@@ -1,9 +1,9 @@
 # Your Project's Title...
-Your project's description...
+This is the initial POC instance of JMP Edge Delivery running against Sharepoint.  
 
 ## Environments
-- Preview: https://main--{repo}--{owner}.hlx.page/
-- Live: https://main--{repo}--{owner}.hlx.live/
+- Preview: https://main--jmpeds--jmphlx.hlx.page/
+- Live: https://main--jmpeds--jmphlx.hlx.live/
 
 ## Installation
 
