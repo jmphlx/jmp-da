@@ -1,4 +1,4 @@
-# JMP POC
+# JMP EDS POC
 This is the initial POC instance of JMP Edge Delivery running against Sharepoint.  
 
 ## Environments
