@@ -1,4 +1,4 @@
-# Your Project's Title...
+# JMP POC
 This is the initial POC instance of JMP Edge Delivery running against Sharepoint.  
 
 ## Environments
