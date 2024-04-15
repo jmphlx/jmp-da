@@ -1,15 +1,16 @@
-.tabs .tabs-list {
-  display: flex;
-  gap: 8px;
-  max-width: 100%;
-  overflow-x: auto;
-  
-}
 
 .tabs-list {
   padding-left: 5%;
   padding-top: 1em;
   border-bottom: 1px solid #d0d0d0;
+  
+}
+
+.tabs .tabs-list {
+  display: flex;
+  gap: 8px;
+  max-width: 100%;
+  overflow-x: auto;
   
 }
 
@@ -22,7 +23,6 @@
   background-color: #ffffff;
   color: initial;
   font-size: 1.4rem;
-  font-family: "anova-med",Arial,Helvetica,sans-serif;
   font-weight: normal;
   line-height: 2.5em;
   text-align: initial;
@@ -30,9 +30,6 @@
   overflow: unset;
   white-space: unset;
   transition: background-color 0.2s;
-  /* additional styles */
-
-
 }
 
 .tabs .tabs-list button[aria-selected="true"] {
@@ -49,17 +46,11 @@
 .tabs .tabs-panel {
   margin-top: -1px;
   padding: 0 16px;
-  /*border: 1px solid var(--dark-color);*/
   border-color: #d0d0d0;
-  border-bottom-color: #FFF;
-      border-color: #d0d0d0;
-    border-bottom-color: #FFF;
-    /*background: #EEE;
-    background: -moz-linear-gradient(top, #e4e4e4 0, #fff 50%);
-    background: -webkit-linear-gradient(top, #e4e4e4 0, #fff 50%);
-    background: -ms-linear-gradient(top, #e4e4e4 0, #fff 50%);
-    background: linear-gradient(to bottom, #e4e4e4 0, #fff 50%);*/
-    overflow: auto;
+  border-bottom-color: #ffffff;
+  border-color: #d0d0d0;
+  border-bottom-color: #ffffff;
+  overflow: auto;
 }
 
 .tabs .tabs-panel[aria-hidden="true"] {
@@ -108,9 +99,6 @@ div.tabs-wrapper div.tabs.block div.tabs-list .tabs-tab {
   border-top-left-radius: 3px;
   position: relative;
   background: #E9E9E9;
-  background: -moz-linear-gradient(bottom, #e4e4e4 0, #fff 50%);
-  background: -webkit-linear-gradient(bottom, #e4e4e4 0, #fff 50%);
-  background: -ms-linear-gradient(bottom, #e4e4e4 0, #fff 50%);
-  background: linear-gradient(to top, #e4e4e4 0, #fff 50%);
+  background: linear-gradient(bottom, #e4e4e4 0, #ffffff 50%);
   
 }
