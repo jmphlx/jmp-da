@@ -1,5 +1,5 @@
-# JMP POC
-This is the initial POC instance of JMP Edge Delivery running against Sharepoint.  Test change.
+# JMP EDS POC
+This is the initial POC instance of JMP Edge Delivery running against Sharepoint with merge workflow.  
 
 ## Environments
 - Preview: https://main--jmpeds--jmphlx.hlx.page/
