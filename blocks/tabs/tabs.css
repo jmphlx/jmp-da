@@ -3,6 +3,14 @@
   gap: 8px;
   max-width: 100%;
   overflow-x: auto;
+  
+}
+
+.tabs-list {
+  padding-left: 5%;
+  padding-top: 1em;
+  border-bottom: 1px solid #d0d0d0;
+  
 }
 
 .tabs .tabs-list button {
@@ -11,16 +19,20 @@
   border: 1px solid var(--dark-color);
   border-radius: 0;
   padding: 8px 16px;
-  background-color: var(--light-color);
+  background-color: #ffffff;
   color: initial;
-  font-size: unset;
-  font-weight: bold;
-  line-height: unset;
+  font-size: 1.4rem;
+  font-family: "anova-med",Arial,Helvetica,sans-serif;
+  font-weight: normal;
+  line-height: 2.5em;
   text-align: initial;
   text-overflow: unset;
   overflow: unset;
   white-space: unset;
   transition: background-color 0.2s;
+  /* additional styles */
+
+
 }
 
 .tabs .tabs-list button[aria-selected="true"] {
@@ -37,10 +49,68 @@
 .tabs .tabs-panel {
   margin-top: -1px;
   padding: 0 16px;
-  border: 1px solid var(--dark-color);
-  overflow: auto;
+  /*border: 1px solid var(--dark-color);*/
+  border-color: #d0d0d0;
+  border-bottom-color: #FFF;
+      border-color: #d0d0d0;
+    border-bottom-color: #FFF;
+    /*background: #EEE;
+    background: -moz-linear-gradient(top, #e4e4e4 0, #fff 50%);
+    background: -webkit-linear-gradient(top, #e4e4e4 0, #fff 50%);
+    background: -ms-linear-gradient(top, #e4e4e4 0, #fff 50%);
+    background: linear-gradient(to bottom, #e4e4e4 0, #fff 50%);*/
+    overflow: auto;
 }
 
 .tabs .tabs-panel[aria-hidden="true"] {
   display: none;
+}
+
+.tabs-panel picture {
+  border: none;
+  border-radius: 0;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+}
+
+.tabs-panel p {
+  
+  width: 30%;
+  min-width: 30%;
+  margin-right: 5px;
+}
+
+
+.tabs-panel a ::before {
+	font-family: 'sasicons-103018' !important;
+	content: "\e616";
+	content: "\e616" "";
+	font-style: normal;
+	font-weight: normal;
+	text-decoration: inherit;
+	text-transform: none;
+	width: 1em;
+	text-align: center;
+	color: #f47723;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	width: 1.5em;
+	margin-left: -1.5em;
+	font-size: 80%;
+	vertical-align: 0;
+}
+
+div.tabs-wrapper div.tabs.block div.tabs-list .tabs-tab {
+  border: 1px solid #d0d0d0;
+  border-bottom-color: #d0d0d0;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+  position: relative;
+  background: #E9E9E9;
+  background: -moz-linear-gradient(bottom, #e4e4e4 0, #fff 50%);
+  background: -webkit-linear-gradient(bottom, #e4e4e4 0, #fff 50%);
+  background: -ms-linear-gradient(bottom, #e4e4e4 0, #fff 50%);
+  background: linear-gradient(to top, #e4e4e4 0, #fff 50%);
+  
 }
