@@ -12,16 +12,16 @@
 
 :root {
   /* colors */
-  --text-color: #333333;
-  --link-color: #0378cd;
-  --background-color: #ffffff;
-  --overlay-background-color: #eeeeee;
-  --highlight-background-color: #cccccc;
+  --text-color: #333;
+  --link-color: #037;
+  --background-color: #fff;
+  --overlay-background-color: #eee;
+  --highlight-background-color: #ccc;
 
   
  /* fonts */
-  --heading-font-family: "anova-light", Arial, Helvetica, sans-serif;
-  --body-font-family: "anova-light", Arial, Helvetica, sans-serif;
+  --heading-font-family: "anova-light", arial, helvetica, sans-serif;
+  --body-font-family: "anova-light", arial, helvetica, sans-serif;
   --fixed-font-family: "Roboto Mono", menlo, consolas, "Liberation Mono", monospace;
 
   /* body sizes */

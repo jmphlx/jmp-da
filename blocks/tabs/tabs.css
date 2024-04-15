@@ -20,7 +20,7 @@
   border: 1px solid var(--dark-color);
   border-radius: 0;
   padding: 8px 16px;
-  background-color: #ffffff;
+  background-color: #fff;
   color: initial;
   font-size: 1.4rem;
   font-weight: normal;
@@ -47,9 +47,7 @@
   margin-top: -1px;
   padding: 0 16px;
   border-color: #d0d0d0;
-  border-bottom-color: #ffffff;
-  border-color: #d0d0d0;
-  border-bottom-color: #ffffff;
+  border-bottom-color: #fff;
   overflow: auto;
 }
 
@@ -66,22 +64,19 @@
 }
 
 .tabs-panel p {
-  
   width: 30%;
   min-width: 30%;
   margin-right: 5px;
 }
 
-
 .tabs-panel a ::before {
-	font-family: 'sasicons-103018' !important;
+	font-family: 'sasicons-103018', sans-serif !important;
 	content: "\e616";
 	content: "\e616" "";
 	font-style: normal;
 	font-weight: normal;
 	text-decoration: inherit;
 	text-transform: none;
-	width: 1em;
 	text-align: center;
 	color: #f47723;
 	line-height: 1;
@@ -99,6 +94,6 @@ div.tabs-wrapper div.tabs.block div.tabs-list .tabs-tab {
   border-top-left-radius: 3px;
   position: relative;
   background: #E9E9E9;
-  background: linear-gradient(bottom, #e4e4e4 0, #ffffff 50%);
-  
+  background: linear-gradient(0deg, #e4e4e4 0, #fff 50%);
+  font-family: anova-med,Arial,Helvetica,sans-serif;  
 }
