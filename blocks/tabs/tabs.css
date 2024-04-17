@@ -89,12 +89,6 @@ div#tabpanel-standard.tabs-panel div table tbody tr td {
   margin-right: 5%;
 }
 
-.tabs-panel p td {
-  width: 30%;
-  min-width: 30%;
-  margin-right: 0;
- 
-}
 
 .tabs-panel a::before {
 	font-family: "sasicons-103018", sans-serif !important;
