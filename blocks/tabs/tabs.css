@@ -11,7 +11,13 @@
   max-width: 100%;
   overflow-x: auto;
 }
-
+.tabs .tabs-list h3 {
+  color: #0378cd;
+  line-height: 2.5em;
+  font-family: "anova-med",Arial,Helvetica,sans-serif;
+  font-weight: normal;
+  font-size: 1.4rem;
+}
 .tabs .tabs-list button {
   flex: 0 0 max-content;
   margin: 0;
@@ -27,6 +33,13 @@
   overflow: unset;
   white-space: unset;
   transition: background-color 0.2s;
+  padding: 0, 1em;
+}
+
+.tabs .tabs-list .tab-tab {
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  
 }
 
 .tabs .tabs-list .tabs-tab[aria-selected="true"] {
