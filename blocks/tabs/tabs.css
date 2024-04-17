@@ -91,6 +91,12 @@
 	vertical-align: 0;
 }
 
+.tabs-panel a:hover {
+  text-decoration: none;
+  color: #3aaafc;
+}
+
+
 div.tabs-wrapper div.tabs.block div.tabs-list .tabs-tab {
   border-top-right-radius: 3px;
   border-top-left-radius: 3px;
