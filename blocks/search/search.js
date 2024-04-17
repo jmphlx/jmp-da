@@ -243,7 +243,7 @@ function searchBox(block, config) {
   const box = document.createElement('div');
   box.classList.add('search-box');
   box.append(
-    searchIcon(),
+    /*searchIcon(),*/
     searchInput(block, config),
   );
 
