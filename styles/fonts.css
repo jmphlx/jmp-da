@@ -31,5 +31,5 @@
   font-weight: 400;
   font-display: swap;
   src: url('../fonts/sasicons-103018.woff2') format('woff2');
-  unicode-range: U+e616;
+  unicode-range: U+e616, U+e619, U+e61b;
 }
