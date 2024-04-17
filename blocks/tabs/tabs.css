@@ -77,16 +77,23 @@
   width: auto;
   max-width: 100%;
   height: auto;
-  display:block;
+  display: inline-block;
   padding: 0;
+  border-image-repeat: stretch;
+}
+
+div#tabpanel-advanced.tabs-panel div table tbody tr td,
+div#tabpanel-standard.tabs-panel div table tbody tr td {
+  width: 30%;
+  min-width: 30%;
+  margin-right: 5%;
 }
 
 .tabs-panel p td {
   width: 30%;
   min-width: 30%;
   margin-right: 0;
-  
-  
+ 
 }
 
 .tabs-panel a::before {
