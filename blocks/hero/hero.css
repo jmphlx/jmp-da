@@ -39,7 +39,9 @@ main .hero-container {
 .jmp-branding {
   background: linear-gradient(45deg, #007dc3 15%, #643695 95%);
   opacity: 1;
+
   h1 {
     color: white;
   }
+  
 }
