@@ -5,23 +5,23 @@
     top: 25px;
     bottom: auto;
     right: auto;
+    /* stylelint-disable-next-line */
     left: auto;
     padding: 2px;
     text-align: left;
     border: 1px solid #CECECE;
     width: 200px;
-    transition-property: width;
-    transition-delay: 0;
-    transition-duration: .5s;
-    transition-timing-function: ease-out;
     font-family: anova-light,Arial,Helvetica,sans-serif;
 }
+
 .search .search-box input::placeholder {
   color: #b2b2b2;
   font-family: inherit;
   font-size: smaller;
 }
+
 .search .search-box::after {
+  /* stylelint-disable-next-line */
     font-family: 'sasicons-103018' !important;
     content: "\e61b";
     content: "\e61b" "";
@@ -37,7 +37,6 @@
     position: absolute;
     top: 4px;
     right: 2px;
-    width: 30px;
     font-size: 120%;
 }
 
@@ -48,7 +47,6 @@
   font: inherit;
   background:transparent;
   line-height: normal;
-  font: inherit;
 }
 
 /* search results */

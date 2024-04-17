@@ -233,17 +233,17 @@ function searchInput(block, config) {
   return input;
 }
 
-function searchIcon() {
+/* function searchIcon() {
   const icon = document.createElement('span');
   icon.classList.add('icon', 'icon-search');
   return icon;
-}
+} */
 
 function searchBox(block, config) {
   const box = document.createElement('div');
   box.classList.add('search-box');
   box.append(
-    /*searchIcon(),*/
+    /* searchIcon(), */
     searchInput(block, config),
   );
 

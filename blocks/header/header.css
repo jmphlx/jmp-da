@@ -13,13 +13,11 @@ header nav {
 	margin: 0 auto;
 	zoom: 1;
   box-sizing: border-box;
-  display: grid;
   grid-template:
     'sections sections sections' 1fr / auto 1fr auto;
   align-items: center;
   gap: 0 2em;
   max-width: 1264px;
-  
   padding: 0 1rem;
   font-family: var(--body-font-family);
 }
@@ -54,6 +52,12 @@ header nav[aria-expanded="true"] {
 header nav p {
   margin: 0;
   line-height: 1;
+}
+
+.nav-drop a {
+  display: block;
+  box-sizing: border-box;
+  padding: 5px 10px;
 }
 
 header nav a:any-link {
@@ -171,6 +175,14 @@ header nav[aria-expanded="true"] .nav-sections {
   align-self: start;
 }
 
+.nav-drop ul {
+  z-index: 1;
+  border-radius: 0;
+  width: auto;
+  padding: 0 10px 10px;
+  box-shadow: 0 6px 6px 0 #0000000d;
+}
+
 header nav .nav-sections ul  {
   list-style: none;
   padding-left: 0;
@@ -278,7 +290,6 @@ header nav .nav-tools {
   grid-area: tools;
 }
 
-
 .nav-drop {
   z-index: 200;
   color: #0378cd;
@@ -293,23 +304,8 @@ header nav .nav-tools {
  height:42px;
 }
 
-
-.nav-drop ul {
-  z-index: 1;
-  border-radius: 0px;
-  width: auto;
-  padding: 0 10px 10px 10px;
-  box-shadow: 0 6px 6px 0 rgba(0,0,0,0.05);
-}
-
 .nav-drop:active {
   color: #333;
-}
-
-.nav-drop a {
-  display: block;
-  box-sizing: border-box;
-  padding: 5px 10px;
 }
 
 .nav-drop a:hover {
