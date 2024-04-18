@@ -55,7 +55,7 @@ const embedTwitter = (url) => {
   return embedHTML;
 };
 
-//vidyard videos
+// vidyard videos
 const embedVidyard = (block, url, autoplay) => {
   const video = url.pathname.split('/').pop();
   const suffix = autoplay ? '?muted=1&autoplay=1' : '';
@@ -67,7 +67,6 @@ const embedVidyard = (block, url, autoplay) => {
     </div>`;
   return embedHTML;
 };
-
 
 const loadEmbed = (block, link, autoplay) => {
   if (block.classList.contains('embed-is-loaded')) {
@@ -89,7 +88,7 @@ const loadEmbed = (block, link, autoplay) => {
     },
     {
       match: ['vidyard'],
-      embed: embedTwitter,
+      embed: embedVidyard,
     },
   ];
 
