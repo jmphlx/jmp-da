@@ -55,6 +55,19 @@ const embedTwitter = (url) => {
   return embedHTML;
 };
 
+// vidyard videos
+const embedVidyard = (block, url, autoplay) => {
+  const video = url.pathname.split('/').pop();
+  const suffix = autoplay ? '?muted=1&autoplay=1' : '';
+  const embedHTML = `<div style="flex justify-center left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
+      <iframe src="https://play.vidyard.com/${video}${suffix}" 
+      style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" 
+      frameborder="0" allowtransparency="true" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen  
+      title="video" loading="lazy"></iframe>
+    </div>`;
+  return embedHTML;
+};
+
 const loadEmbed = (block, link, autoplay) => {
   if (block.classList.contains('embed-is-loaded')) {
     return;
@@ -72,6 +85,10 @@ const loadEmbed = (block, link, autoplay) => {
     {
       match: ['twitter'],
       embed: embedTwitter,
+    },
+    {
+      match: ['vidyard'],
+      embed: embedVidyard,
     },
   ];
 
