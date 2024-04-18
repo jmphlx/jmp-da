@@ -56,7 +56,7 @@ const embedTwitter = (url) => {
 };
 
 // vidyard videos
-const embedVidyard = (block, url, autoplay) => {
+const embedVidyard = (url, autoplay) => {
   const video = url.pathname.split('/').pop();
   const suffix = autoplay ? '?muted=1&autoplay=1' : '';
   const embedHTML = `<div style="flex justify-center left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
