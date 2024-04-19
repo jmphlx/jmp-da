@@ -47,7 +47,8 @@
 .tabs .tabs-list .tabs-tab[aria-selected="true"] {
     border-color: #d0d0d0;
     border-bottom-color: #FFF;
-    background: linear-gradient(0deg, #e4e4e4 0, #fff 50%);
+    background: linear-gradient(180deg, #e4e4e4 0, #fff 50%);
+    
 }
 
 
@@ -56,7 +57,7 @@
 .tabs .tabs-list .tabs-tab[aria-selected="false"]:focus {
   border: 1px solid #d0d0d0;
   border-bottom-color: #d0d0d0;
-  background: linear-gradient(180deg, #e4e4e4 0, #fff 50%);
+  background: linear-gradient(0deg, #e4e4e4 0, #fff 50%);
 }
 
 .tabs .tabs-panel {
