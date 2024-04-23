@@ -147,12 +147,3 @@ async function loadPage() {
 }
 
 loadPage();
-
-// DarkAlley Live Preview from C. Millar
-
-(async function livePreview() {
-  const preview = new URL(window.location.href).searchParams.get('dapreview');
-  if (!preview) return;
-  const origin = preview === 'local' ? 'http://localhost:3000' : 'https://da.live';
-  import(`${origin}/scripts/dapreview.js`).then(({ default: daPreview }) => daPreview(loadPage));
-}());
