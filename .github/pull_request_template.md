@@ -7,4 +7,4 @@ Test URLs:
 - After: https://<branch>--jmpeds--jmplx.hlx.live/
 
 URL for testing:
-- https://<branch>--jmpeds--jmphlx.hlx.page/
+- https://${branch}--jmpeds--jmphlx.hlx.page/
