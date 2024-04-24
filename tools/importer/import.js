@@ -39,9 +39,10 @@ const createMetadataBlock = (main, document) => {
   return metaBlock;
 };
 
-const createHero = (main, document) => {
+const createHero = (main, document, fired) => {
   const doc = {};
  
+  const heroRootCss = '';
   //create heroText
   var heroCss = 'div.container.transom.branding-jmp div.par.parsys div.text.parbase.section div';
   const heroText = document.querySelector(heroCss).innerHTML.replace(/[\n\t]/gm, '');
@@ -74,6 +75,31 @@ const createHero = (main, document) => {
 
   const table = WebImporter.DOMUtils.createTable(cells, document);
   main.append(table);
+  fired.push('div.container.transom.branding-jmp.feathered-overlay');
+};
+
+//get any full width 'hero' with only text likes
+const createTextHero = (main, document) => {
+  const doc = {};
+  console.log('inside text hero');
+  const tHeroCss = 'div.styledcontainer.parbase div.container.segment.first div.par.parsys div.text.parbase.section div h2';
+  const tHeros = document.querySelectorAll(tHeroCss);
+  console.log('inside text hero');
+  if (tHeros) {
+    tHeros.forEach((el) => {
+      doc.tHeroTxt = el.innerHTML;
+      if (doc.tHeroTxt){
+        console.log('heroTextExists');
+        const cells = [
+          ['Hero (textonly)'],
+          [doc.tHeroTxt],
+        ];
+      
+        const table = WebImporter.DOMUtils.createTable(cells, document);
+        main.append(table);
+    }
+    });
+  }
 };
 
 const createCTABanner = (main, document) => {
@@ -262,8 +288,10 @@ const createCards = (main, document) => {
 export default {
   transformDOM: ({ document }) => {
     const main = document.querySelector('main');
+    const fired = [];
     
-    createHero(main, document);
+    createHero(main, document, fired);
+    createTextHero(main, document);
     createColumns(main, document);
     createQuote(main, document);
     //createCTABanner(main, document);
@@ -271,9 +299,11 @@ export default {
     createMetadataBlock(main, document);
 
     // final cleanup
-    WebImporter.DOMUtils.remove(main, [
+    /*WebImporter.DOMUtils.remove(main, [
       '.disclaimer',
-    ]);
+      
+    ]);*/
+    WebImporter.DOMUtils.remove(main, fired);
 
     return main;
   },
