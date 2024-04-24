@@ -14,7 +14,15 @@ const createMetadataBlock = (main, document) => {
     meta.Description = desc.content;
   }
 
-  // find the <meta property="og:image"> element
+  // find the <meta property="og:type"> element
+  const type = document.querySelector('[property="og:type"]');
+  if (type) meta.Type = type.content;
+  
+  // find the <meta property="og:url"> element
+  const url = document.querySelector('[property="og:url"]');
+  if (url) meta.Url = url.content;
+
+    // find the <meta property="og:image"> element
   const img = document.querySelector('[property="og:image"]');
   if (img) {
     // create an <img> element
@@ -22,7 +30,6 @@ const createMetadataBlock = (main, document) => {
     el.src = img.content;
     meta.Image = el;
   }
-
   // helper to create the metadata block
   const metaBlock = WebImporter.Blocks.getMetadataBlock(document, meta);
   // append the block to the main element
@@ -32,25 +39,34 @@ const createMetadataBlock = (main, document) => {
   return metaBlock;
 };
 
-
 const createHero = (main, document) => {
   const doc = {};
  
-  // get hero image src
-  const heroImg = 'div.container.transom.branding-jmp div.bg.bg-op-full.bg-pos-full img.cq-dd-image';
-  const img = document.querySelector(heroImg);
-  if (img) {
-    const el = document.createElement('img');
-    el.src = img.src;
-    doc.img = WebImporter.DOMUtils.encodeImagesForTable(el);
-  }
   //create heroText
   var heroCss = 'div.container.transom.branding-jmp div.par.parsys div.text.parbase.section div';
-  const heroText = document.querySelector(heroCss).innerHTML.replace(/[\n\t]/gm, '');;
+  const heroText = document.querySelector(heroCss).innerHTML.replace(/[\n\t]/gm, '');
   //create heroContents
   if (heroText) {
       doc.heroContents = heroText + '\n';
   }
+
+  //get any subtext since the hero css isn't just for a text based hero image.
+  var heroTextCss = 'div.container.transom.branding-jmp.feathered-overlay div.par.parsys div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section div p span.text-large';
+  const heroSubText = document.querySelector(heroTextCss).innerHTML.replace(/[\n\t]/gm, '');
+  if (heroSubText){
+    doc.heroContents += '\n' + heroSubText; 
+  }
+
+  //parse any buttons that may be there.
+  var heroBtnCss = 'div.container.transom.branding-jmp.feathered-overlay div.par.parsys div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section div.dark-button ul.list-none li span.button';
+  const heroBtns = document.querySelectorAll(heroBtnCss);
+  if (heroBtns){
+      doc.heroContents += '\n';
+      heroBtns.forEach((btn) => {
+        doc.heroContents += '<a href="' + btn.href + '">' + btn.innerHTML + '</a>';
+      });
+  }
+
   const cells = [
     ['Hero'],
     [doc.heroContents],
@@ -62,30 +78,66 @@ const createHero = (main, document) => {
 
 const createCTABanner = (main, document) => {
   const doc = {};
- 
-  // get hero image src
-  const heroImg = 'div.container.transom.branding-jmp div.bg.bg-op-full.bg-pos-full img.cq-dd-image';
-  const img = document.querySelector(heroImg);
-  if (img) {
-    const el = document.createElement('img');
-    el.src = img.src;
-    doc.img = WebImporter.DOMUtils.encodeImagesForTable(el);
+  var ctaHeadings = [];
+  
+  //create CTABannerText
+  var ctaBannerCss = 'div.container.transom.branding-jmp div.par.parsys div.text.parbase.section div h2';
+  const ctaBannerTexts = document.querySelectorAll(ctaBannerCss);
+  //for each CTA Banner we found on the site, generate a hero section with the appropriate buttons
+  /*if (ctaBannerTexts){
+    ctaBannerTexts.forEach((ctaHeading) => {
+      ctaHeadings.push([ctaHeading.innerHTML]);
+    });
+  }*/
+
+  //get the contents now
+  var ctaContentsCss = 'div.container.transom.branding-jmp div.par.parsys div.text.parbase.section div.dark-button-center.narrow p span.text-large';
+  const ctaContents = document.querySelectorAll(ctaContentsCss);
+  /*if (ctaContents) {
+    ctaContents.forEach((ctaContent) => {
+      ctaHeadings.push(ctaContent.innerHTML);
+    });
+  }*/
+
+  // get button links
+  var ctaButCss = 'div.container.transom.branding-jmp div.par.parsys div.text.parbase.section div.dark-button-center.narrow ul.list-none li span.text-small strong span.button a';
+  const ctaButtons = document.querySelectorAll(ctaButCss);
+  /*if (ctaButtons) {
+    ctaButtons.forEach((ctaButton) => {
+      ctaButtons.push([ctaButtons.innerHTML, ctaButtons.href]);
+    });
+  }*/
+  if (ctaBannerTexts && ctaContents && ctaButtons){
+    console.log('inside cta test');
+    ctaButtons.forEach((ctaButton) => {
+      console.log('insideCTAButtons');
+      /*ctaContents.forEach((ctaContent) => {
+        console.log('insideCTAContents');
+        ctaBannerTexts.forEach((ctaHeading) => {
+          console.log('insideCTAHeading');
+          doc.contents = ctaHeading + '\n' + ctaContent + '\n' + ctaButton;
+          console.log(doc.contents);
+          const cells = [
+            ['Hero (cta)'],
+            [doc.contents],
+          ];
+        
+          const table = WebImporter.DOMUtils.createTable(cells, document);
+          main.append(table);
+          console.log(cells);
+        });
+      });**/
+    });
   }
-  //create heroText
-  var heroCss = 'div.container.transom.branding-jmp div.par.parsys div.text.parbase.section div';
-  const heroText = document.querySelector(heroCss).innerHTML.replace(/[\n\t]/gm, '');;
-  //create heroContents
-  if (heroText) {
-      doc.heroContents = heroText + '\n';
-  }
-  const cells = [
+ /* const cells = [
     ['Hero'],
     [doc.heroContents],
   ];
 
   const table = WebImporter.DOMUtils.createTable(cells, document);
-  main.append(table);
+  main.append(table);*/
 };
+
 // createQuote
 const createQuote = (main, document) => {
   const doc = {};
@@ -103,15 +155,16 @@ const createQuote = (main, document) => {
   if (attribution) {
     doc.attribution = attribution.innerHTML;
   }
+  if (attribution && bqText){
+    const cells = [
+      ['Quote'],
+      [doc.bqText],
+      [doc.attribution],
+    ];
 
-  const cells = [
-    ['Quote'],
-    [doc.bqText],
-    [doc.attribution],
-  ];
-
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  main.append(table);
+    const table = WebImporter.DOMUtils.createTable(cells, document);
+    main.append(table);
+  }
 };
 
 // createColumns
@@ -139,22 +192,26 @@ const createColumns = (main, document) => {
     doc.img = img;
   }
   doc.txt = doc.headerTxt + doc.desc;
-  const cells = [
-    ['Columns'],
-    [ doc.txt, doc.img ],
-    
-  ];
 
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  main.append(table);
+  if (headerTxt && desc) {
+    const cells = [
+      ['Columns'],
+      [ doc.txt, doc.img ],
+      
+    ];
+
+    const table = WebImporter.DOMUtils.createTable(cells, document);
+    main.append(table);
+  }
 };
 // create cards
 const createCards = (main, document) => {
   const doc = {};
 
   // get card image
-  const imgCss = 'li.listItem.jmpappareas.jmpappareasdoe.jmpindustry.jmpindustryconservation.jmpappareasquality-reliability-six-sigma.jmpappareasdashboard-building.jmpappareasdataviz-eda.jmpcontent-type.jmpcontent-typecustomer-story.jmpproducts.jmpproductsjmp.jmpindustryenergy-and-utilities.jmptier.jmptierfeatured-resource-tier-1.jmpcapabilities.jmpcapabilitiesautomation-and-scripting.childpageheliatek a span.cmp-image.image img.cmp-image__image';
+  const imgCss = 'li.listItem.jmpappareas.jmpappareasdoe.jmpindustry.jmpindustryconservation.jmpappareasquality-reliability-six-sigma.jmpappareasdashboard-building.jmpappareasdataviz-eda.jmpcontent-type.jmpcontent-typecustomer-story.jmpproducts.jmpproductsjmp.jmpindustryenergy-and-utilities.jmptier.jmptierfeatured-resource-tier-1.jmpcapabilities.jmpcapabilitiesautomation-and-scripting a span.cmp-image.image img.cmp-image__image';
   const img = document.querySelector(imgCss);
+  // const imgs = document.querySelectorAll('imgsCss');
   if (img) {
     doc.img = img;    
   }
@@ -188,16 +245,18 @@ const createCards = (main, document) => {
   }
 
   // combine it together into one object.
-  doc.content = '<a href="' + doc.link + ' target="_self">' + doc.cnTitle + ' ' + doc.cTitle + '\n' + doc.cContent +'</a>\n'
+  //doc.content = '<a href="' + doc.link + ' target="_self">' + doc.cnTitle + '\r\n' + doc.cTitle + '\n' + doc.cContent +'</a>\n'
+  doc.content = doc.cnTitle + '\r\n' + doc.cTitle + '\n' + doc.cContent;
+  if (img) {
+    const cells = [
+      ['Cards'],
+      [doc.img, doc.content],
+      
+    ];
 
-  const cells = [
-    ['Cards'],
-    [doc.img, doc.content],
-    
-  ];
-
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  main.append(table);
+    const table = WebImporter.DOMUtils.createTable(cells, document);
+    main.append(table);
+  }
 };
 
 export default {
@@ -207,6 +266,7 @@ export default {
     createHero(main, document);
     createColumns(main, document);
     createQuote(main, document);
+    //createCTABanner(main, document);
     createCards(main, document);
     createMetadataBlock(main, document);
 
