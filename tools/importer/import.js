@@ -1,46 +1,53 @@
+/* eslint-disable no-console */
+
 /* eslint-disable */
 const createMetadataBlock = (main, document) => {
 
   const meta = {};
 
-  // find the <title> element
+  //find the <title> element
   const title = document.querySelector('title');
   if (title) {
     meta.Title = title.innerHTML.replace(/[\n\t]/gm, '');
   }
 
-  // find the <meta property="og:description"> element
+  //find the <meta property="og:description"> element
   const desc = document.querySelector('[property="og:description"]');
   if (desc) {
     meta.Description = desc.content;
   }
 
-  // find the <meta property="og:type"> element
+  //find the <meta property="og:type"> element
   const type = document.querySelector('[property="og:type"]');
   if (type) meta.Type = type.content;
   
-  // find the <meta property="og:url"> element
+  //find the <meta property="og:url"> element
   const url = document.querySelector('[property="og:url"]');
   if (url) meta.Url = url.content;
 
-    // find the <meta property="og:image"> element
+  //find the <meta property="og:image"> element
   const img = document.querySelector('[property="og:image"]');
   if (img) {
-    // create an <img> element
+    //create an <img> element
     const el = document.createElement('img');
     el.src = img.content;
     meta.Image = el;
   }
-  // helper to create the metadata block
+
+  //find the <meta property="date"> element
+  const date = document.querySelector('[property="date"]');
+  if (date) meta.Date = date.content;
+  
+  //helper to create the metadata block
   const metaBlock = WebImporter.Blocks.getMetadataBlock(document, meta);
   // append the block to the main element
   main.append(metaBlock);
 
-  // returning the meta object might be usefull to other rules
+  //returning the meta object might be usefull to other rules
   return metaBlock;
 };
 
-const createHero = (main, document, fired) => {
+const createHero = (main, document, removeEls) => {
   const doc = {};
  
   const heroRootCss = '';
@@ -65,7 +72,8 @@ const createHero = (main, document, fired) => {
   if (heroBtns){
       doc.heroContents += '\n';
       heroBtns.forEach((btn) => {
-        doc.heroContents += '<a href="' + btn.href + '">' + btn.innerHTML + '</a>';
+        //console.log(btn.innerHTML);
+        doc.heroContents += btn.innerHTML;
       });
   }
 
@@ -77,35 +85,31 @@ const createHero = (main, document, fired) => {
   const table = WebImporter.DOMUtils.createTable(cells, document);
   main.append(table);
   // add our top level css to the fired array for element removal later
-  fired.push('div.container.transom.branding-jmp.feathered-overlay');
+  removeEls.push('div.container.transom.branding-jmp.feathered-overlay');
 };
 
 //get any full width 'hero' with only text likes
-const createTextHero = (main, document, fired) => {
+const createTextHero = (main, document, removeEls) => {
   const doc = {};
-  console.log('inside text hero');
   const tHeroCss = 'div.styledcontainer.parbase div.container.segment.first div.par.parsys div.text.parbase.section div h2';
   const tHeros = document.querySelectorAll(tHeroCss);
-  console.log('inside text hero');
   if (tHeros) {
     tHeros.forEach((el) => {
       doc.tHeroTxt = el;
       if (doc.tHeroTxt){
-        console.log('heroTextExists');
         const cells = [
           ['Hero (textonly)'],
           [doc.tHeroTxt],
         ];
-      
         const table = WebImporter.DOMUtils.createTable(cells, document);
         main.append(table);
-        fired.push('div.styledcontainer.parbase div.container.segment.first div.par.parsys div.text.parbase.section div h2');
     }
     });
+    removeEls.push('div.styledcontainer.parbase div.container.segment.first div.par.parsys div.text.parbase.section div h2');
   }
 };
 
-const createCTABanner = (main, document) => {
+const createCTABanner = (main, document, removeEls) => {
   const doc = {};
   var ctaHeadings = [];
   
@@ -168,7 +172,7 @@ const createCTABanner = (main, document) => {
 };
 
 // createQuote
-const createQuote = (main, document) => {
+const createQuote = (main, document, removeEls) => {
   const doc = {};
 
   // get quote text
@@ -193,11 +197,12 @@ const createQuote = (main, document) => {
 
     const table = WebImporter.DOMUtils.createTable(cells, document);
     main.append(table);
+    removeEls.push(bqTextCSS);
   }
 };
 
 // createColumns
-const createColumns = (main, document) => {
+const createColumns = (main, document, removeEls) => {
   const doc = {};
   // get quote text
   const headerCSS = 'div.styledcontainer.parbase div.container.segment.first div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0 h3';
@@ -231,61 +236,100 @@ const createColumns = (main, document) => {
 
     const table = WebImporter.DOMUtils.createTable(cells, document);
     main.append(table);
+    //removeEls.push();
   }
 };
-// create cards
-const createCards = (main, document) => {
-  const doc = {};
 
-  // get card image
-  const imgCss = 'li.listItem.jmpappareas.jmpappareasdoe.jmpindustry.jmpindustryconservation.jmpappareasquality-reliability-six-sigma.jmpappareasdashboard-building.jmpappareasdataviz-eda.jmpcontent-type.jmpcontent-typecustomer-story.jmpproducts.jmpproductsjmp.jmpindustryenergy-and-utilities.jmptier.jmptierfeatured-resource-tier-1.jmpcapabilities.jmpcapabilitiesautomation-and-scripting a span.cmp-image.image img.cmp-image__image';
-  const img = document.querySelector(imgCss);
-  // const imgs = document.querySelectorAll('imgsCss');
-  if (img) {
-    doc.img = img;    
+//create 'billboard' columns, basically columns with a different CSS Class
+const createbbColumns = (main, document, removeEls) => {
+  const cells = [
+    ['Columns (billboard)'],
+ ];
+  // get text
+  const bbHeadCss = 'div.container.software.billboard.billboard-video.sub-hero div.par.parsys div.parsys_column.cq-colctrl-lt8';
+  var bbHead = document.querySelectorAll(bbHeadCss);
+  if (bbHead) { // we have some content, process each 
+    //for some reason we end up with one undefined entry at the end.
+    var count = 0;
+    bbHead.forEach((el)=> {
+      const bbText = el.querySelector('.text.parbase.section div');
+      if (typeof bbText !== 'undefined'){
+         const text = bbText.innerHTML;
+         const bbImg = el.querySelector('.cmp-image__image');
+        if (typeof bbImg !== 'undefined'){
+          /* build cells for the block */
+          if (count % 2 === 0){
+            cells.push([text, bbImg]);
+            count++;
+          }else{
+            cells.push([bbImg, text]);
+            count++
+          }
+        }
+      } 
+    });
   }
-
-  //create card navTitle
-  const cnTitleCss = 'li.listItem.jmpappareas.jmpappareasdoe.jmpindustry.jmpindustryconservation.jmpappareasquality-reliability-six-sigma.jmpappareasdashboard-building.jmpappareasdataviz-eda.jmpcontent-type.jmpcontent-typecustomer-story.jmpproducts.jmpproductsjmp.jmpindustryenergy-and-utilities.jmptier.jmptierfeatured-resource-tier-1.jmpcapabilities a span.navigation-title';
-  const cnTitle = document.querySelector(cnTitleCss);
-  if (cnTitle) {
-    doc.cnTitle = cnTitle.innerHTML;
-  }
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+  main.append(table);
+  removeEls.push('div.container.software.billboard.billboard-video.sub-hero');
   
-  //create card title
-  const cTitleCss = 'li.listItem.jmpappareas.jmpappareasdoe.jmpindustry.jmpindustryconservation.jmpappareasquality-reliability-six-sigma.jmpappareasdashboard-building.jmpappareasdataviz-eda.jmpcontent-type.jmpcontent-typecustomer-story.jmpproducts.jmpproductsjmp.jmpindustryenergy-and-utilities.jmptier.jmptierfeatured-resource-tier-1.jmpcapabilities a span.title';
-  const cTitle = document.querySelector(cTitleCss);
-  if (cTitle) {
-    doc.cTitle = cTitle.innerHTML;
-  }
+};
 
-  //create card content
-  const cContnetCss = 'li.listItem.jmpappareas.jmpappareasdataviz-eda.jmpjmp-product-version.jmpjmp-product-versionjmp-16.jmpproducts.jmpproductsjmp.jmpcontent-type.jmpcontent-typearticle.jmpappareasstats-modeling-data-mining.jmptier.jmptierfeatured-resource-tier-1.jmpcapabilities.jmpcapabilitiesautomation-and-scripting a span.is-visible.abstract';
-  const cContent = document.querySelector(cContnetCss);
-  if (cContent) {
-    doc.cContent = cContent.innerHTML;
+// create cards
+const createCards = (main, document, removeEls) => {
+  const header = {};
+  const cells = [
+    ['Cards (link)'],      
+  ];
+  //get card heading if any
+  const headCss = 'div.styledcontainer.parbase div.container.tile-3 div.par.parsys div.text.parbase.section div h2';
+  const head = document.querySelector(headCss);
+  //strip the style attribute
+  if (head){
+    header.text = head;
+    console.log(header.text);
+    
   }
-
-  //grab link 
-  const linkCss = 'li.listItem.jmpappareas.jmpappareasdataviz-eda.jmpjmp-product-version.jmpjmp-product-versionjmp-16.jmpproducts.jmpproductsjmp.jmpcontent-type.jmpcontent-typearticle.jmpappareasstats-modeling-data-mining.jmptier.jmptierfeatured-resource-tier-1.jmpcapabilities a';
-  const link = document.querySelector(linkCss);
-  if (link){
-    doc.link = link.href;
-  }
-
-  // combine it together into one object.
-  //doc.content = '<a href="' + doc.link + ' target="_self">' + doc.cnTitle + '\r\n' + doc.cTitle + '\n' + doc.cContent +'</a>\n'
-  doc.content = doc.cnTitle + '\r\n' + doc.cTitle + '\n' + doc.cContent;
-  if (img) {
-    const cells = [
-      ['Cards'],
-      [doc.img, doc.content],
+  // get card container li's
+  const cardCss = 'ul.listOfItems.image-list.list-tile li.listItem';
+  const li = document.querySelectorAll(cardCss);
+  if (li) {
+    li.forEach((el) => {
+      //start building out each card
+      //grab the link
+      const link = el.querySelector('a');
       
-    ];
+      //grab the img
+      const img = el.querySelector('img');
+      
+      //grab the navTitle
+      const nvTitle = el.querySelector('.navigation-title').innerHTML.replace('\n','');
+      
+      //grab the title
+      const title = el.querySelector('.title').innerHTML.replace('\n','');
+      
+      //grab the abstract
+      const abstract = el.querySelector('.is-visible.abstract').innerHTML.replace('\n','');
 
+      // build our content string
+      var contentString = '';
+      if (nvTitle) contentString += '<p>' + nvTitle + '</p>';
+      if (title) contentString += '<p>' + title + '</p>';
+      if (abstract) contentString += '<p>' + abstract + '</p>';       
+
+      //console.log(contentString);
+      //lets build our cell entries
+      cells.push([img, contentString]);
+    });
+  }
+    //spit out the heading first
+    main.append(header.text);
+    //now append the cards below heading
+    console.log(cells);
     const table = WebImporter.DOMUtils.createTable(cells, document);
     main.append(table);
-  }
+    //destroy previous cards:
+    removeEls.push('.container.tile-3');
 };
 
 export default {
@@ -295,22 +339,23 @@ export default {
     * and then pass those to the remove function of DOMUtils to 
     * remove elements we've already processed.
     */
-    const fired = [];
+    const removeEls = [];
     
-    createHero(main, document, fired);
-    createTextHero(main, document, fired);
-    createColumns(main, document, fired);
-    createQuote(main, document, fired);
-    //createCTABanner(main, document, fired);
-    createCards(main, document, fired);
-    createMetadataBlock(main, document, fired);
+    createHero(main, document, removeEls);
+    createTextHero(main, document, removeEls);
+    createColumns(main, document, removeEls);
+    createQuote(main, document, removeEls);
+    //createCTABanner(main, document, removeEls);
+    createbbColumns(main, document, removeEls);
+    createCards(main, document, removeEls);
+    createMetadataBlock(main, document, removeEls);
 
     // final cleanup
     /*WebImporter.DOMUtils.remove(main, [
       '.disclaimer',
       
     ]);*/
-    WebImporter.DOMUtils.remove(main, fired);
+    WebImporter.DOMUtils.remove(main, removeEls);
 
     return main;
   },
