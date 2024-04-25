@@ -1,9 +1,9 @@
-# JMP EDS POC
-This is the initial POC instance of JMP Edge Delivery running against Sharepoint with merge workflow.  
+# JMP Edge Delivery Implementation
+This is the migration site for www.jmp.com on Edge Delivery running against Dark Alley.  
 
 ## Environments
-- Preview: https://main--jmpeds--jmphlx.hlx.page/
-- Live: https://main--jmpeds--jmphlx.hlx.live/
+- Preview: https://main--jmp-da--jmphlx.hlx.page/
+- Live: https://main--jmp-da--jmphlx.hlx.live/
 
 ## Installation
 
