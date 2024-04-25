@@ -1,3 +1,4 @@
+/* eslint-disable */
 const createMetadataBlock = (main, document) => {
 
   const meta = {};
@@ -75,11 +76,12 @@ const createHero = (main, document, fired) => {
 
   const table = WebImporter.DOMUtils.createTable(cells, document);
   main.append(table);
+  // add our top level css to the fired array for element removal later
   fired.push('div.container.transom.branding-jmp.feathered-overlay');
 };
 
 //get any full width 'hero' with only text likes
-const createTextHero = (main, document) => {
+const createTextHero = (main, document, fired) => {
   const doc = {};
   console.log('inside text hero');
   const tHeroCss = 'div.styledcontainer.parbase div.container.segment.first div.par.parsys div.text.parbase.section div h2';
@@ -87,7 +89,7 @@ const createTextHero = (main, document) => {
   console.log('inside text hero');
   if (tHeros) {
     tHeros.forEach((el) => {
-      doc.tHeroTxt = el.innerHTML;
+      doc.tHeroTxt = el;
       if (doc.tHeroTxt){
         console.log('heroTextExists');
         const cells = [
@@ -97,6 +99,7 @@ const createTextHero = (main, document) => {
       
         const table = WebImporter.DOMUtils.createTable(cells, document);
         main.append(table);
+        fired.push('div.styledcontainer.parbase div.container.segment.first div.par.parsys div.text.parbase.section div h2');
     }
     });
   }
@@ -288,15 +291,19 @@ const createCards = (main, document) => {
 export default {
   transformDOM: ({ document }) => {
     const main = document.querySelector('main');
+    /* We'll store the respective CSS classes in the fired array
+    * and then pass those to the remove function of DOMUtils to 
+    * remove elements we've already processed.
+    */
     const fired = [];
     
     createHero(main, document, fired);
-    createTextHero(main, document);
-    createColumns(main, document);
-    createQuote(main, document);
-    //createCTABanner(main, document);
-    createCards(main, document);
-    createMetadataBlock(main, document);
+    createTextHero(main, document, fired);
+    createColumns(main, document, fired);
+    createQuote(main, document, fired);
+    //createCTABanner(main, document, fired);
+    createCards(main, document, fired);
+    createMetadataBlock(main, document, fired);
 
     // final cleanup
     /*WebImporter.DOMUtils.remove(main, [
