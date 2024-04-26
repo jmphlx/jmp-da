@@ -122,7 +122,7 @@ main pre {
   white-space: pre;
 }
 
-/* links */
+/* links
 a:any-link {
   color: var(--link-color);
   text-decoration: none;
@@ -132,8 +132,8 @@ a:hover {
   text-decoration: underline;
   color: var(--link-hover-color);
 }
-
-/* buttons */
+*/
+/* buttons
 a.button:any-link, button {
   font-family: var(--body-font-family);
   display: inline-block;
@@ -169,6 +169,7 @@ a.button.secondary, button.secondary {
   border: 2px solid currentcolor;
   color: var(--text-color)
 }
+*/
 
 main img {
   max-width: 100%;
@@ -211,3 +212,52 @@ main .section.highlight {
   background-color: var(--light-color);
 }
 
+/* JMP Buttons */
+a {
+  background: transparent;
+}
+
+.button {
+  display: inline-block;
+  background-color: #f47723;
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+  font-size: 1.5rem;
+  margin: 10px 0;
+  cursor: pointer;
+  line-height: 2;
+  padding: 0 10px;
+  position: relative;
+  z-index: 1;
+}
+
+a.button:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* Dark Button */
+.dark-button-center {
+
+  a.button {
+    text-align: center;
+    background: rgba(0, 0, 0, .125);
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+    min-width: 200px;
+    margin: 0 auto;
+    box-sizing: content-box;
+    transition-duration: 0.2s;
+    transition-timing-function: ease;
+    position: relative;
+    z-index: 1;
+  }
+
+  a.button:hover {
+    color: #fcfcfc;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(0, 0, 0, .0);
+    min-width: 200px;
+  }	
+  
+}
