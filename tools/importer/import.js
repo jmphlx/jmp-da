@@ -27,12 +27,12 @@ const createMetadataBlock = (main, document) => {
 
   //find the <meta property="og:image"> element
   const img = document.querySelector('[property="og:image"]');
-  if (img) {
-    //create an <img> element
+  if (img && img.content) {
     const el = document.createElement('img');
     el.src = img.content;
     meta.Image = el;
   }
+
 
   //find the <meta property="date"> element
   const date = document.querySelector('[property="date"]');
@@ -287,8 +287,6 @@ const createCards = (main, document, removeEls) => {
   //strip the style attribute
   if (head){
     header.text = head;
-    console.log(header.text);
-    
   }
   // get card container li's
   const cardCss = 'ul.listOfItems.image-list.list-tile li.listItem';
@@ -313,9 +311,9 @@ const createCards = (main, document, removeEls) => {
 
       // build our content string
       var contentString = '';
-      if (nvTitle) contentString += '<p>' + nvTitle + '</p>';
-      if (title) contentString += '<p>' + title + '</p>';
-      if (abstract) contentString += '<p>' + abstract + '</p>';       
+      if (nvTitle) contentString += '<p class="nav-title">' + nvTitle + '</p>';
+      if (title) contentString += '<p class=="title">' + title + '</p>';
+      if (abstract) contentString += '<p class="is-visible.abstract">' + abstract + '</p>';       
 
       //console.log(contentString);
       //lets build our cell entries
@@ -325,7 +323,6 @@ const createCards = (main, document, removeEls) => {
     //spit out the heading first
     main.append(header.text);
     //now append the cards below heading
-    console.log(cells);
     const table = WebImporter.DOMUtils.createTable(cells, document);
     main.append(table);
     //destroy previous cards:
@@ -345,7 +342,7 @@ export default {
     createTextHero(main, document, removeEls);
     createColumns(main, document, removeEls);
     createQuote(main, document, removeEls);
-    //createCTABanner(main, document, removeEls);
+    createCTABanner(main, document, removeEls);
     createbbColumns(main, document, removeEls);
     createCards(main, document, removeEls);
     createMetadataBlock(main, document, removeEls);
