@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 /* eslint-disable */
-const createMetadataBlock = (main, document) => {
+const createMetadataBlock = (document) => {
 
   const meta = {};
 
@@ -33,37 +33,32 @@ const createMetadataBlock = (main, document) => {
     meta.Image = el;
   }
 
-
   //find the <meta property="date"> element
   const date = document.querySelector('[property="date"]');
   if (date) meta.Date = date.content;
   
   //helper to create the metadata block
   const metaBlock = WebImporter.Blocks.getMetadataBlock(document, meta);
-  // append the block to the main element
-  main.append(metaBlock);
-
   //returning the meta object might be usefull to other rules
   return metaBlock;
 };
 
-const createHero = (main, document, removeEls) => {
+const createHero = (document) => {
   const doc = {};
  
-  const heroRootCss = '';
   //create heroText
   var heroCss = 'div.container.transom.branding-jmp div.par.parsys div.text.parbase.section div';
-  const heroText = document.querySelector(heroCss).innerHTML.replace(/[\n\t]/gm, '');
+  const heroText = document.querySelector(heroCss);
   //create heroContents
   if (heroText) {
-      doc.heroContents = heroText + '\n';
+      doc.heroContents = heroText.innerHTML.replace(/[\n\t]/gm, '') + '\n';
   }
 
   //get any subtext since the hero css isn't just for a text based hero image.
   var heroTextCss = 'div.container.transom.branding-jmp.feathered-overlay div.par.parsys div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section div p span.text-large';
-  const heroSubText = document.querySelector(heroTextCss).innerHTML.replace(/[\n\t]/gm, '');
+  const heroSubText = document.querySelector(heroTextCss);
   if (heroSubText){
-    doc.heroContents += '\n' + heroSubText; 
+    doc.heroContents += '\n' + heroSubText.innerHTML.replace(/[\n\t]/gm, ''); 
   }
 
   //parse any buttons that may be there.
@@ -83,13 +78,75 @@ const createHero = (main, document, removeEls) => {
   ];
 
   const table = WebImporter.DOMUtils.createTable(cells, document);
-  main.append(table);
+  return table;
   // add our top level css to the fired array for element removal later
-  removeEls.push('div.container.transom.branding-jmp.feathered-overlay');
+  //removeEls.push('div.container.transom.branding-jmp.feathered-overlay');
+};
+
+const createHeroTest = (document) => {
+  const doc = {};
+  var heroType = 'Hero';
+  const cells = [
+    [heroType],
+  ];
+  
+  //create heroText
+  var heroCss = 'div.container.transom.branding-jmp';
+  const hero = document.querySelectorAll(heroCss);
+  if (hero) {
+    hero.forEach((el) => {
+      //lets handle the h2 and h1 in the regular hero
+      const heroTextCss = '.dark-button h3';
+      const heroText = el.querySelector(heroTextCss);
+      if (heroText) {
+        doc.heroContents = heroText.innerHTML.replace(/[\n\t]/gm, '');
+      }
+
+      const heroSubCss = '.dark-button h1';
+      const heroSubText = el.querySelector(heroSubCss);
+      if (heroSubText) {
+        doc.heroContents += '<p>' + heroSubText.innerHTML + "</p>";
+      }
+
+      //lets grab the span text-large
+      const pSpanCss = 'p span';
+      const pSpan = el.querySelector(pSpanCss);
+      if (pSpan) {
+        //console.log(pSpan);
+        doc.heroContents += pSpan;
+      }
+
+      //below here should be simple CTA banner
+      //check for  as that's in the cta banners
+      const heroH3Css = '.dark-button-center h3';
+      const heroH3 = document.querySelector(heroH3Css);
+      if (heroH3) {
+        console.log('heroH3 added');
+        doc.heroContents = heroH3
+        heroType = 'Hero (centered)';
+      }
+      //now let's deal with buttons:
+      var heroBtnCss = 'span .button';
+      const heroBtns = document.querySelectorAll(heroBtnCss);
+      if (heroBtns){
+          heroBtns.forEach((btn) => {
+          doc.heroContents += btn.innerHTML;
+          });
+      }
+      console.log(doc.heroContents);
+      cells.push([doc.heroContnents]);
+      //console.log(cells);
+    });
+      
+  }
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+  return table;
+  // remove processed elements
+  WebImporter.DOMUtils.remove(main,['div.container.transom.branding-jmp')];
 };
 
 //get any full width 'hero' with only text likes
-const createTextHero = (main, document, removeEls) => {
+const createTextHero = (document) => {
   const doc = {};
   const tHeroCss = 'div.styledcontainer.parbase div.container.segment.first div.par.parsys div.text.parbase.section div h2';
   const tHeros = document.querySelectorAll(tHeroCss);
@@ -102,14 +159,14 @@ const createTextHero = (main, document, removeEls) => {
           [doc.tHeroTxt],
         ];
         const table = WebImporter.DOMUtils.createTable(cells, document);
-        main.append(table);
+        return table;
     }
     });
-    removeEls.push('div.styledcontainer.parbase div.container.segment.first div.par.parsys div.text.parbase.section div h2');
+    //removeEls.push('div.styledcontainer.parbase div.container.segment.first div.par.parsys div.text.parbase.section div h2');
   }
 };
 
-const createCTABanner = (main, document, removeEls) => {
+const createCTABanner = (document) => {
   const doc = {};
   var ctaHeadings = [];
   
@@ -141,15 +198,10 @@ const createCTABanner = (main, document, removeEls) => {
     });
   }*/
   if (ctaBannerTexts && ctaContents && ctaButtons){
-    console.log('inside cta test');
     ctaButtons.forEach((ctaButton) => {
-      console.log('insideCTAButtons');
       /*ctaContents.forEach((ctaContent) => {
-        console.log('insideCTAContents');
         ctaBannerTexts.forEach((ctaHeading) => {
-          console.log('insideCTAHeading');
           doc.contents = ctaHeading + '\n' + ctaContent + '\n' + ctaButton;
-          console.log(doc.contents);
           const cells = [
             ['Hero (cta)'],
             [doc.contents],
@@ -172,7 +224,7 @@ const createCTABanner = (main, document, removeEls) => {
 };
 
 // createQuote
-const createQuote = (main, document, removeEls) => {
+const createQuote = (document) => {
   const doc = {};
 
   // get quote text
@@ -196,13 +248,13 @@ const createQuote = (main, document, removeEls) => {
     ];
 
     const table = WebImporter.DOMUtils.createTable(cells, document);
-    main.append(table);
-    removeEls.push(bqTextCSS);
+    return table;
+    
   }
 };
 
 // createColumns
-const createColumns = (main, document, removeEls) => {
+const createColumns = (document) => {
   const doc = {};
   // get quote text
   const headerCSS = 'div.styledcontainer.parbase div.container.segment.first div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0 h3';
@@ -235,13 +287,13 @@ const createColumns = (main, document, removeEls) => {
     ];
 
     const table = WebImporter.DOMUtils.createTable(cells, document);
-    main.append(table);
-    //removeEls.push();
+    return table;
+    
   }
 };
 
 //create 'billboard' columns, basically columns with a different CSS Class
-const createbbColumns = (main, document, removeEls) => {
+const createbbColumns = (document) => {
   const cells = [
     ['Columns (billboard)'],
  ];
@@ -270,13 +322,14 @@ const createbbColumns = (main, document, removeEls) => {
     });
   }
   const table = WebImporter.DOMUtils.createTable(cells, document);
-  main.append(table);
-  removeEls.push('div.container.software.billboard.billboard-video.sub-hero');
+  return table;
+  //removeEls.push('div.container.software.billboard.billboard-video.sub-hero');
   
 };
 
 // create cards
-const createCards = (main, document, removeEls) => {
+const createCards = (document) => {
+  const doc = {};
   const header = {};
   const cells = [
     ['Cards (link)'],      
@@ -301,30 +354,38 @@ const createCards = (main, document, removeEls) => {
       const img = el.querySelector('img');
       
       //grab the navTitle
-      const nvTitle = el.querySelector('.navigation-title').innerHTML.replace('\n','');
+      const nvTitle = el.querySelector('.navigation-title');
+      if (nvTitle) {
+        doc.nvTitle = nvTitle.innerHTML.replace('\n','');
+      }
       
       //grab the title
-      const title = el.querySelector('.title').innerHTML.replace('\n','');
-      
+      const title = el.querySelector('.title');
+      if (title) {
+        doc.title = title.innerHTML.replace('\n','');
+      }
       //grab the abstract
-      const abstract = el.querySelector('.is-visible.abstract').innerHTML.replace('\n','');
-
+      const abstract = el.querySelector('.is-visible.abstract');
+      if (abstract) {
+        doc.abstract = abstract.innerHTML.replace('\n','')
+      }
       // build our content string
       var contentString = '';
-      if (nvTitle) contentString += '<p class="nav-title">' + nvTitle + '</p>';
-      if (title) contentString += '<p class=="title">' + title + '</p>';
-      if (abstract) contentString += '<p class="is-visible.abstract">' + abstract + '</p>';       
-
-      //console.log(contentString);
+      if (nvTitle) contentString += '<p>' + doc.nvTitle + '</p>';
+      if (title) contentString += '<p class=="title">' + doc.title + '</p>';
+      if (abstract) contentString += '<p class="is-visible.abstract">' + doc.abstract + '</p>';       
       //lets build our cell entries
       cells.push([img, contentString]);
     });
   }
+
+    //@TODO need to figure out how to return both.
     //spit out the heading first
-    main.append(header.text);
+    doc.headerText = header.text;
     //now append the cards below heading
     const table = WebImporter.DOMUtils.createTable(cells, document);
-    main.append(table);
+    doc.table = table;
+    return doc
     //destroy previous cards:
     removeEls.push('.container.tile-3');
 };
@@ -332,28 +393,37 @@ const createCards = (main, document, removeEls) => {
 export default {
   transformDOM: ({ document }) => {
     const main = document.querySelector('main');
-    /* We'll store the respective CSS classes in the fired array
-    * and then pass those to the remove function of DOMUtils to 
-    * remove elements we've already processed.
-    */
-    const removeEls = [];
-    
-    createHero(main, document, removeEls);
-    createTextHero(main, document, removeEls);
-    createColumns(main, document, removeEls);
-    createQuote(main, document, removeEls);
-    createCTABanner(main, document, removeEls);
-    createbbColumns(main, document, removeEls);
-    createCards(main, document, removeEls);
-    createMetadataBlock(main, document, removeEls);
+    //create the container div/section
+    const section = document.createElement('div');
+    main.append(section);
+    /*const hero = createHero(document);
+    if (hero)  section.append(hero);*/
 
-    // final cleanup
-    /*WebImporter.DOMUtils.remove(main, [
-      '.disclaimer',
-      
-    ]);*/
-    WebImporter.DOMUtils.remove(main, removeEls);
+    const heroTest = createHeroTest(document);
+    if (heroTest) section.append(heroTest);
 
+    const columns = createColumns(document);
+    if (columns) section.append(columns);
+
+    const textHero = createTextHero(document);
+    if (textHero) section.append(textHero);
+
+    const quote = createQuote( document,);
+    if (quote) section.append(quote);
+
+    const ctaBanner = createCTABanner(document);
+    if (ctaBanner) section.append(ctaBanner);
+
+    const bbCols = createbbColumns(document);
+    if (bbCols) section.append(bbCols);
+
+    const cards = createCards(document);
+    if (cards) section.append(cards);
+
+    const meta = createMetadataBlock(document);
+    if (meta) section.append(meta);
+
+    main.append(section);
     return main;
   },
 };
