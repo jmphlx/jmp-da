@@ -96,7 +96,7 @@ const createHeroTest = (document) => {
   if (hero) {
     hero.forEach((el) => {
       //lets handle the h2 and h1 in the regular hero
-      const heroTextCss = '.dark-button h3';
+      const heroTextCss = '.dark-button > h3';
       const heroText = el.querySelector(heroTextCss);
       if (heroText) {
         doc.heroContents = heroText.innerHTML.replace(/[\n\t]/gm, '');
@@ -118,7 +118,7 @@ const createHeroTest = (document) => {
 
       //below here should be simple CTA banner
       //check for  as that's in the cta banners
-      const heroH3Css = '.dark-button-center h3';
+      const heroH3Css = '.dark-button-center > h3';
       const heroH3 = document.querySelector(heroH3Css);
       if (heroH3) {
         console.log('heroH3 added');
@@ -228,7 +228,7 @@ const createQuote = (document) => {
   const doc = {};
 
   // get quote text
-  const bqTextCSS = '.narrow blockquote'
+  const bqTextCSS = '.narrow blockquote';
   const bqText = document.querySelector(bqTextCSS);
   if (bqText) {
     doc.bqText = bqText.innerHTML;
@@ -244,6 +244,7 @@ const createQuote = (document) => {
     const cells = [
       ['Quote'],
       [doc.bqText],
+      // ['Column1', 'Column2', 'column3']
       [doc.attribution],
     ];
 
