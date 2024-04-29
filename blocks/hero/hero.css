@@ -31,16 +31,19 @@ main .hero-container {
 }
 
 .hero img {
+  top: 0;
+  position: absolute;
   object-fit: cover;
   width: 100%;
   height: 100%;
+  z-index: 0;
 }
 
 .jmp-branding {
   background: linear-gradient(45deg, #007dc3 15%, #643695 95%);
   opacity: 1;
 
-  h1 {
+  h2 {
     color: white;
   }
   
