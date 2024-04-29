@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-
 /* eslint-disable */
 const createMetadataBlock = (document) => {
 
@@ -96,7 +95,7 @@ const createHeroTest = (document) => {
   if (hero) {
     hero.forEach((el) => {
       //lets handle the h2 and h1 in the regular hero
-      const heroTextCss = '.dark-button > h3';
+      const heroTextCss = '.dark-button h3';
       const heroText = el.querySelector(heroTextCss);
       if (heroText) {
         doc.heroContents = heroText.innerHTML.replace(/[\n\t]/gm, '');
@@ -139,10 +138,9 @@ const createHeroTest = (document) => {
     });
       
   }
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  return table;
   // remove processed elements
-  WebImporter.DOMUtils.remove(main,['div.container.transom.branding-jmp')];
+  //WebImporter.DOMUtils.remove(main,['div.container.transom.branding-jmp']);
+  return WebImporter.DOMUtils.createTable(cells, document);
 };
 
 //get any full width 'hero' with only text likes
@@ -152,6 +150,7 @@ const createTextHero = (document) => {
   const tHeros = document.querySelectorAll(tHeroCss);
   if (tHeros) {
     tHeros.forEach((el) => {
+      
       doc.tHeroTxt = el;
       if (doc.tHeroTxt){
         const cells = [
@@ -322,8 +321,8 @@ const createbbColumns = (document) => {
       } 
     });
   }
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  return table;
+  return WebImporter.DOMUtils.createTable(cells, document);
+  
   //removeEls.push('div.container.software.billboard.billboard-video.sub-hero');
   
 };
@@ -384,9 +383,8 @@ const createCards = (document) => {
     //spit out the heading first
     doc.headerText = header.text;
     //now append the cards below heading
-    const table = WebImporter.DOMUtils.createTable(cells, document);
-    doc.table = table;
-    return doc
+    return WebImporter.DOMUtils.createTable(cells, document);
+    
     //destroy previous cards:
     removeEls.push('.container.tile-3');
 };
@@ -396,7 +394,7 @@ export default {
     const main = document.querySelector('main');
     //create the container div/section
     const section = document.createElement('div');
-    main.append(section);
+    console.log('Starting transformDOM');
     /*const hero = createHero(document);
     if (hero)  section.append(hero);*/
 
@@ -424,6 +422,8 @@ export default {
     const meta = createMetadataBlock(document);
     if (meta) section.append(meta);
 
+    main.innerHTML = '';
+    console.log('main-run-complete');
     main.append(section);
     return main;
   },
