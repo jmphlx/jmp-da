@@ -83,17 +83,17 @@ const createHero = (document) => {
 };
 
 const createHeroTest = (document) => {
+  console.log("Inside HeroTest");
   const doc = {};
-  var heroType = 'Hero';
-  const cells = [
-    [heroType],
-  ];
+  doc.heroType = 'hero';
+
   
   //create heroText
   var heroCss = 'div.container.transom.branding-jmp';
   const hero = document.querySelectorAll(heroCss);
   if (hero) {
     hero.forEach((el) => {
+      //console.log(el);
       //lets handle the h2 and h1 in the regular hero
       const heroTextCss = '.dark-button h3';
       const heroText = el.querySelector(heroTextCss);
@@ -111,36 +111,48 @@ const createHeroTest = (document) => {
       const pSpanCss = 'p span';
       const pSpan = el.querySelector(pSpanCss);
       if (pSpan) {
-        //console.log(pSpan);
-        doc.heroContents += pSpan;
+        console.log(pSpan);
+        doc.heroContents += pSpan.innerHTML;
+      }
+      if (heroText && heroSubText && pSpan ){
+        const cells = [
+          [doc.heroType],
+        ];
+        cells.push([doc.heroContents]);
+        console.log(doc.heroContents);
+        return WebImporter.DOMUtils.createTable(cells, document);
+
       }
 
+
       //below here should be simple CTA banner
+
       //check for  as that's in the cta banners
-      const heroH3Css = '.dark-button-center > h3';
+      const heroH3Css = 'div.dark-button-center h3';
       const heroH3 = document.querySelector(heroH3Css);
       if (heroH3) {
         console.log('heroH3 added');
         doc.heroContents = heroH3
-        heroType = 'Hero (centered)';
+        doc.heroType = 'Hero (centered)';
       }
       //now let's deal with buttons:
-      var heroBtnCss = 'span .button';
+      var heroBtnCss = '.dark-button-center span.button a';
       const heroBtns = document.querySelectorAll(heroBtnCss);
       if (heroBtns){
           heroBtns.forEach((btn) => {
-          doc.heroContents += btn.innerHTML;
+          doc.heroContents += '<p>' + btn + '</p>';
           });
       }
-      console.log(doc.heroContents);
-      cells.push([doc.heroContnents]);
-      //console.log(cells);
+      console.log(doc.heroType);
+      const cells = [
+        [doc.heroType],
+      ];
+      cells.push([doc.heroContents]);
+      //console.log(doc.heroContents);
+      return WebImporter.DOMUtils.createTable(cells, document);
+
     });
-      
   }
-  // remove processed elements
-  //WebImporter.DOMUtils.remove(main,['div.container.transom.branding-jmp']);
-  return WebImporter.DOMUtils.createTable(cells, document);
 };
 
 //get any full width 'hero' with only text likes
@@ -168,58 +180,29 @@ const createTextHero = (document) => {
 const createCTABanner = (document) => {
   const doc = {};
   var ctaHeadings = [];
-  
-  //create CTABannerText
-  var ctaBannerCss = 'div.container.transom.branding-jmp div.par.parsys div.text.parbase.section div h2';
-  const ctaBannerTexts = document.querySelectorAll(ctaBannerCss);
-  //for each CTA Banner we found on the site, generate a hero section with the appropriate buttons
-  /*if (ctaBannerTexts){
-    ctaBannerTexts.forEach((ctaHeading) => {
-      ctaHeadings.push([ctaHeading.innerHTML]);
-    });
-  }*/
-
-  //get the contents now
-  var ctaContentsCss = 'div.container.transom.branding-jmp div.par.parsys div.text.parbase.section div.dark-button-center.narrow p span.text-large';
-  const ctaContents = document.querySelectorAll(ctaContentsCss);
-  /*if (ctaContents) {
-    ctaContents.forEach((ctaContent) => {
-      ctaHeadings.push(ctaContent.innerHTML);
-    });
-  }*/
-
-  // get button links
-  var ctaButCss = 'div.container.transom.branding-jmp div.par.parsys div.text.parbase.section div.dark-button-center.narrow ul.list-none li span.text-small strong span.button a';
-  const ctaButtons = document.querySelectorAll(ctaButCss);
-  /*if (ctaButtons) {
-    ctaButtons.forEach((ctaButton) => {
-      ctaButtons.push([ctaButtons.innerHTML, ctaButtons.href]);
-    });
-  }*/
-  if (ctaBannerTexts && ctaContents && ctaButtons){
-    ctaButtons.forEach((ctaButton) => {
-      /*ctaContents.forEach((ctaContent) => {
-        ctaBannerTexts.forEach((ctaHeading) => {
-          doc.contents = ctaHeading + '\n' + ctaContent + '\n' + ctaButton;
-          const cells = [
-            ['Hero (cta)'],
-            [doc.contents],
-          ];
-        
-          const table = WebImporter.DOMUtils.createTable(cells, document);
-          main.append(table);
-          console.log(cells);
-        });
-      });**/
-    });
+  var heroType
+  //check for  as that's in the cta banners
+  const heroH3Css = 'div.dark-button-center h3';
+  const heroH3 = document.querySelector(heroH3Css);
+  if (heroH3) {
+    //console.log('heroH3 added');
+    doc.heroContents = heroH3
+    heroType = 'Hero (cta)';
   }
- /* const cells = [
-    ['Hero'],
-    [doc.heroContents],
-  ];
+  //now let's deal with buttons:
+  var heroBtnCss = '.dark-button-center span.button a';
+  const heroBtns = document.querySelectorAll(heroBtnCss);
+  if (heroBtns){
+      heroBtns.forEach((btn) => {
+      doc.heroContents += '<p>' + btn + '</p>';
+      });
+  }
+  console.log(heroType);
+  cells.push([doc.heroContents]);
+  //console.log(doc.heroContents);
+  return WebImporter.DOMUtils.createTable(cells, document);
 
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  main.append(table);*/
+ 
 };
 
 // createQuote
@@ -247,9 +230,7 @@ const createQuote = (document) => {
       [doc.attribution],
     ];
 
-    const table = WebImporter.DOMUtils.createTable(cells, document);
-    return table;
-    
+    return WebImporter.DOMUtils.createTable(cells, document);
   }
 };
 
@@ -286,9 +267,7 @@ const createColumns = (document) => {
       
     ];
 
-    const table = WebImporter.DOMUtils.createTable(cells, document);
-    return table;
-    
+   return WebImporter.DOMUtils.createTable(cells, document);
   }
 };
 
@@ -332,7 +311,7 @@ const createCards = (document) => {
   const doc = {};
   const header = {};
   const cells = [
-    ['Cards (link)'],      
+    ['Cards (linked)'],      
   ];
   //get card heading if any
   const headCss = 'div.styledcontainer.parbase div.container.tile-3 div.par.parsys div.text.parbase.section div h2';
@@ -394,11 +373,12 @@ export default {
     const main = document.querySelector('main');
     //create the container div/section
     const section = document.createElement('div');
-    console.log('Starting transformDOM');
+
     /*const hero = createHero(document);
     if (hero)  section.append(hero);*/
 
     const heroTest = createHeroTest(document);
+    console.log(heroTest);
     if (heroTest) section.append(heroTest);
 
     const columns = createColumns(document);
@@ -410,8 +390,8 @@ export default {
     const quote = createQuote( document,);
     if (quote) section.append(quote);
 
-    const ctaBanner = createCTABanner(document);
-    if (ctaBanner) section.append(ctaBanner);
+    /*const ctaBanner = createCTABanner(document);
+    if (ctaBanner) section.append(ctaBanner);*/
 
     const bbCols = createbbColumns(document);
     if (bbCols) section.append(bbCols);
@@ -423,7 +403,7 @@ export default {
     if (meta) section.append(meta);
 
     main.innerHTML = '';
-    console.log('main-run-complete');
+//    console.log('transformDOM complete');
     main.append(section);
     return main;
   },
