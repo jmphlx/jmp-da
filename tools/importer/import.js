@@ -181,37 +181,37 @@ const createQuote = (document) => {
 // createColumns
 const createColumns = (document) => {
   const doc = {};
-  // get quote text
-  const headerCSS = 'div.styledcontainer.parbase div.container.segment.first div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0 h3';
-  const headerTxt = document.querySelector(headerCSS);
-  if (headerTxt) {
-    doc.headerTxt = headerTxt.innerHTML;
+  doc.contents = [];
+  const cells = [
+    ['Columns'],
+ ];
+  // get text
+  const cHeadCss = 'div#page-content.par div#par div.par.parsys div.styledcontainer.parbase div.container div.par.parsys div.text.parbase.section div h2:not(:has(sup))';
+  const cHead = document.querySelectorAll(cHeadCss);  
+  if (cHead) { // we have some content, process each
+    if (cHead.length == 1){
+      console.log(cHead[0]);
+      cells.push([cHead[0]]);
+    }
   }
-
-  //create desc
-  const descCSS = 'div.styledcontainer.parbase div.container.segment.first div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0 div.text.parbase.section div ul';
-  const desc = document.querySelector(descCSS);
-  if (desc) {
-    doc.desc = desc.innerHTML;
+  //get left hand side txt
+  const lTxtCss = 'div.styledcontainer.parbase div.container div.par.parsys div.parsys_column.cq-colctrl-lt0.list-container div.parsys_column.cq-colctrl-lt0-c0 div.text.parbase.section div';
+  const lTxt = document.querySelectorAll(lTxtCss);
+  if (lTxt) {
+      lTxt.forEach((el)=> {
+        doc.contents.push(el.innerHTML.replace(/[\n\t]/gm, ''));
+      });
   }
-
-  //grab the image placeholder for modal
-  const imgCSS = 'div.styledcontainer.parbase div.container.segment.first div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c1 div.lightbox.section div.video a.text-bottom div.image div span.cmp-image img.cmp-image__image';
-  const img = document.querySelector(imgCSS);
-  //combine the two
-  if (img){
-    doc.img = img;
+  const rTxtCss = 'div.styledcontainer.parbase div.container div.par.parsys div.parsys_column.cq-colctrl-lt0.list-container div.parsys_column.cq-colctrl-lt0-c1 div.text.parbase.section div';
+  const rTxt = document.querySelectorAll(rTxtCss);
+  if (rTxt) {
+    rTxt.forEach((el) => {
+      doc.contents.push(el.innerHTML.replace(/[\n\t]/gm, ''));
+    });
   }
-  doc.txt = doc.headerTxt + doc.desc;
-
-  if (headerTxt && desc) {
-    const cells = [
-      ['Columns'],
-      [ doc.txt, doc.img ],
-      
-    ];
-
-   return WebImporter.DOMUtils.createTable(cells, document);
+  if (doc.contents) {
+    cells.push(doc.contents);
+    return WebImporter.DOMUtils.createTable(cells, document);
   }
 };
 
@@ -225,26 +225,28 @@ const createbbColumns = (document) => {
   var bbHead = document.querySelectorAll(bbHeadCss);
   if (bbHead) { // we have some content, process each 
     //for some reason we end up with one undefined entry at the end.
-    var count = 0;
-    bbHead.forEach((el)=> {
-      const bbText = el.querySelector('.text.parbase.section div');
-      if (typeof bbText !== 'undefined'){
-         const text = bbText.innerHTML;
-         const bbImg = el.querySelector('.cmp-image__image');
-        if (typeof bbImg !== 'undefined'){
-          /* build cells for the block */
-          if (count % 2 === 0){
-            cells.push([text, bbImg]);
-            count++;
-          }else{
-            cells.push([bbImg, text]);
-            count++
+    if (bbHead.length > 0){
+      var count = 0;
+      bbHead.forEach((el)=> {
+        const bbText = el.querySelector('.text.parbase.section div');
+        if (typeof bbText !== 'undefined'){
+          const text = bbText.innerHTML;
+          const bbImg = el.querySelector('.cmp-image__image');
+          if (typeof bbImg !== 'undefined'){
+            /* build cells for the block */
+            if (count % 2 === 0){
+              cells.push([text, bbImg]);
+              count++;
+            }else{
+              cells.push([bbImg, text]);
+              count++
+            }
           }
-        }
-      } 
-    });
+        } 
+      });
+      return WebImporter.DOMUtils.createTable(cells, document);
+    }
   }
-  return WebImporter.DOMUtils.createTable(cells, document);
 };
 
 const createCardHeader = (document) => {
