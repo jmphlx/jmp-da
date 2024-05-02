@@ -36,6 +36,14 @@ const createMetadataBlock = (document) => {
   const date = document.querySelector('[property="date"]');
   if (date) meta.Date = date.content;
   
+  //find the <meta property="date"> element
+  const tCard = document.querySelector('[name="twitter:card"]');
+  if (tCard) meta['twitter:card'] = tCard.content;
+
+  //find the <meta property="date"> element
+  const tSite = document.querySelector('[name="twitter:site"]');
+  if (tCard) meta['twitter:site'] = tSite.content;  
+
   //helper to create the metadata block
   const metaBlock = WebImporter.Blocks.getMetadataBlock(document, meta);
   //returning the meta object might be usefull to other rules
