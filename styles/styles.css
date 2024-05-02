@@ -123,6 +123,7 @@ main pre {
 }
 
 /* links
+
 a:any-link {
   color: var(--link-color);
   text-decoration: none;
@@ -132,8 +133,7 @@ a:hover {
   text-decoration: underline;
   color: var(--link-hover-color);
 }
-*/
-/* buttons
+
 a.button:any-link, button {
   font-family: var(--body-font-family);
   display: inline-block;
@@ -169,6 +169,7 @@ a.button.secondary, button.secondary {
   border: 2px solid currentcolor;
   color: var(--text-color)
 }
+
 */
 
 main img {
@@ -233,16 +234,19 @@ a {
 }
 
 a.button:hover {
-  background: rgba(0, 0, 0, 0.4);
+  /* npm run lint expects a modern color notation.  
+  background: rgba(0, 0, 0, 40%);
+  */
+  background: #0066;
 }
 
 /* Dark Button */
-.dark-button-center {
 
+.dark-button-center {
   a.button {
     text-align: center;
-    background: rgba(0, 0, 0, .125);
-    border: 1px solid #ffffff;
+    background: #0020;
+    border: 1px solid #fff;
     border-radius: 8px;
     min-width: 200px;
     margin: 0 auto;
@@ -255,8 +259,8 @@ a.button:hover {
 
   a.button:hover {
     color: #fcfcfc;
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(0, 0, 0, .0);
+    background: #0066;
+    border: 1px solid black;
     min-width: 200px;
   }	
   
