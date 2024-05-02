@@ -37,7 +37,7 @@ jobs:
         run: |
           sed -i.bak "s/{repo}/$(basename ${{ github.repository }})/g" .github/pull_request_template.md
           sed -i.bak "s/{owner}/$(dirname ${{ github.repository }})/g" .github/pull_request_template.md
-          sed -i.bak "s/{branch}/$(echo ${{github.ref}} | cut -d'/' -f 3)/g" .github/pull_request_template.md
+          sed -i.bak "s/{branch}/$(echo ${{ github.ref }})/g" .github/pull_request_template.md
 
 
         # commit back to the repository
