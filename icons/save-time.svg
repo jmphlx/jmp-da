@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="outlines" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75 75">
+    <defs>
+        <style>.cls-1,.cls-2,.cls-3{fill:none;}.cls-2,.cls-3{stroke:#231f20;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}.cls-4{fill:#0076bd;stroke:#0076bd;stroke-miterlimit:10;}.cls-3{stroke-dasharray:0
+            0 3.88 5.82;}</style>
+    </defs>
+    <path class="cls-4"
+        d="m67.37,41.25c1.99-3.32,3.13-7.16,3.13-11.31,0-12.19-9.88-22.07-22.07-22.07v2.19s0,19.89,0,19.89l18.64,11.18.31.13Z" />
+    <path class="cls-2" d="m52.48,51.52c.66-.12,1.31-.27,1.95-.45" />
+    <path class="cls-3"
+        d="m59.76,48.76c6.39-3.85,10.61-10.91,10.81-18.96.27-10.7-9.51-22.55-22.07-22.07-6.09.23-11.62,2.58-15.61,6.5" />
+    <path class="cls-2" d="m30.96,16.4c-.41.53-.79,1.07-1.15,1.64" />
+    <path class="cls-1"
+        d="m45.45,56.54c1.99-3.32,3.13-7.16,3.13-11.31,0-12.19-9.88-22.07-22.07-22.07v2.19s0,19.89,0,19.89l18.64,11.18.31.13Z" />
+    <circle class="cls-2" cx="26.5" cy="45.21" r="22.07" />
+    <polyline class="cls-2" points="26.5 28.4 26.5 45.21 35.18 50.58" />
+</svg>

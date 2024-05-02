@@ -1,2 +1,4 @@
 mountpoints:
-  /: https://arborydigital.sharepoint.com/sites/jmphlx/Shared%20Documents/hlxsite
+  /:
+    url: https://content.da.live/jmphlx/jmp-da/
+    type: markup
