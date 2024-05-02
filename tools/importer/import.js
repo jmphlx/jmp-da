@@ -190,6 +190,7 @@ const createCTABanner = (document) => {
         doc.heroContents += btn.outerHTML + '\n';
       });
   }
+  
   cells.push([doc.heroContents]);
   return WebImporter.DOMUtils.createTable(cells, document);
 };
