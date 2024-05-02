@@ -128,6 +128,43 @@ const createTextHero = (document) => {
   }
 };
 
+const createROIColumns = (document) => {
+  const doc = {};
+  doc.cells = [];
+  const cells = [
+    ['Columns (roi)'],
+  ]
+  const roiColCss = 'div.container.brand-neutral-dark.roi-block div.par.parsys div.text.parbase.section div.roi-grid div';
+  const rCol = document.querySelectorAll(roiColCss);
+  if (rCol) {
+    rCol.forEach((el) => {
+      doc.col = el;
+      if (doc.col){
+        const hasBr = doc.col.querySelector('br');
+        if (hasBr) doc.col.querySelector('br').remove();
+        doc.cells.push(doc.col);
+        console.log(doc.cells);
+    }
+    });
+    
+  }
+  //grab the link
+  const lCss = 'div.container.brand-neutral-dark.roi-block div.par.parsys div.text.parbase.section div.pivot p';
+  const link = document.querySelectorAll(lCss);
+  if (link) {
+  doc.link = [];
+    link.forEach((el) => {
+      console.log(el);
+      doc.link.push('', el.innerHTML, '');
+    });
+  }
+  cells.push(doc.cells);
+  cells.push(doc.link);
+  console.log(cells);
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+  return table;
+};
+
 const createCTABanner = (document) => {
   const doc = {};
   const cells = [
@@ -275,7 +312,6 @@ const createCardLink = (document) => {
   if (el){
     return el;
   }
-
 };
 // create cards
 const createCards = (document) => {
@@ -364,7 +400,10 @@ export default {
 
     const bbCols = createbbColumns(document);
     if (bbCols) section.append(bbCols);
-    
+
+    const roi = createROIColumns(document);
+    if (roi) section.append(roi);
+
     section.append(sectionBreak);
 
     const cardHeader = createCardHeader(document);
