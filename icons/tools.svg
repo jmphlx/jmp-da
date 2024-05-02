@@ -1,0 +1,31 @@
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<svg id="blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75 75" style="width:100px; "
+    role="img">
+    <g>
+        <path
+            d="m47.501,33.819l6.294-6.294.814-.814.002-.002c.753.224,1.551.352,2.377.352,4.596,0,8.321-3.725,8.321-8.321,0-.721-.092-1.42-.264-2.088l-.008-.032-4.29,4.29c-1.516,1.516-3.997,1.516-5.513,0h0c-1.516-1.516-1.516-3.997,0-5.513l4.345-4.345.165-.165-.177-.06c-.813-.265-1.68-.408-2.581-.408-4.596,0-8.321,3.725-8.321,8.321,0,.838.124,1.647.354,2.41l.077.243-.718.718-6.212,6.212"
+            style="width:100px; fill: none; stroke: #231f20; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"></path>
+        <path
+            d="m28.833,41.659l-6.183,6.183-.718.718-.243-.077c-.763-.23-1.572-.354-2.41-.354-4.596,0-8.321,3.725-8.321,8.321,0,.901.143,1.768.408,2.581l.06.177.165-.165,4.345-4.345c1.516-1.516,3.997-1.516,5.513,0h0c1.516,1.516,1.516,3.997,0,5.513l-4.29,4.29.032.008c.667.172,1.367.264,2.088.264,4.596,0,8.321-3.725,8.321-8.321,0-.826-.127-1.624-.352-2.377l.002-.002.814-.814,6.247-6.247"
+            style="width:100px; fill: none; stroke: #231f20; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"></path>
+    </g>
+    <g>
+        <path
+            d="m41.881,46.989l6.011,6.011c-.269.84-.418,1.734-.418,2.664,0,4.821,3.908,8.729,8.729,8.729s8.729-3.908,8.729-8.729-3.908-8.729-8.729-8.729c-.952,0-1.867.158-2.725.44l-5.986-5.986"
+            style="width:100px; fill: none; stroke: #231f20; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"></path>
+        <path
+            d="m34.311,28.208l-6.625-6.625c.674-2.051.638-4.422-.564-6.872-.877-1.788-2.418-3.201-4.276-3.919-7.444-2.878-14.413,4.109-11.501,11.554.757,1.935,2.273,3.515,4.166,4.372,2.318,1.049,4.582,1.081,6.549.451l6.65,6.649"
+            style="width:100px; fill: none; stroke: #231f20; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"></path>
+        <circle cx="19.397" cy="18.858" r="4.364"
+            style="width:100px; fill: none; stroke: #231f20; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"></circle>
+        <circle cx="56.202" cy="55.663" r="4.364"
+            style="width:100px; fill: none; stroke: #231f20; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"></circle>
+    </g>
+    <path
+        d="m38.105,44.536c-3.827,0-6.942-3.114-6.942-6.942s3.114-6.942,6.942-6.942,6.942,3.114,6.942,6.942-3.114,6.942-6.942,6.942Z"
+        style="width:100px; fill: none; stroke: #2677bd; stroke-miterlimit: 10; stroke-width: 2px;"></path>
+    <path
+        d="m38.105,41.66c-2.241,0-4.065-1.823-4.065-4.065s1.824-4.065,4.065-4.065,4.065,1.823,4.065,4.065-1.824,4.065-4.065,4.065Z"
+        style="width:100px; fill: #2677bd; stroke-width: 0px;"></path>
+    <title>Connecting the right combination of tools</title>
+</svg>
