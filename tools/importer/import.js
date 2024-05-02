@@ -316,7 +316,7 @@ const createCards = (document) => {
       if (nvTitle) contentString += '<p>' + doc.nvTitle + '</p>';
       if (title) contentString += '<p class=="title">' + doc.title + '</p>';
       if (abstract) contentString += '<p class="is-visible.abstract">' + doc.abstract + '</p>';
-      if (link) contentString += link;     
+      //if (link) contentString += link;     
       //lets build our cell entries
       cells.push([img, contentString]);
     });
