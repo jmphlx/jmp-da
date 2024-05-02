@@ -259,5 +259,12 @@ a.button:hover {
     border: 1px solid rgba(0, 0, 0, .0);
     min-width: 200px;
   }	
-  
+}
+
+.sasfont  {
+  a::before {
+    color: #eea879;
+    font-family: 'sasicons-103018' !important;
+    content: '';
+  }
 }
