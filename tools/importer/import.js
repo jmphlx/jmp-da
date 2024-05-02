@@ -1,97 +1,168 @@
-const createMetadataBlock = (main, document) => {
+/* eslint-disable no-console */
+/* eslint-disable */
+const createMetadataBlock = (document) => {
 
   const meta = {};
 
-  // find the <title> element
+  //find the <title> element
   const title = document.querySelector('title');
   if (title) {
     meta.Title = title.innerHTML.replace(/[\n\t]/gm, '');
   }
 
-  // find the <meta property="og:description"> element
+  //find the <meta property="og:description"> element
   const desc = document.querySelector('[property="og:description"]');
   if (desc) {
     meta.Description = desc.content;
   }
 
-  // find the <meta property="og:image"> element
+  //find the <meta property="og:type"> element
+  const type = document.querySelector('[property="og:type"]');
+  if (type) meta.Type = type.content;
+  
+  //find the <meta property="og:url"> element
+  const url = document.querySelector('[property="og:url"]');
+  if (url) meta.Url = url.content;
+
+  //find the <meta property="og:image"> element
   const img = document.querySelector('[property="og:image"]');
-  if (img) {
-    // create an <img> element
+  if (img && img.content) {
     const el = document.createElement('img');
     el.src = img.content;
     meta.Image = el;
   }
 
-  // helper to create the metadata block
-  const metaBlock = WebImporter.Blocks.getMetadataBlock(document, meta);
-  // append the block to the main element
-  main.append(metaBlock);
+  //find the <meta property="date"> element
+  const date = document.querySelector('[property="date"]');
+  if (date) meta.Date = date.content;
+  
+  //find the <meta property="date"> element
+  const tCard = document.querySelector('[name="twitter:card"]');
+  if (tCard) meta['twitter:card'] = tCard.content;
 
-  // returning the meta object might be usefull to other rules
+  //find the <meta property="date"> element
+  const tSite = document.querySelector('[name="twitter:site"]');
+  if (tCard) meta['twitter:site'] = tSite.content;  
+
+  //helper to create the metadata block
+  const metaBlock = WebImporter.Blocks.getMetadataBlock(document, meta);
+  //returning the meta object might be usefull to other rules
   return metaBlock;
 };
 
-
-const createHero = (main, document) => {
+const createHero = (document) => {
   const doc = {};
- 
-  // get hero image src
-  const heroImg = 'div.container.transom.branding-jmp div.bg.bg-op-full.bg-pos-full img.cq-dd-image';
-  const img = document.querySelector(heroImg);
-  if (img) {
-    const el = document.createElement('img');
-    el.src = img.src;
-    doc.img = WebImporter.DOMUtils.encodeImagesForTable(el);
+  //grab hero image
+  var heroImgCss = 'div.container.transom.branding-jmp div.bg.bg-op-full.bg-pos-full img';
+  var heroImg = document.querySelector(heroImgCss);
+  if (heroImg){
+    const img = document.createElement('img');
+    if (heroImg.alt)
+    img.src = heroImg.src;
+    if (heroImg.alt){
+      img.alt = heroImg.alt;
+    }
+    if (heroImg.title){
+      img.title = heroImg.title;
+    } else {
+      img.title = heroImg.alt;
+    }
+    doc.heroContents = img.outerHTML + '\n';
   }
+ 
   //create heroText
   var heroCss = 'div.container.transom.branding-jmp div.par.parsys div.text.parbase.section div';
-  const heroText = document.querySelector(heroCss).innerHTML.replace(/[\n\t]/gm, '');;
+  const heroText = document.querySelector(heroCss);
   //create heroContents
   if (heroText) {
-      doc.heroContents = heroText + '\n';
+      doc.heroContents += heroText.innerHTML.replace(/[\n\t]/gm, '') + '\n';
   }
+
+  //get any subtext since the hero css isn't just for a text based hero image.
+  var heroTextCss = 'div.container.transom.branding-jmp.feathered-overlay div.par.parsys div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section div p span.text-large';
+  const heroSubText = document.querySelector(heroTextCss);
+  if (heroSubText){
+   doc.heroContents += heroSubText.innerHTML.replace(/[\n\t]/gm, '') + '\n'; 
+  }
+
+  //parse any buttons that may be there.
+  var heroBtnCss = 'div.container.transom.branding-jmp.feathered-overlay div.par.parsys div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section div.dark-button ul.list-none li span.button';
+  const heroBtns = document.querySelectorAll(heroBtnCss);
+  if (heroBtns){
+      doc.heroContents += '\n';
+      heroBtns.forEach((btn) => {
+        //console.log(btn.innerHTML);
+       doc.heroContents += btn.innerHTML;
+      });
+  }
+
   const cells = [
-    ['Hero'],
+    ['Hero (block)'],
     [doc.heroContents],
   ];
 
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  main.append(table);
+   return WebImporter.DOMUtils.createTable(cells, document);
+  // add our top level css to the fired array for element removal later
+  //removeEls.push('div.container.transom.branding-jmp.feathered-overlay');
 };
 
-const createCTABanner = (main, document) => {
+//get any full width 'hero' with only text likes
+const createTextHero = (document) => {
   const doc = {};
- 
-  // get hero image src
-  const heroImg = 'div.container.transom.branding-jmp div.bg.bg-op-full.bg-pos-full img.cq-dd-image';
-  const img = document.querySelector(heroImg);
-  if (img) {
-    const el = document.createElement('img');
-    el.src = img.src;
-    doc.img = WebImporter.DOMUtils.encodeImagesForTable(el);
+  const tHeroCss = 'div.styledcontainer.parbase div.container.segment.first div.par.parsys div.text.parbase.section div h2';
+  const tHeros = document.querySelectorAll(tHeroCss);
+  if (tHeros) {
+    tHeros.forEach((el) => {
+      
+      doc.tHeroTxt = el;
+      if (doc.tHeroTxt){
+        const cells = [
+          ['Hero (textonly)'],
+          [doc.tHeroTxt],
+        ];
+        const table = WebImporter.DOMUtils.createTable(cells, document);
+        return table;
+    }
+    });
+    //removeEls.push('div.styledcontainer.parbase div.container.segment.first div.par.parsys div.text.parbase.section div h2');
   }
-  //create heroText
-  var heroCss = 'div.container.transom.branding-jmp div.par.parsys div.text.parbase.section div';
-  const heroText = document.querySelector(heroCss).innerHTML.replace(/[\n\t]/gm, '');;
-  //create heroContents
-  if (heroText) {
-      doc.heroContents = heroText + '\n';
-  }
-  const cells = [
-    ['Hero'],
-    [doc.heroContents],
-  ];
-
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  main.append(table);
 };
+
+const createCTABanner = (document) => {
+  const doc = {};
+  const cells = [
+    ['Hero (cta)'],
+  ];
+  // grab the background image
+  const imgCss = 'div.container.transom.branding-jmp div.bg.bg-op-full.bg-pos-full div.cmp-image.cq-dd-image img';
+  const img = document.querySelector(imgCss);
+  if (img) {
+    doc.heroContents = img.outerHTML;
+  }  
+  //check for  as that's in the cta banners
+  const heroH3Css = 'div.dark-button-center h3';
+  const heroH3 = document.querySelector(heroH3Css);
+  if (heroH3) {
+    doc.heroContents += heroH3.outerHTML;
+  }
+  //now let's deal with buttons:
+  var heroBtnCss = '.dark-button-center span.button a';
+  const heroBtns = document.querySelectorAll(heroBtnCss);
+  if (heroBtns){
+      heroBtns.forEach((btn) => {
+        doc.heroContents += btn.outerHTML + '\n';
+      });
+  }
+  cells.push([doc.heroContents]);
+  return WebImporter.DOMUtils.createTable(cells, document);
+};
+
 // createQuote
-const createQuote = (main, document) => {
+const createQuote = (document) => {
   const doc = {};
 
   // get quote text
-  const bqTextCSS = '.narrow blockquote'
+  const bqTextCSS = '.narrow blockquote';
   const bqText = document.querySelector(bqTextCSS);
   if (bqText) {
     doc.bqText = bqText.innerHTML;
@@ -103,118 +174,218 @@ const createQuote = (main, document) => {
   if (attribution) {
     doc.attribution = attribution.innerHTML;
   }
+  if (attribution && bqText){
+    const cells = [
+      ['Quote'],
+      [doc.bqText],
+      // ['Column1', 'Column2', 'column3']
+      [doc.attribution],
+    ];
 
-  const cells = [
-    ['Quote'],
-    [doc.bqText],
-    [doc.attribution],
-  ];
-
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  main.append(table);
+    return WebImporter.DOMUtils.createTable(cells, document);
+  }
 };
 
 // createColumns
-const createColumns = (main, document) => {
+const createColumns = (document) => {
   const doc = {};
-  // get quote text
-  const headerCSS = 'div.styledcontainer.parbase div.container.segment.first div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0 h3';
-  const headerTxt = document.querySelector(headerCSS);
-  if (headerTxt) {
-    doc.headerTxt = headerTxt.innerHTML;
-  }
-
-  //create desc
-  const descCSS = 'div.styledcontainer.parbase div.container.segment.first div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0 div.text.parbase.section div ul';
-  const desc = document.querySelector(descCSS);
-  if (desc) {
-    doc.desc = desc.innerHTML;
-  }
-
-  //grab the image placeholder for modal
-  const imgCSS = 'div.styledcontainer.parbase div.container.segment.first div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c1 div.lightbox.section div.video a.text-bottom div.image div span.cmp-image img.cmp-image__image';
-  const img = document.querySelector(imgCSS);
-  //combine the two
-  if (img){
-    doc.img = img;
-  }
-  doc.txt = doc.headerTxt + doc.desc;
+  doc.contents = [];
   const cells = [
     ['Columns'],
-    [ doc.txt, doc.img ],
-    
-  ];
+ ];
+  // get text
+  const cHeadCss = 'div#page-content.par div#par div.par.parsys div.styledcontainer.parbase div.container div.par.parsys div.text.parbase.section div h2:not(:has(sup))';
+  const cHead = document.querySelectorAll(cHeadCss);  
+  if (cHead) { // we have some content, process each
+    if (cHead.length == 1){
+      console.log(cHead[0]);
+      cells.push([cHead[0]]);
+    }
+  }
+  //get left hand side txt
+  const lTxtCss = 'div.styledcontainer.parbase div.container div.par.parsys div.parsys_column.cq-colctrl-lt0.list-container div.parsys_column.cq-colctrl-lt0-c0 div.text.parbase.section div';
+  const lTxt = document.querySelectorAll(lTxtCss);
+  if (lTxt) {
+      lTxt.forEach((el)=> {
+        doc.contents.push(el.innerHTML.replace(/[\n\t]/gm, ''));
+      });
+  }
+  const rTxtCss = 'div.styledcontainer.parbase div.container div.par.parsys div.parsys_column.cq-colctrl-lt0.list-container div.parsys_column.cq-colctrl-lt0-c1 div.text.parbase.section div';
+  const rTxt = document.querySelectorAll(rTxtCss);
+  if (rTxt) {
+    rTxt.forEach((el) => {
+      doc.contents.push(el.innerHTML.replace(/[\n\t]/gm, ''));
+    });
+  }
+  if (doc.contents) {
+    cells.push(doc.contents);
+    return WebImporter.DOMUtils.createTable(cells, document);
+  }
+};
 
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  main.append(table);
+//create 'billboard' columns, basically columns with a different CSS Class
+const createbbColumns = (document) => {
+  const cells = [
+    ['Columns (billboard)'],
+ ];
+  // get text
+  const bbHeadCss = 'div.container.software.billboard.billboard-video.sub-hero div.par.parsys div.parsys_column.cq-colctrl-lt8';
+  var bbHead = document.querySelectorAll(bbHeadCss);
+  if (bbHead) { // we have some content, process each 
+    //for some reason we end up with one undefined entry at the end.
+    if (bbHead.length > 0){
+      var count = 0;
+      bbHead.forEach((el)=> {
+        const bbText = el.querySelector('.text.parbase.section div');
+        if (typeof bbText !== 'undefined'){
+          const text = bbText.innerHTML;
+          const bbImg = el.querySelector('.cmp-image__image');
+          if (typeof bbImg !== 'undefined'){
+            /* build cells for the block */
+            if (count % 2 === 0){
+              cells.push([text, bbImg]);
+              count++;
+            }else{
+              cells.push([bbImg, text]);
+              count++
+            }
+          }
+        } 
+      });
+      return WebImporter.DOMUtils.createTable(cells, document);
+    }
+  }
+};
+
+const createCardHeader = (document) => {
+  const doc = {};
+  //grab card header 
+  const headCss = 'div.container.tile-3 div.par.parsys div.text.parbase.section div h2';
+  const el = document.querySelector(headCss);
+  if (el){
+   return el;
+  }
+};
+
+const createCardLink = (document) => {
+  const doc = {};
+  //grab card link (after cards) 
+  const headCss = 'div.container.tile-3 div.par.parsys div.text.parbase.section div.sub-capability-cards p a';
+  const el = document.querySelector(headCss);
+  if (el){
+    return el;
+  }
+
 };
 // create cards
-const createCards = (main, document) => {
+const createCards = (document) => {
   const doc = {};
-
-  // get card image
-  const imgCss = 'li.listItem.jmpappareas.jmpappareasdoe.jmpindustry.jmpindustryconservation.jmpappareasquality-reliability-six-sigma.jmpappareasdashboard-building.jmpappareasdataviz-eda.jmpcontent-type.jmpcontent-typecustomer-story.jmpproducts.jmpproductsjmp.jmpindustryenergy-and-utilities.jmptier.jmptierfeatured-resource-tier-1.jmpcapabilities.jmpcapabilitiesautomation-and-scripting.childpageheliatek a span.cmp-image.image img.cmp-image__image';
-  const img = document.querySelector(imgCss);
-  if (img) {
-    doc.img = img;    
-  }
-
-  //create card navTitle
-  const cnTitleCss = 'li.listItem.jmpappareas.jmpappareasdoe.jmpindustry.jmpindustryconservation.jmpappareasquality-reliability-six-sigma.jmpappareasdashboard-building.jmpappareasdataviz-eda.jmpcontent-type.jmpcontent-typecustomer-story.jmpproducts.jmpproductsjmp.jmpindustryenergy-and-utilities.jmptier.jmptierfeatured-resource-tier-1.jmpcapabilities a span.navigation-title';
-  const cnTitle = document.querySelector(cnTitleCss);
-  if (cnTitle) {
-    doc.cnTitle = cnTitle.innerHTML;
-  }
-  
-  //create card title
-  const cTitleCss = 'li.listItem.jmpappareas.jmpappareasdoe.jmpindustry.jmpindustryconservation.jmpappareasquality-reliability-six-sigma.jmpappareasdashboard-building.jmpappareasdataviz-eda.jmpcontent-type.jmpcontent-typecustomer-story.jmpproducts.jmpproductsjmp.jmpindustryenergy-and-utilities.jmptier.jmptierfeatured-resource-tier-1.jmpcapabilities a span.title';
-  const cTitle = document.querySelector(cTitleCss);
-  if (cTitle) {
-    doc.cTitle = cTitle.innerHTML;
-  }
-
-  //create card content
-  const cContnetCss = 'li.listItem.jmpappareas.jmpappareasdataviz-eda.jmpjmp-product-version.jmpjmp-product-versionjmp-16.jmpproducts.jmpproductsjmp.jmpcontent-type.jmpcontent-typearticle.jmpappareasstats-modeling-data-mining.jmptier.jmptierfeatured-resource-tier-1.jmpcapabilities.jmpcapabilitiesautomation-and-scripting a span.is-visible.abstract';
-  const cContent = document.querySelector(cContnetCss);
-  if (cContent) {
-    doc.cContent = cContent.innerHTML;
-  }
-
-  //grab link 
-  const linkCss = 'li.listItem.jmpappareas.jmpappareasdataviz-eda.jmpjmp-product-version.jmpjmp-product-versionjmp-16.jmpproducts.jmpproductsjmp.jmpcontent-type.jmpcontent-typearticle.jmpappareasstats-modeling-data-mining.jmptier.jmptierfeatured-resource-tier-1.jmpcapabilities a';
-  const link = document.querySelector(linkCss);
-  if (link){
-    doc.link = link.href;
-  }
-
-  // combine it together into one object.
-  doc.content = '<a href="' + doc.link + ' target="_self">' + doc.cnTitle + ' ' + doc.cTitle + '\n' + doc.cContent +'</a>\n'
-
+  const header = {};
   const cells = [
-    ['Cards'],
-    [doc.img, doc.content],
-    
+    ['Cards (linked)'],      
   ];
+  //get card heading if any
+  const headCss = 'div.styledcontainer.parbase div.container.tile-3 div.par.parsys div.text.parbase.section div h2';
+  const head = document.querySelector(headCss);
+  //strip the style attribute
+  if (head){
+    header.text = head;
+  }
+  // get card container li's
+  const cardCss = 'ul.listOfItems.image-list.list-tile li.listItem';
+  const li = document.querySelectorAll(cardCss);
+  if (li) {
+    li.forEach((el) => {
+      //start building out each card
+      //grab the link
+      const link = el.querySelector('a');
+      
+      //grab the img
+      const img = el.querySelector('img');
+      
+      //grab the navTitle
+      const nvTitle = el.querySelector('.navigation-title');
+      if (nvTitle) {
+        doc.nvTitle = nvTitle.innerHTML.replace('\n','');
+      }
+      
+      //grab the title
+      const title = el.querySelector('.title');
+      if (title) {
+        doc.title = title.innerHTML.replace('\n','');
+      }
+      //grab the abstract
+      const abstract = el.querySelector('.is-visible.abstract');
+      if (abstract) {
+        doc.abstract = abstract.innerHTML.replace('\n','')
+      }
+      // build our content string
+      var contentString = '';
+      if (nvTitle) contentString += '<p>' + doc.nvTitle + '</p>';
+      if (title) contentString += '<p class=="title">' + doc.title + '</p>';
+      if (abstract) contentString += '<p class="is-visible.abstract">' + doc.abstract + '</p>';
+      //if (link) contentString += link;     
+      //lets build our cell entries
+      cells.push([img, contentString]);
+    });
+  }
 
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  main.append(table);
+    //@TODO need to figure out how to return both.
+    //spit out the heading first
+    doc.headerText = header.text;
+    //now append the cards below heading
+    return WebImporter.DOMUtils.createTable(cells, document);
 };
 
 export default {
   transformDOM: ({ document }) => {
     const main = document.querySelector('main');
+    //create the container div/section
+    const section = document.createElement('div');
+    const sectionBreak = document.createElement('hr');
+
+    const hero = createHero(document);
+    if (hero) section.append(hero);
+    section.append(sectionBreak);
+    /*const heroTest = createHeroTest(document);
+    if (heroTest) section.append(heroTest);*/
+
+    const columns = createColumns(document);
+    if (columns) section.append(columns);
+
+    const textHero = createTextHero(document);
+    if (textHero) section.append(textHero);
+
+    const quote = createQuote( document,);
+    if (quote) section.append(quote);
+
+    /*const ctaBanner = createCTABanner(document);
+    if (ctaBanner) section.append(ctaBanner);*/
+
+    const bbCols = createbbColumns(document);
+    if (bbCols) section.append(bbCols);
     
-    createHero(main, document);
-    createColumns(main, document);
-    createQuote(main, document);
-    createCards(main, document);
-    createMetadataBlock(main, document);
+    section.append(sectionBreak);
 
-    // final cleanup
-    WebImporter.DOMUtils.remove(main, [
-      '.disclaimer',
-    ]);
+    const cardHeader = createCardHeader(document);
+    if (cardHeader) section.append(cardHeader);
 
+    const cards = createCards(document);
+    if (cards) section.append(cards);
+    
+    const cardLink = createCardLink(document);
+    if (cardLink) section.append(cardLink);
+
+    section.append(sectionBreak);
+
+    const ctaBanner = createCTABanner(document);
+    if (ctaBanner) section.append(ctaBanner);
+
+    const meta = createMetadataBlock(document);
+    if (meta) section.append(meta);
+
+    main.innerHTML = '';
+    main.append(section);
     return main;
   },
 };
