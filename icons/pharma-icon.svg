@@ -1,0 +1,51 @@
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<svg id="labels" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75 75" style="width:100px; "
+    role="img">
+    <path d="M32.302,69.739h-15.834c-1.948,0-3.541-1.594-3.541-3.541V16.599" class="transparent"
+        style="width:100px; fill: none; stroke: #333; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 2.271px;"></path>
+    <line x1="52.396" y1="16.599" x2="52.396" y2="48.783" class="transparent"
+        style="width:100px; fill: none; stroke: #333; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2.271px;"></line>
+    <path
+        d="M24.333,16.599h-14.048c-.566,0-1.029-.463-1.029-1.029v-3.818c0-2.427,1.986-4.413,4.413-4.413h37.994c2.427,0,4.413,1.986,4.413,4.413v3.823c0,.564-.461,1.025-1.025,1.025h-26.002"
+        class="transparent"
+        style="width:100px; fill: none; stroke: #333; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 2.271px;"></path>
+    <path
+        d="M14.086,6.956v-2.205c0-1.703,1.393-3.097,3.097-3.097h30.966c1.703,0,3.097,1.393,3.097,3.097v2.208"
+        class="transparent"
+        style="width:100px; fill: none; stroke: #333; stroke-miterlimit: 10; stroke-width: 2.271px;"></path>
+    <g>
+        <line x1="12.927" y1="28.285" x2="19.176" y2="28.285" class="transparent"
+            style="width:100px; fill: none; stroke: #333; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 2.271px;"></line>
+        <line x1="27.605" y1="28.285" x2="41.933" y2="28.285" class="transparent"
+            style="width:100px; fill: none; stroke: #333; stroke-dasharray: 0 0 10.114 8.428; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 2.271px;"></line>
+        <line x1="46.147" y1="28.285" x2="52.396" y2="28.285" class="transparent"
+            style="width:100px; fill: none; stroke: #333; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 2.271px;"></line>
+    </g>
+    <line x1="12.927" y1="62.81" x2="34.664" y2="62.81" class="transparent"
+        style="width:100px; fill: none; stroke: #333; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 2.271px;"></line>
+    <path
+        d="M32.662,33.975c-6.2,0-11.225,5.026-11.225,11.225s5.026,11.225,11.225,11.225,11.225-5.026,11.225-11.225-5.026-11.225-11.225-11.225ZM38.914,47.441h-4.17v4.008c0,1.151-.933,2.083-2.083,2.083s-2.083-.932-2.083-2.083v-4.008h-4.163c-1.15,0-2.083-.932-2.083-2.083s.933-2.083,2.083-2.083h4.163v-4.324c0-1.15.933-2.083,2.083-2.083s2.083.933,2.083,2.083v4.324h4.17c1.15,0,2.083.933,2.083,2.083s-.933,2.083-2.083,2.083Z"
+        class="transparent" style="width:100px; fill: #0076bd; stroke-width: 0px;"></path>
+    <g>
+        <path d="M46.62,61.63c-.429-1.108-.665-2.314-.665-3.574,0-2.356.823-4.519,2.197-6.218"
+            class="transparent"
+            style="width:100px; fill: none; stroke: #333; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 2.271px;"></path>
+        <path
+            d="M48.152,51.838c1.814-2.243,4.588-3.677,7.698-3.677,5.465,0,9.895,4.43,9.895,9.895,0,4.589-3.124,8.449-7.362,9.568"
+            class="transparent"
+            style="width:100px; fill: none; stroke: #333; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 2.271px;"></path>
+        <line x1="60.806" y1="53.1" x2="52.166" y2="61.629" class="transparent"
+            style="width:100px; fill: none; stroke: #333; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 2.271px;"></line>
+    </g>
+    <g>
+        <path
+            d="M45.168,73.372h-6.994c-3.229,0-5.871-2.642-5.871-5.871h0c0-3.229,2.642-5.871,5.871-5.871h6.992s1.157,2.521,1.157,5.815-1.155,5.928-1.155,5.928Z"
+            class="transparent"
+            style="width:100px; fill: none; stroke: #333; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 2.271px;"></path>
+        <path
+            d="M44.737,61.629h7.429c3.229,0,5.871,2.642,5.871,5.871h0c0,3.229-2.642,5.871-5.871,5.871h-7.742"
+            class="transparent"
+            style="width:100px; fill: none; stroke: #333; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 2.271px;"></path>
+    </g>
+    <title>Pharmaceutical</title>
+</svg>

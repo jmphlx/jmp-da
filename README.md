@@ -1,14 +1,14 @@
-# JMP EDS POC
-This is the initial POC instance of JMP Edge Delivery running against Sharepoint with merge workflow.  
+# JMP Edge Delivery Implementation
+This is the migration site for www.jmp.com on Edge Delivery running against Dark Alley.  
 
 ## Environments
-- Preview: https://main--jmpeds--jmphlx.hlx.page/
-- Live: https://main--jmpeds--jmphlx.hlx.live/
+- Preview: https://main--jmp-da--jmphlx.hlx.page/
+- Live: https://main--jmp-da--jmphlx.hlx.live/
 
 ## Installation
 
 ```sh
-npm i
+npm install
 ```
 
 ## Linting
@@ -27,4 +27,4 @@ npm run lint
 
 ## Pull Requests:
 1. Pull requests should be prefixed with `feature-<FEATURE_NAME>` for net new functionality or `bugfix-<BUGNAME>` for bug fixes. EDS Fastly does not support using underscores in branch names for AEM PSI Automated testing.
-1. Always run ```npm run lint``` before opening a pull request. This will ensure any formatting issues are caught before automated PR testing
+1. **Always** run ```npm run lint``` before opening a pull request. This will ensure any formatting issues are caught before automated PR testing
