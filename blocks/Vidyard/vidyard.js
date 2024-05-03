@@ -2,9 +2,10 @@
  * Vidyard Block
  * Show Vidyard videos and social posts directly on your page
  * https://www.hlx.live/developer/block-collection/embed
- * 
- * * 
- * This Block is a work in progress and will host future functionality exclusively for Vidyard videos. Use the embed block until further notice
+ *
+ * *
+ * This Block is a work in progress, it will host future functionality exclusive to Vidyard videos.
+ * Use the embed block until further notice
  */
 
 const loadScript = (url, callback, type) => {
@@ -19,7 +20,9 @@ const loadScript = (url, callback, type) => {
   return script;
 };
 
-const getDefaultEmbed = (url) => `<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
+const getDefaultEmbed = (
+  url,
+) => `<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
     <iframe src="${url.href}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" allowfullscreen=""
       scrolling="no" allow="encrypted-media" title="Content from ${url.hostname}" loading="lazy">
     </iframe>
@@ -60,25 +63,24 @@ const embedTwitter = (url) => {
 
 // vidyard videos
 const embedVidyard = (url) => {
-  const video = url.pathname.split('/').pop();//breaks out UUID of vidyard URL
-  var script = document.createElement('script');//creates and appends vidyard player script to header
+  const video = url.pathname.split('/').pop(); // breaks out UUID of vidyard URL
+  const script = document.createElement('script'); // creates and appends vidyard player script to header
   script.type = 'text/javascript';
-  script.src = 'https://play.vidyard.com/embed/v4.js';    
+  script.src = 'https://play.vidyard.com/embed/v4.js';
   document.head.appendChild(script);
 
-  window.onVidyardAPI = (vidyardEmbed) => { //staging area for API calls
-    vidyardEmbed.api.addReadyListener((_, player) => {
-      console.log('player ready:', player.ready());
-      console.log(player.uuid);
-      //place code below here
-      var players = VidyardV4.api.getPlayersByUUID(video); 
-      players[0].enableCaption('Japanese', 'jp');
-      // players[0].play();  
-  }, video)
-}
+  // window.onVidyardAPI = (vidyardEmbed) => {
+  //   // staging area for API calls
+  //   vidyardEmbed.api.addReadyListener((_, player) => {
+  //     // place code below here
+  //     const players = VidyardV4.api.getPlayersByUUID(video);
+  //     players[0].enableCaption('Japanese', 'jp');
+  //     // players[0].play();
+  //   }, video);
+  // };
 
-//HTML code for placing the vidyard player on the page. Note that this code only places a preview 
-//thumbnail on the page that the above script replaces on loading
+  // HTML code for placing the vidyard player on the page. Note that this code only places a preview
+  // thumbnail on the page that the above script replaces on loading
   const embedHTML = `<div>
       <img class="vidyard-player-embed"
       src="https://play.vidyard.com/${video}.jpg"

@@ -3,7 +3,6 @@
  * Show videos and social posts directly on your page
  * https://www.hlx.live/developer/block-collection/embed
  */
-
 const loadScript = (url, callback, type) => {
   const head = document.querySelector('head');
   const script = document.createElement('script');
@@ -16,7 +15,9 @@ const loadScript = (url, callback, type) => {
   return script;
 };
 
-const getDefaultEmbed = (url) => `<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
+const getDefaultEmbed = (
+  url,
+) => `<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
     <iframe src="${url.href}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" allowfullscreen=""
       scrolling="no" allow="encrypted-media" title="Content from ${url.hostname}" loading="lazy">
     </iframe>
@@ -57,13 +58,13 @@ const embedTwitter = (url) => {
 
 // vidyard videos
 const embedVidyard = (url) => {
-  const video = url.pathname.split('/').pop(); //breaks out UUID of vidyard URL
-  var script = document.createElement('script'); //creates and appends vidyard player script to header
+  const video = url.pathname.split('/').pop(); // breaks out UUID of vidyard URL
+  const script = document.createElement('script'); // creates and appends vidyard player script to header
   script.type = 'text/javascript';
-  script.src = 'https://play.vidyard.com/embed/v4.js';    
+  script.src = 'https://play.vidyard.com/embed/v4.js';
   document.head.appendChild(script);
-//HTML code for placing the vidyard player on the page. Note that this code only places a preview 
-//thumbnail on the page that the above script replaces on loading
+  // HTML code for placing the vidyard player on the page. Note that this code only places a preview
+  // thumbnail on the page that the above script replaces on loading
   const embedHTML = `<div> 
       <img class="vidyard-player-embed"
       src="https://play.vidyard.com/${video}.jpg"
