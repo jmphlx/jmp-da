@@ -8,6 +8,7 @@ main .hero-container > div {
   
 main .hero-container {
   padding: 0;
+  text-align: center;
 }
 
 .hero {
@@ -39,9 +40,15 @@ main .hero-container {
   z-index: 0;
 }
 
+.button-group {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .jmp-branding {
   background: linear-gradient(45deg, #007dc3 15%, #643695 95%);
-  opacity: 1;
+  opacity: .8;
+  color: white;
 
   h2 {
     color: white;
