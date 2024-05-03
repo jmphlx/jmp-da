@@ -140,11 +140,21 @@ const createROIColumns = (document) => {
     rCol.forEach((el) => {
       doc.col = el;
       if (doc.col){
+        //if it contains a break, we need to replace it.
         const hasBr = doc.col.querySelector('br');
-        if (hasBr) doc.col.querySelector('br').remove();
+        if (hasBr) {
+          const br = doc.col.querySelector('h3').innerHTML.split('<br>');
+          const h3 = document.createElement('h3');
+          br.forEach((el) => {
+            const p = document.createElement('p');
+            p.innerHTML = el;
+            h3.append(p);
+          });
+          doc.col.querySelector('h3').replaceWith(h3);
+          console.log(doc.col);
+        }
         doc.cells.push(doc.col);
-        console.log(doc.cells);
-    }
+      }
     });
     
   }
@@ -154,7 +164,6 @@ const createROIColumns = (document) => {
   if (link) {
   doc.link = [];
     link.forEach((el) => {
-      console.log(el);
       doc.link.push('', el.innerHTML, '');
     });
   }
@@ -190,6 +199,7 @@ const createCTABanner = (document) => {
         doc.heroContents += btn.outerHTML + '\n';
       });
   }
+  
   cells.push([doc.heroContents]);
   return WebImporter.DOMUtils.createTable(cells, document);
 };
