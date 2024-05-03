@@ -140,10 +140,18 @@ const createROIColumns = (document) => {
     rCol.forEach((el) => {
       doc.col = el;
       if (doc.col){
+        console.log(doc.col);
         const hasBr = doc.col.querySelector('br');
-        if (hasBr) doc.col.querySelector('br').remove();
+        const p = document.createElement('p');
+        if (hasBr) {
+          const content = hasBr.split('<br>');
+          console.log(content);
+        }
+        
+        //if (hasBr) doc.col.querySelector('br').replaceWith(p);
+        //console.log(doc.col);
         doc.cells.push(doc.col);
-        console.log(doc.cells);
+        
     }
     });
     
