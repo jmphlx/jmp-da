@@ -56,28 +56,15 @@ const embedTwitter = (url) => {
 };
 
 // vidyard videos
-const embedVidyard = (url, autoplay) => {
-  const video = url.pathname.split('/').pop();
-  const suffix = autoplay ? '?muted=1&autoplay=1' : '';
-  var script = document.createElement('script');
+const embedVidyard = (url) => {
+  const video = url.pathname.split('/').pop(); //breaks out UUID of vidyard URL
+  var script = document.createElement('script'); //creates and appends vidyard player script to header
   script.type = 'text/javascript';
   script.src = 'https://play.vidyard.com/embed/v4.js';    
   document.head.appendChild(script);
-
-  window.onVidyardAPI = (vidyardEmbed) => {
-    vidyardEmbed.api.addReadyListener((_, player) => {
-      console.log('player ready:', player.ready());
-      console.log(player.uuid);
-      console.log(suffix)
-      var players = VidyardV4.api.getPlayersByUUID(video); 
-      players[0].enableCaption()
-      // players[0].play();  
-      players[0].toggleFullscreen();
-
-  }, video)
-}
-
-  const embedHTML = `<div>
+//HTML code for placing the vidyard player on the page. Note that this code only places a preview 
+//thumbnail on the page that the above script replaces on loading
+  const embedHTML = `<div> 
       <img class="vidyard-player-embed"
       src="https://play.vidyard.com/${video}.jpg"
       data-uuid="${video}"
