@@ -140,19 +140,21 @@ const createROIColumns = (document) => {
     rCol.forEach((el) => {
       doc.col = el;
       if (doc.col){
-        console.log(doc.col);
+        //if it contains a break, we need to replace it.
         const hasBr = doc.col.querySelector('br');
-        const p = document.createElement('p');
         if (hasBr) {
-          const content = hasBr.split('<br>');
-          console.log(content);
+          const br = doc.col.querySelector('h3').innerHTML.split('<br>');
+          const h3 = document.createElement('h3');
+          br.forEach((el) => {
+            const p = document.createElement('p');
+            p.innerHTML = el;
+            h3.append(p);
+          });
+          doc.col.querySelector('h3').replaceWith(h3);
+          console.log(doc.col);
         }
-        
-        //if (hasBr) doc.col.querySelector('br').replaceWith(p);
-        //console.log(doc.col);
         doc.cells.push(doc.col);
-        
-    }
+      }
     });
     
   }
@@ -162,7 +164,6 @@ const createROIColumns = (document) => {
   if (link) {
   doc.link = [];
     link.forEach((el) => {
-      console.log(el);
       doc.link.push('', el.innerHTML, '');
     });
   }
