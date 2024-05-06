@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable */
 const createMetadataBlock = (document) => {
 
@@ -53,8 +52,8 @@ const createMetadataBlock = (document) => {
 const createHero = (document) => {
   const doc = {};
   //grab hero image
-  var heroImgCss = 'div.container.transom.branding-jmp div.bg.bg-op-full.bg-pos-full img';
-  var heroImg = document.querySelector(heroImgCss);
+  const heroImgCss = 'div.container.transom.branding-jmp div.bg.bg-op-full.bg-pos-full img';
+  const heroImg = document.querySelector(heroImgCss);
   if (heroImg){
     const img = document.createElement('img');
     if (heroImg.alt)
@@ -71,7 +70,7 @@ const createHero = (document) => {
   }
  
   //create heroText
-  var heroCss = 'div.container.transom.branding-jmp div.par.parsys div.text.parbase.section div';
+  const heroCss = 'div.container.transom.branding-jmp div.par.parsys div.text.parbase.section div';
   const heroText = document.querySelector(heroCss);
   //create heroContents
   if (heroText) {
@@ -79,31 +78,46 @@ const createHero = (document) => {
   }
 
   //get any subtext since the hero css isn't just for a text based hero image.
-  var heroTextCss = 'div.container.transom.branding-jmp.feathered-overlay div.par.parsys div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section div p span.text-large';
+  //const heroTextCss = 'div.container.transom.branding-jmp.feathered-overlay div.par.parsys div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section div p span.text-large';
+  const heroTextCss = 'div.container.transom.branding-jmp.feathered-overlay div.par.parsys div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section div p span.text-large, div.container.transom.branding-jmp div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0 div.text.parbase.section div h3';
   const heroSubText = document.querySelector(heroTextCss);
   if (heroSubText){
+    
    doc.heroContents += heroSubText.innerHTML.replace(/[\n\t]/gm, '') + '\n'; 
   }
 
   //parse any buttons that may be there.
-  var heroBtnCss = 'div.container.transom.branding-jmp.feathered-overlay div.par.parsys div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section div.dark-button ul.list-none li span.button';
+  //const heroBtnCss = 'div.container.transom.branding-jmp.feathered-overlay div.par.parsys div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section ul.list-none li span.button';
+  const heroBtnCss = 'div.container.transom.branding-jmp div.par.parsys div.parsys_column div.parsys_column div.text.parbase.section ul.list-none li span.button, div.container.transom.branding-jmp.feathered-overlay div.par.parsys div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section ul.list-none li span.button';
   const heroBtns = document.querySelectorAll(heroBtnCss);
   if (heroBtns){
       doc.heroContents += '\n';
       heroBtns.forEach((btn) => {
-        //console.log(btn.innerHTML);
-       doc.heroContents += btn.innerHTML;
+      doc.heroContents += btn.innerHTML;
       });
   }
-
+  //sometimes there is a image link and link in hero's. Let's deal with them now
+  const subImgCss = 'div.container.transom.branding-jmp div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c1 div.image.parbase.section div a';
+  const subImg = document.querySelector(subImgCss);
+  if (subImg){
+    console.log(subImg);
+    const el = document.createElement('p');
+    el.append(subImg);
+    console.log(el);
+    doc.heroContents += el.outerHTML;
+  }
+  //now lets deal with the link itself. 
+  const linkCss = 'div.container.transom.branding-jmp div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c1 div.text.parbase.section div.sub-capability-cards.link-white';
+  const link = document.querySelector(linkCss);
+  console.log(link);
+  if (link) doc.heroContents += link.innerHTML;
+ // console.log(doc.heroContents);
   const cells = [
     ['Hero (block)'],
     [doc.heroContents],
   ];
-
-   return WebImporter.DOMUtils.createTable(cells, document);
-  // add our top level css to the fired array for element removal later
-  //removeEls.push('div.container.transom.branding-jmp.feathered-overlay');
+  
+  return WebImporter.DOMUtils.createTable(cells, document);
 };
 
 //get any full width 'hero' with only text likes
@@ -136,7 +150,7 @@ const createROIColumns = (document) => {
   ]
   const roiColCss = 'div.container.brand-neutral-dark.roi-block div.par.parsys div.text.parbase.section div.roi-grid div';
   const rCol = document.querySelectorAll(roiColCss);
-  if (rCol) {
+  if (rCol.length > 0) {
     rCol.forEach((el) => {
       doc.col = el;
       if (doc.col){
@@ -151,27 +165,24 @@ const createROIColumns = (document) => {
             h3.append(p);
           });
           doc.col.querySelector('h3').replaceWith(h3);
-          console.log(doc.col);
-        }
+          
+        }        
         doc.cells.push(doc.col);
       }
     });
-    
+    cells.push(doc.cells);  
   }
   //grab the link
   const lCss = 'div.container.brand-neutral-dark.roi-block div.par.parsys div.text.parbase.section div.pivot p';
   const link = document.querySelectorAll(lCss);
-  if (link) {
   doc.link = [];
+  if (link.length > 0) {
     link.forEach((el) => {
       doc.link.push('', el.innerHTML, '');
     });
+    cells.push(doc.link);
   }
-  cells.push(doc.cells);
-  cells.push(doc.link);
-  console.log(cells);
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  return table;
+  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
 const createCTABanner = (document) => {
@@ -191,6 +202,12 @@ const createCTABanner = (document) => {
   if (heroH3) {
     doc.heroContents += heroH3.outerHTML;
   }
+  //check for h2 as that could be in the cta banners
+  const heroH2Css = 'div.dark-button-center h2';
+  const heroH2 = document.querySelector(heroH2Css);
+  if (heroH2) {
+    doc.heroContents += heroH2.outerHTML;
+  }
   //now let's deal with buttons:
   var heroBtnCss = '.dark-button-center span.button a';
   const heroBtns = document.querySelectorAll(heroBtnCss);
@@ -200,7 +217,7 @@ const createCTABanner = (document) => {
       });
   }
   
-  cells.push([doc.heroContents]);
+  if (doc.heroContents); cells.push([doc.heroContents]);
   return WebImporter.DOMUtils.createTable(cells, document);
 };
 
@@ -245,26 +262,25 @@ const createColumns = (document) => {
   const cHead = document.querySelectorAll(cHeadCss);  
   if (cHead) { // we have some content, process each
     if (cHead.length == 1){
-      console.log(cHead[0]);
       cells.push([cHead[0]]);
     }
   }
   //get left hand side txt
   const lTxtCss = 'div.styledcontainer.parbase div.container div.par.parsys div.parsys_column.cq-colctrl-lt0.list-container div.parsys_column.cq-colctrl-lt0-c0 div.text.parbase.section div';
   const lTxt = document.querySelectorAll(lTxtCss);
-  if (lTxt) {
+  if (lTxt.length > 0) {
       lTxt.forEach((el)=> {
         doc.contents.push(el.innerHTML.replace(/[\n\t]/gm, ''));
       });
   }
   const rTxtCss = 'div.styledcontainer.parbase div.container div.par.parsys div.parsys_column.cq-colctrl-lt0.list-container div.parsys_column.cq-colctrl-lt0-c1 div.text.parbase.section div';
   const rTxt = document.querySelectorAll(rTxtCss);
-  if (rTxt) {
+  if (rTxt.length > 0) {
     rTxt.forEach((el) => {
       doc.contents.push(el.innerHTML.replace(/[\n\t]/gm, ''));
     });
   }
-  if (doc.contents) {
+  if (doc.contents.length > 0) {
     cells.push(doc.contents);
     return WebImporter.DOMUtils.createTable(cells, document);
   }
