@@ -78,16 +78,13 @@ const createHero = (document) => {
   }
 
   //get any subtext since the hero css isn't just for a text based hero image.
-  //const heroTextCss = 'div.container.transom.branding-jmp.feathered-overlay div.par.parsys div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section div p span.text-large';
-  const heroTextCss = 'div.container.transom.branding-jmp.feathered-overlay div.par.parsys div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section div p span.text-large, div.container.transom.branding-jmp div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0 div.text.parbase.section div h3';
+  const heroTextCss = 'div.container.transom.branding-jmp.feathered-overlay div.par.parsys div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section div p span.text-large, div.container.transom.branding-jmp div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0 div.text.parbase.section div h3, div.container.transom.branding-jmp div.par.parsys div.parsys_column.cq-colctrl-lt13 div.parsys_column.cq-colctrl-lt13-c0 div.text.parbase.section div.larger-text';
   const heroSubText = document.querySelector(heroTextCss);
   if (heroSubText){
-    
-   doc.heroContents += heroSubText.innerHTML.replace(/[\n\t]/gm, '') + '\n'; 
+    doc.heroContents += heroSubText.innerHTML.replace(/[\n\t]/gm, '') + '\n'; 
   }
 
   //parse any buttons that may be there.
-  //const heroBtnCss = 'div.container.transom.branding-jmp.feathered-overlay div.par.parsys div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section ul.list-none li span.button';
   const heroBtnCss = 'div.container.transom.branding-jmp div.par.parsys div.parsys_column div.parsys_column div.text.parbase.section ul.list-none li span.button, div.container.transom.branding-jmp.feathered-overlay div.par.parsys div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section ul.list-none li span.button';
   const heroBtns = document.querySelectorAll(heroBtnCss);
   if (heroBtns){
@@ -182,7 +179,54 @@ const createROIColumns = (document) => {
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
+
 const createCTABanner = (document) => {
+  const bannerCss = 'div.container.transom.branding-jmp:has(div.dark-button-center)';
+  const banner = document.querySelectorAll(bannerCss);
+  if (banner){
+    banner.forEach((el) => {
+      console.log(el);
+      const cells = [
+        ['Hero (cta)'],
+      ];
+      const doc = {};
+      // grab the background image
+      const imgCss = 'div.cmp-image.cq-dd-image img';
+      const img = el.querySelector(imgCss);
+      if (img) {
+        
+        doc.heroContents = img.outerHTML;
+      }  
+      //check for  as that's in the cta banners
+      const heroH3Css = 'h3';
+      const heroH3 = el.querySelector(heroH3Css);
+      if (heroH3) {
+        
+        doc.heroContents += heroH3.outerHTML;
+      }
+      //check for h2 as that could be in the cta banners
+      const heroH2Css = 'h2';
+      const heroH2 = el.querySelector(heroH2Css);
+      if (heroH2) {
+        
+        doc.heroContents += heroH2.outerHTML;
+      }
+      //now let's deal with buttons:
+      var heroBtnCss = '.dark-button-center span.button a';
+      const heroBtns = el.querySelectorAll(heroBtnCss);
+      if (heroBtns){
+          heroBtns.forEach((btn) => {
+            doc.heroContents += btn.outerHTML + '\n';
+          });
+      }
+      console.log(doc.heroContents);
+      if (doc.heroContents); cells.push([doc.heroContents]);
+      return WebImporter.DOMUtils.createTable(cells, document);
+   });
+  }
+};
+
+/*const createCTABanner = (document) => {
   const doc = {};
   const cells = [
     ['Hero (cta)'],
@@ -210,7 +254,7 @@ const createCTABanner = (document) => {
   
   cells.push([doc.heroContents]);
   return WebImporter.DOMUtils.createTable(cells, document);
-};
+};*/
 
 // createQuote
 const createQuote = (document) => {
