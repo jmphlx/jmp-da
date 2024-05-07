@@ -78,7 +78,7 @@ const createHero = (document) => {
   }
 
   //get any subtext since the hero css isn't just for a text based hero image.
-  const heroTextCss = 'div.container.transom.branding-jmp.feathered-overlay div.par.parsys div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section div p span.text-large, div.container.transom.branding-jmp div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0 div.text.parbase.section div h3, div.container.transom.branding-jmp div.par.parsys div.parsys_column.cq-colctrl-lt13 div.parsys_column.cq-colctrl-lt13-c0 div.text.parbase.section div.larger-text';
+  const heroTextCss = 'div.container.transom.branding-jmp.feathered-overlay div.par.parsys div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section div p span.text-large, div.container.transom.branding-jmp div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0 div.text.parbase.section div h3, div.container.transom.branding-jmp div.par.parsys div.parsys_column.cq-colctrl-lt13 div.parsys_column.cq-colctrl-lt13-c0 div.text.parbase.section div.larger-text, div.container.transom.branding-jmp.feathered-overlay div.par.parsys div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section div p span.text-large, div.container.transom.branding-jmp div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0 div.text.parbase.section div h3, div.container.transom.branding-jmp div.par.parsys div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section div.p-large p span.text-large';
   const heroSubText = document.querySelector(heroTextCss);
   if (heroSubText){
     doc.heroContents += heroSubText.innerHTML.replace(/[\n\t]/gm, '') + '\n'; 
@@ -405,7 +405,6 @@ const createCards = (document) => {
       if (nvTitle) {
         doc.nvTitle = nvTitle.innerHTML.replace('\n','');
       }
-      
       //grab the title
       const title = el.querySelector('.title');
       if (title) {
@@ -421,17 +420,13 @@ const createCards = (document) => {
       if (nvTitle) contentString += '<p>' + doc.nvTitle + '</p>';
       if (title) contentString += '<p class=="title">' + doc.title + '</p>';
       if (abstract) contentString += '<p class="is-visible.abstract">' + doc.abstract + '</p>';
-      //if (link) contentString += link;     
+      if (link) contentString += link;
       //lets build our cell entries
       cells.push([img, contentString]);
     });
-  }
-
-    //@TODO need to figure out how to return both.
-    //spit out the heading first
-    doc.headerText = header.text;
-    //now append the cards below heading
+    console.log(cells);
     return WebImporter.DOMUtils.createTable(cells, document);
+  }
 };
 
 export default {
