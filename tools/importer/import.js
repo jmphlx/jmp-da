@@ -100,16 +100,14 @@ const createHero = (document) => {
   const subImgCss = 'div.container.transom.branding-jmp div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c1 div.image.parbase.section div a';
   const subImg = document.querySelector(subImgCss);
   if (subImg){
-    console.log(subImg);
     const el = document.createElement('p');
     el.append(subImg);
-    console.log(el);
     doc.heroContents += el.outerHTML;
   }
   //now lets deal with the link itself. 
   const linkCss = 'div.container.transom.branding-jmp div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c1 div.text.parbase.section div.sub-capability-cards.link-white';
   const link = document.querySelector(linkCss);
-  console.log(link);
+  //console.log(link);
   if (link) doc.heroContents += link.innerHTML;
  // console.log(doc.heroContents);
   const cells = [
@@ -138,7 +136,6 @@ const createTextHero = (document) => {
         return table;
     }
     });
-    //removeEls.push('div.styledcontainer.parbase div.container.segment.first div.par.parsys div.text.parbase.section div h2');
   }
 };
 
@@ -202,12 +199,6 @@ const createCTABanner = (document) => {
   if (heroH3) {
     doc.heroContents += heroH3.outerHTML;
   }
-  //check for h2 as that could be in the cta banners
-  const heroH2Css = 'div.dark-button-center h2';
-  const heroH2 = document.querySelector(heroH2Css);
-  if (heroH2) {
-    doc.heroContents += heroH2.outerHTML;
-  }
   //now let's deal with buttons:
   var heroBtnCss = '.dark-button-center span.button a';
   const heroBtns = document.querySelectorAll(heroBtnCss);
@@ -217,7 +208,7 @@ const createCTABanner = (document) => {
       });
   }
   
-  if (doc.heroContents); cells.push([doc.heroContents]);
+  cells.push([doc.heroContents]);
   return WebImporter.DOMUtils.createTable(cells, document);
 };
 
