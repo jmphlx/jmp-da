@@ -26,7 +26,6 @@
 
 @media (width >= 900px) {
   .columns > div {
-    align-items: center;
     flex-direction: unset;
     gap: 32px;
   }
@@ -35,4 +34,42 @@
     flex: 1;
     order: unset;
   }
+}
+
+.columns.footer  {
+  color: white;
+  align-content:flex-start;
+
+  p {
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    color: #fff;
+    border-top: 1px solid #777;
+    display: block;
+    padding-top: 1.2em;
+    padding-bottom: 0.8em;
+  }
+
+  a {
+    text-decoration: white;
+    color: #c1c1c1;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0 0 35px;
+    margin: 0;
+  }
+
+  li::before {
+    color: #bbb;
+    font-family: 'sasicons-103018' !important;
+    content: '';
+    font-size: 80%;
+    width: 1em;
+    text-align: center;
+    line-height: 1;
+    margin-right: .3em;
+  }
+
 }
