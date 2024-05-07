@@ -151,7 +151,10 @@ const createROIColumns = (document) => {
         //if it contains a break, we need to replace it.
         const hasBr = doc.col.querySelector('br');
         if (hasBr) {
-          const br = doc.col.querySelector('h3').innerHTML.split('<br>');
+          console.log(doc.col.querySelector('h3'))
+          if (doc.col.querySelector('h3')){
+            const br = doc.col.querySelector('h3').innerHTML.split('<br>');
+          
           const h3 = document.createElement('h3');
           br.forEach((el) => {
             const p = document.createElement('p');
@@ -159,6 +162,7 @@ const createROIColumns = (document) => {
             h3.append(p);
           });
           doc.col.querySelector('h3').replaceWith(h3);
+        }
           
         }        
         doc.cells.push(doc.col);
