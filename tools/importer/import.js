@@ -187,9 +187,11 @@ const createROIColumns = (document) => {
 const createCTABanner = (document) => {
   const bannerCss = 'div.container.transom.branding-jmp:has(div.dark-button-center)';
   const banner = document.querySelectorAll(bannerCss);
+  
   if (banner){
+    var table = [];
     banner.forEach((el) => {
-      console.log(el);
+      //console.log(el);
       const cells = [
         ['Hero (cta)'],
       ];
@@ -198,21 +200,21 @@ const createCTABanner = (document) => {
       const imgCss = 'div.cmp-image.cq-dd-image img';
       const img = el.querySelector(imgCss);
       if (img) {
-        
+        console.log(img);    
         doc.heroContents = img.outerHTML;
       }  
       //check for  as that's in the cta banners
       const heroH3Css = 'h3';
       const heroH3 = el.querySelector(heroH3Css);
       if (heroH3) {
-        
+        console.log(heroH3);
         doc.heroContents += heroH3.outerHTML;
       }
       //check for h2 as that could be in the cta banners
       const heroH2Css = 'h2';
       const heroH2 = el.querySelector(heroH2Css);
       if (heroH2) {
-        
+        console.log(heroH2);
         doc.heroContents += heroH2.outerHTML;
       }
       //now let's deal with buttons:
@@ -225,8 +227,11 @@ const createCTABanner = (document) => {
       }
       console.log(doc.heroContents);
       if (doc.heroContents); cells.push([doc.heroContents]);
-      return WebImporter.DOMUtils.createTable(cells, document);
+      table.push(WebImporter.DOMUtils.createTable(cells, document));
+      
    });
+   console.log(table[1]);
+   return table;
   }
 };
 
@@ -428,8 +433,7 @@ const createCards = (document) => {
       //lets build our cell entries
       cells.push([img, contentString]);
     });
-    console.log(cells);
-    return WebImporter.DOMUtils.createTable(cells, document);
+    if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
   }
 };
 
@@ -478,7 +482,9 @@ export default {
     section.append(sectionBreak);
 
     const ctaBanner = createCTABanner(document);
-    if (ctaBanner) section.append(ctaBanner);
+    if (ctaBanner) {
+      ctaBanner.forEach((el) => { section.append(el); });
+    }  
 
     const meta = createMetadataBlock(document);
     if (meta) section.append(meta);
