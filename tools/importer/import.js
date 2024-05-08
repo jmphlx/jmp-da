@@ -1,28 +1,22 @@
 /* eslint-disable */
 const createMetadataBlock = (document) => {
-
   const meta = {};
-
   //find the <title> element
   const title = document.querySelector('title');
   if (title) {
     meta.Title = title.innerHTML.replace(/[\n\t]/gm, '');
   }
-
   //find the <meta property="og:description"> element
   const desc = document.querySelector('[property="og:description"]');
   if (desc) {
     meta.Description = desc.content;
   }
-
   //find the <meta property="og:type"> element
   const type = document.querySelector('[property="og:type"]');
   if (type) meta.Type = type.content;
-  
   //find the <meta property="og:url"> element
   const url = document.querySelector('[property="og:url"]');
   if (url) meta.Url = url.content;
-
   //find the <meta property="og:image"> element
   const img = document.querySelector('[property="og:image"]');
   if (img && img.content) {
@@ -30,19 +24,15 @@ const createMetadataBlock = (document) => {
     el.src = img.content;
     meta.Image = el;
   }
-
   //find the <meta property="date"> element
   const date = document.querySelector('[property="date"]');
   if (date) meta.Date = date.content;
-  
   //find the <meta property="date"> element
   const tCard = document.querySelector('[name="twitter:card"]');
   if (tCard) meta['twitter:card'] = tCard.content;
-
   //find the <meta property="date"> element
   const tSite = document.querySelector('[name="twitter:site"]');
   if (tCard) meta['twitter:site'] = tSite.content;  
-
   //helper to create the metadata block
   const metaBlock = WebImporter.Blocks.getMetadataBlock(document, meta);
   //returning the meta object might be usefull to other rules
@@ -88,10 +78,12 @@ const createHero = (document) => {
   const heroBtnCss = 'div.container.transom.branding-jmp div.par.parsys div.parsys_column div.parsys_column div.text.parbase.section ul.list-none li span.button, div.container.transom.branding-jmp.feathered-overlay div.par.parsys div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section ul.list-none li span.button';
   const heroBtns = document.querySelectorAll(heroBtnCss);
   if (heroBtns){
-      doc.heroContents += '\n';
-      heroBtns.forEach((btn) => {
-      doc.heroContents += btn.innerHTML;
-      });
+      if (heroBtns.length > 0){
+        doc.heroContents += '\n';
+        heroBtns.forEach((btn) => {
+        doc.heroContents += btn.innerHTML;
+        });
+      }
   }
   //sometimes there is a image link and link in hero's. Let's deal with them now
   const subImgCss = 'div.container.transom.branding-jmp div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c1 div.image.parbase.section div a';
@@ -104,15 +96,12 @@ const createHero = (document) => {
   //now lets deal with the link itself. 
   const linkCss = 'div.container.transom.branding-jmp div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c1 div.text.parbase.section div.sub-capability-cards.link-white';
   const link = document.querySelector(linkCss);
-  //console.log(link);
   if (link) doc.heroContents += link.innerHTML;
- // console.log(doc.heroContents);
   const cells = [
     ['Hero (block)'],
     [doc.heroContents],
   ];
-  
-  return WebImporter.DOMUtils.createTable(cells, document);
+  if (doc.heroContents !== undefined) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
 //get any full width 'hero' with only text likes
@@ -151,7 +140,7 @@ const createROIColumns = (document) => {
         //if it contains a break, we need to replace it.
         const hasBr = doc.col.querySelector('br');
         if (hasBr) {
-          console.log(doc.col.querySelector('h3'))
+          //console.log(doc.col.querySelector('h3'))
           if (doc.col.querySelector('h3')){
             const br = doc.col.querySelector('h3').innerHTML.split('<br>');
           
@@ -183,13 +172,14 @@ const createROIColumns = (document) => {
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
-
 const createCTABanner = (document) => {
   const bannerCss = 'div.container.transom.branding-jmp:has(div.dark-button-center)';
   const banner = document.querySelectorAll(bannerCss);
+  
   if (banner){
+    var table = [];
     banner.forEach((el) => {
-      console.log(el);
+      //console.log(el);
       const cells = [
         ['Hero (cta)'],
       ];
@@ -198,21 +188,21 @@ const createCTABanner = (document) => {
       const imgCss = 'div.cmp-image.cq-dd-image img';
       const img = el.querySelector(imgCss);
       if (img) {
-        
+        //console.log(img);    
         doc.heroContents = img.outerHTML;
       }  
       //check for  as that's in the cta banners
       const heroH3Css = 'h3';
       const heroH3 = el.querySelector(heroH3Css);
       if (heroH3) {
-        
+        //console.log(heroH3);
         doc.heroContents += heroH3.outerHTML;
       }
       //check for h2 as that could be in the cta banners
       const heroH2Css = 'h2';
       const heroH2 = el.querySelector(heroH2Css);
       if (heroH2) {
-        
+       // console.log(heroH2);
         doc.heroContents += heroH2.outerHTML;
       }
       //now let's deal with buttons:
@@ -223,10 +213,13 @@ const createCTABanner = (document) => {
             doc.heroContents += btn.outerHTML + '\n';
           });
       }
-      console.log(doc.heroContents);
+     // console.log(doc.heroContents);
       if (doc.heroContents); cells.push([doc.heroContents]);
-      return WebImporter.DOMUtils.createTable(cells, document);
+      table.push(WebImporter.DOMUtils.createTable(cells, document));
+      
    });
+   //console.log(table[1]);
+   return table;
   }
 };
 
@@ -263,20 +256,22 @@ const createCTABanner = (document) => {
 // createQuote
 const createQuote = (document) => {
   const doc = {};
-
   // get quote text
   const bqTextCSS = '.narrow blockquote';
   const bqText = document.querySelector(bqTextCSS);
   if (bqText) {
+    //if it has a random break, remove it.
     doc.bqText = bqText.innerHTML;
   }
-
+  
   //create attribution
-  const attribCSS = 'div.text.parbase.section div.narrow p';
-  const attribution = document.querySelector(attribCSS);
+  const attCSS = 'div.text.parbase.section div.narrow p :not(span)';
+  const attribution = document.querySelector(attCSS);
+  console.log(attribution);
   if (attribution) {
-    doc.attribution = attribution.innerHTML;
+    doc.attribution = attribution.parentElement.innerHTML;
   }
+  //console.log(doc.attribution);
   if (attribution && bqText){
     const cells = [
       ['Quote'],
@@ -284,7 +279,7 @@ const createQuote = (document) => {
       // ['Column1', 'Column2', 'column3']
       [doc.attribution],
     ];
-
+    
     return WebImporter.DOMUtils.createTable(cells, document);
   }
 };
@@ -428,8 +423,7 @@ const createCards = (document) => {
       //lets build our cell entries
       cells.push([img, contentString]);
     });
-    console.log(cells);
-    return WebImporter.DOMUtils.createTable(cells, document);
+    if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
   }
 };
 
@@ -478,7 +472,9 @@ export default {
     section.append(sectionBreak);
 
     const ctaBanner = createCTABanner(document);
-    if (ctaBanner) section.append(ctaBanner);
+    if (ctaBanner) {
+      ctaBanner.forEach((el) => { section.append(el); });
+    }  
 
     const meta = createMetadataBlock(document);
     if (meta) section.append(meta);
