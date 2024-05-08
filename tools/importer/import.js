@@ -509,9 +509,7 @@ export default {
     const hero = createHero(document);
     if (hero) section.append(hero);
     section.append(sectionBreak);
-    /*const heroTest = createHeroTest(document);
-    if (heroTest) section.append(heroTest);*/
-
+ 
     const columns = createColumns(document);
     if (columns) section.append(columns);
 
