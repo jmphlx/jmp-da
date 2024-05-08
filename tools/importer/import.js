@@ -521,9 +521,6 @@ export default {
     const quote = createQuote( document,);
     if (quote) section.append(quote);
 
-    /*const ctaBanner = createCTABanner(document);
-    if (ctaBanner) section.append(ctaBanner);*/
-
     const bbCols = createbbColumns(document);
     if (bbCols) section.append(bbCols);
 
