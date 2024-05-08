@@ -267,7 +267,7 @@ const createQuote = (document) => {
   //create attribution
   const attCSS = 'div.text.parbase.section div.narrow p :not(span)';
   const attribution = document.querySelector(attCSS);
-  console.log(attribution);
+  //console.log(attribution);
   if (attribution) {
     doc.attribution = attribution.parentElement.innerHTML;
   }
@@ -427,6 +427,78 @@ const createCards = (document) => {
   }
 };
 
+// create accordion
+const createAccordion = (document) => {
+  const doc = {};
+  const cells = [
+    ['Accordion'],      
+  ];
+  console.log("IN createAccordion");
+  //get accordion heading if any
+  const headCss = 'div.container div.par.parsys div.text.parbase.section div h3';
+  const head = document.querySelector(headCss);
+  //strip the style attribute
+  if (head){
+    doc.headerTxt = head;
+  }
+  // get accordion titles
+  const titleCss = 'div.accordionwrapper.parbase div.accordionWrapperParsys.boxed-items div.parsys div.accordion.parbase div.accordion-title';
+  const titles = document.querySelectorAll(titleCss);
+  if (titles) {
+    doc.titles = [];
+    titles.forEach((title) => {
+      //console.log(title.innerHTML);
+      /*title.removeAttribute('id');
+      title.removeAttribute('class');*/
+      doc.titles.push(title.innerHTML);
+      
+    });
+  }
+  const contentCss = 'div.accordionwrapper.parbase div.accordionWrapperParsys.boxed-items div.parsys div.accordion.parbase div.accordion-content';
+  const aContent = document.querySelectorAll(contentCss);
+  if (aContent){
+    doc.contents = [];
+    aContent.forEach((el) => {
+      el.classList.remove();
+      //sanitize attributes
+      /*el.removeAttribute('id');
+      el.removeAttribute('class');*/
+      doc.contents.push(el);
+    });
+  }
+  //lets grab the button if it exists.
+  const btnCss = 'div.container.software div.par.parsys div.btn.parbase a';
+  const btn = document.querySelector(btnCss);
+  if (btn){
+    console.log(btn);
+    //for some reason button contains span. We'll have to remove that?
+    if (btn.querySelector('span')){
+      const linkText = btn.querySelector('span').innerHTML;
+      console.log(linkText);
+      btn.querySelector('span').remove();
+      btn.innerHTML = linkText;
+    }
+    doc.btn = btn;
+  }
+  if (doc.contents.length === doc.titles.length){
+    var count = 0;
+    doc.titles.forEach((title) => {
+      cells.push([title, doc.contents[count]]);
+      count++;
+    });
+    
+    //lets build the block section
+    var block = document.createElement('div');
+    if (doc.headerTxt) block.append(doc.headerTxt);
+    const table =  WebImporter.DOMUtils.createTable(cells, document);
+    //console.log(table.innerHTML);
+    if (table) block.append(table);
+    block.append(doc.btn);
+    //console.log(block);
+    if (cells.length > 1) return block;
+  }
+};
+
 export default {
   transformDOM: ({ document }) => {
     const main = document.querySelector('main');
@@ -468,6 +540,11 @@ export default {
     
     const cardLink = createCardLink(document);
     if (cardLink) section.append(cardLink);
+
+    section.append(sectionBreak);
+
+    const accordion = createAccordion(document);
+    if (accordion) section.append(accordion);
 
     section.append(sectionBreak);
 
