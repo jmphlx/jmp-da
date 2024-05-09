@@ -272,3 +272,9 @@ a.button:hover {
     content: '';
   }
 }
+
+/* Section styles */
+.brand-neutral-dark  {
+  background: linear-gradient(45deg, #242d35 15%, #44545d 95%);
+  color: white;
+}
