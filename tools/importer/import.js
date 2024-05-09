@@ -291,7 +291,6 @@ const createColumns = (document) => {
   const cells = [
     ['Columns'],
  ];
- console.log('inside createColumns');
   // get text
   const cHeadCss = 'div#page-content.par div#par div.par.parsys div.styledcontainer.parbase div.container div.par.parsys div.text.parbase.section div h2:not(:has(sup))';
   const cHead = document.querySelectorAll(cHeadCss);  
@@ -300,31 +299,33 @@ const createColumns = (document) => {
       cells.push([cHead[0]]);
     }
   }
-  //get left hand side txt
-  const lContentCss = 'div.styledcontainer.parbase div.container div.par.parsys div.parsys_column.cq-colctrl-lt0.list-container div.parsys_column.cq-colctrl-lt0-c0 div.text.parbase.section div, div.styledcontainer.parbase div.container div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0';
-  const lContent = document.querySelectorAll(lContentCss);
-  if (lContent.length > 0) {
-    lContent.forEach((el)=> {
-        const imageOrTextCss = '.screenshots-details-lt,img.cmp-image__image';
-        const item = el.querySelector(imageOrTextCss);
-        if (item) doc.lContents.push(item);
-      });
-  }
-  const rContentCss = 'div.styledcontainer.parbase div.container div.par.parsys div.parsys_column.cq-colctrl-lt0.list-container div.parsys_column.cq-colctrl-lt0 div.text.parbase.section div,div.styledcontainer.parbase div.container div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0';
-  const rContent = document.querySelectorAll(rContentCss);
-  if (rContent.length > 0) {
-    rContent.forEach((el) => {
-      console.log(el);
-      const imageOrTextCss = '.screenshots-details-rt,img.cmp-image__image';
-      const item = el.querySelectorAll(imageOrTextCss);
-      console.log(item);
-      //if (item) doc.rContents.push(item);
+  const contentRowCss = 'div.styledcontainer.parbase div.container div.par.parsys div.parsys_column.cq-colctrl-lt0';
+  const contentRow = document.querySelectorAll(contentRowCss);
+  if (contentRow) {
+    contentRow.forEach((row) => {
+      //console.log(row);
+      doc.flipText = false;
+      //console.log(row.classList.contains('text-flip-right'));
+      if (row.classList.contains('text-flip-right')){
+        //might make sense to flip the css around, since due to this class, they're reversed. 
+         doc.flipText = true; 
+      }
+      const rContentCss = '.parsys_column .cq-colctrl-lt0-c0 img.cmp-image__image, .parsys_column .cq-colctrl-lt0-c0 .text';
+      const rightContent = row.querySelector(rContentCss);
+      //if (rightContent.querySelector('.text-flip-right')) console.log('text-flip-right');
+      if (rightContent) console.log(rightContent);
+      
+      //deal with left hand content
+      const lContentCss = '.parsys_column .cq-colctrl-lt0-c1 img.cmp-image__image, .parsys_column .cq-colctrl-lt0-c1 .text'
+      const leftContent = row.querySelector(lContentCss);
+      if (doc.flipText) {
+        cells.push([rightContent, leftContent]);
+      } else {
+        cells.push([leftContent, rightContent]);
+      }
     });
   }
-  if (doc.contents.length > 0) {
-    cells.push(doc.contents);
-    return WebImporter.DOMUtils.createTable(cells, document);
-  }
+  return WebImporter.DOMUtils.createTable(cells, document);
 };
 
 //create 'billboard' columns, basically columns with a different CSS Class
