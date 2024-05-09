@@ -291,6 +291,7 @@ const createColumns = (document) => {
   const cells = [
     ['Columns'],
  ];
+ console.log('inside createColumns');
   // get text
   const cHeadCss = 'div#page-content.par div#par div.par.parsys div.styledcontainer.parbase div.container div.par.parsys div.text.parbase.section div h2:not(:has(sup))';
   const cHead = document.querySelectorAll(cHeadCss);  
@@ -300,18 +301,24 @@ const createColumns = (document) => {
     }
   }
   //get left hand side txt
-  const lTxtCss = 'div.styledcontainer.parbase div.container div.par.parsys div.parsys_column.cq-colctrl-lt0.list-container div.parsys_column.cq-colctrl-lt0-c0 div.text.parbase.section div';
-  const lTxt = document.querySelectorAll(lTxtCss);
-  if (lTxt.length > 0) {
-      lTxt.forEach((el)=> {
-        doc.contents.push(el.innerHTML.replace(/[\n\t]/gm, ''));
+  const lContentCss = 'div.styledcontainer.parbase div.container div.par.parsys div.parsys_column.cq-colctrl-lt0.list-container div.parsys_column.cq-colctrl-lt0-c0 div.text.parbase.section div, div.styledcontainer.parbase div.container div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0';
+  const lContent = document.querySelectorAll(lContentCss);
+  if (lContent.length > 0) {
+    lContent.forEach((el)=> {
+        const imageOrTextCss = '.screenshots-details-lt,img.cmp-image__image';
+        const item = el.querySelector(imageOrTextCss);
+        if (item) doc.lContents.push(item);
       });
   }
-  const rTxtCss = 'div.styledcontainer.parbase div.container div.par.parsys div.parsys_column.cq-colctrl-lt0.list-container div.parsys_column.cq-colctrl-lt0-c1 div.text.parbase.section div';
-  const rTxt = document.querySelectorAll(rTxtCss);
-  if (rTxt.length > 0) {
-    rTxt.forEach((el) => {
-      doc.contents.push(el.innerHTML.replace(/[\n\t]/gm, ''));
+  const rContentCss = 'div.styledcontainer.parbase div.container div.par.parsys div.parsys_column.cq-colctrl-lt0.list-container div.parsys_column.cq-colctrl-lt0 div.text.parbase.section div,div.styledcontainer.parbase div.container div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0';
+  const rContent = document.querySelectorAll(rContentCss);
+  if (rContent.length > 0) {
+    rContent.forEach((el) => {
+      console.log(el);
+      const imageOrTextCss = '.screenshots-details-rt,img.cmp-image__image';
+      const item = el.querySelectorAll(imageOrTextCss);
+      console.log(item);
+      //if (item) doc.rContents.push(item);
     });
   }
   if (doc.contents.length > 0) {
@@ -433,11 +440,9 @@ const createAccordion = (document) => {
   const cells = [
     ['Accordion'],      
   ];
-  console.log("IN createAccordion");
   //get accordion heading if any
   const headCss = 'div.styledcontainer.parbase div.container.software:not(.billboard.billboard-video.sub-hero) div.par.parsys div.text.parbase.section div h3';
   const head = document.querySelector(headCss);
-  console.log(head);
   //strip the style attribute
   if (head){
     doc.headerTxt = head;
@@ -511,19 +516,28 @@ export default {
 
     const hero = createHero(document);
     if (hero) section.append(hero);
+    
     section.append(sectionBreak);
  
     const columns = createColumns(document);
     if (columns) section.append(columns);
 
+    section.append(sectionBreak);
+
     const textHero = createTextHero(document);
     if (textHero) section.append(textHero);
+
+    section.append(sectionBreak);
 
     const quote = createQuote( document,);
     if (quote) section.append(quote);
 
+    section.append(sectionBreak);
+
     const bbCols = createbbColumns(document);
     if (bbCols) section.append(bbCols);
+
+    section.append(sectionBreak);
 
     const roi = createROIColumns(document);
     if (roi) section.append(roi);
