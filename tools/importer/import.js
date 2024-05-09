@@ -435,11 +435,14 @@ const createAccordion = (document) => {
   ];
   console.log("IN createAccordion");
   //get accordion heading if any
-  const headCss = 'div.container div.par.parsys div.text.parbase.section div h3';
+  const headCss = 'div.styledcontainer.parbase div.container.software:not(.billboard.billboard-video.sub-hero) div.par.parsys div.text.parbase.section div h3';
   const head = document.querySelector(headCss);
+  console.log(head);
   //strip the style attribute
   if (head){
     doc.headerTxt = head;
+    console.log('header');
+    console.log(head);
   }
   // get accordion titles
   const titleCss = 'div.accordionwrapper.parbase div.accordionWrapperParsys.boxed-items div.parsys div.accordion.parbase div.accordion-title';
@@ -470,7 +473,7 @@ const createAccordion = (document) => {
   const btnCss = 'div.container.software div.par.parsys div.btn.parbase a';
   const btn = document.querySelector(btnCss);
   if (btn){
-    console.log(btn);
+    //console.log(btn);
     //for some reason button contains span. We'll have to remove that?
     if (btn.querySelector('span')){
       const linkText = btn.querySelector('span').innerHTML;
@@ -493,7 +496,7 @@ const createAccordion = (document) => {
     const table =  WebImporter.DOMUtils.createTable(cells, document);
     //console.log(table.innerHTML);
     if (table) block.append(table);
-    block.append(doc.btn);
+    if (doc.btn )block.append(doc.btn);
     //console.log(block);
     if (cells.length > 1) return block;
   }
