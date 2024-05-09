@@ -299,23 +299,19 @@ const createColumns = (document) => {
       cells.push([cHead[0]]);
     }
   }
-  const contentRowCss = 'div.styledcontainer.parbase div.container div.par.parsys div.parsys_column.cq-colctrl-lt0';
+  const contentRowCss = 'div.styledcontainer.parbase div.container:not(.billboard) div.par.parsys div.parsys_column.cq-colctrl-lt0';
   const contentRow = document.querySelectorAll(contentRowCss);
   if (contentRow) {
     contentRow.forEach((row) => {
-      //console.log(row);
+      console.log(row);
       doc.flipText = false;
-      //console.log(row.classList.contains('text-flip-right'));
       if (row.classList.contains('text-flip-right')){
         //might make sense to flip the css around, since due to this class, they're reversed. 
          doc.flipText = true; 
       }
       const rContentCss = '.parsys_column .cq-colctrl-lt0-c0 img.cmp-image__image, .parsys_column .cq-colctrl-lt0-c0 .text';
       const rightContent = row.querySelector(rContentCss);
-      //if (rightContent.querySelector('.text-flip-right')) console.log('text-flip-right');
-      if (rightContent) console.log(rightContent);
-      
-      //deal with left hand content
+
       const lContentCss = '.parsys_column .cq-colctrl-lt0-c1 img.cmp-image__image, .parsys_column .cq-colctrl-lt0-c1 .text'
       const leftContent = row.querySelector(lContentCss);
       if (doc.flipText) {
