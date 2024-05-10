@@ -140,7 +140,6 @@ const createROIColumns = (document) => {
         //if it contains a break, we need to replace it.
         const hasBr = doc.col.querySelector('br');
         if (hasBr) {
-          //console.log(doc.col.querySelector('h3'))
           if (doc.col.querySelector('h3')){
             const br = doc.col.querySelector('h3').innerHTML.split('<br>');
           
@@ -175,11 +174,9 @@ const createROIColumns = (document) => {
 const createCTABanner = (document) => {
   const bannerCss = 'div.container.transom.branding-jmp:has(div.dark-button-center)';
   const banner = document.querySelectorAll(bannerCss);
-  
   if (banner){
     var table = [];
     banner.forEach((el) => {
-      //console.log(el);
       const cells = [
         ['Hero (cta)'],
       ];
@@ -195,14 +192,12 @@ const createCTABanner = (document) => {
       const heroH3Css = 'h3';
       const heroH3 = el.querySelector(heroH3Css);
       if (heroH3) {
-        //console.log(heroH3);
         doc.heroContents += heroH3.outerHTML;
       }
       //check for h2 as that could be in the cta banners
       const heroH2Css = 'h2';
       const heroH2 = el.querySelector(heroH2Css);
       if (heroH2) {
-       // console.log(heroH2);
         doc.heroContents += heroH2.outerHTML;
       }
       //now let's deal with buttons:
@@ -213,45 +208,53 @@ const createCTABanner = (document) => {
             doc.heroContents += btn.outerHTML + '\n';
           });
       }
-     // console.log(doc.heroContents);
       if (doc.heroContents); cells.push([doc.heroContents]);
       table.push(WebImporter.DOMUtils.createTable(cells, document));
       
    });
-   //console.log(table[1]);
    return table;
   }
 };
 
-/*const createCTABanner = (document) => {
+const createLinkList = (document) => {
   const doc = {};
   const cells = [
-    ['Hero (cta)'],
+    ['Columns (link-list)'],
   ];
+  //['col1','col2','col3']
   // grab the background image
-  const imgCss = 'div.container.transom.branding-jmp div.bg.bg-op-full.bg-pos-full div.cmp-image.cq-dd-image img';
-  const img = document.querySelector(imgCss);
-  if (img) {
-    doc.heroContents = img.outerHTML;
-  }  
-  //check for  as that's in the cta banners
-  const heroH3Css = 'div.dark-button-center h3';
-  const heroH3 = document.querySelector(heroH3Css);
-  if (heroH3) {
-    doc.heroContents += heroH3.outerHTML;
-  }
-  //now let's deal with buttons:
-  var heroBtnCss = '.dark-button-center span.button a';
-  const heroBtns = document.querySelectorAll(heroBtnCss);
-  if (heroBtns){
-      heroBtns.forEach((btn) => {
-        doc.heroContents += btn.outerHTML + '\n';
+  const linksCss = 'div.container div.par.parsys div.text.parbase.section div.sub-capability-cards.sub-nav-anchor-list';
+  const link = document.querySelector(linksCss);
+  //console.log(link);
+  if (link) {
+    doc.col = document.createElement('p');
+    doc.col2 = document.createElement('p');
+    doc.col3 = document.createElement('p');
+    doc.elP = document.createElement('p');
+    doc.col.append(link.querySelector('h4'));
+    const links = link.querySelectorAll('a');
+    if (links) {
+      doc.count = 0;
+      links.forEach((el) => {
+        console.log(el);
+        if (doc.count < 5 ){
+          doc.col.append(el);
+          doc.count++;
+        } else if (doc.count < 10 ) {
+          doc.col2.append(el);
+          doc.count++;
+        }else{
+          doc.col3.append(el);
+        }
       });
+      console.log(doc.col);
+      console.log(doc.col2);
+      console.log(doc.col3);
+    }
   }
-  
-  cells.push([doc.heroContents]);
-  return WebImporter.DOMUtils.createTable(cells, document);
-};*/
+  cells.push([doc.col, doc.col2, doc.col3]);
+  if (cells[1].length > 1) return WebImporter.DOMUtils.createTable(cells, document);
+};
 
 // createQuote
 const createQuote = (document) => {
@@ -292,18 +295,19 @@ const createColumns = (document) => {
     ['Columns'],
  ];
   // get text
-  const cHeadCss = 'div#page-content.par div#par div.par.parsys div.styledcontainer.parbase div.container div.par.parsys div.text.parbase.section div h2:not(:has(sup))';
+  const cHeadCss = 'div#page-content.par div#par div.par.parsys div.styledcontainer.parbase:not(:has(.container.transom.branding-jmp)) div.container div.par.parsys div.text.parbase.section div h2:not(:has(sup))';
   const cHead = document.querySelectorAll(cHeadCss);  
   if (cHead) { // we have some content, process each
     if (cHead.length == 1){
       cells.push([cHead[0]]);
     }
+    
   }
-  const contentRowCss = 'div.styledcontainer.parbase div.container:not(.billboard) div.par.parsys div.parsys_column.cq-colctrl-lt0';
+  const contentRowCss = 'div.styledcontainer.parbase:not(:has(.container.transom.branding-jmp)) div.container:not(.billboard) div.par.parsys div.parsys_column.cq-colctrl-lt0';
   const contentRow = document.querySelectorAll(contentRowCss);
   if (contentRow) {
     contentRow.forEach((row) => {
-      console.log(row);
+      
       doc.flipText = false;
       if (row.classList.contains('text-flip-right')){
         //might make sense to flip the css around, since due to this class, they're reversed. 
@@ -321,7 +325,7 @@ const createColumns = (document) => {
       }
     });
   }
-  return WebImporter.DOMUtils.createTable(cells, document);
+  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
 //create 'billboard' columns, basically columns with a different CSS Class
@@ -443,8 +447,8 @@ const createAccordion = (document) => {
   //strip the style attribute
   if (head){
     doc.headerTxt = head;
-    console.log('header');
-    console.log(head);
+   // console.log('header');
+    //console.log(head);
   }
   // get accordion titles
   const titleCss = 'div.accordionwrapper.parbase div.accordionWrapperParsys.boxed-items div.parsys div.accordion.parbase div.accordion-title';
@@ -516,6 +520,11 @@ export default {
     
     section.append(sectionBreak);
  
+    const listText = createLinkList(document);
+    if (listText) section.append(listText);
+
+    section.append(sectionBreak);
+
     const columns = createColumns(document);
     if (columns) section.append(columns);
 
