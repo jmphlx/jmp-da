@@ -299,25 +299,29 @@ const createColumns = (document) => {
       cells.push([cHead[0]]);
     }
   }
-  //get left hand side txt
-  const lTxtCss = 'div.styledcontainer.parbase div.container div.par.parsys div.parsys_column.cq-colctrl-lt0.list-container div.parsys_column.cq-colctrl-lt0-c0 div.text.parbase.section div';
-  const lTxt = document.querySelectorAll(lTxtCss);
-  if (lTxt.length > 0) {
-      lTxt.forEach((el)=> {
-        doc.contents.push(el.innerHTML.replace(/[\n\t]/gm, ''));
-      });
-  }
-  const rTxtCss = 'div.styledcontainer.parbase div.container div.par.parsys div.parsys_column.cq-colctrl-lt0.list-container div.parsys_column.cq-colctrl-lt0-c1 div.text.parbase.section div';
-  const rTxt = document.querySelectorAll(rTxtCss);
-  if (rTxt.length > 0) {
-    rTxt.forEach((el) => {
-      doc.contents.push(el.innerHTML.replace(/[\n\t]/gm, ''));
+  const contentRowCss = 'div.styledcontainer.parbase div.container:not(.billboard) div.par.parsys div.parsys_column.cq-colctrl-lt0';
+  const contentRow = document.querySelectorAll(contentRowCss);
+  if (contentRow) {
+    contentRow.forEach((row) => {
+      console.log(row);
+      doc.flipText = false;
+      if (row.classList.contains('text-flip-right')){
+        //might make sense to flip the css around, since due to this class, they're reversed. 
+         doc.flipText = true; 
+      }
+      const rContentCss = '.parsys_column .cq-colctrl-lt0-c0 img.cmp-image__image, .parsys_column .cq-colctrl-lt0-c0 .text';
+      const rightContent = row.querySelector(rContentCss);
+
+      const lContentCss = '.parsys_column .cq-colctrl-lt0-c1 img.cmp-image__image, .parsys_column .cq-colctrl-lt0-c1 .text'
+      const leftContent = row.querySelector(lContentCss);
+      if (doc.flipText) {
+        cells.push([rightContent, leftContent]);
+      } else {
+        cells.push([leftContent, rightContent]);
+      }
     });
   }
-  if (doc.contents.length > 0) {
-    cells.push(doc.contents);
-    return WebImporter.DOMUtils.createTable(cells, document);
-  }
+  return WebImporter.DOMUtils.createTable(cells, document);
 };
 
 //create 'billboard' columns, basically columns with a different CSS Class
@@ -433,13 +437,14 @@ const createAccordion = (document) => {
   const cells = [
     ['Accordion'],      
   ];
-  console.log("IN createAccordion");
   //get accordion heading if any
-  const headCss = 'div.container div.par.parsys div.text.parbase.section div h3';
+  const headCss = 'div.styledcontainer.parbase div.container.software:not(.billboard.billboard-video.sub-hero) div.par.parsys div.text.parbase.section div h3';
   const head = document.querySelector(headCss);
   //strip the style attribute
   if (head){
     doc.headerTxt = head;
+    console.log('header');
+    console.log(head);
   }
   // get accordion titles
   const titleCss = 'div.accordionwrapper.parbase div.accordionWrapperParsys.boxed-items div.parsys div.accordion.parbase div.accordion-title';
@@ -470,7 +475,7 @@ const createAccordion = (document) => {
   const btnCss = 'div.container.software div.par.parsys div.btn.parbase a';
   const btn = document.querySelector(btnCss);
   if (btn){
-    console.log(btn);
+    //console.log(btn);
     //for some reason button contains span. We'll have to remove that?
     if (btn.querySelector('span')){
       const linkText = btn.querySelector('span').innerHTML;
@@ -493,7 +498,7 @@ const createAccordion = (document) => {
     const table =  WebImporter.DOMUtils.createTable(cells, document);
     //console.log(table.innerHTML);
     if (table) block.append(table);
-    block.append(doc.btn);
+    if (doc.btn )block.append(doc.btn);
     //console.log(block);
     if (cells.length > 1) return block;
   }
@@ -508,19 +513,28 @@ export default {
 
     const hero = createHero(document);
     if (hero) section.append(hero);
+    
     section.append(sectionBreak);
  
     const columns = createColumns(document);
     if (columns) section.append(columns);
 
+    section.append(sectionBreak);
+
     const textHero = createTextHero(document);
     if (textHero) section.append(textHero);
+
+    section.append(sectionBreak);
 
     const quote = createQuote( document,);
     if (quote) section.append(quote);
 
+    section.append(sectionBreak);
+
     const bbCols = createbbColumns(document);
     if (bbCols) section.append(bbCols);
+
+    section.append(sectionBreak);
 
     const roi = createROIColumns(document);
     if (roi) section.append(roi);
