@@ -228,28 +228,32 @@ const createLinkList = (document) => {
   //console.log(link);
   if (link) {
     doc.col = document.createElement('p');
-    doc.col2 = document.createElement('p');
+    doc.col2 = document.createElement('div');
     doc.col3 = document.createElement('p');
-    doc.elP = document.createElement('p');
+    
     doc.col.append(link.querySelector('h4'));
     const links = link.querySelectorAll('a');
     if (links) {
       doc.count = 0;
       links.forEach((el) => {
-        console.log(el);
-        if (doc.count < 5 ){
+        //console.log(el);
+        doc.elP = document.createElement('p');
+        if (doc.count < 5 ) {
           doc.col.append(el);
           doc.count++;
         } else if (doc.count < 10 ) {
-          doc.col2.append(el);
+          console.log(doc.elP);
+          doc.elP.innerHTML = el.outerHTML;
+          doc.col2.append(doc.elP);
           doc.count++;
-        }else{
-          doc.col3.append(el);
+        } else {
+          doc.elP.innerHTML = el.outerHTML;
+          doc.col3.append(doc.elP);
         }
       });
-      console.log(doc.col);
-      console.log(doc.col2);
-      console.log(doc.col3);
+      //console.log(doc.col);
+      //console.log(doc.col2);
+      //console.log(doc.col3);
     }
   }
   cells.push([doc.col, doc.col2, doc.col3]);
