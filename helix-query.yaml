@@ -7,7 +7,6 @@ indices:
       - '/drafts/**'
       - '/_sandbox/**'
       - '/tools/sidekick/**'
-      - '/fragments/**'
       - '/sites/default/files/**'
     target: /en/query-index.json
     properties:
