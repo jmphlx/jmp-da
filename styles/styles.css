@@ -278,3 +278,28 @@ a.button:hover {
   background: linear-gradient(45deg, #242d35 15%, #44545d 95%);
   color: white;
 }
+
+.sub-capability-cards {
+  ul {
+    background: rgba(0, 0, 0, 0.025);
+    column-count: 3;
+    margin: 0 0 10px 0;
+    padding: 5px 20px 20px 20px;
+    border-radius: 0 0 10px 10px;
+  }
+
+  h3 {
+    font-size: 30px;
+  }
+
+  h4 {
+    font-size: 16px;
+    display: block;
+    margin-block-start: 1.33em;
+    margin-block-end: 1.33em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+}
