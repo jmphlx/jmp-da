@@ -5,7 +5,7 @@ indices:
       - /
     exclude:
       - '/_sandbox/**'
-    target: /query-index.json
+    target: /en-index.json
     properties:
       title:
         select: head > meta[property="og:title"]
