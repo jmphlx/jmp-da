@@ -2,11 +2,9 @@ version: 1
 indices:
   en:
     include:
-      - /**
+      - /
     exclude:
-      - '/drafts/**'
       - '/_sandbox/**'
-      - '/tools/sidekick/**'
     target: /query-index.json
     properties:
       title:
