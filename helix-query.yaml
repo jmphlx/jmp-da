@@ -1,39 +1,12 @@
-version: 1
 indices:
-  en:
+  mysite:
     include:
-      - /
+      - /**
     exclude:
-      - '/_sandbox/**'
-    target: /en-index.json
+      - /_sandbox/**
+    target: /query-index.json
     properties:
-      title:
-        select: head > meta[property="og:title"]
-        value: attribute(el, "content")
-      image:
-        select: head > meta[property="og:image"]
-        value: match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
-      thumbnail:
-        select: head > meta[name="thumbnail"]
-        value: attribute(el, "content")
-      description:
-        select: head > meta[name="description"]
-        value: attribute(el, "content")
-      type:
-        select: head > meta[name="template"]
-        value: attribute(el, "content")
-      publicationType:
-        select: head > meta[name="publication-type"]
-        value: attribute(el, "content")  
-      identifier:
-        select: head > meta[name="identifier"]
-        value: attribute(el, "content")
-      category:
-        select: head > meta[name="category"]
-        value: attribute(el, "content")
-      subCategory:
-        select: head > meta[name="sub-category"]
-        value: attribute(el, "content")
-      technologyType:
-        select: head > meta[name="technology-type"]
-        value: attribute(el, "content")
+      author:
+        select: main > div:nth-of-type(3) > p:nth-of-type(1)
+        value: |
+          match(el, 'by (.*)')
