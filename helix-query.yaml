@@ -1,10 +1,10 @@
 indices:
-  en:
+  jmp-en:
     include:
       - /**
     exclude:
       - /_sandbox/**
-    target: /en.json
+    target: /jmp-en.json
     properties:
       author:
         select: head > meta[name="author"]
