@@ -1,10 +1,59 @@
 indices:
+#ENGLISH CONTENT#
   jmp-en:
+    include:
+      - /en/**
+    exclude:
+      - /_sandbox/**
+    target: /jmp-en.json
+    properties:
+      author:
+        select: head > meta[name="author"]
+        value: |
+          attribute(el, "content")
+      title:
+        select: head > meta[property="og:title"]
+        value: |
+          attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: |
+          match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, "content")
+#SPANISH CONTENT#
+  jmp-es:
+    include:
+      - /es/**
+    exclude:
+      - /_sandbox/**
+    target: /jmp-es.json
+    properties:
+      author:
+        select: head > meta[name="author"]
+        value: |
+          attribute(el, "content")
+      title:
+        select: head > meta[property="og:title"]
+        value: |
+          attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: |
+          match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, "content")
+#ENGLISH CONTENT#
+  jmp-all:
     include:
       - /**
     exclude:
       - /_sandbox/**
-    target: /jmp-en.json
+    target: /jmp-all.json
     properties:
       author:
         select: head > meta[name="author"]
