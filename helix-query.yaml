@@ -4,7 +4,7 @@ indices:
     include:
       - /en/**
     exclude:
-      - /_sandbox/**
+      - /en/drafts/**
     target: /jmp-en.json
     properties:
       author:
@@ -28,7 +28,7 @@ indices:
     include:
       - /es/**
     exclude:
-      - /_sandbox/**
+      - /es/drafts/**
     target: /jmp-es.json
     properties:
       author:
@@ -52,7 +52,7 @@ indices:
     include:
       - /**
     exclude:
-      - /_sandbox/**
+      - /sandbox/**
     target: /jmp-all.json
     properties:
       author:
