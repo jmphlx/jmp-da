@@ -1,4 +1,4 @@
-import { fetchPlaceholders } from '../../scripts/aem.js';
+import { fetchPlaceholders, parseBlockOptions } from '../../scripts/aem.js';
 
 function updateActiveSlide(slide) {
   const block = slide.closest('.carousel');
@@ -89,10 +89,27 @@ function createSlide(row, slideIndex, carouselId) {
   return slide;
 }
 
+function setOptions(block) {
+  const optionsObject = parseBlockOptions(block);
+  Object.keys(optionsObject).forEach((key) => {
+    const optionVal = optionsObject[key];
+    if (key.toLowerCase() === 'timed') {
+      window.setInterval(() => showSlide(
+        block,
+        parseInt(block.dataset.activeSlide, 10) + 1,
+      ), optionVal);
+    }
+  });
+  block.firstElementChild.remove();
+}
+
 let carouselId = 0;
 export default async function decorate(block) {
   carouselId += 1;
   block.setAttribute('id', `carousel-${carouselId}`);
+
+  setOptions(block);
+
   const rows = block.querySelectorAll(':scope > div');
   const isSingleSlide = rows.length < 2;
 
