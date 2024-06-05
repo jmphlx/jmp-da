@@ -718,6 +718,25 @@ function parseBlockOptions(block) {
   return optionsObject;
 }
 
+/**
+ * Returns a list of properties listed in the block
+ * @param {string} route get the Json data from the route
+ * @returns {Object} the json data object
+*/
+async function getJsonFromUrl(route) {
+  try {
+    const response = await fetch(route);
+    if (!response.ok) return null;
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('getJsonFromUrl:', { error });
+  }
+  return null;
+};
+
+
 init();
 
 export {
@@ -730,6 +749,7 @@ export {
   decorateSections,
   decorateTemplateAndTheme,
   fetchPlaceholders,
+  getJsonFromUrl,
   getMetadata,
   loadBlock,
   loadBlocks,
