@@ -71,3 +71,19 @@ indices:
         select: head > meta[name="description"]
         value: |
           attribute(el, "content")
+      resourceType:
+        select: head > meta[name="resource-type"]
+        value: |
+          attribute(el, "content")
+      industry:
+        select: head > meta[name="industry"]
+        value: |
+          attribute(el, "content")
+      capabilities:
+        select: head > meta[name="resource-type"]
+        value: |
+          attribute(el, "content")
+      product:
+        select: head > meta[name="resource-type"]
+        value: |
+          attribute(el, "content")
