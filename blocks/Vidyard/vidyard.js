@@ -1,8 +1,13 @@
 /*
- * Embed Block
- * Show videos and social posts directly on your page
+ * Vidyard Block
+ * Show Vidyard videos and social posts directly on your page
  * https://www.hlx.live/developer/block-collection/embed
+ *
+ * *
+ * This Block is a work in progress, it will host future functionality exclusive to Vidyard videos.
+ * Use the embed block until further notice
  */
+
 const loadScript = (url, callback, type) => {
   const head = document.querySelector('head');
   const script = document.createElement('script');
@@ -63,9 +68,20 @@ const embedVidyard = (url) => {
   script.type = 'text/javascript';
   script.src = 'https://play.vidyard.com/embed/v4.js';
   document.head.appendChild(script);
+
+  // window.onVidyardAPI = (vidyardEmbed) => {
+  //   // staging area for API calls
+  //   vidyardEmbed.api.addReadyListener((_, player) => {
+  //     // place code below here
+  //     const players = VidyardV4.api.getPlayersByUUID(video);
+  //     players[0].enableCaption('Japanese', 'jp');
+  //     // players[0].play();
+  //   }, video);
+  // };
+
   // HTML code for placing the vidyard player on the page. Note that this code only places a preview
   // thumbnail on the page that the above script replaces on loading
-  const embedHTML = `<div> 
+  const embedHTML = `<div>
       <img class="vidyard-player-embed"
       src="https://play.vidyard.com/${video}.jpg"
       data-uuid="${video}"

@@ -13,29 +13,31 @@
 :root {
   /* colors */
   --text-color: #333;
-  --link-color: #037;
+  --link-color: #0378cd;
+  --link-hover-color: #3aaafc;
   --background-color: #fff;
   --overlay-background-color: #eee;
   --highlight-background-color: #ccc;
 
   
- /* fonts */
+  /* fonts */
   --heading-font-family: "anova-light", arial, helvetica, sans-serif;
   --body-font-family: "anova-light", arial, helvetica, sans-serif;
   --fixed-font-family: "Roboto Mono", menlo, consolas, "Liberation Mono", monospace;
 
   /* body sizes */
-  --body-font-size-m: 22px;
-  --body-font-size-s: 18px;
-  --body-font-size-xs: 16px;
+  --body-font-size-m: 20px;
+  --body-font-size-s: 16px;
+  --body-font-size-xs: 14px;
 
-  /* heading sizes */
-  --heading-font-size-xxl: 48px;
-  --heading-font-size-xl: 40px;
-  --heading-font-size-l: 32px;
-  --heading-font-size-m: 24px;
-  --heading-font-size-s: 20px;
-  --heading-font-size-xs: 18px;
+  /* sizes */
+  --heading-font-size-xxl: 42px;
+  --heading-font-size-xl: 34px;
+  --heading-font-size-l: 26px;
+  --heading-font-size-m: 21px;
+  --heading-font-size-s: 16px;
+  --heading-font-size-xs: 13px;
+  
 
   /* nav height */
   --nav-height: 64px;
@@ -120,7 +122,8 @@ main pre {
   white-space: pre;
 }
 
-/* links */
+/* links
+
 a:any-link {
   color: var(--link-color);
   text-decoration: none;
@@ -131,7 +134,6 @@ a:hover {
   color: var(--link-hover-color);
 }
 
-/* buttons */
 a.button:any-link, button {
   font-family: var(--body-font-family);
   display: inline-block;
@@ -167,6 +169,8 @@ a.button.secondary, button.secondary {
   border: 2px solid currentcolor;
   color: var(--text-color)
 }
+
+*/
 
 main img {
   max-width: 100%;
@@ -207,4 +211,92 @@ main .section {
 main .section.light,
 main .section.highlight {
   background-color: var(--light-color);
+}
+
+/* JMP Buttons */
+a {
+  background: transparent;
+}
+
+.button {
+  display: inline-block;
+  background-color: #f47723;
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+  font-size: 1.5rem;
+  margin: 10px 0;
+  cursor: pointer;
+  line-height: 2;
+  padding: 0 10px;
+  position: relative;
+  z-index: 1;
+}
+
+a.button:hover {
+  /* npm run lint expects a modern color notation.  
+  background: rgba(0, 0, 0, 40%);
+  */
+  background: #0066;
+}
+
+/* Dark Button */
+
+.dark-button-center {
+  a.button {
+    text-align: center;
+    background: #0020;
+    border: 1px solid #fff;
+    border-radius: 8px;
+    min-width: 200px;
+    margin: 0 auto;
+    box-sizing: content-box;
+    transition-duration: 0.2s;
+    transition-timing-function: ease;
+    position: relative;
+    z-index: 1;
+  }
+
+  a.button:hover {
+    color: #fcfcfc;
+    background: #0066;
+    border: 1px solid black;
+    min-width: 200px;
+  }	
+}
+
+.sasfont  {
+  a::before {
+    color: #eea879;
+    font-family: 'sasicons-103018' !important;
+    content: '';
+  }
+}
+
+/* Section styles */
+.brand-neutral-dark  {
+  background: linear-gradient(45deg, #242d35 15%, #44545d 95%);
+  color: white;
+}
+
+.sub-capability-cards {
+  ul {
+    background: rgba(0 0 0 / 2.5%);
+    column-count: 3;
+    margin: 0 0 10px;
+    padding: 5px 20px 20px;
+    border-radius: 0 0 10px 10px;
+  }
+
+  h3 {
+    font-size: 30px;
+  }
+
+  h4 {
+    font-size: 16px;
+    display: block;
+    margin-block: 1.33em;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
 }
