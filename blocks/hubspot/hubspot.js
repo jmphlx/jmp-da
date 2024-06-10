@@ -62,10 +62,6 @@ export default function decorate(block) {
   const portalIdVal = portalId.textContent;
   const formIDVal = formID.textContent;
 
-  if (sfdcCampaignId) {
-    const sfdcCampaignIdVal = sfdcCampaignId.textContent;
-  }
-
   block.textContent = '';
 
   const observer = new IntersectionObserver((entries) => {
