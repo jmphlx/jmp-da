@@ -75,6 +75,33 @@ const embedVidyard = (url) => {
   return embedHTML;
 };
 
+// const embedHubspot = (url) => {
+//   // clean up hubspot url query paramaters
+//   // loadScript2('scripts/iframe-resizer.parent.js');
+//   const formID = 'iframeContent';
+//   let urlStr = url.href.replaceAll('%20', ' ');
+
+//   const scriptHubspot = document.createElement('script');
+//   scriptHubspot.setAttribute('type', 'text/javascript');
+//   scriptHubspot.src = 'https://js.hsforms.net/forms/embed/v2.js';
+//   scriptHubspot.addEventListener('load', () => {
+//     // eslint-disable-next-line no-undef
+//     hbspt.forms.create({
+//       region: "na1",
+//       portalId: "46222666",
+//       formId: "a15ab53c-b2b3-4a58-8d8f-c01c59887e70"
+//     });
+//   });
+//   document.head.append(scriptHubspot);
+  
+//   const embedHTML = `
+//   <script>
+//     hbspt.forms.create({});
+//   </script>
+// `;
+//   return embedHTML;
+// };
+
 const loadEmbed = (block, link, autoplay) => {
   if (block.classList.contains('embed-is-loaded')) {
     return;
@@ -96,6 +123,11 @@ const loadEmbed = (block, link, autoplay) => {
     {
       match: ['vidyard'],
       embed: embedVidyard,
+    },
+    {
+      match: ['hsforms', 'hubspot'],
+      embed: embedHubspot,
+      // decorate: decorateHubspot,
     },
   ];
 
