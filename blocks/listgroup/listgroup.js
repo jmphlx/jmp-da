@@ -1,5 +1,6 @@
 import { getJsonFromUrl, parseBlockOptions } from '../../scripts/aem.js';
 
+
 export default async function decorate(block) {
 
   const optionsObject = parseBlockOptions(block);
@@ -13,12 +14,19 @@ export default async function decorate(block) {
 
   let pageSelection = allPages;
 
+  let newArray = pageSelection.filter(function (el) {
+    return el.product === "JMP"
+  });
+
   const limitObjects = optionsObject.limit;
   if(limitObjects !== undefined) {
     pageSelection = pageSelection.slice(0, limitObjects);
   }
 
+  console.log(pageSelection);
   pageSelection.forEach((item) => {
+    //const datePublished = item.lastPublished;
+    //console.log(Date.parse(datePublished));
     const listItem = document.createElement('li');
     const cardLink = document.createElement('a');
     cardLink.href = item.path;
