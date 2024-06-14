@@ -699,10 +699,15 @@ async function waitForLCP(lcpBlocks) {
 }
 
 /** JMP ADDED METHODS */
-function parseBlockOptions(block) {
+function parseBlockOptions(block, rowName) {
   const optionsObject = {};
+
+  if(rowName === undefined) {
+    rowName = 'options';
+  }
+
   const optionName = block.firstElementChild?.children.item(0).textContent;
-  if (optionName.toLowerCase() === 'options') {
+  if (optionName.toLowerCase() === rowName) {
     const optionVal = block.firstElementChild?.children.item(1).textContent;
     const tempOptionsArray = optionVal.length > 1 ? optionVal.split(',') : {};
 
