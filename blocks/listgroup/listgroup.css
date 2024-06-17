@@ -9,10 +9,28 @@ ul.list-tile {
 .listgroup ul li {
   list-style-type: none;
   width: 47%;
+  margin: 0px 10px 20px 0;
+  padding: 0;
 }
 
-a {
+.listgroup ul.list-tile>li a {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  border-top: none;
   text-decoration: none;
+  display: block;
+  position: relative;
+  outline: none;
+  overflow: hidden;
+}
+
+.listgroup ul.list-tile>li a img {
+  border-radius: 5px;
+  border: 1px solid #D7D7D7;
+  padding: 0;
+  transition: color 0.3s ease;
 }
 
 .image {
@@ -20,6 +38,19 @@ a {
   width: 48%;
   margin: 0 20px 20px 0;
   padding-bottom: 0;
+}
+
+.listgroup ul.list-tile>li a .navigation-title {
+  font-size: 13px;
+  font-size: 1.3rem;
+  font-family: "anova-med", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  color: #f04b4b;
+  display: block;
+  padding: 0 0 .25em 0;
+  line-height: 1.3em;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
 }
 
 .title {

@@ -741,6 +741,19 @@ async function getJsonFromUrl(route) {
   return null;
 };
 
+/**
+ * Returns if a given 2 or 4 digit language should have
+ * a valid index. Mainly used in case of listgroup in sandbox
+ * or other nonlanguage directory.
+ * @param {string} language
+ * @returns {Boolean} true if the index should exist.
+ */
+function languageIndexExists(language) {
+  const languageIndexes = [
+    'en', 'es', 'fr', 'zh', 'de', 'it', 'ko', 'ja'
+  ];
+  return languageIndexes.includes(language);
+}
 
 init();
 
@@ -756,6 +769,7 @@ export {
   fetchPlaceholders,
   getJsonFromUrl,
   getMetadata,
+  languageIndexExists,
   loadBlock,
   loadBlocks,
   loadCSS,
