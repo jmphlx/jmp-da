@@ -98,9 +98,24 @@ async function buildMobileMenu(nav) {
     // searchItem.innerHTML = '';
     // //searchItem.append(await createSearchForm({ type: 'minimal', action: searchAction }));
     sections.classList.add('nav-sections-mobile');
-    tools.classList.add('nav-tools-mobile');
     mobileMenu.append(sections);
+    sections.querySelectorAll(':scope > ul > li').forEach((navSection) => {
+      const subList = navSection.querySelector('ul');
+      if (subList) {
+        navSection.classList.add('nav-drop');
+        addNavDropToggle(navSection, sections);
+      }
+    });
+
+    tools.classList.add('nav-tools-mobile');
     mobileMenu.append(tools);
+    tools.querySelectorAll(':scope > ul > li').forEach((navSection) => {
+      const subList = navSection.querySelector('ul');
+      if (subList) {
+        navSection.classList.add('nav-drop');
+        addNavDropToggle(navSection, tools);
+      }
+    });
   }
 
   nav.append(mobileMenu);
