@@ -1,6 +1,8 @@
 /*
- *  global hbspot
+ * Hubspot embed Block
+ * Shows hubspot forms on a page
  */
+/*  global hbspt  */
 
 const embedHubspot = (fRegion, fPortalId, fFormId, sfdcCampaignId = null) => {
   // clean up hubspot url query paramaters
