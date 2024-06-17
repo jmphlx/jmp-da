@@ -14,7 +14,6 @@ const isDesktop = window.matchMedia('(min-width: 900px)');
  */
 async function fetchNavigationHTML() {
   const navMeta = getMetadata('nav');
-  console.log(navMeta);
   //const navPath = navMeta ? new URL(navMeta) : '/nav';
 
   const response = await fetch(`${navMeta}.plain.html`);
@@ -107,21 +106,11 @@ async function buildMobileMenu(nav) {
   nav.append(mobileMenu);
 }
 
-let mouseEntered;
-function bindMouseOverEvents(section, sections) {
-  section.addEventListener('mouseenter', () => {
-    mouseEntered = true;
-    toggleNavDrop(section, sections, true);
+function addNavDropToggle(section, sections) {
+  section.addEventListener('click', () => {
+    toggleNavDrop(section, sections);
   });
 
-  section.addEventListener('mouseleave', () => {
-    mouseEntered = false;
-    setTimeout(() => {
-      if (!mouseEntered) {
-        toggleNavDrop(section, sections, false);
-      }
-    }, 200);
-  });
 }
 
 /**
@@ -150,31 +139,31 @@ export default async function decorate(block) {
       const subList = navSection.querySelector('ul');
       if (subList) {
         navSection.classList.add('nav-drop');
-        const sectionLink = navSection.querySelector(':scope > a');
-        if (sectionLink) {
-          const sectionLi = createElement('li', { class: 'nav-section-link' });
-          sectionLi.append(sectionLink.cloneNode(true));
-          subList.insertAdjacentElement('afterbegin', sectionLi);
+        addNavDropToggle(navSection, navSections);
 
-          sectionLink.className = 'nav-section-heading';
-          sectionLink.role = 'button';
+        // const sectionLink = navSection.querySelector(':scope > a');
+        // if (sectionLink) {
+        //   const sectionLi = createElement('li', { class: 'nav-section-link' });
+        //   sectionLi.append(sectionLink.cloneNode(true));
+        //   subList.insertAdjacentElement('afterbegin', sectionLi);
 
-          const sectionUrl = new URL(sectionLink.href);
-          if (sectionUrl.pathname === window.location.pathname) {
-            navSection.setAttribute('aria-current', 'page');
-          } else {
-            const parentPath = window.location.pathname
-              .split('/')
-              .slice(0, -1)
-              .join('/');
-            if (sectionUrl.pathname === parentPath) {
-              navSection.setAttribute('aria-current', 'page');
-            }
-          }
-          sectionLink.setAttribute('href', '#');
+        //   sectionLink.className = 'nav-section-heading';
+        //   sectionLink.role = 'button';
 
-          bindMouseOverEvents(navSection, navSections);
-        }
+        //   const sectionUrl = new URL(sectionLink.href);
+        //   if (sectionUrl.pathname === window.location.pathname) {
+        //     navSection.setAttribute('aria-current', 'page');
+        //   } else {
+        //     const parentPath = window.location.pathname
+        //       .split('/')
+        //       .slice(0, -1)
+        //       .join('/');
+        //     if (sectionUrl.pathname === parentPath) {
+        //       navSection.setAttribute('aria-current', 'page');
+        //     }
+        //   }
+        //   sectionLink.setAttribute('href', '#');
+        // }
       }
     });
   }
@@ -232,7 +221,7 @@ export default async function decorate(block) {
           sectionLink.setAttribute('href', '#');
         }
 
-        bindMouseOverEvents(navTool, navTools);
+        addNavDropToggle(navTool, navTools);
       }
     });
   }
