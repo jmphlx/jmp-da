@@ -13,10 +13,46 @@
 :root {
   /* colors */
   --text-color: #333;
-  --link-color: #037;
+  --link-color: #0378cd;
+  --linkHover:#2EB3FF;
   --background-color: #fff;
   --overlay-background-color: #eee;
   --highlight-background-color: #ccc;
+  --blue: #0378cd;
+  --orange: #ff5000;
+  --blueLight:#61CAE5;
+  --purple:#643695;
+  --purpleLight:#9D57A3;
+  --red:#B11A29;
+  --redLight:	#F04B4B;
+  --orangeDark:#854200;
+  --green:#0D782F;
+  --greenLight:#9CCB3B;
+  --yellow:#FFC610;
+  --teal:#007481;
+  --tealLight:#3EBDAC;
+  --blueDark:#002753;
+
+/* JMP Brand neutral */
+--white:#FFF;
+--grayDark:#172328;
+--grayMedium:#44545D;	
+--grayLight:#8F989E;
+--black:#000;
+--gray3:#333;
+--gray5:#555;
+--gray6:#666;
+--gray7:#777;
+--gray9:#999;
+--grayRule:#D0D0D0;
+
+/* Color variables */
+--color-primary: var(--blue);
+--color-secondary: var(--orange);
+--textColor: var(--gray3);
+--headlineColor: var(--gray);
+--linkColor: var(--color-primary);
+--error: var(--red);
 
   
  /* fonts */
@@ -38,7 +74,7 @@
   --heading-font-size-xs: 18px;
 
   /* nav height */
-  --nav-height: 64px;
+  --nav-height: 100px;
 }
 
 @font-face {
@@ -138,7 +174,7 @@ a.button:any-link, button {
   box-sizing: border-box;
   text-decoration: none;
   border: 2px solid transparent;
-  padding: 5px 30px;
+  padding: 10px 20px;
   text-align: center;
   font-style: normal;
   font-weight: 600;
@@ -149,7 +185,7 @@ a.button:any-link, button {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  border-radius: 30px;
+  border-radius: 5px;
 }
 
 a.button:hover, a.button:focus, button:hover, button:focus  {
