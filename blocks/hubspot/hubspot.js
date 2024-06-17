@@ -1,7 +1,5 @@
 /*
- * Embed Block
- * Show videos and social posts directly on your page
- * https://www.hlx.live/developer/block-collection/embed
+ *  global hbspot
  */
 
 const embedHubspot = (fRegion, fPortalId, fFormId, sfdcCampaignId = null) => {
