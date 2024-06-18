@@ -2,4 +2,3 @@ mountpoints:
   /:
     url: https://content.da.live/jmphlx/jmp-da/
     type: markup
-
