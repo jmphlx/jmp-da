@@ -1,6 +1,13 @@
 .columns > div {
   display: flex;
   flex-direction: column;
+  align-items: center;
+
+
+ max-width: 1280px; /*  messing around with the quote block */
+ margin:0em auto 2em auto;/*  messing around with the quote block */
+ padding: 32px; /*  messing around with the quote block */
+ text-align: left; /*  messing around with the quote block */
 }
 
 .columns img {
@@ -72,4 +79,52 @@
     margin-right: .3em;
   }
 
+}
+
+
+
+
+
+
+
+.text-link .button-container{
+  a:link, a:hover {
+    background: none;
+    border: none;
+    color: #0378cd; /*  messing around withth equote block */
+    text-decoration: none;
+    /* font-size: 15px; */
+    font-size: 1rem; /*  messing around withth equote block */
+    margin: 5px 0;
+    cursor: pointer;
+    line-height: 2;
+    padding: 0px;
+    position: relative;
+    z-index: 1;
+    text-align: left;
+}
+a:hover {
+  color: black; /*  messing around withth equote block */
+}
+
+:after{
+  color: #f47723; /*  messing around withth equote block */
+  content: " > "; /*  messing around withth equote block */
+}
+}
+
+
+.promo-col{
+  background:#ececec;
+  margin:0em auto;/*  messing around withth equote block */
+  div{
+    margin: 0 auto;
+    p{
+      font-size: .8em;
+    }
+  }
+   h3{
+    text-align: center;
+    margin: 0;
+  }
 }
