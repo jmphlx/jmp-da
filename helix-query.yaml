@@ -1,0 +1,123 @@
+indices:
+#ENGLISH CONTENT#
+  jmp-en:
+    include:
+      - /en/**
+    exclude:
+      - /en/drafts/**
+    target: /jmp-en.json
+    properties:
+      author:
+        select: head > meta[name="author"]
+        value: |
+          attribute(el, "content")
+      title:
+        select: head > meta[property="og:title"]
+        value: |
+          attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: |
+          match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, "content")
+      resourceType:
+        select: head > meta[name="resource-type"]
+        value: |
+          attribute(el, "content")
+      industry:
+        select: head > meta[name="industry"]
+        value: |
+          attribute(el, "content")
+      capabilities:
+        select: head > meta[name="capabilitiy"]
+        value: |
+          attribute(el, "content")
+      product:
+        select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+
+#SPANISH CONTENT#
+  jmp-es:
+    include:
+      - /es/**
+    exclude:
+      - /es/drafts/**
+    target: /jmp-es.json
+    properties:
+      author:
+        select: head > meta[name="author"]
+        value: |
+          attribute(el, "content")
+      title:
+        select: head > meta[property="og:title"]
+        value: |
+          attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: |
+          match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, "content")
+      resourceType:
+        select: head > meta[name="resource-type"]
+        value: |
+          attribute(el, "content")
+      industry:
+        select: head > meta[name="industry"]
+        value: |
+          attribute(el, "content")
+      capabilities:
+        select: head > meta[name="capabilitiy"]
+        value: |
+          attribute(el, "content")
+      product:
+        select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+
+#ENGLISH CONTENT#
+  jmp-all:
+    include:
+      - /**
+    exclude:
+      - /sandbox/**
+    target: /jmp-all.json
+    properties:
+      author:
+        select: head > meta[name="author"]
+        value: |
+          attribute(el, "content")
+      title:
+        select: head > meta[property="og:title"]
+        value: |
+          attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: |
+          match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, "content")
+      resourceType:
+        select: head > meta[name="resource-type"]
+        value: |
+          attribute(el, "content")
+      industry:
+        select: head > meta[name="industry"]
+        value: |
+          attribute(el, "content")
+      capabilities:
+        select: head > meta[name="capabilitiy"]
+        value: |
+          attribute(el, "content")
+      product:
+        select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")

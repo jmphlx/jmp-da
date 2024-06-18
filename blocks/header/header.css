@@ -8,8 +8,12 @@ header .nav-wrapper {
 }
 
 header nav {
+	position: relative;
+	display: block;
+	width: 940px;
+	margin: 0 auto;
+	zoom: 1;
   box-sizing: border-box;
-  display: grid;
   grid-template:
     'tools tools tools' 36px
     'brand sections sections' 64px;
@@ -17,6 +21,10 @@ header nav {
   gap: 0 2em;
   margin: auto;
   height: var(--nav-height);
+  align-items: center;
+  gap: 0 2em;
+  max-width: 1264px;
+  padding: 0 1rem;
   font-family: var(--body-font-family);
 }
 
@@ -93,6 +101,12 @@ header nav {
 header nav p {
   margin: 0;
   line-height: 1;
+}
+
+.nav-drop a {
+  display: block;
+  box-sizing: border-box;
+  padding: 5px 10px;
 }
 
 header nav a:any-link {
@@ -209,12 +223,21 @@ header nav .nav-sections {
   @media (width >= 900px) {
     padding: 0 2rem 0 0;
   }
+  text-decoration: none;
 }
 
 header nav[aria-expanded="true"] .nav-sections {
   display: block;
   visibility: visible;
   align-self: start;
+}
+
+.nav-drop ul {
+  z-index: 1;
+  border-radius: 0;
+  width: auto;
+  padding: 0 10px 10px;
+  box-shadow: 0 6px 6px 0 #0000000d;
 }
 
 header nav .nav-sections ul  {
@@ -337,6 +360,15 @@ header nav .nav-sections ul > li > ul > li {
     &:nth-last-child(-n + 2) {
       border-bottom: none;
     }
+  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded="true"] > ul {
+    display: block;
+    position: absolute;
+    left: -1em;
+    width: 200px;
+    margin-top: 12px;
+    padding: 1em;
+    background-color: white;
+    white-space: initial;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > ul::before {
@@ -388,7 +420,6 @@ header nav .nav-sections ul > li > ul > li {
       }
     }
   }
-
   /* tools */
   header nav .nav-tools {
     grid-area: tools;

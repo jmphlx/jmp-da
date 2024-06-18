@@ -1,6 +1,5 @@
 import {
   sampleRUM,
-  buildBlock,
   loadHeader,
   loadFooter,
   decorateButtons,
@@ -16,9 +15,12 @@ import {
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
 /**
+ * OUT OF THE BOX code that impacts our hero blocks.
+ * To be removed if no other issues found.
+ *
  * Builds hero block and prepends to main in a new section.
  * @param {Element} main The container element
- */
+
 function buildHeroBlock(main) {
   const h1 = main.querySelector('h1');
   const picture = main.querySelector('picture');
@@ -29,6 +31,7 @@ function buildHeroBlock(main) {
     main.prepend(section);
   }
 }
+*/
 
 /**
  * load fonts.css and set a session storage flag
@@ -42,10 +45,22 @@ async function loadFonts() {
   }
 }
 
+function autolinkModals(element) {
+  element.addEventListener('click', async (e) => {
+    const origin = e.target.closest('a');
+
+    if (origin && origin.href && origin.href.includes('/modals/')) {
+      e.preventDefault();
+      const { openModal } = await import(`${window.hlx.codeBasePath}/blocks/modal/modal.js`);
+      openModal(origin.href);
+    }
+  });
+}
+
 /**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
- */
+
 function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
@@ -54,6 +69,7 @@ function buildAutoBlocks(main) {
     console.error('Auto Blocking failed', error);
   }
 }
+*/
 
 /**
  * Decorates the main element.
@@ -64,7 +80,7 @@ export function decorateMain(main) {
   // hopefully forward compatible button decoration
   decorateButtons(main);
   decorateIcons(main);
-  buildAutoBlocks(main);
+  // buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
 }
@@ -98,6 +114,8 @@ async function loadEager(doc) {
  * @param {Element} doc The container element
  */
 async function loadLazy(doc) {
+  autolinkModals(doc);
+
   const main = doc.querySelector('main');
   await loadBlocks(main);
 

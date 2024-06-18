@@ -1,4 +1,5 @@
 mountpoints:
   /:
-    url: https://content.da.live/arbory-digital-inc/jmp-darkalley/
+    url: https://content.da.live/jmphlx/jmp-da/
     type: markup
+

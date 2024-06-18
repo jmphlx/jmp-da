@@ -11,6 +11,7 @@
  */
 
 /* eslint-env browser */
+/* eslint prefer-destructuring: 0 */
 
 /**
  * log RUM if part of the sample.
@@ -697,6 +698,26 @@ async function waitForLCP(lcpBlocks) {
   });
 }
 
+/** JMP ADDED METHODS */
+function parseBlockOptions(block) {
+  const optionsObject = {};
+  const optionName = block.firstElementChild?.children.item(0).textContent;
+  if (optionName.toLowerCase() === 'options') {
+    const optionVal = block.firstElementChild?.children.item(1).textContent;
+    const tempOptionsArray = optionVal.length > 1 ? optionVal.split(',') : {};
+
+    tempOptionsArray.forEach((item) => {
+      if (item.includes('=')) {
+        const optionsString = item.split('=', 2);
+        optionsObject[optionsString[0]] = optionsString[1];
+      } else {
+        optionsObject[item] = true;
+      }
+    });
+  }
+  return optionsObject;
+}
+
 init();
 
 export {
@@ -716,6 +737,7 @@ export {
   loadFooter,
   loadHeader,
   loadScript,
+  parseBlockOptions,
   readBlockConfig,
   sampleRUM,
   setup,

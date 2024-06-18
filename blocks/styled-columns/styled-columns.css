@@ -1,0 +1,52 @@
+
+.styled-columns {
+    --blue: #0033ab;
+    --light-blue: #0be;
+    --yellow: #fcbd30;
+    --white: #fff;
+    --gray: #eee;
+    --light-gray: #767676;
+  }
+  
+  
+  .styled-columns > div {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .styled-columns > div > div {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 10px;
+    flex: 1;
+  }
+  
+  
+  .styled-columns .blue {
+    color: var(--white);
+    background-color: var(--blue);
+  }
+  
+  .styled-columns .light-blue {
+    color: var(--white);
+    background-color: var(--light-blue);
+  }
+  
+  .styled-columns .yellow {
+    color: var(--white);
+    background-color: var(--yellow);
+  }
+  
+  .styled-columns .light-gray {
+    color: var(--white);
+    background-color: var(--light-gray);
+  }
+  
+  @media (width >= 900px) {
+    .styled-columns > div {
+      align-items: stretch;
+      flex-direction: unset;
+    }
+  
+  }

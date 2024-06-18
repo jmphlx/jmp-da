@@ -1,0 +1,19 @@
+#on:
+#  pull_request:
+#    types:
+#      - opened
+
+#jobs:
+#  populate-pr:
+#    runs-on: ubuntu-latest
+#    permissions:
+#      contents: write
+#      actions: write
+#    # only run if commit message is "Initial commit" on main branch
+ #   if: ${{ github.ref != 'refs/heads/main' }}
+#    steps:          
+#      - name: Populate Pull Request Template
+#        run: |
+#          sed -i.bak "s/{repo}/$(basename ${{ github.repository }})/g" .github/pull_request_template.md
+#          sed -i.bak "s/{owner}/$(dirname ${{ github.repository }})/g" .github/pull_request_template.md
+#          sed -i.bak "s/{branch}/$(echo ${{ github.ref }})/g" .github/pull_request_template.md

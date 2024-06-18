@@ -1,0 +1,20 @@
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<svg id="labels" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75 75" style="width:100px; "
+    role="img">
+    <path
+        d="M71.7,38.1h-31c-.7,0-1.2.5-1.2,1.2v31c0,.7.5,1.2,1.2,1.2h31c.7,0,1.2-.5,1.2-1.2v-31c0-.6-.6-1.2-1.2-1.2Z"
+        class="transparent"
+        style="width:100px; fill: none; stroke: #191919; stroke-miterlimit: 10; stroke-width: 2.2px;"></path>
+    <path d="M18.7,47.6l6.1,7.2h-2.9v7.2h-6.5v-7.2h-2.8l6.1-7.2Z" class="transparent"
+        style="width:100px; fill: none; stroke: #333; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"></path>
+    <path d="M56.1,47.6l6.1,7.2h-2.9v7.2h-6.5v-7.2h-2.8l6.1-7.2Z" class="transparent"
+        style="width:100px; fill: none; stroke: #333; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"></path>
+    <path
+        d="M34.2,38.1H3.2c-.7,0-1.2.5-1.2,1.2v31c0,.7.5,1.2,1.2,1.2h31c.7,0,1.2-.5,1.2-1.2v-31c0-.6-.5-1.2-1.2-1.2Z"
+        class="transparent"
+        style="width:100px; fill: none; stroke: #191919; stroke-miterlimit: 10; stroke-width: 2.2px;"></path>
+    <path
+        d="M52.8,1.8h-31c-.7,0-1.2.5-1.2,1.2v31c0,.7.5,1.2,1.2,1.2h31c.7,0,1.2-.5,1.2-1.2V3c.1-.7-.5-1.2-1.2-1.2ZM40.6,18.1v7.2h-6.5v-7.2h-2.8l6.1-7.2,6.1,7.2s-2.9,0-2.9,0Z"
+        class="transparent" style="width:100px; fill: #2677bd; stroke-width: 0px;"></path>
+    <title>Consumer Products</title>
+</svg>
