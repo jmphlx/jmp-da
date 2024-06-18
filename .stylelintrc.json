@@ -7,12 +7,5 @@
         "ignoreFontFamilies": ["sasicons-103018"]
       }
     ]
-  },
-  "ignoreFiles": [
-    "blocks/columns/*.css",
-    "blocks/header/*.css",
-    "blocks/hero/*.css",
-    "blocks/quote/*.css",
-    "styles/styles.css"
-  ]
+  }
 }
