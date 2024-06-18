@@ -701,13 +701,10 @@ async function waitForLCP(lcpBlocks) {
 /** JMP ADDED METHODS */
 function parseBlockOptions(block, rowName) {
   const optionsObject = {};
-
-  if(rowName === undefined) {
-    rowName = 'options';
-  }
+  const row = rowName === undefined ? 'options' : rowName;
 
   const optionName = block.firstElementChild?.children.item(0).textContent;
-  if (optionName.toLowerCase() === rowName) {
+  if (optionName.toLowerCase() === row) {
     const optionVal = block.firstElementChild?.children.item(1).textContent;
     const tempOptionsArray = optionVal.length > 1 ? optionVal.split(',') : {};
 
@@ -739,7 +736,7 @@ async function getJsonFromUrl(route) {
     console.error('getJsonFromUrl:', { error });
   }
   return null;
-};
+}
 
 /**
  * Returns if a given 2 or 4 digit language should have
@@ -750,7 +747,7 @@ async function getJsonFromUrl(route) {
  */
 function languageIndexExists(language) {
   const languageIndexes = [
-    'en', 'es', 'fr', 'zh', 'de', 'it', 'ko', 'ja'
+    'en', 'es', 'fr', 'zh', 'de', 'it', 'ko', 'ja',
   ];
   return languageIndexes.includes(language);
 }
