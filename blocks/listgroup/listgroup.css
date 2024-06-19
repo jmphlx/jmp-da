@@ -3,23 +3,30 @@ ul.list-tile {
   flex-flow: row wrap;
   justify-content: space-between;
   margin: 0;
+  padding: 0;
 }
 
 .listgroup ul li {
+  clear: both;
   list-style-type: none;
-  width: 47%;
-  margin: 0 10 20 0;
+  width: 27.3333%;
+  margin: 0 3% 2em 3%;
   padding: 0;
+  float: left;
 }
 
 .listgroup ul.list-tile>li a {
+  background: #FAFAFA;
+  border: 1px solid #D7D7D7;
+  border-radius: 5px;
+  padding: 8% 8% 9% 8%;
   box-sizing: border-box;
   margin: 0;
-  padding: 0;
+  height: 100%;
   width: auto;
-  border-top: none;
   text-decoration: none;
-  display: block;
+  display: grid;
+  grid-template-rows: 1fr auto auto;
   position: relative;
   outline: none;
   overflow: hidden;
@@ -30,24 +37,27 @@ ul.list-tile {
   border: 1px solid #D7D7D7;
   padding: 0;
   transition: color 0.3s ease;
+  object-fit: cover;
+  height: 100%;
 }
 
 .image {
   float: left;
-  width: 48%;
-  margin: 0 20px 20px 0;
-  padding-bottom: 0;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding-bottom: 20px;
+  grid-row: 1;
 }
 
 .listgroup ul.list-tile>li a .navigation-title {
   font-size: 13px;
-  font-size: 1.3rem;
   font-family: anova-med, Arial, Helvetica, sans-serif;
   font-weight: normal;
-  color: #f04b4b;
+  color: var(--gray7);
   display: block;
   padding: 0 0 .25em;
-  line-height: 1.3em;
+  line-height: 20px;
   text-transform: uppercase;
   transition: color 0.3s ease;
 }
@@ -59,6 +69,7 @@ ul.list-tile {
   font-size: 1.6 rem;
   padding: 0 0 .25em;
   transition: color 0.3s ease;
+  color: var(--blue);
 }
 
 .abstract {
