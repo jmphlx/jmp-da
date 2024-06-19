@@ -699,10 +699,12 @@ async function waitForLCP(lcpBlocks) {
 }
 
 /** JMP ADDED METHODS */
-function parseBlockOptions(block) {
+function parseBlockOptions(block, rowName) {
   const optionsObject = {};
+  const row = rowName === undefined ? 'options' : rowName;
+
   const optionName = block.firstElementChild?.children.item(0).textContent;
-  if (optionName.toLowerCase() === 'options') {
+  if (optionName.toLowerCase() === row) {
     const optionVal = block.firstElementChild?.children.item(1).textContent;
     const tempOptionsArray = optionVal.length > 1 ? optionVal.split(',') : {};
 
@@ -718,6 +720,38 @@ function parseBlockOptions(block) {
   return optionsObject;
 }
 
+/**
+ * Returns a list of properties listed in the block
+ * @param {string} route get the Json data from the route
+ * @returns {Object} the json data object
+*/
+async function getJsonFromUrl(route) {
+  try {
+    const response = await fetch(route);
+    if (!response.ok) return null;
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('getJsonFromUrl:', { error });
+  }
+  return null;
+}
+
+/**
+ * Returns if a given 2 or 4 digit language should have
+ * a valid index. Mainly used in case of listgroup in sandbox
+ * or other nonlanguage directory.
+ * @param {string} language
+ * @returns {Boolean} true if the index should exist.
+ */
+function languageIndexExists(language) {
+  const languageIndexes = [
+    'en', 'es', 'fr', 'zh', 'de', 'it', 'ko', 'ja',
+  ];
+  return languageIndexes.includes(language);
+}
+
 init();
 
 export {
@@ -730,7 +764,9 @@ export {
   decorateSections,
   decorateTemplateAndTheme,
   fetchPlaceholders,
+  getJsonFromUrl,
   getMetadata,
+  languageIndexExists,
   loadBlock,
   loadBlocks,
   loadCSS,

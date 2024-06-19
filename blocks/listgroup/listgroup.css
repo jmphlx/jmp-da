@@ -1,0 +1,67 @@
+ul.list-tile {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  margin: 0;
+}
+
+.listgroup ul li {
+  list-style-type: none;
+  width: 47%;
+  margin: 0 10 20 0;
+  padding: 0;
+}
+
+.listgroup ul.list-tile>li a {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  border-top: none;
+  text-decoration: none;
+  display: block;
+  position: relative;
+  outline: none;
+  overflow: hidden;
+}
+
+.listgroup ul.list-tile>li a img {
+  border-radius: 5px;
+  border: 1px solid #D7D7D7;
+  padding: 0;
+  transition: color 0.3s ease;
+}
+
+.image {
+  float: left;
+  width: 48%;
+  margin: 0 20px 20px 0;
+  padding-bottom: 0;
+}
+
+.listgroup ul.list-tile>li a .navigation-title {
+  font-size: 13px;
+  font-size: 1.3rem;
+  font-family: anova-med, Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  color: #f04b4b;
+  display: block;
+  padding: 0 0 .25em;
+  line-height: 1.3em;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.title {
+  color: #000;
+  font-family: anova-reg, Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-size: 1.6 rem;
+  padding: 0 0 .25em;
+  transition: color 0.3s ease;
+}
+
+.abstract {
+  color: #000;
+  font-size: .8rem;
+}
