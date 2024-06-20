@@ -18,7 +18,6 @@ div.section.copyright {
   display: flex;
   position: absolute;
   left: 0;
-  /* bottom: 0; */
   width: 100%;
   height: 50px;
   padding: 10px;
@@ -46,14 +45,17 @@ div.section.copyright {
       }
       @media (width < 900px) {
         display: block;
-        ul {
-          padding-left: 2em;
-          li {
-            a {
-              border-left: none;
-              margin-left: 0;
-              padding-left: 0;
-            }
+      }
+    }
+    @media (width < 900px) {
+      display: block;
+      ul {
+        padding-left: 1em;
+        li {
+          a {
+            border-left: 0;
+            margin-left: 0;
+            padding-left: 0;
           }
         }
       }
