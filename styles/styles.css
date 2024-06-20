@@ -70,7 +70,7 @@ html { font-size: 62.5%; }
 
   /* sizes */
   --heading-font-size-xxl: clamp(3.2rem, 4vw + 1rem, 5.5rem);
-  --heading-font-size-xl: clamp(28.rem, 3vw + 1rem, 4.2rem);
+  --heading-font-size-xl: clamp(2.8rem, 3vw + 1rem, 4.2rem);
   --heading-font-size-l: clamp(2.4rem, 2vw + 1rem, 3.4rem);
   --heading-font-size-m: clamp(2.1rem, 1.7vw + 1rem, 2.8rem);
   --heading-font-size-s: clamp(1.9rem, 1.7vw + 1rem, 2.3rem);
