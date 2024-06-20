@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
 }
+
 .columns50 {
   max-width: 1280px;
   margin: 0em auto 2em auto;
@@ -11,69 +12,114 @@
     align-items: center;
   }
 }
+
 .columns img {
   width: 100%;
 }
+
 .columns > div > div {
   order: 1;
 }
+
 .columns.shaded {
   background-color: #f1f1f1;
 }
+
 .columns > div > .columns-img-col {
   order: 0;
 }
+
 .columns > div > .columns-img-col img {
   display: block;
 }
+
 @media (width >=900px) {
   .columns > div {
     flex-direction: unset;
     gap: 32px;
   }
+
   .columns > div > div {
     flex: 1;
     order: unset;
   }
 }
+
 .columns.footer {
-  color: white;
+  color: white; 
   align-content: flex-start;
+  padding: 0;
+  margin: 20px 0;
+
   p {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     text-transform: uppercase;
     color: #fff;
     border-top: 1px solid #777;
     display: block;
     padding-top: 1.2em;
-    padding-bottom: 0.8em;
+    padding-bottom: 1em;
   }
+
+  p:last-child {
+    border-top: none;
+    padding-top: 0;
+    .icon {
+      display: inline-block !important;
+      margin-right: 4px;
+      margin-bottom: 4px;
+
+      img {
+        width: 22px;
+        height: 22px;
+        filter: grayscale(100) brightness(2.1);
+      }
+
+      &:hover {
+        filter: brightness(100);
+        transition: .3s;
+      }
+    }
+  }
+
   a {
     text-decoration: white;
     color: #c1c1c1;
+    padding: 0 0 1em .25em;
+    &:hover {
+      color: #fff;
+      transition: .3s;
+    } 
   }
+
   ul {
     list-style-type: none;
-    padding: 0 0 35px;
+    padding: 0 0 10px 0;
     margin: 0;
   }
+
+  li {
+    margin-left: 1em;
+    text-indent: -1em;
+  }
+
   li::before {
     color: #bbb;
     font-family: 'sasicons-103018' !important;
     content: '';
-    font-size: 80%;
+    font-size: 70%;
     width: 1em;
     text-align: center;
     line-height: 1;
-    margin-right: .3em;
   }
 }
+
 .text-link .button-container {
   a:link, a:hover {
     border: none;
     color: #0378cd;
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 1.6rem;
     margin: 5px 0;
     cursor: pointer;
     line-height: 2;
@@ -108,6 +154,7 @@
     margin: 0;
   }
 }
+/* hero columns quote */
 .promo-col-colors {
   background: linear-gradient(45deg, #242d35 15%, #44545d 95%);
   margin: 0em auto;
@@ -115,15 +162,18 @@
   div:nth-child(1) {
     color: #f5ba55;
   }
+
   div > div:nth-child(2) {
     border: 1px solid #69757d;
     color: #3ebdac;
     border-top: none;
     border-bottom: none;
   }
+
   div > div:nth-child(3) {
     color: #c479ba;
   }
+
   h3, div {
     text-align: center;
     margin-bottom: -.5em;
