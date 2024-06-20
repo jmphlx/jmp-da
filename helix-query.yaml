@@ -114,10 +114,10 @@ indices:
         value: |
           attribute(el, "content")
       capabilities:
-        select: head > meta[name="capabilitiy"]
+        select: head > meta[name="resource-type"]
         value: |
           attribute(el, "content")
       product:
-        select: head > meta[name="product"]
+        select: head > meta[name="resource-type"]
         value: |
           attribute(el, "content")

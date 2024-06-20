@@ -3,6 +3,16 @@
   flex-direction: column;
 }
 
+.columns50 {
+  max-width: 1280px;
+  margin: 0em auto 2em auto;
+  text-align: left;
+  div {
+    padding: 1% .9%;
+    align-items: center;
+  }
+}
+
 .columns img {
   width: 100%;
 }
@@ -107,10 +117,9 @@
 .text-link .button-container {
   a:link, a:hover {
     border: none;
-    color: #0378cd; /*  messing around */
+    color: #0378cd;
     text-decoration: none;
-    /* font-size: 15px; */
-    font-size: 1.6rem; /*  messing around */
+    font-size: 1.6rem;
     margin: 5px 0;
     cursor: pointer;
     line-height: 2;
@@ -121,18 +130,21 @@
     background: none;
   }
   a:hover {
-    color: black; /*  messing around */
+    color: black;
   }
   :after {
-    color: #f47723; /*  messing around */
-    content: " > "; /*  messing around */
+    color: #f47723; 
+    content: " > ";
   }
 }
 .promo-col {
   background: #ececec;
-  margin: 0em auto; /*  messing around */
+  text-align: left;
+  margin: 0em auto; 
   div {
+    max-width: 1280px;
     margin: 0 auto;
+    padding: 1em 0;
     p {
       font-size: .8em;
     }
@@ -145,7 +157,7 @@
 /* hero columns quote */
 .promo-col-colors {
   background: linear-gradient(45deg, #242d35 15%, #44545d 95%);
-  margin: 0em auto; /*  messing around */
+  margin: 0em auto;
   padding: 0 0 4em 0;
   div:nth-child(1) {
     color: #f5ba55;
@@ -165,7 +177,9 @@
   h3, div {
     text-align: center;
     margin-bottom: -.5em;
-    padding: 0 1em 1em;
+    padding: 0 1em .5em;
     color: #ffffff;
+    margin: .5em auto 0em auto;
+    max-width: 1280px;
   }
 }
