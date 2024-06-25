@@ -45,7 +45,7 @@ function orFilter(pageSelection, filterObject) {
         // Check if pageValue contains filter.
         const list = pageValue.split(',');
         const trimmedList = list.map((str) => str.trim().toLowerCase());
-        flag = trimmedList.includes(pageValue);
+        flag = trimmedList.includes(filterValue);
       } else {
         // both pageValue and filterValue are strings so test ===
         flag = filterValue === pageValue;
@@ -106,7 +106,7 @@ function getFilterOptions(block) {
   const filterOptions = {};
 
   while (block.firstElementChild !== undefined && block.firstElementChild !== null) {
-    const optionName = block.firstElementChild?.children.item(0).textContent.toLowerCase();
+    const optionName = block.firstElementChild?.children.item(0).textContent;
     let optionValue = block.firstElementChild?.children.item(1).textContent.toLowerCase();
     if (optionValue.indexOf(',') > -1) {
       optionValue = optionValue.split(',').map((str) => str.trim().toLowerCase());
