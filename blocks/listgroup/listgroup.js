@@ -139,7 +139,8 @@ export default async function decorate(block) {
   }
 
   const wrapper = document.createElement('ul');
-  wrapper.classList = 'listOfItems image-list list-tile';
+  const columns = optionsObject.columns !== undefined ? optionsObject.columns : 5;
+  wrapper.classList = `listOfItems image-list list-tile col-size-${columns}`;
 
   const limitObjects = optionsObject.limit;
   if (limitObjects !== undefined && pageSelection.length > limitObjects) {
@@ -151,12 +152,15 @@ export default async function decorate(block) {
     const cardLink = document.createElement('a');
     cardLink.href = item.path;
     cardLink.target = '_self';
-    cardLink.innerHTML = `
+    let htmlOutput = `
     <span class="navigation-title">${item.resourceType}</span>
-    <span class="title">${item.title}</span>
-    <span class="cmp-image image"><img src="${item.image}"/></span>
-    <span class="abstract">${item.description}</span>
-  `;
+    <span class="title">${item.title}</span>`;
+    if (optionsObject.images === undefined || optionsObject.images.toLowerCase() !== 'off') {
+      htmlOutput += `<span class="cmp-image image"><img src="${item.image}"/></span>`;
+    }
+    htmlOutput += `<span class="abstract">${item.description}</span>`;
+    cardLink.innerHTML = htmlOutput;
+
     listItem.append(cardLink);
     wrapper.append(listItem);
   });

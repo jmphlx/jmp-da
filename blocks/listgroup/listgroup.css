@@ -1,7 +1,6 @@
 ul.list-tile {
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-between;
   margin: 0;
   padding: 0;
 }
@@ -9,10 +8,22 @@ ul.list-tile {
 .listgroup ul li {
   clear: both;
   list-style-type: none;
-  width: 27.3333%;
-  margin: 0 3% 2em 3%;
   padding: 0;
   float: left;
+}
+
+.listgroup ul.col-size-3 li {
+  width: 27.3333%;
+  margin: 0 3% 2em 3%;
+}
+
+.listgroup ul.col-size-4 li {
+  width: 18%;
+}
+
+.listgroup ul.col-size-5 li {
+  width: 14%;
+  margin: 0 1.5% 2em 1.5%;
 }
 
 .listgroup ul.list-tile>li a {
