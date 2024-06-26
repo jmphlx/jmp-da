@@ -1,5 +1,5 @@
 @font-face {
-  font-family: anova-regular;
+  font-family: "anova-regular";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
@@ -8,7 +8,7 @@
 }
 
 @font-face {
-  font-family: anova-light;
+  font-family: "anova-light";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
@@ -17,7 +17,7 @@
 }
 
 @font-face {
-  font-family: anova-bold;
+  font-family: "anova-bold";
   font-style: normal;
   font-weight: 400;
   font-display: swap;

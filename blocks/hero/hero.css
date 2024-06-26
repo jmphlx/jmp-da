@@ -27,7 +27,6 @@ main .hero-container {
     position: relative;
     max-width: 1280px;
     margin: 0 auto;
-    text-align: left;
     display: block;
     z-index: 100;
     text-align: left;
@@ -69,7 +68,6 @@ main .hero-container {
     }
   }
   a.button {
-    border: white 1px solid;
     background: white;
     color: #0378cd;
     border: none;
