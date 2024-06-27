@@ -47,7 +47,7 @@
   padding: 0;
 }
 
-.embed .embed-placeholder-play button::before {
+.embed .embed-placeholder-play button:before {
   content: "";
   display: block;
   box-sizing: border-box;

@@ -52,7 +52,7 @@ ul.list-tile {
 
 .listgroup ul.list-tile>li a .navigation-title {
   font-size: 13px;
-  font-family: anova-med, Arial, Helvetica, sans-serif;
+  font-family: "anova-med", "Arial", "Helvetica", sans-serif;
   font-weight: normal;
   color: var(--gray7);
   display: block;
@@ -63,8 +63,7 @@ ul.list-tile {
 }
 
 .title {
-  color: #000;
-  font-family: anova-reg, Arial, Helvetica, sans-serif;
+  font-family: "anova-reg", "Arial", "Helvetica", sans-serif;
   font-weight: normal;
   font-size: 1.6 rem;
   padding: 0 0 .25em;
@@ -73,6 +72,6 @@ ul.list-tile {
 }
 
 .abstract {
-  color: #000;
+  color: #000000;
   font-size: .8rem;
 }

@@ -20,9 +20,9 @@ header nav {
   font-family: var(--body-font-family);
 }
 
-/* mobile */
+/* mobile
 @media (width >= 600px) {
-}
+} */
 
 /* tablet */
 @media (width < 900px) {
@@ -123,34 +123,34 @@ header nav .nav-hamburger button {
 }
 
 header nav .nav-hamburger-icon,
-header nav .nav-hamburger-icon::before,
-header nav .nav-hamburger-icon::after {
+header nav .nav-hamburger-icon:before,
+header nav .nav-hamburger-icon:after {
   box-sizing: border-box;
   display: block;
   position: relative;
   width: 20px;
 }
 
-header nav .nav-hamburger-icon::before,
-header nav .nav-hamburger-icon::after {
+header nav .nav-hamburger-icon:before,
+header nav .nav-hamburger-icon:after {
   content: '';
   position: absolute;
   background: currentcolor;
 }
 
 header nav[aria-expanded="false"] .nav-hamburger-icon,
-header nav[aria-expanded="false"] .nav-hamburger-icon::before,
-header nav[aria-expanded="false"] .nav-hamburger-icon::after {
+header nav[aria-expanded="false"] .nav-hamburger-icon:before,
+header nav[aria-expanded="false"] .nav-hamburger-icon:after {
   height: 2px;
   border-radius: 2px;
   background: currentcolor;
 }
 
-header nav[aria-expanded="false"] .nav-hamburger-icon::before {
+header nav[aria-expanded="false"] .nav-hamburger-icon:before {
   top: -6px;
 }
 
-header nav[aria-expanded="false"] .nav-hamburger-icon::after {
+header nav[aria-expanded="false"] .nav-hamburger-icon:after {
   top: 6px;
 }
 
@@ -158,8 +158,8 @@ header nav[aria-expanded="true"] .nav-hamburger-icon {
   height: 22px;
 }
 
-header nav[aria-expanded="true"] .nav-hamburger-icon::before,
-header nav[aria-expanded="true"] .nav-hamburger-icon::after {
+header nav[aria-expanded="true"] .nav-hamburger-icon:before,
+header nav[aria-expanded="true"] .nav-hamburger-icon:after {
   top: 3px;
   left: 1px;
   transform: rotate(45deg);
@@ -169,7 +169,7 @@ header nav[aria-expanded="true"] .nav-hamburger-icon::after {
   border-radius: 2px;
 }
 
-header nav[aria-expanded="true"] .nav-hamburger-icon::after {
+header nav[aria-expanded="true"] .nav-hamburger-icon:after {
   top: unset;
   bottom: 3px;
   transform: rotate(-45deg);
@@ -272,7 +272,7 @@ header nav .nav-sections ul > li > ul > li {
     cursor: pointer;
   }
 
-  header nav .nav-sections .nav-drop::after {
+  header nav .nav-sections .nav-drop:after {
     content: '';
     display: inline-block;
     position: absolute;
@@ -286,7 +286,7 @@ header nav .nav-sections ul > li > ul > li {
     border-width: 1px 1px 0 0;
   }
 
-  header nav .nav-sections .nav-drop[aria-expanded="true"]::after {
+  header nav .nav-sections .nav-drop[aria-expanded="true"]:after {
     top: 50%;
     transform: rotate(315deg);
   }
@@ -298,29 +298,8 @@ header nav .nav-sections ul > li > ul > li {
     font-size: var(--body-font-size-xs);
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li {
-    flex: 0 1 auto;
-    position: relative;
-    font-weight: 500;
-  }
-
-  header nav .nav-sections .default-content-wrapper > ul > li > ul {
-    display: none;
-    position: relative;
-    &::before {
-      width: 0; 
-      height: 0; 
-      top: 0 !important;
-      left: 50% !important;
-      transform: translateX(-50%);
-      border-left: 6px solid transparent;
-      border-right: 6px solid transparent;
-      border-top: 6px solid var(--orange);
-    }
-  }
-
   header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded="false"] {
-    border-bottom: 3px solid rgba(0,0,0,0.0);
+    border-bottom: 3px solid rgb(0 0 0 / 0);
   }
   header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded="true"] {
     border-bottom: 3px solid var(--orange);
@@ -342,18 +321,10 @@ header nav .nav-sections ul > li > ul > li {
     }
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li > ul::before {
-    content: '';
-    position: absolute;
-    top: -8px;
-    left: 8px;
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 8px solid var(--light-color);
-  }
   header nav .nav-sections .default-content-wrapper > ul > li  {
+    flex: 0 1 auto;
+    position: relative;
+    font-weight: 500;
     p {
       line-height: 62px;
       padding-top: 4px;
@@ -368,8 +339,8 @@ header nav .nav-sections ul > li > ul > li {
           padding: 6px 16px;
           font-size: 16px;
           border-radius: 5px;
-          color: #fff;
-          font-family: "anova-bold";
+          color: #ffffff;
+          font-family: "anova-bold", sans-serif;
         }
       }
       &:hover {
