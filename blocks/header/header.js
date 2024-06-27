@@ -4,7 +4,7 @@ import {
 } from '../../scripts/scripts.js';
 import { getMetadata } from '../../scripts/aem.js';
 
-//import { createSearchForm } from '../../scripts/search-utils.js';
+// import { createSearchForm } from '../../scripts/search-utils.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
@@ -14,7 +14,7 @@ const isDesktop = window.matchMedia('(min-width: 900px)');
  */
 async function fetchNavigationHTML() {
   const navMeta = getMetadata('nav');
-  //const navPath = navMeta ? new URL(navMeta) : '/nav';
+  // const navPath = navMeta ? new URL(navMeta) : '/nav';
 
   const response = await fetch(`${navMeta}.plain.html`);
   return response.text();
@@ -86,6 +86,12 @@ function toggleMenu(nav, forceExpanded = null) {
   }
 }
 
+function addNavDropToggle(section, sections) {
+  section.addEventListener('click', () => {
+    toggleNavDrop(section, sections);
+  });
+}
+
 async function buildMobileMenu(nav) {
   const mobileMenu = createElement('div', { class: 'nav-mobile-menu' });
   let sections = nav.querySelector('.nav-sections');
@@ -121,13 +127,6 @@ async function buildMobileMenu(nav) {
   nav.append(mobileMenu);
 }
 
-function addNavDropToggle(section, sections) {
-  section.addEventListener('click', () => {
-    toggleNavDrop(section, sections);
-  });
-
-}
-
 /**
  * decorates the header, mainly the nav
  * @param {Element} block The header block element
@@ -156,29 +155,29 @@ export default async function decorate(block) {
         navSection.classList.add('nav-drop');
         addNavDropToggle(navSection, navSections);
 
-        // const sectionLink = navSection.querySelector(':scope > a');
-        // if (sectionLink) {
-        //   const sectionLi = createElement('li', { class: 'nav-section-link' });
-        //   sectionLi.append(sectionLink.cloneNode(true));
-        //   subList.insertAdjacentElement('afterbegin', sectionLi);
+        const sectionLink = navSection.querySelector(':scope > a');
+        if (sectionLink) {
+          const sectionLi = createElement('li', { class: 'nav-section-link' });
+          sectionLi.append(sectionLink.cloneNode(true));
+          subList.insertAdjacentElement('afterbegin', sectionLi);
 
-        //   sectionLink.className = 'nav-section-heading';
-        //   sectionLink.role = 'button';
+          sectionLink.className = 'nav-section-heading';
+          sectionLink.role = 'button';
 
-        //   const sectionUrl = new URL(sectionLink.href);
-        //   if (sectionUrl.pathname === window.location.pathname) {
-        //     navSection.setAttribute('aria-current', 'page');
-        //   } else {
-        //     const parentPath = window.location.pathname
-        //       .split('/')
-        //       .slice(0, -1)
-        //       .join('/');
-        //     if (sectionUrl.pathname === parentPath) {
-        //       navSection.setAttribute('aria-current', 'page');
-        //     }
-        //   }
-        //   sectionLink.setAttribute('href', '#');
-        // }
+          const sectionUrl = new URL(sectionLink.href);
+          if (sectionUrl.pathname === window.location.pathname) {
+            navSection.setAttribute('aria-current', 'page');
+          } else {
+            const parentPath = window.location.pathname
+              .split('/')
+              .slice(0, -1)
+              .join('/');
+            if (sectionUrl.pathname === parentPath) {
+              navSection.setAttribute('aria-current', 'page');
+            }
+          }
+          sectionLink.setAttribute('href', '#');
+        }
       }
     });
   }
@@ -206,23 +205,23 @@ export default async function decorate(block) {
   const navTools = nav.querySelector('.nav-tools');
   if (navTools) {
     navTools.querySelectorAll(':scope > ul > li').forEach(async (navTool) => {
-      const isSearch = navTool.querySelector('.fa-search');
+      // const isSearch = navTool.querySelector('.fa-search');
 
-      if (isSearch) {
-        navTool.setAttribute('aria-expanded', 'false');
-        navTool.classList.add('search-item');
-        const searchAction = navTool.querySelector('a').href;
-        const searchForm = await createSearchForm({ type: 'minimal', action: searchAction });
-        navTool.append(searchForm);
-        searchForm.hidden = true;
+      // if (isSearch) {
+      //   navTool.setAttribute('aria-expanded', 'false');
+      //   navTool.classList.add('search-item');
+      //   const searchAction = navTool.querySelector('a').href;
+      //   // const searchForm = await createSearchForm({ type: 'minimal', action: searchAction });
+      //   navTool.append(searchForm);
+      //   searchForm.hidden = true;
 
-        navTool.querySelector('a').addEventListener('click', (e) => {
-          e.preventDefault();
-          navTool.querySelector('.search-form-container').toggleAttribute('hidden');
-          const isExpanded = navTool.getAttribute('aria-expanded') === 'true' || false;
-          navTool.setAttribute('aria-expanded', !isExpanded);
-        });
-      }
+      //   navTool.querySelector('a').addEventListener('click', (e) => {
+      //     e.preventDefault();
+      //     navTool.querySelector('.search-form-container').toggleAttribute('hidden');
+      //     const isExpanded = navTool.getAttribute('aria-expanded') === 'true' || false;
+      //     navTool.setAttribute('aria-expanded', !isExpanded);
+      //   });
+      // }
 
       const subList = navTool.querySelector('ul');
       if (subList) {
@@ -242,7 +241,7 @@ export default async function decorate(block) {
   }
 
   const utilRowWrapper = createElement('div', { class: 'nav-utility-row' });
-  utilRowWrapper.append(nav.querySelector('.nav-brand'), navTools);
+  utilRowWrapper.append(navTools);
   nav.prepend(utilRowWrapper);
 
   await buildMobileMenu(nav);
