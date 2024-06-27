@@ -747,7 +747,7 @@ async function getJsonFromUrl(route) {
  */
 function languageIndexExists(language) {
   const languageIndexes = [
-    'en', 'es', 'fr', 'zh', 'de', 'it', 'ko', 'ja',
+    'en', 'es', 'fr', 'zh', 'de', 'it', 'ko', 'ja', 'zh_hans', 'zh_hant'
   ];
   return languageIndexes.includes(language);
 }
