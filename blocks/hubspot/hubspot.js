@@ -4,34 +4,37 @@
  */
 /*  global hbspt  */
 
-const embedHubspot = (fRegion, fPortalId, fFormId, sfdcCampaignId = null) => {
+const embedHubspot = (fRegion, fPortalId, fFormId, sfdcCampaignId = null, lastAction = null, leadSource = null) => {
   // clean up hubspot url query paramaters
 
   const scriptHubspot = document.createElement('script');
   scriptHubspot.setAttribute('type', 'text/javascript');
   scriptHubspot.src = 'https://js.hsforms.net/forms/embed/v2.js';
 
+  if (lastAction){
+    lastAction = lastAction.textContent;
+  }
+  
+  if (leadSource){
+    leadSource = leadSource.textContent;
+  }
+  
   if (sfdcCampaignId) {
     // check if form has a salesforce campaign id
-    const fsfdcCampaignIdVal = sfdcCampaignId.textContent;
-    scriptHubspot.addEventListener('load', () => {
-      hbspt.forms.create({
-        region: fRegion,
-        portalId: fPortalId,
-        formId: fFormId,
-        sfdcCampaignIdVal: fsfdcCampaignIdVal,
-      });
+    sfdcCampaignId = sfdcCampaignId.textContent;
+  } 
+  
+  scriptHubspot.addEventListener('load', () => {
+    hbspt.forms.create({
+      region: fRegion,
+      portalId: fPortalId,
+      formId: fFormId,
+      sfdcCampaignIdVal: sfdcCampaignId,
+      lastaction: lastAction,
+      leadsource: leadSource,
     });
-  } else {
-    // function to call if it doesn't
-    scriptHubspot.addEventListener('load', () => {
-      hbspt.forms.create({
-        region: fRegion,
-        portalId: fPortalId,
-        formId: fFormId,
-      });
-    });
-  }
+  });
+  
   document.head.append(scriptHubspot);
 
   const embedHTML = `
@@ -42,19 +45,19 @@ const embedHubspot = (fRegion, fPortalId, fFormId, sfdcCampaignId = null) => {
   return embedHTML;
 };
 
-const loadEmbed = (block, region, portalId, formID) => {
+const loadEmbed = (block, region, portalId, formID, sfdcCampaignId, lastAction, leadSource) => {
   if (block.classList.contains('form-is-loaded')) {
     return;
   }
 
-  block.innerHTML = embedHubspot(region, portalId, formID);
+  block.innerHTML = embedHubspot(region, portalId, formID, sfdcCampaignId, lastAction, leadSource);
   block.classList = 'block embed embed-hubspot';
 
   block.classList.add('form-is-loaded');
 };
 
 export default function decorate(block) {
-  const [region, portalId, formID, sfdcCampaignId] = [...block.children].map(
+  const [region, portalId, formID, sfdcCampaignId, lastAction, leadSource] = [...block.children].map(
     (c) => c.firstElementChild,
   ); // mapping variables
 
@@ -68,7 +71,7 @@ export default function decorate(block) {
     // calling embed function
     if (entries.some((e) => e.isIntersecting)) {
       observer.disconnect();
-      loadEmbed(block, regionVal, portalIdVal, formIDVal, sfdcCampaignId);
+      loadEmbed(block, regionVal, portalIdVal, formIDVal, sfdcCampaignId, lastAction, leadSource);
     }
   });
   observer.observe(block);
