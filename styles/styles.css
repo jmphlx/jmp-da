@@ -15,12 +15,12 @@ html { font-size: 62.5%; }
 
 :root {
   /* colors */
-  --text-color: #333;
+  --text-color: #333333;
   --link-color: #0378cd;
   --link-hover-color: #3aaafc;
-  --background-color: #fff;
-  --overlay-background-color: #eee;
-  --highlight-background-color: #ccc;
+  --background-color: #ffffff;
+  --overlay-background-color: #eeeeee;
+  --highlight-background-color: #cccccc;
   --blue: #0378cd;
   --orange: #ff5000;
   --blueLight:#61CAE5;
@@ -37,16 +37,16 @@ html { font-size: 62.5%; }
   --blueDark:#002753;
 
   /* JMP Brand neutral */
-  --white:#FFF;
+  --white:#FFFFFF;
   --grayDark:#172328;
   --grayMedium:#44545D;	
   --grayLight:#8F989E;
-  --black:#000;
-  --gray3:#333;
-  --gray5:#555;
-  --gray6:#666;
-  --gray7:#777;
-  --gray9:#999;
+  --black:#000000;
+  --gray3:#333333;
+  --gray5:#555555;
+  --gray6:#666666;
+  --gray7:#777777;
+  --gray9:#999999;
   --grayRule:#D0D0D0;
 
   /* Color variables */
@@ -82,7 +82,7 @@ html { font-size: 62.5%; }
 }
 
 @font-face {
-  font-family: roboto-fallback;
+  font-family: "roboto-fallback";
   size-adjust: 100.06%;
   ascent-override: 95%;
   src: local('Arial');
@@ -275,7 +275,7 @@ a.button:hover {
   /* npm run lint expects a modern color notation.  
   background: rgba(0, 0, 0, 40%);
   */
-  background: #0066;
+  background: #00006666;
 }
 
 /* Dark Button */
@@ -283,8 +283,8 @@ a.button:hover {
 .dark-button-center {
   a.button {
     text-align: center;
-    background: #0020;
-    border: 1px solid #fff;
+    background: #00002200;
+    border: 1px solid #ffffff;
     border-radius: 8px;
     min-width: 200px;
     margin: 0 auto;
@@ -297,14 +297,14 @@ a.button:hover {
 
   a.button:hover {
     color: #fcfcfc;
-    background: #0066;
+    background: #00006666;
     border: 1px solid black;
     min-width: 200px;
   }	
 }
 
 .sasfont  {
-  a::before {
+  a:before {
     color: #eea879;
     font-family: 'sasicons-103018' !important;
     content: '';
@@ -319,7 +319,7 @@ a.button:hover {
 
 .sub-capability-cards {
   ul {
-    background: rgba(0 0 0 / 2.5%);
+    background: rgba(0 0 0 / 0.025);
     column-count: 3;
     margin: 0 0 10px;
     padding: 5px 20px 20px;

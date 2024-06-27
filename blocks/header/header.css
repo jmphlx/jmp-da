@@ -1,6 +1,6 @@
-/* header and nav layout */
+/* header and nav layout - touch file */
 header .nav-wrapper {
-  background-color: var(--background-color);
+  background-color: #ffffff;
   width: 100%;
   z-index: 2;
   position: relative;
@@ -35,7 +35,8 @@ header nav {
   }
 }
 
-@media (width >= 900px) {
+/* tablet */
+@media (width < 900px) {
   header nav {
     justify-content: space-between;
     padding: 0;
@@ -43,10 +44,61 @@ header nav {
     'utility utility' 36px 
     'brand sections' 64px / 1fr 1fr;
   }
-
   header nav[aria-expanded="true"] {
-    min-height: 0;
-    overflow: visible;
+    grid-template:
+    'tools tools tools' 36px
+    'brand brand hamburger' 64px
+    'sections sections sections' 1fr / auto 1fr auto; 
+    overflow-y: auto;
+    min-height: 100vh;
+  }
+  header nav .nav-sections {
+    border-top: 3px solid #eeeeee;
+    background-color: #fafafa !important;
+  }
+  header nav .nav-sections ul > li {
+    padding-top: 10px;
+  }
+  header nav .nav-sections ul > li > ul > li {
+    padding: 12px 0 0 0;
+  }
+  header nav .nav-sections ul > li > ul {
+    border-bottom: 1px solid #eeeeee;
+    padding-bottom: 20px;
+  }
+  /* tools */
+  header nav .nav-tools {
+    grid-area: tools;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    height: 36px;
+    background-color: #fafafa;
+    align-items: center;
+    > .default-content-wrapper {
+      display: inline-flex;
+      margin: 0;
+      position: relative;
+      padding: 0 1rem;
+      > p {
+        align-self: center;
+        > picture {
+          padding-right: 15px;
+          > img {
+            color: #333333;
+            height: 18px;
+            width: 18px;
+          }
+        }
+      }
+      @media (width >= 900px) {
+        padding: 0 2rem;
+        max-width:none
+      }
+      > ul {
+        display: inline-block;
+      }
+    }
   }
 }
 
@@ -65,6 +117,8 @@ header nav .nav-hamburger {
   height: 22px;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+  padding: 0 1rem;
 }
 
 header nav .nav-hamburger button {
@@ -82,8 +136,8 @@ header nav .nav-hamburger button {
 }
 
 header nav .nav-hamburger-icon,
-header nav .nav-hamburger-icon::before,
-header nav .nav-hamburger-icon::after {
+header nav .nav-hamburger-icon:before,
+header nav .nav-hamburger-icon:after {
   box-sizing: border-box;
   display: block;
   position: relative;
@@ -91,26 +145,26 @@ header nav .nav-hamburger-icon::after {
   transition: transform .5s ease;
 }
 
-header nav .nav-hamburger-icon::before,
-header nav .nav-hamburger-icon::after {
+header nav .nav-hamburger-icon:before,
+header nav .nav-hamburger-icon:after {
   content: '';
   position: absolute;
   background: currentcolor;
 }
 
 header nav[aria-expanded="false"] .nav-hamburger-icon,
-header nav[aria-expanded="false"] .nav-hamburger-icon::before,
-header nav[aria-expanded="false"] .nav-hamburger-icon::after {
+header nav[aria-expanded="false"] .nav-hamburger-icon:before,
+header nav[aria-expanded="false"] .nav-hamburger-icon:after {
   height: 2px;
   border-radius: 2px;
   background: currentcolor;
 }
 
-header nav[aria-expanded="false"] .nav-hamburger-icon::before {
+header nav[aria-expanded="false"] .nav-hamburger-icon:before {
   top: -6px;
 }
 
-header nav[aria-expanded="false"] .nav-hamburger-icon::after {
+header nav[aria-expanded="false"] .nav-hamburger-icon:after {
   top: 6px;
 }
 
@@ -118,8 +172,8 @@ header nav[aria-expanded="true"] .nav-hamburger-icon {
   height: 22px;
 }
 
-header nav[aria-expanded="true"] .nav-hamburger-icon::before,
-header nav[aria-expanded="true"] .nav-hamburger-icon::after {
+header nav[aria-expanded="true"] .nav-hamburger-icon:before,
+header nav[aria-expanded="true"] .nav-hamburger-icon:after {
   top: 3px;
   left: 1px;
   transform: rotate(45deg);
@@ -129,7 +183,7 @@ header nav[aria-expanded="true"] .nav-hamburger-icon::after {
   border-radius: 2px;
 }
 
-header nav[aria-expanded="true"] .nav-hamburger-icon::after {
+header nav[aria-expanded="true"] .nav-hamburger-icon:after {
   top: unset;
   bottom: 3px;
   transform: rotate(-45deg);
@@ -233,6 +287,9 @@ header nav .nav-sections ul > li > ul > li {
     visibility: visible;
     white-space: nowrap;
     padding: 0 2rem 0 0;
+  }
+  header nav .section > div {
+    max-width: none;
   }
 
   header nav .nav-sections ul {
