@@ -700,7 +700,6 @@ async function waitForLCP(lcpBlocks) {
 
 /** JMP ADDED METHODS */
 function parseBlockOptions(block, rowName) {
-  console.log(block);
   const optionsObject = {};
   const row = rowName === undefined ? 'options' : rowName;
 
@@ -728,7 +727,7 @@ function parseBlockOptions(block, rowName) {
 */
 async function getJsonFromUrl(route) {
   try {
-    const response = await fetch(route);
+    const response = await window.fetch(route);
     if (!response.ok) return null;
     const json = await response.json();
     return json;

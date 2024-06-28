@@ -104,7 +104,6 @@ function andFilter(pageSelection, filterObject) {
 
 function getFilterOptions(block) {
   const filterOptions = {};
-
   while (block.firstElementChild !== undefined && block.firstElementChild !== null) {
     const optionName = block.firstElementChild?.children.item(0).textContent;
     let optionValue = block.firstElementChild?.children.item(1).textContent.toLowerCase();
@@ -118,7 +117,6 @@ function getFilterOptions(block) {
 }
 
 export default async function decorate(block) {
-  console.log(block);
   const optionsObject = parseBlockOptions(block);
   block.firstElementChild.remove();
 
@@ -130,6 +128,7 @@ export default async function decorate(block) {
   if (languageIndexExists(pageLanguage)) {
     url = `/jmp-${pageLanguage}.json`;
   }
+
   const { data: allPages } = await getJsonFromUrl(url);
 
   let pageSelection = allPages;
