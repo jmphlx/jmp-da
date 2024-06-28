@@ -7,10 +7,18 @@
   max-width: 1280px;
   margin: 0em auto 2em auto;
   text-align: left;
+  img{
+    border-radius: 5px;
+   /* border: 1px #bbb solid; */
+  }
   div {
     padding: 1% .9%;
     align-items: center;
+    @media only screen and (max-width: 600px) {
+      padding: 3%;
+    }
   }
+  
 }
 
 .columns img {
@@ -141,10 +149,14 @@
   background: #ececec;
   text-align: left;
   margin: 0em auto; 
+  padding: .5em;
   div {
     max-width: 1280px;
     margin: 0 auto;
     padding: 1em 0;
+    @media only screen and (max-width: 600px) {
+      padding: 3%;
+    }
     p {
       font-size: .8em;
     }
@@ -159,6 +171,7 @@
   background: linear-gradient(45deg, #242d35 15%, #44545d 95%);
   margin: 0em auto;
   padding: 0 0 4em 0;
+  
   div:nth-child(1) {
     color: #f5ba55;
   }
@@ -168,6 +181,9 @@
     color: #3ebdac;
     border-top: none;
     border-bottom: none;
+    @media only screen and (max-width: 600px) {
+      border:none;
+    }
   }
 
   div > div:nth-child(3) {

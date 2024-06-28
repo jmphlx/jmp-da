@@ -1,18 +1,26 @@
 /* hero columns quote - touch file */
+.quote-wrapper{
+  padding:32px;
+  text-align: center;
+  
+    @media only screen and (max-width: 600px) {
+    padding: 0px;
+  }
+}
 .quote blockquote {
-  margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 40px 0 32px;
   max-width: 960px;
   display: block;
-
-  margin:4.5em auto; /*  messing around */
+  margin:4.5em auto;
+    @media only screen and (max-width: 600px) {
+    padding: 0 10px;
+  }
 }
 
 .quote blockquote .quote-quotation {
   text-align: center;
   font-family: anova-light,Arial,Helvetica,sans-serif;
   font-weight: normal;
-  font-size: 1.8rem; /*  messing around */
   color: #643695;
   margin: 20px;
   position: relative;
