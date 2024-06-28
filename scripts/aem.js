@@ -700,6 +700,7 @@ async function waitForLCP(lcpBlocks) {
 
 /** JMP ADDED METHODS */
 function parseBlockOptions(block, rowName) {
+  console.log(block);
   const optionsObject = {};
   const row = rowName === undefined ? 'options' : rowName;
 

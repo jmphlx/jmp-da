@@ -7,7 +7,7 @@ import {
 /*
  * Check if an array includes all values of another array
  */
-function arrayIncludesAllValues(filterValues, pageValues) {
+export function arrayIncludesAllValues(filterValues, pageValues) {
   return pageValues.every((val) => filterValues.includes(val));
 }
 
@@ -118,6 +118,7 @@ function getFilterOptions(block) {
 }
 
 export default async function decorate(block) {
+  console.log(block);
   const optionsObject = parseBlockOptions(block);
   block.firstElementChild.remove();
 
