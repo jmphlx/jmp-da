@@ -14,9 +14,10 @@ const isDesktop = window.matchMedia('(min-width: 900px)');
  */
 async function fetchNavigationHTML() {
   const navMeta = getMetadata('nav');
-  // const navPath = navMeta ? new URL(navMeta) : '/nav';
+  console.log(navMeta)
+  const navPath = navMeta ? new URL(navMeta) : '/nav';
 
-  const response = await fetch(`${navMeta}.plain.html`);
+  const response = await fetch(`${navPath}.plain.html`);
   return response.text();
 }
 
