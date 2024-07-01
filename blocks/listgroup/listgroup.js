@@ -14,14 +14,14 @@ export function arrayIncludesAllValues(filterValues, pageValues) {
 /*
  * Check if an array contains any of the values of another array.
  */
-function arrayIncludesSomeValues(filterValues, pageValues) {
+export function arrayIncludesSomeValues(filterValues, pageValues) {
   return pageValues.some((val) => filterValues.includes(val));
 }
 
 /*
  * Apply all filters as an OR. If any condition is true, include the page in the results.
  */
-function orFilter(pageSelection, filterObject) {
+export function orFilter(pageSelection, filterObject) {
   const filteredData = pageSelection.filter((item) => {
     let flag = false;
     Object.keys(filterObject).forEach((key) => {
@@ -60,7 +60,7 @@ function orFilter(pageSelection, filterObject) {
  * Apply all filters as an AND. All conditions must be true in order
  * to include the page in the results.
  */
-function andFilter(pageSelection, filterObject) {
+export function andFilter(pageSelection, filterObject) {
   const filteredData = pageSelection.filter((item) => {
     let flag = true;
     try {
@@ -86,7 +86,7 @@ function andFilter(pageSelection, filterObject) {
            * Check if pageValue contains filter. */
           const list = pageValue.split(',');
           const trimmedList = list.map((str) => str.trim().toLowerCase());
-          if (!trimmedList.includes(pageValue)) {
+          if (!trimmedList.includes(filterValue)) {
             throw new Error('condition not met');
           }
         // both pageValue and filterValue are strings so test ===
