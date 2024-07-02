@@ -30,7 +30,7 @@
   display: none;
 }
 
-.accordion details summary::after {
+.accordion details summary:after {
   content: "";
   position: absolute;
   top: 50%;
@@ -43,7 +43,7 @@
   transition: transform 0.2s;
 }
 
-.accordion details[open] summary::after {
+.accordion details[open] summary:after {
   transform: translateY(-50%) rotate(-45deg);
 }
 

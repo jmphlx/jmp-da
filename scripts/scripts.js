@@ -71,6 +71,98 @@ function buildAutoBlocks(main) {
 }
 */
 
+/* JMP HEADER */
+/**
+ * Wraps images followed by links within a matching <a> tag.
+ * @param {Element} container The container element
+ */
+export function wrapImgsInLinks(container) {
+  const ignorePatterns = ['/fragments/', '/forms/'];
+  const pictures = container.querySelectorAll('picture');
+  pictures.forEach((pic) => {
+    // need to deal with 2 use cases here
+    // 1) <picture><br/><a>
+    // 2) <p><picture></p><p><a></p>
+    if (pic.nextElementSibling && pic.nextElementSibling.tagName === 'BR'
+      && pic.nextElementSibling.nextElementSibling && pic.nextElementSibling.nextElementSibling.tagName === 'A') {
+      const link = pic.nextElementSibling.nextElementSibling;
+      if (link.textContent.includes(link.getAttribute('href'))) {
+        if (ignorePatterns.some((pattern) => link.getAttribute('href').includes(pattern))) {
+          return;
+        }
+        pic.nextElementSibling.remove();
+        link.innerHTML = pic.outerHTML;
+        pic.replaceWith(link);
+        return;
+      }
+    }
+
+    const parent = pic.parentNode;
+    if (!parent.nextElementSibling) {
+      // eslint-disable-next-line no-console
+      console.warn('no next element');
+      return;
+    }
+    const nextSibling = parent.nextElementSibling;
+    if (parent.tagName !== 'P' || nextSibling.tagName !== 'P' || nextSibling.children.length > 1) {
+      // eslint-disable-next-line no-console
+      console.warn('next element not viable link container');
+      return;
+    }
+    const link = nextSibling.querySelector('a');
+    if (link && link.textContent.includes(link.getAttribute('href'))) {
+      if (ignorePatterns.some((pattern) => link.getAttribute('href').includes(pattern))) {
+        return;
+      }
+      link.parentElement.remove();
+      link.innerHTML = pic.outerHTML;
+      pic.replaceWith(link);
+    }
+  });
+}
+
+/**
+ * create an element.
+ * @param {string} tagName the tag for the element
+ * @param {object} props properties to apply
+ * @param {string|Element} html content to add
+ * @returns the element
+ */
+export function createElement(tagName, props, html) {
+  const elem = document.createElement(tagName);
+  if (props) {
+    Object.keys(props).forEach((propName) => {
+      const val = props[propName];
+      if (propName === 'class') {
+        const classesArr = (typeof val === 'string') ? [val] : val;
+        elem.classList.add(...classesArr);
+      } else {
+        elem.setAttribute(propName, val);
+      }
+    });
+  }
+
+  if (html) {
+    const appendEl = (el) => {
+      if (el instanceof HTMLElement || el instanceof SVGElement) {
+        elem.append(el);
+      } else {
+        elem.insertAdjacentHTML('beforeend', el);
+      }
+    };
+
+    if (Array.isArray(html)) {
+      html.forEach(appendEl);
+    } else {
+      appendEl(html);
+    }
+  }
+
+  return elem;
+}
+
+/* JMP HEADER END */
+
 /**
  * Decorates the main element.
  * @param {Element} main The main element

@@ -56,7 +56,7 @@
   padding: 1rem;
   margin: 1.5rem 3rem;
   color: white;
-  background-color: rgba(0 0 0 / 50%);
+  background-color: rgba(0 0 0 / 0.5);
   position: relative;
   width: var(--slide-content-width, auto);
 }
@@ -72,13 +72,13 @@
   height: 1rem;
   padding: 0;
   border-radius: 1rem;
-  background-color: rgba(0 0 0 / 25%);
+  background-color: rgba(0 0 0 / 0.25);
 }
 
 .carousel .carousel-slide-indicator button:disabled,
 .carousel .carousel-slide-indicator button:hover,
 .carousel .carousel-slide-indicator button:focus-visible {
-  background-color: rgba(0 0 0 / 80%);
+  background-color: rgba(0 0 0 / 0.8);
 }
 
 .carousel .carousel-slide-indicator span,
@@ -115,15 +115,15 @@
   width: 2rem;
   height: 2rem;
   position: relative;
-  background-color: rgba(0 0 0 / 25%);
+  background-color: rgba(0 0 0 / 0.25);
 }
 
 .carousel .carousel-navigation-buttons button:hover,
 .carousel .carousel-navigation-buttons button:focus-visible {
-  background-color: rgba(0 0 0 / 80%);
+  background-color: rgba(0 0 0 / 0.8);
 }
 
-.carousel .carousel-navigation-buttons button::after {
+.carousel .carousel-navigation-buttons button:after {
   display: block;
   content: "";
   border: 3px white solid;
@@ -137,7 +137,7 @@
   transform: translate(-50%, -50%) rotate(-135deg);
 }
 
-.carousel .carousel-navigation-buttons button.slide-next::after {
+.carousel .carousel-navigation-buttons button.slide-next:after {
   transform: translate(-50%, -50%)  rotate(45deg);
   left: calc(50% - 3px);
 }
@@ -153,7 +153,7 @@
     height: 3rem;
   }
 
-  .carousel .carousel-navigation-buttons button::after {
+  .carousel .carousel-navigation-buttons button:after {
     width: 1rem;
     height: 1rem;
   }
