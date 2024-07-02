@@ -165,6 +165,9 @@ border: white 1px solid;
 .button-group {
 /*  display: flex;
   justify-content: space-evenly;
+    padding: 32px;
+  min-height: 400px;
+  overflow: hidden;
   */
 }
 
@@ -177,9 +180,7 @@ border: white 1px solid;
 
 
 
-  padding: 32px;
-  min-height: 400px;
-  overflow: hidden;
+
   picture {
     overflow: hidden;
     position: absolute;
@@ -213,7 +214,7 @@ border: white 1px solid;
       max-width: 85%;
     }
   }
-}
+
 .button-group p {
   display: inline-block;
   margin: 3% 3% 0 0;
