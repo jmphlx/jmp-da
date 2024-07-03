@@ -4,40 +4,47 @@
  */
 /*  global hbspt  */
 
-const embedHubspot = (fRegion, fPortalId, fFormId, sfdcCampaignId = null, lastAction = null, leadSource = null) => {
+const embedHubspot = (
+  fRegion,
+  fPortalId,
+  fFormId,
+  sfdcCampaignId = null,
+  lastAction = null,
+  leadSource = null,
+) => {
   // clean up hubspot url query paramaters
 
   const scriptHubspot = document.createElement('script');
   scriptHubspot.setAttribute('type', 'text/javascript');
   scriptHubspot.src = 'https://js.hsforms.net/forms/embed/v2.js';
 
-  if (lastAction){
+  if (lastAction) {
     // check if form has last action field
     lastAction = lastAction.textContent;
   }
-  
-  if (leadSource){
-    //check if form has lead source field
+
+  if (leadSource) {
+    // check if form has lead source field
     leadSource = leadSource.textContent;
   }
-  
+
   if (sfdcCampaignId) {
     // check if form has a salesforce campaign id
     sfdcCampaignId = sfdcCampaignId.textContent;
-  } 
+  }
 
-  //adds event listener to add embed code on load
+  // adds event listener to add embed code on load
   scriptHubspot.addEventListener('load', () => {
     hbspt.forms.create({
       region: fRegion,
       portalId: fPortalId,
       formId: fFormId,
-      sfdcCampaignId: sfdcCampaignId,
+      sfdcCampaignId,
       lastaction: lastAction,
       leadsource: leadSource,
     });
   });
-  
+
   document.head.append(scriptHubspot);
 
   const embedHTML = `
@@ -60,9 +67,9 @@ const loadEmbed = (block, region, portalId, formID, sfdcCampaignId, lastAction, 
 };
 
 export default function decorate(block) {
-  const [region, portalId, formID, sfdcCampaignId, lastAction, leadSource] = [...block.children].map(
-    (c) => c.firstElementChild,
-  ); // mapping variables
+  const [region, portalId, formID, sfdcCampaignId, lastAction, leadSource] = [
+    ...block.children,
+  ].map((c) => c.firstElementChild); // mapping variables
 
   const regionVal = region.textContent; // extracting text content
   const portalIdVal = portalId.textContent;
