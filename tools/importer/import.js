@@ -129,8 +129,16 @@ const createROIColumns = (document) => {
   const doc = {};
   doc.cells = [];
   const cells = [
-    ['Columns (roi)'],
+    ['Columns (promo-col-colors)'],
   ]
+  const roiHeaderCss = 'div.container.brand-neutral-dark.roi-block div.par.parsys div.text.parbase.section div.nametag h3'
+  const roiHeader = document.querySelectorAll(roiHeaderCss)
+  if (roiHeader){
+    roiHeader.forEach((el) => {
+      cells.push([el]);
+    });
+  }
+
   const roiColCss = 'div.container.brand-neutral-dark.roi-block div.par.parsys div.text.parbase.section div.roi-grid div';
   const rCol = document.querySelectorAll(roiColCss);
   if (rCol.length > 0) {
@@ -140,9 +148,10 @@ const createROIColumns = (document) => {
         //if it contains a break, we need to replace it.
         const hasBr = doc.col.querySelector('br');
         if (hasBr) {
+          console.log("has br");
+          console.log(doc.col)
           if (doc.col.querySelector('h3')){
-            const br = doc.col.querySelector('h3').innerHTML.split('<br>');
-          
+          const br = doc.col.querySelector('h3').innerHTML.split('<br>');
           const h3 = document.createElement('h3');
           br.forEach((el) => {
             const p = document.createElement('p');
@@ -150,7 +159,7 @@ const createROIColumns = (document) => {
             h3.append(p);
           });
           doc.col.querySelector('h3').replaceWith(h3);
-        }
+          }
           
         }        
         doc.cells.push(doc.col);
