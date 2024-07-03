@@ -12,10 +12,12 @@ const embedHubspot = (fRegion, fPortalId, fFormId, sfdcCampaignId = null, lastAc
   scriptHubspot.src = 'https://js.hsforms.net/forms/embed/v2.js';
 
   if (lastAction){
+    // check if form has last action field
     lastAction = lastAction.textContent;
   }
   
   if (leadSource){
+    //check if form has lead source field
     leadSource = leadSource.textContent;
   }
   
@@ -23,13 +25,14 @@ const embedHubspot = (fRegion, fPortalId, fFormId, sfdcCampaignId = null, lastAc
     // check if form has a salesforce campaign id
     sfdcCampaignId = sfdcCampaignId.textContent;
   } 
-  
+
+  //adds event listener to add embed code on load
   scriptHubspot.addEventListener('load', () => {
     hbspt.forms.create({
       region: fRegion,
       portalId: fPortalId,
       formId: fFormId,
-      sfdcCampaignIdVal: sfdcCampaignId,
+      sfdcCampaignId: sfdcCampaignId,
       lastaction: lastAction,
       leadsource: leadSource,
     });
