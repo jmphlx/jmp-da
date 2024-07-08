@@ -529,39 +529,46 @@ export default {
     const sectionBreak = document.createElement('hr');
 
     const hero = createHero(document);
-    if (hero) section.append(hero);
-    
+    if (hero) {
+    section.append(hero);
     section.append(sectionBreak);
+  }
  
     const listText = createLinkList(document);
-    if (listText) section.append(listText);
-
+    if (listText) {
+    section.append(listText);
     section.append(sectionBreak);
+}
 
     const columns = createColumns(document);
-    if (columns) section.append(columns);
-
+    if (columns) {
+    section.append(columns);
     section.append(sectionBreak);
+}
 
     const textHero = createTextHero(document);
-    if (textHero) section.append(textHero);
-
+    if (textHero) {
+    section.append(textHero);
     section.append(sectionBreak);
+}
 
     const quote = createQuote( document,);
-    if (quote) section.append(quote);
-
+    if (quote) {
+    section.append(quote);
     section.append(sectionBreak);
+}
 
     const bbCols = createbbColumns(document);
-    if (bbCols) section.append(bbCols);
-
+    if (bbCols) {
+    section.append(bbCols);
     section.append(sectionBreak);
+}
 
     const roi = createROIColumns(document);
-    if (roi) section.append(roi);
-
+    if (roi) {
+    section.append(roi);
     section.append(sectionBreak);
+}
 
     const cardHeader = createCardHeader(document);
     if (cardHeader) section.append(cardHeader);
@@ -570,14 +577,16 @@ export default {
     if (cards) section.append(cards);
     
     const cardLink = createCardLink(document);
-    if (cardLink) section.append(cardLink);
-
+    if (cardLink) {
+    section.append(cardLink);
     section.append(sectionBreak);
+}
 
     const accordion = createAccordion(document);
-    if (accordion) section.append(accordion);
-
+    if (accordion) {
+    section.append(accordion);
     section.append(sectionBreak);
+}
 
     const ctaBanner = createCTABanner(document);
     if (ctaBanner) {
