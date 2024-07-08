@@ -11,7 +11,7 @@
     text-align: left;
     border: 1px solid #CECECE;
     width: 200px;
-    font-family: anova-light,Arial,Helvetica,sans-serif;
+    font-family: "anova-light","Arial","Helvetica",sans-serif;
 }
 
 .search .search-box input::placeholder {
@@ -20,7 +20,7 @@
   font-size: smaller;
 }
 
-.search .search-box::after {
+.search .search-box:after {
   /* stylelint-disable-next-line */
     font-family: 'sasicons-103018' !important;
     content: "\e61b";

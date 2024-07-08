@@ -82,7 +82,7 @@
   order: 1;
 }
 
-.form input[required] + label::after {
+.form input[required] + label:after {
   content: "*";
   color: firebrick;
   margin-inline-start: 1ch;
@@ -110,7 +110,7 @@
   border-radius: 30px;
 }
 
-.form .toggle-wrapper .slider::before {
+.form .toggle-wrapper .slider:before {
   position: absolute;
   content: "";
   height: 20px;
@@ -131,6 +131,6 @@
   outline-offset: 2px;
 }
 
-.form .toggle-wrapper input:checked + .slider::before {
+.form .toggle-wrapper input:checked + .slider:before {
   transform: translateX(24px);
 }

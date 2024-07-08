@@ -6,7 +6,7 @@ body.modal-open {
   --dialog-border-radius: 16px;
 
   overscroll-behavior: none;
-  border: 1px solid #ccc;
+  border: 1px solid #cccccc;
   border-radius: var(--dialog-border-radius);
   width: 100vw;
 }
@@ -30,7 +30,7 @@ body.modal-open {
 }
 
 .modal dialog::backdrop {
-  background-color: rgb(0 0 0 / 50%);
+  background-color: rgb(0 0 0 / 0.5);
 }
 
 .modal .close-button {
