@@ -18,4 +18,12 @@ module.exports = {
       js: 'always',
     }],
   },
+  overrides: [
+    {
+      files: ['*.test.js'],
+      rules: {
+        'no-unused-expressions': 'off',
+      },
+    },
+  ],
 };

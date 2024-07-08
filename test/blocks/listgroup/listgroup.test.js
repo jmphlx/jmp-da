@@ -1,21 +1,22 @@
 import { readFile } from '@web/test-runner-commands';
-import { expect } from '@esm-bundle/chai';
+import {
+  after, before, describe, expect, it,
+} from '@esm-bundle/chai';
 import sinon from 'sinon';
-import { orFilter } from '../../../blocks/listgroup/listgroup.js';
 
-const { buildBlock, decorateBlock, loadBlock } = await import('../../../scripts/aem.js');
+const { decorateBlock, loadBlock } = await import('../../../scripts/aem.js');
 const listgroup = await import('../../../blocks/listgroup/listgroup.js');
 const data = await readFile({ path: './jmp-all.json' });
 
-function jsonOk (body) {
-  var mockResponse = new Response(JSON.stringify(body), {
-    ok: true
+function jsonOk(body) {
+  const mockResponse = new Response(JSON.stringify(body), {
+    ok: true,
   });
 
   return Promise.resolve(mockResponse);
 }
 
-let stub = sinon.stub(window, 'fetch');
+const stub = sinon.stub(window, 'fetch');
 
 describe('Listgroup Block', () => {
   let arrayIncludesAllValues;
@@ -50,7 +51,7 @@ describe('Listgroup Block', () => {
 
     it('Multiple filters of the same category, with matching results', () => {
       const filterObject = {
-        'industry': ['chemistry', 'biotechnology']
+        industry: ['chemistry', 'biotechnology'],
       };
       const pageSelection = JSON.parse(data).data;
       expect(andFilter(pageSelection, filterObject).length).to.equal(2);
@@ -58,8 +59,8 @@ describe('Listgroup Block', () => {
 
     it('More than one type of filter criteria, with matching results', () => {
       const filterObject = {
-        'industry': 'biotechnology',
-        'resourceType': 'interview'
+        industry: 'biotechnology',
+        resourceType: 'interview',
       };
       const pageSelection = JSON.parse(data).data;
       expect(andFilter(pageSelection, filterObject).length).to.equal(2);
@@ -67,12 +68,11 @@ describe('Listgroup Block', () => {
 
     it('More than one type of filter in the same category, matching no resources', () => {
       const filterObject = {
-        'industry': ['chemistry', 'pharmaceutical-and-biotech']
+        industry: ['chemistry', 'pharmaceutical-and-biotech'],
       };
       const pageSelection = JSON.parse(data).data;
       expect(andFilter(pageSelection, filterObject).length).to.equal(0);
     });
-
   });
 
   describe('Or Logic', () => {
@@ -84,35 +84,33 @@ describe('Listgroup Block', () => {
 
     it('Multiple filters of the same category, with matching results', () => {
       const filterObject = {
-        'industry': ['chemistry', 'biotechnology']
+        industry: ['chemistry', 'biotechnology'],
       };
       const pageSelection = JSON.parse(data).data;
-      expect(3).to.equal(orFilter(pageSelection,filterObject).length);
+      expect(3).to.equal(orFilter(pageSelection, filterObject).length);
     });
 
     it('More than one type of filter criteria, with matching results', () => {
       const filterObject = {
-        'industry': 'biotechnology',
-        'resourceType': 'interview'
+        industry: 'biotechnology',
+        resourceType: 'interview',
       };
       const pageSelection = JSON.parse(data).data;
-      expect(10).to.equal(orFilter(pageSelection,filterObject).length);
+      expect(10).to.equal(orFilter(pageSelection, filterObject).length);
     });
 
     it('Different non-overlapping filter criteria for industry', () => {
       const filterObject = {
-        'industry': ['chemistry', 'pharmaceutical-and-biotech']
+        industry: ['chemistry', 'pharmaceutical-and-biotech'],
       };
       const pageSelection = JSON.parse(data).data;
-      expect(4).to.equal(orFilter(pageSelection,filterObject).length);
+      expect(4).to.equal(orFilter(pageSelection, filterObject).length);
     });
-
   });
 
   describe('Generic Or Filter Test', () => {
     before(async () => {
       stub.onCall(0).returns(jsonOk(JSON.parse(data)));
-  
       document.body.innerHTML = await readFile({ path: './orListgroup.html' });
       const listgroupBlock = document.querySelector('.listgroup');
       document.querySelector('main').append(listgroupBlock);
@@ -139,13 +137,11 @@ describe('Listgroup Block', () => {
     after(async () => {
       stub.reset();
     });
-
   });
 
   describe('AND Filter Test', () => {
     before(async () => {
       stub.onCall(0).returns(jsonOk(JSON.parse(data)));
-      
       document.body.innerHTML = await readFile({ path: './andListgroup.html' });
       const listgroupBlock = document.querySelector('.listgroup');
       document.querySelector('main').append(listgroupBlock);
@@ -161,7 +157,6 @@ describe('Listgroup Block', () => {
     after(async () => {
       stub.reset();
     });
-
   });
 
   describe('Options Test', () => {
@@ -193,7 +188,5 @@ describe('Listgroup Block', () => {
     after(async () => {
       stub.reset();
     });
-
   });
-
 });
