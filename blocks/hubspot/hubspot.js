@@ -4,12 +4,29 @@
  */
 /*  global hbspt  */
 
-const embedHubspot = (fRegion, fPortalId, fFormId, sfdcCampaignId = null) => {
+const embedHubspot = (
+  fRegion,
+  fPortalId,
+  fFormId,
+  sfdcCampaignId = null,
+  lastAction = null,
+  leadSource = null,
+) => {
   // clean up hubspot url query paramaters
 
   const scriptHubspot = document.createElement('script');
   scriptHubspot.setAttribute('type', 'text/javascript');
   scriptHubspot.src = 'https://js.hsforms.net/forms/embed/v2.js';
+
+  if (lastAction) {
+    // check if form has last action field
+    lastAction = lastAction.textContent;
+  }
+
+  if (leadSource) {
+    // check if form has lead source field
+    leadSource = leadSource.textContent;
+  }
 
   if (sfdcCampaignId) {
     // check if form has a salesforce campaign id
@@ -23,6 +40,8 @@ const embedHubspot = (fRegion, fPortalId, fFormId, sfdcCampaignId = null) => {
       portalId: fPortalId,
       formId: fFormId,
       sfdcCampaignId,
+      lastaction: lastAction,
+      leadsource: leadSource,
     });
   });
 
@@ -36,21 +55,21 @@ const embedHubspot = (fRegion, fPortalId, fFormId, sfdcCampaignId = null) => {
   return embedHTML;
 };
 
-const loadEmbed = (block, region, portalId, formID, sfdcCampaignId) => {
+const loadEmbed = (block, region, portalId, formID, sfdcCampaignId, lastAction, leadSource) => {
   if (block.classList.contains('form-is-loaded')) {
     return;
   }
 
-  block.innerHTML = embedHubspot(region, portalId, formID, sfdcCampaignId);
+  block.innerHTML = embedHubspot(region, portalId, formID, sfdcCampaignId, lastAction, leadSource);
   block.classList = 'block embed embed-hubspot';
 
   block.classList.add('form-is-loaded');
 };
 
 export default function decorate(block) {
-  const [region, portalId, formID, sfdcCampaignId] = [...block.children].map(
-    (c) => c.firstElementChild,
-  ); // mapping variables
+  const [region, portalId, formID, sfdcCampaignId, lastAction, leadSource] = [
+    ...block.children,
+  ].map((c) => c.firstElementChild); // mapping variables
 
   const regionVal = region.textContent; // extracting text content
   const portalIdVal = portalId.textContent;
@@ -62,7 +81,7 @@ export default function decorate(block) {
     // calling embed function
     if (entries.some((e) => e.isIntersecting)) {
       observer.disconnect();
-      loadEmbed(block, regionVal, portalIdVal, formIDVal, sfdcCampaignId);
+      loadEmbed(block, regionVal, portalIdVal, formIDVal, sfdcCampaignId, lastAction, leadSource);
     }
   });
   observer.observe(block);
