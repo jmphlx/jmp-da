@@ -727,7 +727,7 @@ function parseBlockOptions(block, rowName) {
 */
 async function getJsonFromUrl(route) {
   try {
-    const response = await fetch(route);
+    const response = await window.fetch(route);
     if (!response.ok) return null;
     const json = await response.json();
     return json;
@@ -747,7 +747,7 @@ async function getJsonFromUrl(route) {
  */
 function languageIndexExists(language) {
   const languageIndexes = [
-    'en', 'es', 'fr', 'zh', 'de', 'it', 'ko', 'ja',
+    'en', 'es', 'fr', 'zh', 'de', 'it', 'ko', 'ja', 'zh-hans', 'zh-hant',
   ];
   return languageIndexes.includes(language);
 }
