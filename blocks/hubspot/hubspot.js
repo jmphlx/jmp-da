@@ -41,8 +41,8 @@ const embedHubspot = (
       formId: fFormId,
       sfdcCampaignId,
       onFormReady: function($form) {
-        $('input[name="lead source"]').val(leadSource).change();
-        $('input[name="last action"]').val(lastAction).change();
+        $($form).find('input[name="leadsource"]').val(leadSource).change();
+        $($form).find('input[name="last_action__c"]').val(lastAction).change();
  }
     });
   });
