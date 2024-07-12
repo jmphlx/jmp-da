@@ -14,6 +14,12 @@ const embedHubspot = (
 ) => {
   // clean up hubspot url query paramaters
 
+
+  const head = document.querySelector('head');
+  const script = document.createElement('script');
+  script.src = "https://code.jquery.com/jquery-3.7.1.js";
+  head.append(script);
+
   const scriptHubspot = document.createElement('script');
   scriptHubspot.setAttribute('type', 'text/javascript');
   scriptHubspot.src = 'https://js.hsforms.net/forms/embed/v2.js';
@@ -41,13 +47,15 @@ const embedHubspot = (
       formId: fFormId,
       sfdcCampaignId,
       onFormReady: function($form) {
-        $($form).find('input[name="leadsource"]').val(leadSource).change();
-        $($form).find('input[name="last_action__c"]').val(lastAction).change();
+        $('input[name="leadsource"]').val(leadSource).change();
+        $('input[name="last_action__c"]').val(lastAction).change();
  }
     });
   });
 
   document.head.append(scriptHubspot);
+
+
 
   const embedHTML = `
   <script>
