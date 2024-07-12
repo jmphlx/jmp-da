@@ -42,6 +42,7 @@
     "stylelint-config-standard": "36.0.0"
   },
   "dependencies": {
-    "jest": "^29.7.0"
+    "esm": "^3.2.25",
+    "mocha": "^10.6.0"
   }
 }

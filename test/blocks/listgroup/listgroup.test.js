@@ -1,7 +1,6 @@
+/* global after before describe it */
 import { readFile } from '@web/test-runner-commands';
-import {
-  after, before, describe, expect, it,
-} from '@esm-bundle/chai';
+import { expect } from '@esm-bundle/chai';
 import sinon from 'sinon';
 
 const { decorateBlock, loadBlock } = await import('../../../scripts/aem.js');

@@ -3,12 +3,12 @@
  * dropdown list. Apply active class to list item
  * if the link url matches the current page.
  * @param {Element} dropdownItems
+ * @param {String} activePage
  * @returns {Element} unordered list with all list items.
  */
-function constructDropdown(dropdownItems) {
+export function constructDropdown(dropdownItems, activePage) {
   const wrapper = document.createElement('ul');
   wrapper.classList = 'sub';
-  const activePage = window.location.href;
   dropdownItems.querySelectorAll('li').forEach((item) => {
     if (activePage === item.children[0].href) {
       item.classList.add('active');
@@ -40,6 +40,7 @@ function isDropdownActive(block) {
 }
 
 export default async function decorate(block) {
+  const activePage = window.location.href;
   const wrapper = document.createElement('nav');
   wrapper.classList = 'main';
   const listOfDropdowns = document.createElement('ul');
@@ -65,7 +66,7 @@ export default async function decorate(block) {
       }
     });
 
-    const dropdownListItems = constructDropdown(dropdownItems);
+    const dropdownListItems = constructDropdown(dropdownItems, activePage);
     listItem.append(dropdownListItems);
     if (isDropdownActive(listItem)) {
       listItem.classList.add('active');

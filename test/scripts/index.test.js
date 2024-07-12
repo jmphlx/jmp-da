@@ -1,9 +1,5 @@
-import {
-  before,
-  describe,
-  expect,
-  it,
-} from '@esm-bundle/chai';
+/* global before describe it */
+import { expect } from '@esm-bundle/chai';
 
 const aemHelper = await import('../../scripts/aem.js');
 
