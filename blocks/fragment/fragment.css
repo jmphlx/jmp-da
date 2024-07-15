@@ -11,3 +11,8 @@
 .fragment-wrapper > .section:last-of-type {
   padding-bottom: 0;
 }
+
+.section:has(div.resource-nav) {
+  background-color: #fafafa;
+  border-bottom: 1px solid var(--grayLight);
+}
