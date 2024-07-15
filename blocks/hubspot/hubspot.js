@@ -47,8 +47,16 @@ const embedHubspot = (
       formId: fFormId,
       sfdcCampaignId,
       onFormReady: function($form) {
-        $('input[name="leadsource"]').val(leadSource).change();
-        $('input[name="last_action__c"]').val(lastAction).change();
+
+        var hiddenField2 = $form.find('input[name="last_action__c"]');
+        var currentValue2 = hiddenField2.val(); // Get the current value of the input field
+        var newValue2 = lastAction; // The value you want to append
+        hiddenField2.val(newValue2).change(); 
+
+        var hiddenField = $form.find('input[name="leadsource"]');
+        var currentValue = hiddenField.val(); // Get the current value of the input field
+        var newValue = leadSource; // The value you want to append
+        hiddenField.val(newValue).change(); 
  }
     });
   });
