@@ -184,3 +184,143 @@
     color: #c479ba;
   }
 }
+
+/* resource center columns*/
+/* success story hero */
+.section:has(div.success-story-hero) {
+    background-color: #fafafa;
+}
+
+.success-story-hero {
+  background-color: #fafafa;
+  div {
+    div:first-child {
+      display: flex;
+      flex-direction: column;
+      align-self: center;
+      h2 {
+        padding: 0;
+        margin: 0;
+      }
+      h6 {
+        font-family: "anova-bold", sans-serif;
+      }
+      p {
+        margin-bottom: .5rem;
+      }
+      img {
+          max-width: 200px
+      }
+      @media (width <=899px) {
+        h6 {
+          padding-top: 20px;
+        }
+      }
+    }
+    > div.columns-img-col {
+      display: flex;
+      align-items: center;
+      picture {
+        vertical-align: middle;
+        height: 400px;
+        width: 100%;
+        display: flex;
+        img {
+          display: block;
+          object-fit: cover;
+          border-radius: 5px;
+          object-position: center;
+        }
+      }
+    }
+  }
+}
+
+/* whitepaper hero */
+.section:has(div.whitepaper-hero) {
+  background-color: #fafafa;
+}
+.whitepaper-hero {
+  div {
+    display: flex;
+    div:first-child {
+      display: flex;
+      flex-direction: column;
+      align-self: center;
+      flex-grow: 2;
+      h2 {
+        padding: 0;
+        margin: 0;
+      }
+      h6 {
+        font-family: "anova-bold", sans-serif;
+      }
+      p {
+        margin-bottom: .5rem;
+      }
+      img {
+          max-width: 200px
+      }
+      @media (width <=899px) {
+        h6 {
+          padding-top: 20px;
+        }
+      }
+      @media (width <=899px) {
+        align-self: unset;
+      }
+    }
+    > div.columns-img-col {
+      display: flex;
+      align-items: center;
+      picture {
+        vertical-align: middle;
+        height: 300px;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        img {
+          display: block;
+          object-fit: scale-down;
+          border-radius: 5px;
+          object-position: center;
+          width: auto;
+        }
+      }
+      @media (width <=899px) {
+        picture {
+          justify-content: flex-start;
+        }
+      }
+    }
+  }
+}
+  
+.resource-form {
+  display: inline-block;
+  background-color: #fafafa;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #f4f4f4;
+  .hubspot-container {
+    position: relative;
+    display: inline-flex;
+    .embed {
+      margin: 0;
+    }
+    .hubspot-wrapper {
+      background-color: #fafafa;
+      margin: 10px;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #f4f4f4;
+    }
+  }
+}
+
+.resource-abstract {
+  position: absolute;
+  display: inline-block;
+  width: 70%;
+}

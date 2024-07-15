@@ -122,7 +122,7 @@ h4, h5, h6 {
   font-family: var(--heading-font-family);
   font-weight: 600;
   line-height: 1.25;
-  margin-top: 1em;
+  margin-top: 0;
   margin-bottom: .5em;
   scroll-margin: calc(var(--nav-height) + 1em);
 }
@@ -133,6 +133,20 @@ h3 { font-size: var(--heading-font-size-l) }
 h4 { font-size: var(--heading-font-size-m) }
 h5 { font-size: var(--heading-font-size-s) }
 h6 { font-size: var(--heading-font-size-xs) }
+
+/* headings + p */
+:is(h1, h2, h3, h4, h5, h6):has(+ :is(p, ul, ol)) {
+	padding-bottom: 1rem;
+}
+
+/* H6 labels */
+:is(h6):has(+ :is(h1, h2, h3, h4, h5)) {
+  font-family: "anova-bold", sans-serif;
+  color: var(--purple);
+  text-transform: uppercase;
+  font-size: 1.4rem;
+  padding-bottom: .25rem;
+}
 
 p, dl, ol, ul, pre, blockquote {
   margin-top: 1em;
