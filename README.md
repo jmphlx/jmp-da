@@ -17,6 +17,13 @@ npm install
 npm run lint
 ```
 
+## Updating AEM Importer
+The AEM Importer is bundled together as part of the aem simulator tooling. To update both run the following:
+
+```sh
+npm update -g @adobe/aem-cli
+```
+
 ## Local development
 
 1. Create a new repository based on the `aem-boilerplate` template and add a mountpoint in the `fstab.yaml`
