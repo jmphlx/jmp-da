@@ -298,7 +298,7 @@ a.button:hover {
   a.button:hover {
     color: #fcfcfc;
     background: #00006666;
-    border: 1px solid black;
+    /* -- border: 1px solid black; -- */
     min-width: 200px;
   }	
 }

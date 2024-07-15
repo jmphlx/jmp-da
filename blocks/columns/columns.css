@@ -1,31 +1,42 @@
 .columns > div {
   display: flex;
   flex-direction: column;
-  align-items: center;
-
-
- max-width: 1280px; /*  messing around with the quote block */
+max-width: 1280px; /*  messing around with the quote block */
  margin:0em auto 2em auto;/*  messing around with the quote block */
  padding: 32px; /*  messing around with the quote block */
  text-align: left; /*  messing around with the quote block */
 }
 
 .columns50 {
+  align-items: center;
   max-width: 1280px;
   margin: 0 auto 2em auto;
   text-align: left;
   img{
     border-radius: 5px;
-   /* border: 1px #bbb solid; */
   }
   div {
     padding: 1% .9%;
     align-items: center;
     @media only screen and (max-width: 600px) {
-      padding: 3%;
+    padding: 3%;
     }
   }
-  
+}
+.columns75 {
+  max-width: 1280px;
+  margin: 0 auto 2em auto;
+  text-align: left;
+  img{
+    border-radius: 5px;
+  }
+  div {
+    padding: 1% .9%;
+    align-items: center;
+    @media only screen and (max-width: 600px) {
+    padding: 3%;
+    }
+  }
 }
 
 .columns img {
@@ -40,6 +51,7 @@
     max-width: 1280px;
     margin: 0 auto;
     padding: 1em 0;
+    align-items: normal;
     p {
       font-size: .8em;
     }
@@ -48,6 +60,7 @@
     text-align: center;
     margin: 0;
   }
+  
 }
 
 .columns > div > div {
@@ -200,5 +213,27 @@
 
   div > div:nth-child(3) {
     color: #c479ba;
+  }
+}
+/* product Icons */
+.product-icon{
+h4, p, .button-container a:link{
+  text-align: center;
+}
+img{
+margin: 1em auto 0;
+  max-width: 200px;
+  display: block;
+  @media only screen and (max-width: 600px) {
+    max-width: 150px;
+    margin: 1.5em 0 auto;
+  }
+  }
+}
+.general-center{
+  text-align: center;
+  min-height: 75px;
+  h3 {
+    text-align: center;
   }
 }
