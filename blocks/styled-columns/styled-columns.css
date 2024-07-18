@@ -235,15 +235,18 @@
           min-height: none;
         }
         &:before {
-          left: calc(50% - 20px);
+          right: calc(0% - 25px);
           transform: rotate(90deg);
-          top: -7em;
+          top: -6em;
+          bottom: auto;
+          margin: 0 auto;
         }
         &:after {
-          left: calc(55% - 55px);
+          left: calc(0% - 25px);
           transform: rotate(90deg);
-          bottom: -80px;
+          bottom: -72px;
           top: auto;
+          margin: 0 auto;
           /* rotate: 90deg; */
         }
       }

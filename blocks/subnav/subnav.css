@@ -33,10 +33,12 @@
 }
 .subnav nav.main ul li a, .subnav nav.main ul li {
   background: none;
-  border: 1px solid #ffa49e;
-  color: #ffa49e;
+  border: 1px solid #0378cd;
+  color: #0378cd;
   padding: 0 12px;
   line-height: 2.5em;
+  font-size: 1.3rem;
+  border-radius: 2px;
   transition: border-color 0.5s ease, color 0.5s ease;
 }
 .subnav nav.main ul li.is-dropdown > a:after, .subnav nav.main ul li.is-dropdown:after {
@@ -60,12 +62,21 @@
   bottom: -7px;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
-  border-top: 6px solid #ffa49e;
+  border-top: 6px solid #0378cd;
   transform: translateX(-50%);
-  transition: border-top 0.5s ease;
+  transition: border-top 0.3s ease;
 }
 .subnav nav.main ul li.is-open.is-dropdown > a:hover:before, .subnav nav.main ul li.is-open.is-dropdown:hover:before {
   border-top: 6px solid #ffffff;
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #0378cd;
+  transform: translateX(-50%);
+  transition: border-top 0.3s ease;
 }
 .subnav nav.main ul li ul li a[href*="redirect"]:after {
   color: inherit;
@@ -78,24 +89,19 @@
   border: 1px solid #FFFFFF;
   border: 1px solid rgb(0 0 0 / 0);
   box-sizing: border-box;
-  color: #ffa49e;
+  color: #0378cd;
   padding: .5em 1em;
   line-height: 1.5;
   white-space: nowrap;
 }
 .subnav nav.main ul li.active > a, .subnav nav.main ul li.active {
-  background: #ffa49e;
-  border-color: #ffa49e;
+  background: #0378cd;
+  border-color: #0378cd;
   color: #FFFFFF;
 }
 .subnav nav.main ul li ul li.active a {
-  border: 1px solid #ffa49e;
-  background: #ffa49e;
-}
-.subnav nav.main ul li ul li a:hover {
-  background: #EFEFEF;
-  background: rgb(0 0 0 / 0.05);
-  border: 1px solid rgb(255 255 255 / 0);
+  border: 1px solid #0378cd;
+  background: #0378cd;
 }
 .subnav nav.main ul li.is-open.is-dropdown > a, .subnav nav.main ul li.is-open.is-dropdown {
   position: relative;
@@ -122,5 +128,27 @@
   z-index: 9;
 }
 .subnav nav.main ul li.is-open ul {
+  display: flex;
+  flex-direction: column;
   left: 0;
+  width: max-content;
+  li {
+    border: 0;
+    width: 100%;
+    /* width: max-content; */
+    margin: 0;
+    padding: 0;
+    &:hover {
+      background-color: #fafafa;
+    }
+    a {
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+        /* background-color: #EFEFEF; */
+        /* background: rgb(0 0 0 / 0.05); */
+        /* border: 1px solid rgb(255 255 255 / 0); */
+      }
+    }
+  }
 }
