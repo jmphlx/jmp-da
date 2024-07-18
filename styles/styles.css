@@ -123,8 +123,24 @@ h4, h5, h6 {
   font-weight: 600;
   line-height: 1.25;
   margin-top: 0;
-  margin-bottom: .5em;
+  margin-bottom: 0;
   scroll-margin: calc(var(--nav-height) + 1em);
+}
+
+h1 {
+  margin-bottom: 0.125em;
+}
+
+h2 {
+  margin-bottom: 0.25em;
+}
+
+h3 {
+  margin-bottom: 0.5em;
+}
+
+h4 {
+  margin-bottom: 0.5em;
 }
 
 h1 { font-size: var(--heading-font-size-xxl) }
