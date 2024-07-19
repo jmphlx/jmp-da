@@ -13,7 +13,7 @@ describe('JMP Scripts JS Customizations ', () => {
       document.body.innerHTML = await readFile({ path: './threeGroupLayoutScript.html' });
       buildLayoutContainer(document.querySelector('main'));
     });
-  
+
     it('Expect provided layout to be broken into 3 groups', () => {
       expect(document.querySelector('.layout-wrapper')).to.exist;
       expect(document.querySelector('.group-1')).to.exist;
@@ -21,14 +21,14 @@ describe('JMP Scripts JS Customizations ', () => {
       expect(document.querySelector('.group-3')).to.exist;
       expect(document.querySelector('.group-4')).to.be.null;
     });
-  
+
     it('Expect content to be divided between groups', () => {
       expect(document.querySelector('.group-1 .default-content-wrapper')).to.exist;
       expect(document.querySelector('.group-1 .embed-wrapper')).to.exist;
       expect(document.querySelector('.group-2 .listgroup-wrapper')).to.exist;
       expect(document.querySelector('.group-3 .default-content-wrapper')).to.exist;
     });
-  
+
     it('Expect divider blocks to be removed from html', () => {
       expect(document.querySelector('.divider-wrapper')).to.be.null;
     });
