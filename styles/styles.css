@@ -227,11 +227,15 @@ a.button.secondary, button.secondary {
 main .section[data-layout] .layout-wrapper {
   display: flex;
   flex-direction: row;
-  gap: 50px;
+  gap: 20px;
 }
 
 main .section[data-layout="50/50"] .layout-wrapper > div {
   flex: 1 50%;
+}
+
+main .section[data-layout="33/33/33"] .layout-wrapper > div {
+  flex: 1 calc(33.33% - 5px);
 }
 
 main img {

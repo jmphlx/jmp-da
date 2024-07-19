@@ -160,38 +160,41 @@ export function createElement(tagName, props, html) {
 
   return elem;
 }
-
 /* JMP HEADER END */
 
-
-/** More JMP */
-
+/** JMP Section Group Layout Support */
 /**
- * Builds two column grid.
+ * Builds multi column layout within a section.
+ * Only intended to support groups of 2 or 3.
  * @param {Element} main The container element
  */
-function buildLayoutContainer(main) {
+export function buildLayoutContainer(main) {
   main.querySelectorAll(':scope > .section[data-layout]').forEach((section) => {
     const wrapper = document.createElement('div');
     wrapper.classList.add('layout-wrapper');
-    const layoutFormat = section.getAttribute('data-layout');
-    console.log(layoutFormat);
-    console.log(layoutFormat.split('/').length);
+    const numberOfGroups = section.getAttribute('data-layout').split('/').length;
 
-    const leftDiv = document.createElement('div');
-    leftDiv.classList.add('left-grid');
-    const rightDiv = document.createElement('div');
-    rightDiv.classList.add('right-grid');
-    let current = leftDiv;
+    // Create all group divs.
+    for (let i = 1; i <= numberOfGroups; i++) {
+      const noGroupDiv = document.createElement('div');
+      noGroupDiv.classList.add(`group-${i}`);
+      wrapper.append(noGroupDiv);
+    }
+
+    // Sort elements into groups. Every time you hit separator, increment group #.
+    let currentGroupNumber = 1;
+
     [...section.children].forEach((child) => {
-      if (child.classList.contains('separator-wrapper')) {
-        current = rightDiv;
+      const curr = wrapper.querySelector(`.group-${currentGroupNumber}`);
+      if (child.classList.contains('divider-wrapper')) {
+        currentGroupNumber += 1;
         child.remove();
-        return;
+      } else {
+        curr.append(child);
       }
-      current.append(child);
     });
-    wrapper.append(leftDiv, rightDiv);
+
+    // Add all groups back to the page.
     section.append(wrapper);
   });
 }
