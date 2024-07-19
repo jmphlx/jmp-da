@@ -48,7 +48,7 @@ const embedHubspot = (
       sfdcCampaignId,
       onFormReady: function($form) {
 
-        var hiddenField2 = $form.find('input[name="last_action__c"]');
+        var hiddenField2 = $form.find('input[name="last_action"]');
         var newValue2 = lastAction; // The value you want to append
         hiddenField2.val(newValue2).change(); 
 
