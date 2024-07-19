@@ -224,6 +224,16 @@ a.button.secondary, button.secondary {
 
 */
 
+main .section[data-layout] .layout-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+}
+
+main .section[data-layout="50/50"] .layout-wrapper > div {
+  flex: 1 50%;
+}
+
 main img {
   max-width: 100%;
   width: auto;
