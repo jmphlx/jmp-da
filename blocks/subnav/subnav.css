@@ -1,15 +1,10 @@
 .section:has(div.subnav) {
-  background-color: #f5f5f5;
-}
-.section:has(div.resource-nav) {
-  background-color: #f5f5f5;
+  background-color: #f4f4f4;
   border-bottom: none;
 }
 
 .section:has(div.resource-center-nav-container) {
-  background-color: #f5f5f5;
   border-bottom: none;
-  border-bottom: 1px solid #999999;
 }
 
 .resource-center-nav-container.subnav-container.section {
@@ -55,14 +50,41 @@
 }
 .subnav nav.main ul li a, .subnav nav.main ul li {
   background: #ffffff;
-  border: 1px solid #0378cd;
-  color: #0378cd;
+  border: 1px solid #d2d8de;
+  color: #333333;
   padding: 0 12px;
   line-height: 2.5em;
-  font-size: 1.3rem;
-  border-radius: 2px;
+  font-size: 1.5rem;
+  border-radius: 5px;
   transition: border-color 0.5s ease, color 0.5s ease;
 }
+
+.subnav nav.main ul {
+  li.is-dropdown {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+    &:after {
+      content: '';
+      display: inline-block;
+      margin-left: 4px;
+      top: 50%;
+      right: 2px;
+      transform: translateY(-50%) rotate(135deg);
+      width: 5px;
+      height: 5px;
+      border: 2px solid #333333;
+      border-radius: 0 1px 0 0;
+      border-width: 1px 1px 0 0;
+      position: inherit;
+      transition: all 0.3s ease;
+    }
+    &.is-open {
+      &:after {
+        transform: rotate(10deg);
+      }
+    }
+  }
+}
+
 .subnav nav.main ul li.is-dropdown > a:after, .subnav nav.main ul li.is-dropdown:after {
   font-size: 90%;
   margin-left: 8px;
@@ -76,6 +98,7 @@
 }
 .subnav nav.main ul li.is-open.is-dropdown > a:after, .subnav nav.main ul li.is-open.is-dropdown:after {
   transform: scaleY(-1);
+  transform: rotate(-45deg);
 }
 .subnav nav.main ul li.is-open.is-dropdown:before, .subnav nav.main ul li.is-open.is-dropdown > a:before {
   content: '';
@@ -108,13 +131,18 @@
   vertical-align: 0;
 }
 .subnav nav.main ul li ul li a {
-  border: 1px solid #FFFFFF;
   border: 1px solid rgb(0 0 0 / 0);
   box-sizing: border-box;
-  color: #0378cd;
+  color: #333333;
   padding: .5em 1em;
   line-height: 1.5;
   white-space: nowrap;
+  border-radius: 0px;
+  &:hover {
+    color: #0378cd;
+    background-color: #f4f4f4;
+    transition: none;
+  }
 }
 .subnav nav.main ul li.active > a, .subnav nav.main ul li.active {
   background: #0378cd;
@@ -141,7 +169,7 @@
   border-radius: 5px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-  box-shadow: 0 6px 6px 0 rgb(0 0 0 / 0.2);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
   display: block;
   left: -9999px;
   margin-top: 8px;
