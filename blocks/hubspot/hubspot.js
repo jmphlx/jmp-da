@@ -55,7 +55,7 @@ const embedHubspot = (
         hiddenField.val(newValue).change();
 
         const emailSFC = $form.find('input[name="salesforce_campaign_event_id"]');
-        const newSFC = leadSource; // The value you want to append
+        const newSFC = sfdcCampaignId; // The value you want to append
         emailSFC.val(newSFC).change();
       },
     });
