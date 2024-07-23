@@ -1,0 +1,18 @@
+{
+  "name": "ui-tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "collect-urls": "node collect-urls.mjs",
+    "optimize-screenshots": "node optimize-screenshots.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.30.0",
+    "sharp": "^0.32.1"
+  }
+}

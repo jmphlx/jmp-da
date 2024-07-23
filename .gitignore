@@ -3,6 +3,10 @@ coverage/*
 logs/*
 node_modules/*
 
+/.github/visual-tests/screenshots/
+/.github/visual-tests/test-results/
+/.github/visual-tests/node_modules/
+
 helix-importer-ui
 .DS_Store
 *.bak
