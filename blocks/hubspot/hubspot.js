@@ -45,19 +45,19 @@ const embedHubspot = (
       portalId: fPortalId,
       formId: fFormId,
       sfdcCampaignId,
-      // onFormReady($form) {
-      //   const hiddenField2 = $form.find('input[name="last_action__c"]');
-      //   const newValue2 = lastAction; // The value you want to append
-      //   hiddenField2.val(newValue2).change();
+      onFormReady($form) {
+        const hiddenField = $form.find('input[name="last_action__c"]');
+        const newValue = lastAction;
+        hiddenField2.val(newValue).change();
 
-      //   const hiddenField = $form.find('input[name="leadsource"]');
-      //   const newValue = leadSource; // The value you want to append
-      //   hiddenField.val(newValue).change();
+        const hiddenField2 = $form.find('input[name="leadsource"]');
+        const newValue2 = leadSource;
+        hiddenField.val(newValue2).change();
 
-      //   const emailSFC = $form.find('input[name="salesforce_campaign_event_id"]');
-      //   const newSFC = sfdcCampaignId; // The value you want to append
-      //   emailSFC.val(newSFC).change();
-      // },
+        const emailSFC = $form.find('input[name="salesforce_campaign_event_id"]');
+        const newSFC = sfdcCampaignId;
+        emailSFC.val(newSFC).change();
+      },
     });
   });
 
