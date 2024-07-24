@@ -474,6 +474,15 @@ function decorateSections(main) {
             .filter((style) => style)
             .map((style) => toClassName(style.trim()));
           styles.forEach((style) => section.classList.add(style));
+        } else if (key === 'background-image') {
+          /* JMP Customization to allow a background image
+            in section metadata. */
+          const backgroundDiv = document.createElement('div');
+          backgroundDiv.classList.add('background-img');
+          const backgroundImg = document.createElement('img');
+          backgroundImg.setAttribute('src', meta[key]);
+          backgroundDiv.append(backgroundImg);
+          section.prepend(backgroundDiv);
         } else {
           section.dataset[toCamelCase(key)] = meta[key];
         }
