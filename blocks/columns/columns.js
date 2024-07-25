@@ -1,4 +1,20 @@
+import {embedVidyard} from '../embed/embed.js'
+
+function decorateEmbed(elems) {
+  elems.forEach((elem) => {
+    const embedHTML = embedVidyard(elem);
+    const parentEl = elem.parentElement;
+    parentEl.classList.add('embed', 'embed-ceros');
+    parentEl.innerHTML = embedHTML;
+    elem.remove();
+  });
+}
+
 export default function decorate(block) {
+  //get all elements that are a vidyard share url & decorate them
+  const embedUrls = block.querySelectorAll('a[href*="share.vidyard.com"]'); 
+  decorateEmbed(embedUrls);
+
   const cols = [...block.firstElementChild.children];
   block.classList.add(`columns-${cols.length}-cols`);
 

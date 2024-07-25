@@ -1,12 +1,17 @@
+.section:has(div.subnav) {
+  border-bottom: none;
+  background-color: rgba(0, 0, 0, 0);
+}
+
 .subnav {
   display: block;
 }
 .subnav nav {
   position: relative;
+  display: flex;
 }
 .subnav nav ul {
-  float: left;
-  margin: 0 0 .75em 0;
+  margin: 1em 0;
   padding: 0;
   list-style: none;
 }
@@ -15,8 +20,6 @@
   margin: 0 1px 1px 0;
 }
 .subnav nav ul li a, .subnav nav ul li {
-  background: #FFFFFF;
-  background: rgb(255 255 255 / 0.9);
   display: block;
   padding: 0 15px;
   line-height: 2.75em;
@@ -32,26 +35,78 @@
   position: relative;
 }
 .subnav nav.main ul li a, .subnav nav.main ul li {
-  background: none;
-  border: 1px solid #ffa49e;
-  color: #ffa49e;
+  border: 1px solid #999999;
+  color: #333333;
   padding: 0 12px;
   line-height: 2.5em;
+  font-size: 1.5rem;
+  border-radius: 5px;
   transition: border-color 0.5s ease, color 0.5s ease;
 }
+
+.subnav nav.main ul {
+  li.is-dropdown {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+    box-sizing: border-box;
+    &:after {
+      content: '';
+      display: inline-block;
+      margin-left: 4px;
+      top: 50%;
+      right: 2px;
+      transform: translateY(-50%) rotate(135deg);
+      width: 5px;
+      height: 5px;
+      border: 2px solid #333333;
+      border-radius: 0 1px 0 0;
+      border-width: 2px 2px 0 0;
+      position: inherit;
+      transition: all 0.3s ease;
+    }
+    &.is-open {
+      &:after {
+        transform: rotate(-45deg);
+      }
+    }
+  }
+  @media (width <= 600px) {
+    display: inline-flex;
+    flex-direction: column;
+    width: 100%;
+    li.is-dropdown {
+      width: 100%;
+      &:after {
+        display: flex;
+        float: right;
+        margin-right: 20px;
+        position: absolute;
+      }
+      &.is-open ul {
+        width: 100%;
+      }
+    }
+  }
+}
+
 .subnav nav.main ul li.is-dropdown > a:after, .subnav nav.main ul li.is-dropdown:after {
   font-size: 90%;
   margin-left: 8px;
   transition: transform 0.5s ease, color 0.5s ease;
 }
 .subnav nav.main ul li.is-dropdown > a:hover:after, .subnav nav.main ul li.is-dropdown:hover:after {
-  color: #ffffff;
+  color: #333333;
 }
 .subnav nav.main ul li.active.is-dropdown > a:after, .subnav nav.main ul li.active.is-dropdown:after {
-  color: #FFFFFF;
+  color: #333333;
 }
+
+.subnav nav.main ul li a {
+  background: none;
+}
+
 .subnav nav.main ul li.is-open.is-dropdown > a:after, .subnav nav.main ul li.is-open.is-dropdown:after {
   transform: scaleY(-1);
+  transform: rotate(-45deg);
 }
 .subnav nav.main ul li.is-open.is-dropdown:before, .subnav nav.main ul li.is-open.is-dropdown > a:before {
   content: '';
@@ -60,12 +115,20 @@
   bottom: -7px;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
-  border-top: 6px solid #ffa49e;
+  border-top: 6px solid #999999;
   transform: translateX(-50%);
-  transition: border-top 0.5s ease;
+  transition: border-top 0.3s ease;
 }
 .subnav nav.main ul li.is-open.is-dropdown > a:hover:before, .subnav nav.main ul li.is-open.is-dropdown:hover:before {
-  border-top: 6px solid #ffffff;
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #999999;
+  transform: translateX(-50%);
+  transition: border-top 0.3s ease;
 }
 .subnav nav.main ul li ul li a[href*="redirect"]:after {
   color: inherit;
@@ -75,27 +138,27 @@
   vertical-align: 0;
 }
 .subnav nav.main ul li ul li a {
-  border: 1px solid #FFFFFF;
   border: 1px solid rgb(0 0 0 / 0);
   box-sizing: border-box;
-  color: #ffa49e;
+  color: #333333;
   padding: .5em 1em;
   line-height: 1.5;
   white-space: nowrap;
+  border-radius: 0;
+  &:hover {
+    color: #0378cd;
+    background-color: #f4f4f4;
+    transition: none;
+  }
 }
 .subnav nav.main ul li.active > a, .subnav nav.main ul li.active {
-  background: #ffa49e;
-  border-color: #ffa49e;
+  background: #0378cd;
+  border-color: #0378cd;
   color: #FFFFFF;
 }
 .subnav nav.main ul li ul li.active a {
-  border: 1px solid #ffa49e;
-  background: #ffa49e;
-}
-.subnav nav.main ul li ul li a:hover {
-  background: #EFEFEF;
-  background: rgb(0 0 0 / 0.05);
-  border: 1px solid rgb(255 255 255 / 0);
+  border: 1px solid #0378cd;
+  background: #0378cd;
 }
 .subnav nav.main ul li.is-open.is-dropdown > a, .subnav nav.main ul li.is-open.is-dropdown {
   position: relative;
@@ -107,20 +170,87 @@
   width: 100%;
 }
 .subnav nav.main ul li ul {
-  background: #FFFFFF;
   background: rgb(255 255 255 / 0.95);
   box-sizing: border-box;
   border-radius: 5px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-  box-shadow: 0 6px 6px 0 rgb(0 0 0 / 0.2);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
   display: block;
   left: -9999px;
   margin-top: 8px;
   padding: .66em;
   position: absolute;
   z-index: 9;
+  li {
+    background: none;
+  }
 }
 .subnav nav.main ul li.is-open ul {
+  display: flex;
+  flex-direction: column;
   left: 0;
+  width: max-content;
+  li {
+    border: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    &:hover {
+      background-color: #fafafa;
+    }
+    a {
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }
+
+/* Resource Center Sub Nav */
+.light-nav.subnav-container.section {
+  padding-top: 15px;
+  padding-bottom: 5px;
+  h2 {
+    color: #ffffff;
+    margin-bottom: 0;
+  }
+  h4 {
+    color: rgba(255, 255, 255, 0.85);
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+  .subnav nav.main ul {
+    li {
+      color: #ffffff !important;
+      border: 1px solid #ffffff;
+      li {
+        border: none;
+      }
+    }
+    li.is-dropdown {
+      &:after {
+        border: 2px solid #ffffff;
+        border-radius: 0 1px 0 0;
+        border-width: 2px 2px 0 0;
+      }
+    }
+  }
+
+  .subnav nav.main ul li.is-open.is-dropdown > a:hover:before, .subnav nav.main ul li.is-open.is-dropdown:hover:before {
+    border-top: 6px solid #ffffff;
+  }
+  .subnav nav.main ul li.is-open.is-dropdown:before, .subnav nav.main ul li.is-open.is-dropdown > a:before {
+    border-top: 6px solid #ffffff;
+  }
+}
+
+div.subnav-compact {
+  padding-top: 5px !important;
+  padding-bottom: 0 !important;
+  .subnav nav ul {
+    margin: .5em 0;
+  }
+}
+
