@@ -5,7 +5,7 @@
   margin:4.5em auto; 
 }
 .quote blockquote .quote-quotation {
-  text-align: center;
+  p, h1, h2, h3, h4, h5{
   font-family: "anova-light","Arial","Helvetica",sans-serif;
   font-weight: normal;
   font-size: 1.8rem; 
@@ -14,6 +14,7 @@
   position: relative;
   padding: 0;
   line-height: 1.2em;
+}
 }
 
 
