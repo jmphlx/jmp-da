@@ -127,26 +127,26 @@ h4, h5, h6 {
   scroll-margin: calc(var(--nav-height) + 1em);
 }
 
-h1 {
+h1 { 
+  font-size: var(--heading-font-size-xxl);
   margin-bottom: 0.125em;
 }
 
-h2 {
+h2 { 
+  font-size: var(--heading-font-size-xl);
   margin-bottom: 0.25em;
 }
 
-h3 {
+h3 { 
+  font-size: var(--heading-font-size-l);
+  margin-bottom: 0.5em;
+ }
+
+h4 { 
+  font-size: var(--heading-font-size-m);
   margin-bottom: 0.5em;
 }
 
-h4 {
-  margin-bottom: 0.5em;
-}
-
-h1 { font-size: var(--heading-font-size-xxl) }
-h2 { font-size: var(--heading-font-size-xl) }
-h3 { font-size: var(--heading-font-size-l) }
-h4 { font-size: var(--heading-font-size-m) }
 h5 { font-size: var(--heading-font-size-s) }
 h6 { font-size: var(--heading-font-size-xs) }
 
@@ -367,4 +367,49 @@ a.button:hover {
     font-weight: bold;
     unicode-bidi: isolate;
 }
+}
+
+/* Linear Gradients */
+div.blue-purple-gradient {
+  background: linear-gradient(45deg, #0378CD 15%, #643695 95%);
+}
+
+div.blue-orange-gradient {
+  background: linear-gradient(45deg, #0378CD 15%, #F47723 95%);
+}
+
+div.teal-lightgreen-gradient {
+  background: linear-gradient(45deg, #007481 15%, #9CCB3B 95%);
+}
+
+div.purple-lightred-gradient {
+  background: linear-gradient(45deg, #643695 15%, #F04B4B 95%);
+}
+
+div.purple-blue-gradient {
+  background: linear-gradient(45deg, #643695 15%, #0378CD 95%);
+}
+
+div.purple-lightblue-gradient {
+  background: linear-gradient(45deg, #643695 15%, #61CAE5 95%);
+}
+
+div.purple-lightpurple-gradient {
+  background: linear-gradient(45deg, #643695 15%, #9D57A3 95%);
+}
+
+div.purple-teal-gradient {
+  background: linear-gradient(45deg, #643695 15%, #007481 95%);
+}
+
+div.purple-lightteal-gradient {
+  background: linear-gradient(45deg, #643695 15%, #3EBDAC 95%);
+}
+
+div.purple-orange-gradient {
+  background: linear-gradient(45deg, #643695 15%, #F47723 95%);
+}
+
+div.darkgray-orange-gradient {
+  background: linear-gradient(45deg, #172328 15%, #F47723 95%);
 }
