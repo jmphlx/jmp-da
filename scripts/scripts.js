@@ -165,6 +165,7 @@ export function createElement(tagName, props, html) {
 /** JMP Section Group Layout Support */
 /**
  * Builds multi column layout within a section.
+ * Expect layout to be written as '# column' i.e. '2 column' or '3 column'.
  * Only intended to support groups of 2 or 3.
  * @param {Element} main The container element
  */
@@ -172,7 +173,7 @@ export function buildLayoutContainer(main) {
   main.querySelectorAll(':scope > .section[data-layout]').forEach((section) => {
     const wrapper = document.createElement('div');
     wrapper.classList.add('layout-wrapper');
-    const numberOfGroups = section.getAttribute('data-layout').split('/').length;
+    const numberOfGroups = parseInt(section.getAttribute('data-layout'));
 
     // Create all group divs.
     for (let i = 1; i <= numberOfGroups; i++) {
