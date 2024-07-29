@@ -66,8 +66,6 @@ const loadEmbed = (block, config) => {
 export default function decorate(block) {
   const config = readBlockConfig(block);
 
-  console.log(config['last-action']);
-
   block.textContent = '';
 
   const observer = new IntersectionObserver((entries) => {
