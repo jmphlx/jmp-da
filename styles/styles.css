@@ -122,17 +122,47 @@ h4, h5, h6 {
   font-family: var(--heading-font-family);
   font-weight: 600;
   line-height: 1.25;
-  margin-top: 1em;
-  margin-bottom: .5em;
+  margin-top: 0;
+  margin-bottom: 0;
   scroll-margin: calc(var(--nav-height) + 1em);
 }
 
-h1 { font-size: var(--heading-font-size-xxl) }
-h2 { font-size: var(--heading-font-size-xl) }
-h3 { font-size: var(--heading-font-size-l) }
-h4 { font-size: var(--heading-font-size-m) }
+h1 { 
+  font-size: var(--heading-font-size-xxl);
+  margin-bottom: 0.125em;
+}
+
+h2 { 
+  font-size: var(--heading-font-size-xl);
+  margin-bottom: 0.25em;
+}
+
+h3 { 
+  font-size: var(--heading-font-size-l);
+  margin-bottom: 0.5em;
+ }
+
+h4 { 
+  font-size: var(--heading-font-size-m);
+  margin-bottom: 0.5em;
+}
+
 h5 { font-size: var(--heading-font-size-s) }
 h6 { font-size: var(--heading-font-size-xs) }
+
+/* headings + p */
+:is(h1, h2, h3, h4, h5, h6):has(+ :is(p, ul, ol)) {
+	padding-bottom: 1rem;
+}
+
+/* H6 labels */
+:is(h6):has(+ :is(h1, h2, h3, h4, h5)) {
+  font-family: "anova-bold", sans-serif;
+  color: var(--orange);
+  text-transform: uppercase;
+  font-size: 1.4rem;
+  padding-bottom: .25rem;
+}
 
 p, dl, ol, ul, pre, blockquote {
   margin-top: 1em;
@@ -209,6 +239,20 @@ a.button.secondary, button.secondary {
 }
 
 */
+
+main .section[data-layout] .layout-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+main .section[data-layout="50/50"] .layout-wrapper > div {
+  flex: 1 50%;
+}
+
+main .section[data-layout="33/33/33"] .layout-wrapper > div {
+  flex: 1 calc(33.33% - 5px);
+}
 
 main img {
   max-width: 100%;
@@ -355,4 +399,49 @@ text-align:right;
 padding: 0px;
 margin: 0 auto;
 }
+}
+
+/* Linear Gradients */
+div.blue-purple-gradient {
+  background: linear-gradient(45deg, #0378CD 15%, #643695 95%);
+}
+
+div.blue-orange-gradient {
+  background: linear-gradient(45deg, #0378CD 15%, #F47723 95%);
+}
+
+div.teal-lightgreen-gradient {
+  background: linear-gradient(45deg, #007481 15%, #9CCB3B 95%);
+}
+
+div.purple-lightred-gradient {
+  background: linear-gradient(45deg, #643695 15%, #F04B4B 95%);
+}
+
+div.purple-blue-gradient {
+  background: linear-gradient(45deg, #643695 15%, #0378CD 95%);
+}
+
+div.purple-lightblue-gradient {
+  background: linear-gradient(45deg, #643695 15%, #61CAE5 95%);
+}
+
+div.purple-lightpurple-gradient {
+  background: linear-gradient(45deg, #643695 15%, #9D57A3 95%);
+}
+
+div.purple-teal-gradient {
+  background: linear-gradient(45deg, #643695 15%, #007481 95%);
+}
+
+div.purple-lightteal-gradient {
+  background: linear-gradient(45deg, #643695 15%, #3EBDAC 95%);
+}
+
+div.purple-orange-gradient {
+  background: linear-gradient(45deg, #643695 15%, #F47723 95%);
+}
+
+div.darkgray-orange-gradient {
+  background: linear-gradient(45deg, #172328 15%, #F47723 95%);
 }

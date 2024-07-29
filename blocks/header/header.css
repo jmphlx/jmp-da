@@ -193,6 +193,7 @@ header nav .nav-sections ul > li {
   font-size: var(--body-font-size-xs);
   padding-block: 1rem;
   > p {
+    font-family: "anova-regular", sans-serif;
     > a {
       &:after {
         content: '';
@@ -204,7 +205,7 @@ header nav .nav-sections ul > li {
         height: 5px;
         border: 2px solid currentcolor;
         border-radius: 0 1px 0 0;
-        border-width: 1px 1px 0 0;
+        border-width: 2px 2px 0 0;
         position: inherit;
       }
     }
@@ -242,7 +243,7 @@ header nav .nav-sections ul > li > ul > li {
   }
 
   header nav .nav-sections > ul > li {
-    border-bottom: 3px solid rgb(0, 0, 0, 0);
+    border-bottom: 3px solid rgb(0, 0, 0, 0.0);
     font-weight: 600;
     font-size: 15px;
     padding: 0 10px;
@@ -259,7 +260,7 @@ header nav .nav-sections ul > li > ul > li {
         font-size: 15px;
         border-radius: 5px;
         color: #ffffff;
-        font-family: "anova-bold", arial, helvetica, sans-serif;
+        font-family: "anova-bold", sans-serif;
         background-color: var(--orange);
         transition: color 0.5s ease;
         border: 2px solid var(--orange);
@@ -300,7 +301,7 @@ header nav .nav-sections ul > li > ul > li {
         height: 5px;
         border: 2px solid #333333;
         border-radius: 0 1px 0 0;
-        border-width: 1px 1px 0 0;
+        border-width: 2px 2px 0 0;
         position: inherit;
         transition: all 0.3s ease;
       }
@@ -322,7 +323,7 @@ header nav .nav-sections ul > li > ul > li {
         height: 5px;
         border: 2px solid #333333;
         border-radius: 0 1px 0 0;
-        border-width: 1px 1px 0 0;
+        border-width: 2px 2px 0 0;
         position: inherit;
         transition: all 0.3s ease;
       }
@@ -612,7 +613,7 @@ header nav .nav-tools .nav-drop[aria-expanded="true"] > ul {
   border-top: 3px solid #eeeeee;
   height: max-content;
   max-height: unset;
-  &::after {
+  &:after {
     content: '';
     display: inline-block;
     position: absolute;
@@ -659,7 +660,7 @@ header nav .nav-sections .nav-drop[aria-expanded="true"] .nav-section-heading {
   transition: transform .3s ease-in-out;
 } */
 
-header nav .nav-sections .nav-drop[aria-expanded="true"] .nav-section-heading::after {
+header nav .nav-sections .nav-drop[aria-expanded="true"] .nav-section-heading:after {
   top: 7px;
   left: 2px;
   transform: rotate(225deg);
@@ -696,10 +697,10 @@ header nav .nav-tools .nav-drop[aria-expanded="true"] .nav-section-heading:after
   }
 
   header nav .nav-drop[aria-expanded="true"] > ul {
-    background-color: #fafafa;
+    background-color: #ffffff;
     height: auto;
     border-top: none;
-    box-shadow: 0 4px 4px 0 rgba(0 0 0 / 0.25);
+    box-shadow: 0 2px 4px 0 rgba(0 0 0 / 0.1);
     padding: 20px;
     position: absolute;
     left: 50% !important;
@@ -842,29 +843,29 @@ header nav[aria-expanded="true"] .nav-tools.nav-tools-mobile {
   width: 100% !important;
   padding: 30px 0 0;
   ul {
-    padding: 20px 0 0;
-    border: 1px solid #eee;
+    /* padding: 20px 0 0; */
+    border: 1px solid #eeeeee;
     border-radius: 5px;
-    background-color: #fff;
+    background-color: #ffffff;
     padding: 0 20px;
     > li {
       display: block;
       width: 100%;
       padding: 0 5px;
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid #eeeeee;
       > p {
         font-size: 15px;
         width: 100%;
-        color: #fff;
+        color: #ffffff;
         padding: 20px 0;
         display: block;
-        &::before {
+        &:before {
           float: left;
         }
         picture {
           display: contents;
         }
-        &::after {
+        &:after {
           content: '';
           /* display: inline-block; */
           position: relative;
@@ -875,7 +876,7 @@ header nav[aria-expanded="true"] .nav-tools.nav-tools-mobile {
           height: 8px;
           border: 1px solid #333;
           border-radius: 0 1px 0 0;
-          border-width: 1px 1px 0 0;
+          border-width: 2px 2px 0 0;
           float: right;
         }
       }
@@ -917,14 +918,13 @@ header nav[aria-expanded="true"] .nav-tools.nav-tools-mobile {
         }
         > p {
           padding: 20px 0 10px;
-          &::after {
+          &:after {
             transform: rotate(-45deg);
             transition: transform .5s ease;
           }
         }
         a {
           display: flex;
-          /* wth: 100%; */
           text-decoration: none;
         }
       }

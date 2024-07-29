@@ -2,6 +2,7 @@
 This is the migration site for www.jmp.com on Edge Delivery running against Dark Alley.  
 
 ## Environments
+- Develop: https://develop--jmp-da--jmphlx.hlx.page/ (Design Development)
 - Preview: https://main--jmp-da--jmphlx.hlx.page/
 - Live: https://main--jmp-da--jmphlx.hlx.live/
 
@@ -13,8 +14,19 @@ npm install
 
 ## Linting
 
+In general, use:
 ```sh
 npm run lint
+```
+
+To run just the CSS Linter without the JS Linter:
+```sh
+npm run lint:css
+```
+
+If you want to use the --fix option to automatically correct fixable errors, use:
+```sh
+npm run lint:css:fix
 ```
 
 ## Updating AEM Importer

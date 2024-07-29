@@ -160,8 +160,47 @@ export function createElement(tagName, props, html) {
 
   return elem;
 }
-
 /* JMP HEADER END */
+
+/** JMP Section Group Layout Support */
+/**
+ * Builds multi column layout within a section.
+ * Expect layout to be written as '# column' i.e. '2 column' or '3 column'.
+ * Only intended to support groups of 2 or 3.
+ * @param {Element} main The container element
+ */
+export function buildLayoutContainer(main) {
+  main.querySelectorAll(':scope > .section[data-layout]').forEach((section) => {
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('layout-wrapper');
+    const numberOfGroups = parseInt(section.getAttribute('data-layout'));
+
+    // Create all group divs.
+    for (let i = 1; i <= numberOfGroups; i++) {
+      const noGroupDiv = document.createElement('div');
+      noGroupDiv.classList.add(`group-${i}`);
+      wrapper.append(noGroupDiv);
+    }
+
+    // Sort elements into groups. Every time you hit separator, increment group #.
+    let currentGroupNumber = 1;
+
+    [...section.children].forEach((child) => {
+      const curr = wrapper.querySelector(`.group-${currentGroupNumber}`);
+      if (child.classList.contains('divider-wrapper')) {
+        currentGroupNumber += 1;
+        child.remove();
+      } else {
+        curr.append(child);
+      }
+    });
+
+    // Add all groups back to the page.
+    section.append(wrapper);
+  });
+}
+
+/** End more JMP */
 
 /**
  * Decorates the main element.
@@ -175,6 +214,7 @@ export function decorateMain(main) {
   // buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
+  buildLayoutContainer(main);
 }
 
 /**
