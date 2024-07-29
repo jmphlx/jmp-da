@@ -5,8 +5,13 @@ main .hero-container {
   padding: 0;
   text-align: center;
 }
+
+
+
+
+
 .hero {
-  padding: 32px;
+  padding: 32px 32px 50px 32px;
   min-height: 250px;
   overflow: hidden;
   picture {
@@ -23,9 +28,13 @@ main .hero-container {
     
     }
   }
+  h1{
+    margin-top: .3em;
+  }
   @media only screen and (max-width: 600px) {
-    overflow: visible;
-    width: 110%;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
   }
   div:first-child, p, .button-group {
     position: relative;
@@ -34,11 +43,6 @@ main .hero-container {
     display: block;
     z-index: 100;
     text-align: left;
-  }
-  p {
-    @media only screen and (max-width: 600px) {
-      max-width: 85%;
-    }
   }
 }
 .button-group p {
@@ -67,7 +71,6 @@ main .hero-container {
   }
 }
 
-
 /* hero columns quote - touch file */
 .jmp-branding {
   background: linear-gradient(45deg, #007dc3 15%, #643695 95%);
@@ -75,6 +78,11 @@ main .hero-container {
   p {
     max-width: 65%;
     margin-left: 0;
+  }
+  p {
+    @media only screen and (max-width: 600px) {
+      max-width: 99%;
+    }
   }
 }
 .jmp-pro {
@@ -89,6 +97,7 @@ main .hero-container {
   background: linear-gradient(45deg, var(--teal) 15%, var(--greenLight) 95%);
   color: white;
 }
+
 
 /* baseline styleing for product background colors */
 .jmp-blank, .jmp-branding, .jmp-pro, .jmp-live, .jmp-clinical {
@@ -127,7 +136,9 @@ main .hero-container {
   }
 }
 .g2-badge{
-   > div {padding: 0px 32px;}
+   > div {
+    padding: 0px 32px;}
+
   h3{text-align: center;}
   picture {
   overflow: hidden;
@@ -141,7 +152,9 @@ main .hero-container {
     opacity: .5;
   }
 }
+
 }
+
 .g2-badge-4{
   width: 85%;
   > div {padding: 0px 32px;}
@@ -311,8 +324,8 @@ a.button:hover {
   
 }	
 }
-/* blue centered button */
-.blue-general-center .button-container {
+/* default button */
+.default-button .button-container {
   text-align: center;
   a.button:any-link{
     background-color: #007dc3;
@@ -337,9 +350,8 @@ a.button:hover {
 }	
 }
 
-/* blue centered button */
-.blue-general-center {
-  text-align: center;
+/* light button */
+.light-button {
   a.button:any-link{
     background-color: #007dc3;
     color: white;
@@ -353,8 +365,8 @@ a.button:hover {
 }	
 }
 
-/* Orange centered button */
-.orange-general-center {
+/* dark button */
+.dark-button {
   a.button:any-link{
     background-color: #f47723;
     color: white;
@@ -366,8 +378,26 @@ a.button:hover {
   border: 2px solid #f47723;;
 }	
 }
-.general-center{
-  h1, h2, h3, h4, h5, p{
-  text-align:center;
-  }
+
+
+
+
+
+
+
+
+/* hero section text width */
+/*
+.hero-col-35{
+
 }
+.hero-col-50{
+
+}
+.hero-col-70{
+  
+}
+.hero-col-90{
+  
+}
+*/
