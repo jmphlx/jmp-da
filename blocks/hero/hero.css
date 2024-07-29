@@ -14,35 +14,11 @@ main .hero-container {
   padding: 32px 32px 50px 32px;
   min-height: 250px;
   overflow: hidden;
-  picture {
-    overflow: hidden;
-    position: absolute;
-    right: 0;
-    width: 100%;
-    top: 0;
-    img{
-      object-fit: cover;
-      width: 100%;
-      /* min-height: 550px; I need to look at all the hero images */
-      opacity: .5;
-    
-    }
-  }
-  h1{
-    margin-top: .3em;
-  }
+
   @media only screen and (max-width: 600px) {
     overflow: hidden;
     width: 100%;
     box-sizing: border-box;
-  }
-  div:first-child, p, .button-group {
-    position: relative;
-    max-width: 1280px;
-    margin: 0 auto;
-    display: block;
-    z-index: 100;
-    text-align: left;
   }
 }
 .button-group p {
@@ -75,10 +51,7 @@ main .hero-container {
 .jmp-branding {
   background: linear-gradient(45deg, #007dc3 15%, #643695 95%);
   color: white;
-  p {
-    max-width: 65%;
-    margin-left: 0;
-  }
+
   p {
     @media only screen and (max-width: 600px) {
       max-width: 99%;
@@ -384,20 +357,3 @@ a.button:hover {
 
 
 
-
-
-/* hero section text width */
-/*
-.hero-col-35{
-
-}
-.hero-col-50{
-
-}
-.hero-col-70{
-  
-}
-.hero-col-90{
-  
-}
-*/
