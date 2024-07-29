@@ -4,7 +4,7 @@
  */
 /*  global hbspt  */
 
-import { readBlockConfig } from "../../scripts/aem.js";
+import { readBlockConfig } from '../../scripts/aem.js';
 
 const embedHubspot = (config) => {
   // clean up hubspot url query paramaters
@@ -22,25 +22,23 @@ const embedHubspot = (config) => {
   // adds event listener to add embed code on load
   scriptHubspot.addEventListener('load', () => {
     hbspt.forms.create({
-      region: config['region'],
+      region: config.region,
       portalId: config['portal-id'],
       formId: config['form-id'],
       sfdcCampaignId,
       onFormReady($form) {
-        
+        const hiddenField2 = $form.find('input[name="last_action"]');
+        const newValue2 = config['last-action']; // The value you want to append
+        hiddenField2.val(newValue2).change();
 
-        var hiddenField2 = $form.find('input[name="last_action"]');
-        var newValue2 = config['last-action']; // The value you want to append
-        hiddenField2.val(newValue2).change(); 
-
-        var hiddenField = $form.find('input[name="leadsource"]');
-        var newValue = config['lead-source']; // The value you want to append
-        hiddenField.val(newValue).change(); 
+        const hiddenField = $form.find('input[name="leadsource"]');
+        const newValue = config['lead-source']; // The value you want to append
+        hiddenField.val(newValue).change();
 
         const emailSFC = $form.find('input[name="salesforce_campaign_event_id"]');
         const newSFC = sfdcCampaignId;
         emailSFC.val(newSFC).change();
- }
+      },
     });
   });
 
@@ -66,7 +64,6 @@ const loadEmbed = (block, config) => {
 };
 
 export default function decorate(block) {
-
   const config = readBlockConfig(block);
 
   console.log(config['last-action']);
