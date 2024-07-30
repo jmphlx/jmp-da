@@ -536,10 +536,10 @@ header nav .nav-tools ul > li {
   }
 }
 
-/* header nav[aria-expanded="true"] .nav-tools.nav-tools-mobile {
+header nav[aria-expanded="true"] .nav-tools.nav-tools-mobile {
   display: flex;
   visibility: visible;
-} */
+}
 
 header nav .nav-tools .search-item {
   border-bottom: 1px solid var(--border-color);
