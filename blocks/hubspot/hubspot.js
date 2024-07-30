@@ -19,12 +19,16 @@ const embedHubspot = (config) => {
   scriptHubspot.setAttribute('type', 'text/javascript');
   scriptHubspot.src = 'https://js.hsforms.net/forms/embed/v2.js';
 
+  console.log(config['redirect-url']);
+  const redirect = config['redirect-url'];
+
   // adds event listener to add embed code on load
   scriptHubspot.addEventListener('load', () => {
     hbspt.forms.create({
       region: config.region,
       portalId: config['portal-id'],
       formId: config['form-id'],
+      redirectUrl: config['redirect-url'],
       sfdcCampaignId,
       onFormReady($form) {
         const hiddenField2 = $form.find('input[name="last_action"]');
@@ -39,6 +43,7 @@ const embedHubspot = (config) => {
         const newSFC = sfdcCampaignId;
         emailSFC.val(newSFC).change();
       },
+      onFormSubmitted(redirect,$form){},
     });
   });
 
