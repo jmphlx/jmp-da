@@ -24,7 +24,7 @@ indices:
         value: |
           attribute(el, "content")
       resourceType:
-        select: head > meta[name="resource-type"]
+        select: head > meta[name="resourcetype"]
         value: |
           attribute(el, "content")
       industry:
@@ -37,6 +37,22 @@ indices:
           attribute(el, "content")
       product:
         select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+      releaseDate:
+        select: head > meta[name="releasedate"]
+        value: |
+          parseTimestamp(attribute(el, "content"), "YYYY-MM-DD")
+      eventDate:
+        select: head > meta[name="eventdate"]
+        value: |
+          parseTimestamp(attribute(el, "content"), "YYYY-MM-DD")
+      eventTime:
+        select: head > meta[name="eventtime"]
+        value: |
+          attribute(el, "content")
+      redirectUrl:
+        select: head > meta[name="redirecturl"]
         value: |
           attribute(el, "content")
 
@@ -65,7 +81,7 @@ indices:
         value: |
           attribute(el, "content")
       resourceType:
-        select: head > meta[name="resource-type"]
+        select: head > meta[name="resourcetype"]
         value: |
           attribute(el, "content")
       industry:
@@ -78,6 +94,22 @@ indices:
           attribute(el, "content")
       product:
         select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+      releaseDate:
+        select: head > meta[name="releasedate"]
+        value: |
+          parseTimestamp(attribute(el, "content"), "YYYY-MM-DD")
+      eventDate:
+        select: head > meta[name="eventdate"]
+        value: |
+          parseTimestamp(attribute(el, "content"), "YYYY-MM-DD")
+      eventTime:
+        select: head > meta[name="eventtime"]
+        value: |
+          attribute(el, "content")
+      redirectUrl:
+        select: head > meta[name="redirecturl"]
         value: |
           attribute(el, "content")
 
@@ -106,7 +138,7 @@ indices:
         value: |
           attribute(el, "content")
       resourceType:
-        select: head > meta[name="resource-type"]
+        select: head > meta[name="resourcetype"]
         value: |
           attribute(el, "content")
       industry:
@@ -114,10 +146,26 @@ indices:
         value: |
           attribute(el, "content")
       capabilities:
-        select: head > meta[name="resource-type"]
+        select: head > meta[name="capabilitiy"]
         value: |
           attribute(el, "content")
       product:
-        select: head > meta[name="resource-type"]
+        select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+      releaseDate:
+        select: head > meta[name="releasedate"]
+        value: |
+          parseTimestamp(attribute(el, "content"), "YYYY-MM-DD")
+      eventDate:
+        select: head > meta[name="eventdate"]
+        value: |
+          parseTimestamp(attribute(el, "content"), "YYYY-MM-DD")
+      eventTime:
+        select: head > meta[name="eventtime"]
+        value: |
+          attribute(el, "content")
+      redirectUrl:
+        select: head > meta[name="redirecturl"]
         value: |
           attribute(el, "content")
