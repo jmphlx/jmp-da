@@ -60,3 +60,15 @@
   top: 4px;
   left: 7px;
 }
+
+/* .hubspot {
+  font-family: "anova-regular", sans-serif;
+} */
+
+.hubspot-wrapper {
+  background-color: #f1f1f1;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #d0d0d0;
+}

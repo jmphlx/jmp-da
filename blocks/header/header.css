@@ -262,8 +262,12 @@ header nav .nav-sections ul > li > ul > li {
         color: #ffffff;
         font-family: "anova-bold", sans-serif;
         background-color: var(--orange);
-        transition: color 0.5s ease;
         border: 2px solid var(--orange);
+        &:hover {
+          background-color: var(--orange-hover);
+          border: 2px solid var(--orange-hover);
+          transition: color 0.5s ease;
+        }
         &:after {
           display: none;
         }
@@ -281,6 +285,11 @@ header nav .nav-sections ul > li > ul > li {
         background-color: none;
         transition: color 0.5s ease;
         border: 2px solid var(--blue);
+        &:hover {
+          color: var(--link-hover-color);
+          border: 2px solid var(--link-hover-color);
+          transition: color 0.5s ease;
+        }
         &:after {
           display: none;
         }
@@ -393,7 +402,7 @@ header nav .nav-utility-row {
         border-radius: 0 0 5px 5px;
         left: auto !important;
         transform: none;
-        animation: fadeInDown 0.35s;
+        animation: fade-in-down 0.35s;
         columns: 2;
         > li {
           font-size: 15px;
@@ -422,7 +431,7 @@ header nav .nav-utility-row {
   }
 }
 
-@keyframes fadeInDown {
+@keyframes fade-in-down {
   0% {
     transform: translate3d(0, -1rem, 0);
     opacity: 0;
@@ -540,8 +549,8 @@ header nav .nav-tools .search-item {
 header nav .nav-tools .search-item a {
   display: flex;
   flex-direction: row-reverse;
-  align-content: center;
-  justify-content: space-between;
+  /* align-content: center; */
+  place-content: space-between;
 }
 
 header nav .nav-tools .fa-icon {
@@ -840,6 +849,7 @@ header nav[aria-expanded="true"] .nav-sections.nav-sections-mobile {
 
 header nav[aria-expanded="true"] .nav-tools.nav-tools-mobile {
   display: block;
+  visibility: visible;
   width: 100% !important;
   padding: 30px 0 0;
   ul {
@@ -874,7 +884,7 @@ header nav[aria-expanded="true"] .nav-tools.nav-tools-mobile {
           transform: rotate(135deg);
           width: 8px;
           height: 8px;
-          border: 1px solid #333;
+          border: 1px solid #333333;
           border-radius: 0 1px 0 0;
           border-width: 2px 2px 0 0;
           float: right;
