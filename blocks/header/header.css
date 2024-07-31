@@ -536,11 +536,6 @@ header nav .nav-tools ul > li {
   }
 }
 
-header nav[aria-expanded="true"] .nav-tools.nav-tools-mobile {
-  display: flex;
-  visibility: visible;
-}
-
 header nav .nav-tools .search-item {
   border-bottom: 1px solid var(--border-color);
 }
@@ -846,6 +841,11 @@ header nav[aria-expanded="true"] .nav-sections.nav-sections-mobile {
     }
   }
 }
+
+/* header nav[aria-expanded="true"] .nav-tools.nav-tools-mobile {
+  display: flex;
+  visibility: visible;
+} */
 
 header nav[aria-expanded="true"] .nav-tools.nav-tools-mobile {
   display: block;

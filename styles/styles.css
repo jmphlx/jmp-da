@@ -142,13 +142,17 @@ h4 {
 h5 { font-size: var(--heading-font-size-s) }
 h6 { font-size: var(--heading-font-size-xs) }
 
-/* p {
+p {
   margin-top: 0 !important;
-} */
+}
 
 p, dl, ol, ul, pre, blockquote {
   margin-top: 0;
   margin-bottom: 1em;
+}
+
+strong {
+  font-family: "anova-regular", sans-serif;
 }
 
 /* headings + p */
@@ -812,5 +816,38 @@ div.success-story-body {
         border-radius: var(--base-radius);
       }
     }
+  }
+}
+
+div.interview-body {
+  .layout-wrapper {
+    column-gap: 64px !important;
+    .group-1 {
+      h4 {
+        color: var(--purple);
+        font-family: var(--font-secondary);
+        font-size: 1.6rem;
+      }
+    }
+  }
+  @media (width <= 900px) {
+    .layout-wrapper {
+      display: block !important;
+      .group-1 {
+        display: block;
+        width: auto;
+        margin: 0 0 40px 0;
+        /* padding: 20px; */
+      }
+    }
+  }
+}
+
+/* Breadcrumbs */
+div.breadcrumb {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  p {
+    margin-bottom: 0;
   }
 }
