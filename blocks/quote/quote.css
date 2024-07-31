@@ -1,19 +1,20 @@
 .quote blockquote {
   padding: 0 32px;
-  max-width: 960px;
+  max-width: 1084px;
   display: block;
-  margin:4.5em auto; /*  messing around */
+  margin:4.5em auto; 
 }
 .quote blockquote .quote-quotation {
-  text-align: center;
+  p, h1, h2, h3, h4, h5{
   font-family: "anova-light","Arial","Helvetica",sans-serif;
   font-weight: normal;
-  font-size: 1.8rem; /*  messing around */
+  font-size: 2.8rem; 
   color: #643695;
-  margin: 20px;
+  margin: 32px auto;
   position: relative;
   padding: 0;
-  line-height: 1.2em;
+  line-height: 1.5em;
+}
 }
 
 
@@ -33,9 +34,9 @@
   width: 1em;
   position: absolute;
   top: 0.275em;
-  left: -0.300em; /*  messing around */
-  opacity: .2; /*  messing around */
- /* color: #f2f2f2; */
+  left: -0.300em;
+  opacity: .2;
+  color: #9c9c9c; 
 }
 * *.quote blockquote .quote-quotation > :last-child:after {
   content: '\201D';
@@ -45,21 +46,20 @@
   font-size: 800%;
   line-height: 0;
   display: inline-block;
-  /* color: #f2f2f2; */
   position: absolute;
   bottom: -0.175em;
   right: 0.4em;
   z-index: -1;
-  opacity: .2; /*  messing around */
-  color: #9c9c9c; /*  messing around */
+  opacity: .2; 
+  color: #9c9c9c; 
 }
 .quote blockquote .quote-attribution {
   text-align: center;
-  margin: -1em 0 0 0; /*  messing around */
+  margin: -1em 0 0 0; 
   padding: 0 0 1em;
   line-height: 125%;
   color: #333333;
-  font-size: .8em; /*  messing around */
+  font-size: .8em; 
 }
 .quote blockquote .quote-attribution strong {
   font-family: "anova-med", "Arial", "Helvetica", sans-serif;
@@ -83,12 +83,11 @@
   font-size: 800%;
   line-height: 0;
   display: inline-block;
-  /* color: #f2f2f2; */
   position: absolute;
   bottom: -0.175em;
   right: 0.4em;
   z-index: -1;
-  opacity: .2; /*  messing around */
-  color: #9c9c9c; /*  messing around */
+  opacity: .2; 
+  color: #9c9c9c; 
 
 }
