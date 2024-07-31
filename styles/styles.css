@@ -545,6 +545,18 @@ a.button:any-link, button {
     ;
   }
 }
+
+/* buttons in a hero like area  */
+.columns-60-40{
+  .button-container{
+    display: inline;
+    min-width: 50%;
+    margin-right:  10px;    
+  }
+}
+
+
+
 /* Styleing to compact the sections padding  */
 .section.compact-s {
   padding: 15px;
@@ -623,6 +635,7 @@ a.button:any-link, button {
     color: #3ebdac;
     border-top: none;
     border-bottom: none;
+    padding: 20px 10px;
     @media only screen and (max-width: 600px) {
       border: none;
     }
