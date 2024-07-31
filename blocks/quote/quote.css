@@ -1,6 +1,6 @@
 .quote blockquote {
   padding: 0 32px;
-  max-width: 960px;
+  max-width: 1084px;
   display: block;
   margin:4.5em auto; 
 }
@@ -8,12 +8,12 @@
   p, h1, h2, h3, h4, h5{
   font-family: "anova-light","Arial","Helvetica",sans-serif;
   font-weight: normal;
-  font-size: 1.8rem; 
+  font-size: 2.8rem; 
   color: #643695;
   margin: 32px auto;
   position: relative;
   padding: 0;
-  line-height: 1.2em;
+  line-height: 1.5em;
 }
 }
 
