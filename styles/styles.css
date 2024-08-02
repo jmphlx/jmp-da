@@ -266,9 +266,9 @@ main .section {
 }
 
 /* last empty section on every page (page metadata) - no padding */
-main .section:last-child {
+/* main .section:last-child {
   padding: 0 !important;
-}
+} */
 
 @media (width >=600px) {
   main .section {
