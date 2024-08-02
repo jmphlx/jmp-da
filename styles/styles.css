@@ -264,6 +264,12 @@ main img {
 main .section {
   padding: 64px 16px;
 }
+
+/* last empty section on every page (page metadata) - no padding */
+main .section:last-child {
+  padding: 0 !important;
+}
+
 @media (width >=600px) {
   main .section {
     padding: 64px 32px;
