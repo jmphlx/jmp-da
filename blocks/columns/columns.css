@@ -7,37 +7,7 @@
   text-align: left;
 
 }
-.columns50 {
-  align-items: center;
-  max-width: 1280px;
-  margin: 0 auto 2em auto;
-  text-align: left;
-  img {
-    border-radius: 5px;
-  }
-  div {
-    padding: 1% .9%;
-    align-items: center;
-    @media only screen and (max-width: 600px) {
-      padding: 3%;
-    }
-  }
-}
-.columns75 {
-  max-width: 1280px;
-  margin: 0 auto 2em auto;
-  text-align: left;
-  img {
-    border-radius: 5px;
-  }
-  div {
-    padding: 1% .9%;
-    align-items: center;
-    @media only screen and (max-width: 600px) {
-      padding: 3%;
-    }
-  }
-}
+
 .columns img {
   width: 100%;
 }
@@ -391,6 +361,7 @@
 }
 
 .author-bio {
+  display: block;
   margin-bottom: 2rem;
   gap: 10px;
   div {
@@ -403,6 +374,7 @@
   }
   div.columns-img-col {
     picture {
+      max-width: 284px;
       aspect-ratio: 1;
       img {
         display: block;
@@ -451,5 +423,28 @@
   div {
     font-size: 12px;
     color: rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Text and Image */
+.text-image-wrap {
+  display: block;
+  margin-bottom: 2rem;
+  div {
+    display: block;
+  }
+  div.columns-img-col {
+    float: left;
+    max-width: 50%;
+    margin: 0 3rem 3rem 0;
+    picture {
+      float: left;
+      aspect-ratio: 1;
+      img {
+        object-fit: cover;
+        object-position: center;
+        border-radius: 5px;
+      }
+    }
   }
 }
