@@ -25,14 +25,55 @@ const createMetadataBlock = (document) => {
     meta.Image = el;
   }
   //grab meta property=jmp
+    //grab meta property=jmp
   const jmpMeta = document.querySelectorAll('[property="jmp"]');
   if (jmpMeta) {
-    meta.jmp = [];
+    const splitChar = '|';
     jmpMeta.forEach((el) => {
-      if (el.content) meta.jmp.push(el.content);
+      if (el.content){ 
+        console.log("SplitContents:");
+        console.log(el.content.split(splitChar));
+        // handle custom page tags
+        // handle resourceType 
+        if (el.content.split(splitChar)[0] == 'Content Type'){ // <- this may change to Content Type
+          meta.resourceType = [];
+          //console.log("el.content splits below");
+          //console.log(el.content.split(splitChar)[1]);
+          meta.resourceType.push(el.content.split(splitChar)[1]);
+        }
+        console.log("metaResourceType below"); 
+        console.log(meta.resourceType);
+
+        //handle capability
+        if (el.content.split(splitChar)[0] == 'Capability'){ 
+          meta.capabilityType = [];
+          //console.log("el.content splits below");
+          //console.log(el.content.split(splitChar)[1]);
+          meta.capabilityType.push(el.content.split(splitChar)[1]);
+        }
+        console.log("metaCapabilityType below"); 
+        console.log(meta.capabilityType);
+
+        // handle event types
+        if (el.content.split(splitChar)[0] == 'Event Type'){
+          meta.eventType = [];
+          meta.eventType.push(el.content.split(splitChar)[1]);
+        }
+        //console.log("metaEventType below"); 
+        //console.log(meta.eventType);
+
+      }
+      // handle event types
+      if (el.content.split(splitChar)[0] == 'redirectUrl'){
+        meta.redirectUrl = [];
+        meta.redirectUrl.push(el.content.split(splitChar)[1]);
+      }
+      //console.log("metaRedirectUrl below"); 
+      //console.log(meta.redirectUrl);
+        
+      
     });
   }
-  //console.log(meta.jmp);
   const siteAreaMeta = document.querySelectorAll('[property="siteArea"]');
   if (siteAreaMeta) {
     meta.SiteArea = [];
