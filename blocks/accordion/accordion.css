@@ -1,5 +1,7 @@
 .accordion details {
   border: 1px solid var(--dark-color);
+  border:none;
+  border-top: 1px solid #c1c1c1;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
@@ -66,15 +68,9 @@
 .accordion-item-label{
   color: #007dc3;
 }
-.accordion details {
-  border:none;
-  border-top: 1px solid #c1c1c1;
-}
 .accordion-item-body{
   display: block;
-  
 }
-
 .accordion-item-body :is(hr){
   margin-bottom: 32px;
      }

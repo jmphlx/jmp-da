@@ -293,6 +293,7 @@ a.button:hover {
   background: #00006666;
 }
 /* Dark Button */
+/*
 .dark-button-center {
   a.button {
     text-align: center;
@@ -310,10 +311,11 @@ a.button:hover {
   a.button:hover {
     color: #fcfcfc;
     background: #00006666;
-    /* -- border: 1px solid black; -- */
+    /* -- border: 1px solid black; -- *//*
     min-width: 200px;
   }
 }
+*/
 .sasfont {
   a:before {
     color: #eea879;
@@ -414,13 +416,13 @@ div.gray {
 }
 /* hero section styling */
 .place-background-image {
+  min-height: 175px;
+  overflow: hidden;
+  position: relative;
   .columns > div {
     margin: 2px;
     padding: 2px;
   }
-  min-height: 175px;
-  overflow: hidden;
-  position: relative;
   .background-img {
     overflow: hidden;
     min-width: 100%;
@@ -489,8 +491,8 @@ a.button:any-link, button {
   }
   a.button:hover {
     color: #fcfcfc;
-    background: #00003333;
-    border: 2px solid black;
+    background: #00006666;
+    /* -- border: 1px solid black; -- */
     min-width: 200px;
   }
 }
@@ -576,78 +578,74 @@ a.button:any-link, button {
     margin-right: 10px;
   }
 }
-.text-link-center{
-  .button-container{
-  text-align: center;
-  display: block;
-  a:link {
-    border: none;
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 1.8rem;
-    margin: 0px 0;
-    cursor: pointer;
-    line-height: 2;
-    padding: 0;
-    position: relative;
-    z-index: 1;
-    background: none;
-  }
-  a:hover {
-    color: #f47723;
-  }
-  :after {
-    color: #f47723;
-    content: url('../../../icons/arrow-icon-orange.svg');
-    width: 7px;
-    display: inline-block;
-    padding-left: 9px;
-  }
-}
-}
-.text-link-stack{
-  .button-container{
-  text-align: left;
-  display: block;
-    margin: 0px 0;
-  a:link {
-    border: none;
-    color: var(--link-color);
-    text-decoration: none;
-    font-size: 1.8rem;
-    margin: 0px 0;
-    cursor: pointer;
-    line-height: 2;
-    padding: 0;
-    position: relative;
-    z-index: 1;
-    background: none;
-  }
-  a:hover {
-    color: #f47723;
-  }
-  :after {
-    color: #f47723;
-    content: url('../../../icons/arrow-icon-orange.svg');
-    width: 7px;
-    display: inline-block;
-    padding-left: 9px;
+.text-link-center {
+  .button-container {
+    text-align: center;
+    display: block;
+    a:link {
+      border: none;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 1.8rem;
+      margin: 0;
+      cursor: pointer;
+      line-height: 2;
+      padding: 0;
+      position: relative;
+      z-index: 1;
+      background: none;
+    }
+    a:hover {
+      color: #f47723;
+    }
+    :after {
+      color: #f47723;
+      content: url('../../../icons/arrow-icon-orange.svg');
+      width: 7px;
+      display: inline-block;
+      padding-left: 9px;
+    }
   }
 }
+.text-link-left {
+  .button-container {
+    text-align: left;
+    display: block;
+    margin: 0;
+    .button, a:link {
+      border: none;
+      /*  color: var(--link-color); */
+      text-decoration: none;
+      font-size: 1.8rem;
+      margin: 0;
+      cursor: pointer;
+      line-height: 2;
+      padding: 0;
+      position: relative;
+      z-index: 1;
+      background: none;
+      color: #0378cd;
+    }
+    a:hover {
+      color: #f47723;
+    }
+    :after {
+      color: #f47723;
+      content: url('../../../icons/arrow-icon-orange.svg');
+      width: 7px;
+      display: inline-block;
+      padding-left: 9px;
+    }
+  }
 }
-
-
-
-
-
 .text-link .button-container {
-  margin: 0px;
+  margin: 0;
   a:link {
     border: none;
     color: #0378cd;
     text-decoration: none;
     font-size: 1.8rem;
-    margin: 0px 0;
+    margin: 0;
     cursor: pointer;
     line-height: 2;
     padding: 0;
@@ -666,11 +664,6 @@ a.button:any-link, button {
     padding-left: 9px;
   }
 }
-
-
-
-
-
 .dark-button-inline {
   a.button {
     background: #00002200;
@@ -690,21 +683,20 @@ a.button:any-link, button {
     border: 2px solid black;
     min-width: 200px;
   }
-
-
-
 }
 /* Styleing to compact the sections padding  */
-.section.compact-s {
+.section.compact-s, .compact-s {
   padding-top: 25px;
   padding-bottom: 10px;
-  margin-bottom: 0px auto -20px auto;
+  margin-bottom: 0 auto -20 auto;
 }
-.section.compact-m {
-  padding: 30px auto;
+.section.compact-m, .compact-m {
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
-.section.compact-l {
-  padding: 60px auto;
+.section.compact-l, .compact-l {
+  padding-top: 60px;
+  padding-bottom: 40px;
 }
 /* product Icons */
 .product-icon {
@@ -721,10 +713,9 @@ a.button:any-link, button {
 /* Styling for the ROI block */
 .roi-colors {
   h2, h3, h4, h5 {
-    padding-bottom: 0rem;
+    padding-bottom: 0;
     margin-bottom: 0;
   }
- 
   h3, div, p {
     align-items: center;
     margin: .5em auto 0 auto;
@@ -870,33 +861,24 @@ div.success-story-body {
   }
 }
 /* Styling for G2 badges */
-.g2-badge {
+.g2-badge-6, .g2-badge-4 {
   .columns-wrapper {
     position: relative;
     z-index: 1;
-    @media (width<=900px) {
-      .columns > div > div {
-        display: inline;
-        max-width: 40%;
-        margin: auto;
-        text-align: center;
-      }
+    .columns > div {
+      flex-direction: inherit;
     }
   }
 }
 .g2-badge-4 {
   .columns-wrapper {
-    max-width: 900px;
-    margin: auto;
-    position: relative;
-    z-index: 1;
-    @media (width<=900px) {
-      .columns > div > div {
-        display: inline;
-        max-width: 40%;
-        margin: auto;
-        text-align: center;
-      }
+    max-width: 60%;
+    .columns > div > div {
+      max-width: 20%;
+      margin: 0 auto;
+    }
+    @media (width <=900px) {
+      max-width: 100%;
     }
   }
 }

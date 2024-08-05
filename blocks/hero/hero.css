@@ -43,7 +43,7 @@ main .hero-container {
 .hero-section {
   min-height: 250px;
   overflow: hidden;
-  display:none;
+  display: none;
   .background-img {
     position: absolute;
     min-width: 100%;
@@ -61,6 +61,7 @@ main .hero-container {
     display: block;
   }
 }
+/*
 .button {
   text-align: center;
   background: #ffffff;
@@ -74,9 +75,8 @@ main .hero-container {
 .button:hover {
   background: #ededed;
 }
+  */
 /* -- dark and light button stylin -- */
-
-
 a:any-link {
   color: var(--link-color);
   text-decoration: none;
