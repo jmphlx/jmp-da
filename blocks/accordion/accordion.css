@@ -70,24 +70,16 @@
   border:none;
   border-top: 1px solid #c1c1c1;
 }
-.left-iamge{
-  .accordion-item-body {
-    picture{
-      max-width: 40%;
-      float: left;
-      padding: 32px; 
-      border: solid;
-      display: display;
+.accordion-item-body{
+  display: block;
+  
+}
+
+.accordion-item-body :is(hr){
+  margin-bottom: 32px;
+     }
+.accordion-item-body :is(img){
+ width: 35%;
+ float: left;
+ margin: 0 32px;
     }
-  }
-  }
-.right-iamge{
-.accordion-item-body {
-  img{
-    max-width: 40%;
-    float: right;
-    padding: 1em;
-    display: block;
-  }
-}
-}

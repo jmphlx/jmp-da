@@ -40,55 +40,6 @@ main .hero-container {
     border: none;
   }
 }
-.g2-badge {
-  > div {
-    padding: 0px 32px;
-  }
-  h3 {
-    text-align: center;
-  }
-  picture {
-    overflow: hidden;
-    position: absolute;
-    right: 0;
-    width: 100%;
-    top: 0;
-    img {
-      object-fit: cover;
-      width: 100%;
-      opacity: .5;
-    }
-  }
-}
-.g2-badge-4 {
-  width: 85%;
-  > div {
-    padding: 0px 32px;
-  }
-  h3 {
-    text-align: center;
-  }
-  picture {
-    overflow: hidden;
-    position: absolute;
-    right: 0;
-    width: 100%;
-    top: 0;
-    img {
-      object-fit: cover;
-      width: 100%;
-      opacity: .5;
-    }
-  }
-}
-
-/* hero columns quote - touch file */
-.hero-text-light {
-  color: white;
-}
-.hero-text-dark {
-  color: #333333;
-}
 .hero-section {
   min-height: 250px;
   overflow: hidden;
@@ -110,20 +61,6 @@ main .hero-container {
     display: block;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .button {
   text-align: center;
   background: #ffffff;
