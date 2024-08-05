@@ -24,6 +24,15 @@ const createMetadataBlock = (document) => {
     el.src = img.content;
     meta.Image = el;
   }
+  //grab meta property=jmp
+  const jmpMeta = document.querySelectorAll('[property="jmp"]');
+  if (jmpMeta) {
+    meta.jmp = [];
+    jmpMeta.forEach((el) => {
+      if (el.content) meta.jmp.push(el.content);
+    });
+  }
+  //console.log(meta.jmp);
   //find the <meta property="date"> element
   const date = document.querySelector('[property="date"]');
   if (date) meta.Date = date.content;
