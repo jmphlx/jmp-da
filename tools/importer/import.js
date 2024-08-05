@@ -24,61 +24,81 @@ const createMetadataBlock = (document) => {
     el.src = img.content;
     meta.Image = el;
   }
-    //grab meta property=jmp
+  //grab meta property=jmp
   const jmpMeta = document.querySelectorAll('[property="jmp"]');
   if (jmpMeta) {
     const splitChar = '|';
+
+    meta.resourceType = [];
+    meta.capabilityType = [];
+    meta.product = [];
+    meta.eventType = [];
+    meta.eventTime = [];
     jmpMeta.forEach((el) => {
       if (el.content){ 
-        console.log("SplitContents:");
-        console.log(el.content.split(splitChar));
-        // handle custom page tags
-        // handle resourceType 
-        if (el.content.split(splitChar)[0] == 'Content Type'){ // <- this may change to Content Type
-          meta.resourceType = [];
-          //console.log("el.content splits below");
-          //console.log(el.content.split(splitChar)[1]);
-          meta.resourceType.push(el.content.split(splitChar)[1]);
-        }
-        console.log("metaResourceType below"); 
-        console.log(meta.resourceType);
+          console.log("SplitContents:");
+          console.log(el.content.split(splitChar));
+          // handle custom page tags
+          // handle resourceType 
+          if (el.content.split(splitChar)[0] == 'Content Type'){
+            //meta.resourceType = [];
+            //console.log("el.content splits below");
+            //console.log(el.content.split(splitChar)[1]);
+            meta.resourceType.push(el.content.split(splitChar)[1]);
+          }
+          console.log("metaResourceType below"); 
+          console.log(meta.resourceType);
 
-        //handle capability
-        if (el.content.split(splitChar)[0] == 'Capability'){ 
-          meta.capabilityType = [];
-          //console.log("el.content splits below");
-          //console.log(el.content.split(splitChar)[1]);
-          meta.capabilityType.push(el.content.split(splitChar)[1]);
+          //handle capability
+          if (el.content.split(splitChar)[0] == 'Capability'){ 
+            //meta.capabilityType = [];
+            //console.log("el.content splits below");
+            //console.log(el.content.split(splitChar)[1]);
+            meta.capabilityType.push(el.content.split(splitChar)[1]);
+          }
+          console.log("metaCapabilityType below"); 
+          console.log(meta.capabilityType);
+                  
+        // handle redirectUrl types
+        if (el.content.split(splitChar)[0] == 'redirectUrl'){
+          //meta.redirectUrl = [];
+          meta.redirectUrl.push(el.content.split(splitChar)[1]);
         }
-        console.log("metaCapabilityType below"); 
-        console.log(meta.capabilityType);
+        //console.log("metaredirectUrl below"); 
+        //console.log(meta.redirectUrl);
 
+        // handle software/product types
+        if (el.content.split(splitChar)[0] == 'Product' || el.content.split(splitChar)[0] == 'Software'){
+          //meta.product = [];
+          meta.product.push(el.content.split(splitChar)[1]);
+        }
+        //console.log("metaproduct below"); 
+        //console.log(meta.product);
+
+        // EVENTS
         // handle event types
         if (el.content.split(splitChar)[0] == 'Event Type'){
-          meta.eventType = [];
+          //meta.eventType = [];
           meta.eventType.push(el.content.split(splitChar)[1]);
         }
         //console.log("metaEventType below"); 
         //console.log(meta.eventType);
 
-      }
-      // handle redirectUrl types
-      if (el.content.split(splitChar)[0] == 'redirectUrl'){
-        meta.redirectUrl = [];
-        meta.redirectUrl.push(el.content.split(splitChar)[1]);
-      }
-      //console.log("metaredirectUrl below"); 
-      //console.log(meta.redirectUrl);
+        if (el.content.split(splitChar)[0] == 'Event Time'){
+          //meta.eventTime = [];
+          meta.eventTime.push(el.content.split(splitChar)[1]);
+        }
+        //console.log("metaEventType below"); 
+        console.log(meta);
 
-      // handle software/product types
-      if (el.content.split(splitChar)[0] == 'Product' || el.content.split(splitChar)[0] == 'Software'){
-        meta.product = [];
-        meta.product.push(el.content.split(splitChar)[1]);
-      }
-      //console.log("metaproduct below"); 
-      //console.log(meta.product);
       
+     }
     });
+    //to remove any trailing commas in case we need a csv style
+    /*const last = meta.resourceType.pop().toString().replace("/,$/",",");
+    console.log("last");
+    console.log(last);
+    meta.resourceType.push(last)*/
   }
   const siteAreaMeta = document.querySelectorAll('[property="siteArea"]');
   if (siteAreaMeta) {
