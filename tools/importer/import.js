@@ -24,16 +24,19 @@ const createMetadataBlock = (document) => {
     el.src = img.content;
     meta.Image = el;
   }
+ //grab meta prop=software (because of course both product and software exist)
+  const softwareMeta = document.querySelectorAll('[property="software"]');
   //grab meta property=jmp
   const jmpMeta = document.querySelectorAll('[property="jmp"]');
   if (jmpMeta) {
     const splitChar = '|';
-
     meta.resourceType = [];
     meta.capabilityType = [];
     meta.product = [];
+    //events arrays
     meta.eventType = [];
     meta.eventTime = [];
+    meta.eventSeries = [];
     jmpMeta.forEach((el) => {
       if (el.content){ 
           console.log("SplitContents:");
@@ -44,7 +47,7 @@ const createMetadataBlock = (document) => {
             //meta.resourceType = [];
             //console.log("el.content splits below");
             //console.log(el.content.split(splitChar)[1]);
-            meta.resourceType.push(el.content.split(splitChar)[1]);
+            meta.resourceType.push(el.content.split(splitChar)[1] + ",");
           }
           console.log("metaResourceType below"); 
           console.log(meta.resourceType);
@@ -88,17 +91,36 @@ const createMetadataBlock = (document) => {
           //meta.eventTime = [];
           meta.eventTime.push(el.content.split(splitChar)[1]);
         }
-        //console.log("metaEventType below"); 
+        //console.log("metaEventType below");
+
+        if (el.content.split(splitChar)[0] == 'Event Series'){
+          //meta.eventSeries = [];
+          meta.eventSeries.push(el.content.split(splitChar)[1]);
+        }
+        //console.log("metaEventSeries below");
         console.log(meta);
 
       
      }
     });
-    //to remove any trailing commas in case we need a csv style
-    /*const last = meta.resourceType.pop().toString().replace("/,$/",",");
-    console.log("last");
-    console.log(last);
-    meta.resourceType.push(last)*/
+    if (softwareMeta) {
+      //meta.product = [];
+      softwareMeta.forEach((el) => {
+        if (el.content){ 
+         if (el.content.includes("|")){
+          if (el.content.split(splitChar)[0]){
+            //meta.eventTime = [];
+            meta.product.push(el.content.split(splitChar)[1]);
+          }
+          console.log("productMeta");
+          console.log(meta.product);
+       }
+        else {
+            meta.product.push(el.content);
+        }
+      }
+      });
+    }
   }
   const siteAreaMeta = document.querySelectorAll('[property="siteArea"]');
   if (siteAreaMeta) {
