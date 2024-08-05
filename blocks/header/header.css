@@ -817,12 +817,12 @@ header nav[aria-expanded="true"] .nav-sections.nav-sections-mobile {
     > ul {
       > li {
         padding: 0;
-        /* ul {
+        ul {
           border-top: 1px solid #eeeeee;
           > li {
             border-bottom: 1px solid #eeeeee;
           }
-        } */
+        }
         > p {
           font-size: 15px;
           width: 100%;
