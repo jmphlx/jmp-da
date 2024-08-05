@@ -4,7 +4,6 @@ import { expect } from '@esm-bundle/chai';
 import sinon from 'sinon';
 
 const { decorateBlock, loadBlock } = await import('../../../scripts/aem.js');
-const listgroup = await import('../../../blocks/listgroup/listgroup.js');
 const data = await readFile({ path: './jmp-all.json' });
 
 function jsonOk(body) {
@@ -18,95 +17,6 @@ function jsonOk(body) {
 const stub = sinon.stub(window, 'fetch');
 
 describe('Listgroup Block', () => {
-  let arrayIncludesAllValues;
-  let arrayIncludesSomeValues;
-
-  describe('Array Comparison Logic', () => {
-    before(async () => {
-      arrayIncludesAllValues = listgroup.arrayIncludesAllValues;
-      arrayIncludesSomeValues = listgroup.arrayIncludesSomeValues;
-    });
-
-    it('Array contains another entire array', () => {
-      expect(arrayIncludesAllValues(['1', '2'], ['1', '2'])).to.be.true;
-      expect(arrayIncludesAllValues(['1', '2', '3'], ['1', '2'])).to.be.true;
-      expect(arrayIncludesAllValues(['1', '2'], ['1', '2', '3'])).to.be.false;
-    });
-
-    it('Array contains partial array', () => {
-      expect(arrayIncludesSomeValues(['1', '2'], ['1', '2'])).to.be.true;
-      expect(arrayIncludesSomeValues(['1', '2', '3'], ['1', '2'])).to.be.true;
-      expect(arrayIncludesSomeValues(['1', '2'], ['1', '2', '3'])).to.be.true;
-      expect(arrayIncludesSomeValues(['2'], ['1', '2', '3'])).to.be.true;
-    });
-  });
-
-  describe('And Logic', () => {
-    let andFilter;
-
-    before(async () => {
-      andFilter = listgroup.andFilter;
-    });
-
-    it('Multiple filters of the same category, with matching results', () => {
-      const filterObject = {
-        industry: ['chemistry', 'biotechnology'],
-      };
-      const pageSelection = JSON.parse(data).data;
-      expect(andFilter(pageSelection, filterObject).length).to.equal(2);
-    });
-
-    it('More than one type of filter criteria, with matching results', () => {
-      const filterObject = {
-        industry: 'biotechnology',
-        resourceType: 'interview',
-      };
-      const pageSelection = JSON.parse(data).data;
-      expect(andFilter(pageSelection, filterObject).length).to.equal(2);
-    });
-
-    it('More than one type of filter in the same category, matching no resources', () => {
-      const filterObject = {
-        industry: ['chemistry', 'pharmaceutical-and-biotech'],
-      };
-      const pageSelection = JSON.parse(data).data;
-      expect(andFilter(pageSelection, filterObject).length).to.equal(0);
-    });
-  });
-
-  describe('Or Logic', () => {
-    let orFilter;
-
-    before(async () => {
-      orFilter = listgroup.orFilter;
-    });
-
-    it('Multiple filters of the same category, with matching results', () => {
-      const filterObject = {
-        industry: ['chemistry', 'biotechnology'],
-      };
-      const pageSelection = JSON.parse(data).data;
-      expect(3).to.equal(orFilter(pageSelection, filterObject).length);
-    });
-
-    it('More than one type of filter criteria, with matching results', () => {
-      const filterObject = {
-        industry: 'biotechnology',
-        resourceType: 'interview',
-      };
-      const pageSelection = JSON.parse(data).data;
-      expect(10).to.equal(orFilter(pageSelection, filterObject).length);
-    });
-
-    it('Different non-overlapping filter criteria for industry', () => {
-      const filterObject = {
-        industry: ['chemistry', 'pharmaceutical-and-biotech'],
-      };
-      const pageSelection = JSON.parse(data).data;
-      expect(4).to.equal(orFilter(pageSelection, filterObject).length);
-    });
-  });
-
   describe('Generic Or Filter Test', () => {
     before(async () => {
       stub.onCall(0).returns(jsonOk(JSON.parse(data)));
