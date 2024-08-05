@@ -24,7 +24,6 @@ const createMetadataBlock = (document) => {
     el.src = img.content;
     meta.Image = el;
   }
-  //grab meta property=jmp
     //grab meta property=jmp
   const jmpMeta = document.querySelectorAll('[property="jmp"]');
   if (jmpMeta) {
@@ -63,14 +62,21 @@ const createMetadataBlock = (document) => {
         //console.log(meta.eventType);
 
       }
-      // handle event types
+      // handle redirectUrl types
       if (el.content.split(splitChar)[0] == 'redirectUrl'){
         meta.redirectUrl = [];
         meta.redirectUrl.push(el.content.split(splitChar)[1]);
       }
-      //console.log("metaRedirectUrl below"); 
+      //console.log("metaredirectUrl below"); 
       //console.log(meta.redirectUrl);
-        
+
+      // handle software/product types
+      if (el.content.split(splitChar)[0] == 'Product' || el.content.split(splitChar)[0] == 'Software'){
+        meta.product = [];
+        meta.product.push(el.content.split(splitChar)[1]);
+      }
+      //console.log("metaproduct below"); 
+      //console.log(meta.product);
       
     });
   }
