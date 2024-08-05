@@ -53,6 +53,10 @@ ul.list-tile {
   aspect-ratio: 1.5;
 }
 
+.jmp-books .image {
+  aspect-ratio: 0.8;
+}
+
 .listgroup ul.list-tile {
   > li {
     margin-bottom: 2.5%;
