@@ -1,3 +1,4 @@
+import { loadScript } from '../../scripts/aem.js';
 import {
   getJsonFromUrl,
   getListFilterOptions,
@@ -7,7 +8,13 @@ import {
   parseBlockOptions
 } from '../../scripts/jmp.js';
 
+export function createDateFromString(date) {
+  let dateTimeValue = moment(date, 'YYYY-MM-DD').format();
+  return dateTimeValue;
+}
+
 export default async function decorate(block) {
+  await loadScript('/scripts/moment/moment.js');
   const optionsObject = parseBlockOptions(block);
   block.firstElementChild.remove();
 
@@ -30,14 +37,19 @@ export default async function decorate(block) {
     pageSelection = pageOrFilter(pageSelection, filterOptions);
   }
 
-  const wrapper = document.createElement('ul');
-  const columns = optionsObject.columns !== undefined ? optionsObject.columns : 5;
-  wrapper.classList = `listOfItems image-list list-tile col-size-${columns}`;
+    // Order filtered pages by releaseDate
+    pageSelection.sort((a, b) => (moment(createDateFromString(a.releaseDate)).isBefore(createDateFromString(b.releaseDate)) ?  -1 :  1));
 
+
+  // Cut results down to fit within specified limit.
   const limitObjects = optionsObject.limit;
   if (limitObjects !== undefined && pageSelection.length > limitObjects) {
     pageSelection = pageSelection.slice(0, limitObjects);
   }
+
+  const wrapper = document.createElement('ul');
+  const columns = optionsObject.columns !== undefined ? optionsObject.columns : 5;
+  wrapper.classList = `listOfItems image-list list-tile col-size-${columns}`;
 
   pageSelection.forEach((item) => {
     const listItem = document.createElement('li');

@@ -50,7 +50,7 @@ export default async function decorate(block) {
     pageSelection = pageOrFilter(pageSelection, filterOptions);
   }
 
-  //Order filtered pages by event date and time.
+  // Order filtered pages by event date and time.
   pageSelection.sort((a, b) => (moment(createDateTimeFromString(a.eventDate, a.eventTime)).isBefore(moment(createDateTimeFromString(b.eventDate, b.eventTime))) ? -1 : 1));
 
   //Cut results down to fit within specified limit.
@@ -61,8 +61,7 @@ export default async function decorate(block) {
 
   const wrapper = document.createElement('ul');
   const columns = optionsObject.columns !== undefined ? optionsObject.columns : 5;
-  wrapper.classList = `listOfItems image-list list-tile col-size-${columns}`;
-
+  wrapper.classList = `listOfItems list-tile col-size-${columns}`;
 
   pageSelection.forEach((item) => {
     const listItem = document.createElement('li');
