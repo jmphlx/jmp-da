@@ -33,6 +33,13 @@ const createMetadataBlock = (document) => {
     });
   }
   //console.log(meta.jmp);
+  const siteAreaMeta = document.querySelectorAll('[property="siteArea"]');
+  if (siteAreaMeta) {
+    meta.SiteArea = [];
+    siteAreaMeta.forEach((el) => {
+      if (el.content) meta.SiteArea.push(el.content);
+    });
+  }
   //find the <meta property="date"> element
   const date = document.querySelector('[property="date"]');
   if (date) meta.Date = date.content;
