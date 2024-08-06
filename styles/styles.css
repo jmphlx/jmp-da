@@ -699,18 +699,39 @@ a.button:any-link, button {
   padding-top: 60px;
   padding-bottom: 40px;
 }
-/* product Icons */
-.product-icon {
+
+/*  Icons size scaling */
+.icon-scale-xs, .icon-scale-s, .icon-scale-m, .icon-scale-l {
+  margin: 25 auto 0;
+  display: block;
+@media only screen and (max-width: 600px) {
+  max-width: 150px;
+  margin: 1.5em 0 auto;
+}
+}
+.icon-scale-xs {
   img {
-    margin: 1em auto 0;
-    max-width: 200px;
-    display: block;
-    @media only screen and (max-width: 600px) {
-      max-width: 150px;
-      margin: 1.5em 0 auto;
-    }
+    max-width: 50px;
   }
 }
+.icon-scale-s {
+  img {
+    max-width: 100px;
+  }
+}
+.icon-scale-m {
+  img {
+    max-width: 200px;
+  }
+}
+.icon-scale-l {
+  img {
+    max-width: 350px;
+  }
+}
+
+
+
 /* Styling for the ROI block */
 .roi-colors {
   h2, h3, h4, h5 {
