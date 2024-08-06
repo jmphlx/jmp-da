@@ -33,6 +33,7 @@ const createMetadataBlock = (document) => {
     meta.resourceType = [];
     meta.capabilityType = [];
     meta.product = [];
+    meta.industry = [];
     //events arrays
     meta.eventType = [];
     meta.eventTime = [];
@@ -78,14 +79,20 @@ const createMetadataBlock = (document) => {
         //console.log("metaproduct below"); 
         //console.log(meta.product);
 
+        // handle industries
+        if (el.content.split(splitChar)[0] == 'Industry'){
+          //meta.redirectUrl = [];
+          meta.industry.push(el.content.split(splitChar)[1]);
+        }
+
         // EVENTS
         // handle event types
         if (el.content.split(splitChar)[0] == 'Event Type'){
           //meta.eventType = [];
           meta.eventType.push(el.content.split(splitChar)[1]);
         }
-        //console.log("metaEventType below"); 
-        //console.log(meta.eventType);
+        // console.log("metaEventType below"); 
+        // console.log(meta.eventType);
 
         if (el.content.split(splitChar)[0] == 'Event Time'){
           //meta.eventTime = [];
