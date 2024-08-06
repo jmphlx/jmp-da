@@ -200,7 +200,7 @@ export default async function decorate(block) {
   toggleMenu(nav, isDesktop.matches);
   isDesktop.addEventListener('change', () => toggleMenu(nav, isDesktop.matches));
 
-  wrapImgsInLinks(nav);
+  // wrapImgsInLinks(nav);
 
   const navTools = nav.querySelector('.nav-tools');
   if (navTools) {
