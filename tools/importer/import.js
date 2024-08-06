@@ -31,6 +31,7 @@ const createMetadataBlock = (document) => {
   if (jmpMeta) {
     const splitChar = '|';
     meta.resourceType = [];
+    meta.resourceOptions = [];
     meta.capabilityType = [];
     meta.product = [];
     meta.industry = [];
@@ -52,6 +53,16 @@ const createMetadataBlock = (document) => {
           }
           console.log("metaResourceType below"); 
           console.log(meta.resourceType);
+
+          if (el.content.split(splitChar)[0] == 'Tier' || el.content.split(splitChar)[0] == 'Success Stories'){
+            //meta.resourceType = [];
+            //console.log("el.content splits below");
+            //console.log(el.content.split(splitChar)[1]);
+            if (!(el.content.split(splitChar)[1] === undefined)){
+            meta.resourceOptions.push(el.content.split(splitChar)[1] + ",");}
+          }
+
+
 
           //handle capability
           if (el.content.split(splitChar)[0] == 'Capability'){ 
@@ -81,7 +92,7 @@ const createMetadataBlock = (document) => {
 
         // handle industries
         if (el.content.split(splitChar)[0] == 'Industry'){
-          //meta.redirectUrl = [];
+          //meta.industry = [];
           meta.industry.push(el.content.split(splitChar)[1]);
         }
 
