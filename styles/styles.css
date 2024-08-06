@@ -290,7 +290,7 @@ a.button:hover {
   /* npm run lint expects a modern color notation.  
   background: rgba(0, 0, 0, 40%);
   */
-  background: #00006666;
+  background: #2f2f2f66;
 }
 /* Dark Button */
 /*
@@ -491,7 +491,7 @@ a.button:any-link, button {
   }
   a.button:hover {
     color: #fcfcfc;
-    background: #00006666;
+    background: #1e1e1e66;
     /* -- border: 1px solid black; -- */
     min-width: 200px;
   }
@@ -638,7 +638,7 @@ a.button:any-link, button {
     }
   }
 }
-.text-link .button-container {
+.text-link .button-container, .text-link-dark .button-container {
   margin: 0;
   a:link {
     border: none;
@@ -664,6 +664,7 @@ a.button:any-link, button {
     padding-left: 9px;
   }
 }
+
 .dark-button-inline {
   a.button {
     background: #00002200;
@@ -679,7 +680,7 @@ a.button:any-link, button {
   }
   a.button:hover {
     color: #fcfcfc;
-    background: #00003333;
+    background: #21212133;
     border: 2px solid black;
     min-width: 200px;
   }
