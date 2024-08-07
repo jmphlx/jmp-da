@@ -43,8 +43,8 @@ const createMetadataBlock = (document) => {
     meta.eventSeries = [];
     jmpMeta.forEach((el) => {
       if (el.content){ 
-          console.log("SplitContents:");
-          console.log(el.content.split(splitChar));
+          // console.log("SplitContents:");
+          // console.log(el.content.split(splitChar));
           // handle custom page tags
           // handle resourceType 
           if (el.content.split(splitChar)[0] == 'Content Type'){
@@ -56,8 +56,8 @@ const createMetadataBlock = (document) => {
             } else {
             meta.resourceType.push(el.content.split(splitChar)[1] + ",");}
           }
-          console.log("metaResourceType below"); 
-          console.log(meta.resourceType);
+          // console.log("metaResourceType below"); 
+          // console.log(meta.resourceType);
 
           if (el.content.split(splitChar)[0] == 'Tier' || el.content.split(splitChar)[0] == 'Success Stories'){
             //meta.resourceType = [];
@@ -75,9 +75,9 @@ const createMetadataBlock = (document) => {
             //console.log("el.content splits below");
             //console.log(el.content.split(splitChar)[1]);
             meta.capabilityType.push(el.content.split(splitChar)[1]);
-          }
-          console.log("metaCapabilityType below"); 
-          console.log(meta.capabilityType);
+          // }
+          // console.log("metaCapabilityType below"); 
+          // console.log(meta.capabilityType);
                   
         // handle redirectUrl types
         if (el.content.split(splitChar)[0] == 'redirectUrl'){
@@ -121,7 +121,7 @@ const createMetadataBlock = (document) => {
           meta.eventSeries.push(el.content.split(splitChar)[1]);
         }
         //console.log("metaEventSeries below");
-        console.log(meta);
+        // console.log(meta);
 
       
      }
