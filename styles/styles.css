@@ -255,7 +255,7 @@ main .section {
 }
 @media (width >=600px) {
   main .section {
-    padding: 64px 32px;
+    padding: 64px 32px 32px 32px;
   }
 }
 @media (width >=900px) {
@@ -685,21 +685,22 @@ a.button:any-link, button {
     min-width: 200px;
   }
 }
-/* Styleing to compact the sections padding  */
-.section.compact-s, .compact-s {
-  padding-top: 25px;
-  padding-bottom: 10px;
-  margin-bottom: 0 auto -20 auto;
+/* Styling change to the sections margin  */
+.block-margin-small {
+.columns > div{
+margin: 0 0 32px 0 !important;
 }
-.section.compact-m, .compact-m {
-  padding-top: 30px;
-  padding-bottom: 30px;
 }
-.section.compact-l, .compact-l {
-  padding-top: 60px;
-  padding-bottom: 40px;
+.block-margin-medium {
+  .columns > div{
+  margin: 0 0 62px 0 !important;
+  }
 }
-
+  .block-margin-large {
+    .columns > div{
+    margin: 0 0 92px 0 !important;
+    }
+  }     
 /*  Icons size scaling */
 .icon-scale-xs, .icon-scale-s, .icon-scale-m, .icon-scale-l {
   margin: 25 auto 0;
