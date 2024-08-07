@@ -1,0 +1,88 @@
+ul.list-tile {
+  display: flex;
+  flex-flow: row wrap;
+  margin: 0;
+  padding: 0;
+}
+
+.listgroup-fixed ul li {
+  clear: both;
+  list-style-type: none;
+  padding: 0;
+  float: left;
+}
+
+.listgroup-fixed ul.col-size-3 li {
+  width: 27.3333%;
+  margin: 0 3% 2em 3%;
+}
+
+.listgroup-fixed ul.col-size-4 li {
+  width: 22%;
+}
+
+.listgroup-fixed ul.col-size-5 li {
+  width: 14%;
+  margin: 0 1.5% 2em 1.5%;
+}
+
+.listgroup-fixed ul.list-tile>li a {
+  background: #FAFAFA;
+  border: 1px solid #D7D7D7;
+  border-radius: 5px;
+  padding: 8% 8% 9% 8%;
+  box-sizing: border-box;
+  margin: 0;
+  height: 100%;
+  width: auto;
+  text-decoration: none;
+  display: grid;
+  grid-template-rows: auto 30px auto auto;
+  position: relative;
+  outline: none;
+  overflow: hidden;
+}
+
+.listgroup-fixed ul.list-tile>li a img {
+  border-radius: 5px;
+  border: 1px solid #D7D7D7;
+  padding: 0;
+  transition: color 0.3s ease;
+  object-fit: cover;
+  height: 100%;
+}
+
+.image {
+  float: left;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding-bottom: 20px;
+  grid-row: 1;
+}
+
+.listgroup-fixed ul.list-tile>li a .navigation-title {
+  font-size: 13px;
+  font-family: "anova-med", "Arial", "Helvetica", sans-serif;
+  font-weight: normal;
+  color: var(--gray7);
+  display: block;
+  padding: 0 0 .25em;
+  line-height: 20px;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.title {
+  font-family: "anova-reg", "Arial", "Helvetica", sans-serif;
+  font-weight: normal;
+  font-size: 1.6 rem;
+  padding: 0 0 .25em;
+  transition: color 0.3s ease;
+  color: var(--blue);
+}
+
+.abstract {
+  color: #000000;
+  font-size: .8rem;
+}
