@@ -186,8 +186,8 @@ main pre {
   overflow-x: auto;
   white-space: pre;
 }
-/* links
 
+/* links
 a:any-link {
   color: var(--link-color);
   text-decoration: none;
@@ -233,8 +233,8 @@ a.button.secondary, button.secondary {
   border: 2px solid currentcolor;
   color: var(--text-color)
 }
-
 */
+
 main .section[data-layout] .layout-wrapper {
   display: flex;
   flex-direction: row;
@@ -265,14 +265,9 @@ main .section {
   padding: 64px 16px;
 }
 
-/* last empty section on every page (page metadata) - no padding */
-/* main .section:last-child {
-  padding: 0 !important;
-} */
-
 @media (width >=600px) {
   main .section {
-    padding: 64px 32px;
+    padding: 64px 32px 32px 32px;
   }
 }
 @media (width >=900px) {
@@ -309,6 +304,7 @@ a.button:hover {
   */
   background: #00006666;
 }
+
 /* Dark Button */
 .dark-button-center {
   a.button {
@@ -331,13 +327,51 @@ a.button:hover {
     min-width: 200px;
   }
 }
-.sasfont {
-  a:before {
-    color: #eea879;
-    font-family: 'sasicons-103018' !important;
-    content: '';
+
+.modal-text-link {
+  a.button {
+    text-align: center;
+    background: none !important;
+    color: #333333 !important;
+    font-family: "Anova-Regular", sans-serif !important;
+    overflow: visible !important;
+    /* border: 1px solid #ffffff;
+    border-radius: 8px; */
+    min-width: 200px;
+    margin: 0 auto !important;
+    padding: 5px !important;
+    /* box-sizing: content-box; */
+    transition-duration: 0.2s;
+    transition-timing-function: ease;
+    position: relative;
+    z-index: 1;
+    &:before {
+      content: '\25B6';
+      display: inline-block;
+      vertical-align: middle;
+      width: 1em;
+      height: 1em;
+      text-align: end;
+      color: #333333;
+      line-height: 1.15;
+      font-size: 1.2rem;
+      position: relative;
+      padding: 3px;
+      margin-right: 6px;
+      bottom: 2px;
+      border-radius: 18px;
+      border: 2px solid #333333;
+    }
+  }
+  a.button:hover {
+    color: var(--blue) !important;
+    &:before {
+      color: var(--blue) !important;
+      border-color: var(--blue);
+    }
   }
 }
+
 .sub-capability-cards {
   ul {
     background: rgba(0 0 0 / 0.025);
@@ -855,5 +889,17 @@ div.breadcrumb {
   padding-bottom: 0;
   p {
     margin-bottom: 0;
+  }
+}
+
+/* Spacing */
+.margin-medium {
+  .columns > div {
+    margin: 0 0 60px 0 !important;
+  }
+}
+.margin-large {
+  .columns > div {
+    margin: 0 0 80px 0 !important;
   }
 }
