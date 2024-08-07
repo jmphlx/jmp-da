@@ -1,5 +1,7 @@
 /* eslint arrow-parens: 0 */
 /* eslint consistent-return: 0 */
+/* eslint no-restricted-syntax: 0 */
+/* eslint no-await-in-loop: 0 */
 
 import {
   getMetadata,
