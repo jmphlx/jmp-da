@@ -23,7 +23,8 @@ export default async function decorate(block) {
   const columns = optionsObject.columns !== undefined ? optionsObject.columns : 5;
   wrapper.classList = `listOfItems image-list list-tile col-size-${columns}`;
 
-  pageUrls.forEach(async (item) => {
+  // Needs to be a for instead of forEach to maintain order of urls.
+  for (const item of pageUrls) {
     const resp = await fetch(`${item}`);
     if (!resp.ok) return null;
     const html = await resp.text();
@@ -31,8 +32,14 @@ export default async function decorate(block) {
 
     const listItem = document.createElement('li');
     const cardLink = document.createElement('a');
-    cardLink.href = item;
-    cardLink.target = '_self';
+    const redirectUrl = getMetadata('redirecturl', doc);
+    if (redirectUrl.length > 0) {
+      cardLink.href = redirectUrl;
+      cardLink.target = '_blank';
+    } else {
+      cardLink.href = item;
+      cardLink.target = '_self';
+    }
     const htmlOutput = `
     <span class="navigation-title">${getMetadata('resourcetype', doc)}</span>
     <span class="title">${getMetadata('og:title', doc)}</span>
@@ -43,7 +50,7 @@ export default async function decorate(block) {
 
     listItem.append(cardLink);
     wrapper.append(listItem);
-  });
+  }
 
   block.append(wrapper);
 }

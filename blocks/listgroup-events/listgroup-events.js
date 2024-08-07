@@ -63,8 +63,13 @@ export default async function decorate(block) {
   pageSelection.forEach((item) => {
     const listItem = document.createElement('li');
     const cardLink = document.createElement('a');
-    cardLink.href = item.path;
-    cardLink.target = '_self';
+    if (item.redirectUrl.length > 0) {
+      cardLink.href = item.redirectUrl;
+      cardLink.target = '_blank';
+    } else {
+      cardLink.href = item.path;
+      cardLink.target = '_self';
+    }
     const htmlOutput = `
     <span class="tag-category">${item.resourceType}</span>
     <span class="title">${item.title}</span>
