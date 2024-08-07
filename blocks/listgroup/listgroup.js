@@ -5,11 +5,11 @@ import {
   languageIndexExists,
   pageAndFilter,
   pageOrFilter,
-  parseBlockOptions
+  parseBlockOptions,
 } from '../../scripts/jmp.js';
 
 export function createDateFromString(date) {
-  let dateTimeValue = moment(date, 'YYYY-MM-DD').format();
+  const dateTimeValue = moment(date, 'YYYY-MM-DD').format();
   return dateTimeValue;
 }
 
@@ -37,9 +37,9 @@ export default async function decorate(block) {
     pageSelection = pageOrFilter(pageSelection, filterOptions);
   }
 
-    // Order filtered pages by releaseDate
-    pageSelection.sort((a, b) => (moment(createDateFromString(a.releaseDate)).isBefore(createDateFromString(b.releaseDate)) ?  -1 :  1));
-
+  // Order filtered pages by releaseDate
+  pageSelection.sort((a, b) => (moment(createDateFromString(a.releaseDate))
+    .isBefore(createDateFromString(b.releaseDate)) ? -1 : 1));
 
   // Cut results down to fit within specified limit.
   const limitObjects = optionsObject.limit;

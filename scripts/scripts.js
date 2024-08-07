@@ -173,7 +173,7 @@ export function buildLayoutContainer(main) {
   main.querySelectorAll(':scope > .section[data-layout]').forEach((section) => {
     const wrapper = document.createElement('div');
     wrapper.classList.add('layout-wrapper');
-    const numberOfGroups = parseInt(section.getAttribute('data-layout'));
+    const numberOfGroups = parseInt(section.getAttribute('data-layout'), 10);
 
     // Create all group divs.
     for (let i = 1; i <= numberOfGroups; i++) {

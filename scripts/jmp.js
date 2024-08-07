@@ -48,10 +48,10 @@ async function getTimezones() {
  * @returns single json object of the corresponding timezone
  */
 function getTimezoneObjectFromAbbr(timezones, tzabbr) {
+  // eslint-disable-next-line arrow-body-style
   const timezone = timezones.filter((item) => {
-   return item.abbr === tzabbr;
+    return item.abbr === tzabbr;
   });
-  console.log(timezone);
   return timezone[0];
 }
 
@@ -195,7 +195,6 @@ function getListFilterOptions(block) {
   }
   return filterOptions;
 }
-
 
 export {
   arrayIncludesAllValues,

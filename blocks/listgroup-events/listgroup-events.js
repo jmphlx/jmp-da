@@ -13,15 +13,11 @@ import {
 const timezones = await getTimezones();
 
 export function createDateTimeFromString(date, time) {
-  let timeArray = time.split(' ');
-  let numTime = timeArray[0];
-  let timezone = timeArray[1];
-  console.log(timezone);
-  let offsetUTC = getTimezoneObjectFromAbbr(timezones, timezone).utc[0];
-  console.log(offsetUTC);
-
-  let dateTimeValue = moment(date + ',' + numTime, 'YYYY-MM-DD,hh:mmA').tz(offsetUTC).format();
-  console.log(dateTimeValue);
+  const timeArray = time.split(' ');
+  const numTime = timeArray[0];
+  const timezone = timeArray[1];
+  const offsetUTC = getTimezoneObjectFromAbbr(timezones, timezone).utc[0];
+  const dateTimeValue = moment(`${date},${numTime}`, 'YYYY-MM-DD,hh:mmA').tz(offsetUTC).format();
   return dateTimeValue;
 }
 
@@ -51,9 +47,10 @@ export default async function decorate(block) {
   }
 
   // Order filtered pages by event date and time.
-  pageSelection.sort((a, b) => (moment(createDateTimeFromString(a.eventDate, a.eventTime)).isBefore(moment(createDateTimeFromString(b.eventDate, b.eventTime))) ? -1 : 1));
+  pageSelection.sort((a, b) => (moment(createDateTimeFromString(a.eventDate, a.eventTime))
+    .isBefore(moment(createDateTimeFromString(b.eventDate, b.eventTime))) ? -1 : 1));
 
-  //Cut results down to fit within specified limit.
+  // Cut results down to fit within specified limit.
   const limitObjects = optionsObject.limit;
   if (limitObjects !== undefined && pageSelection.length > limitObjects) {
     pageSelection = pageSelection.slice(0, limitObjects);
@@ -68,7 +65,7 @@ export default async function decorate(block) {
     const cardLink = document.createElement('a');
     cardLink.href = item.path;
     cardLink.target = '_self';
-    let htmlOutput = `
+    const htmlOutput = `
     <span class="tag-category">${item.resourceType}</span>
     <span class="title">${item.title}</span>
     <span class="subtitle">${item.eventDate} | ${item.eventTime}</span>`;

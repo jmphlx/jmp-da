@@ -1,3 +1,6 @@
+/* eslint arrow-parens: 0 */
+/* eslint consistent-return: 0 */
+
 import {
   getMetadata,
 } from '../../scripts/aem.js';
@@ -7,10 +10,10 @@ import {
 
 export default async function decorate(block) {
   const optionsObject = parseBlockOptions(block);
-  if(optionsObject !== undefined && Object.keys(optionsObject).length > 0) {
+  if (optionsObject !== undefined && Object.keys(optionsObject).length > 0) {
     block.firstElementChild.remove();
   }
-  
+
   const list = block.firstElementChild?.children.item(0).textContent;
   const pageUrls = list.split(',').map(string => string.trim());
   // Remove block urls list now that we have it.
@@ -30,7 +33,7 @@ export default async function decorate(block) {
     const cardLink = document.createElement('a');
     cardLink.href = item;
     cardLink.target = '_self';
-    let htmlOutput = `
+    const htmlOutput = `
     <span class="navigation-title">${getMetadata('resourcetype', doc)}</span>
     <span class="title">${getMetadata('og:title', doc)}</span>
     <span class="cmp-image image"><img src="${getMetadata('og:image', doc)}"/></span>
