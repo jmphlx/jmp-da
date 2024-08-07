@@ -4,7 +4,8 @@ const createMetadataBlock = (document) => {
   //find the <title> element
   const title = document.querySelector('title');
   if (title) {
-    meta.Title = title.innerHTML.replace(/[\n\t]/gm, '');
+    const myTitle = title.innerHTML.replace(/[\n\t]/gm, '');
+    meta.Title = myTitle.split('|')[0];
   }
   //find the <meta property="og:description"> element
   const desc = document.querySelector('[property="og:description"]');
@@ -35,6 +36,7 @@ const createMetadataBlock = (document) => {
     meta.capabilityType = [];
     meta.product = [];
     meta.industry = [];
+    meta.redirectUrl = [];
     //events arrays
     meta.eventType = [];
     meta.eventTime = [];
@@ -49,7 +51,10 @@ const createMetadataBlock = (document) => {
             //meta.resourceType = [];
             //console.log("el.content splits below");
             //console.log(el.content.split(splitChar)[1]);
-            meta.resourceType.push(el.content.split(splitChar)[1] + ",");
+            if (el.content.split(splitChar)[1] == 'Success Story'){
+              meta.resourceType.push("Customer Story" + ",");
+            } else {
+            meta.resourceType.push(el.content.split(splitChar)[1] + ",");}
           }
           console.log("metaResourceType below"); 
           console.log(meta.resourceType);
