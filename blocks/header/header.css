@@ -732,7 +732,7 @@ header nav .nav-mobile-menu {
   top: 75px;
   right: 0;
   left: 0;
-  background-color: #fafafa;
+  background-color: #ffffff;
   padding: 0 2rem;
   transform: translateX(-100%);
   min-height: 100dvh;
@@ -743,7 +743,8 @@ header nav .nav-mobile-menu {
   header nav[aria-expanded="true"] .nav-mobile-menu {
     transform: translateX(0);
     transition: transform .3s ease-in-out;
-    padding: 0 2rem;
+    /* padding: 0 2rem; */
+    padding: 0;
     display: flex;
     flex-direction: column;
   }
@@ -759,6 +760,7 @@ header nav[aria-expanded="true"] .nav-sections.nav-sections-mobile {
   display: block;
   order: 1;
   visibility: visible;
+  padding: 0 2rem;
   > ul {
     list-style: none;
     > li {
@@ -857,19 +859,22 @@ header nav[aria-expanded="true"] .nav-tools.nav-tools-mobile {
   order: 0;
   visibility: visible;
   width: 100% !important;
-  padding: 15px 0 10px 0;
+  /* padding: 15px 0 10px 0; */
+  padding: 0;
+  margin-bottom: 10px;
   ul {
     /* padding: 20px 0 0; */
-    border: 1px solid #eeeeee;
+    /* border: 1px solid #eeeeee; */
     border-radius: 5px;
-    background-color: #ffffff;
+    background-color: #fafafa;
     padding: 0 20px;
     align-items: baseline;
     display: flex;
     > li {
       display: block;
       width: 10%;
-      padding: 0 5px;
+      /* padding: 0 5px; */
+      padding: 0;
       /* border-bottom: 1px solid #eeeeee; */
       > p {
         font-size: 15px;
