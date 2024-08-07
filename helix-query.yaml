@@ -42,11 +42,11 @@ indices:
       releaseDate:
         select: head > meta[name="releasedate"]
         value: |
-          parseTimestamp(attribute(el, "content"), "YYYY-MM-DD")
+          attribute(el, "content")
       eventDate:
         select: head > meta[name="eventdate"]
         value: |
-          parseTimestamp(attribute(el, "content"), "YYYY-MM-DD")
+          attribute(el, "content")
       eventTime:
         select: head > meta[name="eventtime"]
         value: |
@@ -99,11 +99,11 @@ indices:
       releaseDate:
         select: head > meta[name="releasedate"]
         value: |
-          parseTimestamp(attribute(el, "content"), "YYYY-MM-DD")
+          attribute(el, "content")
       eventDate:
         select: head > meta[name="eventdate"]
         value: |
-          parseTimestamp(attribute(el, "content"), "YYYY-MM-DD")
+          attribute(el, "content")
       eventTime:
         select: head > meta[name="eventtime"]
         value: |
@@ -156,11 +156,11 @@ indices:
       releaseDate:
         select: head > meta[name="releasedate"]
         value: |
-          parseTimestamp(attribute(el, "content"), "YYYY-MM-DD")
+          attribute(el, "content")
       eventDate:
         select: head > meta[name="eventdate"]
         value: |
-          parseTimestamp(attribute(el, "content"), "YYYY-MM-DD")
+          attribute(el, "content")
       eventTime:
         select: head > meta[name="eventtime"]
         value: |

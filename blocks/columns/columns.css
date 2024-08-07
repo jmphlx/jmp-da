@@ -109,6 +109,10 @@
         padding-bottom: 1rem;
         border-bottom: 1px dotted #b4b4b4;
         border-width: 2px;
+        font-size: clamp(2.4rem, 4vw + 1rem, 4.2rem);
+      }
+      p {
+        margin: 1rem 0 !important;
       }
       h6 {
         font-family: "anova-bold", sans-serif;
@@ -138,11 +142,9 @@
           top: -20px;
         }
       }
-      p {
-        margin: 1rem 0;
-      }
-      img {
-        max-width: 200px
+      img, picture {
+          max-width: 200px;
+          margin-bottom: 0 !important;
       }
       @media (width <=900px) {
         padding-top: 40px;
@@ -165,60 +167,8 @@
       }
     }
   }
-  &:before {
-    display: inline-block;
-    background: #f4f4f4;
-    border-radius: 50%;
-    padding: 0;
-    content: '';
-    height: 250px;
-    width: 250px;
-    position: absolute;
-    right: -100px;
-    bottom: -50%;
-    overflow: hidden;
-    z-index: -1;
-    @media (width <=900px) {
-      background-color: #f4f4f4;
-    }
-  }
-  &:after {
-    display: inline-block;
-    background: #f4f4f4;
-    border-radius: 50%;
-    padding: 0;
-    content: '';
-    height: 350px;
-    width: 350px;
-    position: absolute;
-    right: 5%;
-    bottom: -70%;
-    overflow: hidden;
-    z-index: -1;
-  }
-  @media (width <=900px) {
-    &:before {
-      display: none;
-      /* background-color: #f4f4f4;
-      z-index: 0;
-      height: 30px;
-      width: 30px;
-      position: absolute;
-      right: 0;
-      bottom: -20%; */
-    }
-    &:after {
-      display: none;
-      /* background-color: #f4f4f4;
-      z-index: 0;
-      height: 70px;
-      width: 70px;
-      position: absolute;
-      right: 5%;
-      bottom: -25%; */
-    }
-  }
-  /* H6 labels */ :is(h6):has(+ :is(h1, h2, h3, h4, h5)) {
+  /* H6 labels */
+  :is(h6):has(+ :is(h1, h2, h3, h4, h5)) {
     font-family: "anova-bold", sans-serif;
     color: var(--orange);
     text-transform: uppercase;
@@ -240,6 +190,13 @@
       h1 {
         padding: 0;
         margin: 0;
+        padding-bottom: 1rem;
+        border-bottom: 1px dotted #b4b4b4;
+        border-width: 2px;
+        font-size: clamp(2.4rem, 4vw + 1rem, 4.2rem);
+      }
+      p {
+        margin: 1rem 0 !important;
       }
       h6 {
         font-family: "anova-bold", sans-serif;
@@ -268,9 +225,6 @@
           left: 1px;
           top: -20px;
         }
-      }
-      p {
-        margin: 1rem 0;
       }
       img {
         max-width: 200px
@@ -317,6 +271,13 @@
       h1 {
         padding: 0;
         margin: 0;
+        padding-bottom: 1rem;
+        border-bottom: 1px dotted #b4b4b4;
+        border-width: 2px;
+        font-size: clamp(2.4rem, 4vw + 1rem, 4.2rem);
+      }
+      p {
+        margin: 1rem 0 !important;
       }
       h6 {
         font-family: "anova-bold", sans-serif;
@@ -346,9 +307,6 @@
           top: -20px;
         }
       }
-      p {
-        margin: 1rem 0;
-      }
       img {
         max-width: 200px
       }
@@ -376,7 +334,7 @@
           width: auto;
         }
       }
-      @media (width <=899px) {
+      @media (width <=900px) {
         picture {
           justify-content: flex-start;
         }
@@ -446,5 +404,94 @@ div.clm-75-25 {
   }
   div > div:nth-child(2) {
     min-width: 25%;
+  }
+}
+
+.author-bio {
+  display: block;
+  margin-bottom: 2rem;
+  gap: 10px;
+  div {
+    display: flex;
+    flex-direction: column;
+    p {
+      margin: 1rem 0;
+      line-height: 1.5;
+    }
+  }
+  div.columns-img-col {
+    picture {
+      max-width: 284px;
+      aspect-ratio: 1;
+      img {
+        display: block;
+        height: 100%;
+        width: auto;
+        max-width: 100%;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 5px;
+      }
+    }
+  }
+  @media (width <= 900px) {
+    width: 100%;
+    min-width: 100%;
+    margin-bottom: 20px;
+    flex-direction: row;
+    div {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      column-gap: 5%;
+      width: 100%;
+      min-width: 100%;
+      margin-bottom: 20px;
+      div {
+        display: block;
+      }
+      p {
+        margin: 1rem 0;
+        line-height: 1.5;
+      }
+    }
+    div.columns-img-col {
+      picture {
+        img {
+          aspect-ratio: 1;
+          height: 100%;
+        }
+      }
+    }
+  }
+}
+
+/* Disclaimer text */
+.disclaimer {
+  div {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Text and Image */
+.text-image-wrap {
+  display: block;
+  margin-bottom: 2rem;
+  div {
+    display: block;
+  }
+  div.columns-img-col {
+    float: left;
+    max-width: 50%;
+    margin: 0 3rem 3rem 0;
+    picture {
+      float: left;
+      aspect-ratio: 1;
+      img {
+        object-fit: cover;
+        object-position: center;
+        border-radius: 5px;
+      }
+    }
   }
 }
