@@ -98,7 +98,7 @@ body {
   font-size: var(--body-font-size-s);
   margin: 0;
   font-family: var(--body-font-family);
-  line-height: 1.6;
+  line-height: 1.5;
   color: var(--text-color);
   background-color: var(--background-color);
   display: none;
@@ -111,10 +111,9 @@ header {
 }
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--heading-font-family);
-  font-weight: 600;
   line-height: 1.25;
   margin-top: 0;
-  margin-bottom: 0;
+  margin-bottom: 1em;
   padding-bottom: 0;
   scroll-margin: calc(var(--nav-height) + 1em);
 }
@@ -386,7 +385,7 @@ a.button:hover {
     font-size: 16px;
     display: block;
     margin-block: 1.33em;
-    font-weight: bold;
+    /* font-weight: bold; */
     unicode-bidi: isolate;
   }
 }
@@ -465,7 +464,7 @@ div.brand-neutral-dark {
   color: #ffffff;
 }
 div.gray {
-  background: var(--grayRule);
+  background: #f4f4f4;
 }
 /* hero section styling */
 .place-background-image {
