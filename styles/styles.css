@@ -152,9 +152,9 @@ strong {
 }
 
 /* headings + p */
-:is(h1, h2, h3, h4, h5, h6):has(+ :is(p, ul, ol)) {
+/* :is(h1, h2, h3, h4, h5, h6):has(+ :is(p, ul, ol)) {
 	padding-bottom: .5em;
-}
+} */
 /* H6 labels */
 /* :is(h6):has(+ :is(h1, h2, h3, h4, h5)) {
   font-family: "anova-bold", sans-serif;
@@ -508,7 +508,7 @@ div.gray {
   }
 }
 a.button:any-link, button {
-  font-family: var(--body-font-family);
+  font-family: "Anova-Regular", sans-serif;
   display: inline-block;
   box-sizing: border-box;
   text-decoration: none;
