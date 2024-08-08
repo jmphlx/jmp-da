@@ -1,7 +1,7 @@
 ul.list-tile {
   display: flex;
   flex-flow: row wrap;
-  margin: 0;
+  margin: 0 -1.25%;
   padding: 0;
 }
 
@@ -13,76 +13,140 @@ ul.list-tile {
 }
 
 .listgroup-fixed ul.col-size-3 li {
-  width: 27.3333%;
-  margin: 0 3% 2em 3%;
+  width: 30.75%;
+  margin: 0 1.25% 1.75em 1.25%;
+  @media (width <= 600px) {
+    width: 47.5%;
+  }
 }
 
 .listgroup-fixed ul.col-size-4 li {
-  width: 22%;
+  margin: 0 1.25% 1.75em 1.25%;
+  width: 22.5%;
+  @media (width <= 900px) {
+    width: 30.75%;
+  }
+  @media (width <= 600px) {
+    width: 47.5%;
+  }
 }
 
 .listgroup-fixed ul.col-size-5 li {
-  width: 14%;
-  margin: 0 1.5% 2em 1.5%;
-}
-
-.listgroup-fixed ul.list-tile>li a {
-  background: #FAFAFA;
-  border: 1px solid #D7D7D7;
-  border-radius: 5px;
-  padding: 8% 8% 9% 8%;
-  box-sizing: border-box;
-  margin: 0;
-  height: 100%;
-  width: auto;
-  text-decoration: none;
-  display: grid;
-  grid-template-rows: auto 30px auto auto;
-  position: relative;
-  outline: none;
-  overflow: hidden;
-}
-
-.listgroup-fixed ul.list-tile>li a img {
-  border-radius: 5px;
-  border: 1px solid #D7D7D7;
-  padding: 0;
-  transition: color 0.3s ease;
-  object-fit: cover;
-  height: 100%;
+  margin: 0 1.25% 2% 1.25%;
+  width: 17.5%;
+  @media (width <= 900px) {
+    width: 30.75%;
+  }
+  @media (width <= 600px) {
+    width: 47.5%;
+  }
 }
 
 .image {
+  order: 0;
   float: left;
-  width: 100%;
+  width: auto;
+  display: flex;
   max-width: 100%;
   margin: 0;
-  padding-bottom: 20px;
   grid-row: 1;
+  aspect-ratio: 1.5;
 }
 
-.listgroup-fixed ul.list-tile>li a .navigation-title {
-  font-size: 13px;
-  font-family: "anova-med", "Arial", "Helvetica", sans-serif;
-  font-weight: normal;
-  color: var(--gray7);
-  display: block;
-  padding: 0 0 .25em;
-  line-height: 20px;
-  text-transform: uppercase;
-  transition: color 0.3s ease;
+.jmp-books .image {
+  aspect-ratio: 0.8;
 }
 
-.title {
-  font-family: "anova-reg", "Arial", "Helvetica", sans-serif;
-  font-weight: normal;
-  font-size: 1.6 rem;
-  padding: 0 0 .25em;
-  transition: color 0.3s ease;
-  color: var(--blue);
-}
-
-.abstract {
-  color: #000000;
-  font-size: .8rem;
+.listgroup-fixed ul.list-tile {
+  > li {
+    margin-bottom: 2.5%;
+    transition: all 0.3s ease-in-out;
+    a {
+      background: #FAFAFA;
+      border: 1px solid #D7D7D7;
+      border-radius: 5px;
+      /* padding: 8% 8% 9% 8%; */
+      box-sizing: border-box;
+      margin: 0;
+      height: 100%;
+      width: auto;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      outline: none;
+      img {
+        border-radius: 5px 5px 0 0;
+        border: 1px solid #D7D7D7;
+        padding: 0;
+        transition: color 0.3s ease;
+        object-fit: cover;
+        object-position: center;
+        width: 100%;
+        height: 100%;
+        flex: 1 0 auto;
+        filter: saturate(.75);
+      }
+      .navigation-title {
+        order: 1;
+        font-size: 13px;
+        font-family: "anova-med", "Arial", "Helvetica", sans-serif;
+        font-weight: normal;
+        color: var(--gray7);
+        display: block;
+        padding: 8% 8% .25em 8%;
+        line-height: 20px;
+        text-transform: uppercase;
+        transition: color 0.3s ease;
+      }
+      .title {
+        order: 2;
+        font-family: "anova-reg", "Arial", "Helvetica", sans-serif;
+        font-weight: normal;
+        font-size: 1.6 rem;
+        margin: 0 8% .25em 8%;
+        transition: color 0.3s ease;
+        color: var(--gray3);
+      }
+      .abstract {
+        order: 3;
+        color: #666666;
+        font-size: 1.6rem;
+        flex: 1 0 auto;
+        padding: 0 8% 9% 8%;
+        line-height: 138%;
+      }
+    }
+    :hover {
+      img {
+        filter: saturate(1);
+      }
+      .navigation-title {
+        color: var(--orange);
+      }
+      .title {
+        color: var(--blue);
+        text-decoration: underline solid var(--blueLight);
+      }
+    }
+    :after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: -1;
+      border-radius: 0 0 5px 5px;
+      background: #eeeeee;
+      height: 5px;
+      width: 95%;
+      bottom: -5px;
+    }
+  }
+  > li:hover {
+    transform: translateY(-5px);
+    transition: all 0.3s ease-in-out;
+    :after {
+      background-color: var(--purple);
+    }
+  }
 }
