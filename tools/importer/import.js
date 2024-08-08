@@ -75,7 +75,7 @@ const createMetadataBlock = (document) => {
             //console.log("el.content splits below");
             //console.log(el.content.split(splitChar)[1]);
             meta.capabilityType.push(el.content.split(splitChar)[1]);
-          // }
+          }
           // console.log("metaCapabilityType below"); 
           // console.log(meta.capabilityType);
                   
