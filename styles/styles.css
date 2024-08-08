@@ -47,6 +47,7 @@ html {
   --gray6: #666666;
   --gray7: #777777;
   --gray9: #999999;
+  --gray10: #EFEFEF;
   --grayRule: #D0D0D0;
   /* Color variables */
   --color-primary: var(--blue);
@@ -424,7 +425,7 @@ div.brand-neutral-dark {
   color: #ffffff;
 }
 div.gray {
-  background: var(--grayRule);
+  background: var(--gray10);
 }
 /* hero section styling */
 .place-background-image {
@@ -715,11 +716,14 @@ margin: 0 0 32px 0 !important;
   }     
 /*  Icons size scaling */
 .icon-scale-xs, .icon-scale-s, .icon-scale-m, .icon-scale-l {
-  margin: 25 auto 0;
+  img{
+  margin: 0 auto;
   display: block;
+  }
 @media only screen and (max-width: 600px) {
-  max-width: 150px;
-  margin: 1.5em 0 auto;
+  img{
+  margin: 15px auto 0 auto;
+  }
 }
 }
 .icon-scale-xs {
