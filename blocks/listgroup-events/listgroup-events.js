@@ -21,11 +21,31 @@ export function createDateTimeFromString(date, time) {
   return dateTimeValue;
 }
 
+function checkAndApplyStartingFolder(block) {
+  let startingFolder;
+  const currentRowElement = block.firstElementChild?.children;
+  if (currentRowElement !== undefined
+    && currentRowElement.item(0).textContent.toLowerCase() === 'startingfolder') {
+      startingFolder = currentRowElement.item(1).textContent;
+      block.firstElementChild.remove();
+  }
+  return startingFolder;
+}
+
+function pageFilterByFolder(pageSelection, folderPath) {
+  const filteredData = pageSelection.filter((item) => {
+    return item.path.startsWith(folderPath);
+  });
+  return filteredData;
+}
+
 export default async function decorate(block) {
   await loadScript('/scripts/moment/moment.js');
   await loadScript('/scripts/moment/moment-timezone.min.js');
   const optionsObject = parseBlockOptions(block);
   block.firstElementChild.remove();
+
+  const startingFolder = checkAndApplyStartingFolder(block);
 
   const filterOptions = getListFilterOptions(block);
 
@@ -37,9 +57,14 @@ export default async function decorate(block) {
   }
 
   const { data: allPages } = await getJsonFromUrl(url);
+  let pageSelection = allPages;
+
+  //If startingFolder is not null, then apply location filter FIRST.
+  if (startingFolder !== undefined) {
+    pageSelection = pageFilterByFolder(pageSelection, startingFolder);
+  }
 
   // Filter pages
-  let pageSelection = allPages;
   if (optionsObject.filterType !== undefined && optionsObject.filterType.toLowerCase() === 'and') {
     pageSelection = pageAndFilter(pageSelection, filterOptions);
   } else {
