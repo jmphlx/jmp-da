@@ -19,7 +19,7 @@ export default class DaTagSelector extends LitElement {
   }
 
   getTagURL() {
-    return `https://admin.da.live/source/${this.project.org}/${this.project.repo}/${this.datasource}`
+    return `https://admin.da.live/source/${this.project.org}/${this.project.repo}/${this.datasource}`;
   }
 
   tagClicked(e) {
@@ -35,27 +35,31 @@ export default class DaTagSelector extends LitElement {
         ts.parent = sel;
         sel.parentNode.appendChild(ts);
         sel.parentNode.removeChild(sel);
-      };
+      }
     } else {
-      const form = e.target.form;
+      const { target: { form } } = e;
       if (form) {
         const values = [];
+
+        // eslint-disable-next-line no-restricted-syntax
         for (const item of form.elements) {
           if (item.checked) {
             values.push(item.value);
           }
         }
         const vl = values.join(', ');
-        navigator.clipboard.writeText(vl).then(function() {
+        navigator.clipboard.writeText(vl).then(() => {
           const sd = document.querySelector('#copy-status');
           sd.style.opacity = '1';
-        }, function(err) {
+        }, (err) => {
+          // eslint-disable-next-line no-console
           console.error('Async: Could not copy text: ', err);
         });
       }
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   upClicked() {
     const sel = document.querySelector('da-tag-selector');
     if (sel) {
@@ -69,18 +73,14 @@ export default class DaTagSelector extends LitElement {
     }
   }
 
-  cl(e) {
-    console.log('Clicked: ', e.target.value);
-  }
-
   async fetchTags() {
     const url = this.getTagURL();
 
     const opts = {
       headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    }
+        Authorization: `Bearer ${this.token}`,
+      },
+    };
     const resp = await fetch(url, opts);
     const tagData = await resp.json();
 
@@ -105,12 +105,12 @@ export default class DaTagSelector extends LitElement {
 
       const li = this.iscategory
         ? html`${v.map((tag) => html`<li @click="${this.tagClicked}">${tag}</li>`)}`
-        : html`${v.map((tag) => html`<li><label><input type="checkbox" value="${tag}" @click="${this.tagClicked}">${tag}</label></li>`)}`
+        : html`${v.map((tag) => html`<li><label><input type="checkbox" value="${tag}" @click="${this.tagClicked}">${tag}</label></li>`)}`;
 
       const el = html`<h2>${uplink}${this.displayName}</h2>
       <ul><form>
         ${li}
-      </form></ul>`
+      </form></ul>`;
       tagLists.push(el);
     });
     return tagLists;
