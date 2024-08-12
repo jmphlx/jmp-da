@@ -468,9 +468,12 @@ div.gray {
 }
 /* hero section styling */
 .place-background-image {
-  min-height: 175px;
+  min-height: 96px;
   overflow: hidden;
   position: relative;
+  p{
+    font-size: var(--heading-font-size-xs);
+  }
   .columns > div {
     margin: 2px;
     padding: 2px;
@@ -1024,5 +1027,12 @@ div.breadcrumb {
   padding-bottom: 0;
   p {
     margin-bottom: 0;
+  }
+}
+/* Bio page template */
+.bio-page{
+  padding: 16px 32px 8px 32px !important;
+  h4, h5{
+    margin-bottom: 0em;
   }
 }
