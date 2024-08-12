@@ -1,5 +1,7 @@
 import { loadScript } from '../../scripts/aem.js';
 import {
+  getBlockProperty,
+  getBlockPropertiesList,
   getJsonFromUrl,
   getListFilterOptions,
   getTimezoneObjectFromAbbr,
@@ -7,7 +9,6 @@ import {
   languageIndexExists,
   pageAndFilter,
   pageOrFilter,
-  parseBlockOptions,
 } from '../../scripts/jmp.js';
 
 const timezones = await getTimezones();
@@ -19,24 +20,6 @@ export function createDateTimeFromString(date, time) {
   const offsetUTC = getTimezoneObjectFromAbbr(timezones, timezone).utc[0];
   const dateTimeValue = moment(`${date},${numTime}`, 'YYYY-MM-DD,hh:mmA').tz(offsetUTC).format();
   return dateTimeValue;
-}
-
-function getStartingFolder(block) {
-  let startingFolder;
-  const currentRowElement = block.firstElementChild?.children;
-  if (currentRowElement !== undefined
-    && currentRowElement.item(0).textContent.toLowerCase() === 'startingfolder') {
-      startingFolder = currentRowElement.item(1).textContent;
-      block.firstElementChild.remove();
-  }
-  return startingFolder;
-}
-
-function pageFilterByFolder(pageSelection, folderPath) {
-  const filteredData = pageSelection.filter((item) => {
-    return item.path.startsWith(folderPath);
-  });
-  return filteredData;
 }
 
 function createTabPanel(pageSelection, tabPanel) {
@@ -68,14 +51,13 @@ function createTabPanel(pageSelection, tabPanel) {
 }
 
 export default async function decorate(block) {
-  // Get options, tabs, filters.
-  const optionsObject = parseBlockOptions(block);
-  block.firstElementChild.remove();
+  getBlockProperty(block, 'nullMessage');
+  getBlockProperty(block, 'startingFolder');
 
-  //const startingFolder = getStartingFolder(block);
-  const tabs = parseBlockOptions(block, 'tabs');
-  block.firstElementChild.remove();
-  console.log(tabs);
+  // Get options, tabs, filters.
+  const optionsObject = getBlockPropertiesList(block, 'options');
+  const tabs = getBlockPropertiesList(block, 'tabs');
+  const startingFolder =getBlockProperty(block, 'startingFolder');
 
   //const filterOptions = getListFilterOptions(block);
 
@@ -93,7 +75,7 @@ export default async function decorate(block) {
 
   // decorate tabs and tabpanels
   Object.keys(tabs).forEach((tab, i) => {
-    // decorate tabpanel
+    // create and decorate tabpanel
     const tabpanel = document.createElement('div');
     tabpanel.className = 'tabs-panel';
     tabpanel.id = `tabpanel-${i}`;

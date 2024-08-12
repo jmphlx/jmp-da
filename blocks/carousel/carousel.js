@@ -101,7 +101,6 @@ function setOptions(block) {
       ), optionVal);
     }
   });
-  block.firstElementChild.remove();
 }
 
 let carouselId = 0;

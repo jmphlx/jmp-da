@@ -1,13 +1,15 @@
 import { loadScript } from '../../scripts/aem.js';
 import {
+  getBlockProperty,
+  getBlockPropertiesList,
   getJsonFromUrl,
   getListFilterOptions,
   getTimezoneObjectFromAbbr,
   getTimezones,
   languageIndexExists,
   pageAndFilter,
+  pageFilterByFolder,
   pageOrFilter,
-  parseBlockOptions,
 } from '../../scripts/jmp.js';
 
 const timezones = await getTimezones();
@@ -32,21 +34,11 @@ function checkAndApplyStartingFolder(block) {
   return startingFolder;
 }
 
-function pageFilterByFolder(pageSelection, folderPath) {
-  const filteredData = pageSelection.filter((item) => {
-    return item.path.startsWith(folderPath);
-  });
-  return filteredData;
-}
-
 export default async function decorate(block) {
   await loadScript('/scripts/moment/moment.js');
   await loadScript('/scripts/moment/moment-timezone.min.js');
-  const optionsObject = parseBlockOptions(block);
-  block.firstElementChild.remove();
-
-  const startingFolder = checkAndApplyStartingFolder(block);
-
+  const optionsObject = getBlockPropertiesList(block, 'options');
+  const startingFolder = getBlockProperty(block, 'startingFolder');
   const filterOptions = getListFilterOptions(block);
 
   // Get Index based on language directory of current page.

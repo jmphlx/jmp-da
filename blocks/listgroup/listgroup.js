@@ -1,11 +1,13 @@
 import { loadScript } from '../../scripts/aem.js';
 import {
+  getBlockPropertiesList,
+  getBlockProperty,
   getJsonFromUrl,
   getListFilterOptions,
   languageIndexExists,
   pageAndFilter,
+  pageFilterByFolder,
   pageOrFilter,
-  parseBlockOptions,
 } from '../../scripts/jmp.js';
 
 export function createDateFromString(date) {
@@ -15,9 +17,8 @@ export function createDateFromString(date) {
 
 export default async function decorate(block) {
   await loadScript('/scripts/moment/moment.js');
-  const optionsObject = parseBlockOptions(block);
-  block.firstElementChild.remove();
-
+  const optionsObject = getBlockPropertiesList(block, 'options');
+  const startingFolder = getBlockProperty(block, 'startingFolder');
   const filterOptions = getListFilterOptions(block);
 
   // Get Index based on language directory of current page.
@@ -29,6 +30,11 @@ export default async function decorate(block) {
 
   const { data: allPages } = await getJsonFromUrl(url);
 
+  // If startingFolder is not null, then apply page location filter FIRST.
+  if (startingFolder !== undefined) {
+    pageSelection = pageFilterByFolder(pageSelection, startingFolder);
+  }
+  
   // Filter pages
   let pageSelection = allPages;
   if (optionsObject.filterType !== undefined && optionsObject.filterType.toLowerCase() === 'and') {
@@ -53,6 +59,7 @@ export default async function decorate(block) {
 
   pageSelection.forEach((item) => {
     const listItem = document.createElement('li');
+    listItem.classList = `${item.resourceOptions}`;
     const cardLink = document.createElement('a');
     if (item.redirectUrl.length > 0) {
       cardLink.href = item.redirectUrl;

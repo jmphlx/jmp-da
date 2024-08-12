@@ -7,19 +7,15 @@ import {
   getMetadata,
 } from '../../scripts/aem.js';
 import {
-  parseBlockOptions,
+  getBlockPropertiesList,
+  getBlockProperty,
 } from '../../scripts/jmp.js';
 
 export default async function decorate(block) {
-  const optionsObject = parseBlockOptions(block);
-  if (optionsObject !== undefined && Object.keys(optionsObject).length > 0) {
-    block.firstElementChild.remove();
-  }
+  const optionsObject = getBlockPropertiesList(block, 'options');
+  const pageList =  getBlockProperty(block, 'pages');
 
-  const list = block.firstElementChild?.children.item(0).textContent;
-  const pageUrls = list.split(',').map(string => string.trim());
-  // Remove block urls list now that we have it.
-  block.firstElementChild.remove();
+  const pageUrls = pageList.split(',').map(string => string.trim());
 
   const wrapper = document.createElement('ul');
   const columns = optionsObject.columns !== undefined ? optionsObject.columns : 5;
@@ -33,6 +29,7 @@ export default async function decorate(block) {
     const doc = new DOMParser().parseFromString(html, 'text/html');
 
     const listItem = document.createElement('li');
+    listItem.classList = `${getMetadata('resourceOptions', doc)}`;
     const cardLink = document.createElement('a');
     const redirectUrl = getMetadata('redirecturl', doc);
     if (redirectUrl.length > 0) {
@@ -42,11 +39,13 @@ export default async function decorate(block) {
       cardLink.href = item;
       cardLink.target = '_self';
     }
-    const htmlOutput = `
+    let htmlOutput = `
     <span class="navigation-title">${getMetadata('resourcetype', doc)}</span>
-    <span class="title">${getMetadata('og:title', doc)}</span>
-    <span class="cmp-image image"><img src="${getMetadata('og:image', doc)}"/></span>
-    <span class="abstract">${getMetadata('og:description', doc)}</span>`;
+    <span class="title">${getMetadata('og:title', doc)}</span>`;
+    if (optionsObject.images === undefined || optionsObject.images.toLowerCase() !== 'off') {
+      htmlOutput += `<span class="cmp-image image"><img src="${getMetadata('og:image', doc)}"/></span>`;
+    }
+    htmlOutput += `<span class="abstract">${getMetadata('og:description', doc)}</span>`;
 
     cardLink.innerHTML = htmlOutput;
 

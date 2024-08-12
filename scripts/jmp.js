@@ -179,7 +179,70 @@ function parseBlockOptions(block, rowName) {
       }
     });
   }
+  if(Object.keys(optionsObject).length > 0)   {
+    block.firstElementChild.remove();
+  }
   return optionsObject;
+}
+
+/**
+ * Given a block and the name of a property row, create a JSON object representing
+ * the options to be used in the block if it is found.
+ * Does not require this to be the top row in the table.
+ * Assumes that the row is a list of properties to be
+ * combined into a single object.
+ * @param {*} block - html of the table from document representing block
+ * @param {*} rowName - name of the properties row
+ * @returns a JSON object representing the options/properties specified by
+ * the author for the block
+ */
+function getBlockPropertiesList(block, rowName) {
+  const rowObject = {};
+  const foundItem = Array.from(block.querySelectorAll('div'))
+  .find(el => el.textContent.toLowerCase() === rowName.toLowerCase());
+  
+  const parent = foundItem !== undefined ? foundItem.parentElement :  undefined;
+  if (parent !== undefined) {
+    const optionVal = parent.children.item(1).textContent;
+    const tempOptionsArray = optionVal.length > 1 ? optionVal.split(',') : {};
+
+    tempOptionsArray.forEach((item) => {
+      if (item.includes('=')) {
+        const optionsString = item.split('=', 2);
+        rowObject[optionsString[0]] = optionsString[1];
+      } else {
+        rowObject[item] = true;
+      }
+    });
+  }
+  if (Object.keys(rowObject).length > 0)   {
+    parent.remove();
+  }
+  console.log(rowObject);
+  return rowObject;
+}
+
+/**
+ * Given a block and the name of a property row, return the single value.
+ * Does not require this to be the top row in the table.
+ * Assumes that the row is a single value.
+ * @param {*} block - html of the table from document representing block
+ * @param {*} rowName - name of the properties row
+ * @returns string value of the property if found in the block, undefined if not found.
+ */
+function getBlockProperty(block, rowName) {
+  let rowValue;
+  const foundItem = Array.from(block.querySelectorAll('div'))
+  .find(el => el.textContent.toLowerCase() === rowName.toLowerCase());
+  
+  const parent = foundItem !== undefined ? foundItem.parentElement :  undefined;
+  if (parent !== undefined) {
+    rowValue = parent.children.item(1).textContent;
+    if (rowValue.length > 0)   {
+      parent.remove();
+    }
+  }
+  return rowValue;
 }
 
 function getListFilterOptions(block) {
@@ -196,15 +259,25 @@ function getListFilterOptions(block) {
   return filterOptions;
 }
 
+function pageFilterByFolder(pageSelection, folderPath) {
+  const filteredData = pageSelection.filter((item) => {
+    return item.path.startsWith(folderPath);
+  });
+  return filteredData;
+}
+
 export {
   arrayIncludesAllValues,
   arrayIncludesSomeValues,
+  getBlockPropertiesList,
+  getBlockProperty,
   getJsonFromUrl,
   getListFilterOptions,
   getTimezoneObjectFromAbbr,
   getTimezones,
   languageIndexExists,
   pageAndFilter,
+  pageFilterByFolder,
   pageOrFilter,
   parseBlockOptions,
 };
