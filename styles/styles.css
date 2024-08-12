@@ -496,7 +496,7 @@ div.gray {
         transition-timing-function: ease-in;
       }
       @media only screen and (max-width: 600px) {
-        margin-top: 0px;
+        margin-top: 0;
         min-width: 250%;
         margin-left: -450px;
       }
@@ -1033,6 +1033,6 @@ div.breadcrumb {
 .bio-page{
   padding: 16px 32px 8px 32px !important;
   h4, h5{
-    margin-bottom: 0em;
+    margin-bottom: 0;
   }
 }
