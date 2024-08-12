@@ -7,7 +7,7 @@
 /* stylelint-disable-next-line no-descending-specificity */
 .accordion details + details {
   margin-top: 16px;
-}
+  }
 
 .accordion details summary {
   position: relative;
@@ -51,6 +51,7 @@
 
 .accordion details .accordion-item-body {
   padding: 0 16px;
+  
 }
 
 .accordion details[open] .accordion-item-body {
@@ -70,12 +71,16 @@
 }
 .accordion-item-body{
   display: block;
+  margin-bottom: 32px;
 }
 .accordion-item-body :is(hr){
-  margin-bottom: 32px;
+  margin: 62px auto;
+  width: 95%;
+  text-align: center;
      }
 .accordion-item-body :is(img){
- width: 35%;
- float: left;
+ max-width: 35%;
  margin: 0 32px;
+/* float: inline-start; */
+ flex: 1 auto;
     }
