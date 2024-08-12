@@ -84,36 +84,52 @@ export default class DaTagSelector extends LitElement {
     const resp = await fetch(url, opts);
     const tagData = await resp.json();
 
-    const categories = new Map();
-    tagData.data.forEach((el) => {
-      const k = Object.keys(el)[0];
-      const v = Object.values(el)[0];
-      let vals = categories.get(k);
-      if (!vals) {
-        vals = [];
-        categories.set(k, vals);
+    let sheetType;
+    let langKey;
+    let selection = 'Multiple';
+    const md = tagData.metadata;
+    if (md) {
+      // eslint-disable-next-line no-restricted-syntax
+      for (const mditem of md.data) {
+        // eslint-disable-next-line default-case
+        switch (mditem.Key) {
+          case 'Type':
+            sheetType = mditem.Value;
+            break;
+          case 'Default Language':
+            langKey = mditem.Value;
+            break;
+          case 'Selection':
+            selection = mditem.Value;
+            break;
+        }
       }
-      vals.push(v);
+    } else {
+      [sheetType] = Object.keys(tagData.data[0]);
+      [langKey] = Object.keys(tagData.data[0]);
+    }
+
+    const data = tagData.data.data ? tagData.data.data : tagData.data;
+    const values = [];
+    data.forEach((el) => {
+      const val = el[langKey];
+      values.push(val);
     });
 
     const tagLists = [];
-    categories.forEach((v, k) => {
-      this.iscategory = k.toLowerCase() === 'category';
-      const uplink = this.iscategory
-        ? html``
-        : html`<span class="up" @click="${this.upClicked}">↑</span> `;
-
+    const inputType = selection === 'Single' ? 'radio' : 'checkbox';
+    values.forEach((v) => {
       const li = this.iscategory
-        ? html`${v.map((tag) => html`<li @click="${this.tagClicked}">${tag}</li>`)}`
-        : html`${v.map((tag) => html`<li><label><input type="checkbox" value="${tag}" @click="${this.tagClicked}">${tag}</label></li>`)}`;
-
-      const el = html`<h2>${uplink}${this.displayName}</h2>
-      <ul><form>
-        ${li}
-      </form></ul>`;
-      tagLists.push(el);
+        ? html`<li @click="${this.tagClicked}">${v}</li>`
+        : html`<li><label><input type="${inputType}" name="sel" value="${v}" @click="${this.tagClicked}">${v}</label></li>`;
+      tagLists.push(li);
     });
-    return tagLists;
+
+    this.iscategory = sheetType.toLowerCase() === 'category';
+    const uplink = this.iscategory
+      ? html``
+      : html`<span class="up" @click="${this.upClicked}">↑</span> `;
+    return html`<h2>${uplink}${this.displayName}</h2><ul><form>${tagLists}</form></ul>`;
   }
 
   listTags() {
