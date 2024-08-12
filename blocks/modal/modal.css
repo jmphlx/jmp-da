@@ -3,27 +3,32 @@ body.modal-open {
 }
 
 .modal dialog {
-  --dialog-border-radius: 16px;
-
   overscroll-behavior: none;
-  border: 1px solid #cccccc;
-  border-radius: var(--dialog-border-radius);
-  width: 100vw;
+  border: none;
 }
 
 .modal dialog .modal-content {
   overflow-y: auto;
   overscroll-behavior: none;
-  max-height: calc(100dvh - 60px);
 }
 
-@media (width >= 600px) {
+@media (width >= 901px) {
   .modal dialog {
-    padding: 30px;
-    width: 80vw;
-    max-width: 700px;
+    width: 66%;
+    max-width: 1600px;
+    background-color: rgba(0, 0, 0, 0);
   }
+  .modal dialog .modal-content {
+    max-height: calc(100vh - 90px);
+  }
+}
 
+@media (width <= 900px) {
+  .modal dialog {
+    width: 90%;
+    max-width: 1000px;
+    background-color: rgba(0, 0, 0, 0);
+  }
   .modal dialog .modal-content {
     max-height: calc(100vh - 90px);
   }
@@ -35,19 +40,51 @@ body.modal-open {
 
 .modal .close-button {
   position: absolute;
-  top: 0;
+  top: 32px;
   right: 0;
-  width: 20px;
-  height: 100%;
-  max-height: 54px;
-  border-radius: 0 var(--dialog-border-radius) 0 0;
-  background-color: unset;
+  max-width: 20px;
+  outline: none;
+  /* height: 100%; */
+  max-height: 36px;
+  border-radius: 20px;
+  /* background-color: unset; */
+  background-color: rgba(0, 0, 0, 0);
   text-overflow: clip;
   margin: 0;
   border: none;
   padding-right: 30px;
+  /* transition: color 0.5s ease; */
+  :after {
+    /* font-family: 'sasicons-103018' !important;
+    content: "\e60d"; */
+    content: '\2715';
+    display: inline-block;
+    width: 1em;
+    text-align: center;
+    color: #ffffff;
+    line-height: 1;
+    /* -webkit-font-smoothing: antialiased; */
+    font-size: 2rem;
+    position: absolute;
+    padding: 5px;
+    top: 2px;
+    left: 10px;
+    /* background: var(--blue); */
+    background: rgba(3, 120, 205, 0.5);
+    border-radius: 18px;
+    border: 1px solid #ffffff;
+  }
+  :hover {
+    &:after {
+      background: var(--orange);
+    }
+  }
 }
 
 .modal dialog .section {
   padding: 0;
+}
+
+.icon img {
+  display: none;
 }

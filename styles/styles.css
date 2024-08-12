@@ -99,7 +99,7 @@ body {
   font-size: var(--body-font-size-s);
   margin: 0;
   font-family: var(--body-font-family);
-  line-height: 1.6;
+  line-height: 1.5;
   color: var(--text-color);
   background-color: var(--background-color);
   display: none;
@@ -112,10 +112,9 @@ header {
 }
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--heading-font-family);
-  font-weight: 600;
   line-height: 1.25;
   margin-top: 0;
-  margin-bottom: 0;
+  margin-bottom: 1em;
   padding-bottom: 0;
   scroll-margin: calc(var(--nav-height) + 1em);
 }
@@ -151,9 +150,11 @@ p, dl, ol, ul, pre, blockquote {
 strong {
   font-family: "anova-regular", sans-serif;
 }
-/* headings + p */ :is(h1, h2, h3, h4, h5, h6):has(+ :is(p, ul, ol)) {
-  padding-bottom: .5em;
-}
+
+/* headings + p */
+/* :is(h1, h2, h3, h4, h5, h6):has(+ :is(p, ul, ol)) {
+	padding-bottom: .5em;
+} */
 /* H6 labels */
 /* :is(h6):has(+ :is(h1, h2, h3, h4, h5)) {
   font-family: "anova-bold", sans-serif;
@@ -179,8 +180,8 @@ main pre {
   overflow-x: auto;
   white-space: pre;
 }
-/* links
 
+/* links
 a:any-link {
   color: var(--link-color);
   text-decoration: none;
@@ -226,8 +227,8 @@ a.button.secondary, button.secondary {
   border: 2px solid currentcolor;
   color: var(--text-color)
 }
-
 */
+
 main .section[data-layout] .layout-wrapper {
   display: flex;
   flex-direction: row;
@@ -257,10 +258,7 @@ main img {
 main .section {
   padding: 64px 16px;
 }
-/* last empty section on every page (page metadata) - no padding */
-/* main .section:last-child {
-  padding: 0 !important;
-} */
+
 @media (width >=600px) {
   main .section {
     padding: 64px 32px 32px 32px;
@@ -300,8 +298,8 @@ a.button:hover {
   */
   background: #2f2f2f66;
 }
+
 /* Dark Button */
-/*
 .dark-button-center {
   a.button {
     text-align: center;
@@ -319,18 +317,64 @@ a.button:hover {
   a.button:hover {
     color: #fcfcfc;
     background: #00006666;
-    /* -- border: 1px solid black; -- */ /*
+    /* -- border: 1px solid black; -- */
     min-width: 200px;
   }
 }
-*/
+
+.modal-text-link {
+  a.button {
+    text-align: center;
+    background: none !important;
+    color: #333333 !important;
+    font-family: "Anova-Regular", sans-serif !important;
+    overflow: visible !important;
+    /* border: 1px solid #ffffff;
+    border-radius: 8px; */
+    min-width: 200px;
+    margin: 0 auto !important;
+    padding: 5px !important;
+    /* box-sizing: content-box; */
+    transition-duration: 0.2s;
+    transition-timing-function: ease;
+    position: relative;
+    z-index: 1;
+    &:before {
+      content: '\25B6';
+      display: inline-block;
+      vertical-align: middle;
+      width: 1em;
+      height: 1em;
+      text-align: end;
+      color: #333333;
+      line-height: 1.15;
+      font-size: 1.2rem;
+      position: relative;
+      padding: 3px;
+      margin-right: 6px;
+      bottom: 2px;
+      border-radius: 18px;
+      border: 2px solid #333333;
+    }
+  }
+  a.button:hover {
+    color: var(--blue) !important;
+    &:before {
+      color: var(--blue) !important;
+      border-color: var(--blue);
+    }
+  }
+}
+    
 .sasfont {
   a:before {
     color: #eea879;
     font-family: 'sasicons-103018' !important;
     content: '';
+
   }
 }
+
 .sub-capability-cards {
   ul {
     background: rgba(0 0 0 / 0.025);
@@ -341,7 +385,7 @@ a.button:hover {
     font-size: 16px;
     display: block;
     margin-block: 1.33em;
-    font-weight: bold;
+    /* font-weight: bold; */
     unicode-bidi: isolate;
   }
 }
@@ -476,7 +520,7 @@ div.gray {
   }
 }
 a.button:any-link, button {
-  font-family: var(--body-font-family);
+  font-family: "Anova-Regular", sans-serif;
   display: inline-block;
   box-sizing: border-box;
   text-decoration: none;
