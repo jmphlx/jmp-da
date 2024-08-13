@@ -56,7 +56,9 @@ describe('Tag Selector Plugin Tests', () => {
       const values = [];
       // eslint-disable-next-line no-restricted-syntax
       for (const item of items) {
-        expect(item.innerText).to.equal(item.querySelector('input').value);
+        const input = item.querySelector('input');
+        expect(item.innerText).to.equal(input.value);
+        expect(input.type).to.equal('checkbox');
         values.push(item.innerText);
       }
       expect(values).to.deep.equal(['jmp', 'jmp-pro']);
@@ -118,6 +120,96 @@ describe('Tag Selector Plugin Tests', () => {
       });
       categories.sort();
       expect(categories).to.deep.equal(['capabilities', 'product', 'resourceType']);
+    } finally {
+      window.fetch = savedFetch;
+    }
+  });
+
+  it('Single select tags', async () => {
+    const project = {
+      org: 'jmphlx',
+      repo: 'jmp-da',
+    };
+    const dts = new DaTagSelector();
+    dts.project = project;
+    dts.datasource = 'tools/tagbrowser/mytags.json';
+    dts.displayName = 'mytags';
+
+    const jsonData = {
+      data: {
+        total: 2,
+        offset: 0,
+        limit: 2,
+        data: [
+          {
+            EN: 'Chemical',
+            NL: 'Chemisch',
+            DE: 'Chemisch',
+          },
+          {
+            EN: 'Medical Devices',
+            NL: 'Medische Apparatuur',
+            DE: 'Medizinische Geräte',
+          },
+        ],
+      },
+      metadata: {
+        total: 3,
+        offset: 0,
+        limit: 3,
+        data: [
+          {
+            Key: 'Selection',
+            Value: 'Single',
+          },
+          {
+            Key: 'Type',
+            Value: 'Tag',
+          },
+          {
+            Key: 'Default Language',
+            Value: 'EN',
+          },
+        ],
+      },
+      ':version': 3,
+      ':names': [
+        'data',
+        'metadata',
+      ],
+      ':type': 'multi-sheet',
+    };
+
+    const fetchResp = {
+      json: async () => jsonData,
+    };
+
+    const savedFetch = window.fetch;
+    try {
+      window.fetch = async (url, opts) => {
+        if (url === 'https://admin.da.live/source/jmphlx/jmp-da/tools/tagbrowser/mytags.json') {
+          return fetchResp;
+        }
+        return null;
+      };
+
+      const tags = await dts.fetchTags();
+      const tr = await fixture(html`<div>${tags}</div>`);
+      expect(tr.querySelector('h2').innerText).to.equal('↑ mytags');
+      expect(tr.querySelector('h2 span.up').innerText).to.equal('↑');
+
+      const items = tr.querySelectorAll('ul form li label');
+      expect(items.length).to.equal(2);
+
+      const values = [];
+      // eslint-disable-next-line no-restricted-syntax
+      for (const item of items) {
+        const input = item.querySelector('input');
+        expect(item.innerText).to.equal(input.value);
+        expect(input.type).to.equal('radio');
+        values.push(item.innerText);
+      }
+      expect(values).to.deep.equal(['Chemical', 'Medical Devices']);
     } finally {
       window.fetch = savedFetch;
     }
