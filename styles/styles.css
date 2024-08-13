@@ -150,7 +150,6 @@ p, dl, ol, ul, pre, blockquote {
 strong {
   font-family: "anova-regular", sans-serif;
 }
-
 /* headings + p */
 /* :is(h1, h2, h3, h4, h5, h6):has(+ :is(p, ul, ol)) {
 	padding-bottom: .5em;
@@ -180,7 +179,6 @@ main pre {
   overflow-x: auto;
   white-space: pre;
 }
-
 /* links
 a:any-link {
   color: var(--link-color);
@@ -228,7 +226,6 @@ a.button.secondary, button.secondary {
   color: var(--text-color)
 }
 */
-
 main .section[data-layout] .layout-wrapper {
   display: flex;
   flex-direction: row;
@@ -258,7 +255,6 @@ main img {
 main .section {
   padding: 64px 16px;
 }
-
 @media (width >=600px) {
   main .section {
     padding: 64px 32px 32px 32px;
@@ -298,7 +294,6 @@ a.button:hover {
   */
   background: #2f2f2f66;
 }
-
 /* Dark Button */
 .dark-button-center {
   a.button {
@@ -321,7 +316,6 @@ a.button:hover {
     min-width: 200px;
   }
 }
-
 .modal-text-link {
   a.button {
     text-align: center;
@@ -365,16 +359,13 @@ a.button:hover {
     }
   }
 }
-    
 .sasfont {
   a:before {
     color: #eea879;
     font-family: 'sasicons-103018' !important;
     content: '';
-
   }
 }
-
 .sub-capability-cards {
   ul {
     background: rgba(0 0 0 / 0.025);
@@ -468,9 +459,12 @@ div.gray {
 }
 /* hero section styling */
 .place-background-image {
-  min-height: 175px;
+  min-height: 96px;
   overflow: hidden;
   position: relative;
+  p {
+    font-size: var(--heading-font-size-xs);
+  }
   .columns > div {
     margin: 2px;
     padding: 2px;
@@ -493,7 +487,7 @@ div.gray {
         transition-timing-function: ease-in;
       }
       @media only screen and (max-width: 600px) {
-        margin-top: 0px;
+        margin-top: 0;
         min-width: 250%;
         margin-left: -450px;
       }
@@ -748,10 +742,20 @@ a.button:any-link, button {
     min-width: 200px;
   }
 }
-
-
-
+/* Styling to change all list item bullets to the JMP blue  */
+ul {
+  padding: 0 0 0 24px;
+  li::marker {
+    color: var(--blue);
+    font-size: var(--heading-font-size-s);
+  }
+}
 /* Styling change to the sections margin  */
+.block-margin-small, .block-margin-medium, .block-margin-large {
+  h2 {
+    margin-bottom: 64px;
+  }
+}
 .block-margin-small {
   .columns > div {
     margin: 0 0 32px 0 !important;
@@ -765,19 +769,15 @@ a.button:any-link, button {
 div.section.block-margin-large {
   > .columns-wrapper {
     margin: 0 auto 96px auto !important;
-    div:nth-last-child(1)  {
+    div:nth-last-child(1) {
       margin: auto auto !important;
-      margin-left:auto !important; 
+      margin-left: auto !important;
     }
   }
-  div:nth-last-child(1)  {
+  div:nth-last-child(1) {
     margin: auto auto 32px auto !important;
   }
 }
-
-
-
-
 /*  Icons size scaling */
 .icon-xs, .icon-s, .icon-m, .icon-l, .icon-xl, .icon-xxl {
   img {
@@ -978,20 +978,45 @@ div.success-story-body {
   .columns-wrapper {
     position: relative;
     z-index: 1;
-    .columns > div {
-      flex-direction: inherit;
+  }
+}
+.g2-badge-6 {
+  .columns-wrapper {
+    position: relative;
+    z-index: 1;
+    @media (width <=900px) {
+      .columns > div {
+        display: block;
+        div {
+          margin: 0 8px;
+          max-width: 31%;
+          float: left;
+        }
+      }
+    }
+    @media (width <=750px) {
+      .columns > div {
+        div {
+          margin: 0 4px;
+          max-width: 48%;
+          display: inline-block;
+        }
+      }
     }
   }
 }
 .g2-badge-4 {
   .columns-wrapper {
-    max-width: 60%;
+    max-width: 62%;
     .columns > div > div {
       max-width: 20%;
       margin: 0 auto;
     }
     @media (width <=900px) {
       max-width: 100%;
+      .columns > div {
+        flex-direction: inherit;
+      }
     }
   }
 }
@@ -1023,6 +1048,13 @@ div.breadcrumb {
   margin-bottom: 0;
   padding-bottom: 0;
   p {
+    margin-bottom: 0;
+  }
+}
+/* Bio page template */
+.bio-page {
+  padding: 16px 32px 8px 32px !important;
+  h4, h5 {
     margin-bottom: 0;
   }
 }
