@@ -84,8 +84,8 @@ export default class DaTagSelector extends LitElement {
     const resp = await fetch(url, opts);
     const tagData = await resp.json();
 
-    let sheetType;
-    let langKey;
+    let sheetType = 'Tag';
+    let langKey = 'Tag';
     let selection = 'Multiple';
     const md = tagData.metadata;
     if (md) {
