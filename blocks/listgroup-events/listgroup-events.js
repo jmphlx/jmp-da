@@ -23,22 +23,12 @@ export function createDateTimeFromString(date, time) {
   return dateTimeValue;
 }
 
-function checkAndApplyStartingFolder(block) {
-  let startingFolder;
-  const currentRowElement = block.firstElementChild?.children;
-  if (currentRowElement !== undefined
-    && currentRowElement.item(0).textContent.toLowerCase() === 'startingfolder') {
-      startingFolder = currentRowElement.item(1).textContent;
-      block.firstElementChild.remove();
-  }
-  return startingFolder;
-}
-
 export default async function decorate(block) {
   await loadScript('/scripts/moment/moment.js');
   await loadScript('/scripts/moment/moment-timezone.min.js');
   const optionsObject = getBlockPropertiesList(block, 'options');
   const startingFolder = getBlockProperty(block, 'startingFolder');
+  const emptyResultsMessage = getBlockProperty(block, 'emptyResultsMessage');
   const filterOptions = getListFilterOptions(block);
 
   // Get Index based on language directory of current page.
@@ -96,6 +86,13 @@ export default async function decorate(block) {
     listItem.append(cardLink);
     wrapper.append(listItem);
   });
+
+  if (pageSelection.length === 0 && emptyResultsMessage !== undefined) {
+    const emptyResultsDiv = document.createElement('div');
+    emptyResultsDiv.classList = 'no-results';
+    emptyResultsDiv.innerHTML = `<span>${emptyResultsMessage}</span>`;
+    wrapper.append(emptyResultsDiv);
+  }
 
   block.append(wrapper);
 }

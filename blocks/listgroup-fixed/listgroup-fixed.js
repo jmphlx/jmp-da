@@ -13,6 +13,7 @@ import {
 
 export default async function decorate(block) {
   const optionsObject = getBlockPropertiesList(block, 'options');
+  const emptyResultsMessage = getBlockProperty(block, 'emptyResultsMessage');
   const pageList =  getBlockProperty(block, 'pages');
 
   const pageUrls = pageList.split(',').map(string => string.trim());
@@ -21,10 +22,14 @@ export default async function decorate(block) {
   const columns = optionsObject.columns !== undefined ? optionsObject.columns : 5;
   wrapper.classList = `listOfItems image-list list-tile col-size-${columns}`;
 
+  let pageNotFound = 0;
   // Needs to be a for instead of forEach to maintain order of urls.
   for (const item of pageUrls) {
     const resp = await fetch(`${item}`);
-    if (!resp.ok) return null;
+    if (!resp.ok) {
+      pageNotFound += 1;
+      break;
+    }
     const html = await resp.text();
     const doc = new DOMParser().parseFromString(html, 'text/html');
 
@@ -51,6 +56,13 @@ export default async function decorate(block) {
 
     listItem.append(cardLink);
     wrapper.append(listItem);
+  }
+
+  if (pageNotFound === pageUrls.length && emptyResultsMessage !== undefined) {
+    const emptyResultsDiv = document.createElement('div');
+    emptyResultsDiv.classList = 'no-results';
+    emptyResultsDiv.innerHTML = `<span>${emptyResultsMessage}</span>`;
+    wrapper.append(emptyResultsDiv);
   }
 
   block.append(wrapper);

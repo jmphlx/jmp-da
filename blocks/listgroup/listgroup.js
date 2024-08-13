@@ -19,6 +19,7 @@ export default async function decorate(block) {
   await loadScript('/scripts/moment/moment.js');
   const optionsObject = getBlockPropertiesList(block, 'options');
   const startingFolder = getBlockProperty(block, 'startingFolder');
+  const emptyResultsMessage = getBlockProperty(block, 'emptyResultsMessage');
   const filterOptions = getListFilterOptions(block);
 
   // Get Index based on language directory of current page.
@@ -81,6 +82,13 @@ export default async function decorate(block) {
     listItem.append(cardLink);
     wrapper.append(listItem);
   });
+
+  if (pageSelection.length === 0 && emptyResultsMessage !== undefined) {
+    const emptyResultsDiv = document.createElement('div');
+    emptyResultsDiv.classList = 'no-results';
+    emptyResultsDiv.innerHTML = `<span>${emptyResultsMessage}</span>`;
+    wrapper.append(emptyResultsDiv);
+  }
 
   block.append(wrapper);
 }

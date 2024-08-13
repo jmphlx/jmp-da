@@ -218,7 +218,6 @@ function getBlockPropertiesList(block, rowName) {
   if (Object.keys(rowObject).length > 0)   {
     parent.remove();
   }
-  console.log(rowObject);
   return rowObject;
 }
 
