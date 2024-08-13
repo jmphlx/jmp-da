@@ -9,7 +9,7 @@
 .columns img {
   width: 100%;
   border: 2px solid var(--gray10);
-  border-radius: 4px;
+  border-radius: 8px;
 }
 /* No gray border on images in columns */
 .no-gray-border {
