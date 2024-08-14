@@ -80,7 +80,6 @@ const createDivider = (document) => {
 };
 
 const createLeftHandRail = (document) => {
-  const doc = {};
   const lhRail = document.querySelector('div.parsys_column.cq-colctrl-lt1.cols-halfgutter div.parsys_column.cq-colctrl-lt1-c0 div.text.parbase.section div.article-template.sidebar.success-story');
   if (lhRail){
    // console.log(lhRail);
@@ -91,7 +90,6 @@ const createLeftHandRail = (document) => {
 };
 
 const createRightHandRail = (document) => {
- 
   const rhRail = document.querySelector('div.parsys_column.cq-colctrl-lt1.cols-halfgutter div.parsys_column.cq-colctrl-lt1-c1 div.text.parbase.section div');
   if (rhRail){
    //console.log(rhRail.innerHTML);
@@ -105,10 +103,14 @@ const createButtonLink = (document) => {
 }
 
 const createDisclaimer = (document) => {
+  const cells = [
+    ['columns (disclaimer)'],
+  ]
   const disclaimer = document.querySelector('');
   if (disclaimer) {
-
-  }  
+    //cells.push([]);
+  }
+  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
 };
 
 export default {
