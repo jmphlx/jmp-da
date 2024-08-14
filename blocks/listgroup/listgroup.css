@@ -5,14 +5,14 @@ ul.list-tile {
   padding: 0;
 }
 
-.listgroup ul li {
+.listgroup ul li, .listgroup-fixed ul li {
   clear: both;
   list-style-type: none;
   padding: 0;
   float: left;
 }
 
-.listgroup ul.col-size-3 li {
+.listgroup ul.col-size-3 li, .listgroup-fixed ul.col-size-3 li {
   width: 30.75%;
   margin: 0 1.25% 1.75em 1.25%;
   @media (width <= 600px) {
@@ -20,7 +20,7 @@ ul.list-tile {
   }
 }
 
-.listgroup ul.col-size-4 li {
+.listgroup ul.col-size-4 li, .listgroup-fixed ul.col-size-5 li {
   margin: 0 1.25% 1.75em 1.25%;
   width: 22.5%;
   @media (width <= 900px) {
@@ -31,7 +31,7 @@ ul.list-tile {
   }
 }
 
-.listgroup ul.col-size-5 li {
+.listgroup ul.col-size-5 li, .listgroup-fxed ul.col-size-5 li {
   margin: 0 1.25% 2% 1.25%;
   width: 17.5%;
   @media (width <= 900px) {
@@ -57,7 +57,7 @@ ul.list-tile {
   aspect-ratio: 0.8;
 }
 
-.listgroup ul.list-tile {
+.listgroup ul.list-tile, .listgroup-fixed ul.list-tile  {
   > li {
     margin-bottom: 2.5%;
     transition: all 0.3s ease-in-out;
