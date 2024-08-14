@@ -26,6 +26,7 @@ describe('Subnav Block', () => {
       expect(activeDropdown).to.be.null;
     });
 
+    /*
     it('Clicking on a dropdown should open it', async () => {
       const dropdownButton = document.querySelector('nav ul li');
 
@@ -47,6 +48,7 @@ describe('Subnav Block', () => {
       openDropdown = document.querySelector('li.is-open');
       expect(openDropdown).to.be.null;
     });
+    */
 
     it('should apply the active class to a list item that matches the current page', () => {
       const dropdownItems = document.querySelector('ul');

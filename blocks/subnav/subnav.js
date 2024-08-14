@@ -46,28 +46,42 @@ export default async function decorate(block) {
   const listOfDropdowns = document.createElement('ul');
 
   while (block.firstElementChild !== undefined && block.firstElementChild !== null) {
-    const dropdownName = block.firstElementChild?.children.item(0).textContent;
+    const buttonLevel = block.firstElementChild?.children.item(0);
+    const buttonName = buttonLevel.textContent;
     const dropdownItems = block.firstElementChild?.children.item(1);
     block.firstElementChild.remove();
 
+    const isDropdown = dropdownItems !== undefined &&
+      dropdownItems !== null &&
+      dropdownItems.querySelectorAll('li') !== undefined &&
+      dropdownItems.querySelectorAll('li').length > 0;
+
     const listItem = document.createElement('li');
-    listItem.classList = 'is-dropdown';
-    listItem.innerHTML = `${dropdownName}`;
 
-    listItem.addEventListener('click', () => {
-      let closeDropdown = false;
-      if (listItem.classList.contains('is-open')) {
-        // The dropdown is already open. Close it again.
-        closeDropdown = true;
-      }
-      closeAllNavSections(block);
-      if (!closeDropdown) {
-        listItem.classList.add('is-open');
-      }
-    });
+    if(isDropdown) {
+      listItem.innerHTML = `${buttonName}`;
+      listItem.classList = 'is-dropdown';
 
-    const dropdownListItems = constructDropdown(dropdownItems, activePage);
-    listItem.append(dropdownListItems);
+      listItem.addEventListener('click', () => {
+        let closeDropdown = false;
+        if (listItem.classList.contains('is-open')) {
+          // The dropdown is already open. Close it again.
+          closeDropdown = true;
+        }
+        closeAllNavSections(block);
+        if (!closeDropdown) {
+          listItem.classList.add('is-open');
+        }
+      });
+  
+      const dropdownListItems = constructDropdown(dropdownItems, activePage);
+      listItem.append(dropdownListItems);
+    } else {
+      const link = document.createElement('a');
+      link.href = buttonLevel.querySelector('a').href;
+      link.innerText = `${buttonName}`;
+      listItem.append(link);
+    }
     if (isDropdownActive(listItem)) {
       listItem.classList.add('active');
     }
