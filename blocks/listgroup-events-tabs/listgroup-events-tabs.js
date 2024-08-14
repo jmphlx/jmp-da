@@ -1,3 +1,5 @@
+/* eslint no-undef: 0 */
+
 import { loadScript } from '../../scripts/aem.js';
 import {
   getBlockProperty,
@@ -63,9 +65,7 @@ function createTabPanel(pageSelection, tabPanel) {
     listItem.append(cardLink);
     wrapper.append(listItem);
   });
-
   tabPanel.append(wrapper);
-
 }
 
 export default async function decorate(block) {
@@ -73,23 +73,21 @@ export default async function decorate(block) {
   await loadScript('/scripts/moment/moment.js');
   await loadScript('/scripts/moment/moment-timezone.min.js');
 
-  // Get options, tabs, filters.
-  const optionsObject = getBlockPropertiesList(block, 'options');
-  const tabs = getBlockPropertiesList(block, 'tabs');
-  const startingFolder =getBlockProperty(block, 'startingFolder');
-  const emptyResultsMessage = getBlockProperty(block, 'emptyResultsMessage');
-  const filterOptions = getListFilterOptions(block);
-
-  //const filterOptions = getListFilterOptions(block);
-
   // Get Index based on language directory of current page.
   const pageLanguage = window.location.pathname.split('/')[1];
   let url = '/jmp-all.json';
   if (languageIndexExists(pageLanguage)) {
     url = `/jmp-${pageLanguage}.json`;
   }
-  const { data: allPages } = await getJsonFromUrl(url);
+  const { data: allPages, columns: propertyNames } = await getJsonFromUrl(url);
   let prefilteredPages = allPages;
+
+  // Get options, tabs, filters.
+  const optionsObject = getBlockPropertiesList(block, 'options');
+  const tabs = getBlockPropertiesList(block, 'tabs');
+  const startingFolder = getBlockProperty(block, 'startingFolder');
+  const emptyResultsMessage = getBlockProperty(block, 'emptyResultsMessage');
+  const filterOptions = getListFilterOptions(block, propertyNames);
 
   // If startingFolder is not null, then apply page location filter FIRST.
   if (startingFolder !== undefined) {
@@ -125,15 +123,11 @@ export default async function decorate(block) {
     const filterObject = {};
 
     // Handle All differently than a filter.
-    console.log('tab ' + tab);
-    if(tab.toLowerCase() === 'all') {
+    if (tab.toLowerCase() === 'all') {
       // where the tabProperty has any value.
       pageSelection = pageAnyFilter(pageSelection, optionsObject.tabProperty);
     } else {
-      console.log(optionsObject.tabProperty);
-      console.log(tabs[tab]);
       filterObject[optionsObject.tabProperty] = tab.toLowerCase();
-      console.log(filterObject);
       pageSelection = pageOrFilter(pageSelection, filterObject);
     }
 
@@ -147,7 +141,7 @@ export default async function decorate(block) {
       pageSelection = pageSelection.slice(0, limitObjects);
     }
 
-    console.log(pageSelection);
+    // if there are no results found and there is an empty results message, display it.
     if (pageSelection.length === 0 && emptyResultsMessage !== undefined) {
       createEmptyTabPanel(emptyResultsMessage, tabpanel);
     } else {
@@ -175,7 +169,6 @@ export default async function decorate(block) {
       button.setAttribute('aria-selected', true);
     });
     tablist.append(button);
-    //tab.remove();
   });
 
   block.prepend(tablist);

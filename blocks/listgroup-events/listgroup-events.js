@@ -1,3 +1,5 @@
+/* eslint no-undef: 0 */
+
 import { loadScript } from '../../scripts/aem.js';
 import {
   getBlockProperty,
@@ -26,10 +28,6 @@ export function createDateTimeFromString(date, time) {
 export default async function decorate(block) {
   await loadScript('/scripts/moment/moment.js');
   await loadScript('/scripts/moment/moment-timezone.min.js');
-  const optionsObject = getBlockPropertiesList(block, 'options');
-  const startingFolder = getBlockProperty(block, 'startingFolder');
-  const emptyResultsMessage = getBlockProperty(block, 'emptyResultsMessage');
-  const filterOptions = getListFilterOptions(block);
 
   // Get Index based on language directory of current page.
   const pageLanguage = window.location.pathname.split('/')[1];
@@ -38,10 +36,15 @@ export default async function decorate(block) {
     url = `/jmp-${pageLanguage}.json`;
   }
 
-  const { data: allPages } = await getJsonFromUrl(url);
+  const { data: allPages, columns: propertyNames } = await getJsonFromUrl(url);
   let pageSelection = allPages;
 
-  //If startingFolder is not null, then apply location filter FIRST.
+  const optionsObject = getBlockPropertiesList(block, 'options');
+  const startingFolder = getBlockProperty(block, 'startingFolder');
+  const emptyResultsMessage = getBlockProperty(block, 'emptyResultsMessage');
+  const filterOptions = getListFilterOptions(block, propertyNames);
+
+  // If startingFolder is not null, then apply location filter FIRST.
   if (startingFolder !== undefined) {
     pageSelection = pageFilterByFolder(pageSelection, startingFolder);
   }

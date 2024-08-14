@@ -156,8 +156,8 @@ function pageOrFilter(pageSelection, filterObject) {
 /**
  * Given a block and an options row, create a JSON object representing
  * the options to be used in the block.
- * @param {*} block - html of the table from document representing block
- * @param {*} rowName - name of the options row, by default it is options
+ * @param {Object} block - html of the table from document representing block
+ * @param {string} rowName - name of the options row, by default it is options
  * @returns a JSON object representing the options/properties specified by
  * the author for the block
  */
@@ -179,7 +179,7 @@ function parseBlockOptions(block, rowName) {
       }
     });
   }
-  if(Object.keys(optionsObject).length > 0)   {
+  if (Object.keys(optionsObject).length > 0) {
     block.firstElementChild.remove();
   }
   return optionsObject;
@@ -191,17 +191,17 @@ function parseBlockOptions(block, rowName) {
  * Does not require this to be the top row in the table.
  * Assumes that the row is a list of properties to be
  * combined into a single object.
- * @param {*} block - html of the table from document representing block
- * @param {*} rowName - name of the properties row
+ * @param {Object} block - html of the table from document representing block
+ * @param {string} rowName - name of the properties row
  * @returns a JSON object representing the options/properties specified by
  * the author for the block
  */
 function getBlockPropertiesList(block, rowName) {
   const rowObject = {};
   const foundItem = Array.from(block.querySelectorAll('div'))
-  .find(el => el.textContent.toLowerCase() === rowName.toLowerCase());
-  
-  const parent = foundItem !== undefined ? foundItem.parentElement :  undefined;
+    .find((el) => el.textContent.toLowerCase() === rowName.toLowerCase());
+
+  const parent = foundItem !== undefined ? foundItem.parentElement : undefined;
   if (parent !== undefined) {
     const optionVal = parent.children.item(1).textContent;
     const tempOptionsArray = optionVal.length > 1 ? optionVal.split(',') : {};
@@ -215,7 +215,7 @@ function getBlockPropertiesList(block, rowName) {
       }
     });
   }
-  if (Object.keys(rowObject).length > 0)   {
+  if (Object.keys(rowObject).length > 0) {
     parent.remove();
   }
   return rowObject;
@@ -225,29 +225,40 @@ function getBlockPropertiesList(block, rowName) {
  * Given a block and the name of a property row, return the single value.
  * Does not require this to be the top row in the table.
  * Assumes that the row is a single value.
- * @param {*} block - html of the table from document representing block
- * @param {*} rowName - name of the properties row
+ * @param {Object} block - html of the table from document representing block
+ * @param {string} rowName - name of the properties row
  * @returns string value of the property if found in the block, undefined if not found.
  */
 function getBlockProperty(block, rowName) {
   let rowValue;
   const foundItem = Array.from(block.querySelectorAll('div'))
-  .find(el => el.textContent.toLowerCase() === rowName.toLowerCase());
-  
-  const parent = foundItem !== undefined ? foundItem.parentElement :  undefined;
+    .find((el) => el.textContent.toLowerCase() === rowName.toLowerCase());
+
+  const parent = foundItem !== undefined ? foundItem.parentElement : undefined;
   if (parent !== undefined) {
     rowValue = parent.children.item(1).textContent;
-    if (rowValue.length > 0)   {
+    if (rowValue.length > 0) {
       parent.remove();
     }
   }
   return rowValue;
 }
 
-function getListFilterOptions(block) {
+/**
+ * From the remaining rows in the block, create an object to represent the filters.
+ * With this method, filter name becomes case insensitive by using the columns property
+ * from the index.
+ * @param {Object} block - html of the table from document representing block
+ * @param {array} propertyNames - names of the properties as they appear in the index
+ * @returns json object representing filters to apply to listgroup.
+ */
+function getListFilterOptions(block, propertyNames) {
+  const lowerCaseProperties = propertyNames.map((str) => str.toLowerCase());
   const filterOptions = {};
   while (block.firstElementChild !== undefined && block.firstElementChild !== null) {
-    const optionName = block.firstElementChild?.children.item(0).textContent;
+    let optionName = block.firstElementChild?.children.item(0).textContent;
+    const correctIndex = lowerCaseProperties.indexOf(optionName.toLowerCase());
+    optionName = correctIndex !== -1 ? propertyNames[correctIndex] : optionName;
     let optionValue = block.firstElementChild?.children.item(1).textContent.toLowerCase();
     if (optionValue.indexOf(',') > -1) {
       optionValue = optionValue.split(',').map((str) => str.trim().toLowerCase());
@@ -258,10 +269,15 @@ function getListFilterOptions(block) {
   return filterOptions;
 }
 
+/**
+ * Given a folderPath, filter the pages down to those inside that folder
+ * including nested pages.
+ * @param {array} pageSelection array of pages that may match the filter
+ * @param {string} folderPath string path of the folder we are narrowing results to.
+ * @returns array of pages within the provided folder
+ */
 function pageFilterByFolder(pageSelection, folderPath) {
-  const filteredData = pageSelection.filter((item) => {
-    return item.path.startsWith(folderPath);
-  });
+  const filteredData = pageSelection.filter((item) => item.path.startsWith(folderPath));
   return filteredData;
 }
 

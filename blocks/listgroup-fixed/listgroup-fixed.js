@@ -1,4 +1,3 @@
-/* eslint arrow-parens: 0 */
 /* eslint consistent-return: 0 */
 /* eslint no-restricted-syntax: 0 */
 /* eslint no-await-in-loop: 0 */
@@ -14,9 +13,9 @@ import {
 export default async function decorate(block) {
   const optionsObject = getBlockPropertiesList(block, 'options');
   const emptyResultsMessage = getBlockProperty(block, 'emptyResultsMessage');
-  const pageList =  getBlockProperty(block, 'pages');
+  const pageList = getBlockProperty(block, 'pages');
 
-  const pageUrls = pageList.split(',').map(string => string.trim());
+  const pageUrls = pageList.split(',').map((string) => string.trim());
 
   const wrapper = document.createElement('ul');
   const columns = optionsObject.columns !== undefined ? optionsObject.columns : 5;

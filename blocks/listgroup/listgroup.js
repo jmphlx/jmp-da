@@ -1,3 +1,5 @@
+/* eslint no-undef: 0 */
+
 import { loadScript } from '../../scripts/aem.js';
 import {
   getBlockPropertiesList,
@@ -17,10 +19,6 @@ export function createDateFromString(date) {
 
 export default async function decorate(block) {
   await loadScript('/scripts/moment/moment.js');
-  const optionsObject = getBlockPropertiesList(block, 'options');
-  const startingFolder = getBlockProperty(block, 'startingFolder');
-  const emptyResultsMessage = getBlockProperty(block, 'emptyResultsMessage');
-  const filterOptions = getListFilterOptions(block);
 
   // Get Index based on language directory of current page.
   const pageLanguage = window.location.pathname.split('/')[1];
@@ -28,16 +26,20 @@ export default async function decorate(block) {
   if (languageIndexExists(pageLanguage)) {
     url = `/jmp-${pageLanguage}.json`;
   }
+  const { data: allPages, columns: propertyNames } = await getJsonFromUrl(url);
+  let pageSelection = allPages;
 
-  const { data: allPages } = await getJsonFromUrl(url);
+  const optionsObject = getBlockPropertiesList(block, 'options');
+  const startingFolder = getBlockProperty(block, 'startingFolder');
+  const emptyResultsMessage = getBlockProperty(block, 'emptyResultsMessage');
+  const filterOptions = getListFilterOptions(block, propertyNames);
 
   // If startingFolder is not null, then apply page location filter FIRST.
   if (startingFolder !== undefined) {
     pageSelection = pageFilterByFolder(pageSelection, startingFolder);
   }
-  
+
   // Filter pages
-  let pageSelection = allPages;
   if (optionsObject.filterType !== undefined && optionsObject.filterType.toLowerCase() === 'and') {
     pageSelection = pageAndFilter(pageSelection, filterOptions);
   } else {
