@@ -129,15 +129,11 @@ export default {
     const divider = createDivider(document);
     if (divider) section.append(divider);
 
-    section.append(sectionBreak);
-
     const rightHR = createRightHandRail(document);
     if (rightHR) section.append(rightHR);
 
     const button = createButtonLink(document);
     if (button) section.append(button);
-
-    section.append(sectionBreak);
 
     const disclaimer = createDisclaimer(document);
     if (disclaimer) section.append(disclaimer);
