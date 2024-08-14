@@ -50,6 +50,17 @@ const createMetadataBlock = (document) => {
   //returning the meta object might be usefull to other rules
   return metaBlock;
 };
+const createFragment = (document) => {
+  const cells = [
+    ['fragment'],
+  ]
+  const anchor = document.createElement('a');
+  anchor.href = 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/resource-breadcrumb';
+  console.log(anchor);
+  cells.push([anchor]);
+  console.log(cells);
+  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
+};
 
 const createHero = (document) => {
   const doc = {};
@@ -60,15 +71,12 @@ const createHero = (document) => {
   const heroCss = '#content div#page-content.par div#par div.par.parsys div.styledcontainer.parbase div.container.article-template.article-title div.par.parsys div.parsys_column.cq-colctrl-lt0';
   const hero = document.querySelector(heroCss);
   if (hero){
-    //console.log(hero);
     //grab right hand text 
     const rhText = hero.querySelector('div.parsys_column.cq-colctrl-lt0-c0 div.text.parbase.section div');
     const lhText = hero.querySelector('div.parsys_column.cq-colctrl-lt0-c1 div div');
     cells.push([rhText, lhText]);
-   // console.log(cells.length);
- 
- }
- if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
+  }
+  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
 //get any full width 'hero' with only text likes
@@ -106,10 +114,21 @@ const createDisclaimer = (document) => {
   const cells = [
     ['columns (disclaimer)'],
   ]
-  const disclaimer = document.querySelector('');
+  /* disclaimer = document.querySelector('');
   if (disclaimer) {
     //cells.push([]);
-  }
+  }*/
+  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
+};
+
+const createSM = (document) => {
+  const cells = [
+    ['section-metadata'],
+  ]
+  /*const disclaimer = document.querySelector('');
+  if (disclaimer) {
+    //cells.push([]);
+  }*/
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
 };
 
@@ -119,6 +138,9 @@ export default {
     //create the container div/section
     const section = document.createElement('div');
     const sectionBreak = document.createElement('hr');
+
+    const fragment = createFragment(document);
+    if (fragment) section.append(fragment);
 
     const vidHero = createHero(document);
     if (vidHero) section.append(vidHero);
@@ -140,9 +162,14 @@ export default {
     const disclaimer = createDisclaimer(document);
     if (disclaimer) section.append(disclaimer);
 
+    const sectionMetadata = createSM(document);
+    if(sectionMetadata) section.append(sectionMetadata);
+
+    section.append(sectionBreak);
+  
     const meta = createMetadataBlock(document);
     if (meta) section.append(meta);
-
+    
     main.innerHTML = '';
     main.append(section);
     return main;
