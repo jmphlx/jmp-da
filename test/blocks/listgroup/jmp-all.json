@@ -8,7 +8,14 @@
     "resourceType",
     "industry",
     "capabilities",
-    "product"
+    "product",
+    "releaseDate",
+    "eventDate",
+    "eventTime",
+    "redirectUrl",
+    "resourceOptions",
+    "eventType",
+    "eventSeries"
   ],
   "data": [
     {
@@ -21,7 +28,14 @@
       "resourceType": "",
       "industry": "",
       "capabilities": "",
-      "product": ""
+      "product": "",
+      "releaseDate": "",
+      "eventDate": "",
+      "eventTime": "",
+      "redirectUrl": "",
+      "resourceOptions": "",
+      "eventType": "",
+      "eventSeries": ""
     },
     {
       "path": "/",
@@ -33,7 +47,14 @@
       "resourceType": "",
       "industry": "",
       "capabilities": "",
-      "product": ""
+      "product": "",
+      "releaseDate": "",
+      "eventDate": "",
+      "eventTime": "",
+      "redirectUrl": "",
+      "resourceOptions": "",
+      "eventType": "",
+      "eventSeries": ""
     },
     {
       "path": "/demo",
@@ -45,7 +66,14 @@
       "resourceType": "",
       "industry": "",
       "capabilities": "",
-      "product": ""
+      "product": "",
+      "releaseDate": "",
+      "eventDate": "",
+      "eventTime": "",
+      "redirectUrl": "",
+      "resourceOptions": "",
+      "eventType": "",
+      "eventSeries": ""
     },
     {
       "author": "",
@@ -56,7 +84,14 @@
       "resourceType": "",
       "industry": "",
       "capabilities": "",
-      "product": ""
+      "product": "",
+      "releaseDate": "",
+      "eventDate": "",
+      "eventTime": "",
+      "redirectUrl": "",
+      "resourceOptions": "",
+      "eventType": "",
+      "eventSeries": ""
     },
     {
       "path": "/en/software/predictive-analytics-software",
@@ -68,7 +103,14 @@
       "industry": "",
       "capabilities": "",
       "product": "JMP-Pro",
-      "lastPublished": "2024-06-12T19:24:29.965Z"
+      "lastPublished": "2024-06-12T19:24:29.965Z",
+      "releaseDate": "",
+      "eventDate": "",
+      "eventTime": "",
+      "redirectUrl": "",
+      "resourceOptions": "",
+      "eventType": "",
+      "eventSeries": ""
     },
     {
       "path": "/en/software/why-jmp",
@@ -80,7 +122,14 @@
       "industry": "",
       "capabilities": "",
       "product": "",
-      "lastPublished": "2024-06-19T20:52:31.940Z"
+      "lastPublished": "2024-06-19T20:52:31.940Z",
+      "releaseDate": "",
+      "eventDate": "",
+      "eventTime": "",
+      "redirectUrl": "",
+      "resourceOptions": "",
+      "eventType": "",
+      "eventSeries": ""
     },
     {
       "author": "",
@@ -91,7 +140,14 @@
       "resourceType": "",
       "industry": "",
       "capabilities": "",
-      "product": ""
+      "product": "",
+      "releaseDate": "",
+      "eventDate": "",
+      "eventTime": "",
+      "redirectUrl": "",
+      "resourceOptions": "",
+      "eventType": "",
+      "eventSeries": ""
     },
     {
       "path": "/en/software/data-analysis-software",
@@ -103,7 +159,14 @@
       "industry": "",
       "capabilities": "",
       "product": "JMP",
-      "lastPublished": "2024-06-12T19:14:19.469Z"
+      "lastPublished": "2024-06-12T19:14:19.469Z",
+      "releaseDate": "",
+      "eventDate": "",
+      "eventTime": "",
+      "redirectUrl": "",
+      "resourceOptions": "",
+      "eventType": "",
+      "eventSeries": ""
     },
     {
       "path": "/en/customer-stories/city-of-durham",
@@ -115,7 +178,14 @@
       "industry": "government",
       "capabilities": "",
       "product": "JMP",
-      "lastPublished": "2024-06-12T19:43:20.062Z"
+      "lastPublished": "2024-06-12T19:43:20.062Z",
+      "releaseDate": "2024-05-05",
+      "eventDate": "",
+      "eventTime": "",
+      "redirectUrl": "",
+      "resourceOptions": "",
+      "eventType": "",
+      "eventSeries": ""
     },
     {
       "path": "/en/nav",
@@ -127,7 +197,14 @@
       "industry": "",
       "capabilities": "",
       "product": "",
-      "lastPublished": "2024-06-18T13:25:31.396Z"
+      "lastPublished": "2024-06-18T13:25:31.396Z",
+      "releaseDate": "",
+      "eventDate": "",
+      "eventTime": "",
+      "redirectUrl": "",
+      "resourceOptions": "",
+      "eventType": "",
+      "eventSeries": ""
     },
     {
       "path": "/en/customer-stories/interviews/alicia-garcia-tunon",
@@ -139,7 +216,14 @@
       "industry": "medical-devices",
       "capabilities": "",
       "product": "",
-      "lastPublished": "2024-06-19T20:06:23.078Z"
+      "lastPublished": "2024-06-19T20:06:23.078Z",
+      "releaseDate": "2024-01-01",
+      "eventDate": "",
+      "eventTime": "",
+      "redirectUrl": "",
+      "resourceOptions": "",
+      "eventType": "",
+      "eventSeries": ""
     },
     {
       "path": "/en/customer-stories/interviews/chao-richard-li",
@@ -151,7 +235,14 @@
       "industry": "pharmaceutical-and-biotech",
       "capabilities": "",
       "product": "",
-      "lastPublished": "2024-06-19T20:04:28.275Z"
+      "lastPublished": "2024-06-19T20:04:28.275Z",
+      "releaseDate": "2023-03-23",
+      "eventDate": "",
+      "eventTime": "",
+      "redirectUrl": "",
+      "resourceOptions": "",
+      "eventType": "",
+      "eventSeries": ""
     },
     {
       "path": "/en/customer-stories/interviews/craig-deporter",
@@ -163,7 +254,14 @@
       "industry": "biotechnology, chemistry",
       "capabilities": "",
       "product": "",
-      "lastPublished": "2024-06-19T20:07:16.728Z"
+      "lastPublished": "2024-06-19T20:07:16.728Z",
+      "releaseDate": "",
+      "eventDate": "",
+      "eventTime": "",
+      "redirectUrl": "",
+      "resourceOptions": "",
+      "eventType": "",
+      "eventSeries": ""
     },
     {
       "path": "/en/customer-stories/interviews/dan-fortune",
@@ -175,7 +273,14 @@
       "industry": "chemistry, industrial-manufacturing",
       "capabilities": "",
       "product": "",
-      "lastPublished": "2024-06-19T20:08:18.349Z"
+      "lastPublished": "2024-06-19T20:08:18.349Z",
+      "releaseDate": "",
+      "eventDate": "",
+      "eventTime": "",
+      "redirectUrl": "",
+      "resourceOptions": "",
+      "eventType": "",
+      "eventSeries": ""
     },
     {
       "path": "/en/customer-stories/interviews/dirk-de-bruyn-ouboter",
@@ -187,7 +292,14 @@
       "industry": "biotechnology, chemistry",
       "capabilities": "",
       "product": "",
-      "lastPublished": "2024-06-19T20:12:53.262Z"
+      "lastPublished": "2024-06-19T20:12:53.262Z",
+      "releaseDate": "",
+      "eventDate": "",
+      "eventTime": "",
+      "redirectUrl": "",
+      "resourceOptions": "",
+      "eventType": "",
+      "eventSeries": ""
     },
     {
       "path": "/en/customer-stories/interviews/don-kent",
@@ -199,19 +311,14 @@
       "industry": "semiconductor",
       "capabilities": "",
       "product": "",
-      "lastPublished": "2024-06-19T20:05:16.271Z"
-    },
-    {
-      "path": "/en/sandbox/laurel/aem-168",
-      "author": "",
-      "title": "AEM-168 Listgroup Test",
-      "image": "",
-      "description": "#1 - Limit of 10 of only interviews; use default columns of 5",
-      "resourceType": "",
-      "industry": "",
-      "capabilities": "",
-      "product": "",
-      "lastPublished": "2024-06-25T15:52:52.452Z"
+      "lastPublished": "2024-06-19T20:05:16.271Z",
+      "releaseDate": "",
+      "eventDate": "",
+      "eventTime": "",
+      "redirectUrl": "",
+      "resourceOptions": "",
+      "eventType": "",
+      "eventSeries": ""
     },
     {
       "path": "/en/customer-stories/interviews/georg-raming",
@@ -223,7 +330,14 @@
       "industry": "semiconductor",
       "capabilities": "",
       "product": "",
-      "lastPublished": "2024-06-19T20:15:19.543Z"
+      "lastPublished": "2024-06-19T20:15:19.543Z",
+      "releaseDate": "",
+      "eventDate": "",
+      "eventTime": "",
+      "redirectUrl": "",
+      "resourceOptions": "",
+      "eventType": "",
+      "eventSeries": ""
     },
     {
       "path": "/en/customer-stories/interviews/gerd-kopp",
@@ -235,7 +349,14 @@
       "industry": "medical-devices",
       "capabilities": "",
       "product": "",
-      "lastPublished": "2024-06-19T20:17:13.313Z"
+      "lastPublished": "2024-06-19T20:17:13.313Z",
+      "releaseDate": "",
+      "eventDate": "",
+      "eventTime": "",
+      "redirectUrl": "",
+      "resourceOptions": "",
+      "eventType": "",
+      "eventSeries": ""
     },
     {
       "path": "/en/customer-stories/interviews/gian-franco-pironti",
@@ -247,7 +368,14 @@
       "industry": "semiconductor",
       "capabilities": "",
       "product": "",
-      "lastPublished": "2024-06-19T20:18:37.393Z"
+      "lastPublished": "2024-06-19T20:18:37.393Z",
+      "releaseDate": "",
+      "eventDate": "",
+      "eventTime": "",
+      "redirectUrl": "",
+      "resourceOptions": "",
+      "eventType": "",
+      "eventSeries": ""
     },
     {
       "path": "/en/customer-stories/interviews/john-szarka",
@@ -259,7 +387,14 @@
       "industry": "industrial-manufacturing",
       "capabilities": "",
       "product": "jmp-pro",
-      "lastPublished": "2024-06-19T20:20:31.425Z"
+      "lastPublished": "2024-06-19T20:20:31.425Z",
+      "releaseDate": "2024-06-19",
+      "eventDate": "",
+      "eventTime": "",
+      "redirectUrl": "",
+      "resourceOptions": "",
+      "eventType": "",
+      "eventSeries": ""
     }
   ],
   "offset": 0,
