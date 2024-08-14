@@ -20,6 +20,10 @@ module.exports = {
     'no-plusplus': ['error', {
       allowForLoopAfterthoughts: true,
     }],
+    'prefer-destructuring': ['error', {
+      array: false,
+      object: false,
+    }],
   },
   overrides: [
     {

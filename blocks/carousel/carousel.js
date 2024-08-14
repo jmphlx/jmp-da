@@ -1,4 +1,5 @@
-import { fetchPlaceholders, parseBlockOptions } from '../../scripts/aem.js';
+import { fetchPlaceholders } from '../../scripts/aem.js';
+import { parseBlockOptions } from '../../scripts/jmp.js';
 
 function updateActiveSlide(slide) {
   const block = slide.closest('.carousel');
@@ -100,7 +101,6 @@ function setOptions(block) {
       ), optionVal);
     }
   });
-  block.firstElementChild.remove();
 }
 
 let carouselId = 0;
