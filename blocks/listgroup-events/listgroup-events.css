@@ -170,7 +170,7 @@
   text-align: center;
 }
 .listgroup-events ul.list-tile>li a .tag-category, .listgroup-events ul.list-tile>li a .content-type {
-  color: #777;
+  color: #777777;
   position: absolute;
   top: 1px;
   line-height: 4em;
