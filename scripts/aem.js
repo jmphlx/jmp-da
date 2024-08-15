@@ -483,6 +483,9 @@ function decorateSections(main) {
           backgroundImg.setAttribute('src', meta[key]);
           backgroundDiv.append(backgroundImg);
           section.prepend(backgroundDiv);
+        } else if (key === 'id') {
+          // JMP Customization to add an id to a section for hash scrolling
+          section.id = meta[key];
         } else {
           section.dataset[toCamelCase(key)] = meta[key];
         }
