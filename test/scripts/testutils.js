@@ -5,8 +5,8 @@ function getCenterOf(element) {
   } = element.getBoundingClientRect();
 
   return {
-    x: Math.floor(x + window.pageXOffset + width / 2),
-    y: Math.floor(y + window.pageYOffset + height / 2),
+    x: Math.floor(x + window.scrollX + width / 2),
+    y: Math.floor(y + window.scrollY + height / 2),
   };
 }
 
