@@ -331,9 +331,12 @@ a:hover {
     position: relative;
     z-index: 1;
     background: none;
+    &:hover {
+      color: var(--link-hover-color) !important;
+    }
   }
   a:hover {
-    color: var(--link-hover-color);
+    color: var(--link-hover-color) !important;
     &:after {
       transform: translate(4px, 0);
     }
@@ -353,6 +356,9 @@ a:hover {
   a:link, a.button:any-link {
     border: none;
     color: #ffffff !important;
+    &:hover {
+      color: rgba(250, 250, 250, .85) !important;
+    }
   }
   a:hover {
     color: rgba(250, 250, 250, .85);
@@ -365,6 +371,7 @@ a:hover {
 
 .text-link-caret-left .button-container, .text-link-caret-left ul li  {
   margin-top: 0 !important;
+  font-family: "anova-regular", sans-serif;
   a:link {
     text-decoration: none;
     :hover {
