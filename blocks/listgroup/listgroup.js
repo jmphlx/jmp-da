@@ -5,8 +5,8 @@ import {
   getBlockPropertiesList,
   getBlockProperty,
   getJsonFromUrl,
+  getLanguageIndex,
   getListFilterOptions,
-  languageIndexExists,
   pageAndFilter,
   pageFilterByFolder,
   pageOrFilter,
@@ -20,13 +20,10 @@ export function createDateFromString(date) {
 export default async function decorate(block) {
   await loadScript('/scripts/moment/moment.js');
 
-  // Get Index based on language directory of current page.
-  const pageLanguage = window.location.pathname.split('/')[1];
-  let url = '/jmp-all.json';
-  if (languageIndexExists(pageLanguage)) {
-    url = `/jmp-${pageLanguage}.json`;
-  }
-  const { data: allPages, columns: propertyNames } = await getJsonFromUrl(url);
+  // Get language index.
+  const languageIndexUrl = getLanguageIndex();
+
+  const { data: allPages, columns: propertyNames } = await getJsonFromUrl(languageIndexUrl);
   let pageSelection = allPages;
 
   const optionsObject = getBlockPropertiesList(block, 'options');
