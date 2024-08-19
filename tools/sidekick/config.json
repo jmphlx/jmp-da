@@ -3,10 +3,15 @@
   "plugins": [
     {
       "id": "jmptags",
-      "title": "JMPTags",
-      "environments": ["edit"],
-      "daLibrary": true,
-      "url": "https://da.live/plugin/jmphlx/jmp-da/main/tools/tags"
+      "title": "JMP Tags",
+      "environments": ["da-edit"],
+      "path": "/tools/tags.html"
+    },
+    {
+      "id": "datepicker",
+      "title": "Date Picker",
+      "environments": ["da-edit"],
+      "path": "/tools/datepicker.html"
     }
   ]
 }

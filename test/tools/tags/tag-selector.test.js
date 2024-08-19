@@ -50,7 +50,7 @@ describe('Tag Selector Plugin Tests', () => {
       expect(tr.querySelector('h2').innerText).to.equal('↑ mytags');
       expect(tr.querySelector('h2 span.up').innerText).to.equal('↑');
 
-      const items = tr.querySelectorAll('ul form li label');
+      const items = tr.querySelectorAll('form ul li label');
       expect(items.length).to.equal(2);
 
       const values = [];
@@ -112,7 +112,7 @@ describe('Tag Selector Plugin Tests', () => {
       const tr = await fixture(html`<div>${tags}</div>`);
       expect(tr.querySelector('h2').innerText).to.equal('Categories');
 
-      const items = tr.querySelectorAll('ul form li');
+      const items = tr.querySelectorAll('form ul li');
       expect(items.length).to.equal(3);
       const categories = [];
       items.forEach((item) => {
@@ -186,7 +186,7 @@ describe('Tag Selector Plugin Tests', () => {
 
     const savedFetch = window.fetch;
     try {
-      window.fetch = async (url, opts) => {
+      window.fetch = async (url) => {
         if (url === 'https://admin.da.live/source/jmphlx/jmp-da/tools/tagbrowser/mytags.json') {
           return fetchResp;
         }
@@ -198,7 +198,7 @@ describe('Tag Selector Plugin Tests', () => {
       expect(tr.querySelector('h2').innerText).to.equal('↑ mytags');
       expect(tr.querySelector('h2 span.up').innerText).to.equal('↑');
 
-      const items = tr.querySelectorAll('ul form li label');
+      const items = tr.querySelectorAll('form ul li label');
       expect(items.length).to.equal(2);
 
       const values = [];

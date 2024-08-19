@@ -1,5 +1,6 @@
-:host > p {
-  margin: 0;
+div {
+  display: flex;
+  flex-direction: column;
 }
 
 h2, li, p {
@@ -27,10 +28,24 @@ li input {
   vertical-align: bottom;
 }
 
+li input[type="radio"] {
+  vertical-align: baseline;
+}
+
 span.up {
   cursor: pointer;
 }
 
 em {
   color: lightgrey;
+}
+
+button#use {
+  background-color: dodgerblue;
+  border: none;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
 }

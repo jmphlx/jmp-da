@@ -7,6 +7,7 @@ export default class DaTagSelector extends LitElement {
   static properties = {
     project: { type: String },
     token: { type: String },
+    actions: { type: Object },
     datasource: { type: String },
     iscategory: { type: Boolean },
     displayName: { type: String },
@@ -30,13 +31,32 @@ export default class DaTagSelector extends LitElement {
         const ts = document.createElement('da-tag-selector');
         ts.project = sel.project;
         ts.token = sel.token;
+        ts.actions = sel.actions;
         ts.datasource = `tools/tagbrowser/${tagtext.toLowerCase()}.json`;
         ts.displayName = tagtext;
         ts.parent = sel;
         sel.parentNode.appendChild(ts);
         sel.parentNode.removeChild(sel);
       }
-    } else {
+    }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  upClicked() {
+    const sel = document.querySelector('da-tag-selector');
+    if (sel) {
+      if (sel.parent) {
+        sel.parentNode.appendChild(sel.parent);
+        sel.parentNode.removeChild(sel);
+      }
+    }
+  }
+
+  useButtonClicked(e) {
+    e.preventDefault();
+
+    document.querySelector('da-tag-selector');
+    if (!this.iscategory) {
       const { target: { form } } = e;
       if (form) {
         const values = [];
@@ -47,28 +67,9 @@ export default class DaTagSelector extends LitElement {
             values.push(item.value);
           }
         }
+
         const vl = values.join(', ');
-        navigator.clipboard.writeText(vl).then(() => {
-          const sd = document.querySelector('#copy-status');
-          sd.style.opacity = '1';
-        }, (err) => {
-          // eslint-disable-next-line no-console
-          console.error('Async: Could not copy text: ', err);
-        });
-      }
-    }
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  upClicked() {
-    const sel = document.querySelector('da-tag-selector');
-    if (sel) {
-      if (sel.parent) {
-        const sd = document.querySelector('#copy-status');
-        sd.style.opacity = '0';
-
-        sel.parentNode.appendChild(sel.parent);
-        sel.parentNode.removeChild(sel);
+        this.actions.sendText(vl);
       }
     }
   }
@@ -129,7 +130,10 @@ export default class DaTagSelector extends LitElement {
     const uplink = this.iscategory
       ? html``
       : html`<span class="up" @click="${this.upClicked}">↑</span> `;
-    return html`<h2>${uplink}${this.displayName}</h2><ul><form>${tagLists}</form></ul>`;
+    const usebtn = this.iscategory
+      ? html``
+      : html`<button @click="${this.useButtonClicked}" id="use">Insert</button>`;
+    return html`<div><h2>${uplink}${this.displayName}</h2><form><ul>${tagLists}</ul>${usebtn}</form><div>`;
   }
 
   listTags() {
