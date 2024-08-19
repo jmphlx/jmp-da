@@ -237,7 +237,7 @@ a:hover {
 
 /* padding for 2 buttons mobile */
 :is(p.button-container):has(+ :is(p.button-container)) {
-  margin-bottom: 0 !important;
+  margin-bottom: 10px !important;
 }
 
 .button-secondary {
@@ -316,6 +316,25 @@ a:hover {
   }
 }
 
+
+
+
+
+
+/* 
+.secondary-tertiary {
+
+}
+ */
+
+
+
+
+
+
+
+
+
 .text-link .button-container, .text-link-light .button-container, .text-link-caret-left .button-container{
   margin: 0 0 2em 0 !important;
   a:link, a.button:any-link {
@@ -392,10 +411,38 @@ a:hover {
     margin: 0 5px 0 0;
   }
 }
+.text-link-caret-right .button-container, .text-link-caret-right ul li  {
+  margin-top: 0 !important;
+  font-family: "anova-regular", sans-serif;
+  a:link {
+    text-decoration: none;
+    :hover {
+      color: var(--link-hover-color);
+    }
+  }
+  a:hover {
+    color: var(--link-hover-color);
+  }
+  :before {
+    display: none;
+  }
+  :after {
+    content: url('../../../icons/arrow-orange.svg');
+    width: 7px;
+    display: inline-block;
+    font-size: 80%;
+    margin: 0 0 0 5px;
+  }
+}
 
-.text-link-caret-left ul {
+.text-link-caret-left ul, .text-link-caret-right ul {
   list-style-type: none;
   padding-left: 0;
+  margin-bottom: 0;
+  > :nth-last-child(1){
+    padding-bottom: 0;
+    margin-bottom:1em;
+  }
 }
 
 .modal-text-link {

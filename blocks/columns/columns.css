@@ -362,7 +362,7 @@ div.clm-50-50, div.clm-60-40, div.clm-40-60, div.clm-66-33, div.clm-33-66, div.c
 }
 /* No gray border on images in columns */
 .no-gray-border {
-  .columns-img-col {
+  .columns-img-col, .columns {
       img {
         border: none !important;
     }
