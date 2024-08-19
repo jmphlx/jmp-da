@@ -114,6 +114,13 @@ const createDisclaimer = (document) => {
   const cells = [
     ['columns (disclaimer)'],
   ]
+
+  const disclaimer = document.querySelector('div.trial-button p small span.txt-light');
+  if (disclaimer){
+    cells.push([disclaimer.innerHTML]);
+  }
+  console.log('LOOK HERE DREW');
+  console.log(cells);
   /* disclaimer = document.querySelector('');
   if (disclaimer) {
     //cells.push([]);
@@ -125,10 +132,10 @@ const createSM = (document) => {
   const cells = [
     ['section-metadata'],
   ]
-  /*const disclaimer = document.querySelector('');
-  if (disclaimer) {
-    //cells.push([]);
-  }*/
+
+  cells.push(['layout','2 Column']);
+  cells.push(['Style', 'success-story-body, columns-25-75']);
+  console.log(cells);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
 };
 
@@ -141,6 +148,8 @@ export default {
 
     const fragment = createFragment(document);
     if (fragment) section.append(fragment);
+
+    section.append(sectionBreak);
 
     const vidHero = createHero(document);
     if (vidHero) section.append(vidHero);
