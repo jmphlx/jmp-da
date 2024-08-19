@@ -180,7 +180,6 @@ main pre {
   overflow-x: auto;
   white-space: pre;
 }
-
 /* links */
 /* Body text links */
 a:any-link {
@@ -238,7 +237,7 @@ a:hover {
 
 /* padding for 2 buttons mobile */
 :is(p.button-container):has(+ :is(p.button-container)) {
-  margin-bottom: 0 !important;
+  margin-bottom: 10px !important;
 }
 
 .button-secondary {
@@ -317,6 +316,25 @@ a:hover {
   }
 }
 
+
+
+
+
+
+/* 
+.secondary-tertiary {
+
+}
+ */
+
+
+
+
+
+
+
+
+
 .text-link .button-container, .text-link-light .button-container, .text-link-caret-left .button-container{
   margin: 0 0 2em 0 !important;
   a:link, a.button:any-link {
@@ -393,10 +411,38 @@ a:hover {
     margin: 0 5px 0 0;
   }
 }
+.text-link-caret-right .button-container, .text-link-caret-right ul li  {
+  margin-top: 0 !important;
+  font-family: "anova-regular", sans-serif;
+  a:link {
+    text-decoration: none;
+    :hover {
+      color: var(--link-hover-color);
+    }
+  }
+  a:hover {
+    color: var(--link-hover-color);
+  }
+  :before {
+    display: none;
+  }
+  :after {
+    content: url('../../../icons/arrow-orange.svg');
+    width: 7px;
+    display: inline-block;
+    font-size: 80%;
+    margin: 0 0 0 5px;
+  }
+}
 
-.text-link-caret-left ul {
+.text-link-caret-left ul, .text-link-caret-right ul {
   list-style-type: none;
   padding-left: 0;
+  margin-bottom: 0;
+  > :nth-last-child(1){
+    padding-bottom: 0;
+    margin-bottom:1em;
+  }
 }
 
 .modal-text-link {
@@ -439,6 +485,7 @@ a:hover {
     }
   }
 }
+
 
 main .section[data-layout] .layout-wrapper {
   display: flex;
@@ -484,12 +531,11 @@ main .section {
 main .section.light, main .section.highlight {
   background-color: var(--light-color);
 }
-
 .sasfont {
   a:before {
     color: #eea879;
     font-family: 'sasicons-103018' !important;
-    content: '';
+    content: '';
   }
 }
 .sub-capability-cards {
@@ -640,9 +686,10 @@ ul {
   }
 }
 /* Styling change to the sections margin  */
-.block-margin-small, .block-margin-medium, .block-margin-large {
-  h2 {
-    margin-bottom: 64px;
+.block-margin-small:has(.columns-wrapper), .block-margin-medium:has(.columns-wrapper), .block-margin-large:has(.columns-wrapper) {
+  padding-top: 40px;
+  h2, h3 {
+    margin-bottom: 32px;
   }
 }
 .block-margin-small {
@@ -707,45 +754,6 @@ div.section.block-margin-large {
 .icon-xxl {
   img {
     max-width: 160px;
-  }
-}
-/* Styling for the ROI block */
-.roi-colors {
-  h2, h3, h4, h5 {
-    padding-bottom: 0;
-    margin-bottom: 0;
-  }
-  h3, div, p {
-    align-items: center;
-    margin: .5em auto 0 auto;
-    padding: 10px auto;
-    color: #ffffff;
-    max-width: 1280px;
-  }
-  h5 {
-    color: #888888;
-  }
-  h2 {
-    font-size: 6.8rem;
-  }
-  div:nth-child(1) {
-    color: #f5ba55;
-  }
-  div > div:nth-child(2) {
-    border: 1px solid #69757d;
-    color: #3ebdac;
-    border-top: none;
-    border-bottom: none;
-    padding: 20px 10px;
-    @media only screen and (max-width: 900px) {
-      border: none;
-      border-top: 1px solid #69757d;
-      border-bottom: 1px solid #69757d;
-      width: 95%;
-    }
-  }
-  div > div:nth-child(3) {
-    color: #c479ba;
   }
 }
 /* Column layouts */
@@ -858,53 +866,6 @@ div.success-story-body {
         border: 1px solid #d0d0d0;
         background-color: #f4f4f4;
         border-radius: var(--base-radius);
-      }
-    }
-  }
-}
-/* Styling for G2 badges */
-.g2-badge-6, .g2-badge-4 {
-  .columns-wrapper {
-    position: relative;
-    z-index: 1;
-  }
-}
-.g2-badge-6 {
-  .columns-wrapper {
-    position: relative;
-    z-index: 1;
-    @media (width <=900px) {
-      .columns > div {
-        display: block;
-        div {
-          margin: 0 8px;
-          max-width: 31%;
-          float: left;
-        }
-      }
-    }
-    @media (width <=750px) {
-      .columns > div {
-        div {
-          margin: 0 4px;
-          max-width: 48%;
-          display: inline-block;
-        }
-      }
-    }
-  }
-}
-.g2-badge-4 {
-  .columns-wrapper {
-    max-width: 62%;
-    .columns > div > div {
-      max-width: 20%;
-      margin: 0 auto;
-    }
-    @media (width <=900px) {
-      max-width: 100%;
-      .columns > div {
-        flex-direction: inherit;
       }
     }
   }

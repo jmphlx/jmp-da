@@ -72,10 +72,10 @@ clear: inline-end;
   hr {
     margin: 32px auto;
   }
-  img {
-    max-width: 35%;
-    padding: 0 32px 0 32;
-    position: relative;
-    float: inline-start;
+}
+.accordion-item-body:has(hr) {
+  img{
+  padding: 0 32px 0 32;
+  position: relative;
   }
 }
