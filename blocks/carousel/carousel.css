@@ -180,6 +180,10 @@
       margin-top: 2em;
       .carousel-slide-content {
         margin: 0 auto;
+        width: 70%;
+      }
+      .carousel .carousel-navigation-buttons button {
+        border: none;
       }
     }
   }
