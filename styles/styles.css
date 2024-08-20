@@ -709,10 +709,14 @@ div.section.block-margin-large {
       margin: auto auto !important;
       margin-left: auto !important;
     }
+    @media (width <=900px) {
+      margin: 0 auto 36px auto !important;
+    }
   }
   div:nth-last-child(1) {
     margin: auto auto 32px auto !important;
   }
+
 }
 /*  Icons size scaling */
 .icon-xs, .icon-s, .icon-m, .icon-l, .icon-xl, .icon-xxl {
