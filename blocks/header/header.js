@@ -3,6 +3,7 @@ import {
   createElement,
 } from '../../scripts/scripts.js';
 import { getMetadata } from '../../scripts/aem.js';
+import { getLanguageNav } from '../../scripts/jmp.js';
 
 // import { createSearchForm } from '../../scripts/search-utils.js';
 
@@ -11,10 +12,12 @@ const isDesktop = window.matchMedia('(min-width: 900px)');
 
 /**
  * fetches the navigation markup
+ * JMP Customization
+ * Use language nav based on page lang. Default to /en/nav.
  */
 async function fetchNavigationHTML() {
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta) : '/nav';
+  const navPath = navMeta ? new URL(navMeta) : getLanguageNav();
 
   const response = await fetch(`${navPath}.plain.html`);
   return response.text();

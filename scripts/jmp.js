@@ -56,17 +56,48 @@ function getTimezoneObjectFromAbbr(timezones, tzabbr) {
 }
 
 /**
- * Returns if a given 2 or 4 digit language should have
- * a valid index. Mainly used in case of listgroup in sandbox
- * or other nonlanguage directory.
+ * Returns if a given 2 or 4 digit language is supported
+ * by JMP. Support means that it should have it's own
+ * directory, index, and nav.
  * @param {string} language
  * @returns {Boolean} true if the index should exist.
  */
-function languageIndexExists(language) {
+function isLanguageSupported(language) {
   const languageIndexes = [
     'en', 'es', 'fr', 'zh', 'de', 'it', 'ko', 'ja', 'zh-hans', 'zh-hant',
   ];
   return languageIndexes.includes(language);
+}
+
+/**
+ * Sets the html lang property based on the page path.
+ * If the top directory is the language code of a
+ * JMP supported language, then set it to that language.
+ * Otherwise, default to 'en' (English).
+ */
+function setHtmlPageLanguage() {
+  const pageLanguage = window.location.pathname.split('/')[1];
+  document.documentElement.lang = isLanguageSupported(pageLanguage) ? pageLanguage : 'en';
+}
+
+/**
+ * Returns the path of the appropriate nav based on page language.
+ * Default to 'en' if language isn't found.
+ * @returns {string} path to language nav
+ */
+function getLanguageNav() {
+  const lang = document.documentElement.lang.toLowerCase();
+  return isLanguageSupported(lang) ? `/${lang}/nav` : '/en/nav';
+}
+
+/**
+ * Returns the path of the appropriate index based on page language.
+ * Default to 'en' if language isn't found.
+ * @returns {string} path to language index
+ */
+function getLanguageIndex() {
+  const lang = document.documentElement.lang.toLowerCase();
+  return isLanguageSupported(lang) ? `/jmp-${lang}.json` : 'jmp-all.json';
 }
 
 /*
@@ -287,12 +318,15 @@ export {
   getBlockPropertiesList,
   getBlockProperty,
   getJsonFromUrl,
+  getLanguageIndex,
+  getLanguageNav,
   getListFilterOptions,
   getTimezoneObjectFromAbbr,
   getTimezones,
-  languageIndexExists,
+  isLanguageSupported,
   pageAndFilter,
   pageFilterByFolder,
   pageOrFilter,
   parseBlockOptions,
+  setHtmlPageLanguage,
 };

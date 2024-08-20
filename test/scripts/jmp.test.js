@@ -96,17 +96,17 @@ describe('jmp.js tests', () => {
   });
 
   describe('Language Index', () => {
-    let languageIndexExists;
+    let isLanguageSupported;
 
     before(async () => {
-      languageIndexExists = jmpHelper.languageIndexExists;
+      isLanguageSupported = jmpHelper.isLanguageSupported;
     });
 
     it('Language index should exist for certain languages', () => {
-      expect(true, languageIndexExists('en'));
-      expect(true, languageIndexExists('FR'));
-      expect(true, languageIndexExists('zh_hans'));
-      expect(false, languageIndexExists('en_us'));
+      expect(true, isLanguageSupported('en'));
+      expect(true, isLanguageSupported('FR'));
+      expect(true, isLanguageSupported('zh_hans'));
+      expect(false, isLanguageSupported('en_us'));
     });
   });
 });

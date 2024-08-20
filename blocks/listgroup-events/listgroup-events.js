@@ -5,10 +5,10 @@ import {
   getBlockProperty,
   getBlockPropertiesList,
   getJsonFromUrl,
+  getLanguageIndex,
   getListFilterOptions,
   getTimezoneObjectFromAbbr,
   getTimezones,
-  languageIndexExists,
   pageAndFilter,
   pageFilterByFolder,
   pageOrFilter,
@@ -29,14 +29,10 @@ export default async function decorate(block) {
   await loadScript('/scripts/moment/moment.js');
   await loadScript('/scripts/moment/moment-timezone.min.js');
 
-  // Get Index based on language directory of current page.
-  const pageLanguage = window.location.pathname.split('/')[1];
-  let url = '/jmp-all.json';
-  if (languageIndexExists(pageLanguage)) {
-    url = `/jmp-${pageLanguage}.json`;
-  }
+  // Get language index.
+  const languageIndexUrl = getLanguageIndex();
 
-  const { data: allPages, columns: propertyNames } = await getJsonFromUrl(url);
+  const { data: allPages, columns: propertyNames } = await getJsonFromUrl(languageIndexUrl);
   let pageSelection = allPages;
 
   const optionsObject = getBlockPropertiesList(block, 'options');
