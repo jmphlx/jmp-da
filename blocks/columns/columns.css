@@ -26,7 +26,7 @@
 @media (width >=900px) {
   .columns > div {
     flex-direction: unset;
-    gap: 32px;
+    gap: 64px;
   }
   .columns > div > div {
     flex: 1;
@@ -590,9 +590,9 @@ div.clm-75-25 {
   }
   @media (width <=900px) {
     .columns-4-cols div {
-      width: 80%;
+      max-width: 256px;
       div {
-        max-width: 50%;
+        width: 50%;
         text-align: center;
         img {
           width: 48%;
@@ -621,3 +621,4 @@ div.clm-75-25 {
       }
     }
 }
+
