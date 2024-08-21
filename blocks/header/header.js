@@ -3,6 +3,8 @@ import {
   createElement,
 } from '../../scripts/scripts.js';
 import { getMetadata } from '../../scripts/aem.js';
+import { createTag } from '../../scripts/helper.js';
+import { onSearchInput } from './search.js';
 import { getLanguageNav } from '../../scripts/jmp.js';
 
 // import { createSearchForm } from '../../scripts/search-utils.js';
@@ -51,6 +53,15 @@ function closeAllNavSections(nav) {
 
   nav.querySelectorAll('.drop-expanded').forEach((sections) => {
     sections.classList.remove('drop-expanded');
+  });
+
+  nav.querySelectorAll('.gnav-search').forEach((section) => {
+    section.setAttribute('aria-expanded', false);
+    section.classList.remove('is-Open');
+  });
+
+  nav.querySelectorAll('.gnav-curtain').forEach((section) => {
+    section.classList.remove('is-Open');
   });
 }
 
@@ -113,6 +124,10 @@ async function buildMobileMenu(nav) {
       if (subList) {
         navSection.classList.add('nav-drop');
         addNavDropToggle(navSection, sections);
+      } else {
+        // TO-DO: Mobile search.
+        // If not dropdown, assume it is the search icon.
+        // navSection.classList.add('search-icon');
       }
     });
 
@@ -128,6 +143,35 @@ async function buildMobileMenu(nav) {
   }
 
   nav.append(mobileMenu);
+}
+
+function decorateSearchBar() {
+  const searchBar = createTag('aside', { id: 'gnav-search-bar', class: 'gnav-search-bar' });
+  const searchInput = createTag('input', { class: 'gnav-search-input', placeholder: 'Search' });
+  const searchResults = createTag('div', { class: 'gnav-search-results' });
+  searchInput.addEventListener('input', (e) => {
+    onSearchInput(e.target.value, searchResults);
+  });
+
+  searchBar.append(searchInput);
+  searchBar.append(searchResults);
+  return searchBar;
+}
+
+function toggleSearch(searchBar) {
+  const expanded = searchBar.getAttribute('aria-expanded') === 'true';
+  closeAllNavSections(searchBar.closest('nav'));
+  if(expanded) {
+    // close
+    searchBar.setAttribute('aria-expanded', 'false');
+    searchBar.classList.remove('is-Open');
+    document.querySelector('.gnav-curtain').classList.remove('is-Open');
+  } else {
+    // open
+    searchBar.setAttribute('aria-expanded', 'true');
+    searchBar.classList.add('is-Open');
+    document.querySelector('.gnav-curtain').classList.add('is-Open');
+  }
 }
 
 /**
@@ -208,24 +252,6 @@ export default async function decorate(block) {
   const navTools = nav.querySelector('.nav-tools');
   if (navTools) {
     navTools.querySelectorAll(':scope > ul > li').forEach(async (navTool) => {
-      // const isSearch = navTool.querySelector('.fa-search');
-
-      // if (isSearch) {
-      //   navTool.setAttribute('aria-expanded', 'false');
-      //   navTool.classList.add('search-item');
-      //   const searchAction = navTool.querySelector('a').href;
-      //   // const searchForm = await createSearchForm({ type: 'minimal', action: searchAction });
-      //   navTool.append(searchForm);
-      //   searchForm.hidden = true;
-
-      //   navTool.querySelector('a').addEventListener('click', (e) => {
-      //     e.preventDefault();
-      //     navTool.querySelector('.search-form-container').toggleAttribute('hidden');
-      //     const isExpanded = navTool.getAttribute('aria-expanded') === 'true' || false;
-      //     navTool.setAttribute('aria-expanded', !isExpanded);
-      //   });
-      // }
-
       const subList = navTool.querySelector('ul');
       if (subList) {
         navTool.classList.add('nav-drop');
@@ -239,6 +265,20 @@ export default async function decorate(block) {
         }
 
         addNavDropToggle(navTool, navTools);
+      } else {
+        // Assume search
+        navTool.classList.add('search-icon');
+        navTool.classList.add('gnav-search');
+        const searchButton = navTool.querySelector('picture');
+        const searchBar = decorateSearchBar();
+        searchButton.addEventListener('click', () => {
+          console.log('do search stuff');
+          toggleSearch(navTool);
+          // toggle search input
+
+        });
+
+        navTool.append(searchBar);
       }
     });
   }
@@ -261,6 +301,9 @@ export default async function decorate(block) {
       }
     }
   });
+
+  const curtain =  createTag('div', { class: 'gnav-curtain' });
+  block.append(curtain);
 
   const navWrapper = createElement('div', {
     class: 'nav-wrapper',

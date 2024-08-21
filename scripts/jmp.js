@@ -97,7 +97,7 @@ function getLanguageNav() {
  */
 function getLanguageIndex() {
   const lang = document.documentElement.lang.toLowerCase();
-  return isLanguageSupported(lang) ? `/jmp-${lang}.json` : 'jmp-all.json';
+  return isLanguageSupported(lang) ? `/jmp-${lang}.json` : '/jmp-all.json';
 }
 
 /*
