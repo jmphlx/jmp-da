@@ -1,8 +1,7 @@
 .carousel .carousel-slides-container {
   position: relative;
-  a{
+  a {
     text-decoration: none;
-    
   }
 }
 .carousel .carousel-slides, .carousel .carousel-slide-indicators {
@@ -29,7 +28,6 @@
   position: relative;
   width: 100%;
   min-height: min(4rem, calc(100svh - var(--nav-height)));
-
 }
 .carousel .carousel-slide:has(.carousel-slide-content[data-align="center"]) {
   align-items: center;
@@ -45,7 +43,6 @@
   height: 100%;
   width: 100%;
   object-fit: cover;
-
 }
 .carousel .carousel-slide .carousel-slide-content {
   z-index: 1;
@@ -54,21 +51,19 @@
   position: relative;
   width: var(--slide-content-width, auto);
 }
-
 .carousel .carousel-slide-indicators {
   text-align: center;
-  li{
-    border:none;
-    display:inline-block;
+  li {
+    border: none;
+    display: inline-block;
     margin: auto .5em;
   }
 }
-.carousel-nav-off{
-.carousel .carousel-slide-indicators {
-  display: none;
+.carousel-nav-off {
+  .carousel .carousel-slide-indicators {
+    display: none;
+  }
 }
-}
-
 .carousel .carousel-slide-indicator button {
   width: 1rem;
   height: 1rem;
@@ -161,7 +156,6 @@
     --slide-content-width: auto;
   }
 }
-
 /* If thte carousel multi colors  */
 .carousel-link-colors {
   .carousel-slide:nth-child(1), .carousel-slide:nth-child(5), .carousel-slide:nth-child(9) {
@@ -185,7 +179,6 @@
     }
   }
 }
-
 .carousel-full-width {
   .carousel-wrapper {
     max-width: 100% !important;
@@ -206,13 +199,12 @@
 .carousel-with-header {
   .carousel-navigation-buttons {
     top: 1em;
-    }
-
-    @media (width <=900px) {
-      .carousel-wrapper{
+  }
+  @media (width <=900px) {
+    .carousel-wrapper {
       margin-top: 1em;
       /* border: red solid; */
-      .carousel-navigation-buttons{
+      .carousel-navigation-buttons {
         top: 50%;
       }
       .carousel-slide-content {
@@ -221,21 +213,18 @@
       }
     }
   }
-  }
-
-.carousel-with-background{
+}
+.carousel-with-background {
   a:any-link {
     color: var(--white);
     text-decoration: underline;
     transition: 0.3s;
     transition-timing-function: ease-out;
+  }
+  a:hover {
+    text-decoration-color: var(--orange);
+  }
 }
-a:hover{
-  text-decoration-color: var(--orange);
-}
-}
-
-
 /* .carousel .carousel-slide-content h2 {
   :before {
     content: url('../../../icons/arrow-orange.svg');
@@ -247,9 +236,6 @@ a:hover{
     transition: transform 0.5s ease, color 0.5s ease;
   }
 } */
-
-
-
 .dark-arrow .carousel-navigation-buttons button:after {
   display: block;
   content: "";
