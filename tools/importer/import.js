@@ -17,20 +17,7 @@ const createMetadataBlock = (document) => {
   const type = document.querySelector('[property="og:type"]');
   if (type) meta.Type = type.content;
   //find the <meta property="og:image"> element
-  
   const img = document.querySelector('[property="og:image"]');
-
-  const heroCss = '#content div#page-content.par div#par div.par.parsys div.styledcontainer.parbase div.container.left-side div.par.parsys div.reference.parbase div.cq-dd-paragraph div.styledcontainer_9f05.styledcontainer.parbase div';
-  const hero = document.querySelector(heroCss);
-
-  const lhText = document.querySelector(' div.par.parsys div.textimage.parbase.section div.authorbio div');
-  // console.log(lhText);
-  console.log("Tad Look here");
-  console.log(lhText);
-  lhText.firstElementChild.setAttribute('data-asset',"https://www.jmp.com" + lhText.firstElementChild.getAttribute("data-asset"));
-  lhText.firstElementChild.firstElementChild.setAttribute('src',lhText.firstElementChild.getAttribute("data-asset"));
-  const link = lhText.firstElementChild.firstElementChild.getAttribute('src');
-  console.log(link);
   if (img && img.content) {
     const el = document.createElement('img');
     el.src = img.content;
@@ -274,7 +261,6 @@ export default {
     section.append(sectionBreak);
   
     const meta = createMetadataBlock(document);
-    console.log(meta);
     if (meta) section.append(meta);
     
     main.innerHTML = '';
