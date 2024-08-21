@@ -636,7 +636,7 @@ div.dark-gray {
   min-height: 96px;
   overflow: hidden;
   position: relative;
-  z-index: -2;
+   z-index: 0;
   p {
     font-size: var(--heading-font-size-xs);
   }
