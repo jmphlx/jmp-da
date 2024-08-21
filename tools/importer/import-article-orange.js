@@ -17,20 +17,7 @@ const createMetadataBlock = (document) => {
   const type = document.querySelector('[property="og:type"]');
   if (type) meta.Type = type.content;
   //find the <meta property="og:image"> element
-  
   const img = document.querySelector('[property="og:image"]');
-
-  const heroCss = '#content div#page-content.par div#par div.par.parsys div.styledcontainer.parbase div.container.left-side div.par.parsys div.reference.parbase div.cq-dd-paragraph div.styledcontainer_9f05.styledcontainer.parbase div';
-  const hero = document.querySelector(heroCss);
-
-  const lhText = document.querySelector(' div.par.parsys div.textimage.parbase.section div.authorbio div');
-  // console.log(lhText);
-  console.log("Tad Look here");
-  console.log(lhText);
-  lhText.firstElementChild.setAttribute('data-asset',"https://www.jmp.com" + lhText.firstElementChild.getAttribute("data-asset"));
-  lhText.firstElementChild.firstElementChild.setAttribute('src',lhText.firstElementChild.getAttribute("data-asset"));
-  const link = lhText.firstElementChild.firstElementChild.getAttribute('src');
-  console.log(link);
   if (img && img.content) {
     const el = document.createElement('img');
     el.src = img.content;
@@ -72,10 +59,18 @@ const createMetadataBlock = (document) => {
 
           if (el.content.split(splitChar)[0] == 'Tier' || el.content.split(splitChar)[0] == 'Success Stories'){
             //meta.resourceType = [];
-            //console.log("el.content splits below");
-            //console.log(el.content.split(splitChar)[1]);
             if (!(el.content.split(splitChar)[1] === undefined)){
-            meta.resourceOptions.push(el.content.split(splitChar)[1] + ",");}
+            
+            const metaString = el.content.split((splitChar)[1]);
+            if (metaString[0].split("|")[1].split(" ")[0].toLowerCase() == "featured" && !meta.resourceOptions.includes("featured") ){
+              meta.resourceOptions.push(metaString[0].split("|")[1].split(" ")[0].toLowerCase() + ",");
+            }
+            //console.log(metaString[0].split("|")[1].split(" "))
+            if (metaString[0].split("|")[1].split(" ")[1].toLowerCase() == "video" && !meta.resourceOptions.includes("video") ){
+              meta.resourceOptions.push(metaString[0].split("|")[1].split(" ")[1].toLowerCase() + ",");
+            }
+            
+            }
           }
 
 
@@ -137,8 +132,6 @@ const createMetadataBlock = (document) => {
       
      }
     });
-
-
     if (softwareMeta) {
       //meta.product = [];
       softwareMeta.forEach((el) => {
@@ -148,8 +141,8 @@ const createMetadataBlock = (document) => {
             //meta.eventTime = [];
             meta.product.push(el.content.split(splitChar)[1]);
           }
-          console.log("productMeta");
-          console.log(meta.product);
+          //console.log("productMeta");
+          //console.log(meta.product);
        }
         else {
             meta.product.push(el.content);
@@ -184,65 +177,133 @@ const createFragment = (document) => {
     ['fragment'],
   ]
   const anchor = document.createElement('a');
-  anchor.href = 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/bio-nav';
-  anchor.innerText = 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/bio-nav';
+  anchor.href = 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/resource-breadcrumb';
+  anchor.innerText = 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/resource-breadcrumb';
+  //console.log("LOOK HERE DREW");
+  //console.log(anchor);
   cells.push([anchor]);
+  //console.log(cells);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
-const createBio = (document) => {
+const createHero = (document) => {
   const doc = {};
   const cells = [
-    ['columns (clm-25-75)'],
+    ['columns (video-story-hero)'],
   ]
   //grab hero image
-  const heroCss = '#content div#page-content.par div#par div.par.parsys div.styledcontainer.parbase div.container.left-side div.par.parsys div.reference.parbase div.cq-dd-paragraph div.styledcontainer_9f05.styledcontainer.parbase div';
+  const heroCss = '#content div#page-content.par div#par div.par.parsys div.styledcontainer.parbase div.container.article-template.article-title div.par.parsys div.parsys_column.cq-colctrl-lt0';
   const hero = document.querySelector(heroCss);
-  const lhText = document.querySelector('div.par.parsys div.textimage.parbase.section div.authorbio div');
+  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt9 div.parsys_column.cq-colctrl-lt9-c0 div.image.parbase.section div');
   // console.log(lhText);
-  console.log("Tad Look here");
-  console.log(lhText);
+  //console.log("Tad Look here");
+  //console.log(lhText);
   lhText.firstElementChild.setAttribute('data-asset',"https://www.jmp.com" + lhText.firstElementChild.getAttribute("data-asset"));
   lhText.firstElementChild.firstElementChild.setAttribute('src',lhText.firstElementChild.getAttribute("data-asset"));
 
-  console.log(lhText.innerHTML);
-  const rhText = document.querySelector('div.par.parsys div.textimage.parbase.section div.authorbio div.text');
-  console.log(rhText);
-
-  cells.push([lhText, rhText]);
+  //console.log(lhText.innerHTML);
+  const rhText = document.querySelector('div.container.article div.par.parsys div.text.parbase.section');
+  // console.log(rhText);
+  rhText.querySelector('h2').outerHTML = "<p>" + rhText.querySelector('h2').innerHTML + '</p>'
+  rhText.querySelector('h6').innerText = "Success Story"
+  //console.log("here!!!! here!!!!!!");
+  //console.log(rhText.querySelector('h2'));
+  cells.push([rhText, lhText]);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
+//get any full width 'hero' with only text likes
+const createDivider = (document) => {
+  const cells = [
+    ['divider'],
+  ]
+  return WebImporter.DOMUtils.createTable(cells, document);
+};
 
+const createLeftHandRail = (document) => {
+  const newDiv = document.createElement("div");
+  const tableHeading = document.querySelectorAll('.text.parbase.section tr');
+  // console.log(tableHeading);
+  tableHeading.forEach((el) => {
+    const myh4 = el.querySelector('th');
+    const h4 = document.createElement('h4');
+    h4.innerHTML = myh4.innerHTML;
+    // console.log(h4.innerText);
+    newDiv.appendChild(h4);
 
-const createTitle = (document) => {
-  const title = document.querySelector('.container div.par.parsys div.text.parbase.section div');
-  title.querySelector('h3').outerHTML = "<h1>" + title.querySelector('h3').innerHTML + '</h1>'
-  title.querySelector('h4').outerHTML = "<h6>" + title.querySelector('h4').innerHTML + '</h6>'
-  console.log("DREW LOOK HERE");
-  console.log(title);
-  return title;
+    const tableText = el.querySelector('td');
+    const myP = document.createElement('p');
+    myP.innerText = tableText.innerText;
+    // console.log(myP.innerText);
+
+    newDiv.appendChild(myP);
+    // console.log(newDiv);
+  });
+  return newDiv;
   };
 
+const createRightHandRail = (document) => {
+  const newDiv = document.createElement("div");
+
+  const paragraphs = document.querySelectorAll('.container.article .par.parsys .text.parbase.section div:has(p)');
+  paragraphs.forEach((el) => {
+    // console.log('This is the header');
+    // console.log(el.innerHTML);
+    const header = el.querySelector('h3');
+
+    if (header) {
+      const myHeader = document.createElement('h3');
+      myHeader.innerHTML = header.innerHTML;
+      // console.log('Header Ran');
+      // console.log(myHeader.innerText);
+      newDiv.appendChild(myHeader);
+    }
+    
+    const p = el.querySelectorAll('p');
+    p.forEach((elem) => {
+      const myP = document.createElement('p');
+      myP.innerHTML = elem.innerHTML;
+      // console.log('p ran');
+      // console.log(myP.innerText);
+      newDiv.appendChild(myP);
+    });
+  });
+  
+  // console.log(newDiv.innerText);
+  return newDiv;
+};
+
+const createButtonLink = (document) => {
+  const button = document.querySelector(' div.trial-button p span.button a');
+  return button;
+}
+
+const createDisclaimer = (document) => {
+  const cells = [
+    ['columns (disclaimer)'],
+  ]
+
+  const disclaimer = document.querySelector('div.trial-button p small span.txt-light');
+  if (disclaimer){
+    cells.push([disclaimer.innerHTML]);
+  }
+  
+  //console.log(cells);
+  /* disclaimer = document.querySelector('');
+  if (disclaimer) {
+    //cells.push([]);
+  }*/
+  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
+};
 
 const createSM = (document) => {
   const cells = [
     ['section-metadata'],
   ]
 
-  cells.push(['background-image','']);
-  cells.push(['Style', 'purple-blue-gradient, light-text, place-background-image,']);
-  console.log(cells);
-  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
-};
-
-const createSM2 = (document) => {
-  const cells = [
-    ['section-metadata'],
-  ]
-
-  cells.push(['Style', 'block-margin-large']);
-  console.log(cells);
+  cells.push(['layout','2 Column']);
+  cells.push(['Style', 'success-story-body, columns-25-75']);
+  //console.log(cells);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
 };
 
@@ -254,27 +315,38 @@ export default {
     const sectionBreak = document.createElement('hr');
 
     const fragment = createFragment(document);
+    //console.log("Fragment returned");
+    //console.log(fragment);
     if (fragment) section.append(fragment);
+
+    section.append(":search:")
+
+    //const vidHero = createHero(document);
+    //if (vidHero) section.append(vidHero);
+
+    section.append(document.createElement('hr'));
+
+    const lhrail = createLeftHandRail( document,);
+    if (lhrail) section.append(lhrail);
+
+    const divider = createDivider(document);
+    if (divider) section.append(divider);
+
+    const rightHR = createRightHandRail(document);
+    if (rightHR) section.append(rightHR);
+
+    const button = createButtonLink(document);
+    if (button) section.append(button);
+
+    const disclaimer = createDisclaimer(document);
+    if (disclaimer) section.append(disclaimer);
 
     const sectionMetadata = createSM(document);
     if(sectionMetadata) section.append(sectionMetadata);
 
-    section.append(document.createElement('hr'));
-
-    const title = createTitle(document);
-    if (title) section.append(title);
-
-    const bio = createBio(document);
-    console.log("bio create");
-    if (bio) section.append(bio);
-
-    const sectionMetadata2 = createSM2(document);
-    if(sectionMetadata2) section.append(sectionMetadata2);
-
     section.append(sectionBreak);
   
     const meta = createMetadataBlock(document);
-    console.log(meta);
     if (meta) section.append(meta);
     
     main.innerHTML = '';

@@ -5,7 +5,8 @@ const createMetadataBlock = (document) => {
   //find the <title> element
   const title = document.querySelector('title');
   if (title) {
-    meta.Title = title.innerHTML.replace(/[\n\t]/gm, '');
+    const myTitle = title.innerHTML.replace(/[\n\t]/gm, '');
+    meta.Title = myTitle.split('|')[0];
   }
   //find the <meta property="og:description"> element
   const desc = document.querySelector('[property="og:description"]');
@@ -15,9 +16,6 @@ const createMetadataBlock = (document) => {
   //find the <meta property="og:type"> element
   const type = document.querySelector('[property="og:type"]');
   if (type) meta.Type = type.content;
-  //find the <meta property="og:url"> element
-  const url = document.querySelector('[property="og:url"]');
-  if (url) meta.Url = url.content;
   //find the <meta property="og:image"> element
   const img = document.querySelector('[property="og:image"]');
   if (img && img.content) {
@@ -25,8 +23,128 @@ const createMetadataBlock = (document) => {
     el.src = img.content;
     meta.Image = el;
   }
- 
+ //grab meta prop=software (because of course both product and software exist)
+  const softwareMeta = document.querySelectorAll('[property="software"]');
+  //grab meta property=jmp
+  const jmpMeta = document.querySelectorAll('[property="jmp"]');
+  if (jmpMeta) {
+    const splitChar = '|';
+    meta.resourceType = [];
+    meta.resourceOptions = [];
+    meta.capabilityType = [];
+    meta.product = [];
+    meta.industry = [];
+    meta.redirectUrl = [];
+    //events arrays
+    meta.eventType = [];
+    meta.eventTime = [];
+    meta.eventSeries = [];
+    jmpMeta.forEach((el) => {
+      if (el.content){ 
+          // console.log("SplitContents:");
+          // console.log(el.content.split(splitChar));
+          // handle custom page tags
+          // handle resourceType 
+          if (el.content.split(splitChar)[0] == 'Content Type'){
+            //meta.resourceType = [];
+            //console.log("el.content splits below");
+            //console.log(el.content.split(splitChar)[1]);
+            if (el.content.split(splitChar)[1] == 'Success Story'){
+              meta.resourceType.push("Customer Story" + ",");
+            } else {
+            meta.resourceType.push(el.content.split(splitChar)[1] + ",");}
+          }
+          // console.log("metaResourceType below"); 
+          // console.log(meta.resourceType);
 
+          if (el.content.split(splitChar)[0] == 'Tier' || el.content.split(splitChar)[0] == 'Success Stories'){
+            //meta.resourceType = [];
+            //console.log("el.content splits below");
+            //console.log(el.content.split(splitChar)[1]);
+            if (!(el.content.split(splitChar)[1] === undefined)){
+            meta.resourceOptions.push(el.content.split(splitChar)[1] + ",");}
+          }
+
+
+
+          //handle capability
+          if (el.content.split(splitChar)[0] == 'Capability'){ 
+            //meta.capabilityType = [];
+            //console.log("el.content splits below");
+            //console.log(el.content.split(splitChar)[1]);
+            meta.capabilityType.push(el.content.split(splitChar)[1]);
+          }
+          // console.log("metaCapabilityType below"); 
+          // console.log(meta.capabilityType);
+                  
+        // handle redirectUrl types
+        if (el.content.split(splitChar)[0] == 'redirectUrl'){
+          //meta.redirectUrl = [];
+          meta.redirectUrl.push(el.content.split(splitChar)[1]);
+        }
+        //console.log("metaredirectUrl below"); 
+        //console.log(meta.redirectUrl);
+
+        // handle software/product types
+        if (el.content.split(splitChar)[0] == 'Product' || el.content.split(splitChar)[0] == 'Software'){
+          //meta.product = [];
+          meta.product.push(el.content.split(splitChar)[1]);
+        }
+        //console.log("metaproduct below"); 
+        //console.log(meta.product);
+
+        // handle industries
+        if (el.content.split(splitChar)[0] == 'Industry'){
+          //meta.industry = [];
+          meta.industry.push(el.content.split(splitChar)[1]);
+        }
+
+        // EVENTS
+        // handle event types
+        if (el.content.split(splitChar)[0] == 'Event Type'){
+          //meta.eventType = [];
+          meta.eventType.push(el.content.split(splitChar)[1]);
+        }
+        // console.log("metaEventType below"); 
+        // console.log(meta.eventType);
+
+        if (el.content.split(splitChar)[0] == 'Event Time'){
+          //meta.eventTime = [];
+          meta.eventTime.push(el.content.split(splitChar)[1]);
+        }
+        //console.log("metaEventType below");
+
+        if (el.content.split(splitChar)[0] == 'Event Series'){
+          //meta.eventSeries = [];
+          meta.eventSeries.push(el.content.split(splitChar)[1]);
+        }
+        //console.log("metaEventSeries below");
+        // console.log(meta);
+
+      
+     }
+    });
+
+
+    if (softwareMeta) {
+      //meta.product = [];
+      softwareMeta.forEach((el) => {
+        if (el.content){ 
+         if (el.content.includes("|")){
+          if (el.content.split(splitChar)[0]){
+            //meta.eventTime = [];
+            meta.product.push(el.content.split(splitChar)[1]);
+          }
+          console.log("productMeta");
+          console.log(meta.product);
+       }
+        else {
+            meta.product.push(el.content);
+        }
+      }
+      });
+    }
+  }
   const siteAreaMeta = document.querySelectorAll('[property="siteArea"]');
   if (siteAreaMeta) {
     meta.SiteArea = [];
@@ -34,7 +152,6 @@ const createMetadataBlock = (document) => {
       if (el.content) meta.SiteArea.push(el.content);
     });
   }
-  //console.log(meta.jmp);
   //find the <meta property="date"> element
   const date = document.querySelector('[property="date"]');
   if (date) meta.Date = date.content;
@@ -43,22 +160,21 @@ const createMetadataBlock = (document) => {
   if (tCard) meta['twitter:card'] = tCard.content;
   //find the <meta property="date"> element
   const tSite = document.querySelector('[name="twitter:site"]');
-  if (tCard) meta['twitter:site'] = tSite.content;
-    
+  if (tCard) meta['twitter:site'] = tSite.content;  
   //helper to create the metadata block
   const metaBlock = WebImporter.Blocks.getMetadataBlock(document, meta);
   //returning the meta object might be usefull to other rules
   return metaBlock;
 };
+
 const createFragment = (document) => {
   const cells = [
     ['fragment'],
   ]
   const anchor = document.createElement('a');
   anchor.href = 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/resource-breadcrumb';
-  console.log(anchor);
+  anchor.innerText = 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/resource-breadcrumb';
   cells.push([anchor]);
-  console.log(cells);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
@@ -74,7 +190,9 @@ const createHero = (document) => {
     //grab right hand text 
     const rhText = hero.querySelector('div.parsys_column.cq-colctrl-lt0-c0 div.text.parbase.section div');
     const lhText = hero.querySelector('div.parsys_column.cq-colctrl-lt0-c1 div div');
-    cells.push([rhText, lhText]);
+    console.log("LOOK HERE");
+    console.log(lhText.firstElementChild.getAttribute("data-video-id"));
+    cells.push([rhText, lhText.firstElementChild.getAttribute("data-video-id")]);
   }
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
@@ -88,9 +206,10 @@ const createDivider = (document) => {
 };
 
 const createLeftHandRail = (document) => {
-  const lhRail = document.querySelector('div.parsys_column.cq-colctrl-lt1.cols-halfgutter div.parsys_column.cq-colctrl-lt1-c0 div.text.parbase.section div.article-template.sidebar.success-story');
+  const lhRail = document.querySelector('div.parsys_column.cq-colctrl-lt1.cols-halfgutter div.parsys_column.cq-colctrl-lt1-c0');
   if (lhRail){
-   // console.log(lhRail);
+    // console.log("DREW LOOK HERE");
+   console.log(lhRail);
     return lhRail;
   }
   
@@ -119,12 +238,6 @@ const createDisclaimer = (document) => {
   if (disclaimer){
     cells.push([disclaimer.innerHTML]);
   }
-  console.log('LOOK HERE DREW');
-  console.log(cells);
-  /* disclaimer = document.querySelector('');
-  if (disclaimer) {
-    //cells.push([]);
-  }*/
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
 };
 
@@ -149,14 +262,15 @@ export default {
     const fragment = createFragment(document);
     if (fragment) section.append(fragment);
 
-    section.append(sectionBreak);
+    section.append(":search:")
 
     const vidHero = createHero(document);
     if (vidHero) section.append(vidHero);
 
-    section.append(sectionBreak);
+    section.append(document.createElement('hr'));
 
     const lhrail = createLeftHandRail( document,);
+    console.log(lhrail);
     if (lhrail) section.append(lhrail);
 
     const divider = createDivider(document);
