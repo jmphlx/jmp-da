@@ -624,16 +624,19 @@ div.darkgray-orange-gradient {
 }
 div.brand-neutral-dark {
   background: linear-gradient(45deg, #242d35 15%, #44545d 95%);
-  color: #ffffff;
 }
 div.gray {
   background: var(--gray10);
+}
+div.dark-gray {
+  background: var(--gray3);
 }
 /* hero section styling */
 .place-background-image {
   min-height: 96px;
   overflow: hidden;
   position: relative;
+  z-index: -2;
   p {
     font-size: var(--heading-font-size-xs);
   }
@@ -644,7 +647,7 @@ div.gray {
   .background-img {
     overflow: hidden;
     min-width: 100%;
-    z-index: 1;
+    z-index: -1;
     top: 0;
     left: 0;
     position: absolute;
@@ -665,7 +668,7 @@ div.gray {
       }
     }
   }
-  picture {
+  /* picture {
     position: relative;
     margin: 20px auto;
     display: block;
@@ -674,7 +677,7 @@ div.gray {
   h1, h2, h3, p {
     position: relative;
     z-index: 3;
-  }
+  } */
 }
 
 /* Styling to change all list item bullets to the JMP blue  */
@@ -705,19 +708,55 @@ ul {
 div.section.block-margin-large {
   > .columns-wrapper {
     margin: 0 auto 96px auto !important;
+ 
     div:nth-last-child(1) {
-      margin: auto auto !important;
+      /* margin: auto auto !important; */
       margin-left: auto !important;
     }
     @media (width <=900px) {
-      margin: 0 auto 36px auto !important;
+      margin: 0 auto 32px auto !important;
     }
   }
   div:nth-last-child(1) {
-    margin: auto auto 32px auto !important;
+    /* margin: 0 auto 32px auto !important; */
   }
-
 }
+
+
+
+
+
+
+
+
+
+
+.image-align-top{
+   .columns-img-col{
+    align-items: center !important;
+      /* background-color: blue; */
+      display: block;
+      position: inherit;
+      img{
+      margin: 0 !important;  
+       @media (width <=900px) {
+        display: block;
+      } 
+    }
+  }
+}
+ 
+
+
+
+
+
+
+
+
+
+
+
 /*  Icons size scaling */
 .icon-xs, .icon-s, .icon-m, .icon-l, .icon-xl, .icon-xxl {
   img {
