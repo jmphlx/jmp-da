@@ -1,5 +1,4 @@
 import {
-  wrapImgsInLinks,
   createElement,
 } from '../../scripts/scripts.js';
 import { getMetadata } from '../../scripts/aem.js';
@@ -73,6 +72,31 @@ function toggleNavDrop(section, sections, forceExpanded = null) {
     sections.classList.add('drop-expanded');
   } else {
     sections.classList.remove('drop-expanded');
+  }
+}
+
+/**
+ * Toggle search differently from other navs
+ * @param {*} searchBar parent div of input html element
+ * @param {*} isMobile is this a mobile nav
+ */
+function toggleSearch(searchBar, isMobile) {
+  const expanded = searchBar.getAttribute('aria-expanded') === 'true';
+  closeAllNavSections(searchBar.closest('nav'));
+  if (expanded) {
+    // close
+    searchBar.setAttribute('aria-expanded', 'false');
+    searchBar.classList.remove('is-Open');
+    if (!isMobile) {
+      document.querySelector('.gnav-curtain').classList.remove('is-Open');
+    }
+  } else {
+    // open
+    searchBar.setAttribute('aria-expanded', 'true');
+    searchBar.classList.add('is-Open');
+    if (!isMobile) {
+      document.querySelector('.gnav-curtain').classList.add('is-Open');
+    }
   }
 }
 
@@ -161,26 +185,6 @@ function decorateSearchBar() {
   return searchBar;
 }
 
-function toggleSearch(searchBar, isMobile) {
-  const expanded = searchBar.getAttribute('aria-expanded') === 'true';
-  closeAllNavSections(searchBar.closest('nav'));
-  if(expanded) {
-    // close
-    searchBar.setAttribute('aria-expanded', 'false');
-    searchBar.classList.remove('is-Open');
-    if(!isMobile) {
-      document.querySelector('.gnav-curtain').classList.remove('is-Open');
-    }
-  } else {
-    // open
-    searchBar.setAttribute('aria-expanded', 'true');
-    searchBar.classList.add('is-Open');
-    if(!isMobile) {
-      document.querySelector('.gnav-curtain').classList.add('is-Open');
-    }
-  }
-}
-
 /**
  * decorates the header, mainly the nav
  * @param {Element} block The header block element
@@ -254,8 +258,6 @@ export default async function decorate(block) {
   toggleMenu(nav, isDesktop.matches);
   isDesktop.addEventListener('change', () => toggleMenu(nav, isDesktop.matches));
 
-  // wrapImgsInLinks(nav);
-
   const navTools = nav.querySelector('.nav-tools');
   if (navTools) {
     navTools.querySelectorAll(':scope > ul > li').forEach(async (navTool) => {
@@ -281,7 +283,6 @@ export default async function decorate(block) {
         searchButton.addEventListener('click', () => {
           toggleSearch(navTool);
           searchBar.focus();
-
         });
 
         navTool.append(searchBar);
@@ -308,7 +309,7 @@ export default async function decorate(block) {
     }
   });
 
-  const curtain =  createTag('div', { class: 'gnav-curtain' });
+  const curtain = createTag('div', { class: 'gnav-curtain' });
   block.append(curtain);
 
   const navWrapper = createElement('div', {
