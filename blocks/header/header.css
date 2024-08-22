@@ -1177,3 +1177,46 @@ input {
 .gnav-search-results .result-listing:first-of-type {
   margin-top: unset;
 }
+
+@media (max-width: 899px) {
+  .nav-tools-mobile {
+
+    .gnav-search.is-Open .gnav-search-bar {
+      display: inline;
+      position: fixed;
+      top: 0;
+      z-index: 100;
+      max-height: calc(100%  -  120px);
+    }
+
+    .gnav-search-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      overflow: scroll;
+    }
+
+    .gnav-search-field .gnav-search-input {
+      display: block;
+      width: 100%;
+      line-height: 30px;
+      border: 1px solid;
+      border-color: rgb(202, 202, 202);
+      border-radius: 4px;
+      padding: 0 30px;
+      font-size: 14px;
+      outline: none !important;
+      box-sizing: border-box;
+      transition: border-color 130ms ease-in-out, box-shadow 130ms ease-in-out;
+    }
+
+    .gnav-search.is-Open .gnav-search-button:after {
+      content: "\2715";
+      width: 20px;
+      /* line-height: 1; */
+      font-size: 24px;
+      padding: 1px 0 0 0;
+    }
+  }
+
+}

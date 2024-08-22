@@ -33,12 +33,14 @@ function decorateCard(hit) {
     title, description,
   } = hit;
   const path = hit.path.split('.')[0];
-  const html = `
-  <div class="results-body">
-    <p>${title}</p>
-    <p>${description}</p>
-  </div>`;
-  return createTag('a', { class: 'result-listing', href: path }, html);
+  const displayUrl = path.startsWith('/') ? `${window.location.origin}${path}` : path;
+  const titleLink = createTag('a', { class: 'title', href: path }, `${title}`);
+  const desc = createTag('p', { class: 'description'}, `${description}`);
+  const displayLink = createTag('a', { class: 'displayUrl', href: path }, `${displayUrl}`);
+  const resultBody = createTag('div', { class: 'results-body' }, titleLink);
+  resultBody.append(desc);
+  resultBody.append(displayLink);
+  return createTag('div', { class: 'result-listing' }, resultBody);
 }
 
 async function populateSearchResults(searchTerms, resultsContainer) {
