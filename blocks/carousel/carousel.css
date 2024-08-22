@@ -2,6 +2,21 @@
   position: relative;
   a {
     text-decoration: none;
+    color: var(--link-hover-color);
+    
+  }
+  a:hover {
+    color: var(--blueLight);
+  }
+  h2:has(a:link){
+    :before {
+      content: url('../../../icons/arrow-orange.svg');
+      width: 17px;
+      display: inline-block;
+      font-size: 80%;
+      margin:auto 10px;
+      vertical-align: middle;
+    }
   }
 }
 .carousel .carousel-slides, .carousel .carousel-slide-indicators {
@@ -14,6 +29,8 @@
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
   overflow: scroll clip;
+  width: 90%;
+    margin: auto;
 }
 .carousel .carousel-slides::-webkit-scrollbar {
   display: none;
@@ -47,7 +64,8 @@
 .carousel .carousel-slide .carousel-slide-content {
   z-index: 1;
   padding: 1rem;
-  margin: 1.5rem 3rem;
+  /* margin: 1.5rem 3rem; */
+  margin: 1.5rem auto;
   position: relative;
   width: var(--slide-content-width, auto);
 }
@@ -70,6 +88,7 @@
   padding: 0;
   border-radius: 1rem;
   background-color: rgba(0 0 0 / 0.25);
+  cursor: pointer;
   border: none
 }
 .carousel .carousel-slide-indicator button:disabled, .carousel .carousel-slide-indicator button:hover, .carousel .carousel-slide-indicator button:focus-visible {
@@ -140,6 +159,7 @@
     height: 3rem;
     transform: scale(2);
     border: none;
+    cursor: pointer;
   }
   .carousel .carousel-navigation-buttons button:after {
     width: 1rem;
@@ -214,17 +234,6 @@
     }
   }
 }
-.carousel-with-background {
-  a:any-link {
-    color: var(--white);
-    text-decoration: underline;
-    transition: 0.3s;
-    transition-timing-function: ease-out;
-  }
-  a:hover {
-    text-decoration-color: var(--orange);
-  }
-}
 /* .carousel .carousel-slide-content h2 {
   :before {
     content: url('../../../icons/arrow-orange.svg');
@@ -248,4 +257,18 @@
   top: 50%;
   left: calc(50% + 3px);
   transform: translate(-50%, -50%) rotate(-135deg);
+}
+
+.carousel-light{
+  .carousel .carousel-slide-indicator button {
+    width: 1rem;
+    height: 1rem;
+    padding: 0;
+    border-radius: 1rem;
+    background-color: var(--grayLight);
+    border: none
+  }
+  .carousel .carousel-slide-indicator button:disabled, .carousel .carousel-slide-indicator button:hover, .carousel .carousel-slide-indicator button:focus-visible {
+    background-color: var(--white);
+  }
 }
