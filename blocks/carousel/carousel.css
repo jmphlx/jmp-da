@@ -2,19 +2,14 @@
   position: relative;
   a {
     text-decoration: none;
-    color: var(--link-hover-color);
-    
-  }
-  a:hover {
-    color: var(--blueLight);
-  }
-  h2:has(a:link){
+   }
+  h2:has(a:link) {
     :before {
       content: url('../../../icons/arrow-orange.svg');
       width: 17px;
       display: inline-block;
       font-size: 80%;
-      margin:auto 10px;
+      margin: auto 10px;
       vertical-align: middle;
     }
   }
@@ -30,7 +25,7 @@
   scroll-snap-type: x mandatory;
   overflow: scroll clip;
   width: 90%;
-    margin: auto;
+  margin: auto;
 }
 .carousel .carousel-slides::-webkit-scrollbar {
   display: none;
@@ -129,13 +124,12 @@
   background-color: transparent;
 }
 .carousel .carousel-navigation-buttons button:hover, .carousel .carousel-navigation-buttons button:focus-visible {
-  /* background-color: rgba(0 0 0 / 0.8); */
   background-color: transparent;
 }
 .carousel .carousel-navigation-buttons button:after {
   display: block;
   content: "";
-  border: 3px white solid;
+  border: 3px var(--gray3) solid;
   border-bottom: 0;
   border-left: 0;
   height: 0.75rem;
@@ -223,7 +217,6 @@
   @media (width <=900px) {
     .carousel-wrapper {
       margin-top: 1em;
-      /* border: red solid; */
       .carousel-navigation-buttons {
         top: 50%;
       }
@@ -234,21 +227,10 @@
     }
   }
 }
-/* .carousel .carousel-slide-content h2 {
-  :before {
-    content: url('../../../icons/arrow-orange.svg');
-    width: 7px;
-    display: inline-block;
-    font-size: 80%;
-    margin: 0 5px 0 6px;
-    vertical-align: middle;
-    transition: transform 0.5s ease, color 0.5s ease;
-  }
-} */
-.dark-arrow .carousel-navigation-buttons button:after {
+.light-arrow .carousel-navigation-buttons button:after {
   display: block;
   content: "";
-  border: 3px var(--gray3) solid;
+  border: 3px white solid;
   border-bottom: 0;
   border-left: 0;
   height: 0.75rem;
@@ -258,8 +240,14 @@
   left: calc(50% + 3px);
   transform: translate(-50%, -50%) rotate(-135deg);
 }
-
-.carousel-light{
+.carousel-light {
+  a {
+    text-decoration: none;
+    color: var(--link-hover-color);
+  }
+  a:hover {
+    color: var(--blueLight);
+  }
   .carousel .carousel-slide-indicator button {
     width: 1rem;
     height: 1rem;
@@ -270,5 +258,10 @@
   }
   .carousel .carousel-slide-indicator button:disabled, .carousel .carousel-slide-indicator button:hover, .carousel .carousel-slide-indicator button:focus-visible {
     background-color: var(--white);
+  }
+}
+.carousel-arrows-off {
+  .carousel .carousel-navigation-buttons {
+    display: none;
   }
 }

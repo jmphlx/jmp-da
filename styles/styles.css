@@ -663,8 +663,15 @@ ul {
   }
 }
 .block-margin-small {
-  .columns > div {
-    margin: 0 0 32px 0 !important;
+  > .columns-wrapper {
+    margin: 0 auto 32px auto !important;
+    div:nth-last-child(1) {
+      /* margin: auto auto !important; */
+      margin-left: auto !important;
+    }
+    @media (width <=900px) {
+      margin: 0 auto !important;
+    }
   }
 }
 .block-margin-medium {
@@ -682,6 +689,9 @@ div.section.block-margin-large {
     @media (width <=900px) {
       margin: 0 auto 32px auto !important;
     }
+  }
+  .button-container {
+    margin: 0 !important;
   }
   div:nth-last-child(1) {
     /* margin: 0 auto 32px auto !important; */
