@@ -237,8 +237,8 @@
 }
 
 .light-nav.subnav-container.section {
-  padding-top: 15px;
-  padding-bottom: 5px;
+  /* padding-top: 15px;
+  padding-bottom: 5px; */
   h2 {
     color: #ffffff;
     margin-bottom: 0;
