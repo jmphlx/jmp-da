@@ -13,6 +13,13 @@ const createMetadataBlock = (document) => {
   if (desc) {
     meta.Description = desc.content;
   }
+
+  const descDisp = document.querySelector('[name="description"]');
+  if (descDisp) {
+    console.log("this ran");
+    meta.displayDescription = descDisp.content;
+  }
+
   //find the <meta property="og:type"> element
   const type = document.querySelector('[property="og:type"]');
   if (type) meta.Type = type.content;
@@ -203,7 +210,8 @@ const createBio = (document) => {
 
 
 const createTitle = (document) => {
-  const title = document.querySelector('.container div.par.parsys div.text.parbase.section div');
+  const title = document.querySelectorAll('.container div.par.parsys div.text.parbase.section div');
+  console.log(title)
   title.querySelector('h3').outerHTML = "<h1>" + title.querySelector('h3').innerHTML + '</h1>'
   title.querySelector('h4').outerHTML = "<h6>" + title.querySelector('h4').innerHTML + '</h6>'
   console.log("DREW LOOK HERE");

@@ -13,6 +13,13 @@ const createMetadataBlock = (document) => {
   if (desc) {
     meta.Description = desc.content;
   }
+
+  const descDisp = document.querySelector('[name="description"]');
+  if (descDisp) {
+    console.log("this ran");
+    meta.displayDescription = descDisp.content;
+  }
+
   //find the <meta property="og:type"> element
   const type = document.querySelector('[property="og:type"]');
   if (type) meta.Type = type.content;
@@ -59,18 +66,10 @@ const createMetadataBlock = (document) => {
 
           if (el.content.split(splitChar)[0] == 'Tier' || el.content.split(splitChar)[0] == 'Success Stories'){
             //meta.resourceType = [];
+            //console.log("el.content splits below");
+            //console.log(el.content.split(splitChar)[1]);
             if (!(el.content.split(splitChar)[1] === undefined)){
-            
-            const metaString = el.content.split((splitChar)[1]);
-            if (metaString[0].split("|")[1].split(" ")[0].toLowerCase() == "featured" && !meta.resourceOptions.includes("featured") ){
-              meta.resourceOptions.push(metaString[0].split("|")[1].split(" ")[0].toLowerCase() + ",");
-            }
-            //console.log(metaString[0].split("|")[1].split(" "))
-            if (metaString[0].split("|")[1].split(" ")[1].toLowerCase() == "video" && !meta.resourceOptions.includes("video") ){
-              meta.resourceOptions.push(metaString[0].split("|")[1].split(" ")[1].toLowerCase() + ",");
-            }
-            
-            }
+            meta.resourceOptions.push(el.content.split(splitChar)[1] + ",");}
           }
 
 
@@ -132,6 +131,8 @@ const createMetadataBlock = (document) => {
       
      }
     });
+
+
     if (softwareMeta) {
       //meta.product = [];
       softwareMeta.forEach((el) => {
@@ -141,8 +142,8 @@ const createMetadataBlock = (document) => {
             //meta.eventTime = [];
             meta.product.push(el.content.split(splitChar)[1]);
           }
-          //console.log("productMeta");
-          //console.log(meta.product);
+          console.log("productMeta");
+          console.log(meta.product);
        }
         else {
             meta.product.push(el.content);
@@ -179,10 +180,10 @@ const createFragment = (document) => {
   const anchor = document.createElement('a');
   anchor.href = 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/resource-breadcrumb';
   anchor.innerText = 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/resource-breadcrumb';
-  //console.log("LOOK HERE DREW");
-  //console.log(anchor);
+  console.log("LOOK HERE DREW");
+  console.log(anchor);
   cells.push([anchor]);
-  //console.log(cells);
+  console.log(cells);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
@@ -196,18 +197,18 @@ const createHero = (document) => {
   const hero = document.querySelector(heroCss);
   const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt9 div.parsys_column.cq-colctrl-lt9-c0 div.image.parbase.section div');
   // console.log(lhText);
-  //console.log("Tad Look here");
-  //console.log(lhText);
+  console.log("Tad Look here");
+  console.log(lhText);
   lhText.firstElementChild.setAttribute('data-asset',"https://www.jmp.com" + lhText.firstElementChild.getAttribute("data-asset"));
   lhText.firstElementChild.firstElementChild.setAttribute('src',lhText.firstElementChild.getAttribute("data-asset"));
 
-  //console.log(lhText.innerHTML);
+  console.log(lhText.innerHTML);
   const rhText = document.querySelector('div.container.article div.par.parsys div.text.parbase.section');
   // console.log(rhText);
   rhText.querySelector('h2').outerHTML = "<p>" + rhText.querySelector('h2').innerHTML + '</p>'
   rhText.querySelector('h6').innerText = "Success Story"
-  //console.log("here!!!! here!!!!!!");
-  //console.log(rhText.querySelector('h2'));
+  console.log("here!!!! here!!!!!!");
+  console.log(rhText.querySelector('h2'));
   cells.push([rhText, lhText]);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
@@ -288,7 +289,7 @@ const createDisclaimer = (document) => {
     cells.push([disclaimer.innerHTML]);
   }
   
-  //console.log(cells);
+  console.log(cells);
   /* disclaimer = document.querySelector('');
   if (disclaimer) {
     //cells.push([]);
@@ -303,7 +304,7 @@ const createSM = (document) => {
 
   cells.push(['layout','2 Column']);
   cells.push(['Style', 'success-story-body, columns-25-75']);
-  //console.log(cells);
+  console.log(cells);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
 };
 
@@ -315,14 +316,14 @@ export default {
     const sectionBreak = document.createElement('hr');
 
     const fragment = createFragment(document);
-    //console.log("Fragment returned");
-    //console.log(fragment);
+    console.log("Fragment returned");
+    console.log(fragment);
     if (fragment) section.append(fragment);
 
     section.append(":search:")
 
-    //const vidHero = createHero(document);
-    //if (vidHero) section.append(vidHero);
+    const vidHero = createHero(document);
+    if (vidHero) section.append(vidHero);
 
     section.append(document.createElement('hr'));
 

@@ -12,12 +12,16 @@ const createMetadataBlock = (document) => {
   if (desc) {
     meta.Description = desc.content;
   }
+
+  const descDisp = document.querySelector('[name="description"]');
+  if (descDisp) {
+    console.log("this ran");
+    meta.displayDescription = descDisp.content;
+  }
+
   //find the <meta property="og:type"> element
   const type = document.querySelector('[property="og:type"]');
   if (type) meta.Type = type.content;
-  //find the <meta property="og:url"> element
-  const url = document.querySelector('[property="og:url"]');
-  if (url) meta.Url = url.content;
   //find the <meta property="og:image"> element
   const img = document.querySelector('[property="og:image"]');
   if (img && img.content) {
@@ -126,6 +130,8 @@ const createMetadataBlock = (document) => {
       
      }
     });
+
+
     if (softwareMeta) {
       //meta.product = [];
       softwareMeta.forEach((el) => {
