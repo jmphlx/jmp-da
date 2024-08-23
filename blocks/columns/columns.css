@@ -380,58 +380,58 @@ div.clm-50-50, div.clm-60-40, div.clm-40-60, div.clm-66-33, div.clm-33-66, div.c
 }
 div.clm-50-50 {
   div > div:nth-child(1) {
-    min-width: 50%;
+    min-width: 48%;
   }
   div > div:nth-child(2) {
-    min-width: 50%;
+    min-width: 48%;
   }
 }
 div.clm-60-40 {
   div > div:nth-child(1) {
-    min-width: 60%;
+    min-width: 58%;
   }
   div > div:nth-child(2) {
-    min-width: 40%;
+    min-width: 38%;
   }
 }
 div.clm-40-60 {
   div > div:nth-child(1) {
-    min-width: 40%;
+    min-width: 38%;
   }
   div > div:nth-child(2) {
-    min-width: 60%;
+    min-width: 58%;
   }
 }
 div.clm-66-33 {
   div > div:nth-child(1) {
-    min-width: 66%;
+    min-width: 64%;
   }
   div > div:nth-child(2) {
-    min-width: 33%;
+    min-width: 31%;
   }
 }
 div.clm-33-66 {
   div > div:nth-child(1) {
-    min-width: 33%;
+    min-width: 31%;
   }
   div > div:nth-child(2) {
-    min-width: 66%;
+    min-width: 64%;
   }
 }
 div.clm-25-75 {
   div > div:nth-child(1) {
-    min-width: 25%;
+    min-width: 23%;
   }
   div > div:nth-child(2) {
-    min-width: 75%;
+    min-width: 73%;
   }
 }
 div.clm-75-25 {
   div > div:nth-child(1) {
-    min-width: 75%;
+    min-width: 73%;
   }
   div > div:nth-child(2) {
-    min-width: 25%;
+    min-width: 23%;
   }
 }
 /* Start of author bio styles */

@@ -827,10 +827,21 @@ ul {
   }
 }
 /* Styling change to the sections margin  */
-.block-margin-small:has(.columns-wrapper), .block-margin-medium:has(.columns-wrapper), .block-margin-large:has(.columns-wrapper) {
+.block-margin-none:has(.columns-wrapper),.block-margin-small:has(.columns-wrapper), .block-margin-medium:has(.columns-wrapper), .block-margin-large:has(.columns-wrapper) {
   padding-top: 40px;
   h2, h3 {
     margin-bottom: 32px;
+  }
+}
+.block-margin-none {
+  > .columns-wrapper {
+    margin: 0 auto 0 auto !important;
+    div:nth-last-child(1) {
+      margin-left: auto !important;
+    }
+    @media (width <=900px) {
+      margin: 0 auto !important;
+    }
   }
 }
 .block-margin-small {
