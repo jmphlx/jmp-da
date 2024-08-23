@@ -186,12 +186,10 @@ main pre {
 a:any-link {
   color: var(--link-color);
 }
-
 a:hover {
   text-decoration: underline;
   color: var(--link-hover-color);
 }
-
 /* Default Button */
 .button-container {
   display: inline-block;
@@ -217,7 +215,7 @@ a:hover {
     text-overflow: ellipsis;
     border-radius: 5px;
   }
-  a.button:hover, a.button:focus, button:hover, button:focus  {
+  a.button:hover, a.button:focus, button:hover, button:focus {
     background-color: var(--orange-hover);
     color: white;
     cursor: pointer;
@@ -226,7 +224,6 @@ a:hover {
     margin-bottom: 10px !important;
   }
 }
-
 .button-center {
   text-align: center;
   .button-container:last-child {
@@ -236,12 +233,9 @@ a:hover {
     width: 100%;
   }
 }
-
-/* padding for 2 buttons mobile */
-:is(p.button-container):has(+ :is(p.button-container)) {
+/* padding for 2 buttons mobile */ :is(p.button-container):has(+ :is(p.button-container)) {
   margin-bottom: 10px !important;
 }
-
 .button-secondary {
   a.button:any-link, button {
     border: 2px solid var(--blue);
@@ -252,7 +246,6 @@ a:hover {
     background-color: var(--blue-hover);
   }
 }
-
 .button-tertiary {
   a.button:any-link, button {
     border: 2px solid var(--blue);
@@ -265,7 +258,6 @@ a:hover {
     color: var(--link-hover-color);
   }
 }
-
 .button-light {
   a.button {
     background: rgba(0, 0, 0, 0.125) !important;
@@ -284,14 +276,12 @@ a:hover {
     border: 2px solid rgba(0, 0, 0, 0) !important;
   }
 }
-
 .button-big {
   a.button {
     padding: 20px 24px !important;
     font-size: 2.1rem !important;
   }
 }
-
 .primary-secondary {
   .button-container:nth-last-child(1) {
     a.button {
@@ -304,7 +294,6 @@ a:hover {
     }
   }
 }
-
 .primary-tertiary {
   .button-container:nth-last-child(1) {
     a.button {
@@ -379,7 +368,6 @@ a:hover {
     transition: transform 0.5s ease, color 0.5s ease;
   }
 }
-
 .text-link-light .button-container {
   a:link, a.button:any-link {
     border: none;
@@ -460,17 +448,15 @@ a:hover {
     margin: 0 0 0 5px;
   }
 }
-
 .text-link-caret-left ul, .text-link-caret-right ul {
   list-style-type: none;
   padding-left: 0;
   margin-bottom: 0;
-  > :nth-last-child(1){
+  > :nth-last-child(1) {
     padding-bottom: 0;
-    margin-bottom:1em;
+    margin-bottom: 1em;
   }
 }
-
 .modal-text-link {
   a.button {
     text-align: center;
@@ -654,7 +640,6 @@ a:hover {
   }
 }
 
-
 main .section[data-layout] .layout-wrapper {
   display: flex;
   flex-direction: row;
@@ -778,16 +763,19 @@ div.darkgray-orange-gradient {
 }
 div.brand-neutral-dark {
   background: linear-gradient(45deg, #242d35 15%, #44545d 95%);
-  color: #ffffff;
 }
 div.gray {
   background: #f4f4f4;
+}
+div.dark-gray {
+  background: var(--gray3);
 }
 /* hero section styling */
 .place-background-image {
   min-height: 96px;
   overflow: hidden;
   position: relative;
+  z-index: 0;
   p {
     font-size: var(--heading-font-size-xs);
   }
@@ -798,7 +786,7 @@ div.gray {
   .background-img {
     overflow: hidden;
     min-width: 100%;
-    z-index: 1;
+    z-index: -1;
     top: 0;
     left: 0;
     position: absolute;
@@ -819,7 +807,7 @@ div.gray {
       }
     }
   }
-  picture {
+  /* picture {
     position: relative;
     margin: 20px auto;
     display: block;
@@ -828,9 +816,8 @@ div.gray {
   h1, h2, h3, p {
     position: relative;
     z-index: 3;
-  }
+  } */
 }
-
 /* Styling to change all list item bullets to the JMP blue  */
 ul {
   /* padding: 0 0 0 24px; */
@@ -860,17 +847,30 @@ div.section.block-margin-large {
   > .columns-wrapper {
     margin: 0 auto 96px auto !important;
     div:nth-last-child(1) {
-      margin: auto auto !important;
+      /* margin: auto auto !important; */
       margin-left: auto !important;
     }
     @media (width <=900px) {
-      margin: 0 auto 36px auto !important;
+      margin: 0 auto 32px auto !important;
     }
   }
   div:nth-last-child(1) {
-    margin: auto auto 32px auto !important;
+    /* margin: 0 auto 32px auto !important; */
   }
-
+}
+.image-align-top {
+  .columns-img-col {
+    align-items: center !important;
+    /* background-color: blue; */
+    display: block;
+    position: inherit;
+    img {
+      margin: 0 !important;
+      @media (width <=900px) {
+        display: block;
+      }
+    }
+  }
 }
 /*  Icons size scaling */
 .icon-xs, .icon-s, .icon-m, .icon-l, .icon-xl, .icon-xxl {
