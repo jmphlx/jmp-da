@@ -1,0 +1,109 @@
+.accordion-two-column details {
+  border: 1px solid var(--dark-color);
+  border: none;
+  border-top: 1px solid #c1c1c1;
+}
+/* stylelint-disable-next-line no-descending-specificity */
+.accordion-two-column details + details {
+  margin-top: 16px;
+}
+.accordion-two-column details summary {
+  position: relative;
+  padding: 0 16px;
+  padding-right: 48px;
+  cursor: pointer;
+  list-style: none;
+  overflow: auto;
+  transition: background-color 0.2s;
+}
+.accordion-two-column details[open] summary {
+  background-color: var(--light-color);
+}
+.accordion-two-column details summary:focus, .accordion-two-column details summary:hover {
+  background-color: var(--dark-color);
+}
+.accordion-two-column details summary::-webkit-details-marker {
+  display: none;
+}
+.accordion-two-column details summary:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 18px;
+  transform: translateY(-50%) rotate(135deg);
+  width: 9px;
+  height: 9px;
+  border: 2px solid;
+  border-width: 2px 2px 0 0;
+  transition: transform 0.2s;
+}
+.accordion-two-column details[open] summary:after {
+  transform: translateY(-50%) rotate(-45deg);
+}
+.accordion-two-column details .accordion-item-body {
+  padding: 0 16px;
+}
+.accordion-two-column details[open] .accordion-item-body {
+  border-top: 1px solid var(--dark-color);
+  background-color: none;
+}
+.accordion-item-label {
+  color: #007dc3;
+}
+.accordion-item-body {
+  margin-bottom: 32px;
+  p {
+    clear: both;
+  }
+}
+
+
+.accordion-two-column .accordion-item .accordion-double {
+  display: flex;
+  flex-direction: column;
+}
+
+.accordion-two-column .accordion-item .accordion-double div {
+  width: 50%;
+}
+
+.test-layout {
+  hr {
+    margin: 32px auto;
+  }
+  .accordion-two-column-item-body {
+    margin-top: .5em;
+    clear: both !important;
+    display: block;
+    contain: layout;
+  }
+  h5 {
+    margin-bottom: .1em;
+  }
+  .accordion-two-column-item {
+    clear: both;
+    img {
+      width: 50%;
+      float: left;
+      margin: 0 1em 0 0;
+    }
+    ul:nth-last-child(1){
+      width: 45%;
+      float: left;
+      ul{
+        width: 95%;
+      }
+    }
+    @media (width <=900px) {
+      img, ul, ul:nth-last-child(1) {
+        width: 100%;
+        margin: 0;
+      }
+      ul:nth-last-child(1){
+        ul{
+          width: 95%;
+        }
+      }
+    }
+  }
+}
