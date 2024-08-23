@@ -54,14 +54,16 @@
       display: inline-block !important;
       margin-right: 4px;
       margin-bottom: 4px;
+      transition: .3s;
       img {
         width: 22px;
         height: 22px;
         filter: grayscale(100) brightness(2.1);
+        border: none;
+        border-radius: 0;
       }
       &:hover {
         filter: brightness(100);
-        transition: .3s;
       }
     }
   }
@@ -79,18 +81,17 @@
     padding: 0 0 10px 0;
     margin: 0;
   }
-  li {
+  /* li {
     margin-left: 1em;
     text-indent: -1em;
-  }
+  } */
   li:before {
     color: #bbbbbb;
-    font-family: 'sasicons-103018' !important;
-    content: '';
-    font-size: 70%;
-    width: 1em;
-    text-align: center;
-    line-height: 1;
+    content: url('../../../icons/arrow-white.svg');
+    width: 6px;
+    display: inline-block;
+    font-size: 80%;
+    margin: 0 5px 0 0;
   }
 }
 /* resource center columns */

@@ -23,6 +23,7 @@ html {
   --overlay-background-color: #eeeeee;
   --highlight-background-color: #cccccc;
   --blue: #0378cd;
+  --blue-hover: #00619d;
   --orange: #ff5000;
   --orange-hover: #d94500;
   --blueLight: #61CAE5;
@@ -195,6 +196,7 @@ a:hover {
   text-align: left;
   width: max-content;
   margin: .5em 1em 2em 0;
+  line-height: 100%;
   a.button:any-link, button {
     font-family: var(--font-secondary);
     min-width: 200px;
@@ -202,7 +204,7 @@ a:hover {
     box-sizing: border-box;
     text-decoration: none;
     border: 2px solid transparent;
-    padding: 10px 20px;
+    padding: 14px 20px;
     text-align: center;
     font-size: 1.8rem;
     cursor: pointer;
@@ -224,8 +226,8 @@ a:hover {
 }
 .button-center {
   text-align: center;
-  .button-container {
-    margin: 1em .5em !important;
+  .button-container:last-child {
+    margin: .5em .5em 2em .5em !important;
   }
   &.text-link .button-container {
     width: 100%;
@@ -248,7 +250,8 @@ a:hover {
   a.button:any-link, button {
     border: 2px solid var(--blue);
     color: var(--blue);
-    background-color: transparent;
+    background-color: white;
+    font-family: "anova-regular", sans-serif;
   }
   a.button:hover {
     border: 2px solid var(--link-hover-color);
@@ -275,7 +278,7 @@ a:hover {
 }
 .button-big {
   a.button {
-    padding: 12px 24px !important;
+    padding: 20px 24px !important;
     font-size: 2.1rem !important;
   }
 }
@@ -296,6 +299,31 @@ a:hover {
     a.button {
       border: 2px solid var(--blue);
       color: var(--blue);
+      /* background-color: transparent; */
+      background-color: white;
+    }
+    a.button:hover {
+      border: 2px solid var(--link-hover-color);
+      color: var(--link-hover-color);
+    }
+  }
+}
+
+.secondary-tertiary {
+  .button-container:nth-last-child(2) {
+    a.button {
+      border: 2px solid var(--blue);
+      color: var(--background-color);
+      background-color: var(--blue);
+    }
+    a.button:hover {
+      background-color: var(--blue-hover);
+    }
+  }
+  .button-container:nth-last-child(1) {
+    a.button {
+      border: 2px solid var(--blue);
+      color: var(--blue);
       background-color: transparent;
     }
     a.button:hover {
@@ -304,12 +332,8 @@ a:hover {
     }
   }
 }
-/* 
-.secondary-tertiary {
 
-}
- */
-.text-link .button-container, .text-link-light .button-container, .text-link-caret-left .button-container {
+.text-link .button-container, .text-link-light .button-container, .text-link-caret-left .button-container, .text-link-caret-left-light .button-container{
   margin: 0 0 2em 0 !important;
   a:link, a.button:any-link {
     min-width: max-content !important;
@@ -360,9 +384,11 @@ a:hover {
     transition: transform 0.5s ease, color 0.5s ease;
   }
 }
-.text-link-caret-left .button-container, .text-link-caret-left ul li {
+
+.text-link-caret-left .button-container, .text-link-caret-left ul li, .text-link-caret-left-light .button-container, .text-link-caret-left-light ul li  {
   margin-top: 0 !important;
   font-family: "anova-regular", sans-serif;
+  font-size: 1.6rem !important;
   a:link {
     text-decoration: none;
     :hover {
@@ -383,9 +409,25 @@ a:hover {
     margin: 0 5px 0 0;
   }
 }
-.text-link-caret-right .button-container, .text-link-caret-right ul li {
+
+.text-link-caret-left-light .button-container, .text-link-caret-left-light ul li  {
+  a:link, a:any-link, a.button:any-link  {
+    text-decoration: none;
+    color: #dddddd !important;
+    font-size: 1.6rem !important;
+  }
+  a:hover {
+    color: #ffffff !important;
+  }
+  :before {
+    content: url('../../../icons/arrow-white.svg');
+  }
+}
+
+.text-link-caret-right .button-container, .text-link-caret-right ul li  {
   margin-top: 0 !important;
   font-family: "anova-regular", sans-serif;
+  font-size: 1.6rem;
   a:link {
     text-decoration: none;
     :hover {
@@ -455,6 +497,149 @@ a:hover {
     }
   }
 }
+
+/* Link lists */
+.subnav-anchor-list {
+  .default-content-wrapper {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    h4 {
+      font-family: "anova-regular", sans-serif;
+      font-size: 1.6rem;
+      padding: 20px 20px 0 20px;
+    }
+    ul {
+      column-count: 3;
+      margin: 0 0 2em 0;
+      padding: 5px 20px 20px 20px;
+      background: rgba(0,0,0,0);
+      li {
+        break-inside: avoid-column;
+        line-height: 1.3;
+        margin-bottom: 5px;
+        margin-left: 1em;
+        text-indent: -.5em;
+        &:before {
+          content: url('../../../icons/arrow-orange.svg');
+          width: 7px;
+          display: inline-block;
+          font-size: 80%;
+        }
+        a {
+          &:before {
+            display: none;
+          }
+        }
+      }
+      @media (width <=900px){
+        column-count: 2;
+      }
+      @media (width <=600px) {
+        column-count: 1;
+      }
+    }
+  }
+}
+
+.sub-capability-cards {
+  h4 {
+    background-color: rgba(0,0,0,.025);
+    width: 100%;
+    border-radius: 10px;
+    margin: 0 0 10px 0 !important;
+    box-sizing: border-box;
+    line-height: unset !important;
+    padding: 15px 20px !important;
+    a {
+      width: max-content;
+      font-size: 1.6rem;
+      font-family: "anova-regular", sans-serif;
+      text-decoration: none;
+      box-sizing: border-box;
+      /* padding: 15px 20px 5px 20px !important; */
+      &:after {
+        content: url('../../../icons/arrow-orange.svg');
+        width: 7px;
+        display: inline-block;
+        font-size: 80%;
+        margin: 0 5px 0 6px;
+        vertical-align: middle;
+        transition: transform 0.5s ease, color 0.5s ease;
+      }
+    }
+    a:hover {
+      color: var(--link-hover-color) !important;
+      &:after {
+        transform: translate(4px, 0);
+      }
+    }
+  }
+  h4:has(+ ul) {
+    background-color: rgba(0,0,0,.025);
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+    margin: 0 !important;
+    box-sizing: border-box;
+    line-height: unset !important;
+    padding: 15px 20px 5px 20px !important;
+    a {
+      width: max-content;
+      font-size: 1.6rem;
+      font-family: "anova-regular", sans-serif;
+      text-decoration: none;
+      box-sizing: border-box;
+      /* padding: 15px 20px 5px 20px !important; */
+      &:after {
+        content: url('../../../icons/arrow-orange.svg');
+        width: 7px;
+        display: inline-block;
+        font-size: 80%;
+        margin: 0 5px 0 6px;
+        vertical-align: middle;
+        transition: transform 0.5s ease, color 0.5s ease;
+      }
+    }
+    a:hover {
+      color: var(--link-hover-color) !important;
+      &:after {
+        transform: translate(4px, 0);
+      }
+    }
+  }
+  p.button-container {
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+    text-align: right;
+    margin: 0 !important;
+    box-sizing: border-box;
+    line-height: unset !important;
+    a {
+      width: max-content;
+      box-sizing: border-box;
+      padding: 15px 5px 0 20px !important;
+      margin-bottom: 2em !important;
+    }
+  }
+  ul {
+    background: rgba(0,0,0,.025);
+    column-count: 3;
+    margin: 0 0 10px 0;
+    padding: 5px 20px 20px 40px;
+    border-radius: 0 0 10px 10px;
+    li {
+      break-inside: avoid-column;
+      line-height: 1.2;
+      margin-bottom: 5px;
+    }
+    @media (width <=900px){
+      column-count: 2 !important;
+    }
+    @media (width <=600px) {
+      column-count: 1 !important;
+    }
+  }
+}
+
 main .section[data-layout] .layout-wrapper {
   display: flex;
   flex-direction: row;
@@ -506,20 +691,6 @@ main .section.light, main .section.highlight {
     content: '';
   }
 }
-.sub-capability-cards {
-  ul {
-    background: rgba(0 0 0 / 0.025);
-    column-count: 3;
-    margin: 0 0 10px;
-  }
-  h4 {
-    font-size: 16px;
-    display: block;
-    margin-block: 1.33em;
-    /* font-weight: bold; */
-    unicode-bidi: isolate;
-  }
-}
 sup {
   font-size: 50%;
 }
@@ -548,7 +719,7 @@ div.dark-gray-background {
 }
 /* Text Colors */
 div.light-text {
-  color: #f4f4f4 !important;
+  color: #ffffff !important;
 }
 div.dark-text {
   color: #333333 !important;
@@ -594,7 +765,7 @@ div.brand-neutral-dark {
   background: linear-gradient(45deg, #242d35 15%, #44545d 95%);
 }
 div.gray {
-  background: var(--gray10);
+  background: #f4f4f4;
 }
 div.dark-gray {
   background: var(--gray3);
@@ -649,10 +820,10 @@ div.dark-gray {
 }
 /* Styling to change all list item bullets to the JMP blue  */
 ul {
-  padding: 0 0 0 24px;
+  /* padding: 0 0 0 24px; */
   li::marker {
     color: var(--blue);
-    font-size: var(--heading-font-size-s);
+    /* font-size: var(--heading-font-size-s); */
   }
 }
 /* Styling change to the sections margin  */

@@ -12,6 +12,7 @@ footer .footer {
 footer .footer p {
   margin: 0;
   color: white;
+  font-size: 1.4rem;
 }
 
 div.section.copyright {
