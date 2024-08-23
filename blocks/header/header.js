@@ -1,11 +1,10 @@
 import {
-  wrapImgsInLinks,
   createElement,
 } from '../../scripts/scripts.js';
 import { getMetadata } from '../../scripts/aem.js';
+import { createTag } from '../../scripts/helper.js';
+import { onSearchInput } from './search.js';
 import { getLanguageNav } from '../../scripts/jmp.js';
-
-// import { createSearchForm } from '../../scripts/search-utils.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
@@ -52,6 +51,15 @@ function closeAllNavSections(nav) {
   nav.querySelectorAll('.drop-expanded').forEach((sections) => {
     sections.classList.remove('drop-expanded');
   });
+
+  nav.querySelectorAll('.gnav-search').forEach((section) => {
+    section.setAttribute('aria-expanded', false);
+    section.classList.remove('is-Open');
+  });
+
+  nav.querySelectorAll('.gnav-curtain').forEach((section) => {
+    section.classList.remove('is-Open');
+  });
 }
 
 function toggleNavDrop(section, sections, forceExpanded = null) {
@@ -64,6 +72,31 @@ function toggleNavDrop(section, sections, forceExpanded = null) {
     sections.classList.add('drop-expanded');
   } else {
     sections.classList.remove('drop-expanded');
+  }
+}
+
+/**
+ * Toggle search differently from other navs
+ * @param {*} searchBar parent div of input html element
+ * @param {*} isMobile is this a mobile nav
+ */
+function toggleSearch(searchBar, isMobile) {
+  const expanded = searchBar.getAttribute('aria-expanded') === 'true';
+  closeAllNavSections(searchBar.closest('nav'));
+  if (expanded) {
+    // close
+    searchBar.setAttribute('aria-expanded', 'false');
+    searchBar.classList.remove('is-Open');
+    if (!isMobile) {
+      document.querySelector('.gnav-curtain').classList.remove('is-Open');
+    }
+  } else {
+    // open
+    searchBar.setAttribute('aria-expanded', 'true');
+    searchBar.classList.add('is-Open');
+    if (!isMobile) {
+      document.querySelector('.gnav-curtain').classList.add('is-Open');
+    }
   }
 }
 
@@ -102,10 +135,18 @@ async function buildMobileMenu(nav) {
   if (sections && tools) {
     sections = sections.cloneNode(true);
     tools = tools.cloneNode(true);
-    // const searchItem = tools.querySelector('.search-item');
-    // const searchAction = searchItem.querySelector('a').href;
-    // searchItem.innerHTML = '';
-    // //searchItem.append(await createSearchForm({ type: 'minimal', action: searchAction }));
+
+    // Mobile search
+    const searchButton = tools.querySelector('.search-icon');
+    searchButton.addEventListener('click', () => {
+      toggleSearch(searchButton, true);
+      tools.querySelector('input').focus();
+    });
+    const searchInput = searchButton.querySelector('input');
+    searchInput.addEventListener('input', (e) => {
+      onSearchInput(e.target.value, searchButton.querySelector('.gnav-search-results'));
+    });
+
     sections.classList.add('nav-sections-mobile');
     mobileMenu.append(sections);
     sections.querySelectorAll(':scope > ul > li').forEach((navSection) => {
@@ -128,6 +169,20 @@ async function buildMobileMenu(nav) {
   }
 
   nav.append(mobileMenu);
+}
+
+function decorateSearchBar() {
+  const searchBar = createTag('aside', { id: 'gnav-search-bar', class: 'gnav-search-bar' });
+  const searchField = createTag('div', { class: 'gnav-search-field' });
+  const searchInput = createTag('input', { class: 'gnav-search-input', placeholder: 'Search' });
+  const searchResults = createTag('div', { class: 'gnav-search-results' });
+  searchInput.addEventListener('input', (e) => {
+    onSearchInput(e.target.value, searchResults);
+  });
+
+  searchField.append(searchInput);
+  searchBar.append(searchField, searchResults);
+  return searchBar;
 }
 
 /**
@@ -203,29 +258,9 @@ export default async function decorate(block) {
   toggleMenu(nav, isDesktop.matches);
   isDesktop.addEventListener('change', () => toggleMenu(nav, isDesktop.matches));
 
-  // wrapImgsInLinks(nav);
-
   const navTools = nav.querySelector('.nav-tools');
   if (navTools) {
     navTools.querySelectorAll(':scope > ul > li').forEach(async (navTool) => {
-      // const isSearch = navTool.querySelector('.fa-search');
-
-      // if (isSearch) {
-      //   navTool.setAttribute('aria-expanded', 'false');
-      //   navTool.classList.add('search-item');
-      //   const searchAction = navTool.querySelector('a').href;
-      //   // const searchForm = await createSearchForm({ type: 'minimal', action: searchAction });
-      //   navTool.append(searchForm);
-      //   searchForm.hidden = true;
-
-      //   navTool.querySelector('a').addEventListener('click', (e) => {
-      //     e.preventDefault();
-      //     navTool.querySelector('.search-form-container').toggleAttribute('hidden');
-      //     const isExpanded = navTool.getAttribute('aria-expanded') === 'true' || false;
-      //     navTool.setAttribute('aria-expanded', !isExpanded);
-      //   });
-      // }
-
       const subList = navTool.querySelector('ul');
       if (subList) {
         navTool.classList.add('nav-drop');
@@ -239,6 +274,18 @@ export default async function decorate(block) {
         }
 
         addNavDropToggle(navTool, navTools);
+      } else {
+        // Assume search
+        navTool.classList.add('search-icon');
+        navTool.classList.add('gnav-search');
+        const searchButton = navTool.querySelector('picture');
+        const searchBar = decorateSearchBar();
+        searchButton.addEventListener('click', () => {
+          toggleSearch(navTool);
+          searchBar.focus();
+        });
+
+        navTool.append(searchBar);
       }
     });
   }
@@ -261,6 +308,9 @@ export default async function decorate(block) {
       }
     }
   });
+
+  const curtain = createTag('div', { class: 'gnav-curtain' });
+  block.append(curtain);
 
   const navWrapper = createElement('div', {
     class: 'nav-wrapper',
