@@ -229,7 +229,7 @@ a:hover {
   .button-container:last-child {
     text-align: center;
     /* width: 100%; */
-    margin: .5em .5em 2em .5em !important;
+    /* margin: .5em .5em 2em .5em !important; */
   }
   &.text-link .button-container {
     text-align: center;
@@ -552,19 +552,18 @@ a:hover {
 .sub-capability-cards {
   h4 {
     background-color: rgba(0,0,0,.025);
+    font-size: 1.6rem;
     width: 100%;
     border-radius: 10px;
-    margin: 0 0 10px 0 !important;
     box-sizing: border-box;
     line-height: unset !important;
-    padding: 15px 20px !important;
+    padding: 15px 20px 5px 20px !important;
     a {
       width: max-content;
       font-size: 1.6rem;
       font-family: "anova-regular", sans-serif;
       text-decoration: none;
       box-sizing: border-box;
-      /* padding: 15px 20px 5px 20px !important; */
       &:after {
         content: url('../../../icons/arrow-orange.svg');
         width: 7px;
