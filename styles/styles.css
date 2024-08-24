@@ -226,12 +226,20 @@ a:hover {
 }
 .button-center {
   text-align: center;
+  .button-container:first-child {
+    margin: .5em .5em .5em .5em !important;
+  }
   .button-container:last-child {
     margin: .5em .5em 2em .5em !important;
   }
   &.text-link .button-container {
+    text-align: center;
     width: 100%;
   }
+}
+.text-link-light-center .button-container{
+  text-align: center;
+  width: 100%;
 }
 /* padding for 2 buttons mobile */ :is(p.button-container):has(+ :is(p.button-container)) {
   margin-bottom: 10px !important;
@@ -333,7 +341,7 @@ a:hover {
   }
 }
 
-.text-link .button-container, .text-link-light .button-container, .text-link-caret-left .button-container, .text-link-caret-left-light .button-container{
+.text-link .button-container, .text-link-light .button-container, .text-link-caret-left .button-container, .text-link-caret-left-light .button-container, .text-link-light-center .button-container {
   margin: 0 0 2em 0 !important;
   a:link, a.button:any-link {
     min-width: max-content !important;
@@ -368,7 +376,7 @@ a:hover {
     transition: transform 0.5s ease, color 0.5s ease;
   }
 }
-.text-link-light .button-container {
+.text-link-light .button-container, .text-link-light-center .button-container {
   a:link, a.button:any-link {
     border: none;
     color: #ffffff !important;
@@ -380,12 +388,13 @@ a:hover {
     color: rgba(250, 250, 250, .85);
   }
   :after {
+    width: 7px !important;
     content: url('../../../icons/arrow-white.svg');
     transition: transform 0.5s ease, color 0.5s ease;
   }
 }
 
-.text-link-caret-left .button-container, .text-link-caret-left ul li, .text-link-caret-left-light .button-container, .text-link-caret-left-light ul li  {
+.text-link-caret-left .button-container, .text-link-caret-left ul li, .text-link-caret-left-light .button-container, .text-link-caret-left-light ul li {
   margin-top: 0 !important;
   font-family: "anova-regular", sans-serif;
   font-size: 1.6rem !important;
@@ -410,7 +419,7 @@ a:hover {
   }
 }
 
-.text-link-caret-left-light .button-container, .text-link-caret-left-light ul li  {
+.text-link-caret-left-light .button-container, .text-link-caret-left-light ul li {
   a:link, a:any-link, a.button:any-link  {
     text-decoration: none;
     color: #dddddd !important;
@@ -424,7 +433,7 @@ a:hover {
   }
 }
 
-.text-link-caret-right .button-container, .text-link-caret-right ul li  {
+.text-link-caret-right .button-container, .text-link-caret-right ul li {
   margin-top: 0 !important;
   font-family: "anova-regular", sans-serif;
   font-size: 1.6rem;
@@ -544,19 +553,18 @@ a:hover {
 .sub-capability-cards {
   h4 {
     background-color: rgba(0,0,0,.025);
+    font-size: 1.6rem;
     width: 100%;
     border-radius: 10px;
-    margin: 0 0 10px 0 !important;
     box-sizing: border-box;
     line-height: unset !important;
-    padding: 15px 20px !important;
+    padding: 15px 20px 5px 20px !important;
     a {
       width: max-content;
       font-size: 1.6rem;
       font-family: "anova-regular", sans-serif;
       text-decoration: none;
       box-sizing: border-box;
-      /* padding: 15px 20px 5px 20px !important; */
       &:after {
         content: url('../../../icons/arrow-orange.svg');
         width: 7px;
@@ -658,8 +666,8 @@ main img {
 }
 .icon {
   display: inline-block;
-  height: 24px;
-  width: 24px;
+  height: 30px;
+  width: 30px;
 }
 .icon img {
   height: 100%;
@@ -875,9 +883,9 @@ div.section.block-margin-large {
   .button-container {
     margin: 0 !important;
   }
-  div:nth-last-child(1) {
-    /* margin: 0 auto 32px auto !important; */
-  }
+  /* div:nth-last-child(1) {
+    margin: 0 auto 32px auto !important;
+  } */
 }
 .image-align-top {
   .columns-img-col {
@@ -895,14 +903,24 @@ div.section.block-margin-large {
 }
 /*  Icons size scaling */
 .icon-xs, .icon-s, .icon-m, .icon-l, .icon-xl, .icon-xxl {
-  img {
-    margin: 0 auto;
-    display: block;
-  }
   @media only screen and (max-width: 600px) {
     img {
       margin: 15px auto 0 auto;
     }
+  }
+}
+.icon-inline {
+  .icon {
+    position: relative;
+    display: inline-block;
+    padding: 0 5px;
+    height: auto;
+  }
+}
+.icon-center {
+  img {
+    margin: 0 auto;
+    display: block;
   }
 }
 .icon-xs {

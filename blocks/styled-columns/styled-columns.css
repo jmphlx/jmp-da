@@ -15,7 +15,7 @@
 .styled-columns > div > div {
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
+  /*  margin: 0 auto; */
   padding: 10px;
   flex: 1;
 }
@@ -67,6 +67,13 @@
   a {
     color: #ffffff;
     text-decoration: none;
+  }
+   > div {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 10px;
+    flex: 1;
   }
   /* jmp-workflow-inputs */
   .data-column {
@@ -790,5 +797,63 @@
         }
       }
     }
+  }
+}
+
+/* cloumn ratios */
+div.clm-50-50 {
+  div > div:nth-child(1) {
+    min-width: 50%;
+  }
+  div > div:nth-child(2) {
+    min-width: 50%;
+  }
+}
+div.clm-60-40 {
+  div > div:nth-child(1) {
+    min-width: 60%;
+  }
+  div > div:nth-child(2) {
+    min-width: 40%;
+  }
+}
+div.clm-40-60 {
+  div > div:nth-child(1) {
+    min-width: 40%;
+  }
+  div > div:nth-child(2) {
+    min-width: 60%;
+  }
+}
+div.clm-66-33 {
+  div > div:nth-child(1) {
+    min-width: 66%;
+  }
+  div > div:nth-child(2) {
+    min-width: 33%;
+  }
+}
+div.clm-33-66 {
+  div > div:nth-child(1) {
+    min-width: 33%;
+  }
+  div > div:nth-child(2) {
+    min-width: 66%;
+  }
+}
+div.clm-25-75 {
+  div > div:nth-child(1) {
+    min-width: 25%;
+  }
+  div > div:nth-child(2) {
+    min-width: 75%;
+  }
+}
+div.clm-75-25 {
+  div > div:nth-child(1) {
+    min-width: 75%;
+  }
+  div > div:nth-child(2) {
+    min-width: 25%;
   }
 }
