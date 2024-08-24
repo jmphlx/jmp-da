@@ -91,6 +91,16 @@ function getLanguageNav() {
 }
 
 /**
+ * Returns the path of the appropriate footer based on page language.
+ * Default to 'en' if language isn't found.
+ * @returns {string} path to language footer
+ */
+function getLanguageFooter() {
+  const lang = document.documentElement.lang.toLowerCase();
+  return isLanguageSupported(lang) ? `/${lang}/footer` : '/en/footer';
+}
+
+/**
  * Returns the path of the appropriate index based on page language.
  * Default to 'en' if language isn't found.
  * @returns {string} path to language index
@@ -319,6 +329,7 @@ export {
   getBlockProperty,
   getJsonFromUrl,
   getLanguageIndex,
+  getLanguageFooter,
   getLanguageNav,
   getListFilterOptions,
   getTimezoneObjectFromAbbr,
