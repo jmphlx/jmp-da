@@ -226,10 +226,11 @@ a:hover {
 }
 .button-center {
   text-align: center;
+  .button-container:first-child {
+    margin: .5em .5em .5em .5em !important;
+  }
   .button-container:last-child {
-    text-align: center;
-    /* width: 100%; */
-    /* margin: .5em .5em 2em .5em !important; */
+    margin: .5em .5em 2em .5em !important;
   }
   &.text-link .button-container {
     text-align: center;
