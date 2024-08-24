@@ -45,11 +45,13 @@ export default async function decorate(block) {
     pageSelection = pageFilterByFolder(pageSelection, startingFolder);
   }
 
-  // Filter pages
-  if (optionsObject.filterType !== undefined && optionsObject.filterType.toLowerCase() === 'and') {
-    pageSelection = pageAndFilter(pageSelection, filterOptions);
-  } else {
-    pageSelection = pageOrFilter(pageSelection, filterOptions);
+  // Apply filters if applicable.
+  if (Object.keys(filterOptions).length > 0) {
+    if (optionsObject.filterType !== undefined && optionsObject.filterType.toLowerCase() === 'and') {
+      pageSelection = pageAndFilter(pageSelection, filterOptions);
+    } else {
+      pageSelection = pageOrFilter(pageSelection, filterOptions);
+    }
   }
 
   // Order filtered pages by event date and time.

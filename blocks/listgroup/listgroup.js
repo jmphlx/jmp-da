@@ -36,16 +36,25 @@ export default async function decorate(block) {
     pageSelection = pageFilterByFolder(pageSelection, startingFolder);
   }
 
-  // Filter pages
-  if (optionsObject.filterType !== undefined && optionsObject.filterType.toLowerCase() === 'and') {
-    pageSelection = pageAndFilter(pageSelection, filterOptions);
-  } else {
-    pageSelection = pageOrFilter(pageSelection, filterOptions);
+  // Apply filters to pages (if there are any)
+  if (Object.keys(filterOptions).length > 0) {
+    if (optionsObject.filterType !== undefined && optionsObject.filterType.toLowerCase() === 'and') {
+      pageSelection = pageAndFilter(pageSelection, filterOptions);
+    } else {
+      pageSelection = pageOrFilter(pageSelection, filterOptions);
+    }
   }
 
-  // Order filtered pages by releaseDate
-  pageSelection.sort((a, b) => (moment(createDateFromString(a.releaseDate))
-    .isBefore(createDateFromString(b.releaseDate)) ? -1 : 1));
+  // Order pages by releaseDate or alphabetically
+  const sortOrder = optionsObject.sortOrder;
+  if (sortOrder !== undefined && sortOrder.toLowerCase() === 'alphabetical') {
+    // Order filtered pages alphabetically by title
+    pageSelection.sort((a, b) => (a.title < b.title ? -1 : 1));
+  } else {
+    // Order filtered pages by releaseDate
+    pageSelection.sort((a, b) => (moment(createDateFromString(a.releaseDate))
+      .isBefore(createDateFromString(b.releaseDate)) ? -1 : 1));
+  }
 
   // Cut results down to fit within specified limit.
   const limitObjects = optionsObject.limit;
