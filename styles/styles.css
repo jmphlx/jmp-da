@@ -942,12 +942,6 @@ div.section.block-margin-large {
     max-width: 160px;
   }
 }
-.icon-center {
-  img {
-    margin: 0 auto;
-    display: block;
-  }
-}
 /* Column layouts */
 div.columns-50-50 {
   .layout-wrapper {
