@@ -8,19 +8,15 @@ export default function decorate(block) {
   [...block.children].forEach((row) => {
     // decorate accordion item label
     const label = row.children[0];
-    const summary = document.createElement('summary');
-    summary.className = 'accordion-item-label';
+    const summary = createTag('summary', { class: 'accordion-item-label' });
     summary.append(...label.childNodes);
     if (!hasWrapper(summary)) {
       summary.innerHTML = `<p>${summary.innerHTML}</p>`;
     }
 
     // create accordion body
-    const details = document.createElement('details');
-    details.className = 'accordion-item';
-
-    const accordionBody = document.createElement('div');
-    accordionBody.className = 'accordion-item-body';
+    const details = createTag('details', { class: 'accordion-item' });
+    const accordionBody = createTag('div', { class: 'accordion-item-body' });
 
     // Include accordion column 1 as there will be at least 1 column.
     const bodyOne = row.children[1];
