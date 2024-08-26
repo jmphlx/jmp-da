@@ -136,6 +136,15 @@ p, dl, ol, ul, pre, blockquote {
 strong {
   font-family: "anova-regular", sans-serif;
 }
+hr {
+  border-style: none;
+  border-top: 1px solid var(--grayRule);
+  border-width: 1px !important;
+}
+.horizontal-rule {
+  border-bottom: 1px solid var(--grayRule);
+  margin: 1em 0;
+}
 /* headings + p */
 /* :is(h1, h2, h3, h4, h5, h6):has(+ :is(p, ul, ol)) {
 	padding-bottom: .5em;
@@ -876,6 +885,21 @@ ul {
   li::marker {
     color: var(--blue);
     /* font-size: var(--heading-font-size-s); */
+  }
+}
+/* Section Margins */
+main .section {
+  &.section-padding-none {
+    padding-bottom: 0 !important;
+  }
+  &.section-padding-small {
+    padding-bottom: 32px !important;
+  }
+  &.section-padding-medium {
+    padding-bottom: 64px !important;
+  }
+  &.section-padding-large {
+    padding-bottom: 96px !important;
   }
 }
 /* Styling change to the sections margin  */
