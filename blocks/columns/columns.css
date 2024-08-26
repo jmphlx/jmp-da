@@ -85,14 +85,6 @@
     margin-left: 1em;
     text-indent: -1em;
   } */
-  li:before {
-    color: #bbbbbb;
-    content: url('../../../icons/arrow-white.svg');
-    width: 6px;
-    display: inline-block;
-    font-size: 80%;
-    margin: 0 5px 0 0;
-  }
 }
 /* resource center columns */
 /* success story hero */
