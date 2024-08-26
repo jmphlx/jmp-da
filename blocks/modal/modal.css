@@ -41,7 +41,7 @@ body.modal-open {
 .modal .close-button {
   position: absolute;
   top: 32px;
-  right: 0;
+  right: 12px;
   max-width: 20px;
   outline: none;
   /* height: 100%; */
