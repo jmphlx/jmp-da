@@ -33,3 +33,32 @@
   src: url('../fonts/sasicons-103018.woff2') format('woff2');
   unicode-range: U+e616, U+e619, U+e61b;
 }
+
+@font-face {
+  font-family: "roboto-fallback";
+  size-adjust: 100.06%;
+  ascent-override: 95%;
+  src: local('Arial');
+}
+
+/* Japan */
+:lang(ja) { 
+  font-family: "anova-regular", "Meiryo", "Hiragino Kaku Gothic Pro", sans-serif; 
+  body {
+    font-family: "anova-regular", "Meiryo", sans-serif;
+  }
+}
+/* Korea */
+:lang(ko) { 
+  font-family: "anova-regular", "Malgun Gothic", sans-serif;
+  body, li.nav-drop p, p {
+    font-family: "anova-regular", "Malgun Gothic", sans-serif;
+  }
+}
+/* China */
+:lang(zh-hans), :lang(zh-hant), :lang(zh_hans), :lang(zh_hant) {
+  font-family: "anova-regular", "Microsoft Yahei","微软雅黑", sans-serif;
+  body {
+    font-family: "anova-regular", "Microsoft Yahei","微软雅黑", sans-serif !important;
+  }
+}

@@ -81,22 +81,6 @@ html {
   /* Border Radius */
   --base-radius: 5px;
 }
-@font-face {
-  font-family: "roboto-fallback";
-  size-adjust: 100.06%;
-  ascent-override: 95%;
-  src: local('Arial');
-}
-/* @media (width >= 900px) {
-  :root {
-    --heading-font-size-xxl: 60px;
-    --heading-font-size-xl: 48px;
-    --heading-font-size-l: 36px;
-    --heading-font-size-m: 30px;
-    --heading-font-size-s: 24px;
-    --heading-font-size-xs: 22px;
-  }
-} */
 body {
   font-size: var(--body-font-size-s);
   margin: 0;
@@ -467,6 +451,9 @@ a:hover {
   }
 }
 .modal-text-link {
+  .button-container {
+    margin: 1em 0 !important;
+  }
   a.button {
     text-align: center;
     background: none !important;
@@ -506,6 +493,63 @@ a:hover {
     }
   }
 }
+
+.modal-play-button {
+  a {
+    &:before {
+      z-index: 5;
+      margin: 0 auto;
+      content: '\25B6';
+      display: block;
+      width: 1em;
+      height: 1em;
+      top: 50%;
+      right: 50%;
+      transform: translate(calc(-50% + 90px), calc(-50% + 1em));
+      text-align: end;
+      color: rgba(0, 0, 0, .5);
+      line-height: 1.15;
+      font-size: 5rem;
+      position: absolute;
+      padding: 10px;
+      bottom: 2px;
+      border-radius: 50%;
+      border: 10px solid rgba(0, 0, 0, .5);
+    }
+    &:hover {
+      picture {
+        transition-duration: .5s;
+        transition-timing-function: ease;
+        opacity: .7;
+      }
+      &:before {
+        transition-duration: .5s;
+        transition-timing-function: ease;
+        color: rgba(0, 0, 0, .7);
+        border-color: rgba(0, 0, 0, .7);
+      }
+    }
+    &:not(:hover) {
+      picture {
+        transition-duration: .5s;
+        transition-timing-function: ease;
+      }
+      &:before {
+        transition-duration: .5s;
+      transition-timing-function: ease;
+      }
+    }
+  }
+  @media (width <=600px) {
+    a {
+      &:before {
+        font-size: 3rem;
+        transform: translate(calc(-50% + 70px), calc(-50% + 45px));
+      }
+    }
+  }
+}
+
 
 /* Link lists */
 .subnav-anchor-list {
