@@ -891,6 +891,9 @@ ul {
   h4 + p{
     margin: 0 0 32px 0;
   }
+  .horizontal-rule-wrapper{
+    margin-bottom: 96px;
+  }
 }
 .block-padding-none {
   > .columns-wrapper {
