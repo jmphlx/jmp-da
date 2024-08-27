@@ -277,6 +277,7 @@ header nav .nav-sections ul > li > ul > li {
     height: 58px;
     display: flex;
     > p {
+      padding-bottom: 3px;
       align-self: center;
     }
     &:nth-last-child(2) {
@@ -326,6 +327,7 @@ header nav .nav-sections ul > li > ul > li {
 
   header nav .nav-sections > ul > li[aria-expanded="false"] {
     > p {
+      padding-bottom: 3px;
       &:after {
         content: '';
         display: inline-block;
