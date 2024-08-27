@@ -84,7 +84,7 @@ export default async function decorate(block) {
     if (optionsObject.images === undefined || optionsObject.images.toLowerCase() !== 'off') {
       htmlOutput += `<span class="cmp-image image"><img src="${item.image}"/></span>`;
     }
-    htmlOutput += `<span class="abstract">${item.description}</span>`;
+    htmlOutput += `<span class="abstract">${item.displayDescription}</span>`;
     cardLink.innerHTML = htmlOutput;
 
     listItem.append(cardLink);
