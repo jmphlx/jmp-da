@@ -230,7 +230,7 @@ a:hover {
     width: 100%;
   }
 }
-.text-link-light-center .button-container{
+.text-link-light-center .button-container {
   text-align: center;
   width: 100%;
 }
@@ -309,7 +309,6 @@ a:hover {
     }
   }
 }
-
 .secondary-tertiary {
   .button-container:nth-last-child(2) {
     a.button {
@@ -333,7 +332,6 @@ a:hover {
     }
   }
 }
-
 .text-link .button-container, .text-link-light .button-container, .text-link-caret-left .button-container, .text-link-caret-left-light .button-container, .text-link-light-center .button-container {
   margin: 0 0 2em 0 !important;
   a:link, a.button:any-link {
@@ -386,7 +384,6 @@ a:hover {
     transition: transform 0.5s ease, color 0.5s ease;
   }
 }
-
 .text-link-caret-left .button-container, .text-link-caret-left ul li, .text-link-caret-left-light .button-container, .text-link-caret-left-light ul li {
   margin-top: 0 !important;
   font-family: "anova-regular", sans-serif;
@@ -411,9 +408,8 @@ a:hover {
     margin: 0 5px 0 0;
   }
 }
-
 .text-link-caret-left-light .button-container, .text-link-caret-left-light ul li {
-  a:link, a:any-link, a.button:any-link  {
+  a:link, a:any-link, a.button:any-link {
     text-decoration: none;
     color: #dddddd !important;
     font-size: 1.6rem !important;
@@ -425,7 +421,6 @@ a:hover {
     content: url('../../../icons/arrow-white.svg');
   }
 }
-
 .text-link-caret-right .button-container, .text-link-caret-right ul li {
   margin-top: 0 !important;
   font-family: "anova-regular", sans-serif;
@@ -502,7 +497,6 @@ a:hover {
     }
   }
 }
-
 .modal-play-button {
   a {
     &:before {
@@ -545,7 +539,7 @@ a:hover {
       }
       &:before {
         transition-duration: .5s;
-      transition-timing-function: ease;
+        transition-timing-function: ease;
       }
     }
   }
@@ -558,8 +552,6 @@ a:hover {
     }
   }
 }
-
-
 /* Link lists */
 .subnav-anchor-list {
   .default-content-wrapper {
@@ -574,7 +566,7 @@ a:hover {
       column-count: 3;
       margin: 0 0 2em 0;
       padding: 5px 20px 20px 20px;
-      background: rgba(0,0,0,0);
+      background: rgba(0, 0, 0, 0);
       li {
         break-inside: avoid-column;
         line-height: 1.3;
@@ -593,7 +585,7 @@ a:hover {
           }
         }
       }
-      @media (width <=900px){
+      @media (width <=900px) {
         column-count: 2;
       }
       @media (width <=600px) {
@@ -602,10 +594,9 @@ a:hover {
     }
   }
 }
-
 .sub-capability-cards {
   h4 {
-    background-color: rgba(0,0,0,.025);
+    background-color: rgba(0, 0, 0, .025);
     font-size: 1.6rem;
     width: 100%;
     border-radius: 10px;
@@ -636,7 +627,7 @@ a:hover {
     }
   }
   h4:has(+ ul) {
-    background-color: rgba(0,0,0,.025);
+    background-color: rgba(0, 0, 0, .025);
     width: 100%;
     border-radius: 10px 10px 0 0;
     margin: 0 !important;
@@ -682,7 +673,7 @@ a:hover {
     }
   }
   ul {
-    background: rgba(0,0,0,.025);
+    background: rgba(0, 0, 0, .025);
     column-count: 3;
     margin: 0 0 10px 0;
     padding: 5px 20px 20px 40px;
@@ -692,7 +683,7 @@ a:hover {
       line-height: 1.2;
       margin-bottom: 5px;
     }
-    @media (width <=900px){
+    @media (width <=900px) {
       column-count: 2 !important;
     }
     @media (width <=600px) {
@@ -700,7 +691,6 @@ a:hover {
     }
   }
 }
-
 main .section[data-layout] .layout-wrapper {
   display: flex;
   flex-direction: row;
@@ -844,7 +834,7 @@ div.dark-gray {
   background: var(--gray3);
 }
 /* hero section styling */
-.place-background-image {
+.background-image {
   min-height: 96px;
   overflow: hidden;
   position: relative;
@@ -880,16 +870,6 @@ div.dark-gray {
       }
     }
   }
-  /* picture {
-    position: relative;
-    margin: 20px auto;
-    display: block;
-    z-index: 5;
-  }
-  h1, h2, h3, p {
-    position: relative;
-    z-index: 3;
-  } */
 }
 /* Styling to change all list item bullets to the JMP blue  */
 ul {
@@ -900,13 +880,19 @@ ul {
   }
 }
 /* Styling change to the sections margin  */
-.block-margin-none:has(.columns-wrapper),.block-margin-small:has(.columns-wrapper), .block-margin-medium:has(.columns-wrapper), .block-margin-large:has(.columns-wrapper) {
+.block-padding-none:has(.columns-wrapper), .block-padding-small:has(.columns-wrapper), .block-padding-medium:has(.columns-wrapper), .block-padding-large:has(.columns-wrapper) {
   padding-top: 40px;
   h2, h3 {
     margin-bottom: 32px;
   }
+  h4{
+    margin: 0 0 4px 0;
+  }
+  h4 + p{
+    margin: 0 0 32px 0;
+  }
 }
-.block-margin-none {
+.block-padding-none {
   > .columns-wrapper {
     margin: 0 auto 0 auto !important;
     div:nth-last-child(1) {
@@ -917,7 +903,7 @@ ul {
     }
   }
 }
-.block-margin-small {
+.block-padding-small {
   > .columns-wrapper {
     margin: 0 auto 32px auto !important;
     div:nth-last-child(1) {
@@ -929,12 +915,12 @@ ul {
     }
   }
 }
-.block-margin-medium {
+.block-padding-medium {
   .columns > div {
     margin: 0 0 64px 0 !important;
   }
 }
-div.section.block-margin-large {
+div.section.block-padding-large {
   > .columns-wrapper {
     margin: 0 auto 96px auto !important;
     div:nth-last-child(1) {
