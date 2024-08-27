@@ -23,6 +23,10 @@ indices:
         select: head > meta[name="description"]
         value: |
           attribute(el, "content")
+      displayDescription:
+        select: head > meta[name="displaydescription"]
+        value: |
+          attribute(el, "content")
       resourceType:
         select: head > meta[name="resourcetype"]
         value: |
@@ -92,6 +96,10 @@ indices:
         select: head > meta[name="description"]
         value: |
           attribute(el, "content")
+      displayDescription:
+        select: head > meta[name="displaydescription"]
+        value: |
+          attribute(el, "content")
       resourceType:
         select: head > meta[name="resourcetype"]
         value: |
@@ -159,6 +167,10 @@ indices:
           match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
       description:
         select: head > meta[name="description"]
+        value: |
+          attribute(el, "content")
+      displayDescription:
+        select: head > meta[name="displaydescription"]
         value: |
           attribute(el, "content")
       resourceType:
