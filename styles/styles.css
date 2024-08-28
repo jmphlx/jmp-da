@@ -157,6 +157,9 @@ hr {
   font-size: 1.4rem;
   padding-bottom: .25rem;
 } */
+:is(p):has(picture) {
+	margin-bottom: 0 !important;
+}
 code, pre {
   font-family: var(--fixed-font-family);
   font-size: var(--body-font-size-s);
