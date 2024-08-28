@@ -887,6 +887,9 @@ div.darkgray-orange-gradient {
 div.brand-neutral-dark {
   background: linear-gradient(45deg, #242d35 15%, #44545d 95%);
 }
+div.light-purple-gradient {
+  background: linear-gradient(45deg, #eff1fe 15%, #fdfdff 95%);
+}
 div.gray {
   background: #f4f4f4;
 }
