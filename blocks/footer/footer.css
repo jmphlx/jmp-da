@@ -67,3 +67,57 @@ div.section.copyright {
 .footer-wrapper {
   background-color: #333333;
 }
+
+#back-top {
+  position: fixed;
+  bottom: -500px;
+  right: 20px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  z-index: 501;
+}
+@media print {
+  #back-top {
+    display: none;
+ }
+}
+#back-top a {
+  cursor: pointer;
+  color: transparent;
+  display: inline-block;
+  text-decoration: none;
+  width: 50px;
+  height: 80px;
+  overflow: hidden;
+}
+#back-top a:before {
+  font-family: 'sasicons-103018' !important;
+  content: "\e618";
+  content: "\e618" "";
+  font-style: normal;
+  font-weight: normal;
+  display: inline-block;
+  text-decoration: inherit;
+  text-transform: none;
+  width: 1em;
+  text-align: center;
+  color: #fff;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  background: #333;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  line-height: 1.5;
+  font-size: 200%;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+#back-top a:hover:before {
+  background: rgba(0,0,0,0.99);
+}
+#back-top.is-scrolled {
+  bottom: -30px;
+}
+
