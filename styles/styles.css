@@ -106,11 +106,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 h1 {
   font-size: var(--heading-font-size-xxl);
-  margin-bottom: 0.125em;
+  margin-bottom: 1.5rem;
 }
 h2 {
   font-size: var(--heading-font-size-xl);
-  margin-bottom: 0.25em;
+  margin-bottom: 1.5rem;
 }
 h3 {
   font-size: var(--heading-font-size-l);
@@ -159,6 +159,9 @@ hr {
 } */
 :is(p):has(picture) {
 	margin-bottom: 0 !important;
+}
+:is(h1):has(+ :is(h2, h3, h4, h5)) {
+	margin-bottom: 1.5rem !important;
 }
 code, pre {
   font-family: var(--fixed-font-family);
