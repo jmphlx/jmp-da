@@ -136,6 +136,11 @@ p, dl, ol, ul, pre, blockquote {
 strong {
   font-family: "anova-regular", sans-serif;
 }
+.text-large {
+  p {
+    font-size: var(--heading-font-size-xs);
+  }
+}
 hr {
   border-style: none;
   border-top: 1px solid var(--grayRule);
