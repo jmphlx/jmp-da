@@ -2,6 +2,11 @@ footer {
   padding: 2rem;
   background-color: var(--light-color);
   font-size: var(--body-font-size-s);
+  .text-link-caret-left-light .button-container, .text-link-caret-left-light ul li {
+    a:link, a:any-link, a.button:any-link {
+      font-size: 1.4rem !important;
+    }
+  }
 }
 
 footer .footer {

@@ -93,6 +93,7 @@
 }
 .success-story-hero {
   background-color: #f4f4f4;
+  padding-bottom: 2em;
   div {
     div:first-child {
       display: flex;
@@ -176,6 +177,7 @@
 }
 .video-story-hero {
   background-color: #f4f4f4;
+  padding-bottom: 2em;
   div {
     div:first-child {
       display: flex;
@@ -255,6 +257,7 @@
   background-color: #f4f4f4;
 }
 .whitepaper-hero {
+  padding-bottom: 2em;
   div {
     display: flex;
     div:first-child {
