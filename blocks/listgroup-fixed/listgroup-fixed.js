@@ -49,7 +49,7 @@ export default async function decorate(block) {
     if (optionsObject.images === undefined || optionsObject.images.toLowerCase() !== 'off') {
       htmlOutput += `<span class="cmp-image image"><img src="${getMetadata('og:image', doc)}"/></span>`;
     }
-    htmlOutput += `<span class="abstract">${getMetadata('og:description', doc)}</span>`;
+    htmlOutput += `<span class="abstract">${getMetadata('displaydescription', doc)}</span>`;
 
     cardLink.innerHTML = htmlOutput;
 
