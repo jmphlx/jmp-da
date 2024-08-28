@@ -13,7 +13,6 @@
 }
 
 .styled-columns > div > div {
-  display: flex;
   flex-direction: column;
   /*  margin: 0 auto; */
   padding: 10px;
