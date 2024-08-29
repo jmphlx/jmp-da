@@ -1008,12 +1008,6 @@ div.section.block-padding-large {
       margin: 0 auto 32px auto !important;
     }
   }
-  .button-container {
-    margin: 0 !important;
-  }
-  /* div:nth-last-child(1) {
-    margin: 0 auto 32px auto !important;
-  } */
 }
 .image-align-top {
   .columns-img-col {
