@@ -95,11 +95,14 @@ div.section.copyright {
   width: 50px;
   height: 80px;
   overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 5px 5px 0 0;
+  &:hover {
+    background-color: rgba(0,0,0,0.99);
+  }
 }
 #back-top a:before {
-  font-family: 'sasicons-103018' !important;
-  content: "\e618";
-  content: "\e618" "";
+  content: url('../../../icons/up-arrow-white.svg');
   font-style: normal;
   font-weight: normal;
   display: inline-block;
@@ -108,17 +111,9 @@ div.section.copyright {
   text-align: center;
   color: #ffffff;
   -webkit-font-smoothing: antialiased;
-  background: #333333;
-  background: rgba(0, 0, 0, 0.5);
-  width: 100%;
-  height: 100%;
+  width: 60%;
   line-height: 1.5;
   font-size: 200%;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-#back-top a:hover:before {
-  background: rgba(0,0,0,0.99);
 }
 #back-top.is-scrolled {
   bottom: -30px;
