@@ -291,6 +291,7 @@ a:hover {
 .button-big {
   a.button {
     padding: 20px 24px !important;
+    margin-right: 1.5rem;
     font-size: 2.1rem !important;
   }
 }
@@ -308,6 +309,7 @@ a:hover {
 }
 .primary-tertiary {
   .button-container:nth-last-child(1) {
+    margin-bottom: 2rem !important;
     a.button {
       border: 2px solid var(--blue);
       color: var(--blue);
@@ -802,6 +804,18 @@ main .section {
   &.section-padding-large {
     padding-bottom: 96px !important;
   }
+  &.section-top-padding-none {
+    padding-top: 0 !important;
+  }
+  &.section-top-padding-small {
+    padding-top: 32px !important;
+  }
+  &.section-top-padding-medium {
+    padding-top: 64px !important;
+  }
+  &.section-top-padding-large {
+    padding-top: 96px !important;
+  }
 }
 @media (width >=600px) {
   main .section {
@@ -899,7 +913,7 @@ div.brand-neutral-dark {
   background: linear-gradient(45deg, #242d35 15%, #44545d 95%);
 }
 div.light-purple-gradient {
-  background: linear-gradient(45deg, #eff1fe 15%, #fdfdff 95%);
+  background: linear-gradient(90deg, #fdfdff 15%, #EFF1FE 75%);
 }
 div.gray {
   background: #f4f4f4;
