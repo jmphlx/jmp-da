@@ -1,6 +1,23 @@
 .table {
   width: 100%;
   overflow-x: auto;
+  &.agenda-table{
+    margin: 1em 0 2em 0;
+    border: 1px solid #E7E7E7;
+    background-color: #F7F7F7;
+    td:first-child{
+      width: 20%;
+    }
+    :first-child > tr{
+      color: var(--white);
+      background-color: var(--blue);
+      border: none;
+    }
+    >table thead tr, > table tbody tr {
+      border-top:none;
+      border-bottom: 1px solid #E7E7E7;
+  }
+  }
 }
 
 .table table {

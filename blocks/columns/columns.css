@@ -360,7 +360,13 @@ div.clm-10-90, div.clm-50-50, div.clm-60-40, div.clm-40-60, div.clm-66-33, div.c
   }
   /* This will left align all list itmes in a ul to the left if they are in a colunm ratio  */
   ul{
-    padding:0 0 0 18px !important;
+    padding:0 0 0 18px;
+  }
+  &.presenter{
+    margin: 2em 0;
+    div{
+      gap:1.5rem;
+    }
   }
 }
 /* No gray border on images in columns */
@@ -378,7 +384,6 @@ div.clm-10-90, div.clm-50-50, div.clm-60-40, div.clm-40-60, div.clm-66-33, div.c
   }
 }
 div.clm-10-90 {
-  div{gap: 16px;}  
   div > div:nth-child(1) {
     min-width: 10%;
   }
