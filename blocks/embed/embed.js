@@ -57,12 +57,18 @@ const embedTwitter = (url) => {
 };
 
 // vidyard videos
-export const embedVidyard = (url) => {
+const embedVidyard = (url) => {
   const video = url.pathname.split('/').pop(); // breaks out UUID of vidyard URL
   const script = document.createElement('script'); // creates and appends vidyard player script to header
   script.type = 'text/javascript';
   script.src = 'https://play.vidyard.com/embed/v4.js';
   document.head.appendChild(script);
+
+  const check = document.getElementsByClassName("modal block");
+  let autoplay = 0;
+  if (check.length > 0) {
+    autoplay += 1;
+  };
   // HTML code for placing the vidyard player on the page. Note that this code only places a preview
   // thumbnail on the page that the above script replaces on loading
   const embedHTML = `<div> 
@@ -70,6 +76,7 @@ export const embedVidyard = (url) => {
       src="https://play.vidyard.com/${video}.jpg"
       data-uuid="${video}"
       data-v="4"
+      data-autoplay=${autoplay}
       data-type="inline"/>
     </div>`;
   return embedHTML;
