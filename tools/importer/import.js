@@ -210,7 +210,7 @@ const createBio = (document) => {
 
 
 const createTitle = (document) => {
-  const title = document.querySelectorAll('.container div.par.parsys div.text.parbase.section div');
+  const title = document.querySelector('.container div.par.parsys div.text.parbase.section div');
   console.log(title)
   title.querySelector('h3').outerHTML = "<h1>" + title.querySelector('h3').innerHTML + '</h1>'
   title.querySelector('h4').outerHTML = "<h6>" + title.querySelector('h4').innerHTML + '</h6>'
