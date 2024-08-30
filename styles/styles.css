@@ -488,7 +488,7 @@ a:hover {
 }
 .text-link-caret-left ul, .text-link-caret-right ul, .back-button ul {
   list-style-type: none;
-  padding-left: 0 !important;
+  padding-left: 0;
   margin-bottom: 0;
   > :nth-last-child(1) {
     padding-bottom: 0;
