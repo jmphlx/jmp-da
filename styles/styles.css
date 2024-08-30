@@ -844,6 +844,24 @@ main img {
   width: auto;
   height: auto;
 }
+.image-size-s img{
+  max-width: 25%;
+}
+.image-size-m img{
+  max-width: 50%;
+}
+.image-size-l img{
+  max-width: 75%;
+}
+@media (width <=600px) {
+  .image-size-s, .image-size-m, .image-size-l{
+    img{
+      max-width: 100%;
+    }
+  }
+}
+
+
 .icon {
   display: inline-block;
   height: 30px;
