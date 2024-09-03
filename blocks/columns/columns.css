@@ -215,7 +215,8 @@
         }
       }
       img, picture {
-        max-width: 200px;
+        max-width: 128px;
+        border: 0;
         margin-bottom: 0 !important;
       }
       @media (width <=900px) {
