@@ -137,20 +137,20 @@ strong {
   font-family: "anova-regular", sans-serif;
 }
 .text-large {
-  p {
+  p,li {
     font-size: var(--heading-font-size-xs);
   }
 }
-.text-medium {
-  p {
+/* .text-medium {
+  p,li {
     font-size: var(--heading-font-size-xs);
   }
 }
 .text-small {
-  p {
+  p,li {
     font-size: var(--heading-font-size-xs);
   }
-}
+} */
 hr {
   border-style: none;
   border-top: 1px solid var(--grayRule);
@@ -159,24 +159,25 @@ hr {
 .horizontal-rule {
   border-bottom: 1px solid var(--grayRule);
   margin: 1em 0;
+
   &.rule-padding-none{
     padding: 0;
     margin: 0;
   }
-    &.rule-padding-s{
-    padding: .5em 0 0 0!important;
+  &.rule-padding-s{
+    padding: 1.5em 0 0 0!important;
     margin:0 0 1.5em 0!important;
   }
   &.rule-padding-m{
-    padding: 1em 0 0 0!important;
+    padding: 2em 0 0 0!important;
     margin:0 0 2em 0!important;
   }
   &.rule-padding-l{
-    padding: 1.5em 0 0 0!important;
+    padding: 2.5em 0 0 0!important;
     margin:0 0 2.5em 0!important;
   }
   &.rule-padding-xl{
-    padding: 2em 0 0 0!important;
+    padding: 3em 0 0 0!important;
     margin:0 0 3em 0!important;
   }
 }
@@ -1082,7 +1083,6 @@ ul {
     padding: 0 auto 0 auto !important;
     div:nth-last-child(1) {
       margin-left: auto !important;
-
     }
     @media (width <=900px) {
       margin: 0 auto !important;
