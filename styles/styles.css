@@ -470,6 +470,7 @@ a:hover {
 .back-button .button-container, .back-button ul li {
   p.button-container {
     margin-bottom: 1em !important;
+    transition-duration: 0.5s;
   }
   a:link, a:any-link, a.button:any-link {
     text-decoration: none;
@@ -480,11 +481,16 @@ a:hover {
   }
   a:hover {
     color: var(--link-hover-color) !important;
+    &:before {
+      border: 2px solid var(--link-hover-color);
+      border-width: 2px 2px 0 0;
+    }
   }
   :before {
     content: '';
     transform: rotate(225deg);
     right: -2px;
+    bottom: 1px;
     position: relative;
     width: 8px;
     height: 8px;
@@ -762,6 +768,12 @@ a:hover {
     @media (width <=600px) {
       column-count: 1 !important;
     }
+  }
+}
+/* Breadcrumbs */
+div.breadcrumb {
+  p.button-container {
+    margin-bottom: 2rem;
   }
 }
 main .section[data-layout] .layout-wrapper {
@@ -1224,14 +1236,6 @@ div.interview-body {
         /* padding: 20px; */
       }
     }
-  }
-}
-/* Breadcrumbs */
-div.breadcrumb {
-  margin-bottom: 0;
-  padding-bottom: 0;
-  p {
-    margin-bottom: 0;
   }
 }
 /* Bio page template */
