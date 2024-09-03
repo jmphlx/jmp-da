@@ -141,6 +141,7 @@
     > div.columns-img-col {
       display: flex;
       align-items: center;
+      order: 1;
       picture {
         vertical-align: middle;
         height: auto;
@@ -187,7 +188,7 @@
       }
       h6 {
         font-family: "anova-bold", sans-serif;
-        padding-left: 10px;
+        padding-left: 7px;
         &:before {
           display: inline-block;
           background: var(--orange);
@@ -218,12 +219,13 @@
         margin-bottom: 0 !important;
       }
       @media (width <=900px) {
-        padding-top: 40px;
+        padding-bottom: 2rem;
       }
     }
     > div.columns-img-col {
       display: flex;
       align-items: center;
+      order: 1;
       picture {
         vertical-align: middle;
         height: 400px;
@@ -383,7 +385,7 @@
         max-width: 200px
       }
       @media (width <=899px) {
-        padding-top: 40px;
+        padding-bottom: 2rem;
       }
       @media (width <=899px) {
         align-self: unset;
@@ -392,6 +394,7 @@
     > div.columns-img-col {
       display: flex;
       align-items: center;
+      order: 1;
       picture {
         vertical-align: middle;
         height: 300px;
@@ -537,8 +540,12 @@ div.clm-75-25 {
   div {
     display: flex;
     flex-direction: column;
+    gap: 2rem;
+    div {
+      gap: 1rem;
+    }
     p {
-      margin: 1rem 0;
+      margin: 0;
       line-height: 1.5;
     }
   }
