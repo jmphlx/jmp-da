@@ -1040,7 +1040,7 @@ div.dark-gray {
     position: absolute;
     img {
       min-width: 105%;
-      opacity: .5;
+      opacity: .6;
       transition-timing-function: ease-in;
       @media only screen and (max-width: 900px) {
         min-width: 185%;
