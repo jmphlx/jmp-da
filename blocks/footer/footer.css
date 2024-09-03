@@ -81,6 +81,8 @@ div.section.copyright {
   padding: 0;
   text-align: center;
   z-index: 501;
+  transition-duration: 2s;
+  transition-timing-function: ease-out;
 }
 @media print {
   #back-top {
