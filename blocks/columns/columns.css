@@ -450,16 +450,13 @@ div.clm-10-90, div.clm-50-50, div.clm-60-40, div.clm-40-60, div.clm-66-33, div.c
       gap: 1.5rem;
     }
   }
-
-  .text-flush-left{
+}
+/* Left align list items with a link */
+.listitem-links-left{
   ul{
      padding: 0 0 0 0!important;
-     border: solid;
    }
- }
-
-
-}
+  }
 /* No gray border on images in columns */
 .no-gray-border {
   .columns-img-col, .columns {
