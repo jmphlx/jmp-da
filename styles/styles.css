@@ -141,16 +141,6 @@ strong {
     font-size: var(--heading-font-size-xs);
   }
 }
-/* .text-medium {
-  p,li {
-    font-size: var(--heading-font-size-xs);
-  }
-}
-.text-small {
-  p,li {
-    font-size: var(--heading-font-size-xs);
-  }
-} */
 hr {
   border-style: none;
   border-top: 1px solid var(--grayRule);
@@ -158,7 +148,6 @@ hr {
 }
 .horizontal-rule {
   border-bottom: 1px solid var(--grayRule);
-  /* margin: 1em 0; */
   padding: 5em 0 0 0;
   margin: 0 0 5em 0;
   &.rule-padding-none {
@@ -177,10 +166,6 @@ hr {
     padding: 6em 0 0 0;
     margin: 0 0 7em 0;
   }
-  /* &.rule-padding-xl{
-    padding: 8em 0 0 0;
-    margin:0 0 8em 0;
-  } */
 }
 /* headings + p */
 /* :is(h1, h2, h3, h4, h5, h6):has(+ :is(p, ul, ol)) {
@@ -1015,7 +1000,7 @@ div.gray {
 div.dark-gray {
   background: var(--gray3);
 }
-/* hero section styling */
+/* hero section styling | images used in this section should atleast be 1920x1080 */
 .background-image {
   min-height: 96px;
   overflow: hidden;
@@ -1036,32 +1021,33 @@ div.dark-gray {
     right: 0;
     position: absolute;
     img {
-      margin-top: 0;
-      margin-right: 0;
-      min-width: 100%;
-      opacity: .6;
+      margin-top: -1%;
+      margin-right: -1%;
+      min-width: 70%;
+      opacity: .8;
       float: right;
       transition-duration: 0.1s;
       transition-timing-function: ease-in;
-      @media (width >=2250px) {
-        max-width: 100%;
-        margin-top: -200px;
-        float: none;
-        transition-duration: 0.1s;
-        transition-timing-function: ease-in;
-      }
-      @media (width <=1024px) {
-        min-width: 200%;
+      min-height: 100%;
+      
+      @media (width <=1156px) {
+        min-width: 100%;
         float: right;
-        margin-right: -200px;
-        transition-duration: 0.1s;
+        margin-top: 0;
+        margin-right: 0;
+        transition-duration: 0.s;
         transition-timing-function: ease-in;
-        opacity: .4;
       }
-      @media (width <=600px) {
-        min-width: 350%;
-        margin-left: -400px;
-        float: none;
+      @media (width <=700px) {
+        min-width: 150%;
+        margin-right: -50%;
+        float: left;
+      }
+      @media (width <=480px) {
+        min-width: 200%;
+        margin-left: 0;
+        float: left;
+        height: 250%;
         opacity: .2;
       }
     }
