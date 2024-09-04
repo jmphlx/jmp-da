@@ -17,6 +17,11 @@ import {
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
+(async function loadDa() {
+  if (!new URL(window.location.href).searchParams.get('dapreview')) return;
+  import('https://da.live/scripts/dapreview.js').then(({ default: daPreview }) => daPreview(loadPage));
+}());
+
 /**
  * OUT OF THE BOX code that impacts our hero blocks.
  * To be removed if no other issues found.
