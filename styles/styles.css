@@ -325,6 +325,7 @@ a:hover {
 .button-big {
   a.button {
     padding: 20px 24px !important;
+    margin-right: 1.5rem;
     font-size: 2.1rem !important;
   }
 }
@@ -342,6 +343,7 @@ a:hover {
 }
 .primary-tertiary {
   .button-container:nth-last-child(1) {
+    margin-bottom: 2rem !important;
     a.button {
       border: 2px solid var(--blue);
       color: var(--blue);
@@ -502,6 +504,7 @@ a:hover {
 .back-button .button-container, .back-button ul li {
   p.button-container {
     margin-bottom: 1em !important;
+    transition-duration: 0.5s;
   }
   a:link, a:any-link, a.button:any-link {
     text-decoration: none;
@@ -512,11 +515,16 @@ a:hover {
   }
   a:hover {
     color: var(--link-hover-color) !important;
+    &:before {
+      border: 2px solid var(--link-hover-color);
+      border-width: 2px 2px 0 0;
+    }
   }
   :before {
     content: '';
     transform: rotate(225deg);
     right: -2px;
+    bottom: 1px;
     position: relative;
     width: 8px;
     height: 8px;
@@ -832,6 +840,12 @@ a:hover {
     }
   }
 }
+/* Breadcrumbs */
+div.breadcrumb {
+  p.button-container {
+    margin-bottom: 2rem;
+  }
+}
 main .section[data-layout] .layout-wrapper {
   display: flex;
   flex-direction: row;
@@ -889,6 +903,18 @@ main .section {
   }
   &.section-padding-large {
     padding-bottom: 96px !important;
+  }
+  &.section-top-padding-none {
+    padding-top: 0 !important;
+  }
+  &.section-top-padding-small {
+    padding-top: 32px !important;
+  }
+  &.section-top-padding-medium {
+    padding-top: 64px !important;
+  }
+  &.section-top-padding-large {
+    padding-top: 96px !important;
   }
 }
 @media (width >=600px) {
@@ -987,7 +1013,7 @@ div.brand-neutral-dark {
   background: linear-gradient(45deg, #242d35 15%, #44545d 95%);
 }
 div.light-purple-gradient {
-  background: linear-gradient(45deg, #eff1fe 15%, #fdfdff 95%);
+  background: linear-gradient(90deg, #fdfdff 15%, #EFF1FE 75%);
 }
 div.gray {
   background: #f4f4f4;
@@ -1094,12 +1120,6 @@ div.section.block-padding-large {
       margin: 0 auto 32px auto !important;
     }
   }
-  .button-container {
-    margin: 0 !important;
-  }
-  /* div:nth-last-child(1) {
-    margin: 0 auto 32px auto !important;
-  } */
 }
 .image-align-top {
   .columns-img-col {
@@ -1302,14 +1322,6 @@ div.interview-body {
         /* padding: 20px; */
       }
     }
-  }
-}
-/* Breadcrumbs */
-div.breadcrumb {
-  margin-bottom: 0;
-  padding-bottom: 0;
-  p {
-    margin-bottom: 0;
   }
 }
 /* Bio page template */
