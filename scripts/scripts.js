@@ -17,9 +17,9 @@ import {
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
-(async function daPreview() {
-  const { searchParams } = new URL(window.location.href);
-  if (searchParams.get('dapreview') === 'on') import('./dapreview.js');
+(async function loadDa() {
+  if (!new URL(window.location.href).searchParams.get('dapreview')) return;
+  import('https://da.live/scripts/dapreview.js').then(({ default: daPreview }) => daPreview(loadPage));
 }());
 
 /**
