@@ -33,4 +33,20 @@ describe('JMP Scripts JS Customizations ', () => {
       expect(document.querySelector('.divider-wrapper')).to.be.null;
     });
   });
+
+  describe('Section Metadata', () => {
+    let customizeSectionMeta;
+
+    before(async () => {
+      customizeSectionMeta = scriptHelper.customizeSectionMeta;
+      document.body.innerHTML = await readFile({ path: './sectionMetadata.html' });
+    });
+
+    it('Background image in the section metadata', () => {
+      customizeSectionMeta(document.querySelector('main'));
+      const backgroundImg = document.querySelector('.background-img');
+      expect(backgroundImg).to.exist;
+      expect(backgroundImg.querySelector('picture')).to.exist;
+    });
+  });
 });

@@ -66,18 +66,64 @@ function autolinkModals(element) {
 }
 
 /**
+ * Read in the Section Metadata Block and create a json object of properties to customize.
+ * @param {Element} block section metadata config block
+ * @returns config object that contains custom metadata properties
+ */
+function readSectionMetadataConfig(block) {
+  const config = {};
+  block.querySelectorAll(':scope > div').forEach((row) => {
+    if (row.children) {
+      const cols = [...row.children];
+      const name = cols[0].textContent.toLowerCase();
+      if (name === 'background-image' && cols[1]) {
+        config[name] = row.children[1].innerHTML;
+        row.remove();
+      } else if (name === 'id' && cols[1]) {
+        config[name] = row.children[1].textContent;
+        row.remove();
+      }
+    }
+  });
+  return config;
+}
+
+/**
+ * Customizes metadata sections if a background image or id is specified.
+ * @param {Element} main The container element
+ */
+export function customizeSectionMeta(main) {
+  main.querySelectorAll(':scope > div').forEach((section) => {
+    const sectionMeta = section.querySelector('div.section-metadata');
+    if (sectionMeta) {
+      const meta = readSectionMetadataConfig(sectionMeta);
+      Object.keys(meta).forEach((key) => {
+        if (key === 'background-image') {
+          const backgroundDiv = document.createElement('div');
+          backgroundDiv.classList.add('background-img');
+          backgroundDiv.innerHTML = meta[key];
+          section.prepend(backgroundDiv);
+        } else if (key === 'id') {
+          section.id = meta[key];
+        }
+      });
+    }
+  });
+}
+
+/**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
-
-function buildAutoBlocks(main) {
+ */
+export function buildAutoBlocks(main) {
   try {
-    buildHeroBlock(main);
+    // buildHeroBlock(main);
+    customizeSectionMeta(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
   }
 }
-*/
 
 /* JMP HEADER */
 /**
@@ -219,7 +265,7 @@ export function decorateMain(main) {
   // hopefully forward compatible button decoration
   decorateButtons(main);
   decorateIcons(main);
-  // buildAutoBlocks(main);
+  buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
   buildLayoutContainer(main);
