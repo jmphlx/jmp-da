@@ -238,8 +238,9 @@
             position: relative;
             z-index: 1;
             color: #ffffff !important;
-            padding: 6px 12px !important;
+            padding: 14px 20px !important;
             margin-bottom: 0 !important;
+            min-width: 175px !important;
             &:after {
               display: none;
             }
@@ -406,8 +407,9 @@
             position: relative;
             z-index: 1;
             color: #ffffff !important;
-            padding: 6px 12px !important;
+            padding: 14px 20px !important;
             margin-bottom: 0 !important;
+            min-width: 175px !important;
             &:after {
               display: none;
             }
