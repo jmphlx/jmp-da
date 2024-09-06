@@ -173,140 +173,103 @@ const createMetadataBlock = (document) => {
   //returning the meta object might be usefull to other rules
   return metaBlock;
 };
-const createFragment = (document) => {
+const createFragment = (document, link) => {
   const cells = [
     ['fragment'],
   ]
   const anchor = document.createElement('a');
-  anchor.href = 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/resource-breadcrumb';
-  anchor.innerText = 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/resource-breadcrumb';
-  console.log("LOOK HERE DREW");
-  console.log(anchor);
+  anchor.href = link;
+  anchor.innerText = link;
   cells.push([anchor]);
-  console.log(cells);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
-const createHero = (document) => {
+const createTopic = (document) => {
   const doc = {};
   const cells = [
-    ['columns (success-story-hero)'],
+    ['columns (clm-33-66)'],
   ]
-  //grab hero image
-  const heroCss = '#content div#page-content.par div#par div.par.parsys div.styledcontainer.parbase div.container.article-template.article-title div.par.parsys div.parsys_column.cq-colctrl-lt0';
-  const hero = document.querySelector(heroCss);
-  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt9 div.parsys_column.cq-colctrl-lt9-c0 div.image.parbase.section div');
+  
+  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt14 div.parsys_column.cq-colctrl-lt14-c0');
+
+
+  var children = lhText.children;
+  for (var i = 0; i < children.length; i++) {
+    var child = children[i];
+    if (child.className === "horizontalline parbase section") {
+      child.replaceWith(document.createElement('hr'));
+    };
+    // Do stuff
+  }
+
   // console.log(lhText);
   console.log("Tad Look here");
   console.log(lhText);
-  lhText.firstElementChild.setAttribute('data-asset',"https://www.jmp.com" + lhText.firstElementChild.getAttribute("data-asset"));
-  lhText.firstElementChild.firstElementChild.setAttribute('src',lhText.firstElementChild.getAttribute("data-asset"));
+  // lhText.firstElementChild.setAttribute('data-asset',"https://www.jmp.com" + lhText.firstElementChild.getAttribute("data-asset"));
+  // lhText.firstElementChild.firstElementChild.setAttribute('src',lhText.firstElementChild.getAttribute("data-asset"));
 
-  console.log(lhText.innerHTML);
-  const rhText = document.querySelector('div.container.article div.par.parsys div.text.parbase.section');
-  // console.log(rhText);
-  rhText.querySelector('h2').outerHTML = "<p>" + rhText.querySelector('h2').innerHTML + '</p>'
-  rhText.querySelector('h6').innerText = "Success Story"
-  console.log("here!!!! here!!!!!!");
-  console.log(rhText.querySelector('h2'));
-  cells.push([rhText, lhText]);
+  // console.log(lhText.innerHTML);
+
+  const rhDiv = document.createElement("div");
+  rhDiv.append(document.createElement('hr'));
+  const rhText = document.querySelector('div.parsys_column.cq-colctrl-lt14-c1');
+  var children = rhText.children;
+  console.log(children);
+
+  if (children[0].className === "text parbase section") {
+    rhDiv.append(children[0]);
+    const paragraph = document.createElement("p");
+    console.log(children);
+    paragraph.innerText = children[0].firstElementChild.firstElementChild.getAttribute("data-video-id");
+    rhDiv.append(paragraph);
+    console.log("DREW LOOK HERE");
+    console.log(rhText);
+    console.log(paragraph);
+    console.log(rhDiv);
+  };
+
+  if (children[0].className === "horizontalline parbase section") {
+    rhDiv.append(children[1]);
+    const paragraph = document.createElement("p");
+    console.log(children);
+    paragraph.innerText = children[1].firstElementChild.firstElementChild.getAttribute("data-video-id");
+    rhDiv.append(paragraph);
+    console.log("DREW LOOK HERE");
+    console.log(rhText);
+    console.log(paragraph);
+    console.log(rhDiv);
+  };
+  
+
+  cells.push([lhText, rhDiv]);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
-//get any full width 'hero' with only text likes
-const createDivider = (document) => {
-  const cells = [
-    ['divider'],
-  ]
-  return WebImporter.DOMUtils.createTable(cells, document);
-};
 
-const createLeftHandRail = (document) => {
-  const newDiv = document.createElement("div");
-  const tableHeading = document.querySelectorAll('.text.parbase.section tr');
-  // console.log(tableHeading);
-  tableHeading.forEach((el) => {
-    const myh4 = el.querySelector('th');
-    const h4 = document.createElement('h4');
-    h4.innerHTML = myh4.innerHTML;
-    // console.log(h4.innerText);
-    newDiv.appendChild(h4);
 
-    const tableText = el.querySelector('td');
-    const myP = document.createElement('p');
-    myP.innerText = tableText.innerText;
-    // console.log(myP.innerText);
-
-    newDiv.appendChild(myP);
-    // console.log(newDiv);
-  });
-  return newDiv;
+const createTitle = (document) => {
+  const title = document.querySelector('div.text.parbase.section div.nametag');
+  // console.log(title)
+  if (title.querySelector('h4')) {title.querySelector('h4').outerHTML = "<h5>" + title.querySelector('h4').innerHTML + '</h5>'};
+  if (title.querySelector('p')) {title.querySelector('p').outerHTML = "<h5>" + title.querySelector('p').innerHTML + '</h5>'};
+  title.classList.remove('nametag');
+  // title.querySelector('h4').outerHTML = "<h6>" + title.querySelector('h4').innerHTML + '</h6>'
+  // console.log("DREW LOOK HERE");
+  console.log(title);
+  return title;
   };
 
-const createRightHandRail = (document) => {
-  const newDiv = document.createElement("div");
 
-  const paragraphs = document.querySelectorAll('.container.article .par.parsys .text.parbase.section div:has(p)');
-  paragraphs.forEach((el) => {
-    // console.log('This is the header');
-    // console.log(el.innerHTML);
-    const header = el.querySelector('h3');
-
-    if (header) {
-      const myHeader = document.createElement('h3');
-      myHeader.innerHTML = header.innerHTML;
-      // console.log('Header Ran');
-      // console.log(myHeader.innerText);
-      newDiv.appendChild(myHeader);
-    }
-    
-    const p = el.querySelectorAll('p');
-    p.forEach((elem) => {
-      const myP = document.createElement('p');
-      myP.innerHTML = elem.innerHTML;
-      // console.log('p ran');
-      // console.log(myP.innerText);
-      newDiv.appendChild(myP);
-    });
-  });
-  
-  // console.log(newDiv.innerText);
-  return newDiv;
-};
-
-const createButtonLink = (document) => {
-  const button = document.querySelector(' div.trial-button p span.button a');
-  return button;
-}
-
-const createDisclaimer = (document) => {
-  const cells = [
-    ['columns (disclaimer)'],
-  ]
-
-  const disclaimer = document.querySelector('div.trial-button p small span.txt-light');
-  if (disclaimer){
-    cells.push([disclaimer.innerHTML]);
-  }
-  
-  console.log(cells);
-  /* disclaimer = document.querySelector('');
-  if (disclaimer) {
-    //cells.push([]);
-  }*/
-  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
-};
-
-const createSM = (document) => {
+const createSM = (document, style) => {
   const cells = [
     ['section-metadata'],
   ]
 
-  cells.push(['layout','2 Column']);
-  cells.push(['Style', 'success-story-body, columns-25-75']);
+  cells.push(['Style', style]);
   console.log(cells);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
 };
+
 
 export default {
   transformDOM: ({ document }) => {
@@ -315,37 +278,35 @@ export default {
     const section = document.createElement('div');
     const sectionBreak = document.createElement('hr');
 
-    const fragment = createFragment(document);
-    console.log("Fragment returned");
-    console.log(fragment);
+    const fragment = createFragment(document, 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/learning-library/mini-nav');
     if (fragment) section.append(fragment);
 
-    section.append(":search:")
-
-    const vidHero = createHero(document);
-    if (vidHero) section.append(vidHero);
+    const sectionMetadata = createSM(document, 'blue-purple-gradient, subnav-compact, light-nav');
+    if(sectionMetadata) section.append(sectionMetadata);
 
     section.append(document.createElement('hr'));
 
-    const lhrail = createLeftHandRail( document,);
-    if (lhrail) section.append(lhrail);
+    const title = createTitle(document);
+    if (title) section.append(title);
 
-    const divider = createDivider(document);
-    if (divider) section.append(divider);
+    const sectionMetadata2 = createSM(document, 'section-padding-none');
+    if(sectionMetadata2) section.append(sectionMetadata2);
 
-    const rightHR = createRightHandRail(document);
-    if (rightHR) section.append(rightHR);
+    section.append(document.createElement('hr'));
 
-    const button = createButtonLink(document);
-    if (button) section.append(button);
+    const bio = createTopic(document);
+    if (bio) section.append(bio);
 
-    const disclaimer = createDisclaimer(document);
-    if (disclaimer) section.append(disclaimer);
-
-    const sectionMetadata = createSM(document);
-    if(sectionMetadata) section.append(sectionMetadata);
+    const sectionMetadata3 = createSM(document, 'section-padding-medium');
+    if(sectionMetadata3) section.append(sectionMetadata3);
 
     section.append(sectionBreak);
+
+    const fragment2 = createFragment(document, 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/learning-library/pdf-bundle');
+    if (fragment2) section.append(fragment2);
+
+    const sectionMetadata4 = createSM(document, 'text-center, button-center, gray');
+    if(sectionMetadata4) section.append(sectionMetadata4);
   
     const meta = createMetadataBlock(document);
     if (meta) section.append(meta);

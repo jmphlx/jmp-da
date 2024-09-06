@@ -173,17 +173,15 @@ const createMetadataBlock = (document) => {
   //returning the meta object might be usefull to other rules
   return metaBlock;
 };
+
 const createFragment = (document) => {
   const cells = [
     ['fragment'],
   ]
   const anchor = document.createElement('a');
-  anchor.href = 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/resource-breadcrumb';
-  anchor.innerText = 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/resource-breadcrumb';
-  console.log("LOOK HERE DREW");
-  console.log(anchor);
+  anchor.href = 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/resources/customer-stories-back-button';
+  anchor.innerText = 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/resources/customer-stories-back-button';
   cells.push([anchor]);
-  console.log(cells);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
@@ -195,21 +193,17 @@ const createHero = (document) => {
   //grab hero image
   const heroCss = '#content div#page-content.par div#par div.par.parsys div.styledcontainer.parbase div.container.article-template.article-title div.par.parsys div.parsys_column.cq-colctrl-lt0';
   const hero = document.querySelector(heroCss);
-  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt9 div.parsys_column.cq-colctrl-lt9-c0 div.image.parbase.section div');
-  // console.log(lhText);
-  console.log("Tad Look here");
-  console.log(lhText);
-  lhText.firstElementChild.setAttribute('data-asset',"https://www.jmp.com" + lhText.firstElementChild.getAttribute("data-asset"));
-  lhText.firstElementChild.firstElementChild.setAttribute('src',lhText.firstElementChild.getAttribute("data-asset"));
-
-  console.log(lhText.innerHTML);
-  const rhText = document.querySelector('div.container.article div.par.parsys div.text.parbase.section');
-  // console.log(rhText);
-  rhText.querySelector('h2').outerHTML = "<p>" + rhText.querySelector('h2').innerHTML + '</p>'
-  rhText.querySelector('h6').innerText = "Success Story"
-  console.log("here!!!! here!!!!!!");
-  console.log(rhText.querySelector('h2'));
-  cells.push([rhText, lhText]);
+  if (hero){
+    //grab right hand text 
+    const rhText = hero.querySelector('div.parsys_column.cq-colctrl-lt0-c0 div.text.parbase.section div');
+    const lhText = hero.querySelector('div.parsys_column.cq-colctrl-lt0-c1 div div');
+    let images = lhText.getElementsByTagName("img");
+    console.log(images);
+    for (let el of images) {
+      el.setAttribute('src',"https://www.jmp.com" + el.getAttribute("src"));
+    };
+    cells.push([rhText, lhText]);
+  }
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
@@ -222,60 +216,37 @@ const createDivider = (document) => {
 };
 
 const createLeftHandRail = (document) => {
-  const newDiv = document.createElement("div");
-  const tableHeading = document.querySelectorAll('.text.parbase.section tr');
-  // console.log(tableHeading);
-  tableHeading.forEach((el) => {
-    const myh4 = el.querySelector('th');
-    const h4 = document.createElement('h4');
-    h4.innerHTML = myh4.innerHTML;
-    // console.log(h4.innerText);
-    newDiv.appendChild(h4);
-
-    const tableText = el.querySelector('td');
-    const myP = document.createElement('p');
-    myP.innerText = tableText.innerText;
-    // console.log(myP.innerText);
-
-    newDiv.appendChild(myP);
-    // console.log(newDiv);
-  });
-  return newDiv;
-  };
+  const lhRail = document.querySelector('div.parsys_column.cq-colctrl-lt1.cols-halfgutter div.parsys_column.cq-colctrl-lt1-c0');
+  if (lhRail){
+    console.log("DREW LOOK HERE");
+    
+    lhRail.classList.remove('parsys_column');
+    lhRail.classList.remove('cq-colctrl-lt1-c0');
+    let images = lhRail.getElementsByTagName("img");
+    console.log(images);
+    for (let el of images) {
+      el.setAttribute('src',"https://www.jmp.com" + el.getAttribute("src"));
+    };
+    console.log(images);
+    // lhRail.firstElementChild.setAttribute('data-asset',"https://www.jmp.com" + lhRail.firstElementChild.getAttribute("data-asset"));
+    // lhRail.firstElementChild.firstElementChild.setAttribute('src',lhRail.firstElementChild.getAttribute("data-asset"));
+   console.log(lhRail);
+    return lhRail;
+  }
+  
+  //if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
+};
 
 const createRightHandRail = (document) => {
-  const newDiv = document.createElement("div");
-
-  const paragraphs = document.querySelectorAll('.container.article .par.parsys .text.parbase.section div:has(p)');
-  paragraphs.forEach((el) => {
-    // console.log('This is the header');
-    // console.log(el.innerHTML);
-    const header = el.querySelector('h3');
-
-    if (header) {
-      const myHeader = document.createElement('h3');
-      myHeader.innerHTML = header.innerHTML;
-      // console.log('Header Ran');
-      // console.log(myHeader.innerText);
-      newDiv.appendChild(myHeader);
-    }
-    
-    const p = el.querySelectorAll('p');
-    p.forEach((elem) => {
-      const myP = document.createElement('p');
-      myP.innerHTML = elem.innerHTML;
-      // console.log('p ran');
-      // console.log(myP.innerText);
-      newDiv.appendChild(myP);
-    });
-  });
-  
-  // console.log(newDiv.innerText);
-  return newDiv;
+  const rhRail = document.querySelector('div.parsys_column.cq-colctrl-lt1.cols-halfgutter div.parsys_column.cq-colctrl-lt1-c1 div.text.parbase.section div');
+  if (rhRail){
+   //console.log(rhRail.innerHTML);
+   return rhRail;
+  }
 };
 
 const createButtonLink = (document) => {
-  const button = document.querySelector(' div.trial-button p span.button a');
+  const button = document.querySelector(' div.parsys_column.cq-colctrl-lt1.cols-halfgutter div.parsys_column.cq-colctrl-lt1-c1 div.reference.parbase div.cq-dd-paragraph div.text.parbase div.trial-button p span.button');
   return button;
 }
 
@@ -288,12 +259,6 @@ const createDisclaimer = (document) => {
   if (disclaimer){
     cells.push([disclaimer.innerHTML]);
   }
-  
-  console.log(cells);
-  /* disclaimer = document.querySelector('');
-  if (disclaimer) {
-    //cells.push([]);
-  }*/
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
 };
 
@@ -316,11 +281,7 @@ export default {
     const sectionBreak = document.createElement('hr');
 
     const fragment = createFragment(document);
-    console.log("Fragment returned");
-    console.log(fragment);
     if (fragment) section.append(fragment);
-
-    section.append(":search:")
 
     const vidHero = createHero(document);
     if (vidHero) section.append(vidHero);
@@ -328,6 +289,7 @@ export default {
     section.append(document.createElement('hr'));
 
     const lhrail = createLeftHandRail( document,);
+    console.log(lhrail);
     if (lhrail) section.append(lhrail);
 
     const divider = createDivider(document);
@@ -338,9 +300,6 @@ export default {
 
     const button = createButtonLink(document);
     if (button) section.append(button);
-
-    const disclaimer = createDisclaimer(document);
-    if (disclaimer) section.append(disclaimer);
 
     const sectionMetadata = createSM(document);
     if(sectionMetadata) section.append(sectionMetadata);
