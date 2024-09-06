@@ -727,3 +727,39 @@ div.clm-75-25 {
     height: 100%;
   }
 }
+
+/* .icon-bullet {
+  > div > div {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 1fr;
+    :is(p):has(.icon) {
+      grid-column: 1;
+    }
+    .icon {
+      float: l;
+    }
+    h3, h4, h5, p {
+      grid-column: 2;
+      grid-row: 1;
+      display: inline-block;
+      position: relative;
+    }
+  }
+} */
+
+.icon-bullet {
+  > div > div {
+    position: relative;
+    .icon {
+      height: 64px;
+      width: 64px;
+      position: absolute;
+      left: 0;
+    }
+    h3, h4, h5, p {
+      margin-left: 84px;
+    }
+  }
+}
