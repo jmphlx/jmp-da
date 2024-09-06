@@ -20,7 +20,7 @@ ul.list-tile {
   }
 }
 
-.listgroup ul.col-size-4 li, .listgroup-fixed ul.col-size-5 li {
+.listgroup ul.col-size-4 li, .listgroup-fixed ul.col-size-4 li {
   margin: 0 1.25% 1.75em 1.25%;
   width: 22.5%;
   @media (width <= 900px) {
@@ -106,7 +106,7 @@ ul.list-tile {
         font-size: 1.6 rem;
         margin: 0 8% .25em 8%;
         transition: color 0.3s ease;
-        color: var(--gray3);
+        color: var(--blue) !important;
       }
       .abstract {
         order: 3;
@@ -150,6 +150,13 @@ ul.list-tile {
     }
   }
 }
+
+.listgroup-center {
+  ul {
+    justify-content: center;
+  }
+}
+
 
 .listgroup.learning-library {
   ul.list-tile {
