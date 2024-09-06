@@ -222,8 +222,32 @@
         }
         p.button-container {
           margin: 0;
+          padding: auto !important;
+          text-align: left;
           a {
             background-color: transparent;
+          }
+          a.button {
+            background: rgba(0, 0, 0, 0.125) !important;
+            border: 2px solid #ffffff !important;
+            border-radius: 8px;
+            min-width: 150px;
+            box-sizing: content-box;
+            transition-duration: 0.2s;
+            transition-timing-function: ease;
+            position: relative;
+            z-index: 1;
+            color: #ffffff !important;
+            padding: 6px 12px !important;
+            margin-bottom: 0 !important;
+            &:after {
+              display: none;
+            }
+          }
+          a.button:hover {
+            color: #ffffff !important;
+            background: rgba(0, 0, 0, 0.5) !important;
+            border: 2px solid rgba(0, 0, 0, 0) !important;
           }
           &:before {
             background-color: var(--purple);
@@ -366,30 +390,32 @@
         }
         p.button-container {
           margin: 0;
+          padding: auto !important;
+          text-align: left;
           a {
             background-color: transparent;
           }
-          &:before {
-            background-color: var(--blue);
-            border-radius: 50%;
-            content: '';
-            height: 4em;
-            position: absolute;
-            left: 58%;
-            bottom: 5%;
-            width: 4em;
-            z-index: 10;
+          a.button {
+            background: rgba(0, 0, 0, 0.125) !important;
+            border: 2px solid #ffffff !important;
+            border-radius: 8px;
+            min-width: 150px;
+            box-sizing: content-box;
+            transition-duration: 0.2s;
+            transition-timing-function: ease;
+            position: relative;
+            z-index: 1;
+            color: #ffffff !important;
+            padding: 6px 12px !important;
+            margin-bottom: 0 !important;
+            &:after {
+              display: none;
+            }
           }
-          &:after {
-            background-color: var(--blue);
-            border-radius: 50%;
-            content: '';
-            height: 3em;
-            position: absolute;
-            left: 63%;
-            bottom: 11%;
-            width: 3em;
-            z-index: 10;
+          a.button:hover {
+            color: #ffffff !important;
+            background: rgba(0, 0, 0, 0.5) !important;
+            border: 2px solid rgba(0, 0, 0, 0) !important;
           }
         }
       }
