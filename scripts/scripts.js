@@ -64,7 +64,7 @@ function autolinkModals(element) {
 }
 
 /**
- * 
+ * Add background image to entire section if present.
  * @param {*} main the Container Element
  * @author JMP
  */
@@ -78,7 +78,7 @@ function buildSectionBackground(main) {
       metadata.children[position].remove();
       metadata.parentElement.prepend(block);
     }
-  });  
+  });
 }
 
 /**

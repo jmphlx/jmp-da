@@ -35,15 +35,15 @@ describe('JMP Scripts JS Customizations ', () => {
   });
 
   describe('Section Metadata', () => {
-    let customizeSectionMeta;
+    let buildAutoBlocks;
 
     before(async () => {
-      customizeSectionMeta = scriptHelper.customizeSectionMeta;
+      buildAutoBlocks = scriptHelper.buildAutoBlocks;
       document.body.innerHTML = await readFile({ path: './sectionMetadata.html' });
     });
 
     it('Background image in the section metadata', () => {
-      customizeSectionMeta(document.querySelector('main'));
+      buildAutoBlocks(document.querySelector('main'));
       const backgroundImg = document.querySelector('.background-img');
       expect(backgroundImg).to.exist;
       expect(backgroundImg.querySelector('picture')).to.exist;
