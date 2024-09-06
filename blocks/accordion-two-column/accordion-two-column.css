@@ -56,15 +56,34 @@
     clear: both;
   }
 }
-
 .accordion-item-body.accordion-double {
   display: flex;
   flex-direction: row;
-
+  gap: 2em;
+  h5 {
+    margin: 0 0 4px 0 !important;
+  }
+  h5 + p {
+    margin: 0 0 16px 0 !important;
+  }
   .accordion-col-1 {
-    width: 50%;
+    /* width: 50%; */
+    padding-top: 1em;
+    
   }
   .accordion-col-2 {
-    width: 50%;
+    /* width: 50%; */
+    padding-top: 1em;
+    p {
+      font-size: var(--body-font-size-xs);
+      margin-bottom: 0;
+    }
+  }
+  @media (width <=900px) {
+    flex-direction: column;
+    .accordion-col-1, .accordion-col-2 {
+      width: 100% !important;
+      padding-top: 0;
+    }
   }
 }
