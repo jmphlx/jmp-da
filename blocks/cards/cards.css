@@ -238,9 +238,10 @@
             position: relative;
             z-index: 1;
             color: #ffffff !important;
-            padding: 14px 20px !important;
+            padding: 6px 12px !important;
             margin-bottom: 0 !important;
-            min-width: 175px !important;
+            min-width: 128px !important;
+            line-height: 1.5;
             &:after {
               display: none;
             }
@@ -407,9 +408,10 @@
             position: relative;
             z-index: 1;
             color: #ffffff !important;
-            padding: 14px 20px !important;
+            padding: 6px 12px !important;
             margin-bottom: 0 !important;
-            min-width: 175px !important;
+            min-width: 128px !important;
+            line-height: 1.5;
             &:after {
               display: none;
             }
