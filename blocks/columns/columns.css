@@ -87,6 +87,14 @@
   } */
 }
 /* Home Page Hero */
+.section:has(div.home-page-hero) {
+  .background-img {
+    img {
+      min-width: 100%;
+      width: 100%;
+    }
+  }
+}
 .home-page-hero {
   div {
     div:first-child {
@@ -94,7 +102,7 @@
       align-self: center;
       h1 {
         padding: 0;
-        margin: 0;
+        margin: 0 0 2rem 0 !important;
         color: var(--blue);
         font-family: "anova-regular", sans-serif;
       }
