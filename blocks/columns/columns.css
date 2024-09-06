@@ -26,7 +26,8 @@
 @media (width >=900px) {
   .columns > div {
     flex-direction: unset;
-    gap: 64px;
+    /* gap: 64px; */
+    gap: 5%;
   }
   .columns > div > div {
     flex: 1;
@@ -456,31 +457,31 @@ div.clm-10-90 {
 }
 div.clm-50-50 {
   div > div:nth-child(1) {
-    min-width: 48%;
+    min-width: 47%;
   }
   div > div:nth-child(2) {
-    min-width: 48%;
+    min-width: 47%;
   }
 }
 div.clm-60-40 {
   div > div:nth-child(1) {
-    min-width: 58%;
+    min-width: 57%;
   }
   div > div:nth-child(2) {
-    min-width: 38%;
+    min-width: 37%;
   }
 }
 div.clm-40-60 {
   div > div:nth-child(1) {
-    min-width: 38%;
+    min-width: 37%;
   }
   div > div:nth-child(2) {
-    min-width: 58%;
+    min-width: 57%;
   }
 }
 div.clm-66-33 {
   div > div:nth-child(1) {
-    min-width: 64%;
+    min-width: 63%;
   }
   div > div:nth-child(2) {
     min-width: 31%;
@@ -491,23 +492,23 @@ div.clm-33-66 {
     min-width: 31%;
   }
   div > div:nth-child(2) {
-    min-width: 64%;
+    min-width: 63%;
   }
 }
 div.clm-25-75 {
   div > div:nth-child(1) {
-    min-width: 23%;
+    min-width: 22%;
   }
   div > div:nth-child(2) {
-    min-width: 73%;
+    min-width: 72%;
   }
 }
 div.clm-75-25 {
   div > div:nth-child(1) {
-    min-width: 73%;
+    min-width: 72%;
   }
   div > div:nth-child(2) {
-    min-width: 23%;
+    min-width: 22%;
   }
 }
 /* Start of author bio styles */
