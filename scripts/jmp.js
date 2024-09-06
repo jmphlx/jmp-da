@@ -1,3 +1,22 @@
+/**
+ * Returns if a given 2 or 4 digit language is supported
+ * by JMP. Support means that it should have it's own
+ * directory, index, and nav.
+ * @param {string} language
+ * @returns {Boolean} true if the index should exist.
+ */
+function isLanguageSupported(language) {
+  const languageIndexes = [
+    'en', 'es', 'fr', 'zh', 'de', 'it', 'ko', 'ja', 'zh-hans', 'zh-hant',
+  ];
+  return languageIndexes.includes(language);
+}
+/* Set the html lang property based on the page path. Default to 'en'. */
+const pageLanguage = window.location.pathname.split('/')[1];
+const isLangSupported = isLanguageSupported(pageLanguage);
+const lang = isLangSupported ? pageLanguage : 'en';
+document.documentElement.lang = lang;
+
 /*
  * Check if an array includes all values of another array
  */
@@ -56,38 +75,12 @@ function getTimezoneObjectFromAbbr(timezones, tzabbr) {
 }
 
 /**
- * Returns if a given 2 or 4 digit language is supported
- * by JMP. Support means that it should have it's own
- * directory, index, and nav.
- * @param {string} language
- * @returns {Boolean} true if the index should exist.
- */
-function isLanguageSupported(language) {
-  const languageIndexes = [
-    'en', 'es', 'fr', 'zh', 'de', 'it', 'ko', 'ja', 'zh-hans', 'zh-hant',
-  ];
-  return languageIndexes.includes(language);
-}
-
-/**
- * Sets the html lang property based on the page path.
- * If the top directory is the language code of a
- * JMP supported language, then set it to that language.
- * Otherwise, default to 'en' (English).
- */
-function setHtmlPageLanguage() {
-  const pageLanguage = window.location.pathname.split('/')[1];
-  document.documentElement.lang = isLanguageSupported(pageLanguage) ? pageLanguage : 'en';
-}
-
-/**
  * Returns the path of the appropriate nav based on page language.
  * Default to 'en' if language isn't found.
  * @returns {string} path to language nav
  */
 function getLanguageNav() {
-  const lang = document.documentElement.lang.toLowerCase();
-  return isLanguageSupported(lang) ? `/${lang}/nav` : '/en/nav';
+  return isLanguageSupported ? `/${lang}/nav` : '/en/nav';
 }
 
 /**
@@ -96,8 +89,7 @@ function getLanguageNav() {
  * @returns {string} path to language footer
  */
 function getLanguageFooter() {
-  const lang = document.documentElement.lang.toLowerCase();
-  return isLanguageSupported(lang) ? `/${lang}/footer` : '/en/footer';
+  return isLanguageSupported ? `/${lang}/footer` : '/en/footer';
 }
 
 /**
@@ -106,8 +98,7 @@ function getLanguageFooter() {
  * @returns {string} path to language index
  */
 function getLanguageIndex() {
-  const lang = document.documentElement.lang.toLowerCase();
-  return isLanguageSupported(lang) ? `/jmp-${lang}.json` : '/jmp-all.json';
+  return isLanguageSupported ? `/jmp-${lang}.json` : '/jmp-all.json';
 }
 
 /*
@@ -339,5 +330,4 @@ export {
   pageFilterByFolder,
   pageOrFilter,
   parseBlockOptions,
-  setHtmlPageLanguage,
 };

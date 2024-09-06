@@ -1,5 +1,6 @@
 import {
   sampleRUM,
+  buildBlock,
   loadHeader,
   loadFooter,
   decorateButtons,
@@ -7,15 +8,12 @@ import {
   decorateSections,
   decorateBlocks,
   decorateTemplateAndTheme,
-  waitForLCP,
-  loadBlocks,
+  waitForFirstImage,
+  loadSection,
+  loadSections,
   loadCSS,
+  readBlockConfig,
 } from './aem.js';
-import {
-  setHtmlPageLanguage,
-} from './jmp.js';
-
-const LCP_BLOCKS = []; // add your LCP blocks to the list
 
 (async function loadDa() {
   if (!new URL(window.location.href).searchParams.get('dapreview')) return;
@@ -66,59 +64,44 @@ function autolinkModals(element) {
 }
 
 /**
- * Read in the Section Metadata Block and create a json object of properties to customize.
- * @param {Element} block section metadata config block
- * @returns config object that contains custom metadata properties
+ * 
+ * @param {*} main the Container Element
+ * @author JMP
  */
-function readSectionMetadataConfig(block) {
-  const config = {};
-  block.querySelectorAll(':scope > div').forEach((row) => {
-    if (row.children) {
-      const cols = [...row.children];
-      const name = cols[0].textContent.toLowerCase();
-      if (name === 'background-image' && cols[1]) {
-        config[name] = row.children[1].innerHTML;
-        row.remove();
-      } else if (name === 'id' && cols[1]) {
-        config[name] = row.children[1].textContent;
-        row.remove();
-      }
+function buildSectionBackground(main) {
+  main.querySelectorAll('div.section-metadata').forEach((metadata) => {
+    const config = readBlockConfig(metadata);
+    const position = Object.keys(config).indexOf('background-image');
+    if (position >= 0) {
+      const picture = metadata.children[position].children[1].querySelector('picture');
+      const block = buildBlock('background-img', { elems: [picture] });
+      metadata.children[position].remove();
+      metadata.parentElement.prepend(block);
     }
-  });
-  return config;
+  });  
 }
 
 /**
- * Customizes metadata sections if a background image or id is specified.
- * @param {Element} main The container element
+ * Get all sections that have a data-id attribute and change data-id to id.
+ * @param {*} main The container element
+ * @author JMP
  */
-export function customizeSectionMeta(main) {
-  main.querySelectorAll(':scope > div').forEach((section) => {
-    const sectionMeta = section.querySelector('div.section-metadata');
-    if (sectionMeta) {
-      const meta = readSectionMetadataConfig(sectionMeta);
-      Object.keys(meta).forEach((key) => {
-        if (key === 'background-image') {
-          const backgroundDiv = document.createElement('div');
-          backgroundDiv.classList.add('background-img');
-          backgroundDiv.innerHTML = meta[key];
-          section.prepend(backgroundDiv);
-        } else if (key === 'id') {
-          section.id = meta[key];
-        }
-      });
-    }
+function updateSectionIds(main) {
+  main.querySelectorAll('div.section[data-id]:not([data-id=""])').forEach((section) => {
+    section.id = section.getAttribute('data-id');
+    section.removeAttribute('data-id');
   });
 }
 
 /**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
+ * @author Adobe & JMP modified
  */
 export function buildAutoBlocks(main) {
   try {
     // buildHeroBlock(main);
-    customizeSectionMeta(main);
+    buildSectionBackground(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
@@ -174,46 +157,6 @@ export function wrapImgsInLinks(container) {
     }
   });
 }
-
-/**
- * create an element.
- * @param {string} tagName the tag for the element
- * @param {object} props properties to apply
- * @param {string|Element} html content to add
- * @returns the element
- */
-export function createElement(tagName, props, html) {
-  const elem = document.createElement(tagName);
-  if (props) {
-    Object.keys(props).forEach((propName) => {
-      const val = props[propName];
-      if (propName === 'class') {
-        const classesArr = (typeof val === 'string') ? [val] : val;
-        elem.classList.add(...classesArr);
-      } else {
-        elem.setAttribute(propName, val);
-      }
-    });
-  }
-
-  if (html) {
-    const appendEl = (el) => {
-      if (el instanceof HTMLElement || el instanceof SVGElement) {
-        elem.append(el);
-      } else {
-        elem.insertAdjacentHTML('beforeend', el);
-      }
-    };
-
-    if (Array.isArray(html)) {
-      html.forEach(appendEl);
-    } else {
-      appendEl(html);
-    }
-  }
-
-  return elem;
-}
 /* JMP HEADER END */
 
 /** JMP Section Group Layout Support */
@@ -267,8 +210,9 @@ export function decorateMain(main) {
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);
+  updateSectionIds(main); // JMP Added
   decorateBlocks(main);
-  buildLayoutContainer(main);
+  buildLayoutContainer(main); // JMP Added
 }
 
 /**
@@ -276,14 +220,15 @@ export function decorateMain(main) {
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
-  setHtmlPageLanguage();
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);
     document.body.classList.add('appear');
-    await waitForLCP(LCP_BLOCKS);
+    await loadSection(main.querySelector('.section'), waitForFirstImage);
   }
+
+  sampleRUM.enhance();
 
   try {
     /* if desktop (proxy for fast connection) or fonts already loaded, load fonts.css */
@@ -303,7 +248,7 @@ async function loadLazy(doc) {
   autolinkModals(doc);
 
   const main = doc.querySelector('main');
-  await loadBlocks(main);
+  await loadSections(main);
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
@@ -314,10 +259,6 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
-
-  sampleRUM('lazy');
-  sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
-  sampleRUM.observe(main.querySelectorAll('picture > img'));
 }
 
 /**
