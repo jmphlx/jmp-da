@@ -728,3 +728,18 @@ div.clm-75-25 {
     height: 100%;
   }
 }
+
+.icon-bullet {
+  > div > div {
+    position: relative;
+    .icon {
+      height: 64px;
+      width: 64px;
+      position: absolute;
+      left: 0;
+    }
+    h3, h4, h5, p {
+      margin-left: 84px;
+    }
+  }
+}
