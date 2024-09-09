@@ -231,7 +231,6 @@
             background: rgba(0, 0, 0, 0.125) !important;
             border: 2px solid #ffffff !important;
             border-radius: 8px;
-            min-width: 150px;
             box-sizing: content-box;
             transition-duration: 0.2s;
             transition-timing-function: ease;
@@ -401,7 +400,6 @@
             background: rgba(0, 0, 0, 0.125) !important;
             border: 2px solid #ffffff !important;
             border-radius: 8px;
-            min-width: 150px;
             box-sizing: content-box;
             transition-duration: 0.2s;
             transition-timing-function: ease;
