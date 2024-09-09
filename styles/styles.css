@@ -530,7 +530,7 @@ a:hover {
 }
 .text-link-back .button-container, .text-link-back ul li {
   p.button-container {
-    margin-bottom: 1em !important;
+    margin-bottom: 3rem !important;
     transition-duration: 0.5s;
   }
   a:link, a:any-link, a.button:any-link {
@@ -539,6 +539,7 @@ a:hover {
     font-size: 1.6rem !important;
     line-height: 1.6rem;
     transition-duration: 0.5s;
+    margin-bottom: 1rem !important;
   }
   a:hover {
     color: var(--link-hover-color) !important;
@@ -558,6 +559,11 @@ a:hover {
     border: 2px solid var(--blue);
     border-radius: 0 1px 0 0;
     border-width: 2px 2px 0 0;
+  }
+  @media (width <=900px) {
+    a:link, a:any-link, a.button:any-link {
+      margin-bottom: 2rem !important;
+    }
   }
 }
 /* button with out caret that may appear on pages like the Academic page */
