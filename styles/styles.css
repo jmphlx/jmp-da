@@ -180,35 +180,33 @@ hr {
 /* headings + p */
 /* :is(h1, h2, h3, h4, h5, h6):has(+ :is(p, ul, ol)) {
 	padding-bottom: .5em;
-} */
-:is(p):has(picture) {
-	margin-bottom: 0 !important;
+} */ :is(p):has(picture) {
+  margin-bottom: 0 !important;
 }
 /* h1 combinations */
 /* :is(h1):has(+ :is(h2, h3, h4, h5)) {
 	margin-bottom: .5em !important;
 } */
-/* h1 combinations */
-:is(h1):has(+ :is(h2)) {
-	margin-bottom: 0 !important;
+/* h1 combinations */ :is(h1):has(+ :is(h2)) {
+  margin-bottom: 0 !important;
 }
 h1 + h2 {
   margin-bottom: 3.2rem !important
 }
 :is(h1):has(+ :is(h3)) {
-	margin-bottom: 0 !important;
+  margin-bottom: 0 !important;
 }
 h1 + h3 {
   margin-bottom: 3.2rem !important
 }
 :is(h1):has(+ :is(h4)) {
-	margin-bottom: 0 !important;
+  margin-bottom: 0 !important;
 }
 h1 + h4 {
   margin-bottom: 3.2rem !important
 }
 :is(h1):has(+ :is(h5)) {
-	margin-bottom: .5em !important;
+  margin-bottom: .5em !important;
 }
 h1 + h5 {
   margin-bottom: 3.2rem !important;
@@ -406,7 +404,7 @@ a:hover {
     }
   }
 }
-.text-link .button-container, .text-link-light .button-container, .text-link-caret-left .button-container, .text-link-caret-left-light .button-container, .text-link-light-center .button-container, .text-link-back .button-container{
+.text-link .button-container, .text-link-light .button-container, .text-link-caret-left .button-container, .text-link-caret-left-light .button-container, .text-link-light-center .button-container, .text-link-back .button-container {
   /* margin: 0 0 2em 0 !important; */
   a:link, a.button:any-link {
     min-width: max-content !important;
@@ -897,19 +895,23 @@ main img {
   width: auto;
   height: auto;
 }
-.image-size-small img {
-  max-width: 25%;
-}
-.image-size-medium img {
+.image-small img {
+  min-width: 25%;
   max-width: 50%;
 }
-.image-size-large img {
+.image-medium img {
+  min-width: 50%;
   max-width: 75%;
 }
-@media (width <=600px) {
-  .image-size-s, .image-size-m, .image-size-l {
+.image-large img {
+  min-width: 75%;
+  max-width: 90%;
+}
+@media (width <=900px) {
+  .image-small, .image-medium, .image-large {
     img {
-      max-width: 100%;
+      min-width: 25%;
+      max-width: 50%;
     }
   }
 }
@@ -1103,7 +1105,6 @@ div.dark-gray {
       transition-duration: 0.1s;
       transition-timing-function: ease-in;
       min-height: 100%;
-      
       @media (width <=1156px) {
         min-width: 100%;
         float: right;
@@ -1129,7 +1130,7 @@ div.dark-gray {
 }
 /* Styling to change all list item bullets to the JMP blue  */
 ul {
-  /* padding: 0 0 0 24px; */
+  padding: 0 0 0 16px; /* we are looking at this styling agian */
   li::marker {
     color: var(--blue);
     /* font-size: var(--heading-font-size-s); */
@@ -1152,9 +1153,9 @@ ul {
   main > div.section {
     margin: 0 auto !important;
     padding-bottom: 0;
-    div:nth-last-child(1) {
+    /* div:nth-last-child(1) {
       margin-left: auto !important;
-    }
+    } */
     @media (width <=900px) {
       margin: 0 auto !important;
     }
@@ -1164,10 +1165,10 @@ ul {
   > .columns-wrapper {
     margin: 0 auto !important;
     padding-bottom: 32px;
-    div:nth-last-child(1) {
-      /* margin: auto auto !important; */
+    /* div:nth-last-child(1) {
+      /* margin: auto auto !important;
       margin-left: auto !important;
-    }
+    } */
     @media (width <=900px) {
       margin: 0 auto !important;
     }
@@ -1184,13 +1185,13 @@ div.section.block-padding-large {
   > .columns-wrapper {
     margin: 0 auto !important;
     padding-bottom: 96px;
-    div:nth-last-child(1) {
-      /* margin: auto auto !important; */
+    /* div:nth-last-child(1) {
+      /* margin: auto auto !important; 
       margin-left: auto !important;
-    }
+    } */
     @media (width <=900px) {
-    margin: 0 auto !important;
-    padding-bottom: 32px;
+      margin: 0 auto !important;
+      padding-bottom: 32px;
     }
   }
 }
