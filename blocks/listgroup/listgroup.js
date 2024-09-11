@@ -1,6 +1,5 @@
 /* eslint no-undef: 0 */
 
-import { loadScript } from '../../scripts/aem.js';
 import {
   getBlockPropertiesList,
   getBlockProperty,
@@ -12,14 +11,7 @@ import {
   pageOrFilter,
 } from '../../scripts/jmp.js';
 
-export function createDateFromString(date) {
-  const dateTimeValue = moment(date, 'YYYY-MM-DD').format();
-  return dateTimeValue;
-}
-
 export default async function decorate(block) {
-  await loadScript('/scripts/moment/moment.js');
-
   // Get language index.
   const languageIndexUrl = getLanguageIndex();
 
@@ -52,8 +44,8 @@ export default async function decorate(block) {
     pageSelection.sort((a, b) => (a.title < b.title ? -1 : 1));
   } else {
     // Order filtered pages by releaseDate
-    pageSelection.sort((a, b) => (moment(createDateFromString(a.releaseDate))
-      .isBefore(createDateFromString(b.releaseDate)) ? -1 : 1));
+    pageSelection.sort((a, b) => ((new Date(a.releaseDate) - new Date(b.releaseDate)) < 0
+      ? -1 : 1));
   }
 
   // Cut results down to fit within specified limit.
