@@ -10,6 +10,9 @@ ul.list-tile {
   list-style-type: none;
   padding: 0;
   float: left;
+  a {
+    text-align: left;
+  }
 }
 
 .listgroup ul.col-size-3 li, .listgroup-fixed ul.col-size-3 li {
@@ -233,19 +236,20 @@ ul.list-tile {
     }
     > li:hover {
       transform: none;
-  }
-  .title {
-    &:before {
-      content: url('../../../icons/arrow-orange.svg');
-      width: 7px;
-      display: inline-block;
-      font-size: 80%;
     }
-  }
-  .navigation-title {
-    display: none  !important;
-  }
-  .abstract {
-    text-indent: 0em;
+    .title {
+      &:before {
+        content: url('../../../icons/arrow-orange.svg');
+        width: 7px;
+        display: inline-block;
+        font-size: 80%;
+      }
+    }
+    .navigation-title {
+      display: none  !important;
+    }
+    .abstract {
+      text-indent: 0;
+    }
   }
 }
