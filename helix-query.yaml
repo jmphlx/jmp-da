@@ -55,12 +55,12 @@ indices:
         select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
-      eventDate:
-        select: head > meta[name="eventdate"]
+      eventDateTime:
+        select: head > meta[name="eventdatetime"]
         value: |
           attribute(el, "content")
-      eventTime:
-        select: head > meta[name="eventtime"]
+      eventDisplayTime:
+        select: head > meta[name="eventdisplaytime"]
         value: |
           attribute(el, "content")
       eventType:
@@ -128,12 +128,12 @@ indices:
         select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
-      eventDate:
-        select: head > meta[name="eventdate"]
+      eventDateTime:
+        select: head > meta[name="eventdatetime"]
         value: |
           attribute(el, "content")
-      eventTime:
-        select: head > meta[name="eventtime"]
+      eventDisplayTime:
+        select: head > meta[name="eventdisplaytime"]
         value: |
           attribute(el, "content")
       eventType:
@@ -201,12 +201,12 @@ indices:
         select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
-      eventDate:
-        select: head > meta[name="eventdate"]
+      eventDateTime:
+        select: head > meta[name="eventdatetime"]
         value: |
           attribute(el, "content")
-      eventTime:
-        select: head > meta[name="eventtime"]
+      eventDisplayTime:
+        select: head > meta[name="eventdisplaytime"]
         value: |
           attribute(el, "content")
       eventType:
