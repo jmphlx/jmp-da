@@ -13,14 +13,14 @@ ul.list-tile {
 }
 
 .listgroup ul.col-size-3 li, .listgroup-fixed ul.col-size-3 li {
-  width: 30.75%;
+  width: 22.5%;
   margin: 0 1.25% 1.75em 1.25%;
   @media (width <= 600px) {
     width: 47.5%;
   }
 }
 
-.listgroup ul.col-size-4 li, .listgroup-fixed ul.col-size-5 li {
+.listgroup ul.col-size-4 li, .listgroup-fixed ul.col-size-4 li {
   margin: 0 1.25% 1.75em 1.25%;
   width: 22.5%;
   @media (width <= 900px) {
@@ -106,7 +106,7 @@ ul.list-tile {
         font-size: 1.6 rem;
         margin: 0 8% .25em 8%;
         transition: color 0.3s ease;
-        color: var(--gray3);
+        color: var(--blue) !important;
       }
       .abstract {
         order: 3;
@@ -148,5 +148,104 @@ ul.list-tile {
     :after {
       background-color: var(--purple);
     }
+  }
+}
+
+.listgroup-center {
+  ul {
+    justify-content: center;
+  }
+}
+
+
+.listgroup.learning-library {
+  ul.list-tile {
+    > li {
+      break-inside: avoid-column;
+      line-height: 1.3;
+      margin: 0;
+      text-indent: -.5em;
+      a {
+        background: none;
+        border: none;
+        height: auto;
+        width: auto;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        outline: none;
+      }
+      :after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        z-index: -1;
+        background: none;
+      }
+    }
+  }
+  .title {
+    &:before {
+      content: url('../../../icons/arrow-orange.svg');
+      width: 7px;
+      display: inline-block;
+      font-size: 80%;
+    }
+  }
+  .navigation-title {
+    display: none  !important;
+  }
+  .abstract {
+    display: none;
+  }
+}
+
+.listgroup.learning-library-topics {
+  ul.list-tile.col-size-2 {
+    > li {
+      width: 50%;
+      break-inside: avoid-column;
+      line-height: 1.3;
+      margin: 0;
+      padding-bottom: .5em;
+      padding-top: 1em;
+      text-indent: -.5em;
+      border-top: 1px solid #d0d0d0;
+      a {
+        background: none;
+        border: none;
+        height: auto;
+        width: auto;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        outline: none;
+      }
+      :after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        z-index: -1;
+        background: none;
+      }
+    }
+    > li:hover {
+      transform: none;
+  }
+  .title {
+    &:before {
+      content: url('../../../icons/arrow-orange.svg');
+      width: 7px;
+      display: inline-block;
+      font-size: 80%;
+    }
+  }
+  .navigation-title {
+    display: none  !important;
+  }
+  .abstract {
+    text-indent: 0em;
   }
 }
