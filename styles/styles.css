@@ -220,6 +220,11 @@ h1 + h5 {
   font-size: 1.4rem;
   padding-bottom: .25rem;
 } */
+ /* h4 combinations */
+ :is(h4):has(+ :is(h1)) {
+ margin-bottom: 0;
+ opacity: .7;
+}
 code, pre {
   font-family: var(--fixed-font-family);
   font-size: var(--body-font-size-s);
@@ -931,8 +936,11 @@ main .section {
   &.section-padding-none {
     padding-bottom: 0 !important;
   }
-  &.section-padding-small {
+  &.section-padding-xsmall {
     padding-bottom: 32px !important;
+  }
+  &.section-padding-small {
+    padding-bottom: 48px !important;
   }
   &.section-padding-medium {
     padding-bottom: 64px !important;
@@ -953,7 +961,7 @@ main .section {
     padding-top: 96px !important;
   }
   /* make a block/wrapper 95% wide of the pages width */
-  & div:has(.full-width) {
+  &.full-width {
     max-width: 95% !important;
   }
 }
@@ -981,6 +989,9 @@ main .section.light, main .section.highlight {
 }
 sup {
   font-size: 50%;
+}
+sub {
+  vertical-align: text-bottom;
 }
 /* text alignment */
 .text-center {
