@@ -728,33 +728,6 @@ div.clm-75-25 {
   }
 } */
 
-.product-cards {
-  .layout-wrapper {
-    gap: 32px !important;
-  }
-  div.group-1, div.group-2, div.group-3, div.group-4 {
-    border: 1px solid var(--grayRule);
-  }
-  > div {
-    gap: 32px;
-    > div {
-      /* border: 1px solid var(--grayRule); */
-      border-radius: 5px;
-      .default-content-wrapper {
-        /* border: 1px solid var(--grayRule); */
-        border-radius: 5px;
-        /* padding: 16px; */
-      }
-    }
-  }
-  /* a {
-    display: inline-block;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-  } */
-}
-
 .icon-bullet {
   > div > div {
     position: relative;

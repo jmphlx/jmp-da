@@ -690,9 +690,9 @@ a:hover {
       display: block;
       width: 1em;
       height: 1em;
-      top: 30%;
+      top: 44%;
       right: 50%;
-      transform: translate(calc(-50% + 90px), calc(-50% + 1em));
+      transform: translate(calc(-50% + 90px), calc(-50%));
       text-align: end;
       color: rgba(0, 0, 0, .5);
       line-height: 1.15;
