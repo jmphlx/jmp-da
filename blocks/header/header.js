@@ -1,6 +1,3 @@
-import {
-  createElement,
-} from '../../scripts/scripts.js';
 import { getMetadata } from '../../scripts/aem.js';
 import { createTag } from '../../scripts/helper.js';
 import { onSearchInput } from './search.js';
@@ -129,7 +126,7 @@ function addNavDropToggle(section, sections) {
 }
 
 async function buildMobileMenu(nav) {
-  const mobileMenu = createElement('div', { class: 'nav-mobile-menu' });
+  const mobileMenu = createTag('div', { class: 'nav-mobile-menu' });
   let sections = nav.querySelector('.nav-sections');
   let tools = nav.querySelector('.nav-tools');
   if (sections && tools) {
@@ -194,9 +191,7 @@ export default async function decorate(block) {
   const navHTML = await fetchNavigationHTML();
 
   // decorate nav DOM
-  const nav = createElement('nav', {
-    id: 'nav',
-  });
+  const nav = createTag('nav', { id: 'nav' });
   nav.innerHTML = navHTML;
 
   const classes = ['brand', 'tools', 'sections'];
@@ -215,7 +210,7 @@ export default async function decorate(block) {
 
         const sectionLink = navSection.querySelector(':scope > a');
         if (sectionLink) {
-          const sectionLi = createElement('li', { class: 'nav-section-link' });
+          const sectionLi = createTag('li', { class: 'nav-section-link' });
           sectionLi.append(sectionLink.cloneNode(true));
           subList.insertAdjacentElement('afterbegin', sectionLi);
 
@@ -241,13 +236,13 @@ export default async function decorate(block) {
   }
 
   // hamburger for mobile
-  const hamburger = createElement('div', {
+  const hamburger = createTag('div', {
     class: 'nav-hamburger',
-  }, createElement('button', {
+  }, createTag('button', {
     type: 'button',
     'aria-controls': 'nav',
     'aria-label': 'Open navigation',
-  }, createElement('span', {
+  }, createTag('span', {
     class: 'nav-hamburger-icon',
   })));
 
@@ -290,7 +285,7 @@ export default async function decorate(block) {
     });
   }
 
-  const utilRowWrapper = createElement('div', { class: 'nav-utility-row' });
+  const utilRowWrapper = createTag('div', { class: 'nav-utility-row' });
   utilRowWrapper.append(navTools);
   nav.prepend(utilRowWrapper);
 
@@ -312,7 +307,7 @@ export default async function decorate(block) {
   const curtain = createTag('div', { class: 'gnav-curtain' });
   block.append(curtain);
 
-  const navWrapper = createElement('div', {
+  const navWrapper = createTag('div', {
     class: 'nav-wrapper',
   }, nav);
   block.append(navWrapper);
