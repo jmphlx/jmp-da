@@ -1,165 +1,102 @@
+/* eslint no-undef: 0 */
+
+import { loadScript } from '../../scripts/aem.js';
 import {
+  getBlockPropertiesList,
+  getBlockProperty,
   getJsonFromUrl,
-  languageIndexExists,
-  parseBlockOptions,
-} from '../../scripts/aem.js';
+  getLanguageIndex,
+  getListFilterOptions,
+  pageAndFilter,
+  pageFilterByFolder,
+  pageOrFilter,
+} from '../../scripts/jmp.js';
 
-/*
- * Check if an array includes all values of another array
- */
-function arrayIncludesAllValues(filterValues, pageValues) {
-  return pageValues.every((val) => filterValues.includes(val));
-}
-
-/*
- * Check if an array contains any of the values of another array.
- */
-function arrayIncludesSomeValues(filterValues, pageValues) {
-  return pageValues.some((val) => filterValues.includes(val));
-}
-
-/*
- * Apply all filters as an OR. If any condition is true, include the page in the results.
- */
-function orFilter(pageSelection, filterObject) {
-  const filteredData = pageSelection.filter((item) => {
-    let flag = false;
-    Object.keys(filterObject).forEach((key) => {
-      const pageValue = item[key].toLowerCase();
-      const filterValue = filterObject[key];
-      if (typeof filterValue === 'object') {
-        // if filterValue is an array of values
-        // is pageValue also an array of values?
-        if (pageValue !== undefined && pageValue.indexOf(',') > -1) {
-          const list = pageValue.split(',');
-          const trimmedList = list.map((str) => str.trim().toLowerCase());
-          flag = arrayIncludesSomeValues(filterValue, trimmedList);
-        } else {
-          // if filterValue is an array of values
-          // but pageValue is a singular value
-          flag = filterValue.includes(pageValue);
-        }
-      } else if (pageValue !== undefined && pageValue.indexOf(',') > -1) {
-        // if filterValue is a single string.
-        // but pageValue is an array.
-        // Check if pageValue contains filter.
-        const list = pageValue.split(',');
-        const trimmedList = list.map((str) => str.trim().toLowerCase());
-        flag = trimmedList.includes(pageValue);
-      } else {
-        // both pageValue and filterValue are strings so test ===
-        flag = filterValue === pageValue;
-      }
-    });
-    return flag;
-  });
-  return filteredData;
-}
-
-/*
- * Apply all filters as an AND. All conditions must be true in order
- * to include the page in the results.
- */
-function andFilter(pageSelection, filterObject) {
-  const filteredData = pageSelection.filter((item) => {
-    let flag = true;
-    try {
-      Object.keys(filterObject).forEach((key) => {
-        const pageValue = item[key].toLowerCase();
-        const filterValue = filterObject[key];
-        if (typeof filterValue === 'object') {
-          // if filterValue is an array of values
-          // is pageValue also an array of values?
-          if (pageValue !== undefined && pageValue.indexOf(',') > -1) {
-            const list = pageValue.split(',');
-            const trimmedList = list.map((str) => str.trim().toLowerCase());
-            if (!arrayIncludesAllValues(filterValue, trimmedList)) {
-              throw new Error('condition not met');
-            }
-          } else {
-            // if pageValue is not also an array of values then it can't possibly match.
-            throw new Error('condition not met');
-          }
-        } else if (pageValue !== undefined && pageValue.indexOf(',') > -1) {
-          /* if filterValue is a single string.
-           * but pageValue is an array.
-           * Check if pageValue contains filter. */
-          const list = pageValue.split(',');
-          const trimmedList = list.map((str) => str.trim().toLowerCase());
-          if (!trimmedList.includes(pageValue)) {
-            throw new Error('condition not met');
-          }
-        // both pageValue and filterValue are strings so test ===
-        } else if (filterValue !== pageValue) {
-          throw new Error('condition not met');
-        }
-      });
-    } catch (e) {
-      flag = false;
-    }
-    return flag;
-  });
-  return filteredData;
-}
-
-function getFilterOptions(block) {
-  const filterOptions = {};
-
-  while (block.firstElementChild !== undefined && block.firstElementChild !== null) {
-    const optionName = block.firstElementChild?.children.item(0).textContent.toLowerCase();
-    let optionValue = block.firstElementChild?.children.item(1).textContent.toLowerCase();
-    if (optionValue.indexOf(',') > -1) {
-      optionValue = optionValue.split(',').map((str) => str.trim().toLowerCase());
-    }
-    filterOptions[optionName] = optionValue;
-    block.firstElementChild.remove();
-  }
-  return filterOptions;
+export function createDateFromString(date) {
+  const dateTimeValue = moment(date, 'YYYY-MM-DD').format();
+  return dateTimeValue;
 }
 
 export default async function decorate(block) {
-  const optionsObject = parseBlockOptions(block);
-  block.firstElementChild.remove();
+  await loadScript('/scripts/moment/moment.js');
 
-  const filterOptions = getFilterOptions(block);
+  // Get language index.
+  const languageIndexUrl = getLanguageIndex();
 
-  // Get Index based on language directory of current page.
-  const pageLanguage = window.location.pathname.split('/')[1];
-  let url = '/jmp-all.json';
-  if (languageIndexExists(pageLanguage)) {
-    url = `/jmp-${pageLanguage}.json`;
-  }
-  const { data: allPages } = await getJsonFromUrl(url);
-
+  const { data: allPages, columns: propertyNames } = await getJsonFromUrl(languageIndexUrl);
   let pageSelection = allPages;
-  if (optionsObject.filterType !== undefined && optionsObject.filterType.toLowerCase() === 'and') {
-    pageSelection = andFilter(pageSelection, filterOptions);
-  } else {
-    pageSelection = orFilter(pageSelection, filterOptions);
+
+  const optionsObject = getBlockPropertiesList(block, 'options');
+  const startingFolder = getBlockProperty(block, 'startingFolder');
+  const emptyResultsMessage = getBlockProperty(block, 'emptyResultsMessage');
+  const filterOptions = getListFilterOptions(block, propertyNames);
+
+  // If startingFolder is not null, then apply page location filter FIRST.
+  if (startingFolder !== undefined) {
+    pageSelection = pageFilterByFolder(pageSelection, startingFolder);
   }
 
-  const wrapper = document.createElement('ul');
-  wrapper.classList = 'listOfItems image-list list-tile';
+  // Apply filters to pages (if there are any)
+  if (Object.keys(filterOptions).length > 0) {
+    if (optionsObject.filterType !== undefined && optionsObject.filterType.toLowerCase() === 'and') {
+      pageSelection = pageAndFilter(pageSelection, filterOptions);
+    } else {
+      pageSelection = pageOrFilter(pageSelection, filterOptions);
+    }
+  }
 
+  // Order pages by releaseDate or alphabetically
+  const sortOrder = optionsObject.sortOrder;
+  if (sortOrder !== undefined && sortOrder.toLowerCase() === 'alphabetical') {
+    // Order filtered pages alphabetically by title
+    pageSelection.sort((a, b) => (a.title < b.title ? -1 : 1));
+  } else {
+    // Order filtered pages by releaseDate
+    pageSelection.sort((a, b) => (moment(createDateFromString(a.releaseDate))
+      .isBefore(createDateFromString(b.releaseDate)) ? -1 : 1));
+  }
+
+  // Cut results down to fit within specified limit.
   const limitObjects = optionsObject.limit;
   if (limitObjects !== undefined && pageSelection.length > limitObjects) {
     pageSelection = pageSelection.slice(0, limitObjects);
   }
 
+  const wrapper = document.createElement('ul');
+  const columns = optionsObject.columns !== undefined ? optionsObject.columns : 5;
+  wrapper.classList = `listOfItems image-list list-tile col-size-${columns}`;
+
   pageSelection.forEach((item) => {
     const listItem = document.createElement('li');
+    listItem.classList = `${item.resourceOptions}`;
     const cardLink = document.createElement('a');
-    cardLink.href = item.path;
-    cardLink.target = '_self';
-    cardLink.innerHTML = `
+    if (item.redirectUrl.length > 0) {
+      cardLink.href = item.redirectUrl;
+      cardLink.target = '_blank';
+    } else {
+      cardLink.href = item.path;
+      cardLink.target = '_self';
+    }
+
+    let htmlOutput = `
     <span class="navigation-title">${item.resourceType}</span>
-    <span class="title">${item.title}</span>
-    <span class="cmp-image image"><img src="${item.image}"/></span>
-    <span class="abstract">${item.description}</span>
-  `;
+    <span class="title">${item.title}</span>`;
+    if (optionsObject.images === undefined || optionsObject.images.toLowerCase() !== 'off') {
+      htmlOutput += `<span class="cmp-image image"><img src="${item.image}"/></span>`;
+    }
+    htmlOutput += `<span class="abstract">${item.displayDescription}</span>`;
+    cardLink.innerHTML = htmlOutput;
+
     listItem.append(cardLink);
     wrapper.append(listItem);
   });
+
+  if (pageSelection.length === 0 && emptyResultsMessage !== undefined) {
+    const emptyResultsDiv = document.createElement('div');
+    emptyResultsDiv.classList = 'no-results';
+    emptyResultsDiv.innerHTML = `<span>${emptyResultsMessage}</span>`;
+    wrapper.append(emptyResultsDiv);
+  }
 
   block.append(wrapper);
 }

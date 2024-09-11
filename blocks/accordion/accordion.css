@@ -1,12 +1,12 @@
 .accordion details {
   border: 1px solid var(--dark-color);
+  border: none;
+  border-top: 1px solid #c1c1c1;
 }
-
 /* stylelint-disable-next-line no-descending-specificity */
 .accordion details + details {
   margin-top: 16px;
 }
-
 .accordion details summary {
   position: relative;
   padding: 0 16px;
@@ -16,21 +16,16 @@
   overflow: auto;
   transition: background-color 0.2s;
 }
-
 .accordion details[open] summary {
   background-color: var(--light-color);
 }
-
-.accordion details summary:focus,
-.accordion details summary:hover {
+.accordion details summary:focus, .accordion details summary:hover {
   background-color: var(--dark-color);
 }
-
 .accordion details summary::-webkit-details-marker {
   display: none;
 }
-
-.accordion details summary::after {
+.accordion details summary:after {
   content: "";
   position: absolute;
   top: 50%;
@@ -42,16 +37,82 @@
   border-width: 2px 2px 0 0;
   transition: transform 0.2s;
 }
-
-.accordion details[open] summary::after {
+.accordion details[open] summary:after {
   transform: translateY(-50%) rotate(-45deg);
 }
-
 .accordion details .accordion-item-body {
   padding: 0 16px;
 }
-
 .accordion details[open] .accordion-item-body {
   border-top: 1px solid var(--dark-color);
-  background-color: var(--background-color);
+  background-color: none;
+}
+/* .accordion-container {
+  background-color: #F8F6F4
+} */
+/*
+.accordion{
+text-align: left;
+margin: 0 auto;
+details{
+padding: 32px auto;
+display: block;
+clear: inline-end;
+}
+}
+*/
+.accordion-item-label {
+  color: #007dc3;
+}
+.accordion-item-body {
+  margin-bottom: 32px;
+  p {
+    clear: both;
+  }
+}
+
+
+
+
+
+
+.test-layout {
+  hr {
+    margin: 32px auto;
+  }
+  .accordion-item-body {
+    margin-top: .5em;
+    clear: both !important;
+    display: block;
+    contain: layout;
+  }
+  h5 {
+    margin-bottom: .1em;
+  }
+  .accordion-item {
+    clear: both;
+    img {
+      width: 50%;
+      float: left;
+      margin: 0 1em 0 0;
+    }
+    ul:nth-last-child(1){
+      width: 45%;
+      float: left;
+      ul{
+        width: 95%;
+      }
+    }
+    @media (width <=900px) {
+      img, ul, ul:nth-last-child(1) {
+        width: 100%;
+        margin: 0;
+      }
+      ul:nth-last-child(1){
+        ul{
+          width: 95%;
+        }
+      }
+    }
+  }
 }

@@ -17,5 +17,20 @@ module.exports = {
     'import/extensions': ['error', {
       js: 'always',
     }],
+    'no-plusplus': ['error', {
+      allowForLoopAfterthoughts: true,
+    }],
+    'prefer-destructuring': ['error', {
+      array: false,
+      object: false,
+    }],
   },
+  overrides: [
+    {
+      files: ['*.test.js'],
+      rules: {
+        'no-unused-expressions': 'off',
+      },
+    },
+  ],
 };

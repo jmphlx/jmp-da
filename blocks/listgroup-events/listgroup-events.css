@@ -1,0 +1,225 @@
+.listgroup-events >h1, .listgroup-events >h2, .listgroup-events >h3, .listgroup-events >h4, .listgroup-events >h5, .listgroup-events >h6 {
+  margin-bottom: 0.5em;
+}
+.listgroup-events .list-group {
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  padding-top: 0;
+  color: orange;
+}
+.listgroup-events .mcl-2 ul, .listgroup-events .mcl-3 ul, .listgroup-events .mcl-4 ul, .listgroup-events .mcl-5 ul {
+  float: left;
+}
+.listgroup-events .mcl-2 ul:last-child, .listgroup-events .mcl-3 ul:last-child, .listgroup-events .mcl-4 ul:last-child, .listgroup-events .mcl-5 ul:last-child {
+  margin: 0;
+}
+.listgroup-events .mcl-2 {
+  padding: 0 0 30px 0;
+}
+.listgroup-events .mcl-2 ul {
+  width: 45%;
+  margin-right: 5%;
+}
+.listgroup-events .mcl-2 ul:last-child {
+  width: 45%;
+}
+.listgroup-events .mcl-3 ul {
+  width: 30%;
+  margin-right: 5%;
+}
+.listgroup-events .mcl-4 ul {
+  width: 23%;
+  margin-right: 2%;
+}
+.listgroup-events .mcl-5 ul {
+  width: 18%;
+  margin-right: 2%;
+}
+.listgroup-events ul {
+  list-style: none;
+}
+.listgroup-events ul>li {
+  margin-bottom: 1em;
+}
+.listgroup-events ul>li .primary-title {
+  font-size: 110%;
+}
+.listgroup-events ul>li .primary-title .release-date, .listgroup-events ul>li .primary-title .meta-description, .listgroup-events ul>li .primary-title .description, .listgroup-events ul>li .primary-title .list-page-title, .listgroup-events ul>li .primary-title .alternate-listing-title, .listgroup-events ul>li .primary-title .subtitle {
+  display: inline;
+  font-size: 110%;
+}
+.listgroup-events ul>li .release-date {
+  display: block;
+  font-size: 80%;
+}
+.listgroup-events ul>li .meta-description, .listgroup-events ul>li .description {
+  display: block;
+  font-size: 95%;
+}
+.listgroup-events ul>li .list-page-title, .listgroup-events ul>li .alternate-listing-title {
+  display: block;
+  font-size: 80%;
+  
+}
+.listgroup-events ul>li .subtitle {
+  display: block;
+  font-size: 95%;
+}
+.listgroup-events ul>li .tag-category {
+  display: block;
+  text-transform: uppercase;
+}
+.listgroup-events ul>li .event-type {
+  display: inline-block;
+  margin-left: .5em;
+  padding-left: .5em;
+  border-left: 1px solid ;
+  font-size: 90%;
+  font-style: italic;
+}
+.listgroup-events ul>li .venue {
+  display: block;
+  font-size: 80%;
+}
+.listgroup-events ul>li .abstract-toggle {
+  display: block;
+  font-size: 80%;
+  font-weight: normal;
+  text-decoration: none;
+  cursor: pointer;
+  margin: .5em 0 0 37%;
+}
+.listgroup-events ul>li .abstract {
+  display: block;
+  max-height: inherit;
+  overflow: hidden;
+  margin: 0 0 10px;
+  width: 96%;
+  width: auto;
+  font-size: 90%;
+}
+.listgroup-events ul>li .abstract.show {
+  max-height: 1500px;
+  padding: 5px 2%;
+}
+.listgroup-events ul>li .abstract.is-visible {
+  display: block;
+  overflow: visible;
+  padding: 1px 0 0 150px;
+  line-height: 138%;
+}
+#listing .listgroup-events ul>li {
+  margin-bottom: 1.5em;
+}
+.listgroup-events ul.listOfItems.list-arrow {
+  padding: 5px 0 20px 0;
+}
+.listgroup-events ul.listOfItems.list-arrow>li:before {
+  margin-left: -1.3em;
+  font-size: 80%;
+}
+.listgroup-events ul.listOfItems.list-arrow>li p {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+.listgroup-events ul.listOfItems.list-none a {
+  display: block;
+}
+.listgroup-events ul.listOfItems.list-none.image-list a {
+  display: block;
+}
+.listgroup-events ul.no-bullet>li {
+  padding-left: 0;
+}
+.listgroup-events ul.no-bullet>li:before {
+  display: none;
+}
+.listgroup-events ul.list-tile {
+  margin: 0 -1%;
+  position: relative;
+}
+.listgroup-events ul.list-tile>li {
+  float: left;
+  width: 25%;
+  padding: 0;
+  margin: 0;
+  clear: none;
+}
+.listgroup-events ul.list-tile>li:before {
+  content: none;
+  margin-left: 0;
+}
+.listgroup-events ul.list-tile>li a {
+  display: block;
+  position: relative;
+  outline: none;
+  overflow: hidden;
+  padding: 44px 0 1em 0;
+  margin: 0 4%;
+  width: 92%;
+  background: white;
+  background: rgba(255,255,255,0.7);
+}
+.listgroup-events ul.list-tile>li a .image {
+  display: block;
+  float: none;
+  padding-bottom: .66em;
+  text-align: center;
+}
+.listgroup-events ul.list-tile>li a .tag-category, .listgroup-events ul.list-tile>li a .content-type {
+  color: #777777;
+  position: absolute;
+  top: 1px;
+  line-height: 4em;
+  text-transform: uppercase;
+}
+.listgroup-events ul.list-tile>li a .title {
+  display: block;
+  padding-bottom: .33em;
+}
+.listgroup-events ul.list-tile>li a .abstract.is-visible {
+  padding: 0;
+}
+.listgroup-events ul.list-bricks {
+  position: relative;
+}
+.listgroup-events ul.list-bricks:before {
+  content: '';
+  width: 256px;
+  height: 64px;
+  opacity: 0.5;
+  position: absolute;
+  top: 40px;
+  left: 40%;
+}
+.listgroup-events ul.list-bricks li {
+  width: 25%;
+  padding: 0;
+  margin: 0;
+}
+.listgroup-events ul.list-bricks li a .image {
+  display: block;
+  width: 90%;
+  float: none;
+  margin: 10px 5%;
+  text-align: center;
+}
+.listgroup-events ul.list-bricks li a .tag-category, .listgroup-events ul.list-bricks li a .content-type {
+  position: absolute;
+  top: 1.5em;
+  left: 5%;
+}
+.listgroup-events .nullresults ul {
+  padding-bottom: 1em;
+}
+.listgroup-events .nullresults ul li {
+  border: none;
+  padding: 0 0 0 1.1em;
+}
+.listgroup-events .nullresults ul li:before {
+  width: 1.5em;
+  margin-left: -1.5em;
+}

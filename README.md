@@ -14,8 +14,26 @@ npm install
 
 ## Linting
 
+In general, use:
 ```sh
 npm run lint
+```
+
+To run just the CSS Linter without the JS Linter:
+```sh
+npm run lint:css
+```
+
+If you want to use the --fix option to automatically correct fixable errors, use:
+```sh
+npm run lint:css:fix
+```
+
+## Updating AEM Importer
+The AEM Importer is bundled together as part of the aem simulator tooling. To update both run the following:
+
+```sh
+npm update -g @adobe/aem-cli
 ```
 
 ## Local development

@@ -1,0 +1,53 @@
+/* hero section styling | images used in this section should atleast be 1920x1080 */
+.section.background-img-container {
+  min-height: 96px;
+  overflow: hidden;
+  position: relative;
+  z-index: 0;
+  p {
+    font-size: var(--heading-font-size-xs);
+  }
+  .columns > div {
+    margin: 2px;
+    padding: 2px;
+  }
+  .background-img {
+    overflow: hidden;
+    min-width: 100%;
+    z-index: -1;
+    top: 0;
+    right: 0;
+    position: absolute;
+    img {
+      margin-top: -1%;
+      margin-right: -1%;
+      min-width: 70%;
+      opacity: .8;
+      float: right;
+      transition-duration: 0.1s;
+      transition-timing-function: ease-in;
+      min-height: 100%;
+      
+      @media (width <=1156px) {
+        min-width: 100%;
+        float: right;
+        margin-top: 0;
+        margin-right: 0;
+        transition-duration: 0.s;
+        transition-timing-function: ease-in;
+      }
+      @media (width <=700px) {
+        min-width: 150%;
+        margin-right: -50%;
+        float: left;
+      }
+      @media (width <=480px) {
+        min-width: 200%;
+        margin-left: 0;
+        float: left;
+        height: 250%;
+        opacity: .2;
+      }
+    }
+  }
+}

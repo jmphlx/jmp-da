@@ -3,7 +3,7 @@
   padding-top: 1em;
   border-bottom: 1px solid #d0d0d0;
   font-weight: normal;
-  font-family: anova-med,Arial,Helvetica,sans-serif;  ;
+  font-family: "anova-med","Arial","Helvetica",sans-serif;  ;
 }
 
 .tabs .tabs-list {
@@ -15,7 +15,7 @@
 .tabs .tabs-list h3 {
   color: #0378cd;
   line-height: 2.5em;
-  font-family: anova-med,Arial,Helvetica,sans-serif;
+  font-family: "anova-med","Arial","Helvetica",sans-serif;
   font-weight: normal;
   font-size: 1.4rem;
 }
@@ -25,7 +25,7 @@
   margin: 0;
   border: 1px solid var(--dark-color);
   border-radius: 0;
-  background-color: #fff;
+  background-color: #ffffff;
   color: initial;
   font-size: 1.4rem;
   font-weight: normal;
@@ -46,8 +46,8 @@
 
 .tabs .tabs-list .tabs-tab[aria-selected="true"] {
     border-color: #d0d0d0;
-    border-bottom-color: #FFF;
-    background: linear-gradient(180deg, #e4e4e4 0, #fff 50%);
+    border-bottom-color: #FFFFFF;
+    background: linear-gradient(180deg, #e4e4e4 0, #ffffff 50%);
     
 }
 
@@ -57,14 +57,14 @@
 .tabs .tabs-list .tabs-tab[aria-selected="false"]:focus {
   border: 1px solid #d0d0d0;
   border-bottom-color: #d0d0d0;
-  background: linear-gradient(0deg, #e4e4e4 0, #fff 50%);
+  background: linear-gradient(0deg, #e4e4e4 0, #ffffff 50%);
 }
 
 .tabs .tabs-panel {
   margin-top: -1px;
   padding: 0 16px;
   border-color: #d0d0d0;
-  border-bottom-color: #fff;
+  border-bottom-color: #ffffff;
   overflow: auto;
 }
 
@@ -91,7 +91,7 @@ div#tabpanel-standard.tabs-panel div table tbody tr td {
 }
 
 
-.tabs-panel a::before {
+.tabs-panel a:before {
 	font-family: "sasicons-103018", sans-serif !important;
   content: "\e616";
 	content: "\e616" "";

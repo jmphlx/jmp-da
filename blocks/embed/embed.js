@@ -57,7 +57,7 @@ const embedTwitter = (url) => {
 };
 
 // vidyard videos
-const embedVidyard = (url) => {
+export const embedVidyard = (url) => {
   const video = url.pathname.split('/').pop(); // breaks out UUID of vidyard URL
   const script = document.createElement('script'); // creates and appends vidyard player script to header
   script.type = 'text/javascript';

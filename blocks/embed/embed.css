@@ -1,7 +1,7 @@
 .embed {
   width: unset;
   text-align: center;
-  max-width: 800px;
+  max-width: 1600px;
   margin: 32px auto;
 }
 
@@ -47,7 +47,7 @@
   padding: 0;
 }
 
-.embed .embed-placeholder-play button::before {
+.embed .embed-placeholder-play button:before {
   content: "";
   display: block;
   box-sizing: border-box;
@@ -59,4 +59,8 @@
   border-left: 6px solid;
   top: 4px;
   left: 7px;
+}
+
+div.vidyard-player-container {
+  border-radius: 10px !important;
 }

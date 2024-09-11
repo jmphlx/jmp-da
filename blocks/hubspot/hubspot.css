@@ -47,7 +47,7 @@
   padding: 0;
 }
 
-.embed .embed-placeholder-play button::before {
+.embed .embed-placeholder-play button:before {
   content: "";
   display: block;
   box-sizing: border-box;
@@ -59,4 +59,16 @@
   border-left: 6px solid;
   top: 4px;
   left: 7px;
+}
+
+.hubspot * {
+  font-family: "anova-regular", sans-serif;
+}
+
+.hubspot-wrapper {
+  background-color: #f1f1f1;
+  margin: 0;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #d0d0d0;
 }

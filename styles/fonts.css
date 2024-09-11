@@ -1,5 +1,5 @@
 @font-face {
-  font-family: anova-regular;
+  font-family: "anova-regular";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
@@ -8,7 +8,7 @@
 }
 
 @font-face {
-  font-family: anova-light;
+  font-family: "anova-light";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
@@ -17,9 +17,9 @@
 }
 
 @font-face {
-  font-family: anova-bold;
+  font-family: "anova-bold";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 700;
   font-display: swap;
   src: url('../fonts/Anova-Bold.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
@@ -32,4 +32,33 @@
   font-display: swap;
   src: url('../fonts/sasicons-103018.woff2') format('woff2');
   unicode-range: U+e616, U+e619, U+e61b;
+}
+
+@font-face {
+  font-family: "roboto-fallback";
+  size-adjust: 100.06%;
+  ascent-override: 95%;
+  src: local('Arial');
+}
+
+/* Japan */
+:lang(ja) { 
+  font-family: "anova-regular", "Meiryo", "Hiragino Kaku Gothic Pro", sans-serif; 
+  body {
+    font-family: "anova-regular", "Meiryo", sans-serif;
+  }
+}
+/* Korea */
+:lang(ko) { 
+  font-family: "anova-regular", "Malgun Gothic", sans-serif;
+  body, li.nav-drop p, p {
+    font-family: "anova-regular", "Malgun Gothic", sans-serif;
+  }
+}
+/* China */
+:lang(zh-hans), :lang(zh-hant), :lang(zh_hans), :lang(zh_hant) {
+  font-family: "anova-regular", "Microsoft Yahei","微软雅黑", sans-serif;
+  body {
+    font-family: "anova-regular", "Microsoft Yahei","微软雅黑", sans-serif !important;
+  }
 }

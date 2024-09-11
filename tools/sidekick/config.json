@@ -1,0 +1,17 @@
+{
+  "project": "DA Block Collection",
+  "plugins": [
+    {
+      "id": "jmptags",
+      "title": "JMP Tags",
+      "environments": ["da-edit"],
+      "path": "/tools/tags.html"
+    },
+    {
+      "id": "datepicker",
+      "title": "Date Picker",
+      "environments": ["da-edit"],
+      "path": "/tools/datepicker.html"
+    }
+  ]
+}

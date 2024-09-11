@@ -1,58 +1,63 @@
 .table {
   width: 100%;
   overflow-x: auto;
+  &.agenda-table {
+    margin: 1em 0 2em 0;
+    border: 1px solid #E7E7E7;
+    background-color: #F7F7F7;
+    td:first-child {
+      width: 20%;
+    }
+    :first-child > tr {
+      color: var(--white);
+      background-color: var(--blue);
+      border: none;
+    }
+    > table thead tr, > table tbody tr {
+      border-top: none;
+      border-bottom: 1px solid #E7E7E7;
+    }
+  }
 }
-
 .table table {
   width: 100%;
   max-width: 100%;
   border-collapse: collapse;
   font-size: var(--body-font-size-xs);
 }
-
-@media (width >= 600px) {
+@media (width >=600px) {
   .table table {
     font-size: var(--body-font-size-s);
   }
 }
-
-@media (width >= 900px) {
+@media (width >=900px) {
   .table table {
     font-size: var(--body-font-size-m);
   }
 }
-
 .table table thead tr {
   border-top: 2px solid;
   border-bottom: 2px solid;
 }
-
 .table table tbody tr {
   border-bottom: 1px solid;
 }
-
 .table table th {
   font-weight: 700;
 }
-
-.table table th,
-.table table td {
+.table table th, .table table td {
   padding: 8px 16px;
   text-align: left;
 }
-
 /* no header variant */
 .table.no-header table tbody tr {
   border-top: 1px solid;
 }
-
 /* striped variant */
 .table.striped tbody tr:nth-child(odd) {
   background-color: var(--overlay-background-color);
 }
-
 /* bordered variant */
-.table.bordered table th,
-.table.bordered table td {
+.table.bordered table th, .table.bordered table td {
   border: 1px solid;
 }

@@ -23,8 +23,12 @@ indices:
         select: head > meta[name="description"]
         value: |
           attribute(el, "content")
+      displayDescription:
+        select: head > meta[name="displaydescription"]
+        value: |
+          attribute(el, "content")
       resourceType:
-        select: head > meta[name="resource-type"]
+        select: head > meta[name="resourcetype"]
         value: |
           attribute(el, "content")
       industry:
@@ -37,6 +41,34 @@ indices:
           attribute(el, "content")
       product:
         select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+      releaseDate:
+        select: head > meta[name="releasedate"]
+        value: |
+          attribute(el, "content")
+      redirectUrl:
+        select: head > meta[name="redirecturl"]
+        value: |
+          attribute(el, "content")
+      resourceOptions:
+        select: head > meta[name="resourceoptions"]
+        value: |
+          attribute(el, "content")
+      eventDateTime:
+        select: head > meta[name="eventdatetime"]
+        value: |
+          attribute(el, "content")
+      eventDisplayTime:
+        select: head > meta[name="eventdisplaytime"]
+        value: |
+          attribute(el, "content")
+      eventType:
+        select: head > meta[name="eventtype"]
+        value: |
+          attribute(el, "content")
+      eventSeries:
+        select: head > meta[name="eventseries"]
         value: |
           attribute(el, "content")
 
@@ -64,8 +96,12 @@ indices:
         select: head > meta[name="description"]
         value: |
           attribute(el, "content")
+      displayDescription:
+        select: head > meta[name="displaydescription"]
+        value: |
+          attribute(el, "content")
       resourceType:
-        select: head > meta[name="resource-type"]
+        select: head > meta[name="resourcetype"]
         value: |
           attribute(el, "content")
       industry:
@@ -78,6 +114,34 @@ indices:
           attribute(el, "content")
       product:
         select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+      releaseDate:
+        select: head > meta[name="releasedate"]
+        value: |
+          attribute(el, "content")
+      redirectUrl:
+        select: head > meta[name="redirecturl"]
+        value: |
+          attribute(el, "content")
+      resourceOptions:
+        select: head > meta[name="resourceoptions"]
+        value: |
+          attribute(el, "content")
+      eventDateTime:
+        select: head > meta[name="eventdatetime"]
+        value: |
+          attribute(el, "content")
+      eventDisplayTime:
+        select: head > meta[name="eventdisplaytime"]
+        value: |
+          attribute(el, "content")
+      eventType:
+        select: head > meta[name="eventtype"]
+        value: |
+          attribute(el, "content")
+      eventSeries:
+        select: head > meta[name="eventseries"]
         value: |
           attribute(el, "content")
 
@@ -105,8 +169,12 @@ indices:
         select: head > meta[name="description"]
         value: |
           attribute(el, "content")
+      displayDescription:
+        select: head > meta[name="displaydescription"]
+        value: |
+          attribute(el, "content")
       resourceType:
-        select: head > meta[name="resource-type"]
+        select: head > meta[name="resourcetype"]
         value: |
           attribute(el, "content")
       industry:
@@ -114,10 +182,38 @@ indices:
         value: |
           attribute(el, "content")
       capabilities:
-        select: head > meta[name="resource-type"]
+        select: head > meta[name="capabilitiy"]
         value: |
           attribute(el, "content")
       product:
-        select: head > meta[name="resource-type"]
+        select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+      releaseDate:
+        select: head > meta[name="releasedate"]
+        value: |
+          attribute(el, "content")
+      redirectUrl:
+        select: head > meta[name="redirecturl"]
+        value: |
+          attribute(el, "content")
+      resourceOptions:
+        select: head > meta[name="resourceoptions"]
+        value: |
+          attribute(el, "content")
+      eventDateTime:
+        select: head > meta[name="eventdatetime"]
+        value: |
+          attribute(el, "content")
+      eventDisplayTime:
+        select: head > meta[name="eventdisplaytime"]
+        value: |
+          attribute(el, "content")
+      eventType:
+        select: head > meta[name="eventtype"]
+        value: |
+          attribute(el, "content")
+      eventSeries:
+        select: head > meta[name="eventseries"]
         value: |
           attribute(el, "content")
