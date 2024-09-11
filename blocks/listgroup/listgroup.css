@@ -13,7 +13,7 @@ ul.list-tile {
 }
 
 .listgroup ul.col-size-3 li, .listgroup-fixed ul.col-size-3 li {
-  width: 30.75%;
+  width: 22.5%;
   margin: 0 1.25% 1.75em 1.25%;
   @media (width <= 600px) {
     width: 47.5%;
