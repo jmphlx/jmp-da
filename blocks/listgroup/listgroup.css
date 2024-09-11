@@ -157,3 +157,95 @@ ul.list-tile {
   }
 }
 
+
+.listgroup.learning-library {
+  ul.list-tile {
+    > li {
+      break-inside: avoid-column;
+      line-height: 1.3;
+      margin: 0;
+      text-indent: -.5em;
+      a {
+        background: none;
+        border: none;
+        height: auto;
+        width: auto;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        outline: none;
+      }
+      :after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        z-index: -1;
+        background: none;
+      }
+    }
+  }
+  .title {
+    &:before {
+      content: url('../../../icons/arrow-orange.svg');
+      width: 7px;
+      display: inline-block;
+      font-size: 80%;
+    }
+  }
+  .navigation-title {
+    display: none  !important;
+  }
+  .abstract {
+    display: none;
+  }
+}
+
+.listgroup.learning-library-topics {
+  ul.list-tile.col-size-2 {
+    > li {
+      width: 50%;
+      break-inside: avoid-column;
+      line-height: 1.3;
+      margin: 0;
+      padding-bottom: .5em;
+      padding-top: 1em;
+      text-indent: -.5em;
+      border-top: 1px solid #d0d0d0;
+      a {
+        background: none;
+        border: none;
+        height: auto;
+        width: auto;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        outline: none;
+      }
+      :after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        z-index: -1;
+        background: none;
+      }
+    }
+    > li:hover {
+      transform: none;
+  }
+  .title {
+    &:before {
+      content: url('../../../icons/arrow-orange.svg');
+      width: 7px;
+      display: inline-block;
+      font-size: 80%;
+    }
+  }
+  .navigation-title {
+    display: none  !important;
+  }
+  .abstract {
+    text-indent: 0em;
+  }
+}
