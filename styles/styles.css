@@ -1102,43 +1102,96 @@ div.dark-gray {
   }
   .background-img {
     overflow: hidden;
-    min-width: 100%;
-    z-index: -1;
+    min-width: 65%;
+    max-height: 150%;
     top: 0;
     right: 0;
-    position: absolute;
+    margin: 0;
+    z-index: -1;
+    object-fit: cover;
+    position: absolute; 
+    transition-duration: 250ms;
+    transition-timing-function: ease-in;
     img {
       margin-top: -1%;
       margin-right: -1%;
-      min-width: 70%;
+      min-width: 100%;
       opacity: .8;
       float: right;
-      transition-duration: 0.1s;
+      transition-duration: 250ms;
       transition-timing-function: ease-in;
       min-height: 100%;
-      @media (width <=1156px) {
-        min-width: 100%;
-        float: right;
-        margin-top: 0;
-        margin-right: 0;
-        transition-duration: 0.s;
-        transition-timing-function: ease-in;
-      }
-      @media (width <=700px) {
-        min-width: 150%;
-        margin-right: -50%;
-        float: left;
-      }
-      @media (width <=480px) {
-        min-width: 200%;
-        margin-left: 0;
-        float: left;
-        height: 250%;
-        opacity: .2;
-      }
+    }
+    @media (width <=1156px) {
+      float: right;
+      margin-top: 0;
+      margin-right: 0;
+      opacity: .4;
+    }
+    @media (width <=600px) {
+      min-width: 150%;
+      margin-right: -25%;
+      float: left;
+      opacity: .2;
+    }
+    @media (width <=480px) {
+      margin-left: 0;
+      float: left;
     }
   }
 }
+/* hero section styling | images used in this section should atleast be 1920x1080 */
+/* .background-image-full {
+  min-height: 96px;
+  overflow: hidden;
+  position: relative;
+  z-index: 0;
+  p {
+    font-size: var(--heading-font-size-xs);
+  }
+  .columns > div {
+    margin: 2px;
+    padding: 2px;
+  }
+  .background-img {
+    overflow: hidden;
+    min-width: 65%;
+    max-height: 150%;
+    top: 0;
+    right: 0;
+    margin: 0;
+    z-index: -1;
+    object-fit: cover;
+    position: absolute; 
+    transition-duration: 250ms;
+    transition-timing-function: ease-in;
+    img {
+      margin-top: -1%;
+      margin-right: -1%;
+      min-width: 100%;
+      float: right;
+      transition-duration: 250ms;
+      transition-timing-function: ease-in;
+      min-height: 100%;
+    }
+    @media (width <=1156px) {
+      float: right;
+      margin-top: 0;
+      margin-right: 0;
+      min-width: 110%;
+      
+    }
+    @media (width <=720px) {
+      min-width: 150%;
+      margin-right: -25%;
+      float: left;
+    }
+    @media (width <=480px) {
+      margin-left: 0;
+      float: left;
+    }
+  }
+} */
 /* Styling to change all list item bullets to the JMP blue  */
 ul {
   padding: 0 0 0 16px; /* we are looking at this styling agian */
