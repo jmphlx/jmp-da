@@ -5,6 +5,10 @@ ul.list-tile {
   padding: 0;
 }
 
+.listgroup ul {
+  padding-top: 1.5rem;
+}
+
 .listgroup ul li, .listgroup-fixed ul li {
   clear: both;
   list-style-type: none;

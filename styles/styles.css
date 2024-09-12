@@ -103,6 +103,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 1rem;
   padding-bottom: 0;
   scroll-margin: calc(var(--nav-height) + 1em);
+  font-weight: normal;
 }
 h1 {
   font-size: var(--heading-font-size-xxl);
@@ -114,11 +115,11 @@ h2 {
 }
 h3 {
   font-size: var(--heading-font-size-l);
-  margin-bottom: 0.5em;
+  margin-bottom: 1.5rem;
 }
 h4 {
   font-size: var(--heading-font-size-m);
-  margin-bottom: 0.5em;
+  margin-bottom: 1.5rem;
 }
 h5 {
   font-size: var(--heading-font-size-s)
@@ -131,10 +132,12 @@ h6 {
 } */
 p, dl, ol, ul, pre, blockquote {
   margin-top: 0;
-  margin-bottom: 1em;
+  margin-bottom: 1rem;
+  font-weight: normal;
 }
 strong {
   font-family: "anova-regular", sans-serif;
+  font-weight: normal;
 }
 .text-large {
   p, li {
@@ -285,17 +288,51 @@ a:hover {
     margin-bottom: 10px !important;
   }
 }
+
 .button-center {
-  text-align: center;
-  .button-container:first-child {
-    margin: .5em .5em .5em .5em !important;
+  p.button-container {
+      text-align: center;
+      width: 100%;
+  }
+  /* .button-container:first-child {
+    margin: .5em .5em .5em 50% !important;
   }
   .button-container:last-child {
-    margin: .5em .5em 2em .5em !important;
-  }
+    margin: .5em 0 2em .5em !important;
+  } */
   &.text-link .button-container {
     text-align: center;
     width: 100%;
+  }
+}
+/* left button in 2 button pair */
+.button-center :is(p.button-container):has(+ :is(p.button-container)) {
+  display: inline-flex;
+  width: 50%;
+  margin: 0 !important;
+  a.button {
+    margin: .5em .5em .5em auto;
+  }
+  @media (width <=600px) {
+    width: 100%;
+    a.button {
+      margin: .5em auto .5em auto;
+    }
+  }
+}
+/* right button in 2 button pair */
+.button-center p.button-container + p.button-container {
+  display: inline-flex;
+  width: 50%;
+  margin: 0 !important;
+  a.button {
+    margin: .5em auto 2em .5em;
+  }
+  @media (width <=600px) {
+    width: 100%;
+    a.button {
+      margin: .5em auto 2em auto;
+    }
   }
 }
 .button-right {
@@ -309,7 +346,8 @@ a:hover {
   text-align: center;
   width: 100%;
 }
-/* padding for 2 buttons mobile */ :is(p.button-container):has(+ :is(p.button-container)) {
+/* padding for 2 buttons mobile */ 
+:is(p.button-container):has(+ :is(p.button-container)) {
   margin-bottom: 10px !important;
 }
 .button-secondary {
