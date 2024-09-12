@@ -598,19 +598,22 @@ div.clm-75-25 {
 }
 /* Styling for the ROI block */
 .roi-colors {
-  h1, h2, h3, h4, h5 {
-    padding-bottom: 0 !important;
-    margin-bottom: 0 !important;
+  h1, h2, h3, h4, h5, p {
+    padding: 0 !important;
+    margin: 0 !important;
+    align-items: stretch;
   }
-  h3, div, p {
-    align-items: center;
-    margin: 0 auto;
-    padding: 10px auto;
+   p{
+    font-size: 2.1rem;
     color: #ffffff;
-    max-width: 1280px;
+  }
+  h3{
+    font-size: 2.8rem;
   }
   h5 {
-    color: #888888;
+    color: /* #b1b1b1 */ #a3a3a3;
+    font-size: 2.4rem;
+    padding-top:8px !important;
   }
   h1 {
     font-size:8.9rem;
@@ -626,19 +629,27 @@ div.clm-75-25 {
     color: #3ebdac;
     border-top: none;
     border-bottom: none;
-    padding: .5em;
-    
+    padding:3em .5em;
     @media only screen and (max-width: 900px) {
       border: none;
       border-top: 1px solid #69757d;
       border-bottom: 1px solid #69757d;
       width: 95%;
-      padding: 2em .5em;
+      padding: 2em .5em!important;
     }
   }
   div > div:nth-child(3) {
     color: #c479ba;
   }
+      
+  @media only screen and (max-width: 900px) {
+    div{
+    padding: 0 0 1.5em 0!important;
+    > div:nth-child(3) {
+      padding:1.5em 0 0 0!important;
+    }
+  }
+}
 }
 /* Styling for G2 badges */
 .g2-badge-6, .g2-badge-4 {
