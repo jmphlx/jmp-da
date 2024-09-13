@@ -787,3 +787,14 @@ div.clm-75-25 {
     font-size: var(--body-font-size-xs);
   }
 }
+
+.text-grid {
+  div {
+    div {
+      margin-bottom: 1rem;
+    }
+    h3, h4 {
+      margin-bottom: .5rem;
+    }
+  }
+}
