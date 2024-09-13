@@ -12,7 +12,8 @@ function isLanguageSupported(language) {
   return languageIndexes.includes(language);
 }
 /* Set the html lang property based on the page path. Default to 'en'. */
-const pageLanguage = window.location.pathname.split('/')[1];
+const pagePath = window.location.pathname
+const pageLanguage = pagePath.split('/')[1];
 const isLangSupported = isLanguageSupported(pageLanguage);
 const lang = isLangSupported ? pageLanguage : 'en';
 document.documentElement.lang = lang;
@@ -288,12 +289,35 @@ function pageFilterByFolder(pageSelection, folderPath) {
   return filteredData;
 }
 
+/**
+ * Given a page path, determine if the curernt page exists in that language
+ * @param {*} languagePage 
+ * @returns 
+ */
+async function getLangMenuPageUrl(languagePage) {
+  const languageDirectory = languagePage.split('/')[1];
+
+  const currPage = pagePath.replace(/\/(.*?)\w+/,'');
+  let languageCurrPage = `/${languageDirectory}${currPage}`;
+
+  try {
+    const response = await fetch(languageCurrPage);
+    if (!response.ok) {
+      return null;
+    }
+    return languageCurrPage;
+  } catch (error) {
+  }
+  return null;
+}
+
 export {
   arrayIncludesAllValues,
   arrayIncludesSomeValues,
   getBlockPropertiesList,
   getBlockProperty,
   getJsonFromUrl,
+  getLangMenuPageUrl,
   getLanguageIndex,
   getLanguageFooter,
   getLanguageNav,

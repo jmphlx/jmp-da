@@ -1,10 +1,12 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { createTag } from '../../scripts/helper.js';
 import { onSearchInput } from './search.js';
-import { getLanguageNav } from '../../scripts/jmp.js';
+import { getLangMenuPageUrl, getLanguageNav } from '../../scripts/jmp.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
+// flag to check if the language dropdown urls were decorated
+let languageDropdownDecorated = false;
 
 /**
  * fetches the navigation markup
@@ -34,6 +36,28 @@ function closeOnEscape(e) {
       nav.querySelector('button').focus();
     }
   }
+}
+
+/**
+ * If the current page path exists for another language, change the nav menu item url for
+ * that language to be the current page in the language. Otherwise, leave the
+ * url as the language home page. 
+ * This should only run once, when the language dropdown is opened for the first time on a page.
+ * It should only run twice if the user switches from desktop to mobile or vice versa to update
+ * the displayed language nav items.
+ * If the language dropdown is never opened, the urls are never modified.
+ * If the language dropdown has already been opened while on the current page,
+ * don't decorate the urls again.
+ * @param {element} subList the navigation menu element for languages.
+ */
+function decorateLanguageMenu(subList) {
+  subList.querySelectorAll('ul li a').forEach(async (item) => {
+    const url = await getLangMenuPageUrl(item.pathname);
+    if  (url !== null) {
+      item.setAttribute('href', url);
+    }
+  });
+  languageDropdownDecorated = true;
 }
 
 /**
@@ -119,10 +143,27 @@ function toggleMenu(nav, forceExpanded = null) {
   }
 }
 
+/**
+ * When a nav menu item is clicked, toggle that nav and close
+ * all other dropdowns.
+ * If it is the language nav menu, then also decorate the urls
+ * the first time it is opened.
+ * @param {*} section the current nav menu item
+ * @param {*} sections the parent of all nav menus
+ */
 function addNavDropToggle(section, sections) {
-  section.addEventListener('click', () => {
-    toggleNavDrop(section, sections);
-  });
+  if (section.classList.contains('language-nav')) {
+    section.addEventListener('click', () => {
+      toggleNavDrop(section, sections);
+      if (!languageDropdownDecorated) {
+        decorateLanguageMenu(section);
+      }
+    });
+  } else {
+    section.addEventListener('click', () => {
+      toggleNavDrop(section, sections);
+    });
+  }
 }
 
 async function buildMobileMenu(nav) {
@@ -251,7 +292,10 @@ export default async function decorate(block) {
   nav.setAttribute('aria-expanded', 'false');
   // prevent mobile nav behavior on window resize
   toggleMenu(nav, isDesktop.matches);
-  isDesktop.addEventListener('change', () => toggleMenu(nav, isDesktop.matches));
+  isDesktop.addEventListener('change', () => {
+    toggleMenu(nav, isDesktop.matches);
+    languageDropdownDecorated = false;
+  });
 
   const navTools = nav.querySelector('.nav-tools');
   if (navTools) {
@@ -259,6 +303,12 @@ export default async function decorate(block) {
       const subList = navTool.querySelector('ul');
       if (subList) {
         navTool.classList.add('nav-drop');
+        // Add a class to the language dropdown.
+        const languageItem = Array.from(subList.querySelectorAll('a'))
+          .find(el => el.textContent === 'English');
+        if (languageItem !== undefined) {
+          navTool.classList.add('language-nav');
+        }
         const sectionLink = navTool.querySelector(':scope > a');
         if (sectionLink) {
           sectionLink.className = 'nav-section-heading';
