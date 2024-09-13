@@ -791,10 +791,11 @@ div.clm-75-25 {
 .text-grid {
   div {
     div {
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
-    h3, h4 {
-      margin-bottom: .5rem;
+    h5 {
+      font-family: "anova-regular", sans-serif;
+      margin-bottom: 1rem;
     }
   }
 }
