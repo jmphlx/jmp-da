@@ -50,31 +50,6 @@ async function getJsonFromUrl(route) {
 }
 
 /**
- * Create an array of Json Object representing all world timezones.
- * This includes the offset, the name of the timezone, abbreviation, etc.
- * This is pulled from moment.js.
- * @returns array of json objects of global timezones
- */
-async function getTimezones() {
-  const timezones = await getJsonFromUrl('/scripts/moment/timezones.json');
-  return timezones;
-}
-
-/**
- * Given an abbreviation of a timezone i.e. PST, return
- * the json object representing that timezone. Primarily used to get
- * the offset.
- * @returns single json object of the corresponding timezone
- */
-function getTimezoneObjectFromAbbr(timezones, tzabbr) {
-  // eslint-disable-next-line arrow-body-style
-  const timezone = timezones.filter((item) => {
-    return item.abbr === tzabbr;
-  });
-  return timezone[0];
-}
-
-/**
  * Returns the path of the appropriate nav based on page language.
  * Default to 'en' if language isn't found.
  * @returns {string} path to language nav
@@ -323,8 +298,6 @@ export {
   getLanguageFooter,
   getLanguageNav,
   getListFilterOptions,
-  getTimezoneObjectFromAbbr,
-  getTimezones,
   isLanguageSupported,
   pageAndFilter,
   pageFilterByFolder,

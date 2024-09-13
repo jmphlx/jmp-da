@@ -1,20 +1,15 @@
 /* eslint no-undef: 0 */
 
-import { loadScript } from '../../scripts/aem.js';
 import {
   getBlockProperty,
   getBlockPropertiesList,
   getJsonFromUrl,
   getLanguageIndex,
   getListFilterOptions,
-  getTimezoneObjectFromAbbr,
-  getTimezones,
   pageAndFilter,
   pageFilterByFolder,
   pageOrFilter,
 } from '../../scripts/jmp.js';
-
-const timezones = await getTimezones();
 
 /*
  * Apply where a property is not empty.
@@ -24,15 +19,6 @@ function pageAnyFilter(pageSelection, tabProperty) {
     const pageValue = item[tabProperty].toLowerCase();
     return pageValue !== undefined && pageValue.length > 0;
   });
-}
-
-export function createDateTimeFromString(date, time) {
-  const timeArray = time.split(' ');
-  const numTime = timeArray[0];
-  const timezone = timeArray[1];
-  const offsetUTC = getTimezoneObjectFromAbbr(timezones, timezone).utc[0];
-  const dateTimeValue = moment(`${date},${numTime}`, 'YYYY-MM-DD,hh:mmA').tz(offsetUTC).format();
-  return dateTimeValue;
 }
 
 function createEmptyTabPanel(emptyResultsMessage, tabPanel) {
@@ -59,7 +45,7 @@ function createTabPanel(pageSelection, tabPanel) {
     const htmlOutput = `
     <span class="tag-category">${item.resourceType}</span>
     <span class="title">${item.title}</span>
-    <span class="subtitle">${item.eventDate} | ${item.eventTime}</span>`;
+    <span class="subtitle">${item.eventDisplayTime}</span>`;
     cardLink.innerHTML = htmlOutput;
 
     listItem.append(cardLink);
@@ -69,10 +55,6 @@ function createTabPanel(pageSelection, tabPanel) {
 }
 
 export default async function decorate(block) {
-  // Load moment for date comparisons.
-  await loadScript('/scripts/moment/moment.js');
-  await loadScript('/scripts/moment/moment-timezone.min.js');
-
   // Get language index.
   const languageIndexUrl = getLanguageIndex();
   const { data: allPages, columns: propertyNames } = await getJsonFromUrl(languageIndexUrl);
@@ -128,8 +110,8 @@ export default async function decorate(block) {
     }
 
     // Order filtered pages by event date and time.
-    pageSelection.sort((a, b) => (moment(createDateTimeFromString(a.eventDate, a.eventTime))
-      .isBefore(moment(createDateTimeFromString(b.eventDate, b.eventTime))) ? -1 : 1));
+    pageSelection.sort((a, b) => ((new Date(a.eventDateTime) - new Date(b.eventDateTime)) < 0
+      ? -1 : 1));
 
     // Cut results down to fit within specified limit.
     const limitObjects = optionsObject.limit;
