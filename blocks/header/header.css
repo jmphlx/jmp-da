@@ -182,8 +182,10 @@ header .nav-brand {
 }
 
 header nav .nav-brand {
+  display: flex;
+  align-items: center;
   picture {
-    display: flex;
+    /* display: flex; */
     img {
       width: 160px;
       align-self: center;
@@ -1134,7 +1136,7 @@ header nav[aria-expanded="true"] .nav-tools.nav-tools-mobile {
   /* display: grid;
   grid-template-columns: 1fr auto;
   grid-gap: 20px; */
-  padding: 0 12px;
+  padding: 0 20px;
   box-sizing: border-box;
 }
 
