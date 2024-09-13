@@ -598,6 +598,9 @@ div.clm-75-25 {
 }
 /* Styling for the ROI block */
 .roi-colors {
+  div{
+    align-items: center
+  }
   h1, h2, h3, h4, h5, p {
     padding: 0 !important;
     margin: 0 !important;
