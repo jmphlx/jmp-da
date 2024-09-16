@@ -23,6 +23,37 @@
 .columns > div > .columns-img-col img {
   display: block;
 }
+.button-center {
+  .button-container {
+      text-align: center;
+      width: 100%;
+  }
+  /* .button-container:first-child {
+    margin: .5em .5em .5em 50% !important;
+  }
+  .button-container:last-child {
+    margin: .5em 0 2em .5em !important;
+  } */
+  &.text-link .button-container {
+    text-align: center;
+    width: 100%;
+  }
+}
+/* left button in 2 button pair */
+.button-center :is(p.button-container):has(+ :is(p.button-container)) {
+  display: inline-flex;
+  width: 49.5%;
+  margin: 0 !important;
+  a.button {
+    margin: .5em .5em .5em auto;
+  }
+  @media (width <=600px) {
+    width: 100%;
+    a.button {
+      margin: .5em auto .5em auto;
+    }
+  }
+}
 @media (width >=900px) {
   .columns > div {
     flex-direction: unset;
