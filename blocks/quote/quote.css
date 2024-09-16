@@ -50,11 +50,11 @@ div.quote-small .quote-quotation {
   content: '\201C';
   width: 1em;
   top: 0.275em;
-  left: -70px;
+  left: -35px;
 }
 
 * *.quote blockquote .quote-quotation > :last-child:after {
   content: '\201D';
   bottom: -0.175em;
-  right: 70px;
+  right: 105px;
 }
