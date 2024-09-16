@@ -290,7 +290,7 @@ a:hover {
 }
 
 .button-center {
-  p.button-container {
+  .button-container {
       text-align: center;
       width: 100%;
   }
