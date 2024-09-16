@@ -15,7 +15,7 @@ let languageDropdownDecorated = false;
  */
 async function fetchNavigationHTML() {
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta) : getLanguageNav();
+  const navPath = navMeta ? new URL(navMeta, window.location).pathname : getLanguageNav();
 
   const response = await fetch(`${navPath}.plain.html`);
   return response.text();

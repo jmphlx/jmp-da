@@ -27,34 +27,34 @@ export default async function decorate(block) {
     const resp = await fetch(`${item}`);
     if (!resp.ok) {
       pageNotFound += 1;
-      break;
-    }
-    const html = await resp.text();
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-
-    const listItem = document.createElement('li');
-    listItem.classList = `${getMetadata('resourceOptions', doc)}`;
-    const cardLink = document.createElement('a');
-    const redirectUrl = getMetadata('redirecturl', doc);
-    if (redirectUrl.length > 0) {
-      cardLink.href = redirectUrl;
-      cardLink.target = '_blank';
     } else {
-      cardLink.href = item;
-      cardLink.target = '_self';
+      const html = await resp.text();
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+  
+      const listItem = document.createElement('li');
+      listItem.classList = `${getMetadata('resourceOptions', doc)}`;
+      const cardLink = document.createElement('a');
+      const redirectUrl = getMetadata('redirecturl', doc);
+      if (redirectUrl.length > 0) {
+        cardLink.href = redirectUrl;
+        cardLink.target = '_blank';
+      } else {
+        cardLink.href = item;
+        cardLink.target = '_self';
+      }
+      let htmlOutput = `
+      <span class="navigation-title">${getMetadata('resourcetype', doc)}</span>
+      <span class="title">${getMetadata('og:title', doc)}</span>`;
+      if (optionsObject.images === undefined || optionsObject.images.toLowerCase() !== 'off') {
+        htmlOutput += `<span class="cmp-image image"><img src="${getMetadata('og:image', doc)}"/></span>`;
+      }
+      htmlOutput += `<span class="abstract">${getMetadata('displaydescription', doc)}</span>`;
+  
+      cardLink.innerHTML = htmlOutput;
+  
+      listItem.append(cardLink);
+      wrapper.append(listItem);
     }
-    let htmlOutput = `
-    <span class="navigation-title">${getMetadata('resourcetype', doc)}</span>
-    <span class="title">${getMetadata('og:title', doc)}</span>`;
-    if (optionsObject.images === undefined || optionsObject.images.toLowerCase() !== 'off') {
-      htmlOutput += `<span class="cmp-image image"><img src="${getMetadata('og:image', doc)}"/></span>`;
-    }
-    htmlOutput += `<span class="abstract">${getMetadata('displaydescription', doc)}</span>`;
-
-    cardLink.innerHTML = htmlOutput;
-
-    listItem.append(cardLink);
-    wrapper.append(listItem);
   }
 
   if (pageNotFound === pageUrls.length && emptyResultsMessage !== undefined) {
