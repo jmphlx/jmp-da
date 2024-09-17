@@ -179,13 +179,14 @@ div.listgroup-fixed, div.listgroup  {
       margin: 0;
       text-indent: -.5em;
       width: 100% !important;
-      margin-left: 10px !important;
+      margin-left: 20px !important;
       a {
         background: none;
         border: none;
         height: auto;
         width: auto;
         text-decoration: none;
+        text-indent: -10px;
         display: block;
         flex-direction: column;
         position: relative;
@@ -211,13 +212,15 @@ div.listgroup-fixed, div.listgroup  {
     }
   }
   .title {
-    margin: 0 2rem .25rem 3rem !important;
+    margin: 0 2rem .25rem 1rem !important;
     &:before {
       content: url('../../../icons/arrow-orange.svg');
       width: 7px;
       display: inline-block;
       margin-left: -20px;
       font-size: 80%;
+      padding-left: 12px;
+      text-indent: -8px;
     }
     :hover {
       color: var(--blueLight);
