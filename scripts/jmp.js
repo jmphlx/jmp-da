@@ -74,7 +74,16 @@ function getLanguageFooter() {
  * @returns {string} path to language index
  */
 function getLanguageIndex() {
-  return isLanguageSupported ? `/jmp-${lang}.json` : '/jmp-all.json';
+  return isLanguageSupported ? `/jmp-${lang}.json` : '/jmp-en.json';
+}
+
+/**
+ * Returns the path of the appropriate index for SKP based on page language.
+ * Default to 'en' if language isn't found.
+ * @returns {string} path to language index
+ */
+function getSKPLanguageIndex() {
+  return isLanguageSupported ? `/skp-${lang}.json` : '/skp-en.json';
 }
 
 /*
@@ -322,6 +331,7 @@ export {
   getLanguageFooter,
   getLanguageNav,
   getListFilterOptions,
+  getSKPLanguageIndex,
   isLanguageSupported,
   pageAndFilter,
   pageFilterByFolder,

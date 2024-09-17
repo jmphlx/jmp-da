@@ -1,6 +1,9 @@
 import {
   sampleRUM,
   buildBlock,
+  decorateBlock,
+  getMetadata,
+  loadBlock,
   loadHeader,
   loadFooter,
   decorateButtons,
@@ -91,6 +94,19 @@ function updateSectionIds(main) {
     section.id = section.getAttribute('data-id');
     section.removeAttribute('data-id');
   });
+}
+
+/**
+ * If the page has a page-style, import the appropriate css as well.
+ * Got from Adobe support.
+ * @author JMP
+ */
+function decoratePageStyles() {
+  const pageStyle = getMetadata('page-style');
+  if (pageStyle && pageStyle.trim().length > 0) {
+    loadCSS(`${`${window.location.protocol}//${window.location.host}`}/styles/pages/${pageStyle.toLowerCase()}.css`);
+    document.body.classList.add(pageStyle.toLowerCase());
+  }
 }
 
 /**
@@ -221,6 +237,7 @@ export function decorateMain(main) {
  */
 async function loadEager(doc) {
   decorateTemplateAndTheme();
+  decoratePageStyles();
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);
@@ -254,7 +271,17 @@ async function loadLazy(doc) {
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
-  loadHeader(doc.querySelector('header'));
+  // If this is a SKP page, use the SKP header (custom and reduces js).
+  const isSKPPage = document.body.classList.contains('knowledgeportal');
+  if (isSKPPage) {
+    const headerBlock = buildBlock('header-skp', '');
+    doc.querySelector('header').append(headerBlock);
+    decorateBlock(headerBlock);
+    loadBlock(headerBlock);
+  } else {
+    loadHeader(doc.querySelector('header'));
+  }
+
   loadFooter(doc.querySelector('footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
