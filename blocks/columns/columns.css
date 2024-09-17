@@ -768,7 +768,7 @@ div.clm-75-25 {
   }
 }
 /* presenter/speaker block */
-.presenter {
+/* .presenter {
   margin: 1em 0;
   div {
     gap: 1.5rem;
@@ -781,7 +781,7 @@ div.clm-75-25 {
       margin: 0 0 .5em 0;
     }
   }
-}
+} */
 .event-disclaimer {
   padding: 1em 0;
   p {

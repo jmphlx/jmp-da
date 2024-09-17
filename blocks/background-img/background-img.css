@@ -51,8 +51,8 @@
     }
   }
 }
-/* hero section styling | images used in this section should atleast be */
-/* .background-image-narrow {
+/* Narrow hero section styling | images used in this section should atleast be */
+.background-image-narrow {
   min-height: 96px;
   overflow: hidden;
   position: relative;
@@ -66,42 +66,34 @@
   }
   .background-img-wrapper {
     overflow: hidden;
-    min-width: 6%;
-    max-height: 150%;
+    min-width: 125%;
     top: 0;
+    left:0;
     right: 0;
-    margin: 0;
+    /* margin: 0 auto; */
     z-index: -1;
-    object-fit: cover;
+    object-fit: fill;
     position: absolute; 
     transition-duration: 250ms;
     transition-timing-function: ease-in;
     img {
-      margin-top: -1%;
-      margin-right: -1%;
-      min-width: 100%;
-      opacity: .8;
-      float: right;
+      margin: auto;
       transition-duration: 250ms;
       transition-timing-function: ease-in;
-      min-height: 100%;
-    }
+      height: 150% !important;
+      overflow: visible;
+      width: 250%;
     @media (width <=1156px) {
-      float: right;
       margin-top: 0;
-      margin-right: 0;
-      opacity: .4;
-    }
-    @media (width <=600px) {
-      min-width: 150%;
-      margin-right: -25%;
-      float: left;
-      opacity: .2;
+      min-width: 200%;
     }
     @media (width <=480px) {
-      margin-left: 0;
-      float: left;
+      margin-top: 0;
+      min-width: 200%;
+      max-height: 350%;
+      object-fit:cover;
+      min-height: 150% !important;
     }
-  } 
 }
-  */
+}
+}
