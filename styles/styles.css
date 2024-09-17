@@ -943,23 +943,28 @@ main img {
   width: auto;
   height: auto;
 }
-.image-small img {
-  min-width: 25%;
-  max-width: 50%;
+.image-size-50 img {
+   width: 50%;
 }
-.image-medium img {
-  min-width: 50%;
-  max-width: 75%;
+.image-size-60 img {
+  width: 60%;
 }
-.image-large img {
-  min-width: 75%;
-  max-width: 90%;
+.image-size-70 img {
+  width: 70%;
+}
+.image-size-80 img {
+  width: 80%;
+}
+.image-size-90 img {
+  width: 90%;
+}
+.image-size-100 img {
+  width: 100%;
 }
 @media (width <=900px) {
-  .image-small, .image-medium, .image-large {
+  .image-size-50, .image-size-60, .image-size-70, .image-size-80, .image-size-90, .image-size-100 {
     img {
-      min-width: 25%;
-      max-width: 50%;
+      width: 100%;
     }
   }
 }
@@ -1129,6 +1134,12 @@ div.gray {
 }
 div.dark-gray {
   background: var(--gray3);
+}
+div.blue {
+  background: var(--blue);
+}
+div.dark-blue {
+  background: var(--blueDark);
 }
 
 /* Styling to change all list item bullets to the JMP blue  */
