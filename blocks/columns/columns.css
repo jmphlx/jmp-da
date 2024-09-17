@@ -606,28 +606,77 @@ div.clm-75-25 {
     color: rgba(0, 0, 0, 0.3);
   }
 }
-/* Text and Image */
-.text-image-wrap {
-  display: block;
-  margin-bottom: 2rem;
+.image-float {
+  img {
+    margin: 0 2rem 2rem 0;
+    float: left;
+  }
+}
+/* Image sizes */
+.image-size-small {
+  img {
+    width: 128px;
+  }
   div {
-    display: block;
+    gap: 2rem;
   }
   div.columns-img-col {
-    float: left;
-    max-width: 50%;
-    margin: 0 3rem 3rem 0;
+    width: 128px;
+    max-width: 128px;
+    height: auto;
     picture {
-      float: left;
-      aspect-ratio: 1;
-      img {
-        object-fit: cover;
-        object-position: center;
-        border-radius: 5px;
-      }
+      width: 100%;
+    }
+  }
+  @media (width <=900px) {
+    div.columns-img-col {
+      width: auto;
     }
   }
 }
+.image-size-medium {
+  img {
+    width: 264px;
+  }
+  div {
+    gap: 2rem;
+  }
+  div.columns-img-col {
+    width: 264px;
+    max-width: 264px;
+    height: auto;
+    picture {
+      width: 100%;
+    }
+  }
+  @media (width <=900px) {
+    div.columns-img-col {
+      width: 100%;
+    }
+  }
+}
+.image-size-large {
+  img {
+    width: 528px;
+  }
+  div {
+    gap: 2rem;
+  }
+  div.columns-img-col {
+    width: 528px;
+    max-width: 528px;
+    height: auto;
+    picture {
+      width: 100%;
+    }
+  }
+  @media (width <=900px) {
+    div.columns-img-col {
+      width: auto;
+    }
+  }
+}
+
 /* Styling for the ROI block */
 .roi-colors {
   div{
