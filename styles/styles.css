@@ -1247,42 +1247,42 @@ div.section.block-padding-large {
   .icon {
     height: auto;
     width: 16px;
-    max-width: 16px;
   }
 }
 .icon-s {
   .icon {
     height: auto;
     width: 32px;
-    max-width: 32px;
   }
 }
 .icon-m {
   .icon {
     height: auto;
     width: 64px;
-    max-width: 64px;
   }
 }
 .icon-l {
   .icon {
     height: auto;
     width: 96px;
-    max-width: 96px;
   }
 }
 .icon-xl {
   .icon {
     height: auto;
     width: 128px;
-    max-width: 128px;
   }
 }
 .icon-xxl {
   .icon {
     height: auto;
     width: 160px;
-    max-width: 160px;
+  }
+}
+.icon-xxxl {
+  .icon {
+    height: auto;
+    width: 250px;
   }
 }
 /* Column layouts */
