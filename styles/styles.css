@@ -530,12 +530,12 @@ a:hover {
     text-decoration: none;
     color: #dddddd !important;
     font-size: 1.6rem !important;
-  }
-  a:hover {
-    color: #ffffff !important;
-  }
-  :before {
-    content: url('../../../icons/arrow-white.svg');
+    &:before {
+      content: url('../../../icons/arrow-white.svg');
+    }
+    &:hover {
+      color: #ffffff !important;
+    }
   }
 }
 .text-link-caret-right .button-container, .text-link-caret-right ul li {
@@ -583,26 +583,30 @@ a:hover {
     line-height: 1.6rem;
     transition-duration: 0.5s;
     margin-bottom: 1rem !important;
-  }
-  a:hover {
-    color: var(--link-hover-color) !important;
     &:before {
-      border: 2px solid var(--link-hover-color);
+      content: '';
+      transform: rotate(225deg);
+      right: -2px;
+      bottom: 1px;
+      position: relative;
+      width: 8px;
+      height: 8px;
+      border: 2px solid var(--blue);
+      border-radius: 0 1px 0 0;
       border-width: 2px 2px 0 0;
     }
+    &:after {
+      display: none;
+    }
+    &:hover {
+      color: var(--link-hover-color) !important;
+      &:before {
+        border: 2px solid var(--link-hover-color);
+        border-width: 2px 2px 0 0;
+      }
+    }
   }
-  :before {
-    content: '';
-    transform: rotate(225deg);
-    right: -2px;
-    bottom: 1px;
-    position: relative;
-    width: 8px;
-    height: 8px;
-    border: 2px solid var(--blue);
-    border-radius: 0 1px 0 0;
-    border-width: 2px 2px 0 0;
-  }
+  
   @media (width <=900px) {
     a:link, a:any-link, a.button:any-link {
       margin-bottom: 2rem !important;
@@ -1382,10 +1386,12 @@ div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-60-40, div.
       .group-1 {
         display: block;
         width: auto;
+        margin-bottom: 2rem;
       }
       .group-2 {
         display: block;
         width: 100%;
+        margin-bottom: 2rem;
       }
     }
   }
