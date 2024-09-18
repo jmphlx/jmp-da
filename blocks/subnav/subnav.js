@@ -51,14 +51,14 @@ export default async function decorate(block) {
     const dropdownItems = block.firstElementChild?.children.item(1);
     block.firstElementChild.remove();
 
-    const isDropdown = dropdownItems !== undefined &&
-      dropdownItems !== null &&
-      dropdownItems.querySelectorAll('li') !== undefined &&
-      dropdownItems.querySelectorAll('li').length > 0;
+    const isDropdown = dropdownItems !== undefined
+      && dropdownItems !== null
+      && dropdownItems.querySelectorAll('li') !== undefined
+      && dropdownItems.querySelectorAll('li').length > 0;
 
     const listItem = document.createElement('li');
 
-    if(isDropdown) {
+    if (isDropdown) {
       listItem.innerHTML = `${buttonName}`;
       listItem.classList = 'is-dropdown';
 
@@ -73,7 +73,7 @@ export default async function decorate(block) {
           listItem.classList.add('is-open');
         }
       });
-  
+
       const dropdownListItems = constructDropdown(dropdownItems, activePage);
       listItem.append(dropdownListItems);
     } else {
@@ -82,7 +82,9 @@ export default async function decorate(block) {
       link.innerText = `${buttonName}`;
       listItem.append(link);
     }
-    if (isDropdownActive(listItem)) {
+
+    if ((isDropdown && isDropdownActive(listItem))
+      || (!isDropdown && listItem.querySelector('a').href === activePage)) {
       listItem.classList.add('active');
     }
     listOfDropdowns.append(listItem);
