@@ -71,6 +71,10 @@ indices:
         select: head > meta[name="eventseries"]
         value: |
           attribute(el, "content")
+      eventDisplayLabel:
+        select: head > meta[name="eventdisplaylabel"]
+        value: |
+          attribute(el, "content")
 
 #SKP ENGLISH CONTENT#
   skp-en:
@@ -140,6 +144,10 @@ indices:
           attribute(el, "content")
       eventSeries:
         select: head > meta[name="eventseries"]
+        value: |
+          attribute(el, "content")
+      eventDisplayLabel:
+        select: head > meta[name="eventdisplaylabel"]
         value: |
           attribute(el, "content")
 
@@ -215,6 +223,10 @@ indices:
         select: head > meta[name="eventseries"]
         value: |
           attribute(el, "content")
+      eventDisplayLabel:
+        select: head > meta[name="eventdisplaylabel"]
+        value: |
+          attribute(el, "content")
 
 #ENGLISH CONTENT#
   jmp-all:
@@ -286,5 +298,9 @@ indices:
           attribute(el, "content")
       eventSeries:
         select: head > meta[name="eventseries"]
+        value: |
+          attribute(el, "content")
+      eventDisplayLabel:
+        select: head > meta[name="eventdisplaylabel"]
         value: |
           attribute(el, "content")
