@@ -97,7 +97,7 @@ div.listgroup-fixed, div.listgroup  {
       .navigation-title {
         order: 1;
         font-size: 13px;
-        font-family: "anova-med", "Arial", "Helvetica", sans-serif;
+        font-family: "anova-regular", "Arial", "Helvetica", sans-serif;
         font-weight: normal;
         color: var(--gray7);
         display: block;
@@ -108,7 +108,7 @@ div.listgroup-fixed, div.listgroup  {
       }
       .title {
         order: 2;
-        font-family: "anova-reg", "Arial", "Helvetica", sans-serif;
+        font-family: "anova-regular", "Arial", "Helvetica", sans-serif;
         font-weight: normal;
         font-size: 1.6 rem;
         margin: 0 8% .25em 8%;
@@ -191,6 +191,7 @@ div.listgroup-fixed, div.listgroup  {
         flex-direction: column;
         position: relative;
         outline: none;
+        margin-bottom: 5px;
         :hover {
           color: var(--link-hover-color) !important;
           text-decoration: underline solid var(--link-hover-color) !important;
