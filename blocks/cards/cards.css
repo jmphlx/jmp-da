@@ -64,6 +64,12 @@
   }
 } */
 
+.extra-space {
+  .cards > ul > li {
+    padding: 2rem;
+  }
+}
+
 .data-viz-icon-cards {
   > ul {
     display: flex;
