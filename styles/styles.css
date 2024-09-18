@@ -513,19 +513,16 @@ a:hover {
     :hover {
       color: var(--link-hover-color);
     }
-  }
-  a:hover {
-    color: var(--link-hover-color);
-  }
-  :after {
-    display: none;
-  }
-  :before {
-    content: url('../../../icons/arrow-orange.svg');
-    width: 7px;
-    display: inline-block;
-    font-size: 80%;
-    margin: 0 5px 0 0;
+    :after {
+      display: none;
+    }
+    &:before {
+      content: url('../../../icons/arrow-orange.svg');
+      width: 7px;
+      display: inline-block;
+      font-size: 80%;
+      margin: 0 5px 0 0;
+    }
   }
 }
 .text-link-caret-left-light .button-container, .text-link-caret-left-light ul li {
