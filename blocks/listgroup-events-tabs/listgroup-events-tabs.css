@@ -203,7 +203,7 @@
 }
 .listgroup-events-tabs ul.list-tile>li {
   float: left;
-  width: 25%;
+  width: 100%;
   padding: 0;
   margin: 0;
   clear: none;
@@ -256,7 +256,7 @@
   left: 40%;
 }
 .listgroup-events-tabs ul.list-bricks li {
-  width: 25%;
+  width: 100%;
   padding: 0;
   margin: 0;
 }
