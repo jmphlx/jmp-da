@@ -827,9 +827,9 @@ div.clm-75-25 {
 .event-page {
   h6 {
     text-transform: uppercase;
-    margin: 0 0 .5em 0;
+    margin: 0;
     font-size: var(--body-font-size-xs);
-    + h1 {
+    + h1, + h2 {
       margin: 0 0 .5em 0;
     }
   }
@@ -841,34 +841,18 @@ div.clm-75-25 {
       gap: 1.5rem;
     }
   }
+  @media (width <=600px) {
+   &.section{
+    padding-top:48px;
+      padding-bottom:0;
+    }
+  }
   @media (width <=480px) {
-    picture {
-      display: none;
-    }
-  }
+    &.section{
+      padding:48px 16px 32px 16px;
+     }
+   }
 }
-/* presenter/speaker block */
-/* .presenter {
-  margin: 1em 0;
-  div {
-    gap: 1.5rem;
-  }
-  h6 {
-    text-transform: uppercase;
-    margin: 0 0 .5em 0;
-    font-size: var(--body-font-size-xs);
-    + h4 {
-      margin: 0 0 .5em 0;
-    }
-  }
-} */
-.event-disclaimer {
-  padding: 1em 0;
-  p {
-    font-size: var(--body-font-size-xs);
-  }
-}
-
 .text-grid {
   div {
     div {

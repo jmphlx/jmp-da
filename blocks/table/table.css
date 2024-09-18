@@ -5,6 +5,13 @@
     margin: 1em 0 2em 0;
     border: 1px solid #E7E7E7;
     background-color: #F7F7F7;
+    box-sizing: border-box;
+    tr{
+      vertical-align:top;
+    }
+    p{
+      margin-bottom:0;
+    }
     td:first-child {
       width: 20%;
     }
