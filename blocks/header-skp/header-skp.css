@@ -1,0 +1,310 @@
+header .nav-wrapper {
+  background-color: #ffffff;
+  width: 100%;
+  z-index: 1000;
+  position: fixed;
+}
+
+@media (width >= 900px) { 
+  header nav { 
+    min-height: 0; 
+    overflow: visible; 
+    display: grid;
+    padding: 0; 
+    grid-template: 
+      'brand sections'
+      'knowledgeportal tools';
+  }
+}
+
+header nav p {
+  margin: 0;
+  line-height: 1;
+}
+
+header nav a:any-link {
+  color: currentcolor;
+}
+
+/* brand */
+header .nav-brand {
+  grid-area: brand;
+  display: grid;
+  grid-row: 1;
+  grid-column: 1;
+  border-bottom: 3px solid #eeeeee;
+  height: 64px;
+  picture {
+    img {
+      margin-top: 15px;
+      height: 40px;
+      width: 194px;
+    }
+  }
+}
+/* end of brand */
+
+/* sections */
+header nav .nav-sections {
+  grid-area: sections;
+  display: none;
+  visibility: hidden;
+  border-bottom: 3px solid #eeeeee;
+  padding-right: 5px;
+  a {
+    text-decoration: none;
+    padding: 6px 12px;
+    font-size: 15px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-family: "anova-bold", sans-serif;
+    background-color: var(--orange);
+    border: 2px solid var(--orange);
+    &:hover {
+      background-color: var(--orange-hover);
+      border: 2px solid var(--orange-hover);
+      transition: color 0.5s ease;
+    }
+    &:after {
+      content: '\e616';
+      font-family: 'sasicons-103018' !important;
+    }
+  }
+}
+
+header nav .nav-sections ul  {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  @media (min-width: 900px) {
+    height: 64px;
+  }
+}
+
+header nav .nav-sections ul > li > ul > li {
+  font-size: 15px;
+}
+
+@media (min-width: 900px) {
+  header nav .nav-sections {
+    display: block;
+    visibility: visible;
+    white-space: nowrap;
+    padding: 0 2rem 0 0;
+  }
+
+  header nav .nav-sections ul {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+  }
+}
+/* end sections */
+
+/* knowledgeportal */
+header nav .nav-knowledgeportal {
+  grid-area: knowledgeportal;
+  background-color: var(--blue);
+  h3 {
+    color: white;
+    font-size: 40px;
+  }
+  p {
+    color: #194573;
+    font-size: 1.9rem;
+  }
+}
+/* end of knowledgeportal */
+
+/* tools - search & hamburger */
+header nav .nav-tools {
+  grid-area: tools;
+  padding: 5px;
+  display: flex;
+  @media (min-width: 900px) {
+    background-color: var(--blue);
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+  }
+
+  @media (max-width: 899px) {
+    background-color: #194573;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+  }
+
+  input {
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    border-radius: 11px;
+    height: 43px;
+    width: 450px;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0 47px 0 15px;
+  }
+
+  picture {
+    z-index: 1;
+    position: relative;
+    top: 12px;
+    right: 45px;
+  }
+
+}
+
+header nav .gnav-search-results {
+  grid-column: span 2;
+  background-color: var(--clr-gray-light);
+  padding: 0 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  .result-listing {
+    border-bottom: solid 1px #e8e8e8;
+    padding: 10px 0 12px 0;
+    margin: 0;
+    width: unset;
+    max-width: unset;
+    .results-body {
+      a.title {
+        color: var(--blue);
+        text-decoration: none;
+        font-size: 1.8rem;
+        font-family: "anova-regular", sans-serif;
+        display: inline-block;
+        &:hover {
+          text-decoration: underline;
+          color: var(--link-hover-color);
+        }
+      }
+      p.description {
+        line-height: 1.5;
+        font-size: 1.4rem;
+      }
+      a.displayUrl {
+        display: inline-block;
+        margin-top: .5em;
+        color: var(--blue);
+        font-size: 1.4rem;
+        &:hover {
+          color: var(--link-hover-color);
+        }
+      }
+    }
+    &:first-child {
+      margin-top: 20px !important;
+    }
+    &:last-child {
+      margin-bottom: 64px !important;
+    }
+  }
+}
+
+@media (min-width: 900px) {
+  header nav .nav-tools ul {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}
+
+@media (min-width: 900px) {
+  header nav .nav-hamburger {
+    display: none;
+    visibility: hidden;
+  }
+}
+
+/* end of tools */
+
+
+
+/** try hamburger */
+/* hamburger */
+header nav .nav-hamburger {
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0;
+}
+
+header nav .nav-hamburger button {
+  cursor: pointer;
+  height: 22px;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  background-color: var(--blue);
+  color: white;
+  overflow: initial;
+  text-overflow: initial;
+  white-space: initial;
+  min-width: 0;
+}
+
+header nav .nav-hamburger-icon,
+header nav .nav-hamburger-icon:before,
+header nav .nav-hamburger-icon:after {
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  width: 20px;
+  transition: transform .5s ease;
+}
+
+header nav .nav-hamburger-icon:before,
+header nav .nav-hamburger-icon:after {
+  content: '';
+  position: absolute;
+  background: currentcolor;
+}
+
+header nav[aria-expanded="false"] .nav-hamburger-icon,
+header nav[aria-expanded="false"] .nav-hamburger-icon:before,
+header nav[aria-expanded="false"] .nav-hamburger-icon:after {
+  height: 2px;
+  border-radius: 2px;
+  background: currentcolor;
+}
+
+header nav[aria-expanded="false"] .nav-hamburger-icon:before {
+  top: -6px;
+}
+
+header nav[aria-expanded="false"] .nav-hamburger-icon:after {
+  top: 6px;
+}
+
+header nav[aria-expanded="true"] .nav-hamburger-icon {
+  height: 22px;
+}
+
+header nav[aria-expanded="true"] .nav-hamburger-icon:before,
+header nav[aria-expanded="true"] .nav-hamburger-icon:after {
+  top: 3px;
+  left: 1px;
+  transform: rotate(45deg);
+  transform-origin: 2px 1px;
+  width: 24px;
+  height: 2px;
+  border-radius: 2px;
+}
+
+header nav[aria-expanded="true"] .nav-hamburger-icon:after {
+  top: unset;
+  bottom: 3px;
+  transform: rotate(-45deg);
+}
+
+@media (min-width: 900px) {
+  header nav .nav-hamburger {
+    display: none;
+    visibility: hidden;
+  }
+}

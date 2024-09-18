@@ -1,5 +1,5 @@
 import { createTag } from '../../scripts/helper.js';
-import { getLanguageIndex } from '../../scripts/jmp.js';
+import { getSKPLanguageIndex } from '../../scripts/jmp.js';
 
 /**
  * Fetches language index with parameters
@@ -15,7 +15,7 @@ export async function fetchIndex() {
   };
   if (window.blogIndex.complete) return (window.blogIndex);
   const index = window.blogIndex;
-  const languageIndexUrl = getLanguageIndex();
+  const languageIndexUrl = getSKPLanguageIndex();
   const resp = await fetch(`${languageIndexUrl}?limit=${pageSize}`);
   const json = await resp.json();
   const complete = (json.limit + json.offset) === json.total;

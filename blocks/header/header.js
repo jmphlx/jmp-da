@@ -41,7 +41,7 @@ function closeOnEscape(e) {
 /**
  * If the current page path exists for another language, change the nav menu item url for
  * that language to be the current page in the language. Otherwise, leave the
- * url as the language home page. 
+ * url as the language home page.
  * This should only run once, when the language dropdown is opened for the first time on a page.
  * It should only run twice if the user switches from desktop to mobile or vice versa to update
  * the displayed language nav items.
@@ -53,7 +53,7 @@ function closeOnEscape(e) {
 function decorateLanguageMenu(subList) {
   subList.querySelectorAll('ul li a').forEach(async (item) => {
     const url = await getLangMenuPageUrl(item.pathname);
-    if  (url !== null) {
+    if (url !== null) {
       item.setAttribute('href', url);
     }
   });
@@ -305,7 +305,7 @@ export default async function decorate(block) {
         navTool.classList.add('nav-drop');
         // Add a class to the language dropdown.
         const languageItem = Array.from(subList.querySelectorAll('a'))
-          .find(el => el.textContent === 'English');
+          .find((el) => el.textContent === 'English');
         if (languageItem !== undefined) {
           navTool.classList.add('language-nav');
         }

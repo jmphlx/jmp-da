@@ -12,7 +12,7 @@ function isLanguageSupported(language) {
   return languageIndexes.includes(language);
 }
 /* Set the html lang property based on the page path. Default to 'en'. */
-const pagePath = window.location.pathname
+const pagePath = window.location.pathname;
 const pageLanguage = pagePath.split('/')[1];
 const isLangSupported = isLanguageSupported(pageLanguage);
 const lang = isLangSupported ? pageLanguage : 'en';
@@ -53,9 +53,13 @@ async function getJsonFromUrl(route) {
 /**
  * Returns the path of the appropriate nav based on page language.
  * Default to 'en' if language isn't found.
+ * @param {boolean} true if the SKP index is needed.
  * @returns {string} path to language nav
  */
-function getLanguageNav() {
+function getLanguageNav(isSKP = null) {
+  if (isSKP) {
+    return isLanguageSupported ? `/${lang}/statistics-knowledge-portal/nav` : '/en/statistics-knowledge-portal/nav';
+  }
   return isLanguageSupported ? `/${lang}/nav` : '/en/nav';
 }
 
@@ -74,7 +78,16 @@ function getLanguageFooter() {
  * @returns {string} path to language index
  */
 function getLanguageIndex() {
-  return isLanguageSupported ? `/jmp-${lang}.json` : '/jmp-all.json';
+  return isLanguageSupported ? `/jmp-${lang}.json` : '/jmp-en.json';
+}
+
+/**
+ * Returns the path of the appropriate index for SKP based on page language.
+ * Default to 'en' if language isn't found.
+ * @returns {string} path to language index
+ */
+function getSKPLanguageIndex() {
+  return isLanguageSupported ? `/skp-${lang}.json` : '/skp-en.json';
 }
 
 /*
@@ -291,14 +304,14 @@ function pageFilterByFolder(pageSelection, folderPath) {
 
 /**
  * Given a page path, determine if the curernt page exists in that language
- * @param {*} languagePage 
- * @returns 
+ * @param {string} languagePage page to check in another language
+ * @returns pagePath if the page exists in another language
  */
 async function getLangMenuPageUrl(languagePage) {
   const languageDirectory = languagePage.split('/')[1];
 
-  const currPage = pagePath.replace(/\/(.*?)\w+/,'');
-  let languageCurrPage = `/${languageDirectory}${currPage}`;
+  const currPage = pagePath.replace(/\/(.*?)\w+/, '');
+  const languageCurrPage = `/${languageDirectory}${currPage}`;
 
   try {
     const response = await fetch(languageCurrPage);
@@ -307,8 +320,8 @@ async function getLangMenuPageUrl(languagePage) {
     }
     return languageCurrPage;
   } catch (error) {
+    return null;
   }
-  return null;
 }
 
 export {
@@ -322,6 +335,7 @@ export {
   getLanguageFooter,
   getLanguageNav,
   getListFilterOptions,
+  getSKPLanguageIndex,
   isLanguageSupported,
   pageAndFilter,
   pageFilterByFolder,
