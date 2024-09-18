@@ -35,7 +35,7 @@ function decorateCard(hit) {
   const path = hit.path.split('.')[0];
   const displayUrl = path.startsWith('/') ? `${window.location.origin}${path}` : path;
   const titleLink = createTag('a', { class: 'title', href: path }, `${title}`);
-  const desc = createTag('p', { class: 'description'}, `${description}`);
+  const desc = createTag('p', { class: 'description' }, `${description}`);
   const displayLink = createTag('a', { class: 'displayUrl', href: path }, `${displayUrl}`);
   const resultBody = createTag('div', { class: 'results-body' }, titleLink);
   resultBody.append(desc);

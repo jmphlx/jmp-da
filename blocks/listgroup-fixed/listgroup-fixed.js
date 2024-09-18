@@ -30,7 +30,7 @@ export default async function decorate(block) {
     } else {
       const html = await resp.text();
       const doc = new DOMParser().parseFromString(html, 'text/html');
-  
+
       const listItem = document.createElement('li');
       listItem.classList = `${getMetadata('resourceOptions', doc)}`;
       const cardLink = document.createElement('a');
@@ -49,9 +49,9 @@ export default async function decorate(block) {
         htmlOutput += `<span class="cmp-image image"><img src="${getMetadata('og:image', doc)}"/></span>`;
       }
       htmlOutput += `<span class="abstract">${getMetadata('displaydescription', doc)}</span>`;
-  
+
       cardLink.innerHTML = htmlOutput;
-  
+
       listItem.append(cardLink);
       wrapper.append(listItem);
     }

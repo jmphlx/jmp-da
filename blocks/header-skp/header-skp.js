@@ -1,4 +1,3 @@
-import { getMetadata } from '../../scripts/aem.js';
 import { createTag } from '../../scripts/helper.js';
 import { onSearchInput } from './search.js';
 import { getLanguageNav } from '../../scripts/jmp.js';
@@ -9,7 +8,7 @@ import { getLanguageNav } from '../../scripts/jmp.js';
  * Use language nav based on page lang. Default to /en/nav.
  */
 async function fetchNavigationHTML() {
-  const navPath = '/en/statistics-knowledge-portal/nav';
+  const navPath = getLanguageNav(true);
   const response = await fetch(`${navPath}.plain.html`);
   return response.text();
 }
@@ -52,41 +51,41 @@ export default async function decorate(block) {
     if (section) section.classList.add(`nav-${c}`);
   });
 
-  //Don't need to decorate nav-sections (Try jmp button)
+  // Don't need to decorate nav-sections (Try jmp button)
 
   const navTools = nav.querySelector('.nav-tools');
   if (navTools) {
-      // Add Search search
-      navTools.classList.add('search-icon');
-      navTools.classList.add('gnav-search');
-      const searchButton = navTools.querySelector('picture');
-      const results = createTag('div', { class: 'gnav-search-results' });
-      nav.append(results);
-      const searchBar = decorateSearchBar(results);
-      searchButton.addEventListener('click', () => {
-        searchBar.focus();
-      });
-      navTools.append(searchBar);
+    // Add Search search
+    navTools.classList.add('search-icon');
+    navTools.classList.add('gnav-search');
+    const searchButton = navTools.querySelector('picture');
+    const results = createTag('div', { class: 'gnav-search-results' });
+    nav.append(results);
+    const searchBar = decorateSearchBar(results);
+    searchButton.addEventListener('click', () => {
+      searchBar.focus();
+    });
+    navTools.append(searchBar);
 
-      // hamburger for mobile
-      const hamburger = createTag('div', {
-        class: 'nav-hamburger',
-      }, createTag('button', {
-        type: 'button',
-        'aria-controls': 'nav',
-        'aria-label': 'Open navigation',
-      }, createTag('span', {
-        class: 'nav-hamburger-icon',
-      })));
+    // hamburger for mobile
+    const hamburger = createTag('div', {
+      class: 'nav-hamburger',
+    }, createTag('button', {
+      type: 'button',
+      'aria-controls': 'nav',
+      'aria-label': 'Open navigation',
+    }, createTag('span', {
+      class: 'nav-hamburger-icon',
+    })));
 
-      hamburger.addEventListener('click', () => toggleHamburgerMenu(nav));
-      navTools.prepend(hamburger);
-      nav.setAttribute('aria-expanded', 'false');
-      // prevent mobile nav behavior on window resize
-      // isDesktop.addEventListener('change', () => {
-      //   // toggleMenu(nav, isDesktop.matches);
-      //   //languageDropdownDecorated = false;
-      // });
+    hamburger.addEventListener('click', () => toggleHamburgerMenu(nav));
+    navTools.prepend(hamburger);
+    nav.setAttribute('aria-expanded', 'false');
+    // prevent mobile nav behavior on window resize
+    // isDesktop.addEventListener('change', () => {
+    //   // toggleMenu(nav, isDesktop.matches);
+    //   //languageDropdownDecorated = false;
+    // });
   }
 
   const navWrapper = createTag('div', {
