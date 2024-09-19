@@ -20,13 +20,14 @@
 }
 
 .listgroup-events-tabs .tabs-list button {
+  cursor: pointer;
   flex: 0 0 max-content;
   margin: 0;
   border: 1px solid var(--blue);
   /* border-radius: var(--base-radius); */
-  padding: 0.5em;
+  padding: 7px 14px;
   background-color: var(--gray);
-  color: initial;
+  color: var(--gray3);
   font-weight: bold;
   font-family: var(--font-primary);
   line-height: unset;
@@ -43,10 +44,10 @@
 
 
 .listgroup-events-tabs .tabs-list button[aria-selected='true'] {
+  cursor: pointer;
   border-bottom: 1px solid var(--background-color);
   background-color: var(--blue);
   color: white;
-  cursor: initial;
 }
 
 .listgroup-events-tabs .tabs-panel {
@@ -126,7 +127,7 @@
 .listgroup-events-tabs ul>li .subtitle {
   color: var(--gray3);
   display: inline-block;
-  transition: color 0.5s ease;
+  /* transition: color 0.5s ease; */
   font-size: var(--body-font-size-m);
 }
 .listgroup-events-tabs ul>li .tag-category {
@@ -175,6 +176,9 @@
 #listing .listgroup-events-tabs ul>li {
   margin-bottom: 1.5em;
 }
+.listgroup-events-tabs ul.listOfItems {
+  padding: 0;
+}
 .listgroup-events-tabs ul.listOfItems.list-arrow {
   padding: 5px 0 20px 0;
 }
@@ -201,7 +205,7 @@
   display: none;
 }
 .listgroup-events-tabs ul.list-tile {
-  margin: 0 -1%;
+  margin: 0;
   position: relative;
 }
 .listgroup-events-tabs ul.list-tile>li {
@@ -220,12 +224,34 @@
   position: relative;
   outline: none;
   overflow: hidden;
-  padding: 2rem 0 2rem 0;
-  margin: 0;
-  width: 92%;
-  background: white;
-  background: rgba(255,255,255,0.7);
+  padding: 2rem;
+  border-radius: var(--base-radius);
+  margin: 0 0 1rem 0;
+  /* width: 92%; */
+  background-color: var(--gray);
   text-decoration: none;
+  &:after {
+    content:'';
+    width: 2rem;
+    height: 2rem;
+    border: solid var(--blue);
+    border-width: 0 3px 3px 0;
+    position: absolute;
+    top: 48%;
+    transform: rotate(-45deg) translateY(-50%);
+    right: 3rem;
+    opacity: 0;
+    transition: all 0.5s ease;
+  }
+  &:hover {
+    .subtitle {
+      color: var(--link-hover-color);
+    }
+    &:after {
+      right: 2rem;
+      opacity: 1;
+    }
+  }
 }
 .listgroup-events-tabs ul.list-tile>li a .image {
   display: block;
@@ -242,11 +268,18 @@
   &:empty {
     display: none;
   }
+  &:before {
+    content: url('../../../icons/arrow-orange.svg');
+    width: 7px;
+    display: inline-block;
+    font-size: 80%;
+    margin: 0 5px 0 0;
+  }
 }
 .listgroup-events-tabs ul.list-tile>li a .title {
   display: block;
   font-size: 2.6rem;
-  padding: 0 0 .25em 0;
+  padding: 0 4rem 0 0;
 }
 .listgroup-events-tabs ul.list-tile>li a .abstract.is-visible {
   padding: 0;
