@@ -315,6 +315,9 @@
   .subnav nav.main ul li.is-open.is-dropdown:before, .subnav nav.main ul li.is-open.is-dropdown > a:before {
     border-top: 6px solid #ffffff;
   }
+  @media (width <= 600px) {
+    padding: 32px 16px 16px 16px !important;
+  }
 }
 
 .dark-nav.subnav-container.section {

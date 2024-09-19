@@ -27,7 +27,6 @@
   padding: 7px 14px;
   background-color: var(--gray);
   color: var(--blue);
-  font-weight: bold;
   font-family: var(--font-secondary);
   font-size: 1.6rem;
   line-height: unset;
@@ -277,7 +276,7 @@
 }
 .listgroup-events-tabs ul.list-tile>li a .title {
   display: block;
-  font-size: 2.6rem;
+  font-size: var(--heading-font-size-m);
   padding: 0 4rem 0 0;
 }
 .listgroup-events-tabs ul.list-tile>li a .abstract.is-visible {

@@ -10,7 +10,8 @@
 .cards > ul > li {
   border: 1px solid var(--grayRule);
   background-color: var(--background-color);
-  border-radius: 5px
+  border-radius: 5px;
+  margin-bottom: 0 !important;
 }
 
 .cards .cards-card-body {
@@ -825,6 +826,13 @@
           z-index: 1;
           font-size: var(--heading-font-size-s);
           font-family: "anova-regular", sans-serif;
+        }
+      }
+      &:hover {
+        div.cards-card-body  {
+          h4 {
+            text-decoration: underline solid 2px;
+          }
         }
       }
     }
