@@ -773,6 +773,7 @@
   position: relative;
   > ul {
     display: flex;
+    padding: 2rem 0;
     > li {
       width: 24%;
       border-radius: 5px;
