@@ -65,7 +65,7 @@
 } */
 
 .extra-space {
-  .cards > ul > li {
+  &.cards > ul > li {
     padding: 2rem;
   }
 }
