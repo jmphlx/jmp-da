@@ -99,9 +99,9 @@ header {
 }
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--heading-font-family);
-  line-height: 1.25;
+  line-height: 1.35;
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 1.6rem;
   padding-bottom: 0;
   scroll-margin: calc(var(--nav-height) + 1em);
   font-weight: normal;
@@ -112,15 +112,12 @@ h1 {
 }
 h2 {
   font-size: var(--heading-font-size-xl);
-  margin-bottom: 1.5rem;
 }
 h3 {
   font-size: var(--heading-font-size-l);
-  margin-bottom: 1.5rem;
 }
 h4 {
   font-size: var(--heading-font-size-m);
-  margin-bottom: 1.5rem;
 }
 h5 {
   font-size: var(--heading-font-size-s)
