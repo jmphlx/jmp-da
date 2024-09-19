@@ -22,12 +22,13 @@
 .listgroup-events-tabs .tabs-list button {
   flex: 0 0 max-content;
   margin: 0;
-  border: 1px solid #dadada;
-  border-radius: 0;
+  border: 1px solid var(--blue);
+  /* border-radius: var(--base-radius); */
   padding: 0.5em;
-  background-color: var(--light-color);
+  background-color: var(--gray);
   color: initial;
   font-weight: bold;
+  font-family: var(--font-primary);
   line-height: unset;
   text-align: initial;
   text-overflow: unset;
@@ -43,14 +44,14 @@
 
 .listgroup-events-tabs .tabs-list button[aria-selected='true'] {
   border-bottom: 1px solid var(--background-color);
-  background-color: var(--background-color);
+  background-color: var(--blue);
+  color: white;
   cursor: initial;
 }
 
 .listgroup-events-tabs .tabs-panel {
-  margin-top: -1px;
-  padding: 24px;
-  border: 1px solid #dadada;
+  padding: 2rem 2rem 3.2rem 0;
+  border: none;
   overflow: auto;
 }
 
@@ -123,8 +124,10 @@
   
 }
 .listgroup-events-tabs ul>li .subtitle {
-  display: block;
-  font-size: 95%;
+  color: var(--gray3);
+  display: inline-block;
+  transition: color 0.5s ease;
+  font-size: var(--body-font-size-m);
 }
 .listgroup-events-tabs ul>li .tag-category {
   display: block;
@@ -217,11 +220,12 @@
   position: relative;
   outline: none;
   overflow: hidden;
-  padding: 44px 0 1em 0;
-  margin: 0 4%;
+  padding: 2rem 0 2rem 0;
+  margin: 0;
   width: 92%;
   background: white;
   background: rgba(255,255,255,0.7);
+  text-decoration: none;
 }
 .listgroup-events-tabs ul.list-tile>li a .image {
   display: block;
@@ -231,14 +235,18 @@
 }
 .listgroup-events-tabs ul.list-tile>li a .tag-category, .listgroup-events-tabs ul.list-tile>li a .content-type {
   color: #777777;
-  position: absolute;
-  top: 1px;
-  line-height: 4em;
+  position: relative;
+  line-height: 1.5;
   text-transform: uppercase;
+  font-size: var(--body-font-size-xs);
+  &:empty {
+    display: none;
+  }
 }
 .listgroup-events-tabs ul.list-tile>li a .title {
   display: block;
-  padding-bottom: .33em;
+  font-size: 2.6rem;
+  padding: 0 0 .25em 0;
 }
 .listgroup-events-tabs ul.list-tile>li a .abstract.is-visible {
   padding: 0;
