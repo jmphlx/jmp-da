@@ -832,6 +832,12 @@ div.clm-75-25 {
     + h1, + h2 {
       margin: 0 0 .5em 0;
     }
+    + h4{
+      margin-bottom: 0em;
+      + h5{
+        margin-bottom: .5em;
+    }
+  }
   }
   .clm-10-90 {
     img {
@@ -853,6 +859,20 @@ div.clm-75-25 {
      }
    }
 }
+.text-link-back{
+  &.section-padding-none, &.section-top-padding-small{
+  .fragment-wrapper{
+    .button-container{
+    margin: 0 auto;
+    a:link, a:any-link, a.button:any-link {
+    margin-bottom: 0!important;
+      }
+    }
+    }
+  }
+}
+
+
 .text-grid {
   div {
     div {
