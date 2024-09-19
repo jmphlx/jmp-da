@@ -15,7 +15,7 @@
 
 @media (width >= 900px) {
   .listgroup-events-tabs .tabs-list {
-    font-size: var(--body-font-size-m);
+    font-size: 1.6rem;
   }
 }
 
@@ -24,12 +24,12 @@
   flex: 0 0 max-content;
   margin: 0;
   border: 1px solid var(--blue);
-  /* border-radius: var(--base-radius); */
   padding: 7px 14px;
   background-color: var(--gray);
-  color: var(--gray3);
+  color: var(--blue);
   font-weight: bold;
-  font-family: var(--font-primary);
+  font-family: var(--font-secondary);
+  font-size: 1.6rem;
   line-height: unset;
   text-align: initial;
   text-overflow: unset;
@@ -41,7 +41,6 @@
 .listgroup-events-tabs .tabs-list button p {
   margin: 0;
 }
-
 
 .listgroup-events-tabs .tabs-list button[aria-selected='true'] {
   cursor: pointer;
