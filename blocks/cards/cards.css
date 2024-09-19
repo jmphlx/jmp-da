@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(278px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-gap: 16px;
 }
 
@@ -67,6 +67,9 @@
 .extra-space {
   &.cards > ul > li {
     padding: 2rem;
+    div.cards-card-body {
+      margin: 1.6rem 0;
+    }
   }
 }
 

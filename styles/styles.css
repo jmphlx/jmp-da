@@ -932,7 +932,7 @@ div.breadcrumb {
 main .section[data-layout] .layout-wrapper {
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 3.2rem;
 }
 main .section[data-layout="50/50"] .layout-wrapper > div {
   flex: 1 50%;
@@ -1356,10 +1356,10 @@ div.columns-25-75 {
 div.columns-75-25 {
   .layout-wrapper {
     .group-1 {
-      width: 75%;
+      width: calc(75% - 20px);
     }
     .group-2 {
-      width: 25%;
+      width: calc(25%) ;
     }
   }
 }
