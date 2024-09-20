@@ -26,6 +26,7 @@
   overflow: scroll clip;
   width: 90%;
   margin: auto;
+  scrollbar-width: none;
 }
 .carousel .carousel-slides::-webkit-scrollbar {
   display: none;
