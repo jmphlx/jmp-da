@@ -219,7 +219,7 @@ header nav .nav-sections ul  {
 }
 
 header nav .nav-sections ul > li {
-  font-weight: 700;
+  font-weight: normal;
   font-size: var(--body-font-size-xs);
   padding-block: 1rem;
   > p {
@@ -668,7 +668,7 @@ header nav .nav-tools .nav-drop[aria-expanded="true"] > ul {
 
 /* stylelint-disable-next-line no-descending-specificity */
 header nav .nav-drop > ul > li {
-  font-weight: 600;
+  font-weight: normal;
 }
 
 header nav .nav-drop .nav-section-heading {

@@ -4,12 +4,14 @@
   gap: 0.5ch;
   max-width: 100%;
   font-size: var(--body-font-size-xs);
+  border-bottom: 1px solid var(--grayRule);
   overflow-x: auto;
 }
 
 @media (width >= 600px) {
   .listgroup-events-tabs .tabs-list {
     font-size: var(--body-font-size-s);
+    border-bottom: 1px solid var(--grayRule);
   }
 }
 
@@ -23,7 +25,8 @@
   cursor: pointer;
   flex: 0 0 max-content;
   margin: 0;
-  border: 1px solid var(--blue);
+  border: 1px solid var(--grayRule);
+  border-radius: 5px 5px 0 0;
   padding: 7px 14px;
   background-color: var(--gray);
   color: var(--blue);
@@ -35,6 +38,7 @@
   overflow: unset;
   white-space: unset;
   transition: background-color 0.2s;
+  border-bottom: none;
 }
 
 .listgroup-events-tabs .tabs-list button p {
@@ -43,15 +47,18 @@
 
 .listgroup-events-tabs .tabs-list button[aria-selected='true'] {
   cursor: pointer;
-  border-bottom: 1px solid var(--background-color);
+  border-bottom: none;
   background-color: var(--blue);
   color: white;
 }
 
 .listgroup-events-tabs .tabs-panel {
-  padding: 2rem 2rem 3.2rem 0;
+  padding: 2rem 0 3.2rem 0;
   border: none;
   overflow: auto;
+  @media (width <=900px) {
+    padding: 2rem 0 3.2rem 0;
+  }
 }
 
 .listgroup-events-tabs .tabs-panel[aria-hidden='true'] {
@@ -245,7 +252,7 @@
   }
   &:hover {
     border: 1px solid var(--blue);
-    .subtitle {
+    .subtitle, .tag-category {
       color: var(--link-hover-color);
     }
     &:after {

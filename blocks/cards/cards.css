@@ -40,6 +40,10 @@
   border-radius: 5px 5px 0 0;
 }
 
+.button-container {
+  margin-bottom: 0;
+}
+
 .cards.card-5 > ul {
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
