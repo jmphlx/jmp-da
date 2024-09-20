@@ -25,8 +25,8 @@
 }
 .button-center {
   .button-container {
-      text-align: center;
-      width: 100%;
+    text-align: center;
+    width: 100%;
   }
   /* .button-container:first-child {
     margin: .5em .5em .5em 50% !important;
@@ -113,10 +113,6 @@
     padding: 0 0 10px 0;
     margin: 0;
   }
-  /* li {
-    margin-left: 1em;
-    text-indent: -1em;
-  } */
 }
 /* Home Page Hero */
 .section:has(div.home-page-hero) {
@@ -679,10 +675,9 @@ div.clm-75-25 {
     }
   }
 }
-
 /* Styling for the ROI block */
 .roi-colors {
-  div{
+  div {
     align-items: center
   }
   h1, h2, h3, h4, h5, p {
@@ -690,20 +685,20 @@ div.clm-75-25 {
     margin: 0 !important;
     align-items: stretch;
   }
-   p{
+  p {
     font-size: 2.1rem;
     color: #ffffff;
   }
-  h3{
+  h3 {
     font-size: 2.8rem;
   }
   h5 {
     color: /* #b1b1b1 */ #a3a3a3;
     font-size: 2.4rem;
-    padding-top:8px !important;
+    padding-top: 8px !important;
   }
   h1 {
-    font-size:8.9rem;
+    font-size: 8.9rem;
   }
   h2 {
     font-size: 6.8rem;
@@ -716,27 +711,26 @@ div.clm-75-25 {
     color: #3ebdac;
     border-top: none;
     border-bottom: none;
-    padding:3em .5em;
+    padding: 3em .5em;
     @media only screen and (max-width: 900px) {
       border: none;
       border-top: 1px solid #69757d;
       border-bottom: 1px solid #69757d;
       width: 95%;
-      padding: 2em .5em!important;
+      padding: 2em .5em !important;
     }
   }
   div > div:nth-child(3) {
     color: #c479ba;
   }
-      
   @media only screen and (max-width: 900px) {
-    div{
-    padding: 0 0 1.5em 0!important;
-    > div:nth-child(3) {
-      padding:1.5em 0 0 0!important;
+    div {
+      padding: 0 0 1.5em 0 !important;
+      > div:nth-child(3) {
+        padding: 1.5em 0 0 0 !important;
+      }
     }
   }
-}
 }
 /* Styling for G2 badges */
 .g2-badge-6, .g2-badge-4 {
@@ -810,7 +804,6 @@ div.clm-75-25 {
     }
   }
 }
-
 .icon-bullet {
   > div > div {
     position: relative;
@@ -826,58 +819,6 @@ div.clm-75-25 {
     }
   }
 }
-/* If you want to Event page styling */
-.event-page {
-  h6 {
-    text-transform: uppercase;
-    margin: 0;
-    font-size: var(--body-font-size-xs);
-    + h1, + h2 {
-      margin: 0 0 .5em 0;
-    }
-    + h4{
-      margin-bottom: 0;
-      + h5{
-        margin-bottom: .5em;
-    }
-  }
-}
-  @media (width <=600px) {
-   &.section{
-    padding-top:48px;
-    padding-bottom:0;
-    }
-  }
-  @media (width <=480px) {
-    &.section{
-      padding:48px 16px 32px 16px;
-     }
-   }
-
-.hubspot-wrapper{
-  padding: .5em 2em;
-  background-color: #f4f4f4;
-  border: 1px solid var(--gray10);
-  @media (width <=900px) {
-  margin-top:48px;
-  }
-}
-
-}
-.text-link-back{
-  &.section-padding-none, &.section-top-padding-small{
-  .fragment-wrapper{
-    .button-container{
-    margin: 0 auto;
-    a:link, a:any-link, a.button:any-link {
-    margin-bottom: 0!important;
-      }
-    }
-    }
-  }
-}
-
-
 .text-grid {
   div {
     div {
@@ -886,6 +827,92 @@ div.clm-75-25 {
     h5 {
       font-family: "anova-regular", sans-serif;
       margin-bottom: 1rem;
+    }
+  }
+}
+/* Event page styling starts here */
+.event-page {
+  h6 {
+    text-transform: uppercase;
+    margin: 0;
+    font-size: var(--body-font-size-xs);
+    + h1, + h2 {
+      margin: 0 0 .5em 0;
+    }
+    + h4 {
+      margin-bottom: 0;
+      + h5 {
+        margin-bottom: .5em;
+      }
+    }
+  }
+  @media (width <=600px) {
+    &.section {
+      padding-top: 48px;
+      padding-bottom: 0;
+    }
+  }
+  @media (width <=480px) {
+    &.section {
+      padding: 48px 16px 32px 16px;
+    }
+  }
+  /* Limited styling to control the display of the form shell on an Eevnt Page. */
+  .hubspot-wrapper {
+    padding: .5em 2em;
+    background-color: #f4f4f4;
+    border: 1px solid var(--gray10);
+    @media (width <=900px) {
+      margin-top: 48px;
+    }
+  }
+  /* Styling to control the display on the Statistically Speaking logo on an Eevnt Page. */
+  &.icon-xxxl {
+    p {
+      margin-bottom: 0;
+    }
+    .icon {
+      padding-bottom: 2em;
+    }
+  }
+}
+/* Styling to control the display on the Time To Innovate logo on an Eevnt Page. */
+.tti-logo-h {
+  .default-content-wrapper {
+    h3 {
+      &:before {
+        content: url('../../../icons/tti-logo.svg');
+        width: 96px;
+        height: 96px;
+        display: inline-block;
+        vertical-align: middle;
+        margin: -32px 5px 0 0;
+        padding-top: 10px;
+      }
+      @media (width <=600px) {
+        &:before {
+          content: url('../../../icons/tti-logo.svg');
+          width: 75px;
+          height: 75px;
+          display: block;
+          vertical-align: middle;
+          margin: 0 16px 0 0;
+          padding: .5em 0 .25em 0;
+        }
+      }
+    }
+  }
+}
+/* Styling to control the spacing on the back button on the Event pages. */
+.text-link-back {
+  &.section-padding-none, &.section-top-padding-small {
+    .fragment-wrapper {
+      .button-container {
+        margin: 0 auto;
+        a:link, a:any-link, a.button:any-link {
+          margin-bottom: 0 !important;
+        }
+      }
     }
   }
 }

@@ -1,8 +1,6 @@
 .carousel .carousel-slides-container {
   position: relative;
-  a {
-    text-decoration: none;
-   }
+  overflow-x: hidden;
   h2:has(a:link) {
     :before {
       content: url('../../../icons/arrow-orange.svg');
@@ -26,6 +24,7 @@
   overflow: scroll clip;
   width: 90%;
   margin: auto;
+  overflow-x: hidden;
 }
 .carousel .carousel-slides::-webkit-scrollbar {
   display: none;
@@ -242,7 +241,7 @@
 }
 .carousel-light {
   a {
-    text-decoration: none;
+    /* text-decoration: none; */
     color: var(--link-hover-color);
   }
   a:hover {
