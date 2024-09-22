@@ -1154,11 +1154,11 @@ ul {
   }
 }
 /* Styling change to the sections margin  */
-.block-padding-none:has(.columns-wrapper, .cards-wrapper), 
+/* .block-padding-none:has(.columns-wrapper, .cards-wrapper), 
 .block-padding-small:has(.columns-wrapper, .cards-wrapper), 
 .block-padding-medium:has(.columns-wrapper, .cards-wrapper), 
 .block-padding-large:has(.columns-wrapper, .cards-wrapper) {
-  /* padding-top: 40px; */
+  padding-top: 40px; 
   h2, h3 {
     margin-bottom: 32px;
   }
@@ -1168,39 +1168,40 @@ ul {
   h4 + p {
     margin: 0 0 32px 0;
   }
-}
+} */
 .block-padding-none {
   main > div.section {
     margin: 0 auto !important;
     padding-bottom: 0;
-    @media (width <=900px) {
+    /* @media (width <=900px) {
       margin: 0 auto !important;
-    }
+    } */
   }
 }
 .block-padding-small {
-  > .columns-wrapper, > .cards-wrapper {
+  /* > .columns-wrapper, > .cards-wrapper { */
+  .columns, .cards{
     margin: 0 auto !important;
     padding-bottom: 32px;
-    @media (width <=900px) {
+    /* @media (width <=900px) {
       margin: 0 auto !important;
-    }
+    } */
   }
 }
 .block-padding-medium {
-  > .columns-wrapper, > .cards-wrapper {
+  .columns, .cards {
     margin: 0 auto !important;
     padding-bottom: 64px;
   }
 }
 div.section.block-padding-large {
-  > .columns-wrapper, > .cards-wrapper {
+  .columns, .cards {
     margin: 0 auto !important;
     padding-bottom: 96px;
-    @media (width <=900px) {
+    /* @media (width <=900px) {
       margin: 0 auto !important;
       padding-bottom: 32px;
-    }
+    } */
   }
 }
 .image-align-top {
@@ -1445,4 +1446,14 @@ div.interview-body {
   h4, h5 {
     margin-bottom: 0;
   }
+}
+/* Compact class options added to control spacing - AK request  */
+.compact-small{
+  padding: 16px 32 0 32px;
+}
+.compact{
+  padding: 32 32 0 32px;
+}
+.compact-large{
+  padding: 64px 32 32 32px;
 }

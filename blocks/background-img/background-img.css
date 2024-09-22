@@ -20,7 +20,7 @@
       position: absolute;
       img {
         margin-top: -1%;
-        margin-right: -1%;
+        margin-right: 0%;
         width: 100%;
         opacity: .8;
         float: right;
