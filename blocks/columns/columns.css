@@ -832,6 +832,15 @@ div.clm-75-25 {
 }
 /* Event page styling starts here */
 .event-page {
+  &.background-image-narrow, &.background-image{  
+      padding: 48px 32px 21px 32px !important;
+}
+h1{
+  margin-bottom: 10em;
+  +h4{
+    opacity: .6;
+  }
+}
   h6 {
     text-transform: uppercase;
     margin: 0;
@@ -846,6 +855,7 @@ div.clm-75-25 {
       }
     }
   }
+ 
   @media (width <=600px) {
     &.section {
       padding-top: 48px;
