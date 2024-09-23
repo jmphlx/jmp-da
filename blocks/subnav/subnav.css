@@ -291,8 +291,11 @@
         }
       }
     }
-    li.active a {
-      background-color: rgba(255, 255, 255, 0.15) !important;
+    li.active {
+      background: none;
+      a {
+        background-color: rgba(255, 255, 255, 0.15) !important;
+      }
     }
     li:hover {
       cursor: pointer;
