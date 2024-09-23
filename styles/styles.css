@@ -1183,7 +1183,7 @@ ul {
   }
 }
 .block-padding-small {
-  &.columns, &.cards {
+  .columns, .cards {
     margin: 0 auto !important;
     padding-bottom: 32px;
     /* @media (width <=900px) {
@@ -1192,13 +1192,13 @@ ul {
   }
 }
 .block-padding-medium {
-  &.columns, &.cards  {
+  .columns, .cards  {
     margin: 0 auto !important;
     padding-bottom: 64px;
   }
 }
 .block-padding-large {
-  &.columns, &.cards {
+  .columns, .cards {
     /* margin: 0 auto !important; */
     padding-bottom: 96px;
     /* @media (width <=900px) {
