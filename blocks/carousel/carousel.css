@@ -11,6 +11,11 @@
       vertical-align: middle;
     }
   }
+
+a, a:hover{
+  transition-duration: 0.1s;
+  transition-timing-function: ease-in;
+}
 }
 .carousel .carousel-slides, .carousel .carousel-slide-indicators {
   list-style: none;
@@ -176,20 +181,36 @@
     a {
       color: #3ebdac;
     }
+    a:hover{
+      color: #c1eaf8;
+      border-color: rgba(255, 255, 255, 0.66);
+    }
   }
   .carousel-slide:nth-child(2), .carousel-slide:nth-child(6), .carousel-slide:nth-child(10) {
     a {
       color: #f5ba55;
+    }
+   a:hover{
+      color: #fbe1b5;
+      border-color: rgba(255, 255, 255, 0.66);
     }
   }
   .carousel-slide:nth-child(3), .carousel-slide:nth-child(7), .carousel-slide:nth-child(11) {
     a {
       color: #c479ba;
     }
+    a:hover{
+      color: #e3c0de;
+      border-color: rgba(255, 255, 255, 0.66);
+    }
   }
   .carousel-slide:nth-child(4), .carousel-slide:nth-child(8), .carousel-slide:nth-child(12) {
     a {
       color: #66cbed;
+    }
+    a:hover{
+      color: #c1eaf8;
+      border-color: rgba(255, 255, 255, 0.66);
     }
   }
 }
