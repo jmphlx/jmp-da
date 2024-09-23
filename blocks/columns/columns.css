@@ -77,7 +77,7 @@
     }
   }
   @media (width <=900px) {
-    justify-content: unset;
+    /* justify-content: unset; */
     > div {
       gap: 0;
     }
