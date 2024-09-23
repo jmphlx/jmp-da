@@ -99,7 +99,6 @@ header {
 }
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--heading-font-family);
-  line-height: 1.35;
   margin-top: 0;
   margin-bottom: 1.6rem;
   padding-bottom: 0;
@@ -109,21 +108,26 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-size: var(--heading-font-size-xxl);
   margin-bottom: 1rem;
+  line-height: 1.25;
 }
 h2 {
   font-size: var(--heading-font-size-xl);
+  line-height: 1.25;
 }
 h3 {
   font-size: var(--heading-font-size-l);
+  line-height: 1.35;
 }
 h4 {
   font-size: var(--heading-font-size-m);
+  line-height: 1.35;
 }
 h5 {
-  font-size: var(--heading-font-size-s)
+  font-size: var(--heading-font-size-s);
+  line-height: 1.35;
 }
 h6 {
-  font-size: var(--heading-font-size-xs)
+  font-size: var(--heading-font-size-xs);
 }
 /* p {
   margin-top: 0 !important;
@@ -1175,7 +1179,7 @@ ul {
   }
 }
 .block-padding-small {
-  > .columns-wrapper, > .cards-wrapper {
+  &.columns, &.cards {
     margin: 0 auto !important;
     padding-bottom: 32px;
     @media (width <=900px) {
@@ -1184,14 +1188,14 @@ ul {
   }
 }
 .block-padding-medium {
-  > .columns-wrapper, > .cards-wrapper {
+  &.columns, &.cards  {
     margin: 0 auto !important;
     padding-bottom: 64px;
   }
 }
-div.section.block-padding-large {
-  > .columns-wrapper, > .cards-wrapper {
-    margin: 0 auto !important;
+.block-padding-large {
+  &.columns, &.cards {
+    /* margin: 0 auto !important; */
     padding-bottom: 96px;
     @media (width <=900px) {
       margin: 0 auto !important;

@@ -1,7 +1,7 @@
 
 .listgroup-events-tabs .tabs-list {
   display: flex;
-  gap: 0.5ch;
+  gap: 8px;
   max-width: 100%;
   font-size: var(--body-font-size-xs);
   border-bottom: 1px solid var(--grayRule);

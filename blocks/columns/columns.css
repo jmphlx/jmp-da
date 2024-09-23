@@ -39,6 +39,7 @@
     width: 100%;
   }
 }
+
 /* left button in 2 button pair */
 .button-center :is(p.button-container):has(+ :is(p.button-container)) {
   display: inline-flex;
@@ -63,6 +64,20 @@
   .columns > div > div {
     flex: 1;
     order: unset;
+  }
+}
+.columns-center {
+  display: flex;
+  justify-content: center;
+  > div {
+    gap: 3em;
+    justify-self: center !important;
+    > div {
+      flex: unset;
+    }
+  }
+  @media (width <=900px) {
+    justify-content: unset;
   }
 }
 .columns.footer {
@@ -895,7 +910,7 @@ div.clm-75-25 {
           width: 75px;
           height: 75px;
           display: block;
-          vertical-align: middle;
+          /* vertical-align: middle; */
           margin: 0 16px 0 0;
           padding: .5em 0 .25em 0;
         }
