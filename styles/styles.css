@@ -113,10 +113,12 @@ h1 {
 h2 {
   font-size: var(--heading-font-size-xl);
   line-height: 1.25;
+  margin-bottom: 3.2rem;
 }
 h3 {
   font-size: var(--heading-font-size-l);
   line-height: 1.35;
+  margin-bottom: 3.2rem;
 }
 h4 {
   font-size: var(--heading-font-size-m);
@@ -458,7 +460,7 @@ a:hover {
     }
   }
 }
-.text-link .button-container, .text-link-light .button-container, .text-link-caret-left .button-container, .text-link-caret-left-light .button-container, .text-link-light-center .button-container, .text-link-back .button-container {
+.text-link .button-container, .text-link-light .button-container, .text-link-caret-left .button-container, .text-link-caret-left-light .button-container, .text-link-light-center .button-container, .text-link-back .button-container, .text-link-caret-red .button-container {
   /* margin: 0 0 2em 0 !important; */
   a:link, a.button:any-link {
     min-width: max-content !important;
@@ -475,22 +477,19 @@ a:hover {
     background: none;
     &:hover {
       color: var(--link-hover-color) !important;
+      &:after {
+        transform: translate(4px, 0);
+      }
     }
-  }
-  a:hover {
-    color: var(--link-hover-color) !important;
     &:after {
-      transform: translate(4px, 0);
+      content: url('../../../icons/arrow-orange.svg');
+      width: 7px;
+      display: inline-block;
+      font-size: 80%;
+      margin: 0 5px 0 6px;
+      vertical-align: middle;
+      transition: transform 0.5s ease, color 0.5s ease;
     }
-  }
-  :after {
-    content: url('../../../icons/arrow-orange.svg');
-    width: 7px;
-    display: inline-block;
-    font-size: 80%;
-    margin: 0 5px 0 6px;
-    vertical-align: middle;
-    transition: transform 0.5s ease, color 0.5s ease;
   }
 }
 .text-link-light .button-container, .text-link-light-center .button-container {
@@ -541,6 +540,29 @@ a:hover {
     }
     &:hover {
       color: #ffffff !important;
+    }
+  }
+}
+.text-link-caret-red .button-container {
+  margin-top: 0 !important;
+  font-family: "anova-regular", sans-serif;
+  font-size: 1.6rem;
+  a:link, a.button:any-link {
+    color: var(--purple) !important;
+    text-decoration: none;
+    &:hover {
+      color: var(--purpleLight) !important;
+    }
+    &:before {
+      display: none;
+    }
+    &:after {
+      content: url('../../../icons/arrow-icon-red.svg');
+      width: 7px;
+      display: inline-block;
+      font-size: 80%;
+      padding-right: 5px;
+      margin: 0 0 0 5px;
     }
   }
 }
@@ -1056,7 +1078,7 @@ sub {
 }
 .text-left {
   h1, h2, h3, h4, h5, p {
-    text-align: left;
+    text-align: left !important;
   }
 }
 .text-right {
@@ -1179,6 +1201,7 @@ ul {
   }
 }
 .block-padding-small {
+
   &.columns, &.cards, .columns, .cards {
     padding-bottom: 32px;
   }
