@@ -858,7 +858,7 @@ div.clm-75-25 {
       padding: 48px 32px 21px 32px !important;
 }
 h1{
-  margin-bottom: 10em;
+  margin-bottom: 1em;
   +h4{
     opacity: .6;
   }
