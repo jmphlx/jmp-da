@@ -463,7 +463,7 @@ div.clm-10-90, div.clm-50-50, div.clm-60-40, div.clm-40-60, div.clm-66-33, div.c
   @media (width <=900px) {
     .columns-img-col {
       img {
-        margin-bottom: 3.2rem !important;
+        margin-bottom: 2em !important;
       }
     }
   }
@@ -864,7 +864,7 @@ div.clm-75-25 {
       padding: 48px 32px 21px 32px !important;
 }
 h1{
-  margin-bottom: 1em;
+  margin-bottom: 10em;
   +h4{
     opacity: .6;
   }

@@ -1214,6 +1214,9 @@ ul {
 .block-padding-large {
   &.columns, &.cards, .columns, .cards {
     padding-bottom: 96px;
+    @media (width <=900px) {
+      padding-bottom: 32px;
+    }
   }
 }
 .image-align-top {
