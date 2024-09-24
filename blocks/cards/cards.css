@@ -855,3 +855,101 @@
     }
   }
 }
+
+.g2-banner {
+  ul {
+    display: flex;
+    li {
+      background: linear-gradient(45deg, #643695 15%, #F04B4B 95%);
+      border-radius: 10px;
+      width: 100%;
+      min-height: 200px;
+      display: flex;
+      position: relative;
+      .cards-card-image:nth-child(1){
+        position: absolute;
+        max-width: 128px;
+        right: 4rem;
+        top: 0;
+        z-index: 3;
+        picture {
+          img {
+            height: 100%;
+          }
+        }
+      }
+      .cards-card-image:nth-child(2) {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        z-index: 0;
+        picture {
+          width: 100%;
+          height: 100%;
+          opacity: .2;
+          img {
+            height: 100%;
+          }
+        }
+      }
+      .cards-card-body {
+        position: relative;
+        flex-direction: column;
+        width: 100%;
+        margin: 2rem 2rem 2rem 4rem;
+        justify-content: center;
+        justify-self: center;
+        display: flex;
+        h2 {
+          font-family: "anova-bold", sans-serif;
+          color: white;
+          margin-bottom: 1rem;
+        }
+        h4 {
+          font-size: 2.4rem;
+          color: rgba(255, 255, 255, 0.75);
+          font-family: "anova-reg", sans-serif;
+          margin-bottom: 2rem;
+        }
+        p.button-container {
+          margin: 0;
+          a {
+            background-color: var(--redLight);
+            &:hover {
+              background-color: var(--red);
+            }
+          }
+        }
+        p {
+          position: relative;
+          overflow: hidden;
+          picture {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            z-index: 0;
+          }
+        }
+      }
+      @media (width <=900px) {
+        .cards-card-image:nth-child(1){
+          left: 4rem;
+          picture {
+            img {
+              height: 100%;
+            }
+          }
+        }
+        .cards-card-body {
+          margin-top: 170px;
+        }
+      }
+    }
+  }
+}
