@@ -54,7 +54,7 @@
 
 .analytic-workflow > div {
   display: grid;
-  grid-template-columns: 1fr 4fr 1fr;
+  grid-template-columns: 1fr 6fr 1fr;
   column-gap: 2rem;
   margin-bottom: 2rem;
   h3 {
@@ -80,7 +80,7 @@
   .data-column {
     width: 100%;
     ul {
-      margin: 0 auto;
+      margin: 0;
       border-radius: 20px;
       padding: 1em;
       position: relative;
@@ -157,7 +157,7 @@
       &:before {
         content: url('../../../icons/arrow-icon-blue.svg'); 
         position: absolute;
-        left: -1.5em;
+        left: -3.5%;
         top: 50%;
         transform: translate(-18px, -25px);
         z-index: 1;
@@ -170,7 +170,7 @@
       &:after {
         content: url('../../../icons/arrow-icon-purple.svg'); 
         position: absolute;
-        right: -1.25em;
+        right: -3.25%;
         top: 50%;
         transform: translate(21px, -25px);
         z-index: 1;
