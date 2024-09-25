@@ -447,6 +447,7 @@ div.clm-10-90, div.clm-50-50, div.clm-60-40, div.clm-40-60, div.clm-66-33, div.c
   .columns-img-col {
     img {
       border: 2px solid var(--gray10);
+      
       display: block;
     }
   }
@@ -458,13 +459,6 @@ div.clm-10-90, div.clm-50-50, div.clm-60-40, div.clm-40-60, div.clm-66-33, div.c
     padding: 0 0 0 18px;
     li {
       padding: 0 0 .5em 0;
-    }
-  }
-  @media (width <=900px) {
-    .columns-img-col {
-      img {
-        margin-bottom: 2em !important;
-      }
     }
   }
 }
@@ -864,7 +858,7 @@ div.clm-75-25 {
       padding: 48px 32px 21px 32px !important;
 }
 h1{
-  margin-bottom: 10em;
+  margin-bottom: 1em;
   +h4{
     opacity: .6;
   }
