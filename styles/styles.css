@@ -191,14 +191,16 @@ hr {
 /* headings + p */
 /* :is(h1, h2, h3, h4, h5, h6):has(+ :is(p, ul, ol)) {
 	padding-bottom: .5em;
-} */ :is(p):has(picture) {
+} */ 
+:is(p):has(picture) {
   margin-bottom: 0 !important;
 }
 /* h1 combinations */
 /* :is(h1):has(+ :is(h2, h3, h4, h5)) {
 	margin-bottom: .5em !important;
 } */
-/* h1 combinations */ :is(h1):has(+ :is(h2)) {
+/* h1 combinations */ 
+:is(h1):has(+ :is(h2)) {
   margin-bottom: 0 !important;
 }
 h1 + h2 {
@@ -269,6 +271,181 @@ main pre {
   overflow-x: auto;
   white-space: pre;
 }
+.sasfont {
+  a:before {
+    color: #eea879;
+    font-family: 'sasicons-103018' !important;
+    content: '';
+  }
+}
+sup {
+  font-size: 50%;
+}
+sub {
+  vertical-align: text-bottom;
+}
+/* text alignment */
+.text-center {
+  h1, h2, h3, h4, h5, p {
+    text-align: center;
+  }
+}
+.text-left {
+  h1, h2, h3, h4, h5, p {
+    text-align: left !important;
+  }
+}
+.text-right {
+  h1, h2, h3, h4, h5, p {
+    text-align: right;
+  }
+}
+.heading-center {
+  h1, h2, h3, h4, h5, h6 {
+    text-align: center !important;
+  }
+}
+.heading-left {
+  h1, h2, h3, h4, h5, h6 {
+    text-align: left !important;
+  }
+}
+.heading-right {
+  h1, h2, h3, h4, h5, h6 {
+    text-align: right !important;
+  }
+}
+/* Background Colors */
+div.light-gray-background {
+  background-color: #f4f4f4 !important;
+}
+div.dark-gray-background {
+  background-color: #333333;
+}
+/* Text Colors */
+div.light-text {
+  color: #ffffff !important;
+}
+div.dark-text {
+  color: #333333 !important;
+}
+
+/* sections */
+/* section metadata */
+main .section.light, main .section.highlight {
+  background-color: var(--light-color);
+}
+main .section {
+  padding: 32px 16px;
+  &.section-padding-none {
+    padding-bottom: 0 !important;
+  }
+  &.section-padding-xsmall {
+    padding-bottom: 32px !important;
+  }
+  &.section-padding-small {
+    padding-bottom: 56px !important;
+  }
+  &.section-padding-medium {
+    padding-bottom: 64px !important;
+  }
+  &.section-padding-large {
+    padding-bottom: 96px !important;
+  }
+  &.section-top-padding-none {
+    padding-top: 0 !important;
+  }
+  &.section-top-padding-small {
+    padding-top: 32px !important;
+  }
+  &.section-top-padding-medium {
+    padding-top: 64px !important;
+  }
+  &.section-top-padding-large {
+    padding-top: 96px !important;
+  }
+}
+@media (width >=600px) {
+  main .section {
+    padding: 64px 32px 32px 32px;
+  }
+}
+@media (width >=900px) {
+  .section > div {
+    max-width: 1200px;
+    margin: auto;
+  }
+  .section.content-wide > div {
+    max-width: 1400px;
+    margin: auto;
+  }
+}
+
+/* Linear Gradients */
+div.blue-purple-gradient {
+  background: linear-gradient(45deg, #0378CD 15%, #643695 95%);
+}
+div.blue-orange-gradient {
+  background: linear-gradient(45deg, #0378CD 15%, #F47723 95%);
+}
+div.teal-lightgreen-gradient {
+  background: linear-gradient(45deg, #007481 15%, #9CCB3B 95%);
+}
+div.purple-lightred-gradient {
+  background: linear-gradient(45deg, #643695 15%, #F04B4B 95%);
+}
+div.lightred-purple-gradient {
+  background: linear-gradient(45deg, #F04B4B 15%, #643695 95%);
+}
+div.purple-blue-gradient {
+  background: linear-gradient(45deg, #643695 15%, #0378CD 95%);
+}
+div.purple-lightblue-gradient {
+  background: linear-gradient(45deg, #643695 15%, #61CAE5 95%);
+}
+div.purple-lightpurple-gradient {
+  background: linear-gradient(45deg, #643695 15%, #9D57A3 95%);
+}
+div.purple-teal-gradient {
+  background: linear-gradient(45deg, #643695 15%, #007481 95%);
+}
+div.purple-lightteal-gradient {
+  background: linear-gradient(45deg, #643695 15%, #3EBDAC 95%);
+}
+div.purple-orange-gradient {
+  background: linear-gradient(45deg, #643695 15%, #F47723 95%);
+}
+div.darkgray-orange-gradient {
+  background: linear-gradient(45deg, #172328 15%, #F47723 95%);
+}
+div.brand-neutral-dark {
+  background: linear-gradient(45deg, #242d35 15%, #44545d 95%);
+}
+div.light-purple-gradient {
+  background: linear-gradient(90deg, #fdfdff 15%, #EFF1FE 75%);
+}
+div.gray {
+  background: #f4f4f4;
+}
+div.dark-gray {
+  background: var(--gray3);
+}
+div.blue {
+  background: var(--blue);
+}
+div.dark-blue {
+  background: var(--blueDark);
+}
+
+/* Styling to change all list item bullets to the JMP blue  */
+ul {
+  padding: 0 0 0 16px; /* we are looking at this styling agian */
+  li::marker {
+    color: var(--blue);
+    /* font-size: var(--heading-font-size-s); */
+  }
+}
+
 /* links */
 /* Body text links */
 a:any-link {
@@ -278,6 +455,7 @@ a:hover {
   text-decoration: underline;
   color: var(--link-hover-color);
 }
+
 /* Default Button */
 .button-container {
   display: inline-block;
@@ -312,7 +490,6 @@ a:hover {
     margin-bottom: 10px !important;
   }
 }
-
 .button-center {
   .button-container {
       text-align: center;
@@ -1021,178 +1198,7 @@ main img {
     width: 100%;
   }
 }
-/* sections */
-main .section {
-  padding: 32px 16px;
-  &.section-padding-none {
-    padding-bottom: 0 !important;
-  }
-  &.section-padding-xsmall {
-    padding-bottom: 32px !important;
-  }
-  &.section-padding-small {
-    padding-bottom: 56px !important;
-  }
-  &.section-padding-medium {
-    padding-bottom: 64px !important;
-  }
-  &.section-padding-large {
-    padding-bottom: 96px !important;
-  }
-  &.section-top-padding-none {
-    padding-top: 0 !important;
-  }
-  &.section-top-padding-small {
-    padding-top: 32px !important;
-  }
-  &.section-top-padding-medium {
-    padding-top: 64px !important;
-  }
-  &.section-top-padding-large {
-    padding-top: 96px !important;
-  }
-  /* make a block/wrapper 95% wide of the pages width */
-  &.full-width {
-    max-width: 95% !important;
-  }
-}
-@media (width >=600px) {
-  main .section {
-    padding: 64px 32px 32px 32px;
-  }
-}
-@media (width >=900px) {
-  .section > div {
-    max-width: 1200px;
-    margin: auto;
-  }
-}
-/* section metadata */
-main .section.light, main .section.highlight {
-  background-color: var(--light-color);
-}
-.sasfont {
-  a:before {
-    color: #eea879;
-    font-family: 'sasicons-103018' !important;
-    content: '';
-  }
-}
-sup {
-  font-size: 50%;
-}
-sub {
-  vertical-align: text-bottom;
-}
-/* text alignment */
-.text-center {
-  h1, h2, h3, h4, h5, p {
-    text-align: center;
-  }
-}
-.text-left {
-  h1, h2, h3, h4, h5, p {
-    text-align: left !important;
-  }
-}
-.text-right {
-  h1, h2, h3, h4, h5, p {
-    text-align: right;
-  }
-}
-.heading-center {
-  h1, h2, h3, h4, h5, h6 {
-    text-align: center !important;
-  }
-}
-.heading-left {
-  h1, h2, h3, h4, h5, h6 {
-    text-align: left !important;
-  }
-}
-.heading-right {
-  h1, h2, h3, h4, h5, h6 {
-    text-align: right !important;
-  }
-}
-/* Background Colors */
-div.light-gray-background {
-  background-color: #f4f4f4 !important;
-}
-div.dark-gray-background {
-  background-color: #333333;
-}
-/* Text Colors */
-div.light-text {
-  color: #ffffff !important;
-}
-div.dark-text {
-  color: #333333 !important;
-}
-/* Linear Gradients */
-div.blue-purple-gradient {
-  background: linear-gradient(45deg, #0378CD 15%, #643695 95%);
-}
-div.blue-orange-gradient {
-  background: linear-gradient(45deg, #0378CD 15%, #F47723 95%);
-}
-div.teal-lightgreen-gradient {
-  background: linear-gradient(45deg, #007481 15%, #9CCB3B 95%);
-}
-div.purple-lightred-gradient {
-  background: linear-gradient(45deg, #643695 15%, #F04B4B 95%);
-}
-div.lightred-purple-gradient {
-  background: linear-gradient(45deg, #F04B4B 15%, #643695 95%);
-}
-div.purple-blue-gradient {
-  background: linear-gradient(45deg, #643695 15%, #0378CD 95%);
-}
-div.purple-lightblue-gradient {
-  background: linear-gradient(45deg, #643695 15%, #61CAE5 95%);
-}
-div.purple-lightpurple-gradient {
-  background: linear-gradient(45deg, #643695 15%, #9D57A3 95%);
-}
-div.purple-teal-gradient {
-  background: linear-gradient(45deg, #643695 15%, #007481 95%);
-}
-div.purple-lightteal-gradient {
-  background: linear-gradient(45deg, #643695 15%, #3EBDAC 95%);
-}
-div.purple-orange-gradient {
-  background: linear-gradient(45deg, #643695 15%, #F47723 95%);
-}
-div.darkgray-orange-gradient {
-  background: linear-gradient(45deg, #172328 15%, #F47723 95%);
-}
-div.brand-neutral-dark {
-  background: linear-gradient(45deg, #242d35 15%, #44545d 95%);
-}
-div.light-purple-gradient {
-  background: linear-gradient(90deg, #fdfdff 15%, #EFF1FE 75%);
-}
-div.gray {
-  background: #f4f4f4;
-}
-div.dark-gray {
-  background: var(--gray3);
-}
-div.blue {
-  background: var(--blue);
-}
-div.dark-blue {
-  background: var(--blueDark);
-}
 
-/* Styling to change all list item bullets to the JMP blue  */
-ul {
-  padding: 0 0 0 16px; /* we are looking at this styling agian */
-  li::marker {
-    color: var(--blue);
-    /* font-size: var(--heading-font-size-s); */
-  }
-}
 /* Styling change to the sections margin  */
 /* .block-padding-none:has(.columns-wrapper, .cards-wrapper), 
 .block-padding-small:has(.columns-wrapper, .cards-wrapper), 
