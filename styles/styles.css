@@ -223,6 +223,22 @@ h1 + h5 {
   margin-bottom: 3.2rem !important;
   opacity: .9;
 }
+:is(h2) {
+  &:has(+ :is(h4)) {
+    margin-bottom: 1rem !important;
+  }
+  &:has(+ :is(p)) {
+    margin-bottom: 1rem !important;
+  }
+}
+:is(h3) {
+  &:has(+ :is(h4)) {
+    margin-bottom: 1rem !important;
+  }
+  &:has(+ :is(p)) {
+    margin-bottom: 1rem !important;
+  }
+}
 /* h6 combinations */
 /* :is(h6):has(+ :is(h1, h2, h3, h4, h5)) {
   font-family: "anova-bold", sans-serif;
@@ -499,17 +515,14 @@ a:hover {
     &:hover {
       color: rgba(250, 250, 250, .85) !important;
     }
-  }
-  a:hover {
-    color: rgba(250, 250, 250, .85);
-  }
-  :after {
-    width: 7px !important;
-    content: url('../../../icons/arrow-white.svg');
-    transition: transform 0.5s ease, color 0.5s ease;
+    &:after {
+      width: 7px !important;
+      content: url('../../../icons/arrow-white.svg');
+      transition: transform 0.5s ease, color 0.5s ease;
+    }
   }
 }
-.text-link-caret-left .button-container, .text-link-caret-left ul li, .text-link-caret-left-light .button-container, .text-link-caret-left-light ul li, .text-link-back .button-container, .text-link-back ul li {
+.text-link-caret-left .button-container, .text-link-caret-left-light .button-container, .text-link-back .button-container {
   margin-top: 0 !important;
   font-family: "anova-regular", sans-serif;
   font-size: 1.6rem !important;
@@ -536,7 +549,10 @@ a:hover {
     color: #dddddd !important;
     font-size: 1.6rem !important;
     &:before {
+      display: inline-block;
+      width: 7px;
       content: url('../../../icons/arrow-white.svg');
+      padding-right: 5px;
     }
     &:hover {
       color: #ffffff !important;
@@ -549,20 +565,11 @@ a:hover {
   font-size: 1.6rem;
   a:link, a.button:any-link {
     color: var(--purple) !important;
-    text-decoration: none;
     &:hover {
       color: var(--purpleLight) !important;
     }
-    &:before {
-      display: none;
-    }
     &:after {
       content: url('../../../icons/arrow-icon-red.svg');
-      width: 7px;
-      display: inline-block;
-      font-size: 80%;
-      padding-right: 5px;
-      margin: 0 0 0 5px;
     }
   }
 }
@@ -592,11 +599,18 @@ a:hover {
 }
 .text-link-caret-left ul, .text-link-caret-right ul, .text-link-back ul {
   list-style-type: none;
+  font-family: "anova-regular", sans-serif;
   padding-left: 0;
   margin-bottom: 0;
   > :nth-last-child(1) {
     padding-bottom: 0;
     margin-bottom: 1em;
+  }
+  a:link {
+    text-decoration: none;
+    :hover {
+      color: var(--link-hover-color);
+    }
   }
 }
 .text-link-back .button-container, .text-link-back ul li {

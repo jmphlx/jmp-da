@@ -447,7 +447,6 @@ div.clm-10-90, div.clm-50-50, div.clm-60-40, div.clm-40-60, div.clm-66-33, div.c
   .columns-img-col {
     img {
       border: 2px solid var(--gray10);
-      
       display: block;
     }
   }
@@ -961,7 +960,7 @@ h1{
   }
   h5 {
     padding: 1rem 2rem 0 2rem;
-    font-family: "anova-regular", Arial, Helvetica, sans-serif;
+    font-family: "anova-regular", sans-serif;
     font-size: 1.9rem;
   }
   p {
@@ -978,14 +977,11 @@ h1{
     position: relative;
     > li {
       position: relative;
-      /* border: 1px solid var(--grayRule); */
-      background-color: transparent;
       background: linear-gradient(45deg, #643695 15%, #F04B4B 95%);
       border-radius: 10px;
       width: 100%;
       min-height: 250px;
       display: flex;
-      position: relative;
     }
   }
   .columns-img-col {

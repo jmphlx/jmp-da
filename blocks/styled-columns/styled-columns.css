@@ -55,6 +55,8 @@
 .analytic-workflow > div {
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;
+  column-gap: 2rem;
+  margin-bottom: 2rem;
   h3 {
     color: #ffffff;
     text-align: center;
@@ -76,6 +78,7 @@
   }
   /* jmp-workflow-inputs */
   .data-column {
+    width: 100%;
     ul {
       margin: 0 auto;
       border-radius: 20px;
@@ -110,6 +113,7 @@
   }
   /* jmp-workflow-process capabilities-14 */
   .capabilities-column {
+    width: 100%;
     ul {
       background: linear-gradient(45deg, #0378cd 0%, #643695 75%);
       border-radius: 20px;
@@ -153,7 +157,7 @@
       &:before {
         content: url('../../../icons/arrow-icon-blue.svg'); 
         position: absolute;
-        left: -1.25em;
+        left: -1.5em;
         top: 50%;
         transform: translate(-18px, -25px);
         z-index: 1;
@@ -233,20 +237,21 @@
   @media (width <= 799px){
     display: block;
     .capabilities-column {
+      width: auto;
       margin: 70px 0;
       ul {
         grid-template-columns: repeat(4, minmax(0, 1fr));
         grid-template-rows: repeat(14, minmax(0, 1fr));
         padding: 1.5em;
         margin: 0;
-        width: 100%;
+        width: 95%;
         li {
           min-height: none;
         }
         &:before {
-          right: calc(0% - 25px);
+          right: calc(0% - 15px);
           transform: rotate(90deg);
-          top: -6em;
+          top: -8em;
           bottom: auto;
           margin: 0 auto;
         }
@@ -263,8 +268,8 @@
   }
   /* jmp-workflow-outputs */
   .insights-column {
+    width: 100%;
     ul {
-      margin: 0 auto;
       border: none;
       border-radius: 20px;
       padding: 1em;
@@ -274,6 +279,7 @@
       flex-direction: column;
       justify-content: center;
       background: rgba(255, 255, 255, 0.1);
+      margin-bottom: 0;
       li {
         background: none;
 				border-radius: 5px;
