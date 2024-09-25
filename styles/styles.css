@@ -708,8 +708,8 @@ a:hover {
     :hover {
       color: var(--link-hover-color);
     }
-    :after {
-      display: none;
+    &:after {
+      display: none !important;
     }
     &:before {
       content: url('../../../icons/arrow-orange.svg');
