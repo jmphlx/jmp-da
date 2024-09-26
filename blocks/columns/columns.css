@@ -947,6 +947,8 @@ h1{
 }
 
 .video-card {
+  border-radius: 0 0 5px 5px;
+  background-color: #fafafa !important;
   div.button-container {
     margin-right: 0;
     height: 100%;
@@ -956,13 +958,18 @@ h1{
       height: 100%;
     }
   }
-  h5 {
-    padding: 1rem 2rem 0 2rem;
-    font-family: "anova-regular", sans-serif;
-    font-size: 1.9rem;
-  }
-  p {
-    padding: 0 2rem 1rem 2rem;
+  div:nth-child(2) {
+    div {
+      border-radius: 0 0 5px 5px;
+      h5 {
+        padding: 1rem 2rem 0 2rem;
+        font-family: "anova-regular", sans-serif;
+        font-size: 1.9rem;
+      }
+      p {
+        padding: 0 2rem 1rem 2rem;
+      }
+    }
   }
 }
 :is(section):has(.g2-banner) {
