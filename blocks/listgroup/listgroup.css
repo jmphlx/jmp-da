@@ -133,7 +133,7 @@ div.listgroup-fixed, div.listgroup  {
       }
       .title {
         color: var(--blue);
-        text-decoration: underline solid var(--blueLight);
+        /* text-decoration: underline solid var(--blueLight); */
       }
     }
     :after {
