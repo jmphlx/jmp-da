@@ -219,10 +219,10 @@ h1 + h4 {
   margin-bottom: 3.2rem !important
 }
 :is(h1):has(+ :is(h5)) {
-  margin-bottom: .5em !important;
+  margin-bottom: 0 !important;
 }
 h1 + h5 {
-  margin-bottom: 3.2rem !important;
+  margin-bottom: 1.6rem !important;
   opacity: .9;
 }
 :is(h2) {
