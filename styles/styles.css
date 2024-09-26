@@ -460,7 +460,7 @@ a:hover {
 .button-container {
   display: inline-block;
   text-align: left;
-  width: max-content;
+  /* width: max-content; */
   margin: .5em 1em 2em 0;
   line-height: 100%;
   a.button:any-link, button {
@@ -656,7 +656,9 @@ a:hover {
 .text-link .button-container, .text-link-light .button-container, .text-link-caret-left .button-container, .text-link-caret-left-light .button-container, .text-link-light-center .button-container, .text-link-back .button-container, .text-link-caret-red .button-container {
   /* margin: 0 0 2em 0 !important; */
   a:link, a.button:any-link {
-    min-width: max-content !important;
+    min-width: auto !important;
+    text-align: left;
+    text-wrap: wrap;
     border: none;
     color: #0378cd !important;
     text-decoration: none;
