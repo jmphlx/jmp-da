@@ -131,6 +131,27 @@ h5 {
 h6 {
   font-size: var(--heading-font-size-xs);
 }
+/* Styling below handles the combinations that happen mostly in the events section  */
+h1{
+  margin-bottom: 1em;
+  +h4{
+    opacity: .6;
+  }
+}
+  h6 {
+    text-transform: uppercase;
+    margin: 0;
+    font-size: var(--body-font-size-xs);
+    + h1, + h2 {
+      margin: 0 0 .5em 0;
+    }
+    + h4 {
+      margin-bottom: 0;
+      + h5 {
+        margin-bottom: .5em;
+      }
+    }
+  }
 /* p {
   margin-top: 0 !important;
 } */
@@ -351,6 +372,12 @@ main .section {
   }
   &.section-padding-large {
     padding-bottom: 96px !important;
+  }
+  &.section-padding-xlarge {
+    padding-bottom: 128px;
+    @media (width <=900px) {
+      padding-bottom: 32px;
+    }
   }
   &.section-top-padding-none {
     padding-top: 0 !important;
@@ -1215,13 +1242,36 @@ main img {
     margin: 0 0 32px 0;
   }
 } */
+.block-top-padding-none {
+  main > div.section {
+    padding-bottom: 0;
+  }
+}
+.block-top-padding-small {
+  &.columns, &.cards, .columns, .cards {
+    padding-top: 32px;
+  }
+}
+.block-top-padding-medium {
+  &.columns, &.cards, .columns, .cards {
+    padding-top: 64px;
+  }
+}
+.block-top-padding-large {
+  &.columns, &.cards, .columns, .cards {
+    padding-top: 96px;
+    @media (width <=900px) {
+      margin: 0 auto !important;
+      padding-top: 32px;
+    }
+  }
+}
 .block-padding-none {
   main > div.section {
     padding-bottom: 0;
   }
 }
 .block-padding-small {
-
   &.columns, &.cards, .columns, .cards {
     padding-bottom: 32px;
   }
@@ -1238,6 +1288,14 @@ main img {
       padding-bottom: 32px;
     }
   }
+}
+  .block-padding-xlarge {
+    &.columns, &.cards, .columns, .cards {
+      padding-bottom: 128px;
+      @media (width <=900px) {
+        padding-bottom: 32px;
+      }
+    }
 }
 .image-align-top {
   .columns-img-col {
@@ -1482,13 +1540,4 @@ div.interview-body {
     margin-bottom: 0;
   }
 }
-/* Compact class options added to control spacing - AK request  */
-.compact-small{
-  padding: 16px 32 0 32px;
-}
-.compact{
-  padding: 32 32 0 32px;
-}
-.compact-large{
-  padding: 64px 32 32 32px;
-}
+
