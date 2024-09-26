@@ -854,26 +854,6 @@ div.clm-75-25 {
     }
   }
 }
-/* Event page styling starts here */
-.event-page {
-  &.background-image-narrow, &.background-image{  
-      padding: 48px 32px 21px 32px !important;
-}
-
- 
-  @media (width <=600px) {
-    &.section {
-      padding-top: 48px;
-      padding-bottom: 0;
-    }
-  }
-  @media (width <=480px) {
-    &.section {
-      padding: 48px 16px 32px 16px;
-    }
-  }
-}
-
 /* Styling to control the display on the Time To Innovate logo on an Eevnt Page. */
 .tti-logo-h {
   .default-content-wrapper {

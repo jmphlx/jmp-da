@@ -118,7 +118,7 @@ h2 {
 h3 {
   font-size: var(--heading-font-size-l);
   line-height: 1.35;
-  margin-bottom: 3.2rem;
+  margin-bottom: 3.2rem;  
 }
 h4 {
   font-size: var(--heading-font-size-m);
@@ -133,7 +133,7 @@ h6 {
 }
 /* Styling below handles the combinations that happen mostly in the events section  */
 h1{
-  margin-bottom: 1em;
+  /* margin-bottom: 1em; */
   +h4{
     opacity: .6;
   }
@@ -1541,3 +1541,13 @@ div.interview-body {
   }
 }
 
+.section-compact{
+  padding: 48px 32px 21px 32px !important;
+  @media (width <=600px) {
+  padding-top: 48px;
+  padding-bottom: 0;
+  }
+  @media (width <=480px) {
+  padding: 48px 16px 8px 16px;
+  }
+}
