@@ -118,7 +118,7 @@ h2 {
 h3 {
   font-size: var(--heading-font-size-l);
   line-height: 1.35;
-  margin-bottom: 3.2rem;
+  margin-bottom: 3.2rem;  
 }
 h4 {
   font-size: var(--heading-font-size-m);
@@ -351,6 +351,12 @@ main .section {
   }
   &.section-padding-large {
     padding-bottom: 96px !important;
+  }
+  &.section-padding-xlarge {
+    padding-bottom: 128px;
+    @media (width <=900px) {
+      padding-bottom: 32px;
+    }
   }
   &.section-top-padding-none {
     padding-top: 0 !important;
@@ -1217,13 +1223,36 @@ main img {
     margin: 0 0 32px 0;
   }
 } */
+.block-top-padding-none {
+  main > div.section {
+    padding-bottom: 0;
+  }
+}
+.block-top-padding-small {
+  &.columns, &.cards, .columns, .cards {
+    padding-top: 32px;
+  }
+}
+.block-top-padding-medium {
+  &.columns, &.cards, .columns, .cards {
+    padding-top: 64px;
+  }
+}
+.block-top-padding-large {
+  &.columns, &.cards, .columns, .cards {
+    padding-top: 96px;
+    @media (width <=900px) {
+      margin: 0 auto !important;
+      padding-top: 32px;
+    }
+  }
+}
 .block-padding-none {
   main > div.section {
     padding-bottom: 0;
   }
 }
 .block-padding-small {
-
   &.columns, &.cards, .columns, .cards {
     padding-bottom: 32px;
   }
@@ -1240,6 +1269,14 @@ main img {
       padding-bottom: 32px;
     }
   }
+}
+  .block-padding-xlarge {
+    &.columns, &.cards, .columns, .cards {
+      padding-bottom: 128px;
+      @media (width <=900px) {
+        padding-bottom: 32px;
+      }
+    }
 }
 .image-align-top {
   .columns-img-col {
@@ -1484,13 +1521,13 @@ div.interview-body {
     margin-bottom: 0;
   }
 }
-/* Compact class options added to control spacing - AK request  */
-.compact-small{
-  padding: 16px 32 0 32px;
-}
-.compact{
-  padding: 32 32 0 32px;
-}
-.compact-large{
-  padding: 64px 32 32 32px;
+.section-compact{
+  padding: 48px 32px 21px 32px !important;
+  @media (width <=600px) {
+  padding-top: 48px;
+  padding-bottom: 0;
+  }
+  @media (width <=480px) {
+  padding: 48px 16px 8px 16px;
+  }
 }
