@@ -105,9 +105,11 @@
 }
 .listgroup-events-tabs ul {
   list-style: none;
+  transition: all 0.5s ease;
 }
 .listgroup-events-tabs ul>li {
   margin-bottom: 1em;
+  transition: all 0.5s ease;
 }
 .listgroup-events-tabs ul>li .primary-title {
   font-size: 110%;
@@ -132,7 +134,7 @@
 .listgroup-events-tabs ul>li .subtitle {
   color: var(--gray3);
   display: inline-block;
-  /* transition: color 0.5s ease; */
+  transition: all 0.5s ease;
   font-size: var(--body-font-size-m);
 }
 .listgroup-events-tabs ul>li .tag-category {
@@ -237,6 +239,7 @@
   background-color: var(--gray);
   box-sizing: border-box;
   text-decoration: none;
+  transition: all 0.5s ease;
   &:after {
     content:'';
     width: 2rem;

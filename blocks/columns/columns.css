@@ -151,9 +151,12 @@
       align-self: center;
       h1 {
         padding: 0;
-        margin: 0 0 2rem 0 !important;
+        margin-bottom: 1rem !important;
         color: var(--blue);
         font-family: "anova-regular", sans-serif;
+      }
+      h3 {
+        margin-bottom: 3.2rem !important;
       }
       @media (width <=900px) {
         align-self: unset;
