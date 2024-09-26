@@ -24,6 +24,7 @@ html {
   --highlight-background-color: #cccccc;
   --blue: #0378cd;
   --blue-hover: #00619d;
+  --blueDark: #002753; /* stat speaking only */
   --orange: #ff5000;
   --orange-hover: #d94500;
   --blueLight: #61CAE5;
@@ -37,7 +38,6 @@ html {
   --yellow: #FFC610;
   --teal: #007481;
   --tealLight: #3EBDAC;
-  --blueDark: #002753;
   /* JMP Brand neutral */
   --white: #FFFFFF;
   --grayDark: #172328;
@@ -431,7 +431,7 @@ div.light-purple-gradient {
   background: linear-gradient(90deg, #fdfdff 15%, #EFF1FE 75%);
 }
 div.gray {
-  background: #f4f4f4;
+  background: var(--gray);
 }
 div.dark-gray {
   background: var(--gray3);
@@ -466,7 +466,7 @@ a:hover {
 .button-container {
   display: inline-block;
   text-align: left;
-  width: max-content;
+  /* width: max-content; */
   margin: .5em 1em 2em 0;
   line-height: 100%;
   a.button:any-link, button {
@@ -662,7 +662,9 @@ a:hover {
 .text-link .button-container, .text-link-light .button-container, .text-link-caret-left .button-container, .text-link-caret-left-light .button-container, .text-link-light-center .button-container, .text-link-back .button-container, .text-link-caret-red .button-container {
   /* margin: 0 0 2em 0 !important; */
   a:link, a.button:any-link {
-    min-width: max-content !important;
+    min-width: auto !important;
+    text-align: left;
+    text-wrap: wrap;
     border: none;
     color: #0378cd !important;
     text-decoration: none;
