@@ -1,6 +1,10 @@
 import { createTag } from '../../scripts/helper.js';
 import { onSearchInput } from './search.js';
 import { getLanguageNav } from '../../scripts/jmp.js';
+import { decorateBlock, loadBlock } from '../../scripts/aem.js';
+
+// media query match that indicates mobile/tablet width
+const isDesktop = window.matchMedia('(min-width: 900px)');
 
 /**
  * fetches the navigation markup
@@ -16,8 +20,6 @@ async function fetchNavigationHTML() {
 function toggleHamburgerMenu(nav, forceExpanded = null) {
   const expanded = forceExpanded !== null ? !forceExpanded : nav.getAttribute('aria-expanded') === 'true';
   nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-
-  // TO-DO Enable escape keypress toggle??
 }
 
 function decorateSearchBar(results) {
@@ -31,6 +33,11 @@ function decorateSearchBar(results) {
   searchField.append(searchInput);
   searchBar.append(searchField);
   return searchBar;
+}
+
+async function formatNav(sideNav) {
+  decorateBlock(sideNav);
+  return loadBlock(sideNav);
 }
 
 /**
@@ -78,15 +85,30 @@ export default async function decorate(block) {
       class: 'nav-hamburger-icon',
     })));
 
+    // Copy subnav to document body as side rail.
+    const group2 = document.querySelector('.group-2');
+
+    const subNav = nav.querySelector('.subnav');
+    const sideRailNav = subNav.cloneNode(true);
+    subNav.classList.add('mobile-nav');
+    formatNav(subNav);
+
+    const sideRailWrapper = createTag('div', {
+      class: 'sideRail-wrapper',
+    });
+    sideRailWrapper.append(sideRailNav);
+    await formatNav(sideRailNav);
+    group2.append(sideRailWrapper);
+
     hamburger.addEventListener('click', () => toggleHamburgerMenu(nav));
     navTools.prepend(hamburger);
     nav.setAttribute('aria-expanded', 'false');
-    // prevent mobile nav behavior on window resize
-    // isDesktop.addEventListener('change', () => {
-    //   // toggleMenu(nav, isDesktop.matches);
-    //   //languageDropdownDecorated = false;
-    // });
   }
+
+  // close mobile nav if window resizes between desktop and mobile
+  isDesktop.addEventListener('change', () => {
+    toggleHamburgerMenu(nav, false);
+  });
 
   const navWrapper = createTag('div', {
     class: 'nav-wrapper',

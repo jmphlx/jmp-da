@@ -66,4 +66,30 @@ describe('Subnav Block', () => {
       await resetMouse();
     });
   });
+
+  describe('SKP Header Subnav', () => {
+    beforeEach(async () => {
+      document.body.innerHTML = await readFile({ path: './subnavSkpBlock.html' });
+      const subnavBlock = document.querySelector('.subnav');
+      document.querySelector('main').append(subnavBlock);
+      decorateBlock(subnavBlock);
+      await loadBlock(subnavBlock);
+    });
+
+    it('All top level dropdowns should have an anchor', async () => {
+      const listOfDropdowns = document.querySelectorAll('nav.main > ul > li');
+      expect(listOfDropdowns.length).to.equal(9);
+
+      const topAnchors = document.querySelectorAll('nav.main > ul > li > a');
+      expect(topAnchors.length).to.equal(9);
+    });
+
+    it('Should be 2 sub dropdowns with a total 6 children', async () => {
+      const subDropdown = document.querySelectorAll('nav ul li.is-dropdown');
+      expect(subDropdown.length).to.equal(2);
+
+      const subDropdownItems = document.querySelectorAll('nav.main > ul > li > ul a');
+      expect(subDropdownItems.length).to.equal(6);
+    });
+  });
 });

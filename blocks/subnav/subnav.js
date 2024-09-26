@@ -55,24 +55,35 @@ export default async function decorate(block) {
       && dropdownItems !== null
       && dropdownItems.querySelectorAll('li') !== undefined
       && dropdownItems.querySelectorAll('li').length > 0;
+    const topLevelLink = buttonLevel.querySelector('a');
+    const topLevelLinkedBtn = isDropdown
+      && topLevelLink
+      && topLevelLink.href;
 
     const listItem = document.createElement('li');
 
     if (isDropdown) {
-      listItem.innerHTML = `${buttonName}`;
       listItem.classList = 'is-dropdown';
+      if (topLevelLinkedBtn) {
+        const link = document.createElement('a');
+        link.href = buttonLevel.querySelector('a').href;
+        link.innerText = `${buttonName}`;
+        listItem.append(link);
+      } else {
+        listItem.innerHTML = `${buttonName}`;
 
-      listItem.addEventListener('click', () => {
-        let closeDropdown = false;
-        if (listItem.classList.contains('is-open')) {
-          // The dropdown is already open. Close it again.
-          closeDropdown = true;
-        }
-        closeAllNavSections(block);
-        if (!closeDropdown) {
-          listItem.classList.add('is-open');
-        }
-      });
+        listItem.addEventListener('click', () => {
+          let closeDropdown = false;
+          if (listItem.classList.contains('is-open')) {
+            // The dropdown is already open. Close it again.
+            closeDropdown = true;
+          }
+          closeAllNavSections(block);
+          if (!closeDropdown) {
+            listItem.classList.add('is-open');
+          }
+        });
+      }
 
       const dropdownListItems = constructDropdown(dropdownItems, activePage);
       listItem.append(dropdownListItems);
@@ -84,6 +95,7 @@ export default async function decorate(block) {
     }
 
     if ((isDropdown && isDropdownActive(listItem))
+      || (topLevelLinkedBtn && listItem.querySelector('a').href === activePage)
       || (!isDropdown && listItem.querySelector('a').href === activePage)) {
       listItem.classList.add('active');
     }

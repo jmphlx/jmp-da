@@ -272,7 +272,7 @@ async function loadLazy(doc) {
   if (hash && element) element.scrollIntoView();
 
   // If this is a SKP page, use the SKP header (custom and reduces js).
-  const isSKPPage = document.body.classList.contains('knowledgeportal');
+  const isSKPPage = document.body.classList.contains('skp');
   if (isSKPPage) {
     const headerBlock = buildBlock('header-skp', '');
     doc.querySelector('header').append(headerBlock);
