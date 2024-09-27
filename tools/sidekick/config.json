@@ -1,7 +1,7 @@
 {
   "project": "JMP-DA",
   "editUrlLabel": "Document Authoring",
-  "editUrlPattern": "https://da.live/edit#/{{org}}/{{site}}{{pathname}}"
+  "editUrlPattern": "https://da.live/edit#/{{org}}/{{site}}{{pathname}}",
   "plugins": [
     {
       "id": "jmptags",
