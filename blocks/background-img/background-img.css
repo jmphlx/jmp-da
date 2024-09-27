@@ -113,27 +113,3 @@
     }
   }
 }
-/* Styling below handles the combinations that happen mostly in the events section  */
-.image-size-small,
-.background-image,
-.background-image-narrow{
-  :has(h1 + h4){
-    h4{
-    opacity: .6;
-   }
-  }
-  h6{
-    text-transform: uppercase;
-    margin: 0;
-    font-size: var(--body-font-size-xs);
-    + h1, + h2 {
-      margin: 0 0 .5em 0;
-    }
-    + h4 {
-      margin-bottom: 0;
-      + h5 {
-      margin-bottom: .5em;
-      }
-    }
-  }
-}

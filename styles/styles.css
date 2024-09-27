@@ -241,6 +241,19 @@ h1 + h5 {
     margin-bottom: 1rem !important;
   }
 }
+:is(h4) {
+  &:has(+ :is(p)) {
+    margin-bottom: 0;
+  }
+  + p{
+    margin-bottom: .5em;
+  }
+}
+:is(h6) {
+  &:has(+ :is(h1, h2)) {
+    margin-bottom: 0;
+  }
+}
 /* h6 combinations */
 /* :is(h6):has(+ :is(h1, h2, h3, h4, h5)) {
   font-family: "anova-bold", sans-serif;
@@ -325,6 +338,18 @@ div.dark-gray-background {
 /* Text Colors */
 div.light-text {
   color: #ffffff !important;
+  :has(h6 + h1){
+    h6{
+    text-transform: uppercase;
+    margin-bottom: 0;
+    opacity: .6;
+  }
+}
+:has(h1 + h4){
+  h4{
+  opacity: .6;
+  }
+}
 }
 div.dark-text {
   color: #333333 !important;
@@ -1522,7 +1547,7 @@ div.interview-body {
   }
 }
 .section-compact{
-  padding: 48px 32px 21px 32px !important;
+  padding: 48px 32px 21px 32px;
   @media (width <=600px) {
   padding-top: 48px;
   padding-bottom: 0;
