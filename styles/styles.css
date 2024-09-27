@@ -237,7 +237,7 @@ h1 + h5 {
   &:has(+ :is(h4)) {
     margin-bottom: 1rem !important;
   }
-  &:has(+ :is(p)) {
+  &:has(+ :is(p, ul, ol)) {
     margin-bottom: 1rem !important;
   }
 }

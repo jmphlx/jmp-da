@@ -47,8 +47,6 @@ header .nav-brand {
 /* sections */
 header nav .nav-sections {
   grid-area: sections;
-  display: none;
-  visibility: hidden;
   border-bottom: 3px solid #eeeeee;
   padding-right: 5px;
   a {
@@ -307,4 +305,80 @@ header nav[aria-expanded="true"] .nav-hamburger-icon:after {
     display: none;
     visibility: hidden;
   }
+
+  header nav div.subnav {
+    display: none;
+    visibility: hidden;
+  }
+
 }
+
+@media (max-width: 900px) {
+  .side-nav {
+    display: none;
+    visibility: hidden;
+  }
+}
+
+
+/* nav mobile menu */
+@media (max-width: 900px) {
+  header nav {
+    display: flex;
+    flex-direction: column;
+    .nav-brand {
+      order: 1;
+      border-bottom: none;
+    }
+
+    .nav-tools {
+      order: 4;
+    }
+
+    .nav-knowledgeportal {
+      order: 3;
+    }
+
+    .nav-sections {
+      order: 2;
+      height: 64px;
+      margin-top: 5px;
+      margin-left: 28px;
+      height: 40px;
+    }
+  }
+
+  header nav[aria-expanded="true"] .nav-tools div.subnav {
+    position: absolute;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    top: 198px;
+    left: -20px;
+    width: 100%;
+    transition: transform .3s ease-in-out;
+    nav ul {
+      display: flex;
+      flex-direction: column;
+      background-color: var(--background-color);
+    }
+  }
+}
+
+header nav[aria-expanded="false"] .nav-mobile-menu {
+  display: none;
+  visibility: hidden;
+}
+
+header nav[aria-expanded="false"] div.subnav {
+  display: none;
+  visibility: hidden;
+}
+
+/* Hide sideRail in mobile */
+@media (max-width: 900px) {
+  .group-2 .sideRail-wrapper {
+    display: none;
+  }
+}
+/* nav mobile menu */

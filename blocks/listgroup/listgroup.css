@@ -97,7 +97,7 @@ div.listgroup-fixed, div.listgroup  {
       .navigation-title {
         order: 1;
         font-size: 13px;
-        font-family: "anova-light", "Arial", "Helvetica", sans-serif;
+        font-family: var(--font-secondary);
         font-weight: normal;
         color: var(--gray7);
         display: block;
@@ -234,10 +234,10 @@ div.listgroup-fixed, div.listgroup  {
         &:after {
           content:'';
           display: block;
-          width: 1.5rem;
-          height: 1.5rem;
+          width: 1.6rem;
+          height: 1.6rem;
           border: solid var(--blue);
-          border-width: 0 2px 2px 0;
+          border-width: 0 3px 3px 0;
           position: absolute;
           top: 48%;
           left: auto;
@@ -318,6 +318,11 @@ div.listgroup-fixed, div.listgroup  {
             .abstract {
               font-size: 1.6rem;
             }
+            &:after {
+              width: 1.6rem;
+              height: 1.6rem;
+              border-width: 0 3px 3px 0;
+            }
           }
         }
       }
@@ -393,10 +398,10 @@ div.listgroup-fixed, div.listgroup  {
         &:after {
           content:'';
           display: block;
-          width: 1rem;
-          height: 1rem;
+          width: 1.6rem;
+          height: 1.6rem;
           border: solid var(--blue);
-          border-width: 0 2px 2px 0;
+          border-width: 0 3px 3px 0;
           position: absolute;
           top: 48%;
           left: auto;
