@@ -47,8 +47,6 @@ header .nav-brand {
 /* sections */
 header nav .nav-sections {
   grid-area: sections;
-  display: none;
-  visibility: hidden;
   border-bottom: 3px solid #eeeeee;
   padding-right: 5px;
   a {
@@ -330,14 +328,23 @@ header nav[aria-expanded="true"] .nav-hamburger-icon:after {
     flex-direction: column;
     .nav-brand {
       order: 1;
+      border-bottom: none;
     }
 
     .nav-tools {
-      order: 3;
+      order: 4;
     }
 
     .nav-knowledgeportal {
+      order: 3;
+    }
+
+    .nav-sections {
       order: 2;
+      height: 64px;
+      margin-top: 5px;
+      margin-left: 28px;
+      height: 40px;
     }
   }
 
