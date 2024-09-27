@@ -336,7 +336,7 @@ main .section.light, main .section.highlight {
   background-color: var(--light-color);
 }
 main .section {
-  padding: 32px 16px;
+  padding: 64px 16px;
   &.section-padding-none {
     padding-bottom: 0 !important;
   }
