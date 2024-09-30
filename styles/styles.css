@@ -336,7 +336,7 @@ div.dark-gray-background {
   background-color: #333333;
 }
 /* Text Colors */
-div.text-light, .light-text {
+div.text-light {
   color: #ffffff !important;
   :has(h6 + h1){
     h6{
