@@ -336,26 +336,21 @@ div.dark-gray-background {
   background-color: #333333;
 }
 /* Text Colors */
-div.light-text {
+div.text-light, .light-text {
   color: #ffffff !important;
   :has(h6 + h1){
     h6{
     text-transform: uppercase;
     margin-bottom: 0;
-    opacity: .6;
   }
 }
-:has(h1 + h4){
-  h4{
-  opacity: .6;
+:is(h1){
+  +h2, +h3, +h4, +h5, +h6{
+  opacity: .7;
   }
 }
-}
-div.dark-text {
-  color: #333333 !important;
 }
 
-/* sections */
 /* section metadata */
 main .section.light, main .section.highlight {
   background-color: var(--light-color);
