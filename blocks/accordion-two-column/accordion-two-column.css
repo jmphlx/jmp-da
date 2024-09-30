@@ -5,11 +5,11 @@
 }
 /* stylelint-disable-next-line no-descending-specificity */
 .accordion-two-column details + details {
-  margin-top: 16px;
+  margin-top: 0;
 }
 .accordion-two-column details summary {
   position: relative;
-  padding: 0 16px;
+  padding: 0 8px;
   padding-right: 48px;
   cursor: pointer;
   list-style: none;
@@ -31,7 +31,7 @@
 .accordion-two-column details summary:after {
   content: "";
   position: absolute;
-  top: 50%;
+  top: 48%;
   right: 18px;
   transform: translateY(-50%) rotate(135deg);
   width: 9px;
@@ -41,7 +41,8 @@
   transition: transform 0.2s;
 }
 .accordion-two-column details[open] summary:after {
-  transform: translateY(-50%) rotate(-45deg);
+  /* transform: translateY(-50%) rotate(-45deg); */
+  transform: scaleY(-1) rotate(-225deg);
 }
 .accordion-two-column details .accordion-item-body {
   padding: 0 16px;
@@ -50,9 +51,26 @@
   border-top: 1px solid var(--dark-color);
   background-color: none;
 }
-.accordion-item-label {
-  color: #007dc3;
+.accordion-two-column-wrapper {
+  .accordion-two-column {
+    margin: 3.2rem auto 2.4rem auto !important;
+    .accordion-item {
+      .accordion-item-label {
+        color: #007dc3;
+        h4, h5 {
+          margin: 1.6rem 0 !important;
+        }
+        p {
+          margin: 0 !important;
+        }
+      }
+      .accordion-item-body {
+        padding-bottom: 2.4rem;
+      }
+    }
+  }
 }
+
 /* .accordion-item-body {
   margin-bottom: 32px;
   p {
