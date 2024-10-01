@@ -235,18 +235,22 @@ h1 + h5 {
 }
 :is(h3) {
   &:has(+ :is(h4)) {
-    margin-bottom: 1rem !important;
+    margin-bottom: .5rem !important;
   }
   &:has(+ :is(p, ul, ol)) {
-    margin-bottom: 1rem !important;
+    margin-bottom: .5rem !important;
+  }
+  + h4 {
+    opacity: .7;
+    margin-bottom: .5rem;
   }
 }
 :is(h4) {
   &:has(+ :is(p)) {
-    margin-bottom: 0;
+    margin-bottom: 1rem;
   }
-  + p{
-    margin-bottom: .5em;
+  + p {
+    margin-bottom: .75rem;
   }
 }
 :is(h6) {
@@ -463,12 +467,30 @@ div.dark-blue {
   background: var(--blueDark);
 }
 
-/* Styling to change all list item bullets to the JMP blue  */
+/* bullets JMP blue  */
 ul {
-  padding: 0 0 0 16px; /* we are looking at this styling agian */
+  padding: 0 0 0 16px; 
   li::marker {
     color: var(--blue);
-    /* font-size: var(--heading-font-size-s); */
+  }
+}
+.bullet-arrow {
+  .default-content-wrapper  {
+    ul {
+    padding: 0 0 0 2rem; 
+      li {
+        text-indent: -8px;
+      } 
+      li::marker {
+        content: '';
+      }
+      li:before {
+        content: url('../../../icons/arrow-orange.svg');
+        width: 7px;
+        display: inline-block;
+        font-size: 80%;
+      }
+    }
   }
 }
 
