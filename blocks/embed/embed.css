@@ -2,7 +2,7 @@
   width: unset;
   text-align: center;
   max-width: 1600px;
-  margin: 32px auto;
+  margin: 0 auto 32px auto;
 }
 
 .embed > div {
@@ -62,5 +62,5 @@
 }
 
 div.vidyard-player-container {
-  border-radius: 10px !important;
+  border-radius: 5px !important;
 }
