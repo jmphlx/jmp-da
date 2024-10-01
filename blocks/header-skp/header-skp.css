@@ -341,7 +341,7 @@ header nav[aria-expanded="true"] .nav-hamburger-icon:after {
 
     .nav-sections {
       order: 2;
-      height: 64px;
+      /* height: 64px; */
       margin-top: 5px;
       margin-left: 28px;
       height: 40px;
