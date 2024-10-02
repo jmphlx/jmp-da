@@ -1,12 +1,21 @@
+.header-skp-wrapper {
+  position: relative;
+  /* display: flex; */
+  height: auto;
+}
+
 header .nav-wrapper {
   background-color: #ffffff;
   width: 100%;
   z-index: 1000;
-  position: fixed;
-}
-
-@media (width >= 900px) { 
-  header nav { 
+  p {
+    margin: 0;
+    line-height: 1;
+  }
+  a:any-link {
+    color: currentcolor;
+  }
+  nav {
     min-height: 0; 
     overflow: visible; 
     display: grid;
@@ -14,90 +23,187 @@ header .nav-wrapper {
     grid-template: 
       'brand sections'
       'knowledgeportal tools';
+    .nav-brand {
+      grid-area: brand;
+      grid-row: 1;
+      grid-column: 1;
+      border-bottom: 3px solid var(--blue);
+      height: 64px;
+      display: flex;
+      justify-content: left;
+      align-items: center;
+      /* margin: 0 0 0 32px; */
+      picture {
+        img {
+          width: 150px;
+          height: 64px;
+          margin-top: 3px;
+          padding-left: 32px;
+        }
+      }
+    }
+    .nav-sections {
+      grid-area: sections;
+      border-bottom: 3px solid var(--blue);
+      display: block;
+      visibility: visible;
+      white-space: nowrap;
+      padding: 0 32px 0 0;
+      ul  {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+        height: 64px;
+        display: flex;
+        justify-content: right;
+        align-items: center;
+      }
+      ul > li > ul > li {
+        font-size: 15px;
+      }
+      a {
+        text-decoration: none;
+        padding: 6px 12px;
+        font-size: 15px;
+        border-radius: 5px;
+        color: #ffffff;
+        font-family: "anova-bold", sans-serif;
+        background-color: var(--orange);
+        border: 2px solid var(--orange);
+        &:hover {
+          background-color: var(--orange-hover);
+          border: 2px solid var(--orange-hover);
+          transition: color 0.5s ease;
+        }
+        &:after {
+          display: inline-block;
+          padding-left: 5px;
+          width: 7px !important;
+          content: url('../../../icons/arrow-white.svg');
+        }
+      }
+    }
+    .nav-knowledgeportal {
+      background: rgba(60, 128, 197, 0.57);
+      padding: 0 0 1rem 3.2rem;
+      h3 {
+        margin-bottom: 0 !important;
+      }
+    }
+    .nav-tools {
+      background: rgba(60, 128, 197, 0.57);
+      padding: 0;
+      display: flex;
+      justify-content: stretch;
+      align-items: center;
+      ul {
+        display: none;
+        justify-content: flex-end;
+        align-items: center;
+      }
+    }
+    &.nav-hamburger {
+      display: none;
+      visibility: hidden;
+    }
   }
-}
-
-header nav p {
-  margin: 0;
-  line-height: 1;
-}
-
-header nav a:any-link {
-  color: currentcolor;
-}
-
-/* brand */
-header .nav-brand {
-  grid-area: brand;
-  display: grid;
-  grid-row: 1;
-  grid-column: 1;
-  border-bottom: 3px solid #eeeeee;
-  height: 64px;
-  picture {
-    img {
-      margin-top: 15px;
-      height: 40px;
-      width: 194px;
+  @media (width <= 900px) { 
+    nav { 
+      display: grid !important;
+      min-height: 0; 
+      overflow: visible; 
+      padding: 0;
+      width: 100%;
+      grid-template: 
+        'brand sections'
+        'knowledgeportal knowledgeportal'
+        'tools tools';
+      div.nav-tools {
+        display: grid;
+        order: 4;
+        /* background: #194573; */
+        background: rgba(25, 69, 115, 0.6);
+        z-index: 100;
+        grid-template: 
+        'search hamburger'
+        'subnav subnav';
+        div.nav-hamburger {
+          grid-area: hamburger;
+          background-color: #194573;
+          height: 100%;
+          padding-right: 32px;
+        }
+        div.gnav-search-field {
+          grid-area: search;
+          background-color: #194573;
+          padding: 1rem 3.2rem;
+          height: 100%;
+          width: 100%;
+        }
+        nav.main {
+          grid-area: subnav;
+          order: 3;
+           ul {
+            /* margin: 1.6rem 0 1.6rem 3.2rem; */
+            li {
+              padding: 0 0 0 3.2rem;
+              a {
+                color: rgba(255, 255, 255, 0.7);
+              }
+            }
+            li.is-dropdown {
+              padding-left: 2rem;
+            }
+          }
+        }
+      }
+      .nav-knowledgeportal {
+        order: 3;
+        background: rgba(60, 128, 197, 0.57);
+        padding-left: 32px;
+          padding-right: 32px;
+      }
+    }
+    nav[aria-expanded="true"] .nav-tools div.subnav {
+      position: absolute;
+      padding: 0 2rem;
+      display: contents;
+      background: rgba(25, 69, 115, 0.6);
+      flex-direction: column;
+      top: 198px;
+      left: -20px;
+      width: 100%;
+      transition: transform .3s ease-in-out;
+      div.nav-hamburger {
+        background-color: rgba(25, 69, 115, 0.6);
+      }
+      nav ul {
+        display: flex;
+        flex-direction: column;
+        background-color: transparent;
+      }
+    }
+  }
+  @media (width <= 600px) { 
+    nav {
+      .nav-brand  {
+        margin: 0;
+        & picture {
+          img  {
+          padding-left: 16px;
+          }
+        }
+      }
+      .nav-sections {
+        margin: 0;
+        padding: 0;
+        ul {
+          padding-right: 16px;
+        }
+      }
     }
   }
 }
-/* end of brand */
-
-/* sections */
-header nav .nav-sections {
-  grid-area: sections;
-  border-bottom: 3px solid #eeeeee;
-  padding-right: 5px;
-  a {
-    text-decoration: none;
-    padding: 6px 12px;
-    font-size: 15px;
-    border-radius: 5px;
-    color: #ffffff;
-    font-family: "anova-bold", sans-serif;
-    background-color: var(--orange);
-    border: 2px solid var(--orange);
-    &:hover {
-      background-color: var(--orange-hover);
-      border: 2px solid var(--orange-hover);
-      transition: color 0.5s ease;
-    }
-    &:after {
-      content: '\e616';
-      font-family: 'sasicons-103018' !important;
-    }
-  }
-}
-
-header nav .nav-sections ul  {
-  list-style: none;
-  padding-left: 0;
-  margin: 0;
-  @media (min-width: 900px) {
-    height: 64px;
-  }
-}
-
-header nav .nav-sections ul > li > ul > li {
-  font-size: 15px;
-}
-
-@media (min-width: 900px) {
-  header nav .nav-sections {
-    display: block;
-    visibility: visible;
-    white-space: nowrap;
-    padding: 0 2rem 0 0;
-  }
-
-  header nav .nav-sections ul {
-    display: flex;
-    justify-content: right;
-    align-items: center;
-  }
-}
-/* end sections */
 
 /* knowledgeportal */
 header nav .nav-knowledgeportal {
@@ -202,22 +308,6 @@ header nav .gnav-search-results {
   }
 }
 
-@media (min-width: 900px) {
-  header nav .nav-tools ul {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-  }
-}
-
-@media (min-width: 900px) {
-  header nav .nav-hamburger {
-    display: none;
-    visibility: hidden;
-  }
-}
-
-/* end of tools */
 
 
 
@@ -238,7 +328,7 @@ header nav .nav-hamburger button {
   border: 0;
   border-radius: 0;
   padding: 0;
-  background-color: var(--blue);
+  background-color: transparent;
   color: white;
   overflow: initial;
   text-overflow: initial;
@@ -329,6 +419,7 @@ header nav[aria-expanded="true"] .nav-hamburger-icon:after {
     .nav-brand {
       order: 1;
       border-bottom: none;
+      /* width: 50%; */
     }
 
     .nav-tools {
@@ -337,14 +428,41 @@ header nav[aria-expanded="true"] .nav-hamburger-icon:after {
 
     .nav-knowledgeportal {
       order: 3;
+      background: rgba(60, 128, 197, 0.57);
+      padding-left: 32px;
+        padding-right: 32px;
+    }
+  }
+
+  header nav[aria-expanded="true"] .nav-tools div.subnav {
+    position: absolute;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    top: 198px;
+    left: -20px;
+    width: 100%;
+    transition: transform .3s ease-in-out;
+    nav ul {
+      display: flex;
+      flex-direction: column;
+      background-color: var(--background-color);
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  header nav {
+    .nav-brand {
+      margin-left: 16px;
+    }
+    .nav-knowledgeportal {
+      padding-left: 16px;
+      padding-right: 16px;
     }
 
     .nav-sections {
-      order: 2;
-      /* height: 64px; */
-      margin-top: 5px;
-      margin-left: 28px;
-      height: 40px;
+      margin-right: 16px;
     }
   }
 
