@@ -68,7 +68,10 @@ function getLanguageNav(isSKP = null) {
  * Default to 'en' if language isn't found.
  * @returns {string} path to language footer
  */
-function getLanguageFooter() {
+function getLanguageFooter(isSKP = null) {
+  if (isSKP) {
+    return isLanguageSupported ? `/${lang}/statistics-knowledge-portal/footer` : '/en/statistics-knowledge-portal/footer';
+  }
   return isLanguageSupported ? `/${lang}/footer` : '/en/footer';
 }
 

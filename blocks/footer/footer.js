@@ -24,6 +24,16 @@ function addBackToTopButton() {
   return buttonNav;
 }
 
+function addStickyFooter(footer, stickyFooter) {
+  document.addEventListener('scroll', () => {
+    if (window.scrollY >= 300 && window.innerHeight <= footer.getBoundingClientRect().top) {
+      stickyFooter.classList.add('active');
+    } else {
+      stickyFooter.classList.remove('active');
+    }
+  });
+}
+
 /**
  * loads and decorates the footer
  * @param {Element} block The footer block element
@@ -32,9 +42,11 @@ export default async function decorate(block) {
   const footerMeta = getMetadata('footer');
   block.textContent = '';
 
+  const isSKP = document.querySelector('body.skp');
+
   // load footer fragment
   const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname
-    : getLanguageFooter();
+    : getLanguageFooter(isSKP);
   const fragment = await loadFragment(footerPath);
 
   // decorate footer DOM
@@ -43,6 +55,10 @@ export default async function decorate(block) {
 
   const backToTopButton = addBackToTopButton();
   footer.append(backToTopButton);
+
+  if (isSKP) {
+    addStickyFooter(footer, footer.querySelector('.sticky-footer'));
+  }
 
   block.append(footer);
 }

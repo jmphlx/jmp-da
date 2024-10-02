@@ -87,3 +87,14 @@ div.subnav.skpsubnav nav.main ul li.active {
     color: #194573;
   }
 }
+
+body.skp footer {
+  background: rgba(0, 40, 80, 0.64);
+  padding: 0;
+  margin: 0;
+
+  .footer {
+    margin: 0;
+    min-width: 100%;
+  }
+}
