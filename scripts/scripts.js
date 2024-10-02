@@ -17,11 +17,14 @@ import {
   loadCSS,
   readBlockConfig,
 } from './aem.js';
+import { createTag } from './helper.js';
 
 (async function loadDa() {
   if (!new URL(window.location.href).searchParams.get('dapreview')) return;
   import('https://da.live/scripts/dapreview.js').then(({ default: daPreview }) => daPreview(loadPage));
 }());
+
+var isSKPPage = false;
 
 /**
  * OUT OF THE BOX code that impacts our hero blocks.
@@ -106,6 +109,7 @@ function decoratePageStyles() {
   if (pageStyle && pageStyle.trim().length > 0) {
     loadCSS(`${`${window.location.protocol}//${window.location.host}`}/styles/pages/${pageStyle.toLowerCase()}.css`);
     document.body.classList.add(pageStyle.toLowerCase());
+    isSKPPage = pageStyle.toLowerCase() === 'skp';
   }
 }
 
@@ -232,12 +236,34 @@ export function decorateMain(main) {
 }
 
 /**
+ * For SKP pages, load the mathjax script for equations.
+ * NOTE: This needs to be loaded before the body content or
+ * the script won't convert text equations.
+ * @author JMP
+ */
+function addMathJax() {
+  const mathJaxConfig = createTag('script', {
+    type: 'text/x-mathjax-config',
+  });
+  mathJaxConfig.innerText = "MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$']], processEscapes: true}});"
+  document.head.appendChild(mathJaxConfig);
+
+  const mathJaxScript = createTag('script', {
+    src: 'https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML',
+  });
+  document.head.appendChild(mathJaxScript);
+}
+
+/**
  * Loads everything needed to get to LCP.
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
   decorateTemplateAndTheme();
   decoratePageStyles();
+  if(isSKPPage) {
+    addMathJax();
+  }
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);
@@ -272,7 +298,6 @@ async function loadLazy(doc) {
   if (hash && element) element.scrollIntoView();
 
   // If this is a SKP page, use the SKP header (custom and reduces js).
-  const isSKPPage = document.body.classList.contains('skp');
   if (isSKPPage) {
     const headerBlock = buildBlock('header-skp', '');
     doc.querySelector('header').append(headerBlock);
