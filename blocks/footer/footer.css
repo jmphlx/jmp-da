@@ -121,3 +121,53 @@ div.section.copyright {
   bottom: -30px;
 }
 
+.sticky-footer {
+  display: block;
+  position: fixed;
+  transition: .4s;
+  bottom: 0;
+  z-index: 100;
+  width: 100%;
+  background-size: 200%;
+  color: white;
+  left: 0;
+  box-shadow: 0 0 30px rgba(0,0,0,.4);
+  transform: translate3d(0,100px,0);
+  pointer-events: none;
+
+  &:before {
+    content: "";
+    background: rgba(0,40,80,1);
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+  }
+
+  &.active {
+    transform: translate3d(0,0,0);
+    pointer-events: all;
+  }
+  .button-container {
+    z-index: 1000;
+    p  {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+}
+
+.section.sticky-footer.background-img-container {
+  position: fixed;
+  bottom: 0;
+  .background-img-wrapper {
+    z-index: 0;
+  }
+  &.active {
+    transform: translate3d(0,0,0);
+    pointer-events: all;
+  }
+}
