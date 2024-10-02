@@ -1,3 +1,7 @@
+h1 {
+  color: #194573;
+  font-family: var(--font-bold) !important;
+}
 div.subnav.skpsubnav nav.main ul {
   list-style: none;
   display: flex;
@@ -5,22 +9,26 @@ div.subnav.skpsubnav nav.main ul {
   padding: 0;
   a {
     font-size: 24px;
+    width: 100%;
+    text-align: left;
     color: #7c9db6;
     background: none;
     border: none;
     padding: 0;
     line-height: 1.25em;
     transition: .3s;
-    font-family: "anova-bold", Arsial, Helvetica, sans-serif;
+    font-family: "anova-regular", Arial, Helvetica, sans-serif;
   }
   >li {
     border: none;
+    width: 100%;
   }
 }
 
 div.subnav.skpsubnav nav.main ul li.is-dropdown {
   display: flex;
   flex-direction: column;
+  width: 100%;
   ul.sub {
     display: none;
     position: relative;
@@ -74,6 +82,7 @@ div.subnav.skpsubnav nav.main ul li.active {
   flex-direction: column;
   a {
     background: none;
+    width: 100%;
     background-color: none;
     color: #194573;
   }
