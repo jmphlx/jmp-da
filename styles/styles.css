@@ -534,9 +534,9 @@ a:hover {
     color: white;
     cursor: pointer;
   }
-  @media (width <=600px) {
+  /* @media (width <=600px) {
     margin-bottom: 10px !important;
-  }
+  } */
 }
 .button-center {
   .button-container {
