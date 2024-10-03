@@ -76,6 +76,11 @@
       margin: 1.6rem 0;
     }
   }
+  @media (width <= 900px) {
+    &.cards > ul {
+      display: block;
+    }
+  }
 }
 
 .data-viz-icon-cards {
