@@ -383,7 +383,6 @@ header nav .gnav-search-results {
   background-color: var(--clr-gray-light);
   padding: 0 3.2rem;
   box-sizing: border-box;
-  /* display: flex; */
   flex-direction: column;
   margin: 0 auto;
   display: block;

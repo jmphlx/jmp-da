@@ -5,13 +5,19 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-gap: 16px;
+  @media (width <= 600px) {
+    display: block;
+    > li {
+      margin-bottom: 1.6rem !important;
+    }
+  }
 }
 
 .cards > ul > li {
   border: 1px solid var(--grayRule);
   background-color: var(--background-color);
   border-radius: 5px;
-  margin-bottom: 0 !important;
+  margin-bottom: 0 ;
 }
 
 .cards .cards-card-body {
