@@ -17,9 +17,24 @@ async function fetchNavigationHTML() {
   return response.text();
 }
 
+function closeAllMobileDropdowns(nav) {
+  nav.setAttribute('aria-expanded', false);
+  nav.querySelector('.gnav-search-bar').setAttribute('aria-expanded', false);
+  nav.querySelector('.gnav-search-input').value = '';
+  nav.querySelector('.gnav-search-input').dispatchEvent(new Event('input', { bubbles: true }))
+}
+
 function toggleHamburgerMenu(nav, forceExpanded = null) {
   const expanded = forceExpanded !== null ? !forceExpanded : nav.getAttribute('aria-expanded') === 'true';
+  closeAllMobileDropdowns(nav);
   nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+}
+
+function toggleMobileSearch(nav, searchBar, forceExpanded = null) {
+  const expanded = forceExpanded !== null ? !forceExpanded : searchBar.getAttribute('aria-expanded') === 'true';
+  closeAllMobileDropdowns(nav);
+  searchBar.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+  searchBar.querySelector('input').focus();
 }
 
 function decorateSearchBar(results) {
@@ -70,8 +85,9 @@ export default async function decorate(block) {
     nav.append(results);
     const searchBar = decorateSearchBar(results);
     searchButton.addEventListener('click', () => {
-      searchBar.focus();
+      toggleMobileSearch(nav, searchBar);
     });
+    searchBar.setAttribute('aria-expanded', 'false');
     navTools.append(searchBar);
 
     // hamburger for mobile
