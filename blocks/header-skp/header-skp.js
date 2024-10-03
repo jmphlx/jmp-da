@@ -20,6 +20,8 @@ async function fetchNavigationHTML() {
 function closeAllMobileDropdowns(nav) {
   nav.setAttribute('aria-expanded', false);
   nav.querySelector('.gnav-search-bar').setAttribute('aria-expanded', false);
+  nav.querySelector('.gnav-search-input').value = '';
+  nav.querySelector('.gnav-search-input').dispatchEvent(new Event('input', { bubbles: true }))
 }
 
 function toggleHamburgerMenu(nav, forceExpanded = null) {
