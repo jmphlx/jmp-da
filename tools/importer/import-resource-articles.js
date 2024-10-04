@@ -173,94 +173,141 @@ const createMetadataBlock = (document) => {
   //returning the meta object might be usefull to other rules
   return metaBlock;
 };
-const createFragment = (document, link) => {
+
+const createFragment = (document) => {
   const cells = [
     ['fragment'],
   ]
   const anchor = document.createElement('a');
-  anchor.href = link;
-  anchor.innerText = link;
+  anchor.href = 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/resources/resource-back-button';
+  anchor.innerText = 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/resources/resource-back-button';
   cells.push([anchor]);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
-const createTopic = (document) => {
+const createHero = (document) => {
   const doc = {};
   const cells = [
-    ['columns (clm-33-66)'],
+    ['columns (success-story-hero)'],
   ]
+  //grab hero image
   
-  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt14 div.parsys_column.cq-colctrl-lt14-c0');
+  
+  //grab right hand text 
+  const image = document.querySelector('div.parsys_column.cq-colctrl-lt13 div.parsys_column.cq-colctrl-lt13-c0 div.textimage.parbase.section div div');
+  const rhText = document.createElement("img");
+  console.log(image);
+  const img = document.querySelector('[property="og:image"]');
+  rhText.src = img.content;
 
-
-  var children = lhText.children;
-  for (var i = 0; i < children.length; i++) {
-    var child = children[i];
-    if (child.className === "horizontalline parbase section") {
-      child.replaceWith(document.createElement('hr'));
-    };
-    // Do stuff
-  }
-
-  // console.log(lhText);
-  console.log("Tad Look here");
+  // rhText.setAttribute('src',"https://www.jmp.com" + rhText.getAttribute("src"));
+  const text = document.querySelector('div.par.parsys div.styledcontainer.parbase div.container.column div.par.parsys div.text.parbase.section div');
+  const lhText = document.createElement("div");
+  const topper = document.createElement("h6");
+  topper.innerText = "Article";
+  lhText.append(topper);
+  lhText.append(text);
+  console.log("This is the Hero image area");
   console.log(lhText);
-  // lhText.firstElementChild.setAttribute('data-asset',"https://www.jmp.com" + lhText.firstElementChild.getAttribute("data-asset"));
-  // lhText.firstElementChild.firstElementChild.setAttribute('src',lhText.firstElementChild.getAttribute("data-asset"));
-
-  // console.log(lhText.innerHTML);
-
-  const rhDiv = document.createElement("div");
-  rhDiv.append(document.createElement('hr'));
-  const rhText = document.querySelector('div.parsys_column.cq-colctrl-lt14-c1');
-  var children = rhText.children;
-  console.log(children);
-
-  if (children[0].className === "text parbase section") {
-    rhDiv.append(children[0]);
-    const paragraph = document.createElement("p");
-    console.log(children);
-    paragraph.innerText = children[0].firstElementChild.firstElementChild.getAttribute("data-video-id");
-    rhDiv.append(paragraph);
-    console.log("DREW LOOK HERE");
-    console.log(rhText);
-    console.log(paragraph);
-    console.log(rhDiv);
+  console.log(rhText);
+  console.log("DREW LOOK ABOVE HERE");
+  // rhText.firstElementChild.setAttribute('data-asset',"https://www.jmp.com" + rhText.firstElementChild.getAttribute("data-asset"));
+  // console.log(rhText.firstElementChild.getAttribute("data-smp-src"));
+  // rhText.firstElementChild.setAttribute('data-cmp-src',"https://www.jmp.com" + rhText.firstElementChild.getAttribute("data-cmp-src"));
+  let images = rhText.getElementsByTagName("img");
+  console.log(images);
+  for (let el of images) {
+    
+    console.log(el.getAttribute("src"));
+    console.log("this ran");
+    el.setAttribute('src',"https://www.jmp.com" + el.getAttribute("src"));
   };
-
-  if (children[0].className === "horizontalline parbase section") {
-    rhDiv.append(children[1]);
-    const paragraph = document.createElement("p");
-    console.log(children);
-    paragraph.innerText = children[1].firstElementChild.firstElementChild.getAttribute("data-video-id");
-    rhDiv.append(paragraph);
-    console.log("DREW LOOK HERE");
-    console.log(rhText);
-    console.log(paragraph);
-    console.log(rhDiv);
-  };
+  cells.push([lhText, rhText]);
   
-
-  cells.push([lhText, rhDiv]);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
+//get any full width 'hero' with only text likes
+const createDivider = (document) => {
+  const cells = [
+    ['divider'],
+  ]
+  return WebImporter.DOMUtils.createTable(cells, document);
+};
+
+const createLeftHandRail = (document) => {
+  const lhRail = document.querySelector('div.parsys_column.cq-colctrl-lt13 div.parsys_column.cq-colctrl-lt13-c0 div.textimage.parbase.section div div.text');
+  if (lhRail){
+    lhRail.className = "";
+    return lhRail;
+  }
+  
+  //if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
+};
+
+const createRightHandRail = (document) => {
+  const rhRail = document.querySelector('div.par.parsys div.styledcontainer.parbase div.container.column div.par.parsys div.parsys_column.cq-colctrl-lt13 div.parsys_column.cq-colctrl-lt13-c0');
+  if (rhRail){
+    console.log("DREW LOOK HERE");
+    
+    rhRail.classList.remove('text-parbase-section');
+    rhRail.classList.remove('cq-colctrl-lt13-c0');
+    rhRail.classList.remove("parsys_column");
+    let images = rhRail.getElementsByTagName("img");
+    let children = rhRail.children;
+
+    for (var i = 0; i < children.length; i++) {
+      var child = children[i];
+      
+      if (child.className === "image parbase section") {
+        let pic = document.createElement("img");
+        let image = child.querySelector("img");
+        console.log("This is the Right Hand Rail area")
+        console.log(child);
+        console.log(image);
+        pic.setAttribute('src',"https://www.jmp.com" + image.getAttribute("src"));
+        child.replaceWith(pic);
+      };
+
+      if (child.className === "horizontalline parbase section") {
+        child.remove();
+      };
+
+      if (child.className === "textimage parbase section") {
+        child.remove();
+      };
+
+      if (child.className === "text parbase section") {
+        let header = child.querySelector('h3');
+        if (header) {child.querySelector('h3').outerHTML = "<h2>" + child.querySelector('h3').innerHTML + '</h2>'};
+        
+      };
+      // Do stuff
+    }
+    console.log(children);
+    // for (let el of children) {
+    //   // console.log(el.getAttribute("src"));
+    //   // console.log(el.attributes);
+    //   el.setAttribute('src',"https://www.jmp.com" + el.getAttribute("src"));
+    //   // el.setAttribute('data-asset',"https://www.jmp.com" + el.getAttribute("data-asset"));
+    // };
 
 
-const createTitle = (document) => {
-  const title = document.querySelector('div.text.parbase.section div.nametag');
-  // console.log(title)
-  if (title.querySelector('h4')) {title.querySelector('h4').outerHTML = "<h5>" + title.querySelector('h4').innerHTML + '</h5>'};
-  if (title.querySelector('p')) {title.querySelector('p').outerHTML = "<h5>" + title.querySelector('p').innerHTML + '</h5>'};
-  title.classList.remove('nametag');
-  // title.querySelector('h4').outerHTML = "<h6>" + title.querySelector('h4').innerHTML + '</h6>'
-  // console.log("DREW LOOK HERE");
-  console.log(title);
-  return title;
-  };
+    console.log(images);
+    // lhRail.firstElementChild.setAttribute('data-asset',"https://www.jmp.com" + lhRail.firstElementChild.getAttribute("data-asset"));
+    // lhRail.firstElementChild.firstElementChild.setAttribute('src',lhRail.firstElementChild.getAttribute("data-asset"));
+   console.log(rhRail);
+   //console.log(rhRail.innerHTML);
+   return rhRail;
+  }
+};
 
+const createButtonLink = (document) => {
+  const button = document.querySelector(' div.parsys_column.cq-colctrl-lt1.cols-halfgutter div.parsys_column.cq-colctrl-lt1-c1 div.reference.parbase div.cq-dd-paragraph div.text.parbase div.trial-button p span.button');
+  return button;
+}
 
-const createSM = (document, style) => {
+const createSM2 = (document, style) => {
   const cells = [
     ['section-metadata'],
   ]
@@ -270,6 +317,16 @@ const createSM = (document, style) => {
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
 };
 
+const createSM = (document) => {
+  const cells = [
+    ['section-metadata'],
+  ]
+
+  cells.push(['layout','2 Column']);
+  cells.push(['Style', 'success-story-body, columns-75-25']);
+  console.log(cells);
+  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
+};
 
 export default {
   transformDOM: ({ document }) => {
@@ -278,35 +335,31 @@ export default {
     const section = document.createElement('div');
     const sectionBreak = document.createElement('hr');
 
-    const fragment = createFragment(document, 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/learning-library/mini-nav');
+    const fragment = createFragment(document);
     if (fragment) section.append(fragment);
 
-    const sectionMetadata = createSM(document, 'blue-purple-gradient, subnav-compact, light-nav');
+    const vidHero = createHero(document);
+    if (vidHero) section.append(vidHero);
+
+    const topSectionMetadata = createSM2(document,"section-top-padding-small");
+    if(topSectionMetadata) section.append(topSectionMetadata);
+
+    section.append(document.createElement('hr'));
+
+    const lhrail = createLeftHandRail( document,);
+    console.log(lhrail);
+    if (lhrail) section.append(lhrail);
+
+    const divider = createDivider(document);
+    if (divider) section.append(divider);
+
+    const rightHR = createRightHandRail(document);
+    if (rightHR) section.append(rightHR);
+
+    const sectionMetadata = createSM(document);
     if(sectionMetadata) section.append(sectionMetadata);
 
-    section.append(document.createElement('hr'));
-
-    const title = createTitle(document);
-    if (title) section.append(title);
-
-    const sectionMetadata2 = createSM(document, 'section-padding-none');
-    if(sectionMetadata2) section.append(sectionMetadata2);
-
-    section.append(document.createElement('hr'));
-
-    const bio = createTopic(document);
-    if (bio) section.append(bio);
-
-    const sectionMetadata3 = createSM(document, 'section-padding-medium');
-    if(sectionMetadata3) section.append(sectionMetadata3);
-
     section.append(sectionBreak);
-
-    const fragment2 = createFragment(document, 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/learning-library/pdf-bundle');
-    if (fragment2) section.append(fragment2);
-
-    const sectionMetadata4 = createSM(document, 'text-center, button-center, gray');
-    if(sectionMetadata4) section.append(sectionMetadata4);
   
     const meta = createMetadataBlock(document);
     if (meta) section.append(meta);

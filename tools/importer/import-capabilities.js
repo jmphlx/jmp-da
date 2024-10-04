@@ -194,7 +194,7 @@ const createTopic = (document, title) => {
 
 
   const rhText = document.querySelector('div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c1 div.lightbox.section div.video a.text-bottom div.image div span.cmp-image img.cmp-image__image');
-  const page = title.innerText.trim().replace(" ","-").toLowerCase();
+  const page = title.innerText.trim().replaceAll(" ","-").toLowerCase();
   rhText.setAttribute("href",`https://main--jmp-da--jmphlx.hlx.page/modals/${page}`);
   rhText.setAttribute("src", "https://www.jmp.com" + rhText.getAttribute('src'));
   
