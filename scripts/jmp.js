@@ -1,3 +1,7 @@
+import { toClassName } from './aem.js';
+
+const knownObjectProperties = ['options', 'filters'];
+
 /**
  * Returns if a given 2 or 4 digit language is supported
  * by JMP. Support means that it should have it's own
@@ -327,9 +331,70 @@ async function getLangMenuPageUrl(languagePage) {
   }
 }
 
+function convertStringToJSONObject(stringValue) {
+  const jsonObj = {};
+  const stringList = stringValue.split(',');
+  stringList.forEach((item) => {
+    if (item.includes('=')) {
+      const optionsString = item.split('=', 2);
+      jsonObj[optionsString[0].trim().toLowerCase()] = optionsString[1].trim().toLowerCase();
+    } else {
+      jsonObj[item.trim().toLowerCase()] = true;
+    }
+  });
+  return jsonObj;
+}
+
+function getBlockConfig(block) {
+  const config = {};
+  block.querySelectorAll(':scope > div').forEach((row) => {
+    if (row.children) {
+      const cols = [...row.children];
+      if (cols[1]) {
+        const col = cols[1];
+        const name = cols[0].textContent;
+        let value = '';
+        if (knownObjectProperties.includes(name.toLowerCase())) {
+          //known json object
+          const stringValue = col.textContent;
+          value = convertStringToJSONObject(stringValue);
+        } else if (col.querySelector('a')) {
+          const as = [...col.querySelectorAll('a')];
+          if (as.length === 1) {
+            value = as[0].href;
+          } else {
+            value = as.map((a) => a.href);
+          }
+        } else if (col.querySelector('img')) {
+          const imgs = [...col.querySelectorAll('img')];
+          if (imgs.length === 1) {
+            value = imgs[0].src;
+          } else {
+            value = imgs.map((img) => img.src);
+          }
+        } else if (col.querySelector('p')) {
+          const ps = [...col.querySelectorAll('p')];
+          if (ps.length === 1) {
+            value = ps[0].textContent;
+          } else {
+            value = ps.map((p) => p.textContent);
+          }
+        } else if (col.querySelector('ul')) {
+          const listItems = [...col.querySelectorAll('li')];
+          value = listItems.map((item) => item.textContent);
+        } else value = row.children[1].textContent;
+        config[name] = value;
+      }
+    }
+  });
+  console.log(config);
+  return config;
+}
+
 export {
   arrayIncludesAllValues,
   arrayIncludesSomeValues,
+  getBlockConfig,
   getBlockPropertiesList,
   getBlockProperty,
   getJsonFromUrl,
