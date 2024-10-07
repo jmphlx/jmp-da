@@ -140,10 +140,7 @@ div.section.copyright {
     background: rgba(0,40,80,1);
     display: block;
     position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
+    inset: 0;
   }
 
   &.active {
