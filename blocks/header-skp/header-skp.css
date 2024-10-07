@@ -92,7 +92,6 @@ header .nav-wrapper {
       }
     }
     .nav-tools {
-      background: rgba(60, 128, 197, 0.57);
       padding: 0;
       display: flex;
       justify-content: stretch;
@@ -101,15 +100,28 @@ header .nav-wrapper {
         list-style: none;
         justify-content: flex-end;
         align-items: center;
+        padding-left: 3.2rem;
+        background-color: #194573;
+        height: 100%;
+        /* width: 64px; */
+        margin: unset;
         picture {
           left: 0;
           img {
             filter: invert(1);
+            height: 30px;
+            width: 30px;
           }
         }
       }
+      :is(ul):has(div.gnav-search-bar[aria-expanded="true"]) {
+          display: none;
+      }
       div.gnav-search-field {
         padding: 1rem 3.2rem;
+      }
+      @media (width >= 900px) {
+        background: rgba(60, 128, 197, 0.57);
       }
     }
     &.nav-hamburger {
@@ -131,11 +143,11 @@ header .nav-wrapper {
       div.nav-tools {
         display: grid;
         order: 4;
-        background: #194573;
+        /* background: #194573; */
         /* background: rgba(25, 69, 115, 0.6); */
         z-index: 100;
         grid-template: 
-        'hamburger search'
+        'search hamburger'
         'subnav subnav';
         grid-template-columns: 1fr 64px !important;
         div.nav-hamburger {
@@ -143,6 +155,7 @@ header .nav-wrapper {
           background-color: #194573;
           height: 100%;
           width: 64px;
+          margin: 1rem 0;
           /* button {
             padding-right: 32px;
           } */
@@ -155,14 +168,16 @@ header .nav-wrapper {
         }
         div.gnav-search-field {
           grid-area: search;
-          background-color: #194573;
+          /* background-color: #194573; */
           padding: 1rem 3.2rem;
           height: 100%;
-          /* width: 100%; */
+          width: 100%;
         }
         nav.main {
           grid-area: subnav;
+          padding-top: 1rem;
           order: 3;
+          /* background: rgba(25, 69, 115, 0.6); */
            ul {
             margin: 1.6rem 0;
             width: auto;
@@ -188,7 +203,7 @@ header .nav-wrapper {
             li.is-dropdown {
               padding: 0 0 0 3.2rem;
               &.active {
-                background-color: rgba(255, 255, 255, 0.18);;
+                background-color: rgba(255, 255, 255, 0.18);
                 a {
                   color: #ffffff;
                   margin: 1rem 0 0 -8px;
@@ -255,7 +270,7 @@ header .nav-wrapper {
       }
       .nav-knowledgeportal {
         order: 3;
-        background: rgba(60, 128, 197, 0.57);
+        /* background: rgba(60, 128, 197, 0.57); */
         padding-left: 32px;
           padding-right: 32px;
       }
@@ -269,7 +284,7 @@ header .nav-wrapper {
       position: absolute;
       padding: 0 2rem;
       display: contents;
-      background: rgba(25, 69, 115, 0.6);
+      /* background: rgba(25, 69, 115, 0.6); */
       flex-direction: column;
       top: 198px;
       left: -20px;
@@ -317,7 +332,7 @@ header .nav-wrapper {
 /* knowledgeportal */
 header nav .nav-knowledgeportal {
   grid-area: knowledgeportal;
-  background-color: var(--blue);
+  /* background-color: var(--blue); */
   h3 {
     color: white;
     font-size: 40px;
@@ -335,7 +350,7 @@ header nav .nav-tools {
   padding: 5px;
   display: flex;
   @media (min-width: 900px) {
-    background-color: var(--blue);
+    /* background-color: var(--blue); */
     align-items: flex-end;
     justify-content: flex-end;
     flex-direction: row-reverse;
@@ -346,14 +361,14 @@ header nav .nav-tools {
   }
 
   @media (max-width: 899px) {
-    background-color: #194573;
+    background: rgba(25, 69, 115, 0.6); 
     align-items: flex-end;
     justify-content: flex-end;
     flex-direction: row-reverse;
   }
 
   input {
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.8);
     border: none;
     border-radius: 11px;
     height: 43px;
@@ -363,6 +378,9 @@ header nav .nav-tools {
     padding: 0 47px 0 15px;
     .gnav-search-input {
       color: #ffffff;
+    }
+    @media (width >= 900px) {
+      width: 400px;
     }
   }
 
@@ -396,7 +414,7 @@ header nav .gnav-search.is-Open  {
 header nav .gnav-search-results {
   grid-column: span 2;
   width: 100%;
-  background-color: var(--clr-gray-light);
+  /* background-color: var(--clr-gray-light); */
   padding: 0 3.2rem;
   box-sizing: border-box;
   flex-direction: column;
@@ -568,7 +586,7 @@ header nav[aria-expanded="true"] .nav-hamburger-icon:after {
 
     .nav-knowledgeportal {
       order: 3;
-      background: rgba(60, 128, 197, 0.57);
+      /* background: rgba(60, 128, 197, 0.57); */
       padding-left: 32px;
         padding-right: 32px;
     }

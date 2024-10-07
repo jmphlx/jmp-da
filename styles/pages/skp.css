@@ -50,6 +50,7 @@ div.subnav.skpsubnav nav.main ul li.is-dropdown.active {
   display: flex;
   flex-direction: column;
   border-left: 8px solid #194573;
+  border-radius: 0;
   ul.sub {
     display: flex;
     position: relative;
@@ -57,7 +58,7 @@ div.subnav.skpsubnav nav.main ul li.is-dropdown.active {
     background-color: none;
     background: none;
     box-shadow: none;
-    margin: none;
+    margin: .5rem 0 0 0;
     left: 0;
     li.active {
       a {
@@ -70,21 +71,99 @@ div.subnav.skpsubnav nav.main ul li.is-dropdown.active {
   }
   a {
     background: none;
-    background-color: none;
     color: #194573;
   }
 }
 
-div.subnav.skpsubnav nav.main ul li.active {
-  background: none;
-  background-color: none;
-  display: flex;
-  flex-direction: column;
-  a {
+div.subnav.skpsubnav nav.main ul {
+  li {
+    padding: 0 0 0 2rem;
+    margin: 0 0 1rem 0;
+    a {
+      font-size: 1.9rem;
+      background: none;
+      border: none;
+      padding: 0;
+      line-height: 1.25em;
+      transition: .3s;
+      cursor: pointer;
+      text-wrap: wrap;
+      &:hover {
+        color: #194573;
+      }
+    }
+    &:hover {
+      color: #194573;
+      border-left: 8px solid #7c9db6;
+      border-radius: 0;
+    }
+    li {
+      padding: 0 0 0 5px;
+      margin: .25rem 0 0 0;
+      &:hover {
+        border-left: 0;
+        transform: translateX(5px);
+      }
+    }
+  }
+  li.is-dropdown {
+    padding: 0 0 0 2rem;
+  }  
+  li.active {
     background: none;
-    width: 100%;
     background-color: none;
-    color: #194573;
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 0 1.2rem;
+    border-left: 8px solid #194573;
+    border-radius: 0;
+    a {
+      color: #194573;
+    }
+    li.active {
+      border: 0;
+      padding: 0 0 0 5px;    }
+    li a {
+      background: none;
+      width: 100%;
+      color: #194573;
+      font-size: 1.6rem;
+      &:before {
+        content:'';
+        display: block;
+        width: .5rem;
+        height: .5rem;
+        border: solid #7c9db6;
+        border-width: 0 2px 2px 0;
+        transform: rotate(-45deg) translateY(-50%);
+        background: none;
+        transition: all 0.5s ease;
+        z-index: 1;
+        border-radius: 0 !important;
+        margin-bottom: 4px;
+        position: absolute;
+        left: -6px;
+        top: 8px;
+      }
+      &:hover {
+        &:before {
+          border-color: #194573;
+        }
+      }
+    }
+    /* &:before {
+      content: "";
+      display: block;
+      background-color: #194573;
+      width: 8px;
+      height: 100%;
+      background: inherit;
+      position: absolute;
+      left: -28px;
+      top: 0;
+      height: 0;
+      transition: .3s;
+    } */
   }
 }
 
