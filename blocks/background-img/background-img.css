@@ -169,4 +169,12 @@
       }
     }
   }
+  @media (width <= 600px) {
+    padding-top: 40px !important;
+    padding-bottom: 0 !important;
+    &.stat-speaking-header {
+      padding-top: 32px !important;
+      padding-bottom: 16px !important;
+    }
+  }
 }

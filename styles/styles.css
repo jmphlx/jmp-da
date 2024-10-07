@@ -410,7 +410,6 @@ main .section {
     margin: auto;
   }
 }
-
 /* Linear Gradients */
 div.blue-purple-gradient {
   background: linear-gradient(45deg, #0378CD 15%, #643695 95%);
@@ -1578,6 +1577,10 @@ div.interview-body {
   h4, h5 {
     margin-bottom: 0;
   }
+}
+.stat-speaking-header {
+  padding-top: 32px !important;
+  padding-bottom: 16px !important;
 }
 .section-compact{
   padding: 48px 32px 21px 32px;

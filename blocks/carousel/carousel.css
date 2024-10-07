@@ -11,7 +11,6 @@
       vertical-align: middle;
     }
   }
-
 a, a:hover{
   transition-duration: 0.1s;
   transition-timing-function: ease-in;
@@ -214,6 +213,8 @@ a, a:hover{
     }
   }
 }
+
+
 .carousel-full-width {
   .carousel-wrapper {
     max-width: 100% !important;
@@ -228,6 +229,13 @@ a, a:hover{
         border: none;
       }
     }
+    @media (width <=600px) {
+      padding: 0;
+      margin: 0 auto;
+      p{
+        text-align: center;
+      }
+      }
   }
 }
 /* Gray 3 background color for company pages */
@@ -284,5 +292,50 @@ a, a:hover{
 .carousel-arrows-off {
   .carousel .carousel-navigation-buttons {
     display: none;
+  }
+}
+
+
+
+/* Adding quote marks around headers */
+.quote-wheel{
+:has(h4){
+  padding-top:.8em;
+  :before, :after{
+    content: "";
+    font-family: "Georgia", cursive;
+    line-height: 0;
+    font-size: 800%;
+    width: 0;
+    height: 0;
+    position: absolute;
+    color: #f2f2f2;
+    z-index: -1;
+    margin-top:8px;
+}
+    h4:before {
+      content: '\201C';
+      width: 1em;
+      top: 0.275em;
+      left: -62px;
+      opacity: .2;
+    }
+    h4:after {
+      content: '\201D';
+      bottom: 0;
+      right: 65px;
+      opacity: .2;
+    }
+}
+@media (width <= 600px) {
+  text-align: center;
+  padding-top:8px !important;
+  padding-bottom:8px !important;
+  .carousel .carousel-slide .carousel-slide-content {
+    --slide-content-width: 65%;
+    /* margin: 0 auto; */
+    text-align: center;
+    font-size: var(--heading-font-size-s);
+  }
   }
 }
