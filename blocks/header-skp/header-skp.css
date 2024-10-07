@@ -98,9 +98,15 @@ header .nav-wrapper {
       justify-content: stretch;
       align-items: center;
       ul {
-        display: none;
+        list-style: none;
         justify-content: flex-end;
         align-items: center;
+        picture {
+          left: 0;
+          img {
+            filter: invert(1);
+          }
+        }
       }
       div.gnav-search-field {
         padding: 1rem 3.2rem;
@@ -125,11 +131,11 @@ header .nav-wrapper {
       div.nav-tools {
         display: grid;
         order: 4;
-        /* background: #194573; */
-        background: rgba(25, 69, 115, 0.6);
+        background: #194573;
+        /* background: rgba(25, 69, 115, 0.6); */
         z-index: 100;
         grid-template: 
-        'search hamburger'
+        'hamburger search'
         'subnav subnav';
         grid-template-columns: 1fr 64px !important;
         div.nav-hamburger {
@@ -140,6 +146,12 @@ header .nav-wrapper {
           /* button {
             padding-right: 32px;
           } */
+        }
+        div.gnav-search-bar[aria-expanded="false"] {
+          display: none;
+        }
+        div.gnav-search-bar[aria-expanded="true"] {
+          display: block;
         }
         div.gnav-search-field {
           grid-area: search;
@@ -327,6 +339,10 @@ header nav .nav-tools {
     align-items: flex-end;
     justify-content: flex-end;
     flex-direction: row-reverse;
+    ul {
+      display: none;
+      visibility: hidden;
+    }
   }
 
   @media (max-width: 899px) {
