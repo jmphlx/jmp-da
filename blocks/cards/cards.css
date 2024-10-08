@@ -964,3 +964,25 @@
     }
   }
 }
+
+.bullet-arrow {
+  .cards-wrapper  {
+    ul {
+    /* padding: 0 0 0 2rem;  */
+      li {
+        li {
+          text-indent: -8px;
+        } 
+        li::marker {
+          content: '';
+        }
+        li:before {
+          content: url('../../../icons/arrow-orange.svg');
+          width: 7px;
+          display: inline-block;
+          font-size: 80%;
+        }
+      }
+    }
+  }
+}
