@@ -369,6 +369,9 @@ main .section {
   }
   &.section-padding-small {
     padding-bottom: 56px !important;
+    @media (width <=600px) {
+      padding-bottom: 32px !important;
+    }
   }
   &.section-padding-medium {
     padding-bottom: 64px !important;
