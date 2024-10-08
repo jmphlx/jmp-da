@@ -68,6 +68,9 @@
         p {
           margin: 0 !important;
         }
+        :hover{
+          color: #3aaafc;
+        }
       }
       .accordion-item-body {
         padding-bottom: 2.4rem;
