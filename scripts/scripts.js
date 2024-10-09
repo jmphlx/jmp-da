@@ -255,10 +255,23 @@ function addMathJax() {
 }
 
 /**
+ * Apply suffix to document title property without impacting og:title.
+ * If a suffix is provided in the metadata properties use it
+ * (with an additional space as whitespace is trimmed when writing the head).
+ * Otherwise, default to ' | JMP' as the suffix.
+ */
+function addTitleSuffix() {
+  const suffixMeta = getMetadata('suffix');
+  const suffix = suffixMeta ? ' ' + suffixMeta : ' | JMP';
+  document.title = document.title + suffix;
+}
+
+/**
  * Loads everything needed to get to LCP.
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
+  addTitleSuffix();
   decorateTemplateAndTheme();
   decoratePageStyles();
   if(isSKPPage) {
