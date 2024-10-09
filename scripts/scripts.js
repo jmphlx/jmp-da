@@ -24,7 +24,7 @@ import { createTag } from './helper.js';
   import('https://da.live/scripts/dapreview.js').then(({ default: daPreview }) => daPreview(loadPage));
 }());
 
-var isSKPPage = false;
+let isSKPPage = false;
 
 /**
  * OUT OF THE BOX code that impacts our hero blocks.
@@ -245,7 +245,7 @@ function addMathJax() {
   const mathJaxConfig = createTag('script', {
     type: 'text/x-mathjax-config',
   });
-  mathJaxConfig.innerText = "MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$']], processEscapes: true}});"
+  mathJaxConfig.innerText = "MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$']], processEscapes: true}});";
   document.head.appendChild(mathJaxConfig);
 
   const mathJaxScript = createTag('script', {
@@ -262,8 +262,8 @@ function addMathJax() {
  */
 function addTitleSuffix() {
   const suffixMeta = getMetadata('suffix');
-  const suffix = suffixMeta ? ' ' + suffixMeta : ' | JMP';
-  document.title = document.title + suffix;
+  const suffix = suffixMeta ? ` ${suffixMeta}` : ' | JMP';
+  document.title += suffix;
 }
 
 /**
@@ -274,7 +274,7 @@ async function loadEager(doc) {
   addTitleSuffix();
   decorateTemplateAndTheme();
   decoratePageStyles();
-  if(isSKPPage) {
+  if (isSKPPage) {
     addMathJax();
   }
   const main = doc.querySelector('main');
