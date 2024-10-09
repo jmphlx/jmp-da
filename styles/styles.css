@@ -388,6 +388,9 @@ main .section {
   &.section-top-padding-none {
     padding-top: 0 !important;
   }
+  &.section-top-padding-xsmall {
+    padding-top: 16px !important;
+  }
   &.section-top-padding-small {
     padding-top: 32px !important;
   }
@@ -1286,9 +1289,12 @@ main img {
     margin: 0 0 32px 0;
   }
 } */
+ .embed-wrapper{
+  padding-top: 16px;
+ }
 .block-top-padding-none {
-  main > div.section {
-    padding-bottom: 0;
+  &.columns, &.cards, .columns, .cards  {
+    padding-top: 0;
   }
 }
 .block-top-padding-small {
@@ -1311,8 +1317,8 @@ main img {
   }
 }
 .block-padding-none {
-  main > div.section {
-    padding-bottom: 0;
+  &.columns, &.cards, .columns, .cards {
+    padding-bottom: 0 !important;
   }
 }
 .block-padding-small {
