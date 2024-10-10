@@ -294,9 +294,6 @@ a, a:hover{
     display: none;
   }
 }
-
-
-
 /* Adding quote marks around headers */
 .quote-wheel{
 :has(h4){
