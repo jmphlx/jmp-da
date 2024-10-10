@@ -1,3 +1,5 @@
+@import url("/styles/styles.css");
+
 h1 {
   color: #194573;
   font-family: var(--font-bold) !important;
@@ -162,7 +164,11 @@ div.subnav.skpsubnav nav.main ul {
     }
     li.active {
       border: 0;
-      padding: 0 0 0 5px;    }
+      padding: 0 0 0 5px;
+      a:before {
+        border-color: #194573;
+      }
+    }
     li:before {
       background-color: transparent !important;
     }
