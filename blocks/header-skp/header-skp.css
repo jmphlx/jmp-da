@@ -425,7 +425,7 @@ header nav .nav-tools {
       width: 400px;
     }
     &:focus {
-      outline: 2px solid var(--blueLight);
+      outline: 2px solid var(--blue);
     }
   }
 
