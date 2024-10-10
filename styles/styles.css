@@ -1606,3 +1606,24 @@ div.interview-body {
   padding: 48px 16px 8px 16px;
   }
 }
+/* Line height options */
+.line-leading-01{
+h1, h2, h3, h4, h5, h6{
+line-height: 1.75em !important;
+}
+}
+.line-leading-02{
+  h1, h2, h3, h4, h5, h6{
+    line-height: 2em !important;
+}
+}
+.line-leading-03{
+  h1, h2, h3, h4, h5, h6{
+    line-height: 2.25em !important;
+}
+}
+.line-leading-04{
+  h1, h2, h3, h4, h5, h6{
+    line-height: 2.5em !important;
+}
+}
