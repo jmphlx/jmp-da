@@ -1030,7 +1030,7 @@ a:hover {
       display: block;
       width: 1em;
       height: 1em;
-      top: 44%;
+      top: 48%;
       right: 50%;
       transform: translate(calc(-50% + 90px), calc(-50%));
       text-align: end;
