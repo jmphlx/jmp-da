@@ -3,6 +3,22 @@
 h1 {
   color: #194573;
   font-family: var(--font-bold) !important;
+  color: #194573;
+  position: relative;
+  padding: 0;
+  margin: 35px 0;
+  line-height: 1em;
+  &:before {
+    content: "";
+    display: block;
+    width: 1.6rem;
+    position: absolute;
+    height: 4rem;
+    top: 2px;
+    line-height: 2;
+    left: -32px;
+    background: #194573;
+  }
 }
 div.subnav.skpsubnav nav.main ul {
   list-style: none;
@@ -211,4 +227,13 @@ body.skp footer {
     margin: 0;
     min-width: 100%;
   }
+}
+
+.box-shadow {
+  background: white;
+  border-radius: 17px;
+  box-shadow: 0 8px 28px rgba(111, 145, 173, 0.25);
+  padding: 23px 30px 23px;
+  margin: 0;
+  margin-bottom: 60px;
 }

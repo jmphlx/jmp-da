@@ -1018,7 +1018,7 @@ a:hover {
     }
   }
 }
-.modal-play-button {
+.modal-play-button, .modal-play-button-light {
   p {
     position: relative;
   }
@@ -1072,6 +1072,20 @@ a:hover {
       &:before {
         font-size: 3rem;
         transform: translate(calc(-50% + 70px), calc(-50% + 20px));
+      }
+    }
+  }
+}
+.modal-play-button-light {
+  a {
+    &:before {
+      color: rgba(255, 255, 255, .7);
+      border: 10px solid rgba(255, 255, 255, .7);
+    }
+    &:hover {
+      &:before {
+        color: rgba(255, 255, 255, 1);
+        border-color: rgba(255, 255, 255, 1);
       }
     }
   }
