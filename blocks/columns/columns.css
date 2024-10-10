@@ -446,6 +446,9 @@ div.clm-10-90, div.clm-50-50, div.clm-60-40, div.clm-40-60, div.clm-66-33, div.c
     img {
       border: 2px solid var(--gray10);
       display: block;
+      @media (width <=900px) {
+      margin-bottom:16px ;  
+      }
     }
   }
   h3 {
@@ -1009,5 +1012,67 @@ div.bullet-arrow {
       display: inline-block;
       font-size: 80%;
     }
+  }
+}
+.employee-quote{
+  div:has( .columns-img-col){
+    gap: 16px; 
+    div{
+      padding: 0 32px;
+    }
+    .columns-img-col{
+      padding: 0 0 0 0px;
+      @media (width <=900px) {
+        padding:0 0 1em 0;
+      }
+      img{
+        width: 93%;
+      }
+   }
+  
+}
+  p:first-child:before,
+  p:first-child:after {
+  content: "";
+  font-family: "Georgia", cursive;
+  line-height: 0;
+  font-size: 800%;
+  width: 0;
+  height: 0;
+  position: absolute;
+  color: #f2f2f2;
+  z-index: -1;
+}
+  p:first-child:before{
+    content: '\201C';
+    width: 1em;
+    margin: 40px 0 0 -35px;
+
+  }
+  p:first-child:after {
+    content: '\201D';
+    width: 1em;
+    margin: 60px 0 0 -15px;
+   
+  }
+  h5:has(+h6) {
+    margin-top:1em;  
+    margin-bottom:.2em;
+   +:has(+p){
+    margin-bottom:0em;
+   }
+   @media (width <=600px) {
+    h5{
+      font-size: var(--heading-font-size-m) !important;
+    }
+  }
+  }
+  @media (width <=900px) {
+  
+    .columns-img-col{
+      img{
+        width: 100% !important;
+      }
+  }
   }
 }
