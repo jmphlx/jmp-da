@@ -1026,25 +1026,25 @@ div.bullet-arrow {
     }
   }
   p:first-child:before, p:first-child:after {
-    content: "";
-    font-family: "Georgia", cursive;
-    line-height: 0;
-    font-size: 800%;
-    width: 0;
-    height: 0;
-    position: absolute;
-    color: #f2f2f2;
-    z-index: -1;
+      content: "";
+      font-family: "Georgia", cursive;
+      line-height: 0;
+      font-size: 800%;
+      width: 0;
+      height: 0;
+      position: absolute;
+      color: #f2f2f2;
+      z-index: -1;
   }
   p:first-child:before {
-    content: '\201C';
-    width: 1em;
-    margin: 40px 0 0 -35px;
+      content: '\201C';
+      width: 1em;
+      margin: 40px 0 0 -35px;
   }
   p:first-child:after {
-    content: '\201D';
-    width: 1em;
-    margin: 60px 0 0 -15px;
+      content: '\201D';
+      width: 1em;
+      margin: 60px 0 0 -15px;
   }
   h5:has(+h6) {
     margin-top: 1em;
