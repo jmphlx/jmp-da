@@ -85,10 +85,13 @@ header .nav-wrapper {
     }
     .nav-knowledgeportal {
       background: rgba(60, 128, 197, 0.57);
-      padding: 0 0 1rem 3.2rem;
+      padding: .5rem 0 1.5rem 3.2rem;
       h3 {
-        margin-bottom: 0 !important;
+        margin-bottom: 3px !important;
         font-size: var( --heading-font-size-l);
+      }
+      p {
+        font-size: var( --heading-font-size-xs);
       }
     }
     .nav-tools {
@@ -293,7 +296,10 @@ header .nav-wrapper {
         order: 3;
         /* background: rgba(60, 128, 197, 0.57); */
         padding-left: 32px;
-          padding-right: 32px;
+        padding-right: 32px;
+        p {
+          font-size: 1.6rem;
+        }
       }
     }
     nav[aria-expanded="true"] .nav-tools {
@@ -372,10 +378,10 @@ header nav .nav-knowledgeportal {
     color: white;
     font-size: 40px;
   }
-  p {
+  /* p {
     color: #194573;
     font-size: 1.9rem;
-  }
+  } */
 }
 /* end of knowledgeportal */
 
@@ -418,6 +424,9 @@ header nav .nav-tools {
     @media (width >= 900px) {
       width: 400px;
     }
+    &:focus {
+      outline: 2px solid var(--blueLight);
+    }
   }
 
   picture {
@@ -451,7 +460,7 @@ header nav .gnav-search.is-Open  {
   &:after {
     content: "\2715";
     display: inline-flex;
-    top: 142px;
+    top: 150px;
     vertical-align: middle;
     align-self: center;
     font-size: 28px;
