@@ -173,6 +173,13 @@ div.section.copyright {
   bottom: 0;
   .background-img-wrapper {
     z-index: 0;
+    .background-img {
+      picture {
+        img {
+          opacity: .4 !important;
+        }
+      }
+    }
   }
   &.active {
     transform: translate3d(0,0,0);
@@ -184,7 +191,7 @@ div.section.copyright {
     .background-img {
       picture {
         img {
-          opacity: .4;
+          opacity: .4 !important;
         }
       }
     }
@@ -197,6 +204,10 @@ div.section.copyright {
     .columns {
       div {
         gap: 5%;
+        div {
+          padding: 0 2.4rem;
+          min-width: auto;
+        }
       }
       h3 {
         font-family: var(--font-bold);
