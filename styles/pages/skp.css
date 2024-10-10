@@ -72,7 +72,7 @@ div.subnav.skpsubnav nav.main ul li.is-dropdown.active {
     background-color: none;
     background: none;
     box-shadow: none;
-    margin: .5rem 0 0 0;
+    margin: .25rem 0 0 0;
     left: 0;
     li.active {
       a {
@@ -128,7 +128,7 @@ div.subnav.skpsubnav nav.main ul {
     }
     li {
       padding: 0 0 0 5px;
-      margin: .25rem 0 0 0;
+      margin: .5rem 0 0 0;
       &:hover {
         border-left: 0;
         transform: translateX(5px);
