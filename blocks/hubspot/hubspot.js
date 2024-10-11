@@ -19,8 +19,8 @@ const embedHubspot = (config) => {
   scriptHubspot.setAttribute('type', 'text/javascript');
   scriptHubspot.src = 'https://js.hsforms.net/forms/embed/v2.js';
 
-  console.log(config['redirect-url']);
-  const redirect = config['redirect-url'];
+  console.log(config['redirectTarget']);
+  const redirect = config['redirectTarget'];
 
   // adds event listener to add embed code on load
   scriptHubspot.addEventListener('load', () => {
@@ -28,7 +28,7 @@ const embedHubspot = (config) => {
       region: config.region,
       portalId: config['portal-id'],
       formId: config['form-id'],
-      redirectUrl: config['redirect-url'],
+      redirectUrl: config['redirectTarget'],
       sfdcCampaignId,
       onFormReady($form) {
         const hiddenField2 = $form.find('input[name="last_action"]');
