@@ -1313,7 +1313,7 @@ main img {
     padding-top: 16px;
     &.columns:has(&.embed){
       .embed{
-      padding-top:0px;
+      padding-top:0;
       }
     }
   }
@@ -1323,7 +1323,7 @@ main img {
     padding-top: 32px;
     &.columns:has(&.embed){
       .embed{
-      padding-top:0px;
+      padding-top:0;
       }
     }
   }
@@ -1333,7 +1333,7 @@ main img {
     padding-top: 64px;
     &.columns:has(&.embed){
       .embed{
-      padding-top:0px;
+      padding-top:0;
       }
     }
   }
@@ -1343,7 +1343,7 @@ main img {
     padding-top: 96px;   
     &.columns:has(&.embed){
       .embed{
-      padding-top:0px;
+      padding-top:0;
       }
     }
   }
