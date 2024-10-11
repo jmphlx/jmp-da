@@ -1311,27 +1311,47 @@ main img {
 .block-top-padding-xsmall {
   &.columns, &.cards, &.embed, .columns, .cards, .embed {
     padding-top: 16px;
+    &.columns:has(&.embed){
+      .embed{
+      padding-top:0;
+      }
+    }
   }
 }
 .block-top-padding-small {
   &.columns, &.cards, &.embed, .columns, .cards, .embed {
     padding-top: 32px;
+    &.columns:has(&.embed){
+      .embed{
+      padding-top:0;
+      }
+    }
   }
 }
 .block-top-padding-medium {
   &.columns, &.cards, &.embed, .columns, .cards, .embed {
     padding-top: 64px;
+    &.columns:has(&.embed){
+      .embed{
+      padding-top:0;
+      }
+    }
   }
 }
 .block-top-padding-large {
   &.columns, &.cards, &.embed, .columns, .cards, .embed {
-    padding-top: 96px;
+    padding-top: 96px;   
+    &.columns:has(&.embed){
+      .embed{
+      padding-top:0;
+      }
+    }
+  }
     @media (width <=900px) {
       margin: 0 auto !important;
       padding-top: 32px;
     }
   }
-}
 .block-padding-none {
   &.columns, &.cards, &.embed, .columns, .cards, .embed {
     padding-bottom: 0 !important;
