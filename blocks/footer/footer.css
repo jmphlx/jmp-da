@@ -203,6 +203,7 @@ div.section.copyright {
     padding: 6.4rem 3.2rem 3.2rem;
     .columns {
       div {
+        max-width: unset;
         gap: 5%;
         div {
           padding: 0 6.4rem;
