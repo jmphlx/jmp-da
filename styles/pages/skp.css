@@ -1,4 +1,17 @@
-@import url("/styles/styles.css");
+/* @import url("/styles/styles.css"); */
+@media (width >= 900px) {
+  .section > div {
+    max-width: unset;
+    margin: auto;
+    padding: 0;
+  }
+}
+
+@media (width >= 600px) {
+  main .section {
+    padding: 64px 5% 32px 5%;
+  }
+}
 
 h1 {
   color: #194573;
@@ -8,7 +21,7 @@ h1 {
   padding: 0;
   margin: 35px 0;
   line-height: 1em;
-  &:before {
+  /* &:before {
     content: "";
     display: block;
     width: 1.6rem;
@@ -18,8 +31,24 @@ h1 {
     line-height: 2;
     left: -32px;
     background: #194573;
+  } */
+  &:before {
+    content: "";
+    display: block;
+    width: 10%;
+    position: absolute;
+    left: calc(-10% - 24px);
+    height: 100%;
+    top: 0;
+    background: #194573;
+  }
+  @media (width <= 600px) {
+    &:before {
+      left: calc(-10% - 8px);
+    }
   }
 }
+
 div.subnav.skpsubnav nav.main ul {
   list-style: none;
   display: flex;
