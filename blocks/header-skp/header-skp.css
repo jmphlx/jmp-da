@@ -93,6 +93,11 @@ header .nav-wrapper {
       p {
         font-size: var( --heading-font-size-xs);
       }
+      @media (width <= 900px) {
+        h3 {
+          font-size: 24px;
+        }
+      }
     }
     .nav-tools {
       padding: 0;
@@ -146,11 +151,6 @@ header .nav-wrapper {
         'brand sections'
         'knowledgeportal knowledgeportal'
         'tools tools';
-      .nav-knowledgeportal {
-        h3 {
-          font-size: 24px;
-        }
-      }
       div.nav-tools {
         display: grid;
         order: 4;
