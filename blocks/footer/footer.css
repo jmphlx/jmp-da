@@ -134,7 +134,6 @@ div.section.copyright {
   box-shadow: 0 0 30px rgba(0,0,0,.4);
   transform: translate3d(0,100px,0);
   pointer-events: none;
-
   &:before {
     content: "";
     background: rgba(0,40,80,1);
@@ -142,7 +141,13 @@ div.section.copyright {
     position: absolute;
     inset: 0;
   }
-
+  .columns-wrapper {
+    .columns {
+      div {
+        max-width: unset;
+      }
+    }
+  }
   &.active {
     transform: translate3d(0,0,0);
     pointer-events: all;
@@ -186,6 +191,7 @@ div.section.copyright {
     pointer-events: all;
   }
 }
+
 .section.skp-footer {
   .background-img-wrapper {
     .background-img {
