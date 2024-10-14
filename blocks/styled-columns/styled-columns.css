@@ -810,14 +810,13 @@
   div {
     display: block;
     div.column-blue {
-      margin-bottom: 25px;
       border-left: 4px solid #007dc3;
       padding: 20px;
       position: relative;
       background: rgba(0, 125, 195, 0.07);
       box-sizing: border-box;
       z-index: 100;
-      margin-left: 20px;
+      margin: 0 0 2.4rem 3.2rem;
       width: 40%;
       height: max-content;
       float: right !important;
@@ -832,6 +831,9 @@
       }
       a {
         word-break: break-word;
+      }
+      p.embed {
+        padding: 1.6rem 0;
       }
     }
     div.column-2 {
