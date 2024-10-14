@@ -16,8 +16,7 @@ body.modal-open {
   .modal dialog {
     width: 66%;
     max-width: 1600px;
-    /* background-color: rgba(0, 0, 0, 0); */
-    background-color: white;
+    background-color: rgba(0, 0, 0, 0);
   }
   .modal dialog .modal-content {
     max-height: calc(100vh - 90px);
@@ -28,8 +27,7 @@ body.modal-open {
   .modal dialog {
     width: 90%;
     max-width: 1000px;
-    /* background-color: rgba(0, 0, 0, 0); */
-    background-color: white;
+    background-color: rgba(0, 0, 0, 0);
   }
   .modal dialog .modal-content {
     max-height: calc(100vh - 90px);
