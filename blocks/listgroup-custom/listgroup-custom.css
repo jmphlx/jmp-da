@@ -5,11 +5,11 @@ ul.list-tile {
   padding: 0;
 }
 
-div.listgroup-fixed, div.listgroup  {
+div.listgroup-custom  {
   padding-top: 0;
 }
 
-.listgroup ul li, .listgroup-fixed ul li {
+.listgroup-custom ul li {
   clear: both;
   list-style-type: none;
   padding: 0;
@@ -19,7 +19,7 @@ div.listgroup-fixed, div.listgroup  {
   }
 }
 
-.listgroup ul.col-size-3 li, .listgroup-fixed ul.col-size-3 li {
+.listgroup-custom ul.col-size-3 li {
   width: 22.5%;
   margin: 0 1.25% 1.5rem 1.25%;
   @media (width <= 600px) {
@@ -27,7 +27,7 @@ div.listgroup-fixed, div.listgroup  {
   }
 }
 
-.listgroup ul.col-size-4 li, .listgroup-fixed ul.col-size-4 li {
+.listgroup-custom ul.col-size-4 li {
   margin: 0 1.25% 1.5rem 1.25%;
   width: 22.5%;
   @media (width <= 900px) {
@@ -38,7 +38,7 @@ div.listgroup-fixed, div.listgroup  {
   }
 }
 
-.listgroup ul.col-size-5 li, .listgroup-fxed ul.col-size-5 li {
+.listgroup-custom ul.col-size-5 li {
   margin: 0 1.25% 1.5rem 1.25%;
   width: 17.5%;
   @media (width <= 900px) {
@@ -64,7 +64,7 @@ div.listgroup-fixed, div.listgroup  {
   aspect-ratio: 0.8;
 }
 
-.listgroup ul.list-tile, .listgroup-fixed ul.list-tile  {
+.listgroup-custom ul.list-tile {
   > li {
     margin-bottom: 2.5%;
     transition: all 0.5s ease-in-out;

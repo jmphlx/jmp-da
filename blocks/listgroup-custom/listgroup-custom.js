@@ -1,72 +1,119 @@
 /* eslint no-undef: 0 */
 
 import {
+  arrayIncludesSomeValues,
+  containsOperator,
+  matchesOperator,
+  startsWithOperator,
   getBlockConfig,
   getJsonFromUrl,
   getLanguageIndex,
   pageAndFilter,
   pageFilterByFolder,
   pageOrFilter,
+  sortPageList,
 } from '../../scripts/jmp.js';
+
+const propertyNames = {
+  filter: 'filter',
+  displayProperties: 'displayproperties',
+  limit: 'limit',
+  sortBy: 'sort by',
+  sortOrder: 'sort order',
+};
+
+function lowercaseObj(obj) {
+  const newObj = {};
+  Object.keys(obj).forEach((key) => {
+    newObj[key.toLowerCase()] = obj[key];
+  });
+  return newObj;
+}
+
+function conditionMatches(doc, condition) {
+  const lcDoc = lowercaseObj(doc);
+  const lcCond = lowercaseObj(condition);
+  console.log(lcCond);
+
+  switch (lcCond.operator) {
+    // Use quote 'equals' sign here because the = character has special
+    // meaning in the spreadsheet and cannot be entered on its own.
+    case '\'=\'':
+      return lcDoc[lcCond.property?.toLowerCase()] === lcCond.value;
+    case '<':
+      return Number(lcDoc[lcCond.property?.toLowerCase()]) < Number(lcCond.value);
+    case '>':
+      return Number(lcDoc[lcCond.property?.toLowerCase()]) > Number(lcCond.value);
+    case 'contains':
+      return containsOperator(lcDoc, lcCond);
+    case 'matches':
+       return matchesOperator(lcDoc, lcCond);
+    case 'startswith':
+      return startsWithOperator(lcDoc, lcCond);
+    default:
+      return false;
+  }
+}
+
+function conditionsMatch(doc, conditions) {
+  if (!conditions) return false;
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const condition of conditions) {
+    //console.log(condition);
+    if (!conditionMatches(doc, condition)) return false;
+  }
+  return true;
+}
+
+function docMatches(doc, filters) {
+  // Is there more than one sheet? OR the sheets together.
+  if (filters[':names']) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const filter of filters[':names']) {
+      if (conditionsMatch(doc, filters[filter]?.data)) return true;
+    }
+  } else {
+    //only one page.
+    if (conditionsMatch(doc, filters.data)) return true;
+  }
+  return false;
+}
 
 export default async function decorate(block) {
   const blockObj = getBlockConfig(block);
-  console.log(blockObj);
   block.textContent = '';
 
   // Get language index.
   const languageIndexUrl = getLanguageIndex();
 
   const { data: allPages } = await getJsonFromUrl(languageIndexUrl);
-  let pageSelection = allPages;
+  const filters = await getJsonFromUrl(blockObj[propertyNames.filter]);
+  const limit = blockObj[propertyNames.limit];
+  const sortBy = blockObj[propertyNames.sortBy]?.toLowerCase();
+  const sortOrder = blockObj[propertyNames.sortOrder]?.toLowerCase();
 
-
-  // const optionsObject = getBlockPropertiesList(block, 'options');
-  // const startingFolder = getBlockProperty(block, 'startingFolder');
-  // const emptyResultsMessage = getBlockProperty(block, 'emptyResultsMessage');
-  // const filterOptions = getListFilterOptions(block, propertyNames);
-
-  const optionsObject = blockObj['options'];
-  const startingFolder = blockObj['startingFolder'];
-  const emptyResultsMessage = blockObj['emptyResultsMessage'];
-  const filterOptions = blockObj['filters'];
-
-  // If startingFolder is not null, then apply page location filter FIRST.
-  if (startingFolder !== undefined) {
-    pageSelection = pageFilterByFolder(pageSelection, startingFolder);
-  }
-
-  // Apply filters to pages (if there are any)
-  if (Object.keys(filterOptions).length > 0) {
-    if (optionsObject.filterType !== undefined && optionsObject.filterType.toLowerCase() === 'and') {
-      pageSelection = pageAndFilter(pageSelection, filterOptions);
-    } else {
-      pageSelection = pageOrFilter(pageSelection, filterOptions);
+  let matching = [];
+  allPages.forEach((doc) => {
+    if (docMatches(doc, filters)) {
+      matching.push(doc);
     }
+  });
+
+
+  matching = sortPageList(matching, sortBy, sortOrder);
+
+  // Apply limit to results.
+  if (limit !== undefined  && matching.length > limit) {
+    matching = matching.slice(0, limit);
   }
 
-  // Order pages by releaseDate or alphabetically
-  const sortOrder = optionsObject.sortOrder;
-  if (sortOrder !== undefined && sortOrder.toLowerCase() === 'alphabetical') {
-    // Order filtered pages alphabetically by title
-    pageSelection.sort((a, b) => (a.title < b.title ? -1 : 1));
-  } else {
-    // Order filtered pages by releaseDate
-    pageSelection.sort((a, b) => ((new Date(a.releaseDate) - new Date(b.releaseDate)) < 0
-      ? -1 : 1));
-  }
 
-  // Cut results down to fit within specified limit.
-  const limitObjects = optionsObject.limit;
-  if (limitObjects !== undefined && pageSelection.length > limitObjects) {
-    pageSelection = pageSelection.slice(0, limitObjects);
-  }
 
   const wrapper = document.createElement('ul');
-  const columns = optionsObject.columns !== undefined ? optionsObject.columns : 5;
-  wrapper.classList = `listOfItems image-list list-tile col-size-${columns}`;
+  wrapper.classList = `listOfItems image-list list-tile col-size-5`;
 
-  pageSelection.forEach((item) => {
+  matching.forEach((item) => {
     const listItem = document.createElement('li');
     listItem.classList = `${item.resourceOptions}`;
     const cardLink = document.createElement('a');
@@ -80,7 +127,7 @@ export default async function decorate(block) {
 
     let htmlOutput = [];
 
-    blockObj['displayProperties'].forEach((prop) => {
+    blockObj[propertyNames.displayProperties].forEach((prop) => {
       let span;
       if (prop === 'image') {
         span =`<span class="cmp-image image"><img src="${item[prop]}"/></span>`;
@@ -94,13 +141,5 @@ export default async function decorate(block) {
     listItem.append(cardLink);
     wrapper.append(listItem);
   });
-
-  if (pageSelection.length === 0 && emptyResultsMessage !== undefined) {
-    const emptyResultsDiv = document.createElement('div');
-    emptyResultsDiv.classList = 'no-results';
-    emptyResultsDiv.innerHTML = `<span>${emptyResultsMessage}</span>`;
-    wrapper.append(emptyResultsDiv);
-  }
-
   block.append(wrapper);
 }
