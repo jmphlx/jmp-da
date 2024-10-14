@@ -1,5 +1,3 @@
-import { toClassName } from './aem.js';
-
 const knownObjectProperties = ['options', 'filters'];
 
 /**
@@ -357,7 +355,6 @@ function getBlockConfig(block) {
         const name = cols[0].textContent.toLowerCase();
         let value = '';
         if (knownObjectProperties.includes(name.toLowerCase())) {
-          //known json object
           const stringValue = col.textContent;
           value = convertStringToJSONObject(stringValue);
         } else if (col.querySelector('a')) {
@@ -392,8 +389,6 @@ function getBlockConfig(block) {
       }
     }
   });
-  console.log('config');
-  console.log(config);
   return config;
 }
 
@@ -402,8 +397,6 @@ function containsOperator(pageObj, condObj) {
   const propertyName = condObj.property.toLowerCase();
   const filterValue = condObj.value.toLowerCase();
   const pageValue = pageObj[propertyName];
-  // console.log(`PropertyName ${propertyName}`);
-  // console.log(`Does actual page value ${pageValue} equal expected ${filterValue}`);
 
   try {
     // filterValue is an array
@@ -447,36 +440,34 @@ function startsWithOperator(pageObj, condObj) {
 }
 
 function sortPageList(pageList, sortBy, sortOrder) {
-  let sortedList = pageList;
-  console.log(sortBy);
+  const sortedList = pageList;
   switch (sortBy) {
     case 'title':
       sortedList.sort((a, b) => {
-        if (sortOrder !== undefined && sortOrder == 'descending') {
+        if (sortOrder !== undefined && sortOrder === 'descending') {
           return (a.title < b.title ? 1 : -1);
-        } else {
-          return (a.title < b.title ? -1 : 1);
         }
+        return (a.title < b.title ? -1 : 1);
       });
+      break;
     case 'releasedate':
       sortedList.sort((a, b) => {
-        if (sortOrder !== undefined && sortOrder == 'descending') {
+        if (sortOrder !== undefined && sortOrder === 'descending') {
           return ((new Date(a.releaseDate) - new Date(b.releaseDate)) < 0
             ? 1 : -1);
-        } else {
-          return ((new Date(a.releaseDate) - new Date(b.releaseDate)) < 0
-            ? -1 : 1);
         }
+        return ((new Date(a.releaseDate) - new Date(b.releaseDate)) < 0
+          ? -1 : 1);
       });
+      break;
     default:
       sortedList.sort((a, b) => {
-        if (sortOrder !== undefined && sortOrder == 'descending') {
+        if (sortOrder !== undefined && sortOrder === 'descending') {
           return ((new Date(a.releaseDate) - new Date(b.releaseDate)) < 0
             ? 1 : -1);
-        } else {
-          return ((new Date(a.releaseDate) - new Date(b.releaseDate)) < 0
-            ? -1 : 1);
         }
+        return ((new Date(a.releaseDate) - new Date(b.releaseDate)) < 0
+          ? -1 : 1);
       });
   }
   return sortedList;

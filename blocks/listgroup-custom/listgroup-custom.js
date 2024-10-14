@@ -1,16 +1,12 @@
 /* eslint no-undef: 0 */
 
 import {
-  arrayIncludesSomeValues,
   containsOperator,
   matchesOperator,
   startsWithOperator,
   getBlockConfig,
   getJsonFromUrl,
   getLanguageIndex,
-  pageAndFilter,
-  pageFilterByFolder,
-  pageOrFilter,
   sortPageList,
 } from '../../scripts/jmp.js';
 
@@ -30,52 +26,50 @@ function lowercaseObj(obj) {
   return newObj;
 }
 
-function conditionMatches(doc, condition) {
-  const lcDoc = lowercaseObj(doc);
+function conditionMatches(page, condition) {
+  const lcPage = lowercaseObj(page);
   const lcCond = lowercaseObj(condition);
-  console.log(lcCond);
 
   switch (lcCond.operator) {
     // Use quote 'equals' sign here because the = character has special
     // meaning in the spreadsheet and cannot be entered on its own.
     case '\'=\'':
-      return lcDoc[lcCond.property?.toLowerCase()] === lcCond.value;
+      return lcPage[lcCond.property?.toLowerCase()] === lcCond.value;
     case '<':
-      return Number(lcDoc[lcCond.property?.toLowerCase()]) < Number(lcCond.value);
+      return Number(lcPage[lcCond.property?.toLowerCase()]) < Number(lcCond.value);
     case '>':
-      return Number(lcDoc[lcCond.property?.toLowerCase()]) > Number(lcCond.value);
+      return Number(lcPage[lcCond.property?.toLowerCase()]) > Number(lcCond.value);
     case 'contains':
-      return containsOperator(lcDoc, lcCond);
+      return containsOperator(lcPage, lcCond);
     case 'matches':
-       return matchesOperator(lcDoc, lcCond);
+      return matchesOperator(lcPage, lcCond);
     case 'startswith':
-      return startsWithOperator(lcDoc, lcCond);
+      return startsWithOperator(lcPage, lcCond);
     default:
       return false;
   }
 }
 
-function conditionsMatch(doc, conditions) {
+function conditionsMatch(page, conditions) {
   if (!conditions) return false;
 
   // eslint-disable-next-line no-restricted-syntax
   for (const condition of conditions) {
-    //console.log(condition);
-    if (!conditionMatches(doc, condition)) return false;
+    if (!conditionMatches(page, condition)) return false;
   }
   return true;
 }
 
-function docMatches(doc, filters) {
+function pageMatches(page, filters) {
   // Is there more than one sheet? OR the sheets together.
   if (filters[':names']) {
     // eslint-disable-next-line no-restricted-syntax
     for (const filter of filters[':names']) {
-      if (conditionsMatch(doc, filters[filter]?.data)) return true;
+      if (conditionsMatch(page, filters[filter]?.data)) return true;
     }
-  } else {
-    //only one page.
-    if (conditionsMatch(doc, filters.data)) return true;
+  } else if (conditionsMatch(page, filters.data)) {
+    // only one page.
+    return true;
   }
   return false;
 }
@@ -94,43 +88,40 @@ export default async function decorate(block) {
   const sortOrder = blockObj[propertyNames.sortOrder]?.toLowerCase();
 
   let matching = [];
-  allPages.forEach((doc) => {
-    if (docMatches(doc, filters)) {
-      matching.push(doc);
+  allPages.forEach((page) => {
+    if (pageMatches(page, filters)) {
+      matching.push(page);
     }
   });
-
 
   matching = sortPageList(matching, sortBy, sortOrder);
 
   // Apply limit to results.
-  if (limit !== undefined  && matching.length > limit) {
+  if (limit !== undefined && matching.length > limit) {
     matching = matching.slice(0, limit);
   }
 
-
-
   const wrapper = document.createElement('ul');
-  wrapper.classList = `listOfItems image-list list-tile col-size-5`;
+  wrapper.classList = 'listOfItems image-list list-tile';
 
   matching.forEach((item) => {
     const listItem = document.createElement('li');
     listItem.classList = `${item.resourceOptions}`;
     const cardLink = document.createElement('a');
-    if (item.redirectUrl.length > 0) {
-      cardLink.href = item.redirectUrl;
+    if (item.redirectTarget.length > 0) {
+      cardLink.href = item.redirectTarget;
       cardLink.target = '_blank';
     } else {
       cardLink.href = item.path;
       cardLink.target = '_self';
     }
 
-    let htmlOutput = [];
+    const htmlOutput = [];
 
     blockObj[propertyNames.displayProperties].forEach((prop) => {
       let span;
       if (prop === 'image') {
-        span =`<span class="cmp-image image"><img src="${item[prop]}"/></span>`;
+        span = `<span class="image"><img src="${item[prop]}"/></span>`;
       } else {
         span = `<span class="${prop}">${item[prop]}</span>`;
       }

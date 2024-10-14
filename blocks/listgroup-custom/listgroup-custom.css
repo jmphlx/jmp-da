@@ -618,3 +618,24 @@ div.listgroup-custom  {
     }
   }
 }
+
+/* Books */
+div.books ul {
+  display: flex;
+  justify-content: space-evenly;
+
+  li  {
+    height: max-content;
+    width: 200px;
+  
+    a {
+      display: flex;
+      flex-direction: row;
+  
+      span.image {
+        width: 199px;
+        height: 244px;
+      }
+    }
+  }
+}
