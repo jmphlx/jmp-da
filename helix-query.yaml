@@ -75,6 +75,30 @@ indices:
         select: head > meta[name="eventdisplaylabel"]
         value: |
           attribute(el, "content")
+      bookTypeTitle:
+        select: head > meta[name="booktypetitle"]
+        value: |
+          attribute(el, "content")
+      bookPublishDate:
+        select: head > meta[name="bookpublishdate"]
+        value: |
+          attribute(el, "content")
+      bookAuthor:
+        select: head > meta[name="bookauthor"]
+        value: |
+          attribute(el, "content")
+      bookType:
+        select: head > meta[name="booktype"]
+        value: |
+          attribute(el, "content")
+      course:
+        select: head > meta[name="course"]
+        value: |
+          attribute(el, "content")
+      userLevel:
+        select: head > meta[name="userlevel"]
+        value: |
+          attribute(el, "content")
 
 #SKP ENGLISH CONTENT#
   skp-en:
@@ -148,30 +172,6 @@ indices:
           attribute(el, "content")
       eventDisplayLabel:
         select: head > meta[name="eventdisplaylabel"]
-        value: |
-          attribute(el, "content")
-      bookTypeTitle:
-        select: head > meta[name="booktypetitle"]
-        value: |
-          attribute(el, "content")
-      bookPublishDate:
-        select: head > meta[name="bookpublishdate"]
-        value: |
-          attribute(el, "content")
-      bookAuthor:
-        select: head > meta[name="bookauthor"]
-        value: |
-          attribute(el, "content")
-      bookType:
-        select: head > meta[name="booktype"]
-        value: |
-          attribute(el, "content")
-      course:
-        select: head > meta[name="course"]
-        value: |
-          attribute(el, "content")
-      userLevel:
-        select: head > meta[name="userlevel"]
         value: |
           attribute(el, "content")
 
