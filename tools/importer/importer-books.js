@@ -47,7 +47,7 @@ export default {
     transformDOM: ({ document }) => {
         console.log(document);
         const meta = createMetadataBlock(document);
-        const main = document.querySelector('body');
+        const body = document.querySelector('body');
 
         main.innerHTML = '';
         const section = document.createElement('div');
