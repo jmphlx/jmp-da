@@ -47,8 +47,8 @@ indices:
         select: head > meta[name="releasedate"]
         value: |
           attribute(el, "content")
-      redirectUrl:
-        select: head > meta[name="redirecturl"]
+      redirectTarget:
+        select: head > meta[name="redirecttarget"]
         value: |
           attribute(el, "content")
       resourceOptions:
@@ -122,8 +122,8 @@ indices:
         select: head > meta[name="releasedate"]
         value: |
           attribute(el, "content")
-      redirectUrl:
-        select: head > meta[name="redirecturl"]
+      redirectTarget:
+        select: head > meta[name="redirecttarget"]
         value: |
           attribute(el, "content")
       resourceOptions:
@@ -148,6 +148,30 @@ indices:
           attribute(el, "content")
       eventDisplayLabel:
         select: head > meta[name="eventdisplaylabel"]
+        value: |
+          attribute(el, "content")
+      bookTypeTitle:
+        select: head > meta[name="booktypetitle"]
+        value: |
+          attribute(el, "content")
+      bookPublishDate:
+        select: head > meta[name="bookpublishdate"]
+        value: |
+          attribute(el, "content")
+      bookAuthor:
+        select: head > meta[name="bookauthor"]
+        value: |
+          attribute(el, "content")
+      bookType:
+        select: head > meta[name="booktype"]
+        value: |
+          attribute(el, "content")
+      course:
+        select: head > meta[name="course"]
+        value: |
+          attribute(el, "content")
+      userLevel:
+        select: head > meta[name="userlevel"]
         value: |
           attribute(el, "content")
 
@@ -199,8 +223,8 @@ indices:
         select: head > meta[name="releasedate"]
         value: |
           attribute(el, "content")
-      redirectUrl:
-        select: head > meta[name="redirecturl"]
+      redirectTarget:
+        select: head > meta[name="redirecttarget"]
         value: |
           attribute(el, "content")
       resourceOptions:
@@ -225,6 +249,30 @@ indices:
           attribute(el, "content")
       eventDisplayLabel:
         select: head > meta[name="eventdisplaylabel"]
+        value: |
+          attribute(el, "content")
+      bookTypeTitle:
+        select: head > meta[name="booktypetitle"]
+        value: |
+          attribute(el, "content")
+      bookPublishDate:
+        select: head > meta[name="bookpublishdate"]
+        value: |
+          attribute(el, "content")
+      bookAuthor:
+        select: head > meta[name="bookauthor"]
+        value: |
+          attribute(el, "content")
+      bookType:
+        select: head > meta[name="booktype"]
+        value: |
+          attribute(el, "content")
+      course:
+        select: head > meta[name="course"]
+        value: |
+          attribute(el, "content")
+      userLevel:
+        select: head > meta[name="userlevel"]
         value: |
           attribute(el, "content")
 
@@ -276,8 +324,8 @@ indices:
         select: head > meta[name="releasedate"]
         value: |
           attribute(el, "content")
-      redirectUrl:
-        select: head > meta[name="redirecturl"]
+      redirectTarget:
+        select: head > meta[name="redirecttarget"]
         value: |
           attribute(el, "content")
       resourceOptions:
@@ -302,5 +350,29 @@ indices:
           attribute(el, "content")
       eventDisplayLabel:
         select: head > meta[name="eventdisplaylabel"]
+        value: |
+          attribute(el, "content")
+      bookTypeTitle:
+        select: head > meta[name="booktypetitle"]
+        value: |
+          attribute(el, "content")
+      bookPublishDate:
+        select: head > meta[name="bookpublishdate"]
+        value: |
+          attribute(el, "content")
+      bookAuthor:
+        select: head > meta[name="bookauthor"]
+        value: |
+          attribute(el, "content")
+      bookType:
+        select: head > meta[name="booktype"]
+        value: |
+          attribute(el, "content")
+      course:
+        select: head > meta[name="course"]
+        value: |
+          attribute(el, "content")
+      userLevel:
+        select: head > meta[name="userlevel"]
         value: |
           attribute(el, "content")

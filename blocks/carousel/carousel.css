@@ -294,13 +294,12 @@ a, a:hover{
     display: none;
   }
 }
-
-
-
 /* Adding quote marks around headers */
 .quote-wheel{
 :has(h4){
+  div div{
   padding-top:.8em;
+  }
   :before, :after{
     content: "";
     font-family: "Georgia", cursive;
@@ -316,8 +315,8 @@ a, a:hover{
     h4:before {
       content: '\201C';
       width: 1em;
-      top: 0.275em;
-      left: -62px;
+      top: 0.3em;
+      left: -75px;
       opacity: .2;
     }
     h4:after {
@@ -328,14 +327,17 @@ a, a:hover{
     }
 }
 @media (width <= 600px) {
+  &.section-top-padding-small, 
+  &.section-padding-small{
   text-align: center;
-  padding-top:8px !important;
-  padding-bottom:8px !important;
+  :has(h4){
+    padding-top:0;
   .carousel .carousel-slide .carousel-slide-content {
-    --slide-content-width: 65%;
-    /* margin: 0 auto; */
-    text-align: center;
-    font-size: var(--heading-font-size-s);
+    --slide-content-width: 75%;
+    
+    padding:8px auto !important;
   }
   }
+}
+}
 }

@@ -19,6 +19,7 @@ async function fetchNavigationHTML() {
 
 function closeAllMobileDropdowns(nav) {
   nav.setAttribute('aria-expanded', false);
+  nav.querySelector('.gnav-search').classList.remove('is-Open');
   nav.querySelector('.gnav-search-bar').setAttribute('aria-expanded', false);
   nav.querySelector('.gnav-search-input').value = '';
   nav.querySelector('.gnav-search-input').dispatchEvent(new Event('input', { bubbles: true }))
@@ -34,6 +35,11 @@ function toggleMobileSearch(nav, searchBar, forceExpanded = null) {
   const expanded = forceExpanded !== null ? !forceExpanded : searchBar.getAttribute('aria-expanded') === 'true';
   closeAllMobileDropdowns(nav);
   searchBar.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+  if (!expanded) {
+    nav.querySelector('.gnav-search').classList.add('is-Open');
+  } else {
+    nav.querySelector('.gnav-search').classList.remove('is-Open');
+  }
   searchBar.querySelector('input').focus();
 }
 
