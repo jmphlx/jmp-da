@@ -12,7 +12,7 @@
     "releaseDate",
     "eventDate",
     "eventTime",
-    "redirectUrl",
+    "redirectTarget",
     "resourceOptions",
     "eventType",
     "eventSeries"
@@ -32,7 +32,7 @@
       "releaseDate": "",
       "eventDate": "",
       "eventTime": "",
-      "redirectUrl": "",
+      "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
       "eventSeries": ""
@@ -51,7 +51,7 @@
       "releaseDate": "",
       "eventDate": "",
       "eventTime": "",
-      "redirectUrl": "",
+      "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
       "eventSeries": ""
@@ -70,7 +70,7 @@
       "releaseDate": "",
       "eventDate": "",
       "eventTime": "",
-      "redirectUrl": "",
+      "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
       "eventSeries": ""
@@ -88,7 +88,7 @@
       "releaseDate": "",
       "eventDate": "",
       "eventTime": "",
-      "redirectUrl": "",
+      "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
       "eventSeries": ""
@@ -107,7 +107,7 @@
       "releaseDate": "",
       "eventDate": "",
       "eventTime": "",
-      "redirectUrl": "",
+      "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
       "eventSeries": ""
@@ -126,7 +126,7 @@
       "releaseDate": "",
       "eventDate": "",
       "eventTime": "",
-      "redirectUrl": "",
+      "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
       "eventSeries": ""
@@ -144,7 +144,7 @@
       "releaseDate": "",
       "eventDate": "",
       "eventTime": "",
-      "redirectUrl": "",
+      "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
       "eventSeries": ""
@@ -163,7 +163,7 @@
       "releaseDate": "",
       "eventDate": "",
       "eventTime": "",
-      "redirectUrl": "",
+      "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
       "eventSeries": ""
@@ -182,7 +182,7 @@
       "releaseDate": "2024-05-05",
       "eventDate": "",
       "eventTime": "",
-      "redirectUrl": "",
+      "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
       "eventSeries": ""
@@ -201,7 +201,7 @@
       "releaseDate": "",
       "eventDate": "",
       "eventTime": "",
-      "redirectUrl": "",
+      "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
       "eventSeries": ""
@@ -220,7 +220,7 @@
       "releaseDate": "2024-01-01",
       "eventDate": "",
       "eventTime": "",
-      "redirectUrl": "",
+      "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
       "eventSeries": ""
@@ -239,7 +239,7 @@
       "releaseDate": "2023-03-23",
       "eventDate": "",
       "eventTime": "",
-      "redirectUrl": "",
+      "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
       "eventSeries": ""
@@ -258,7 +258,7 @@
       "releaseDate": "",
       "eventDate": "",
       "eventTime": "",
-      "redirectUrl": "",
+      "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
       "eventSeries": ""
@@ -277,7 +277,7 @@
       "releaseDate": "",
       "eventDate": "",
       "eventTime": "",
-      "redirectUrl": "",
+      "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
       "eventSeries": ""
@@ -296,7 +296,7 @@
       "releaseDate": "",
       "eventDate": "",
       "eventTime": "",
-      "redirectUrl": "",
+      "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
       "eventSeries": ""
@@ -315,7 +315,7 @@
       "releaseDate": "",
       "eventDate": "",
       "eventTime": "",
-      "redirectUrl": "",
+      "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
       "eventSeries": ""
@@ -334,7 +334,7 @@
       "releaseDate": "",
       "eventDate": "",
       "eventTime": "",
-      "redirectUrl": "",
+      "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
       "eventSeries": ""
@@ -353,7 +353,7 @@
       "releaseDate": "",
       "eventDate": "",
       "eventTime": "",
-      "redirectUrl": "",
+      "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
       "eventSeries": ""
@@ -372,7 +372,7 @@
       "releaseDate": "",
       "eventDate": "",
       "eventTime": "",
-      "redirectUrl": "",
+      "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
       "eventSeries": ""
@@ -391,7 +391,7 @@
       "releaseDate": "2024-06-19",
       "eventDate": "",
       "eventTime": "",
-      "redirectUrl": "",
+      "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
       "eventSeries": ""
