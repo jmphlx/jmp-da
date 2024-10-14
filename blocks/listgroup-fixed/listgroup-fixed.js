@@ -34,9 +34,9 @@ export default async function decorate(block) {
       const listItem = document.createElement('li');
       listItem.classList = `${getMetadata('resourceOptions', doc)}`;
       const cardLink = document.createElement('a');
-      const redirectUrl = getMetadata('redirecturl', doc);
-      if (redirectUrl.length > 0) {
-        cardLink.href = redirectUrl;
+      const redirectTarget = getMetadata('redirecttarget', doc);
+      if (redirectTarget.length > 0) {
+        cardLink.href = redirectTarget;
         cardLink.target = '_blank';
       } else {
         cardLink.href = item;
