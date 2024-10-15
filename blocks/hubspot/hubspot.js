@@ -19,13 +19,16 @@ const embedHubspot = (config) => {
   scriptHubspot.setAttribute('type', 'text/javascript');
   scriptHubspot.src = 'https://js.hsforms.net/forms/embed/v2.js';
 
+  // eslint-disable-next-line no-unused-vars
+  const redirect = config.redirecttarget;
+
   // adds event listener to add embed code on load
   scriptHubspot.addEventListener('load', () => {
     hbspt.forms.create({
       region: config.region,
       portalId: config['portal-id'],
       formId: config['form-id'],
-      redirectUrl: config['redirectTarget'],
+      redirectUrl: config.redirecttarget,
       sfdcCampaignId,
       onFormReady($form) {
         const hiddenField2 = $form.find('input[name="last_action"]');
@@ -40,7 +43,8 @@ const embedHubspot = (config) => {
         const newSFC = sfdcCampaignId;
         emailSFC.val(newSFC).change();
       },
-      onFormSubmitted(redirect,$form){},
+      // eslint-disable-next-line no-unused-vars, no-shadow
+      onFormSubmitted(redirect, $form) {},
     });
   });
 
@@ -61,8 +65,8 @@ const loadEmbed = (block, config) => {
 
   block.innerHTML = embedHubspot(config);
   block.classList = 'block embed embed-hubspot';
-  if (config['headline']) {
-    block.prepend(config['headline']);
+  if (config.headline) {
+    block.prepend(config.headline);
   }
 
   block.classList.add('form-is-loaded');
