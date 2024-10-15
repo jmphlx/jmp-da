@@ -4,7 +4,7 @@
  */
 /*  global hbspt  */
 
-import { readBlockConfig } from '../../scripts/aem.js';
+import { getBlockConfig } from '../../scripts/jmp.js';
 
 const embedHubspot = (config) => {
   // clean up hubspot url query paramaters
@@ -18,9 +18,6 @@ const embedHubspot = (config) => {
   const scriptHubspot = document.createElement('script');
   scriptHubspot.setAttribute('type', 'text/javascript');
   scriptHubspot.src = 'https://js.hsforms.net/forms/embed/v2.js';
-
-  console.log(config['redirectTarget']);
-  const redirect = config['redirectTarget'];
 
   // adds event listener to add embed code on load
   scriptHubspot.addEventListener('load', () => {
@@ -64,12 +61,15 @@ const loadEmbed = (block, config) => {
 
   block.innerHTML = embedHubspot(config);
   block.classList = 'block embed embed-hubspot';
+  if (config['headline']) {
+    block.prepend(config['headline']);
+  }
 
   block.classList.add('form-is-loaded');
 };
 
 export default function decorate(block) {
-  const config = readBlockConfig(block);
+  const config = getBlockConfig(block);
 
   block.textContent = '';
 

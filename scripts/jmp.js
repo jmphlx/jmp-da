@@ -1,3 +1,4 @@
+import { toClassName } from '../../scripts/aem.js';
 const knownObjectProperties = ['options', 'filters'];
 
 /**
@@ -345,6 +346,11 @@ function convertStringToJSONObject(stringValue) {
   return jsonObj;
 }
 
+/**
+ * Customized version of readBlockConfig from aem.js
+ * Adds options for ordered and unordered lists and
+ * preserves html elements if no match found.
+ */
 function getBlockConfig(block) {
   const config = {};
   block.querySelectorAll(':scope > div').forEach((row) => {
@@ -352,7 +358,7 @@ function getBlockConfig(block) {
       const cols = [...row.children];
       if (cols[1]) {
         const col = cols[1];
-        const name = cols[0].textContent.toLowerCase();
+        const name = toClassName(cols[0].textContent.toLowerCase());
         let value = '';
         if (knownObjectProperties.includes(name.toLowerCase())) {
           const stringValue = col.textContent;
@@ -384,7 +390,7 @@ function getBlockConfig(block) {
         } else if (col.querySelector('ol')) {
           const listItems = [...col.querySelectorAll('li')];
           value = listItems.map((item) => item.textContent);
-        } else value = row.children[1].textContent;
+        } else value = row.children[1];
         config[name] = value;
       }
     }
