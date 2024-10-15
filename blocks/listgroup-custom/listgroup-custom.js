@@ -14,8 +14,8 @@ const propertyNames = {
   filter: 'filter',
   displayProperties: 'displayproperties',
   limit: 'limit',
-  sortBy: 'sort by',
-  sortOrder: 'sort order',
+  sortBy: 'sort-by',
+  sortOrder: 'sort-order',
 };
 
 function lowercaseObj(obj) {
