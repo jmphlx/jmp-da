@@ -249,9 +249,6 @@ h1 + h5 {
   &:has(+ :is(p)) {
     margin-bottom: 1rem;
   }
-  + p {
-    margin-bottom: .75rem;
-  }
 }
 :is(h6) {
   &:has(+ :is(h1, h2, h4)) {
