@@ -1,7 +1,6 @@
-/* global afterEach beforeEach describe it */
-import { readFile, sendMouse, resetMouse } from '@web/test-runner-commands';
+/* global beforeEach describe it */
+import { readFile } from '@web/test-runner-commands';
 import { expect } from '@esm-bundle/chai';
-import { getCenterOf } from '../../scripts/testutils.js';
 
 const { decorateBlock, loadBlock } = await import('../../../scripts/aem.js');
 const subnav = await import('../../../blocks/subnav/subnav.js');
@@ -26,12 +25,9 @@ describe('Subnav Block', () => {
       expect(activeDropdown).to.be.null;
     });
 
-    /*
     it('Clicking on a dropdown should open it', async () => {
       const dropdownButton = document.querySelector('nav ul li');
-
-      const coordinates = getCenterOf(dropdownButton);
-      await sendMouse({ type: 'click', position: [coordinates.x, coordinates.y] });
+      dropdownButton.click();
 
       const openDropdown = document.querySelector('li.is-open');
       expect(openDropdown.firstChild.textContent).to.equal('By Industry');
@@ -39,16 +35,13 @@ describe('Subnav Block', () => {
 
     it('Clicking on an open dropdown should close it', async () => {
       const dropdownButton = document.querySelector('nav ul li');
-      const coordinates = getCenterOf(dropdownButton);
-
-      await sendMouse({ type: 'click', position: [coordinates.x, coordinates.y] });
+      dropdownButton.click();
       let openDropdown = document.querySelector('li.is-open');
 
-      await sendMouse({ type: 'click', position: [coordinates.x, coordinates.y] });
+      dropdownButton.click();
       openDropdown = document.querySelector('li.is-open');
       expect(openDropdown).to.be.null;
     });
-    */
 
     it('should apply the active class to a list item that matches the current page', () => {
       const dropdownItems = document.querySelector('ul');
@@ -60,10 +53,6 @@ describe('Subnav Block', () => {
       const activeListItems = dropdown.querySelectorAll('li.active');
       expect(1).to.equal(activeListItems.length);
       expect('Chemical').to.equal(activeListItems[0].textContent);
-    });
-
-    afterEach(async () => {
-      await resetMouse();
     });
   });
 

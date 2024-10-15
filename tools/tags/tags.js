@@ -1,4 +1,5 @@
 // Import SDK
+// eslint-disable-next-line import/no-unresolved
 import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 
 // Import Web Component

@@ -21,6 +21,7 @@ import { createTag } from './helper.js';
 
 (async function loadDa() {
   if (!new URL(window.location.href).searchParams.get('dapreview')) return;
+  // eslint-disable-next-line import/no-unresolved, no-use-before-define
   import('https://da.live/scripts/dapreview.js').then(({ default: daPreview }) => daPreview(loadPage));
 }());
 

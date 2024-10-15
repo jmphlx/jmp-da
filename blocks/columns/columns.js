@@ -1,6 +1,4 @@
-
 import { embedVidyard } from '../embed/embed.js';
-
 
 function decorateEmbed(elems) {
   elems.forEach((elem) => {
@@ -13,7 +11,6 @@ function decorateEmbed(elems) {
 }
 
 export default function decorate(block) {
-
   // get all elements that are a vidyard share url & decorate them
   const embedUrls = block.querySelectorAll('a[href*="share.vidyard.com"]');
 

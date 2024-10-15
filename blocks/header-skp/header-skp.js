@@ -22,7 +22,7 @@ function closeAllMobileDropdowns(nav) {
   nav.querySelector('.gnav-search').classList.remove('is-Open');
   nav.querySelector('.gnav-search-bar').setAttribute('aria-expanded', false);
   nav.querySelector('.gnav-search-input').value = '';
-  nav.querySelector('.gnav-search-input').dispatchEvent(new Event('input', { bubbles: true }))
+  nav.querySelector('.gnav-search-input').dispatchEvent(new Event('input', { bubbles: true }));
 }
 
 function toggleHamburgerMenu(nav, forceExpanded = null) {
