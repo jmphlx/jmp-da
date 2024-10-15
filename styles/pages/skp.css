@@ -40,6 +40,7 @@ h1 {
   position: relative;
   padding: 0;
   line-height: 1em;
+  margin-bottom: 3.2rem !important;
   &:before {
     content: "";
     display: block;

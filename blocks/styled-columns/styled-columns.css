@@ -815,7 +815,6 @@
       position: relative;
       background: rgba(0, 125, 195, 0.07);
       box-sizing: border-box;
-      z-index: 100;
       margin: 0 0 2.4rem 3.2rem;
       width: 40%;
       height: max-content;

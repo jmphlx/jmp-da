@@ -71,48 +71,25 @@ clear: inline-end;
   }
 }
 
-
-
-
-
-
-.test-layout {
-  hr {
-    margin: 32px auto;
+.skp-blue {
+  margin-bottom: 25px;
+  border-left: 4px solid #007dc3;
+  padding: 2rem;
+  position: relative;
+  background: rgba(0, 125, 195, 0.07);
+  width: auto;
+  box-sizing: border-box;
+  h3 {
+    font-size: 2.4rem;
+  }
+  &.accordion details summary {
+    padding: 0 !important;
+    padding-right: 48px;
   }
   .accordion-item-body {
-    margin-top: .5em;
-    clear: both !important;
-    display: block;
-    contain: layout;
-  }
-  h5 {
-    margin-bottom: .1em;
+    padding: 0 !important;
   }
   .accordion-item {
-    clear: both;
-    img {
-      width: 50%;
-      float: left;
-      margin: 0 1em 0 0;
-    }
-    ul:nth-last-child(1){
-      width: 45%;
-      float: left;
-      ul{
-        width: 95%;
-      }
-    }
-    @media (width <=900px) {
-      img, ul, ul:nth-last-child(1) {
-        width: 100%;
-        margin: 0;
-      }
-      ul:nth-last-child(1){
-        ul{
-          width: 95%;
-        }
-      }
-    }
+    border-top: 0;
   }
 }

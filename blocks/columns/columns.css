@@ -1088,3 +1088,13 @@ div.bullet-arrow {
     }
   }
 }
+
+.skp-blue {
+  margin-bottom: 25px;
+  border-left: 4px solid #007dc3;
+  padding: 2rem;
+  position: relative;
+  background: rgba(0, 125, 195, 0.07);
+  width: auto;
+  box-sizing: border-box;
+}
