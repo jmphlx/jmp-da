@@ -190,6 +190,12 @@ div.subnav.skpsubnav nav.main ul li.is-dropdown.active {
   }
 }
 
+div.subnav.skpsubnav {
+  @media (width >= 900px) {
+    padding-top: 5.6rem;
+  }
+}
+
 div.subnav.skpsubnav nav.main ul {
   transition: all .3s ease; 
   li {
