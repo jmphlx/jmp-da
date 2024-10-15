@@ -140,8 +140,10 @@ p, dl, ol, ul, pre, blockquote {
   font-weight: normal;
 }
 strong {
-  font-family: "anova-regular", sans-serif;
-  font-weight: normal;
+  /* font-family: "anova-regular", sans-serif;
+  font-weight: normal; */
+  font-family: var(--font-bold);
+  color: var(--gray6);
 }
 .text-large {
   p, li {
@@ -250,10 +252,30 @@ h1 + h5 {
     margin-bottom: 1rem;
   }
 }
+:is(h5):has(+h6 +h6 +p) {
+/* h5:has(+h6 +h6 +p) { */
+  line-height:1.6em;
+  color:var(--purpleLight);
+  margin-bottom: 3.2rem;
+  +h6:has(+ h6){
+  font-family: var(--font-bold);
+  margin-bottom:0;
+  color:var(--gray6);
+  +:is(h6){
+    margin-bottom:0;
+    +:is(p){
+      margin-top: 3px;
+    }
+  }
+}
+}
 :is(h6) {
   &:has(+ :is(h1, h2, h4)) {
     margin-bottom: 0;
   }
+}
+h6:has(+ h6){
+  margin-bottom:0;
 }
 /* h6 combinations */
 /* :is(h6):has(+ :is(h1, h2, h3, h4, h5)) {
