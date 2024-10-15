@@ -1,3 +1,5 @@
+const knownObjectProperties = ['options', 'filters'];
+
 /**
  * Returns if a given 2 or 4 digit language is supported
  * by JMP. Support means that it should have it's own
@@ -20,9 +22,11 @@ document.documentElement.lang = lang;
 
 /*
  * Check if an array includes all values of another array
+Are all of the values in Array B included in Array A?
+Is B contained within A?
  */
-function arrayIncludesAllValues(filterValues, pageValues) {
-  return pageValues.every((val) => filterValues.includes(val));
+function arrayIncludesAllValues(arrayA, arrayB) {
+  return arrayB.every((val) => arrayA.includes(val));
 }
 
 /*
@@ -110,7 +114,7 @@ function pageAndFilter(pageSelection, filterObject) {
           if (pageValue !== undefined && pageValue.indexOf(',') > -1) {
             const list = pageValue.split(',');
             const trimmedList = list.map((str) => str.trim().toLowerCase());
-            if (!arrayIncludesAllValues(filterValue, trimmedList)) {
+            if (!arrayIncludesAllValues(trimmedList, filterValue)) {
               throw new Error('condition not met');
             }
           } else {
@@ -327,9 +331,155 @@ async function getLangMenuPageUrl(languagePage) {
   }
 }
 
+function convertStringToJSONObject(stringValue) {
+  const jsonObj = {};
+  const stringList = stringValue.split(',');
+  stringList.forEach((item) => {
+    if (item.includes('=')) {
+      const optionsString = item.split('=', 2);
+      jsonObj[optionsString[0].trim().toLowerCase()] = optionsString[1].trim().toLowerCase();
+    } else {
+      jsonObj[item.trim().toLowerCase()] = true;
+    }
+  });
+  return jsonObj;
+}
+
+function getBlockConfig(block) {
+  const config = {};
+  block.querySelectorAll(':scope > div').forEach((row) => {
+    if (row.children) {
+      const cols = [...row.children];
+      if (cols[1]) {
+        const col = cols[1];
+        const name = cols[0].textContent.toLowerCase();
+        let value = '';
+        if (knownObjectProperties.includes(name.toLowerCase())) {
+          const stringValue = col.textContent;
+          value = convertStringToJSONObject(stringValue);
+        } else if (col.querySelector('a')) {
+          const as = [...col.querySelectorAll('a')];
+          if (as.length === 1) {
+            value = as[0].href;
+          } else {
+            value = as.map((a) => a.href);
+          }
+        } else if (col.querySelector('img')) {
+          const imgs = [...col.querySelectorAll('img')];
+          if (imgs.length === 1) {
+            value = imgs[0].src;
+          } else {
+            value = imgs.map((img) => img.src);
+          }
+        } else if (col.querySelector('p')) {
+          const ps = [...col.querySelectorAll('p')];
+          if (ps.length === 1) {
+            value = ps[0].textContent;
+          } else {
+            value = ps.map((p) => p.textContent);
+          }
+        } else if (col.querySelector('ul')) {
+          const listItems = [...col.querySelectorAll('li')];
+          value = listItems.map((item) => item.textContent);
+        } else if (col.querySelector('ol')) {
+          const listItems = [...col.querySelectorAll('li')];
+          value = listItems.map((item) => item.textContent);
+        } else value = row.children[1].textContent;
+        config[name] = value;
+      }
+    }
+  });
+  return config;
+}
+
+function containsOperator(pageObj, condObj) {
+  let flag = true;
+  const propertyName = condObj.property.toLowerCase();
+  const filterValue = condObj.value.toLowerCase();
+  const pageValue = pageObj[propertyName];
+
+  try {
+    // filterValue is an array
+    if (filterValue.indexOf(',') > 0) {
+      const filterValueArray = filterValue.split(',');
+      const trimmedFilter = filterValueArray.map((str) => str.trim().toLowerCase());
+      // filterValue is an array and pageValue is an array
+      if (pageValue !== undefined && pageValue.indexOf(',') > -1) {
+        const list = pageValue.split(',');
+        const trimmedList = list.map((str) => str.trim().toLowerCase());
+        if (!arrayIncludesAllValues(trimmedList, trimmedFilter)) {
+          throw new Error('condition not met');
+        }
+      } else {
+        // if pageValue is not also an array of values then it can't possibly match.
+        throw new Error('condition not met');
+      }
+    // filterValue is a single string but pageValue is array
+    } else if (pageValue !== undefined && pageValue.indexOf(',') > -1) {
+      const list = pageValue.split(',');
+      const trimmedList = list.map((str) => str.trim().toLowerCase());
+      if (!trimmedList.includes(filterValue)) {
+        throw new Error('condition not met');
+      }
+    // both pageValue and filterValue are strings so test ===
+    } else if (filterValue !== pageValue) {
+      throw new Error('condition not met');
+    }
+  } catch (e) {
+    flag = false;
+  }
+  return flag;
+}
+
+function matchesOperator(pageObj, condObj) {
+  return pageObj[condObj.property].match(condObj.value);
+}
+
+function startsWithOperator(pageObj, condObj) {
+  return pageObj[condObj.property].startsWith(condObj.value);
+}
+
+function sortPageList(pageList, sortBy, sortOrder) {
+  const sortedList = pageList;
+  switch (sortBy) {
+    case 'title':
+      sortedList.sort((a, b) => {
+        if (sortOrder !== undefined && sortOrder === 'descending') {
+          return (a.title < b.title ? 1 : -1);
+        }
+        return (a.title < b.title ? -1 : 1);
+      });
+      break;
+    case 'releasedate':
+      sortedList.sort((a, b) => {
+        if (sortOrder !== undefined && sortOrder === 'descending') {
+          return ((new Date(a.releaseDate) - new Date(b.releaseDate)) < 0
+            ? 1 : -1);
+        }
+        return ((new Date(a.releaseDate) - new Date(b.releaseDate)) < 0
+          ? -1 : 1);
+      });
+      break;
+    default:
+      sortedList.sort((a, b) => {
+        if (sortOrder !== undefined && sortOrder === 'descending') {
+          return ((new Date(a.releaseDate) - new Date(b.releaseDate)) < 0
+            ? 1 : -1);
+        }
+        return ((new Date(a.releaseDate) - new Date(b.releaseDate)) < 0
+          ? -1 : 1);
+      });
+  }
+  return sortedList;
+}
+
 export {
   arrayIncludesAllValues,
   arrayIncludesSomeValues,
+  containsOperator,
+  matchesOperator,
+  startsWithOperator,
+  getBlockConfig,
   getBlockPropertiesList,
   getBlockProperty,
   getJsonFromUrl,
@@ -344,4 +494,5 @@ export {
   pageFilterByFolder,
   pageOrFilter,
   parseBlockOptions,
+  sortPageList,
 };
