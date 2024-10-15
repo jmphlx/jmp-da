@@ -1,3 +1,4 @@
+/* eslint no-unused-vars: 0 */
 /* global describe it */
 import { expect } from '@esm-bundle/chai';
 import { html, fixture } from '@open-wc/testing';

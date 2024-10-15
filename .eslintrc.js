@@ -24,6 +24,9 @@ module.exports = {
       array: false,
       object: false,
     }],
+    'import/prefer-default-export': ['off', {
+      target: 'single',
+    }],
   },
   overrides: [
     {

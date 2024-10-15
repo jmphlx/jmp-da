@@ -1,3 +1,4 @@
+/* eslint import/no-unresolved: 0 */
 import { LitElement, html, until } from 'https://da.live/deps/lit/lit-all.min.js';
 import getSheet from 'https://da.live/blocks/shared/sheet.js';
 
