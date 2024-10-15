@@ -1047,7 +1047,7 @@ div.bullet-arrow {
       }
     }
   }
-  :first-child:before, :first-child:after {
+  h5:first-child:before, h5:first-child:after {
       content: "";
       font-family: "Georgia", cursive;
       line-height: 0;
