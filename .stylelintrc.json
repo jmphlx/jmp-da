@@ -19,6 +19,10 @@
     "media-feature-range-notation": null,
     "font-family-name-quotes": ["always-unless-keyword"],
     "custom-property-pattern": [null],
-    "selector-class-pattern": [null]
+    "selector-class-pattern": [null],
+    "declaration-block-no-redundant-longhand-properties":  [
+      true,
+      { "severity": "warning" }
+    ]
   }
 }

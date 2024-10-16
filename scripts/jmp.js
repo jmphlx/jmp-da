@@ -1,4 +1,5 @@
-import { toClassName } from '../../scripts/aem.js';
+import { toClassName } from './aem.js';
+
 const knownObjectProperties = ['options', 'filters'];
 
 /**
