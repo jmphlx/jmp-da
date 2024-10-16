@@ -411,15 +411,18 @@ function containsOperator(pageObj, condObj) {
       const filterValueArray = filterValue.split(',');
       const trimmedFilter = filterValueArray.map((str) => str.trim().toLowerCase());
       // filterValue is an array and pageValue is an array
+      // in a comma-delimited filter value, the conditions should be OR.
       if (pageValue !== undefined && pageValue.indexOf(',') > -1) {
         const list = pageValue.split(',');
         const trimmedList = list.map((str) => str.trim().toLowerCase());
-        if (!arrayIncludesAllValues(trimmedList, trimmedFilter)) {
+        if (!arrayIncludesSomeValues(trimmedList, trimmedFilter)) {
           throw new Error('condition not met');
         }
       } else {
-        // if pageValue is not also an array of values then it can't possibly match.
-        throw new Error('condition not met');
+        // pageValue is not an array, is it in the list of possible filters.
+        if(!trimmedFilter.contains(pageValue)) {
+          throw new error('condition not met');
+        }
       }
     // filterValue is a single string but pageValue is array
     } else if (pageValue !== undefined && pageValue.indexOf(',') > -1) {
