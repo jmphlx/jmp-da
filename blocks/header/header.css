@@ -1,27 +1,8 @@
-/* header and nav layout - touch file */
 header .nav-wrapper {
   background-color: #ffffff;
   width: 100%;
   z-index: 1000;
   position: fixed;
-}
-
-header nav {
-  position: fixed;
-  width: 100%;
-  box-sizing: border-box;
-  display: grid;
-  grid-template:
-    'utility hamburger' 75px / 1fr auto;
-  align-items: center;
-  gap: 0;
-  margin: auto;
-  height: 100px;
-  padding: 0 1rem;
-  /* border-bottom: 3px solid #eeeeee; */
-  @media (max-width: 899px) {
-    height: 75px;
-  }
 }
 
 @media (max-width: 899px) {
@@ -45,7 +26,6 @@ header nav {
     }
   }
 }
-
 
 @media (min-width: 600px) {
   header nav {
