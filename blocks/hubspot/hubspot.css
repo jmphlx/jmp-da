@@ -1,12 +1,12 @@
 .embed-hubspot {
   width: unset;
-  text-align: center;
+  text-align: left;
   max-width: 800px;
   margin: 32px auto;
 }
 
 .embed > div {
-  display: flex;
+  display: block;
   justify-content: center;
 }
 
@@ -74,11 +74,14 @@
 } */
   /* Limited styling to control the display of the form shell on an Eevnt Page. */
 .hubspot-wrapper {
-    padding: .5em 2em;
-    background-color: #f4f4f4;
-    border-radius: 10px;
-    border: 1px solid var(--gray10);
-    @media (width <=900px) {
-      margin-top: 48px;
-    }
+  padding: .5em 2em;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  border: 1px solid var(--gray10);
+  div {
+    margin-bottom: 2.4rem;
   }
+  @media (width <=900px) {
+    margin-top: 48px;
+  }
+}
