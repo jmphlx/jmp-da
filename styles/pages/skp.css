@@ -1,4 +1,4 @@
-/* @import url("/styles/styles.css"); */
+@import url("../../../styles/styles.css");
 
 /* Full Width */
 main {
@@ -12,7 +12,7 @@ main {
     }
   }
   strong {
-    color: var(--blue);
+    color: unset !important;
   }
 }
 @media (width >= 900px) {
@@ -329,6 +329,7 @@ body.skp footer {
   margin-bottom: 60px;
   strong {
     font-family: "anova-regular", sans-serif !important;
+    color: var(--blue);
   }
   h2 {
     color: #007dc3;
