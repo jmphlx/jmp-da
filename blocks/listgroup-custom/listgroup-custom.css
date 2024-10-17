@@ -639,3 +639,9 @@ div.books ul {
     }
   }
 }
+
+ul.group-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}

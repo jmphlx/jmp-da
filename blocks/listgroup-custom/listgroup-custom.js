@@ -125,12 +125,25 @@ function writeAsAZGroups(wrapper, matching, groupBy, groupProperty, blockObj) {
   Object.keys(dictionary).forEach((letter) => {
     const letterGroup = document.createElement('li');
     const heading = document.createElement('h3');
+    heading.id = letter;
     heading.textContent = letter.toUpperCase();
     const groupWrapper = document.createElement('ul');
     writeAsOneGroup(groupWrapper, dictionary[letter], blockObj);
     letterGroup.append(heading, groupWrapper);
     wrapper.append(letterGroup);
   });
+
+  const groupHeader = document.createElement('ul');
+  groupHeader.classList = 'group-header';
+  Object.keys(dictionary).forEach((letter) => {
+    const letterLink = document.createElement('li');
+    const anchor = document.createElement('a');
+    anchor.href = `#${letter}`;
+    anchor.textContent = letter.toUpperCase();
+    letterLink.append(anchor);
+    groupHeader.append(letterLink);
+  });
+  wrapper.prepend(groupHeader);
 }
 
 export default async function decorate(block) {
