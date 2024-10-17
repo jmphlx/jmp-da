@@ -12,7 +12,7 @@ main {
     }
   }
   strong {
-    font-family: "anova-bold", sans-serif;
+    color: var(--blue);
   }
 }
 @media (width >= 900px) {
