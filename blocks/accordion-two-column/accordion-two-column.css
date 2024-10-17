@@ -16,9 +16,6 @@
   list-style: none;
   overflow: auto;
   transition: background-color 0.2s;
-  @media (width <=900px) {
-    padding-bottom: .5em;
-  }
 }
 .accordion-two-column details[open] summary {
   background-color: var(--light-color);
