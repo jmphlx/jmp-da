@@ -18,6 +18,7 @@ const propertyNames = {
   sortOrder: 'sort-order',
   emptyResultsMessage: 'empty-results-message',
   columns: 'columns',
+  groupBy: 'group-by',
 };
 
 function lowercaseObj(obj) {
@@ -76,20 +77,76 @@ function pageMatches(page, filters) {
   return false;
 }
 
+function writeAsOneGroup(wrapper, matching, config) {
+  const columns = config[propertyNames.columns] ? config[propertyNames.columns] : 5;
+  wrapper.classList = `listOfItems image-list list-tile col-size-${columns}`;
+  matching.forEach((item) => {
+    const listItem = document.createElement('li');
+    listItem.classList = `${item.resourceOptions}`;
+    const cardLink = document.createElement('a');
+    if (item.redirectTarget.length > 0) {
+      cardLink.href = item.redirectTarget;
+      cardLink.target = '_blank';
+    } else {
+      cardLink.href = item.path;
+      cardLink.target = '_self';
+    }
+
+    const htmlOutput = [];
+
+    config[propertyNames.displayProperties].forEach((prop) => {
+      let span;
+      if (prop === 'image') {
+        span = `<span class="image"><img src="${item[prop]}"/></span>`;
+      } else {
+        span = `<span class="${prop}">${item[prop]}</span>`;
+      }
+      htmlOutput.push(span);
+    });
+    cardLink.innerHTML = htmlOutput.join('');
+
+    listItem.append(cardLink);
+    wrapper.append(listItem);
+  });
+
+  return wrapper;
+}
+
+function writeAsAZGroups(wrapper, matching, groupBy, groupProperty, blockObj) {
+  const dictionary = matching.reduce((groups, page) => {
+    const startingLetter = page[groupProperty][0].toLowerCase();
+    // either push to an existing letter entry or create one
+    if (groups[startingLetter]) groups[startingLetter].push(page);
+    else groups[startingLetter] = [page];
+
+    return groups;
+  }, {});
+
+  Object.keys(dictionary).forEach((letter) => {
+    const letterGroup = document.createElement('li');
+    const heading = document.createElement('h3');
+    heading.textContent = letter.toUpperCase();
+    const groupWrapper = document.createElement('ul');
+    writeAsOneGroup(groupWrapper, dictionary[letter], blockObj);
+    letterGroup.append(heading, groupWrapper);
+    wrapper.append(letterGroup);
+  });
+}
+
 export default async function decorate(block) {
-  const blockObj = getBlockConfig(block);
+  const config = getBlockConfig(block);
   block.textContent = '';
 
   // Get language index.
   const languageIndexUrl = getLanguageIndex();
 
   const { data: allPages } = await getJsonFromUrl(languageIndexUrl);
-  const filters = await getJsonFromUrl(blockObj[propertyNames.filter]);
-  const limit = blockObj[propertyNames.limit];
-  const sortBy = blockObj[propertyNames.sortBy]?.toLowerCase();
-  const sortOrder = blockObj[propertyNames.sortOrder]?.toLowerCase();
-  const emptyResultsMessage = blockObj[propertyNames.emptyResultsMessage];
-  const columns = blockObj[propertyNames.columns] ? blockObj[propertyNames.columns] : 5;
+  const filters = await getJsonFromUrl(config[propertyNames.filter]);
+  const limit = config[propertyNames.limit];
+  const sortBy = config[propertyNames.sortBy]?.toLowerCase();
+  const sortOrder = config[propertyNames.sortOrder]?.toLowerCase();
+  const emptyResultsMessage = config[propertyNames.emptyResultsMessage];
+  const groupBy = config[propertyNames.groupBy]?.toLowerCase();
 
   let matching = [];
   allPages.forEach((page) => {
@@ -106,36 +163,15 @@ export default async function decorate(block) {
   }
 
   const wrapper = document.createElement('ul');
-  wrapper.classList = `listOfItems image-list list-tile col-size-${columns}`;
 
-  matching.forEach((item) => {
-    const listItem = document.createElement('li');
-    listItem.classList = `${item.resourceOptions}`;
-    const cardLink = document.createElement('a');
-    if (item.redirectTarget.length > 0) {
-      cardLink.href = item.redirectTarget;
-      cardLink.target = '_blank';
+  if (matching.length > 0) {
+    if (groupBy) {
+      wrapper.classList = 'groupList';
+      writeAsAZGroups(wrapper, matching, groupBy, sortBy, config);
     } else {
-      cardLink.href = item.path;
-      cardLink.target = '_self';
+      writeAsOneGroup(wrapper, matching, config);
     }
-
-    const htmlOutput = [];
-
-    blockObj[propertyNames.displayProperties].forEach((prop) => {
-      let span;
-      if (prop === 'image') {
-        span = `<span class="image"><img src="${item[prop]}"/></span>`;
-      } else {
-        span = `<span class="${prop}">${item[prop]}</span>`;
-      }
-      htmlOutput.push(span);
-    });
-    cardLink.innerHTML = htmlOutput.join('');
-
-    listItem.append(cardLink);
-    wrapper.append(listItem);
-  });
+  }
 
   if (matching.length === 0 && emptyResultsMessage !== undefined) {
     const emptyResultsDiv = document.createElement('div');
