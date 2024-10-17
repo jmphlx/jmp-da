@@ -8,9 +8,10 @@
   margin-top: 0;
 }
 .accordion-two-column details summary {
+  color: var(--blue);
+  width: calc(100% - 48px);
   position: relative;
-  padding: 0 8px;
-  padding-right: 48px;
+  padding: 0 2rem 0 4.8rem;
   cursor: pointer;
   list-style: none;
   overflow: auto;
@@ -21,14 +22,41 @@
 }
 .accordion-two-column details[open] summary {
   background-color: var(--light-color);
+  &:before {
+    transform: translateY(-50%) rotate(-90deg);
+  }
 }
-.accordion-two-column details summary:focus, .accordion-two-column details summary:hover {
-  background-color: var(--dark-color);
+.accordion-two-column details summary:hover {
+  /* background-color: var(--gray); */
+  h3 , h4, .accordion-item-label, strong, summary, p {
+    color: var(--link-hover-color) !important;
+  }
+  &:before {
+    background-color: var(--link-hover-color) !important;;
+  }
 }
 .accordion-two-column details summary::-webkit-details-marker {
   display: none;
 }
-.accordion-two-column details summary:after {
+.accordion-two-column  details summary:before {
+  content: '';
+  background-image: url('../../../icons/arrow-white.svg');
+  background-color: #0378cd;
+  background-size: 30%;
+  background-repeat: no-repeat;
+  background-position: 54%;
+  width: 2.4rem;
+  height: 2.4rem;
+  position: absolute;
+  border-radius: 50%;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  transition: transform 0.5s ease, color 0.5s ease;
+}
+
+
+/* .accordion-two-column details summary:after {
   content: "";
   position: absolute;
   top: 48%;
@@ -39,13 +67,13 @@
   border: 2px solid;
   border-width: 2px 2px 0 0;
   transition: transform 0.2s;
-}
+} */
 .accordion-two-column details[open] summary:after {
   /* transform: translateY(-50%) rotate(-45deg); */
   transform: scaleY(-1) rotate(-225deg);
 }
 .accordion-two-column details .accordion-item-body {
-  padding: 0 3.2rem;
+  padding: 0 3.2rem 0 4.8rem;
   @media (width <=600px) {
     padding: 0 .9rem;
  
@@ -77,14 +105,14 @@
       }
     }
   }
-  .skp-blue-2 {
+  .skp-blue-accordion-2 {
     margin: 2.4rem 0 3.2rem 0!important;
     border-left: 4px solid #007dc3;
-    padding: 2rem !important;
     position: relative;
     background: rgba(0, 125, 195, 0.07);
     width: auto;
     box-sizing: border-box;
+    padding: 1.6rem 0 !important;
     h3 {
       font-size: 2.4rem;
       line-height: 1;
@@ -94,16 +122,13 @@
       padding-right: 48px;
     }
     .accordion-item {
+      line-height: 1;
       border-top: 0;
       .accordion-item-label {
-        color: var(--blue) !important;
-        padding-left: 0;
-        :hover {
-          color: var(--blue) !important;
-        }
+        padding-left: 4.8rem;
       }
       .accordion-item-body {
-        padding: 0 !important;
+        padding: 0 2.4rem 0 4.8rem !important;
         margin-bottom: 0 !important;
       }
     }
@@ -139,7 +164,7 @@
     }
   }
   @media (width <= 900px) {
-    .skp-blue-2 {
+    .skp-blue-accordion-2 {
       div > div:nth-child(2) {
         max-width: 100%;
       }
