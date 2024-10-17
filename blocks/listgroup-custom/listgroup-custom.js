@@ -16,6 +16,8 @@ const propertyNames = {
   limit: 'limit',
   sortBy: 'sort-by',
   sortOrder: 'sort-order',
+  emptyResultsMessage: 'empty-results-message',
+  columns: 'columns',
 };
 
 function lowercaseObj(obj) {
@@ -86,6 +88,8 @@ export default async function decorate(block) {
   const limit = blockObj[propertyNames.limit];
   const sortBy = blockObj[propertyNames.sortBy]?.toLowerCase();
   const sortOrder = blockObj[propertyNames.sortOrder]?.toLowerCase();
+  const emptyResultsMessage = blockObj[propertyNames.emptyResultsMessage];
+  const columns = blockObj[propertyNames.columns] ? blockObj[propertyNames.columns] : 5;
 
   let matching = [];
   allPages.forEach((page) => {
@@ -102,7 +106,7 @@ export default async function decorate(block) {
   }
 
   const wrapper = document.createElement('ul');
-  wrapper.classList = 'listOfItems image-list list-tile';
+  wrapper.classList = `listOfItems image-list list-tile col-size-${columns}`;
 
   matching.forEach((item) => {
     const listItem = document.createElement('li');
@@ -132,5 +136,12 @@ export default async function decorate(block) {
     listItem.append(cardLink);
     wrapper.append(listItem);
   });
+
+  if (matching.length === 0 && emptyResultsMessage !== undefined) {
+    const emptyResultsDiv = document.createElement('div');
+    emptyResultsDiv.classList = 'no-results';
+    emptyResultsDiv.innerHTML = `<span>${emptyResultsMessage}</span>`;
+    wrapper.append(emptyResultsDiv);
+  }
   block.append(wrapper);
 }
