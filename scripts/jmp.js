@@ -418,11 +418,8 @@ function containsOperator(pageObj, condObj) {
         if (!arrayIncludesSomeValues(trimmedList, trimmedFilter)) {
           throw new Error('condition not met');
         }
-      } else {
-        // pageValue is not an array, is it in the list of possible filters.
-        if(!trimmedFilter.contains(pageValue)) {
-          throw new error('condition not met');
-        }
+      } else if (!trimmedFilter.contains(pageValue)) {
+        throw new Error('condition not met');
       }
     // filterValue is a single string but pageValue is array
     } else if (pageValue !== undefined && pageValue.indexOf(',') > -1) {
