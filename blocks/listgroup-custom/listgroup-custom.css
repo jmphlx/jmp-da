@@ -1,3 +1,5 @@
+@import url("/blocks/listgroup/listgroup.css");
+
 ul.list-tile {
   display: flex;
   flex-flow: row wrap;
@@ -615,27 +617,6 @@ div.listgroup-custom  {
   @media (width <=600px) {
     ul.list-tile {
       column-count: 1 !important;
-    }
-  }
-}
-
-/* Books */
-div.books ul {
-  display: flex;
-  justify-content: space-evenly;
-
-  li  {
-    height: max-content;
-    width: 200px;
-  
-    a {
-      display: flex;
-      flex-direction: row;
-  
-      span.image {
-        width: 199px;
-        height: 244px;
-      }
     }
   }
 }
