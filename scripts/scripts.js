@@ -268,11 +268,24 @@ function addTitleSuffix() {
 }
 
 /**
+ * If the metaproperty Image is not present, use the default value
+ * Default metaimage is located in /icons/jmp-com-share.jpg.
+ */
+function setMetaImage() {
+  const imageMeta = getMetadata('image');
+  if (!imageMeta) {
+    const defaultMetaImage = `${window.location.origin}/icons/jmp-com-share.jpg`;
+    document.querySelector('meta[property="og:image"]')?.setAttribute('content', defaultMetaImage);
+  }
+}
+
+/**
  * Loads everything needed to get to LCP.
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
   addTitleSuffix();
+  setMetaImage();
   decorateTemplateAndTheme();
   decoratePageStyles();
   if (isSKPPage) {
