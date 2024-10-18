@@ -19,6 +19,9 @@
       color: var(--white);
       background-color: var(--blue);
       border: none;
+      strong {
+        color: #ffffff;
+      }
     }
     > table thead tr, > table tbody tr {
       border-top: none;
