@@ -10,6 +10,8 @@ import {
   sortPageList,
 } from '../../scripts/jmp.js';
 
+import { createTag } from '../../scripts/helper.js';
+
 const propertyNames = {
   filter: 'filter',
   displayProperties: 'displayproperties',
@@ -19,6 +21,7 @@ const propertyNames = {
   emptyResultsMessage: 'empty-results-message',
   columns: 'columns',
   groupBy: 'group-by',
+  filterBy: 'filter-by',
 };
 
 function lowercaseObj(obj) {
@@ -146,6 +149,45 @@ function writeAsAZGroups(wrapper, matching, groupBy, groupProperty, blockObj) {
   wrapper.prepend(groupHeader);
 }
 
+function constructDictionary(matching, filterBy) {
+  const dictionary = matching.reduce((filterGroups, page) => {
+    const filterValue = page[filterBy];
+    if (filterValue.indexOf(',') > 0) {
+      const filterValueArray = filterValue.split(',');
+      filterValueArray.forEach((val) => {
+        // either push to an existing entry or create one
+        if (filterGroups[val.trim()]) filterGroups[val.trim()].push(page);
+        else filterGroups[val.trim()] = [page];
+      });
+    } else {
+      // either push to an existing entry or create one
+      if (filterGroups[filterValue]) filterGroups[filterValue].push(page);
+      else filterGroups[filterValue] = [page];
+    }
+
+    return filterGroups;
+  }, {});
+  return dictionary;
+}
+
+function constructDropdown(dictionary) {
+  const filterDropdown = createTag('select', { class: 'filterDropdown'});
+
+  const allDropdownItem = createTag('option', { value: ''});
+  allDropdownItem.textContent = 'All';
+  filterDropdown.append(allDropdownItem);
+
+  Object.keys(dictionary).forEach((filterValue) => {
+    if (filterValue.length > 0) {
+      const dropdownItem = createTag('option', { value: `${filterValue}` });
+      dropdownItem.innerText = filterValue;
+      filterDropdown.append(dropdownItem);
+    }
+  });
+
+  return filterDropdown;
+}
+
 export default async function decorate(block) {
   const config = getBlockConfig(block);
   block.textContent = '';
@@ -160,6 +202,7 @@ export default async function decorate(block) {
   const sortOrder = config[propertyNames.sortOrder]?.toLowerCase();
   const emptyResultsMessage = config[propertyNames.emptyResultsMessage];
   const groupBy = config[propertyNames.groupBy]?.toLowerCase();
+  const filterBy = config[propertyNames.filterBy]?.toLowerCase();
 
   let matching = [];
   allPages.forEach((page) => {
@@ -171,11 +214,28 @@ export default async function decorate(block) {
   matching = sortPageList(matching, sortBy, sortOrder);
 
   // Apply limit to results.
+  // TO-DO: May need to move this to write methods
   if (limit !== undefined && matching.length > limit) {
     matching = matching.slice(0, limit);
   }
 
   const wrapper = document.createElement('ul');
+
+  if (filterBy) {
+    const dictionary = constructDictionary(matching, filterBy);
+    const filterDropdown = constructDropdown(dictionary);
+
+      // When value changes, clear out results and add matching values.
+    filterDropdown.addEventListener('change', (e) => {
+      wrapper.querySelectorAll('li').forEach(e => e.remove());
+      if (filterDropdown.value) {
+        writeAsOneGroup(wrapper, dictionary[filterDropdown.value], config);
+      } else {
+        writeAsOneGroup(wrapper, matching, config);
+      }
+    });
+    block.append(filterDropdown);
+  }
 
   if (matching.length > 0) {
     if (groupBy) {
