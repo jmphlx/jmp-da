@@ -10,12 +10,13 @@
 .styled-columns > div {
   display: flex;
   flex-direction: column;
+  gap: 2.4rem;
 }
 
 .styled-columns > div > div {
   flex-direction: column;
   /*  margin: 0 auto; */
-  padding: 10px;
+  /* padding: 10px; */
   flex: 1;
 }
 
@@ -251,7 +252,7 @@
         &:before {
           right: calc(0% - 15px);
           transform: rotate(90deg);
-          top: -8em;
+          top: -10rem;
           bottom: auto;
           margin: 0 auto;
         }
