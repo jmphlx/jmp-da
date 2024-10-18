@@ -140,8 +140,7 @@ p, dl, ol, ul, pre, blockquote {
   font-weight: normal;
 }
 strong {
-  /* font-family: "anova-regular", sans-serif;
-  font-weight: normal; */
+  font-weight: normal;
   font-family: var(--font-bold);
   color: var(--gray6);
 }
