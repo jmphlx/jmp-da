@@ -1,6 +1,16 @@
 .table {
   width: 100%;
   overflow-x: auto;
+  margin: 2.4rem 0;
+  &.table {
+    td {
+      border-bottom: 1px solid #999999;
+      padding: 10px;
+      p {
+        margin-bottom: 0 !important;
+      }
+    }
+  }
   &.agenda-table {
     margin: 1em 0 2em 0;
     border: 1px solid #E7E7E7;
@@ -46,22 +56,30 @@
   }
 }
 .table table thead tr {
-  border-top: 2px solid;
+  border: 1px solid;
   border-bottom: 2px solid;
+  font-family: var(--font-secondary);
 }
 .table table tbody tr {
-  border-bottom: 1px solid;
+  border: 1px solid;
+}
+.table table td {
+  border: 1px solid;
 }
 .table table th {
   font-weight: 700;
+  border: 1px solid;
 }
 .table table th, .table table td {
-  padding: 8px 16px;
+  padding: 1rem;
   text-align: left;
+  p {
+    margin-bottom: 0;
+  }
 }
 /* no header variant */
 .table.no-header table tbody tr {
-  border-top: 1px solid;
+  border: 1px solid;
 }
 /* striped variant */
 .table.striped tbody tr:nth-child(odd) {
