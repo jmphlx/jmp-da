@@ -75,6 +75,10 @@ h2 {
   }
 }
 
+h2 + p {
+  margin-bottom: 3.2rem;
+}
+
 /* Background Image */
 main:before {
   content: '';
