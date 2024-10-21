@@ -81,7 +81,9 @@ div.listgroup-custom  {
   span.title {
     font-family: var(--font-secondary);
     font-size: 1.6rem;
-    padding: 0 1rem .25rem 1rem;
+    padding: 0 1rem .25rem 1rem !important;
+    margin: 0 !important;
+    order: unset !important;
   }
   span.bookPublishDate {
     font-size: 1.3rem;
