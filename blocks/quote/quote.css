@@ -58,3 +58,23 @@ div.quote-small .quote-quotation {
   bottom: -0.175em;
   right: 105px;
 }
+
+.img-float-right {
+  p {
+    font-size: 1.9rem !important;
+    color: #333333 !important;
+    line-height: 1.35 !important;
+  }
+  img {
+    float: right;
+    border-radius: 50%;
+    width: 35%;
+    min-width: 275px;
+    margin: 0 0 1rem 3rem;
+  }
+  @media (width <= 600px) {
+    img {
+      float: none;
+    }
+  }
+}
