@@ -62,8 +62,38 @@ div.listgroup-custom  {
   aspect-ratio: 1.5;
 }
 
-.jmp-books .image {
-  aspect-ratio: 0.8;
+.books {
+  .image {
+    aspect-ratio: 0.8;
+    padding-bottom: 1.6rem;
+    img {
+      border: 0 !important;
+    }
+  }
+  span.bookTypeTitle {
+    font-size: 1.1rem;
+    padding: 0 1rem .25rem 1rem;
+    color: #777777;
+    line-height: 1.1rem;
+    text-transform: uppercase;
+    transition: color 0.5s ease;
+  }
+  span.Title {
+    font-family: var(--font-secondary);
+    font-size: 1.6rem;
+    padding: 0 1rem .25rem 1rem;
+  }
+  span.bookPublishDate {
+    font-size: 1.3rem;
+    color: #666666;
+    padding: 0 1rem .25rem 1rem;
+  }
+  span.bookAuthor {
+    color: #666666;
+    line-height: 1.6rem;
+    font-size: 1.3rem;
+    padding: 0 1rem 1.6rem 1rem;
+  }
 }
 
 .listgroup-custom ul.list-tile {
