@@ -107,8 +107,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 h1 {
   font-size: var(--heading-font-size-xxl);
-  margin-bottom: 1rem;
   line-height: 1.25;
+  margin-bottom: 3.2rem;
 }
 h2 {
   font-size: var(--heading-font-size-xl);
@@ -131,9 +131,6 @@ h5 {
 h6 {
   font-size: var(--heading-font-size-xs);
 }
-/* p {
-  margin-top: 0 !important;
-} */
 p, dl, ol, ul, pre, blockquote {
   margin-top: 0;
   margin-bottom: 1.5rem;
@@ -142,7 +139,7 @@ p, dl, ol, ul, pre, blockquote {
 strong {
   font-weight: normal;
   font-family: var(--font-bold);
-  color: var(--gray6);
+  color: var(--gray5);
 }
 .text-large {
   p, li {
