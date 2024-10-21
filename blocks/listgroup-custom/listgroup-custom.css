@@ -78,7 +78,7 @@ div.listgroup-custom  {
     text-transform: uppercase;
     transition: color 0.5s ease;
   }
-  span.Title {
+  span.title {
     font-family: var(--font-secondary);
     font-size: 1.6rem;
     padding: 0 1rem .25rem 1rem;
