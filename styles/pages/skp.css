@@ -74,10 +74,13 @@ h2 {
     margin-bottom: 3.2rem !important;
   }
 }
-
-h2 + p {
-  margin-bottom: 3.2rem;
+:is(p):has(+ :is(h2)) {
+  margin-bottom: 3.2rem !important;
 }
+:is(p):has(picture) {
+  text-align: center;
+}
+
 
 /* Background Image */
 main:before {
@@ -340,5 +343,8 @@ body.skp footer {
     margin-bottom: 5px !important;
     font-size: 2.6rem !important;
     font-family: "anova-regular", sans-serif !important;
+  }
+  :is(p):has(+ :is(h2)) {
+    margin-bottom: 1.6rem !important;
   }
 }
