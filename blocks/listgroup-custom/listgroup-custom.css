@@ -135,7 +135,6 @@ div.listgroup-custom  {
         width: 100%;
         height: 100%;
         flex: 1 0 auto;
-        filter: saturate(.75);
       }
       .navigation-title {
         order: 1;
@@ -168,9 +167,6 @@ div.listgroup-custom  {
       }
     }
     :hover {
-      img {
-        filter: saturate(1);
-      }
       .navigation-title {
         color: var(--orange);
       }
