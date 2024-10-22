@@ -72,7 +72,7 @@ div.listgroup-custom  {
   }
   span.bookTypeTitle {
     font-size: 1.1rem;
-    padding: 0 1rem .25rem 1rem;
+    padding: 0 1rem .5rem 1rem;
     color: #777777;
     line-height: 1.1rem;
     text-transform: uppercase;
@@ -81,14 +81,14 @@ div.listgroup-custom  {
   span.title {
     font-family: var(--font-secondary);
     font-size: 1.6rem;
-    padding: 0 1rem .25rem 1rem !important;
+    padding: 0 1rem .5rem 1rem !important;
     margin: 0 !important;
     order: unset !important;
   }
   span.bookPublishDate {
     font-size: 1.3rem;
     color: #666666;
-    padding: 0 1rem .25rem 1rem;
+    padding: 0 1rem .5rem 1rem;
   }
   span.bookAuthor {
     color: #666666;
@@ -152,7 +152,8 @@ div.listgroup-custom  {
         order: 2;
         font-family: "anova-regular", "Arial", "Helvetica", sans-serif;
         font-weight: normal;
-        font-size: 1.6 rem;
+        font-size: 1.6rem;
+        line-height: 1.4;
         margin: 0 8% .25em 8%;
         transition: color 0.5s ease;
         color: var(--blue) !important;
