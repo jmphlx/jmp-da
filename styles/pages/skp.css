@@ -74,6 +74,14 @@ h2 {
     margin-bottom: 3.2rem !important;
   }
 }
+h3 {
+  font-size: 2.2rem;
+  font-family: "anova-bold", sans-serif !important;
+  color: #007dc3;
+  font-weight: var(--font-bold);
+  line-height: 1.25em;
+  margin-bottom: 10px;
+}
 :is(p):has(+ :is(h2)) {
   margin-bottom: 3.2rem !important;
 }
@@ -352,4 +360,9 @@ body.skp footer {
   :is(p):has(+ :is(h2)) {
     margin-bottom: 1.6rem !important;
   }
+}
+
+span.mjx-chtml {
+  line-height: 0;
+  font-size: clamp(1.3rem, 1.7vw + 1rem, 2.4rem);
 }
