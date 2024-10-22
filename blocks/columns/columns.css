@@ -1112,3 +1112,10 @@ div.bullet-arrow {
   width: auto;
   box-sizing: border-box;
 }
+
+.figure {
+  p {
+    color: #7c9db6;
+    font-size: 15px;
+  }
+}
