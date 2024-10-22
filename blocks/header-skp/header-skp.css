@@ -91,6 +91,7 @@ header .nav-wrapper {
       h3 {
         margin-bottom: 3px !important;
         font-size: var(--heading-font-size-l);
+        font-family: "anova-regular", sans-serif !important;
       }
       p {
         font-size: var( --heading-font-size-xs);
