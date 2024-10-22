@@ -22,8 +22,18 @@
     p{
       margin-bottom:0;
     }
+    th {
+      border: 0
+    }
     td:first-child {
       width: 20%;
+    }
+    td {
+      border: 0;
+      border-bottom: 1px solid #E7E7E7;
+    }
+    tbody tr {
+      border: 0;
     }
     :first-child > tr {
       color: var(--white);
