@@ -63,7 +63,7 @@ h1 {
 }
 
 h2 {
-  font-size: 3.2rem;
+  font-size: var(--heading-font-size-l);
   font-family: "anova-bold", sans-serif !important;
   color: #007dc3;
   font-weight: var(--font-bold);
@@ -80,7 +80,7 @@ h3 {
   color: #007dc3;
   font-weight: var(--font-bold);
   line-height: 1.25em;
-  margin-bottom: 10px;
+  margin-bottom: 1rem !important;
 }
 :is(p):has(+ :is(h2)) {
   margin-bottom: 3.2rem !important;
