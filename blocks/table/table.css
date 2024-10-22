@@ -89,3 +89,7 @@
 .table.bordered table th, .table.bordered table td {
   border: 1px solid;
 }
+.MJXp-math {
+  line-height: 0;
+  font-size: clamp(1.3rem, 1.7vw + 1rem, 2.4rem);
+}
