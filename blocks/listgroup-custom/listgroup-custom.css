@@ -96,6 +96,15 @@ div.listgroup-custom  {
     font-size: 1.3rem;
     padding: 0 1rem 1.6rem 1rem;
   }
+  ul.list-tile {
+    > li {
+      &:hover {
+        & span.title {
+          color: var(--link-hover-color) !important;
+        }
+      }
+    }
+  }
 }
 
 .listgroup-custom ul.list-tile {
