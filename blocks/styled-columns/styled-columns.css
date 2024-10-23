@@ -840,6 +840,11 @@
     div.column-2 {
       padding: 0;
       width: 100%;
+      p:has(span.mjx-chtml) {
+        /* line-height: .25; */
+        font-size: clamp(1.3rem, 1.7vw + 1rem, 1.9rem) !important;
+        text-align: center !important;
+      }
     }
   }
   @media (width <= 900px) {
