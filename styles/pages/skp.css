@@ -130,6 +130,7 @@ div.subnav.skpsubnav nav.main ul {
   display: flex;
   flex-direction: column;
   padding: 0;
+  margin-top: 0;
   a {
     font-size: 24px;
     width: 100%;
@@ -210,11 +211,11 @@ div.subnav.skpsubnav nav.main ul li.is-dropdown.active {
   }
 }
 
-div.subnav.skpsubnav {
+/* div.subnav.skpsubnav {
   @media (width >= 900px) {
     padding-top: 5.6rem;
   }
-}
+} */
 
 div.subnav.skpsubnav nav.main ul {
   transition: all .3s ease; 
