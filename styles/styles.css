@@ -791,8 +791,6 @@ a:hover {
   }
   }
 }
-
-
 .text-link-light .button-container, .text-link-light-center .button-container {
   a:link, a.button:any-link {
     border: none;
@@ -1338,7 +1336,6 @@ main img {
     width: 100%;
   }
 }
-
 /* Styling change to the sections margin  */
 /* .block-padding-none:has(.columns-wrapper, .cards-wrapper), 
 .block-padding-small:has(.columns-wrapper, .cards-wrapper), 
