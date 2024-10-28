@@ -239,7 +239,8 @@ function buildListItems(block, matching, tabDictionary, config) {
   }
 
   const emptyResultsMessage = config[propertyNames.emptyResultsMessage];
-  if ((pageSelection === undefined || pageSelection.length === 0) && emptyResultsMessage !== undefined) {
+  if ((pageSelection === undefined || pageSelection.length === 0)
+      && emptyResultsMessage !== undefined) {
     const emptyResultsDiv = document.createElement('div');
     emptyResultsDiv.classList = 'listOfItems no-results';
     emptyResultsDiv.innerHTML = `<span>${emptyResultsMessage}</span>`;
