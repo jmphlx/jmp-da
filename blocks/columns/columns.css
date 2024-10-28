@@ -268,6 +268,10 @@
     padding-bottom: .25rem;
   }
 }
+/* video story hero */
+.section:has(div.video-story-hero ) {
+  background-color: #f4f4f4;
+}
 .video-story-hero {
   padding-bottom: 2em;
   div {
@@ -1116,12 +1120,5 @@ div.bullet-arrow {
   }
   p.button-container {
     margin-bottom: 0;
-  }
-}
-
-.figure {
-  p {
-    color: #7c9db6;
-    font-size: 15px;
   }
 }

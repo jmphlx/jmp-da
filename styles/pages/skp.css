@@ -363,6 +363,14 @@ body.skp footer {
   }
 }
 
+.figure {
+  p {
+    color: #7c9db6;
+    font-size: 1.4rem;
+    margin-bottom: 2.4rem;
+  }
+}
+
 span.mjx-chtml {
   line-height: 0;
   font-size: clamp(1.3rem, 1.7vw + 1rem, 2.4rem);
