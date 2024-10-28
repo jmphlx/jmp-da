@@ -20,7 +20,6 @@
   flex: 1;
 }
 
-
 .styled-columns .blue {
   color: var(--white);
   background-color: var(--blue);
@@ -46,6 +45,10 @@
     align-items: stretch;
     flex-direction: unset;
   }
+}
+
+:is(p):has(picture) {
+  margin-bottom: 0 !important;
 }
 
 /* analytic workflow  jmp-workflow-content */
