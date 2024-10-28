@@ -269,6 +269,11 @@ h1 + h5 {
     margin-bottom: 0;
   }
 }
+h4:has( + p img){
+  @media (width <=600px) {
+      padding-top: 1em !important;
+   }
+  }
 h6:has(+ h6){
   margin-bottom:0;
 }
@@ -285,6 +290,7 @@ h6:has(+ h6){
  margin-bottom: .25em;
  opacity: .7;
 }
+
 code, pre {
   font-family: var(--fixed-font-family);
   font-size: var(--body-font-size-s);
@@ -768,7 +774,8 @@ a:hover {
 
 .text-link-large{
   a:link, a.button:any-link {
-     font-size: var(--heading-font-size-s) !important;
+     /* font-size: var(--heading-font-size-s) !important; */
+     font-size: 2.4rem !important;
     &:after {
       width: 10px !important;
       display: inline-block;
@@ -784,8 +791,6 @@ a:hover {
   }
   }
 }
-
-
 .text-link-light .button-container, .text-link-light-center .button-container {
   a:link, a.button:any-link {
     border: none;
@@ -892,8 +897,10 @@ a:hover {
   }
 }
 .text-link-caret-left ul {
+  padding: 0 0 0 1.5rem; 
   li {
     margin-bottom: 1rem;
+    text-indent: -1em;
     a {
       line-height: 1.3;
       margin-left: 1rem;
@@ -1329,7 +1336,6 @@ main img {
     width: 100%;
   }
 }
-
 /* Styling change to the sections margin  */
 /* .block-padding-none:has(.columns-wrapper, .cards-wrapper), 
 .block-padding-small:has(.columns-wrapper, .cards-wrapper), 

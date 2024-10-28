@@ -22,6 +22,7 @@ body.modal-open {
     width: 66%;
     max-width: 1600px;
     background-color: rgba(0, 0, 0, 0);
+    overflow: hidden;
   }
   .modal dialog .modal-content {
     max-height: calc(100vh - 90px);
