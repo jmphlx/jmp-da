@@ -92,7 +92,7 @@ function writeAsOneGroup(matching, config) {
   if (useTabs) {
     wrapper.setAttribute('role', 'tabpanel');
   }
-  matching.forEach((item) => {
+  matching?.forEach((item) => {
     const listItem = document.createElement('li');
     listItem.classList = `${item.resourceOptions}`;
     const cardLink = document.createElement('a');
@@ -234,7 +234,7 @@ function buildListItems(block, matching, tabDictionary, config) {
   }
 
   const limit = config[propertyNames.limit];
-  if (limit !== undefined && pageSelection.length > limit) {
+  if (limit !== undefined && pageSelection?.length > limit) {
     pageSelection = pageSelection.slice(0, limit);
   }
 
