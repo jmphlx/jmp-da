@@ -99,6 +99,14 @@ indices:
         select: head > meta[name="userlevel"]
         value: |
           attribute(el, "content")
+      partner:
+        select: head > meta[name="partner"]
+        value: |
+          attribute(el, "content")  
+      country:
+        select: head > meta[name="country"]
+        value: |
+          attribute(el, "content") 
 
 #SKP ENGLISH CONTENT#
   skp-en:
@@ -275,6 +283,14 @@ indices:
         select: head > meta[name="userlevel"]
         value: |
           attribute(el, "content")
+      partner:
+        select: head > meta[name="partner"]
+        value: |
+          attribute(el, "content")  
+      country:
+        select: head > meta[name="country"]
+        value: |
+          attribute(el, "content") 
 
 #ENGLISH CONTENT#
   jmp-all:
@@ -376,3 +392,11 @@ indices:
         select: head > meta[name="userlevel"]
         value: |
           attribute(el, "content")
+      partner:
+        select: head > meta[name="partner"]
+        value: |
+          attribute(el, "content")  
+      country:
+        select: head > meta[name="country"]
+        value: |
+          attribute(el, "content") 
