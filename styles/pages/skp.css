@@ -63,7 +63,7 @@ h1 {
 }
 
 h2 {
-  font-size: 3.2rem;
+  font-size: var(--heading-font-size-l);
   font-family: "anova-bold", sans-serif !important;
   color: #007dc3;
   font-weight: var(--font-bold);
@@ -73,6 +73,26 @@ h2 {
   &:has(+ :is(p)) {
     margin-bottom: 3.2rem !important;
   }
+}
+h3 {
+  font-size: 2.2rem;
+  font-family: "anova-regular", sans-serif !important;
+  color: #007dc3;
+  font-weight: var(--font-bold);
+  line-height: 1.25em;
+  margin-bottom: 1rem !important;
+}
+:is(p):has(+ :is(h2)) {
+  margin-bottom: 3.2rem !important;
+}
+:is(.table-wrapper):has(+ :is(.default-content-wrapper)) {
+  margin-bottom: 3.2rem !important;
+}
+:is(p):has(picture) {
+  text-align: center;
+}
+span.mjx-chtml {
+  font-size: 2.4rem;
 }
 
 /* Background Image */
@@ -110,6 +130,7 @@ div.subnav.skpsubnav nav.main ul {
   display: flex;
   flex-direction: column;
   padding: 0;
+  margin-top: 0;
   a {
     font-size: 24px;
     width: 100%;
@@ -190,11 +211,11 @@ div.subnav.skpsubnav nav.main ul li.is-dropdown.active {
   }
 }
 
-div.subnav.skpsubnav {
+/* div.subnav.skpsubnav {
   @media (width >= 900px) {
     padding-top: 5.6rem;
   }
-}
+} */
 
 div.subnav.skpsubnav nav.main ul {
   transition: all .3s ease; 
@@ -337,4 +358,20 @@ body.skp footer {
     font-size: 2.6rem !important;
     font-family: "anova-regular", sans-serif !important;
   }
+  :is(p):has(+ :is(h2)) {
+    margin-bottom: 1.6rem !important;
+  }
+}
+
+.figure {
+  p {
+    color: #7c9db6;
+    font-size: 1.4rem;
+    margin-bottom: 2.4rem;
+  }
+}
+
+span.mjx-chtml {
+  line-height: 0;
+  font-size: clamp(1.3rem, 1.7vw + 1rem, 2.4rem);
 }

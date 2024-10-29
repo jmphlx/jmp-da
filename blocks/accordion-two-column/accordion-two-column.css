@@ -81,6 +81,7 @@
   background-color: none;
 }
 .accordion-two-column-wrapper {
+  clear: both;
   .accordion-two-column {
     margin: 0 auto !important;
     padding: 3.2rem 0 !important;
@@ -103,7 +104,7 @@
     }
   }
   .skp-blue-accordion-2 {
-    margin: 2.4rem 0 3.2rem 0!important;
+    margin: 3.2rem 0!important;
     border-left: 4px solid #007dc3;
     position: relative;
     background: rgba(0, 125, 195, 0.07);

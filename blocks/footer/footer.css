@@ -219,6 +219,8 @@ div.section.copyright {
       h3 {
         font-family: var(--font-bold);
         margin-bottom: 5px !important;
+        font-size: var(--heading-font-size-m);
+        color: #ffffff;
       }
       h5 {
         font-size: 2.2rem;

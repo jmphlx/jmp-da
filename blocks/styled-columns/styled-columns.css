@@ -10,15 +10,15 @@
 .styled-columns > div {
   display: flex;
   flex-direction: column;
+  gap: 2.4rem;
 }
 
 .styled-columns > div > div {
   flex-direction: column;
   /*  margin: 0 auto; */
-  padding: 10px;
+  /* padding: 10px; */
   flex: 1;
 }
-
 
 .styled-columns .blue {
   color: var(--white);
@@ -45,6 +45,10 @@
     align-items: stretch;
     flex-direction: unset;
   }
+}
+
+:is(p):has(picture) {
+  margin-bottom: 0 !important;
 }
 
 /* analytic workflow  jmp-workflow-content */
@@ -251,7 +255,7 @@
         &:before {
           right: calc(0% - 15px);
           transform: rotate(90deg);
-          top: -8em;
+          top: -10rem;
           bottom: auto;
           margin: 0 auto;
         }
@@ -807,6 +811,7 @@
 
 /* SKP Blue video aside */
 .blue-aside {
+  margin-bottom: 3.2rem;
   div {
     display: block;
     div.column-blue {
@@ -825,6 +830,7 @@
       h3 {
         text-align: center;
         line-height: 1.25em;
+        color: #333333;
         font-size: 2.2rem;
         font-family: var(--font-secondary);
       }
@@ -833,11 +839,23 @@
       }
       p.embed {
         padding: 1.6rem 0;
+        + p {
+          font-size: 1.5rem;
+          text-align: center;
+        }
+      }
+      p.embed:has(+ p) {
+        margin-bottom: 0 !important;
       }
     }
     div.column-2 {
       padding: 0;
       width: 100%;
+      p:has(span.mjx-chtml) {
+        /* line-height: .25; */
+        font-size: clamp(1.3rem, 1.7vw + 1rem, 1.9rem) !important;
+        text-align: center !important;
+      }
     }
   }
   @media (width <= 900px) {
