@@ -658,3 +658,270 @@ div.listgroup-custom  {
     }
   }
 }
+
+ul.group-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+
+.listgroup-custom .tabs-list {
+  display: flex;
+  gap: 8px;
+  max-width: 100%;
+  font-size: var(--body-font-size-xs);
+  border-bottom: 1px solid var(--grayRule);
+  overflow-x: auto;
+}
+
+@media (width >= 600px) {
+  .listgroup-custom .tabs-list {
+    font-size: var(--body-font-size-s);
+    border-bottom: 1px solid var(--grayRule);
+  }
+}
+
+@media (width >= 900px) {
+  .listgroup-custom .tabs-list {
+    font-size: 1.6rem;
+  }
+}
+
+.listgroup-custom .tabs-list button {
+  cursor: pointer;
+  flex: 0 0 max-content;
+  margin: 0;
+  border: 1px solid var(--grayRule);
+  border-radius: 5px 5px 0 0;
+  padding: 7px 14px;
+  background-color: var(--gray);
+  color: var(--blue);
+  font-family: var(--font-secondary);
+  font-size: 1.5rem;
+  line-height: unset;
+  text-align: initial;
+  text-overflow: unset;
+  overflow: unset;
+  white-space: unset;
+  transition: background-color 0.2s;
+  border-bottom: none;
+}
+
+.listgroup-custom .tabs-list button p {
+  margin: 0;
+}
+
+.listgroup-custom .tabs-list button[aria-selected='true'] {
+  cursor: pointer;
+  border-bottom: none;
+  background-color: var(--blue);
+  color: white;
+}
+
+.listgroup-custom .tabs-panel {
+  padding: 2rem 0 3.2rem 0;
+  border: none;
+  overflow: auto;
+  @media (width <=900px) {
+    padding: 2rem 0 3.2rem 0;
+  }
+}
+
+.listgroup-custom .tabs-panel[aria-hidden='true'] {
+  display: none;
+}
+
+.listgroup-custom >h1, .listgroup-custom >h2, .listgroup-custom >h3, .listgroup-custom >h4, .listgroup-custom >h5, .listgroup-custom >h6 {
+  margin-bottom: 0.5em;
+}
+.listgroup-custom .list-group {
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  padding-top: 0;
+  color: orange;
+}
+.listgroup-custom .mcl-2 ul, .listgroup-custom .mcl-3 ul, .listgroup-custom .mcl-4 ul, .listgroup-custom .mcl-5 ul {
+  float: left;
+}
+.listgroup-custom .mcl-2 ul:last-child, .listgroup-custom .mcl-3 ul:last-child, .listgroup-custom .mcl-4 ul:last-child, .listgroup-custom .mcl-5 ul:last-child {
+  margin: 0;
+}
+.listgroup-custom .mcl-2 {
+  padding: 0 0 30px 0;
+}
+.listgroup-custom .mcl-2 ul {
+  width: 45%;
+  margin-right: 5%;
+}
+.listgroup-custom .mcl-2 ul:last-child {
+  width: 45%;
+}
+.listgroup-custom .mcl-3 ul {
+  width: 30%;
+  margin-right: 5%;
+}
+.listgroup-custom .mcl-4 ul {
+  width: 23%;
+  margin-right: 2%;
+}
+.listgroup-custom .mcl-5 ul {
+  width: 18%;
+  margin-right: 2%;
+}
+.listgroup-custom ul {
+  list-style: none;
+  transition: all 0.5s ease;
+}
+.listgroup-custom ul>li {
+  margin-bottom: 1em;
+  transition: all 0.5s ease;
+}
+.listgroup-custom ul>li .primary-title {
+  font-size: 110%;
+}
+.listgroup-custom ul>li .primary-title .release-date, .listgroup-custom ul>li .primary-title .meta-description, .listgroup-custom ul>li .primary-title .description, .listgroup-custom ul>li .primary-title .list-page-title, .listgroup-custom ul>li .primary-title .alternate-listing-title, .listgroup-custom ul>li .primary-title .subtitle {
+  display: inline;
+  font-size: 110%;
+}
+.listgroup-custom ul>li .release-date {
+  display: block;
+  font-size: 80%;
+}
+.listgroup-custom ul>li .meta-description, .listgroup-custom ul>li .description {
+  display: block;
+  font-size: 95%;
+}
+.listgroup-custom ul>li .list-page-title, .listgroup-custom ul>li .alternate-listing-title {
+  display: block;
+  font-size: 80%;
+  
+}
+.listgroup-custom ul>li .subtitle {
+  color: var(--gray3);
+  display: inline-block;
+  transition: all 0.5s ease;
+  font-size: var(--body-font-size-m);
+}
+.listgroup-custom ul>li .tag-category {
+  display: block;
+  text-transform: uppercase;
+}
+.listgroup-custom ul>li .event-type {
+  display: inline-block;
+  margin-left: .5em;
+  padding-left: .5em;
+  border-left: 1px solid ;
+  font-size: 90%;
+  font-style: italic;
+}
+.listgroup-custom ul>li .venue {
+  display: block;
+  font-size: 80%;
+}
+.listgroup-custom ul>li .abstract-toggle {
+  display: block;
+  font-size: 80%;
+  font-weight: normal;
+  text-decoration: none;
+  cursor: pointer;
+  margin: .5em 0 0 37%;
+}
+.listgroup-custom ul>li .abstract {
+  display: block;
+  max-height: inherit;
+  overflow: hidden;
+  margin: 0 0 10px;
+  width: 96%;
+  width: auto;
+  font-size: 90%;
+}
+.listgroup-custom ul>li .abstract.show {
+  max-height: 1500px;
+  padding: 5px 2%;
+}
+.listgroup-custom ul>li .abstract.is-visible {
+  display: block;
+  overflow: visible;
+  padding: 1px 0 0 150px;
+  line-height: 138%;
+}
+#listing .listgroup-custom ul>li {
+  margin-bottom: 1.5em;
+}
+.listgroup-custom ul.listOfItems {
+  padding: 0;
+}
+.listgroup-custom ul.listOfItems.list-arrow {
+  padding: 5px 0 20px 0;
+}
+.listgroup-custom ul.listOfItems.list-arrow>li:before {
+  margin-left: -1.3em;
+  font-size: 80%;
+}
+.listgroup-custom ul.listOfItems.list-arrow>li p {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+.listgroup-custom ul.listOfItems.list-none a {
+  display: block;
+}
+.listgroup-custom ul.listOfItems.list-none.image-list a {
+  display: block;
+}
+.listgroup-custom ul.no-bullet>li {
+  padding-left: 0;
+}
+.listgroup-custom ul.no-bullet>li:before {
+  display: none;
+}
+.listgroup-custom ul.list-tile>li:before {
+  content: none;
+  margin-left: 0;
+}
+.listgroup-custom ul.list-tile>li a .abstract.is-visible {
+  padding: 0;
+}
+.listgroup-custom ul.list-bricks {
+  position: relative;
+}
+.listgroup-custom ul.list-bricks:before {
+  content: '';
+  width: 256px;
+  height: 64px;
+  opacity: 0.5;
+  position: absolute;
+  top: 40px;
+  left: 40%;
+}
+.listgroup-custom ul.list-bricks li {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+.listgroup-custom ul.list-bricks li a .image {
+  display: block;
+  width: 90%;
+  float: none;
+  margin: 10px 5%;
+  text-align: center;
+}
+.listgroup-custom ul.list-bricks li a .tag-category, .listgroup-custom ul.list-bricks li a .content-type {
+  position: absolute;
+  top: 1.5em;
+  left: 5%;
+}
+.listgroup-custom .nullresults ul {
+  padding-bottom: 1em;
+}
+.listgroup-custom .nullresults ul li {
+  border: none;
+  padding: 0 0 0 1.1em;
+}
+.listgroup-custom .nullresults ul li:before {
+  width: 1.5em;
+  margin-left: -1.5em;
+}

@@ -1,0 +1,32 @@
+{
+  "rule1": {
+    "total": 1,
+    "offset": 0,
+    "limit": 1,
+    "data": [
+      {
+        "Property": "path",
+        "Operator": "matches",
+        "Value": "/en/*"
+      }
+    ]
+  },
+  "rule2": {
+    "total": 1,
+    "offset": 0,
+    "limit": 1,
+    "data": [
+      {
+        "Property": "product",
+        "Operator": "contains",
+        "Value": "JMP"
+      }
+    ]
+  },
+  ":version": 3,
+  ":names": [
+    "rule1",
+    "rule2"
+  ],
+  ":type": "multi-sheet"
+}

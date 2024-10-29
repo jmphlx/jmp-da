@@ -404,7 +404,6 @@ function containsOperator(pageObj, condObj) {
   const propertyName = condObj.property.toLowerCase();
   const filterValue = condObj.value.toLowerCase();
   const pageValue = pageObj[propertyName];
-
   try {
     // filterValue is an array
     if (filterValue.indexOf(',') > 0) {
@@ -418,7 +417,7 @@ function containsOperator(pageObj, condObj) {
         if (!arrayIncludesSomeValues(trimmedList, trimmedFilter)) {
           throw new Error('condition not met');
         }
-      } else if (!trimmedFilter.contains(pageValue)) {
+      } else if (!trimmedFilter.includes(pageValue.toLowerCase())) {
         throw new Error('condition not met');
       }
     // filterValue is a single string but pageValue is array
@@ -429,7 +428,7 @@ function containsOperator(pageObj, condObj) {
         throw new Error('condition not met');
       }
     // both pageValue and filterValue are strings so test ===
-    } else if (filterValue !== pageValue) {
+    } else if (filterValue !== pageValue?.toLowerCase()) {
       throw new Error('condition not met');
     }
   } catch (e) {
