@@ -99,8 +99,8 @@ indices:
         select: head > meta[name="userlevel"]
         value: |
           attribute(el, "content")
-      partner:
-        select: head > meta[name="partner"]
+      partnerType:
+        select: head > meta[name="partnertype"]
         value: |
           attribute(el, "content")  
       country:
@@ -283,8 +283,8 @@ indices:
         select: head > meta[name="userlevel"]
         value: |
           attribute(el, "content")
-      partner:
-        select: head > meta[name="partner"]
+      partnerType:
+        select: head > meta[name="partnertype"]
         value: |
           attribute(el, "content")  
       country:
@@ -392,8 +392,8 @@ indices:
         select: head > meta[name="userlevel"]
         value: |
           attribute(el, "content")
-      partner:
-        select: head > meta[name="partner"]
+      partnerType:
+        select: head > meta[name="partnertype"]
         value: |
           attribute(el, "content")  
       country:
