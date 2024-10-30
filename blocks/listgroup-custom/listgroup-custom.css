@@ -158,7 +158,7 @@ div.listgroup-custom  {
         transition: color 0.5s ease;
         color: var(--blue) !important;
       }
-      .abstract {
+      .abstract, .description, .displayDescription {
         order: 3;
         color: #666666;
         font-size: 1.6rem;
