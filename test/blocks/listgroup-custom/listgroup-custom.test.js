@@ -18,34 +18,33 @@ function jsonOk(body) {
   return Promise.resolve(mockResponse);
 }
 
-describe('Custom Listgroup', () => {
-  // describe('Generic', () => {
-  //   before(async () => {
-  //     stub.onCall(0).returns(jsonOk(JSON.parse(pagedata)));
-  //     stub.onCall(1).returns(jsonOk(JSON.parse(querydata)));
-  //     document.body.innerHTML = await readFile({ path: './customListgroup.html' });
-  //     const listgroupBlock = document.querySelector('.listgroup-custom');
-  //     document.querySelector('main').append(listgroupBlock);
-  //     decorateBlock(listgroupBlock);
-  //     await loadBlock(listgroupBlock);
-  //   });
+describe('Fixed Listgroup', () => {
+  describe('Generic', () => {
+    before(async () => {
+      stub.onCall(0).returns(jsonOk(JSON.parse(pagedata)));
+      stub.onCall(1).returns(jsonOk(JSON.parse(querydata)));
+      document.body.innerHTML = await readFile({ path: './customListgroup.html' });
+      const listgroupBlock = document.querySelector('.listgroup-custom');
+      document.querySelector('main').append(listgroupBlock);
+      decorateBlock(listgroupBlock);
+      await loadBlock(listgroupBlock);
+    });
 
-  //   it('Expect only one list of items', async () => {
-  //     console.log(document.innerHTML);
-  //     const listofitems = document.querySelectorAll('ul.listOfItems');
-  //     expect(listofitems.length).to.equal(1);
-  //   });
+    it('Expect only one list of items', async () => {
+      const listofitems = document.querySelectorAll('ul.listOfItems');
+      expect(listofitems.length).to.equal(1);
+    });
 
-  //   it('Verify list items are correct after running query', async () => {
-  //     const listofitems = document.querySelector('ul.listOfItems');
-  //     expect(listofitems.children.length).to.equal(5);
-  //   });
+    it('Verify list items are correct after running query', async () => {
+      const listofitems = document.querySelector('ul.listOfItems');
+      expect(listofitems.children.length).to.equal(5);
+    });
 
     
-  //   after(async () => {
-  //     stub.reset();
-  //   });
-  // });
+    after(async () => {
+      stub.reset();
+    });
+  });
 
   describe('Multiple Sheet Query', () => {
     before(async () => {
@@ -60,7 +59,6 @@ describe('Custom Listgroup', () => {
 
     it('Verify list items are correct after running query', async () => {
       const listofitems = document.querySelectorAll('ul.listOfItems');
-      console.log(listofitems.innerHTML);
       expect(listofitems.length).to.equal(1);
       expect(listofitems[0].children.length).to.equal(5);
     });
@@ -208,6 +206,48 @@ describe('Custom Listgroup', () => {
     });
 
 
+
+    after(async () => {
+      stub.reset();
+    });
+  });
+
+  describe('Simple On-page Query', () => {
+    before(async () => {
+      stub.onCall(0).returns(jsonOk(JSON.parse(pagedata)));
+      document.body.innerHTML = await readFile({ path: './simpleCustom.html' });
+      const listgroupBlock = document.querySelector('.listgroup-custom');
+      document.querySelector('main').append(listgroupBlock);
+      decorateBlock(listgroupBlock);
+      await loadBlock(listgroupBlock);
+    });
+
+    it('When providing a filter instead of a json file, evaluate the filter', async () => {
+      const listOfLists = document.querySelectorAll('ul.listOfItems');
+      expect(listOfLists.length).to.equal(1);
+      expect(listOfLists[0].children.length).to.equal(2);
+    });
+
+    after(async () => {
+      stub.reset();
+    });
+  });
+
+  describe('On-page Query with starting Folder and multiple tag checks', () => {
+    before(async () => {
+      stub.onCall(0).returns(jsonOk(JSON.parse(pagedata)));
+      document.body.innerHTML = await readFile({ path: './startingFolderSimpleCustom.html' });
+      const listgroupBlock = document.querySelector('.listgroup-custom');
+      document.querySelector('main').append(listgroupBlock);
+      decorateBlock(listgroupBlock);
+      await loadBlock(listgroupBlock);
+    });
+
+    it('When providing a filter and startingFolder instead of a json file, evaluate the filter', async () => {
+      const listOfLists = document.querySelectorAll('ul.listOfItems');
+      expect(listOfLists.length).to.equal(1);
+      expect(listOfLists[0].children.length).to.equal(1);
+    });
 
     after(async () => {
       stub.reset();
