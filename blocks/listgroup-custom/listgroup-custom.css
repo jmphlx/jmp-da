@@ -264,12 +264,13 @@ div.listgroup-custom  {
           display: block;
           margin: 0;
         }
-        .abstract {
+        .abstract, .description, .displayDescription {
           grid-area: abstract;
           display: block;
           width: 90%;
           padding: 0;
           margin-bottom: 2rem;
+          color: #333333 !important;
         }
         &:after {
           content:'';
@@ -302,7 +303,7 @@ div.listgroup-custom  {
             margin-top: 2rem;
             font-size: 2.1rem;
           }
-          .abstract {
+          .abstract, .description, .displayDescription {
             font-size: 1.9rem;
           }
           &:after {
@@ -355,7 +356,7 @@ div.listgroup-custom  {
               margin-top: 0;
               font-size: 1.3rem;
             }
-            .abstract {
+            .abstract, .description, .displayDescription {
               font-size: 1.6rem;
             }
             &:after {
@@ -428,7 +429,7 @@ div.listgroup-custom  {
           display: block;
           margin: 0;
         }
-        .abstract {
+        .abstract, .description, .displayDescription {
           grid-area: abstract;
           display: block;
           width: 90%;
@@ -496,7 +497,7 @@ div.listgroup-custom  {
               margin-top: 0;
               font-size: 1.3rem;
             }
-            .abstract {
+            .abstract, .description, .displayDescription {
               font-size: 1.6rem;
             }
           }
@@ -573,7 +574,7 @@ div.listgroup-custom  {
   .navigation-title {
     display: none  !important;
   }
-  .abstract {
+  .abstract, .description, .displayDescription {
     display: none;
   }
 }
@@ -641,7 +642,7 @@ div.listgroup-custom  {
   .navigation-title {
     display: none  !important;
   }
-  .abstract {
+  .abstract, .description, .displayDescription {
     pointer-events: none;
     text-indent: 0;
     display: block;
