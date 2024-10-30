@@ -24,6 +24,7 @@ const propertyNames = {
   filterBy: 'filter-by',
   tabProperty: 'tab-property',
   tabs: 'tabs',
+  startingFolder: 'startingfolder',
 };
 
 let useFilter = false;
@@ -296,6 +297,41 @@ function constructTabs(matching, dictionary, tabs, block, config) {
   return tablist;
 }
 
+function readFilterStatement(filterString) {
+  const filterObj = {};
+  const splitFilter = filterString.split('=');
+  filterObj.Property = splitFilter[0].trim();
+  filterObj.Value = splitFilter[1].trim();
+  filterObj.Operator = 'contains';
+  return filterObj;
+}
+
+function buildSimplifiedFilter(filterString, startingFolder) {
+  const filterObj = {};
+  const dataArray = [];
+
+  if (startingFolder) {
+    const folderFilter = {};
+    folderFilter.Property = 'path';
+    folderFilter.Operator = 'matches';
+    folderFilter.Value = startingFolder.trim();
+    dataArray.push(folderFilter);
+  }
+
+  // DOES NOT SUPPORT OR statments.
+  if (filterString?.indexOf('AND')) {
+    const filters = filterString.split('AND');
+    filters.forEach((filter) => {
+      dataArray.push(readFilterStatement(filter));
+    });
+    filterObj.data = dataArray;
+  } else if (filterString) {
+    dataArray.push(readFilterStatement(filterString));
+  }
+  filterObj.data = dataArray;
+  return filterObj;
+}
+
 export default async function decorate(block) {
   const config = getBlockConfig(block);
   block.textContent = '';
@@ -304,7 +340,11 @@ export default async function decorate(block) {
   const languageIndexUrl = getLanguageIndex();
 
   const { data: allPages } = await getJsonFromUrl(languageIndexUrl);
-  const filters = await getJsonFromUrl(config[propertyNames.filter]);
+
+  const filterField = config[propertyNames.filter];
+  // Ignored if filter is a json file.
+  const startingFolder = config[propertyNames.startingFolder];
+  const filters = filterField?.includes('.json') ? await getJsonFromUrl(filterField) : buildSimplifiedFilter(filterField, startingFolder);
   const sortBy = config[propertyNames.sortBy]?.toLowerCase();
   const sortOrder = config[propertyNames.sortOrder]?.toLowerCase();
   const groupBy = config[propertyNames.groupBy];
