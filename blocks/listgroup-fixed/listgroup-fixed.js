@@ -6,19 +6,40 @@ import {
   getMetadata,
 } from '../../scripts/aem.js';
 import {
-  getBlockPropertiesList,
-  getBlockProperty,
+  getBlockConfig,
 } from '../../scripts/jmp.js';
 
-export default async function decorate(block) {
-  const optionsObject = getBlockPropertiesList(block, 'options');
-  const emptyResultsMessage = getBlockProperty(block, 'emptyResultsMessage');
-  const pageList = getBlockProperty(block, 'pages');
+const propertyNames = {
+  displayProperties: 'displayproperties',
+  emptyResultsMessage: 'emptyresultsmessage',
+};
 
-  const pageUrls = pageList.split(',').map((string) => string.trim());
+const ogNames = {
+  title: 'og:title',
+  image: 'og:image',
+};
+
+function getMetaValue(prop, doc) {
+  let val;
+  if (Object.prototype.hasOwnProperty.call(ogNames, prop)) {
+    val = getMetadata(ogNames[prop], doc);
+  } else {
+    val = getMetadata(prop.toLowerCase(), doc);
+  }
+  return val;
+}
+
+export default async function decorate(block) {
+  const config = getBlockConfig(block);
+  block.textContent = '';
+
+  const emptyResultsMessage = config[propertyNames.emptyResultsMessage];
+  const pageList = config.pages;
+  const columns = config.columns ? config.columns : 5;
+
+  const pageUrls = Array.of(pageList).flat().map((string) => string.trim());
 
   const wrapper = document.createElement('ul');
-  const columns = optionsObject.columns !== undefined ? optionsObject.columns : 5;
   wrapper.classList = `listOfItems image-list list-tile col-size-${columns}`;
 
   let pageNotFound = 0;
@@ -42,15 +63,20 @@ export default async function decorate(block) {
         cardLink.href = item;
         cardLink.target = '_self';
       }
-      let htmlOutput = `
-      <span class="navigation-title">${getMetadata('resourcetype', doc)}</span>
-      <span class="title">${getMetadata('og:title', doc)}</span>`;
-      if (optionsObject.images === undefined || optionsObject.images.toLowerCase() !== 'off') {
-        htmlOutput += `<span class="cmp-image image"><img src="${getMetadata('og:image', doc)}"/></span>`;
-      }
-      htmlOutput += `<span class="abstract">${getMetadata('displaydescription', doc)}</span>`;
 
-      cardLink.innerHTML = htmlOutput;
+      const htmlOutput = [];
+
+      config[propertyNames.displayProperties]?.forEach((prop) => {
+        const pagePropVal = getMetaValue(prop, doc);
+        let span;
+        if (prop === 'image') {
+          span = `<span class="${prop}"><img src="${pagePropVal}"/></span>`;
+        } else {
+          span = `<span class="${prop}">${pagePropVal}</span>`;
+        }
+        htmlOutput.push(span);
+      });
+      cardLink.innerHTML = htmlOutput.join('');
 
       listItem.append(cardLink);
       wrapper.append(listItem);
