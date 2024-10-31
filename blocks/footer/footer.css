@@ -40,7 +40,7 @@ div.section.copyright {
         /* padding-right: 10px; */
         a {
           color: var(--blue);
-          border-left: 1px solid #333333;
+          border-left: 1px solid #DDDDDD;
           margin-left: 1em;
           padding-left: 1em;
           &:hover {
