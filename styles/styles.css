@@ -242,6 +242,12 @@ h1 + h5 {
     opacity: .7;
     margin-bottom: .5rem;
   }
+  &:has(+ :is(h5)) {
+    margin-bottom: .5rem !important;
+    +h5{
+      margin-bottom: .5rem !important;
+    }
+  }
 }
 :is(h4) {
   &:has(+ :is(p)) {
@@ -269,11 +275,11 @@ h1 + h5 {
     margin-bottom: 0;
   }
 }
-h4:has( + p img){
+/* h4:has( + p img){
   @media (width <=600px) {
       padding-top: 1em !important;
    }
-  }
+  } */
 h6:has(+ h6){
   margin-bottom:0;
 }
@@ -956,19 +962,22 @@ a:hover {
     }
   }
 }
-/* button with out caret that may appear on pages like the Academic page */
+/* Jump link buttons with out caret that may appear on pages like the Academic page */
 .text-link-no-caret {
   ul {
     text-align: center;
     @media (width <=900px) {
       padding: 0;
     }
-    li, h1, h2, h3, h4, h5, h6 {
+    li {
       display: inline-block;
+      border-right: #d0d0d0 solid !important;
+      h1, h2, h3, h4, h5, h6{
       margin-bottom: .5rem;
+      }
     }
-    li:last-child a {
-      border: none;
+    li:last-child{
+      border: #d0d0d0 none !important;
     }
   }
   &.block-padding-none {
@@ -976,7 +985,7 @@ a:hover {
   }
   a:link, a.button:any-link {
     min-width: max-content !important;
-    color: #0378cd !important;
+    color: #0378cd;
     text-decoration: none;
     cursor: pointer;
     line-height: 1.8;
@@ -984,8 +993,6 @@ a:hover {
     z-index: 1;
     background: none;
     padding: 0 1em;
-    border: none;
-    border-right: 1px solid #d0d0d0;
     &:hover {
       color: var(--link-hover-color) !important;
     }
