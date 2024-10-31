@@ -2,11 +2,12 @@
   min-height: 72px;
   /* overflow: hidden; */
   position: relative;
-  z-index: 0;
+  /* z-index: 0; */
   .background-img-wrapper {
     overflow: hidden;
     min-width: 100%;
-    z-index: -1;
+    /* z-index: -1; */
+    z-index: 0;
     top: 0;
     left: 0;
     position: absolute;
