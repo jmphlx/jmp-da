@@ -971,7 +971,7 @@ a:hover {
     }
     li {
       display: inline-block;
-      border-right: #d0d0d0 solid !important;
+      border-right: #d0d0d0 1px solid !important;
       h1, h2, h3, h4, h5, h6{
       margin-bottom: 0;
       }
