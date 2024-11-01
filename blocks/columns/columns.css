@@ -454,9 +454,9 @@ div.clm-10-90, div.clm-50-50, div.clm-60-40, div.clm-40-60, div.clm-66-33, div.c
       }
     }
   }
-  /* h3 {
+  h3 {
     margin-bottom: 16px !important;
-  } */
+  }
   /* This will left align all list itmes in a ul to the left if they are in a colunm ratio  */
   ul {
     padding: 0 0 0 18px;
