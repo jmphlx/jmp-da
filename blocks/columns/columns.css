@@ -4,7 +4,7 @@
   max-width: 1280px;
   margin: 0 auto 2 auto;
   padding: 0;
-  text-align: left;
+  text-align: left;  
 }
 .columns img {
   width: 100%;
@@ -461,7 +461,7 @@ div.clm-10-90, div.clm-50-50, div.clm-60-40, div.clm-40-60, div.clm-66-33, div.c
   ul {
     padding: 0 0 0 18px;
     li {
-      padding: 0 0 .5em 0;
+      /* padding: 0 0 .5em 0; */
     }
   }
 }
@@ -1121,4 +1121,27 @@ div.bullet-arrow {
   p.button-container {
     margin-bottom: 0;
   }
+}
+
+
+
+@media (width <=900px) {
+  div.clm-10-90, div.clm-50-50, div.clm-60-40, div.clm-40-60, 
+  div.clm-66-33, div.clm-33-66, div.clm-25-75, div.clm-75-25, 
+  div.columns-3-cols, div.columns-4-cols{
+  div{
+      padding-bottom: 3.2rem;
+  }
+ /* div:first-child:has(img){
+   padding-bottom:0;
+ } */
+    div:last-child{
+    padding-bottom:0;
+   }
+  }
+  div:is(.clm-block-collapse){
+    div{
+    padding-bottom:0;
+    }
+}
 }
