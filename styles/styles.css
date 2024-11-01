@@ -998,6 +998,46 @@ a:hover {
     }
   }
 }
+
+.jump-nav {
+  ul {
+    text-align: center;
+    padding-bottom: 1.6rem;
+    li {
+      display: inline-block;
+      border-right: #d0d0d0 1px solid !important;
+      padding: .4rem 1.6rem;
+      line-height: 1.8rem;
+      p, h1, h2, h3, h4, h5, h6 {
+        margin-bottom: 0;
+      }
+      @media (width <=900px) {
+        margin-bottom: .8rem;
+      }
+    }
+    li:last-child {
+      border: none !important;
+      @media (width <=900px) {
+        margin-bottom: 0;
+      }
+    }
+  }
+  a:link, a.button:any-link {
+    min-width: max-content !important;
+    color: #0378cd;
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    &:hover {
+      color: var(--link-hover-color) !important;
+    }
+  }
+  &.block-padding-none {
+    padding-top: 32px !important;
+  }
+}
+
 .resource-center-breadcrumb {
   p.button-container {
     margin: 0;
