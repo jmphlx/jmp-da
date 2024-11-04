@@ -1353,12 +1353,12 @@ main img {
   }
 } */
 .block-top-padding-none {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed  {
     padding-top: 0;
   }
 }
 .block-top-padding-xsmall {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed  {
     padding-top: 16px;
     &.columns:has(&.embed){
       .embed{
@@ -1368,7 +1368,7 @@ main img {
   }
 }
 .block-top-padding-small {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed  {
     padding-top: 32px;
     &.columns:has(&.embed){
       .embed{
@@ -1378,7 +1378,7 @@ main img {
   }
 }
 .block-top-padding-medium {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed  {
     padding-top: 64px;
     &.columns:has(&.embed){
       .embed{
@@ -1388,7 +1388,7 @@ main img {
   }
 }
 .block-top-padding-large {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed  {
     padding-top: 96px;   
     &.columns:has(&.embed){
       .embed{
@@ -1402,22 +1402,22 @@ main img {
     }
   }
 .block-padding-none {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed {
     padding-bottom: 0 !important;
   }
 }
 .block-padding-small {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed  {
     padding-bottom: 32px;
   }
 }
 .block-padding-medium {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed  {
     padding-bottom: 64px;
   }
 }
 .block-padding-large {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed  {
     padding-bottom: 96px;
     @media (width <=900px) {
       padding-bottom: 32px;
@@ -1425,7 +1425,7 @@ main img {
   }
 }
   .block-padding-xlarge {
-    &.columns, &.cards, &.embed, .columns, .cards, .embed {
+    &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed  {
       padding-bottom: 128px;
       @media (width <=900px) {
         padding-bottom: 32px;
@@ -1682,31 +1682,63 @@ div.interview-body {
 .section-compact{
   padding: 48px 32px 21px 32px;
   @media (width <=600px) {
-  padding-top: 48px;
-  padding-bottom: 0;
+    padding-top: 48px;
+    padding-bottom: 0;
   }
   @media (width <=480px) {
-  padding: 48px 16px 8px 16px;
+    padding: 48px 16px 8px 16px;
   }
 }
-/* Line height options */
-.line-leading-01{
-h1, h2, h3, h4, h5, h6{
-line-height: 1.75em !important;
+/* text width */
+.text-50 {
+  .default-content-wrapper {
+    width: 50%;
+  }
+  @media (width <= 900px) {
+    .default-content-wrapper {
+      width: 100%;
+    }
+  }
 }
+.text-60 {
+  .default-content-wrapper {
+    h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
+      width: 60%;
+    }
+  }
+  @media (width <= 900px) {
+    .default-content-wrapper {
+      h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
+        width: 100%;
+      }
+    }
+  }
 }
-.line-leading-02{
-  h1, h2, h3, h4, h5, h6{
-    line-height: 2em !important;
+.text-66 {
+  .default-content-wrapper {
+    h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
+      width: 66%;
+    }
+  }
+  @media (width <= 900px) {
+    .default-content-wrapper {
+      h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
+        width: 100%;
+      }
+    }
+  }
 }
-}
-.line-leading-03{
-  h1, h2, h3, h4, h5, h6{
-    line-height: 2.25em !important;
-}
-}
-.line-leading-04{
-  h1, h2, h3, h4, h5, h6{
-    line-height: 2.5em !important;
-}
+.text-75 {
+  .default-content-wrapper {
+    h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
+      width: 75%;
+    }
+  }
+  @media (width <= 900px) {
+    .default-content-wrapper {
+      h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
+        width: 100%;
+      }
+    }
+  }
 }

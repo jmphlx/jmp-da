@@ -1001,3 +1001,58 @@ ul.group-header {
     }
   }
 }
+
+.partners {
+  .filterDropdown {
+    padding: .5rem 1rem !important;
+  }
+  div.tabs-list {
+    padding-top: 2.4rem;
+  }
+  .listOfItems {
+    display: flex;
+    flex-direction: column;
+    padding-top: 2.4rem !important;
+    li {
+      margin-bottom: .5rem !important;
+      width: 100% !important;
+      /* height: 25px; */
+      margin-top: 0 !important;
+      font-family: "anova-regular", sans-serif;
+      font-size: 1.6rem !important;
+      a {
+        display: flex;
+        flex-direction: row !important;
+        background: none !important;
+        border: none !important;
+        span.title {
+          order: 0;
+          margin: 0;
+          width: max-content;
+        }
+        span.description {
+          padding: 0 0 0 5px;
+        }
+        &:before {
+          content: url('../../../icons/arrow-orange.svg');
+          width: 7px;
+          display: inline-block;
+          font-size: unset;
+          margin: 0 5px 0 0;
+        }
+      }
+      &:hover {
+        transform: none !important;
+        color: var(--link-hover-color) !important;
+        a {
+          span.title {
+            color: var(--link-hover-color) !important;
+          }
+        }
+      }
+      :after {
+        display: none;
+      }
+    }
+  }
+}
