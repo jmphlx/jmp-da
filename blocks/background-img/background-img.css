@@ -170,7 +170,6 @@
     }
   }
   @media (width <= 600px) {
-
     padding-top: 40px !important;
     padding-bottom: 1.6rem;
     &.stat-speaking-header {
