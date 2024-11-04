@@ -1631,8 +1631,13 @@ div.columns-25-25-25-25 {
     }
   }
 }
-/* column breakpoints - max-width tablet 900px */
+/* column breakpoints */
 div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-60-40, div.columns-40-60, div.columns-66-33, div.columns-33-66 {
+  @media (width >=900px) {
+    .layout-wrapper {
+      column-gap: 64px !important;
+    }
+  }
   @media (width <=900px) {
     .layout-wrapper {
       display: block !important;
