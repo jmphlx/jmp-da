@@ -430,6 +430,16 @@ main .section {
     padding-top: 96px !important;
   }
 }
+@media (width >=240px) {
+  main .section {
+    padding: 64px 16px 16px 16px;
+  }
+}
+@media (width >=360px) {
+  main .section {
+    padding: 64px 32px 32px 32px;
+  }
+}
 @media (width >=600px) {
   main .section {
     padding: 64px 32px 32px 32px;
