@@ -193,7 +193,7 @@ function constructDropdown(dictionary, filterBy, defaultFilterOption) {
   });
 
   const allDropdownItem = createTag('option', { value: '' });
-  allDropdownItem.textContent = defaultFilterOption ? defaultFilterOption : 'Select';
+  allDropdownItem.textContent = defaultFilterOption || 'Select';
   filterDropdown.append(allDropdownItem);
 
   Object.keys(dictionary).forEach((filterValue) => {
