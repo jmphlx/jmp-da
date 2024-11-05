@@ -1393,7 +1393,7 @@ main img {
     padding-top: 16px;
     &.columns:has(&.embed){
       .embed{
-      padding-top:0;
+        padding: 0;
       }
     }
   }
@@ -1403,7 +1403,7 @@ main img {
     padding-top: 32px;
     &.columns:has(&.embed){
       .embed{
-      padding-top:0;
+        padding: 0;
       }
     }
   }
@@ -1413,7 +1413,7 @@ main img {
     padding-top: 64px;
     &.columns:has(&.embed){
       .embed{
-      padding-top:0;
+        padding: 0;
       }
     }
   }
@@ -1423,7 +1423,7 @@ main img {
     padding-top: 96px;   
     &.columns:has(&.embed){
       .embed{
-      padding-top:0;
+        padding: 0;
       }
     }
   }
@@ -1437,19 +1437,44 @@ main img {
     padding-bottom: 0 !important;
   }
 }
+.block-padding-xsmall {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed  {
+    padding-bottom: 16px;
+    &.columns:has(&.embed){
+      .embed{
+        padding: 0;
+      }
+    }
+  }
+}
 .block-padding-small {
   &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed  {
     padding-bottom: 32px;
+    &.columns:has(&.embed){
+      .embed{
+        padding: 0;
+      }
+    }
   }
 }
 .block-padding-medium {
   &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed  {
     padding-bottom: 64px;
+    &.columns:has(&.embed){
+      .embed{
+        padding: 0;
+      }
+    }
   }
 }
 .block-padding-large {
   &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed  {
     padding-bottom: 96px;
+    &.columns:has(&.embed){
+      .embed{
+        padding: 0;
+      }
+    }
     @media (width <=900px) {
       padding-bottom: 32px;
     }
@@ -1458,6 +1483,11 @@ main img {
   .block-padding-xlarge {
     &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed  {
       padding-bottom: 128px;
+      &.columns:has(&.embed){
+        .embed{
+          padding: 0;
+        }
+      }
       @media (width <=900px) {
         padding-bottom: 32px;
       }
