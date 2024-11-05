@@ -460,9 +460,9 @@ div.clm-10-90, div.clm-50-50, div.clm-60-40, div.clm-40-60, div.clm-66-33, div.c
   /* This will left align all list itmes in a ul to the left if they are in a colunm ratio  */
   ul {
     padding: 0 0 0 18px;
-    li {
-      /* padding: 0 0 .5em 0; */
-    }
+    /* li {
+      padding: 0 0 .5em 0;
+    } */
   }
 }
 /* Left align list items with a link */
@@ -569,7 +569,7 @@ div.clm-75-25 {
     flex-direction: column;
     gap: 2rem;
     div {
-      gap: 1rem;
+      gap: 0;
     }
     p {
       margin: 0;
