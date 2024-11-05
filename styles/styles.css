@@ -43,7 +43,7 @@ html {
   --grayDark: #172328;
   --grayMedium: #44545D;
   --grayLight: #8F989E;
-  --gray: #fafafa;
+  --gray: #f4f4f4;
   --black: #000000;
   --gray3: #333333;
   --gray5: #555555;
@@ -1034,7 +1034,8 @@ a:hover {
     }
   }
   &.block-padding-none {
-    padding-top: 32px !important;
+    padding-top: 32px;
+    padding-bottom: 32px;
   }
 }
 
