@@ -1034,7 +1034,8 @@ a:hover {
     }
   }
   &.block-padding-none {
-    padding: 32px 0;
+    padding-top: 32px;
+    padding-bottom: 32px;
   }
 }
 

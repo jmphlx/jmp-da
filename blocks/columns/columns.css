@@ -9,7 +9,7 @@
 .columns img {
   width: 100%;
   border: 2px solid var(--gray10);
-  border-radius: 8px;
+  border-radius: 5px;
 }
 .columns > div > div {
   order: 1;
