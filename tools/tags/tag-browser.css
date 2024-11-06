@@ -1,0 +1,32 @@
+:host {
+  font-family: 'Adobe Clean', adobe-clean, sans-serif;
+}
+
+.tag-browser {
+  display: block;
+}
+
+.da-tag-groups {
+  display: flex;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.da-tag-group-column {
+  min-width: 264px;
+  padding: 0 12px 0 0;
+  box-sizing: border-box;
+}
+
+.da-tag-group-column:first-child {
+  padding: 0 12px;
+}
+
+.da-tag-group {
+  display: flex;
+  justify-content: space-between;
+}
