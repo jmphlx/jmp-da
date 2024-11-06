@@ -5,7 +5,7 @@
   "plugins": [
     {
       "id": "jmptags",
-      "title": "JMP Tags",
+      "title": "AEM Tags",
       "environments": ["da-edit"],
       "path": "/tools/tags.html"
     },
