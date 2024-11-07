@@ -196,7 +196,7 @@ function constructDropdown(dictionary, filterBy, defaultFilterOption) {
   allDropdownItem.textContent = defaultFilterOption || 'Select';
   filterDropdown.append(allDropdownItem);
 
-  Object.keys(dictionary).forEach((filterValue) => {
+  Object.keys(dictionary).sort().forEach((filterValue) => {
     if (filterValue.length > 0) {
       const dropdownItem = createTag('option', { value: `${filterValue}` });
       dropdownItem.innerText = filterValue;
