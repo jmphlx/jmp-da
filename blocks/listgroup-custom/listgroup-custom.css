@@ -1009,10 +1009,13 @@ ul.group-header {
   div.tabs-list {
     padding-top: 3.2rem;
   }
+  .list-tile {
+    margin: 0;
+  }
   .listOfItems {
     display: inline-block;
     flex-direction: column;
-    padding: 3.2rem 0 0 18px!important;
+    padding: 3.2rem 0 0 5px!important;
     li {
       margin-bottom: .5rem !important;
       width: 100% !important;
