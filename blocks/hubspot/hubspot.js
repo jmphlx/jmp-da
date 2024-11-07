@@ -32,11 +32,11 @@ const embedHubspot = (config) => {
       sfdcCampaignId,
       onFormReady($form) {
         const hiddenField2 = $form.find('input[name="last_action"]');
-        const newValue2 = config['last-action']; // The value you want to append
+        const newValue2 = config['lastaction']; // The value you want to append
         hiddenField2.val(newValue2).change();
 
         const hiddenField = $form.find('input[name="leadsource"]');
-        const newValue = config['lead-source']; // The value you want to append
+        const newValue = config['leadsource']; // The value you want to append
         hiddenField.val(newValue).change();
 
         const emailSFC = $form.find('input[name="salesforce_campaign_event_id"]');
