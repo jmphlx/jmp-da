@@ -360,15 +360,15 @@ describe('jmp.js tests', () => {
     });
 
     it('Convert <p> into strings', () => {
-      expect(config['sort-by']).to.equal('title');
-      expect(config['tab-property']).to.equal('resourceType');
+      expect(config['sortBy']).to.equal('title');
+      expect(config['tabProperty']).to.equal('resourceType');
       expect(config.filter).to.equal('/en/customquery.json');
       expect(config.paragraphs).to.have.all.members(['foo', 'bar']);
     });
 
     it('Convert <ol> to array of strings', () => {
       expect(config.tabs).to.have.all.members(['All Resources=all', 'Customer Story ABC=Customer Story','Interviews=Interview']);
-      expect(config.displayproperties).to.have.all.members(['title']);
+      expect(config.displayProperties).to.have.all.members(['title']);
     });
 
     it('Convert <ul> to array of strings', () => {
@@ -382,7 +382,7 @@ describe('jmp.js tests', () => {
 
     it('Convert <img> to the link', () => {
       expect(config.image).to.contain('/myTest.jpg');
-      expect(2).to.equal(config['multiple-images'].length);
+      expect(2).to.equal(config['multipleImages'].length);
     });
   });
 });

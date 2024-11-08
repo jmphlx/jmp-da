@@ -359,7 +359,7 @@ function getBlockConfig(block) {
       const cols = [...row.children];
       if (cols[1]) {
         const col = cols[1];
-        const name = toClassName(cols[0].textContent.toLowerCase());
+        const name = cols[0].textContent;
         let value = '';
         if (knownObjectProperties.includes(name.toLowerCase())) {
           const stringValue = col.textContent;
