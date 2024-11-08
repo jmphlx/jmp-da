@@ -8,7 +8,7 @@ import { getBlockConfig } from '../../scripts/jmp.js';
 
 const embedHubspot = (config) => {
   // clean up hubspot url query paramaters
-  const sfdcCampaignId = config['salesforceCampaignId'];
+  const sfdcCampaignId = config.salesforceCampaignId;
 
   const head = document.querySelector('head');
   const script = document.createElement('script');
@@ -26,17 +26,17 @@ const embedHubspot = (config) => {
   scriptHubspot.addEventListener('load', () => {
     hbspt.forms.create({
       region: config.region,
-      portalId: config['portalId'],
-      formId: config['formId'],
+      portalId: config.portalId,
+      formId: config.formId,
       redirectUrl: config.redirectTarget,
       sfdcCampaignId,
       onFormReady($form) {
         const hiddenField2 = $form.find('input[name="last_action"]');
-        const newValue2 = config['lastAction']; // The value you want to append
+        const newValue2 = config.lastAction; // The value you want to append
         hiddenField2.val(newValue2).change();
 
         const hiddenField = $form.find('input[name="leadsource"]');
-        const newValue = config['leadSource']; // The value you want to append
+        const newValue = config.leadSource; // The value you want to append
         hiddenField.val(newValue).change();
 
         const emailSFC = $form.find('input[name="salesforce_campaign_event_id"]');
