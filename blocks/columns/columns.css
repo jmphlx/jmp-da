@@ -188,7 +188,7 @@
 }
 .success-story-hero {
   background-color: #f4f4f4;
-  padding-bottom: 2em;
+  padding: 2.4rem 0;
   div {
     div:first-child {
       display: flex;
@@ -252,6 +252,11 @@
     text-transform: uppercase;
     font-size: 1.4rem;
     padding-bottom: .25rem;
+  }
+  @media (width <= 900px) {
+    h6 {
+      padding-top: 0;
+    }
   }
 }
 /* video story hero */
@@ -363,8 +368,6 @@
       }
       @media (width <=899px) {
         padding-bottom: 2rem;
-      }
-      @media (width <=899px) {
         align-self: unset;
       }
     }
