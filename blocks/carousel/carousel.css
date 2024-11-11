@@ -482,3 +482,9 @@
     }
   }
 }
+
+.carousel-rule {
+  border-top: 1px solid var(--grayRule);
+  border-bottom: 1px solid var(--grayRule);
+  margin: 3.2rem 0;
+}
