@@ -295,17 +295,6 @@
             background: rgba(0, 0, 0, 0.5) !important;
             border: 2px solid rgba(0, 0, 0, 0) !important;
           }
-          &:before {
-            background-color: var(--purple);
-            border-radius: 50%;
-            content: '';
-            height: 4em;
-            position: absolute;
-            left: 58%;
-            bottom: 5%;
-            width: 4em;
-            z-index: 10;
-          }
           &:after {
             background-color: var(--purple);
             border-radius: 50%;
@@ -329,8 +318,8 @@
           };
           picture {
             &:before {
-              right: 2em;
-              bottom: 53%;
+              right: 2%;
+              bottom: 81%;
             }
             &:after {
               right: 3em;
@@ -349,12 +338,12 @@
           }
           p.button-container {
             &:before {
-              left: 58%;
-              bottom: 44%;
+              left: 78%;
+              bottom: 68%;
             }
             &:after {
               left: 63%;
-              bottom: 54%;
+              bottom: 68%;
             }
           }
         }
@@ -465,6 +454,17 @@
             border: 2px solid rgba(0, 0, 0, 0) !important;
           }
         }
+        &:after {
+          background-color: var(--blue);
+          border-radius: 50%;
+          content: '';
+          height: 3em;
+          position: absolute;
+          left: 63%;
+          bottom: 11%;
+          width: 3em;
+          z-index: 10;
+        }
       }
       @media (width <=600px) {
         flex-direction: column;
@@ -476,8 +476,8 @@
           };
           picture {
             &:before {
-              right: 2em;
-              bottom: 53%;
+              right: 2%;
+              bottom: 81%;
             }
             &:after {
               right: 3em;
@@ -496,12 +496,12 @@
           }
           p.button-container {
             &:before {
-              left: 58%;
-              bottom: 44%;
+              left: 78%;
+              bottom: 68%;
             }
             &:after {
               left: 63%;
-              bottom: 54%;
+              bottom: 68%;
             }
           }
         }
