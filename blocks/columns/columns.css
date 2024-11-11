@@ -207,30 +207,16 @@
       }
       h6 {
         font-family: "anova-bold", sans-serif;
-        padding-left: 7px;
         &:before {
+          content: url('../../../icons/bubbles-orange.svg');
           display: inline-block;
-          background: var(--orange);
-          border-radius: 50%;
-          padding: 0;
-          content: '';
-          height: 12px;
+          height: 16px;
           width: 12px;
           position: relative;
-          left: -6px;
-          top: 0;
-        }
-        &:after {
-          display: block;
-          background: var(--orange);
-          border-radius: 50%;
-          padding: 0;
-          content: '';
-          height: 6px;
-          width: 6px;
-          position: relative;
-          left: 1px;
-          top: -20px;
+          left: 0;
+          margin-bottom: 5px;
+          vertical-align: middle;
+          padding-right: 8px;
         }
       }
       img, picture {
@@ -292,30 +278,16 @@
       }
       h6 {
         font-family: "anova-bold", sans-serif;
-        padding-left: 10px;
         &:before {
+          content: url('../../../icons/bubbles-orange.svg');
           display: inline-block;
-          background: var(--orange);
-          border-radius: 50%;
-          padding: 0;
-          content: '';
-          height: 12px;
+          height: 16px;
           width: 12px;
           position: relative;
-          left: -6px;
-          top: 0;
-        }
-        &:after {
-          display: block;
-          background: var(--orange);
-          border-radius: 50%;
-          padding: 0;
-          content: '';
-          height: 6px;
-          width: 6px;
-          position: relative;
-          left: 1px;
-          top: -20px;
+          left: 0;
+          margin-bottom: 5px;
+          vertical-align: middle;
+          padding-right: 8px;
         }
       }
       img {
@@ -374,30 +346,16 @@
       }
       h6 {
         font-family: "anova-bold", sans-serif;
-        padding-left: 10px;
         &:before {
+          content: url('../../../icons/bubbles-orange.svg');
           display: inline-block;
-          background: var(--orange);
-          border-radius: 50%;
-          padding: 0;
-          content: '';
-          height: 12px;
+          height: 16px;
           width: 12px;
           position: relative;
-          left: -6px;
-          top: 0;
-        }
-        &:after {
-          display: block;
-          background: var(--orange);
-          border-radius: 50%;
-          padding: 0;
-          content: '';
-          height: 6px;
-          width: 6px;
-          position: relative;
-          left: 1px;
-          top: -20px;
+          left: 0;
+          margin-bottom: 5px;
+          vertical-align: middle;
+          padding-right: 8px;
         }
       }
       img {
