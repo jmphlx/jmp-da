@@ -18,7 +18,7 @@ function jsonOk(body) {
   return Promise.resolve(mockResponse);
 }
 
-describe('Fixed Listgroup', () => {
+describe('Custom Listgroup', () => {
   describe('Generic', () => {
     before(async () => {
       stub.onCall(0).returns(jsonOk(JSON.parse(pagedata)));
