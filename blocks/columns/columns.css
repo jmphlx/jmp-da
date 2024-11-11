@@ -242,6 +242,7 @@
           object-fit: cover;
           border-radius: 5px;
           object-position: center;
+          height: 100%;
         }
       }
     }
@@ -1109,4 +1110,13 @@ div.bullet-arrow {
   border-top: 1px solid var(--grayRule);
   border-bottom: 1px solid var(--grayRule);
   margin: 3.2rem 0;
+}
+
+.full-image {
+  picture {
+    height: auto !important;
+    img {
+      object-fit: contain !important;
+    }
+  }
 }
