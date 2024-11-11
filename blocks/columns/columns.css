@@ -196,7 +196,7 @@
       align-self: center;
       h1 {
         padding: 0;
-        margin: 0;
+        margin: 0 !important;
         padding-bottom: 1rem;
         border-bottom: 1px dotted #b4b4b4;
         border-width: 2px;
@@ -267,7 +267,7 @@
       align-self: center;
       h1 {
         padding: 0;
-        margin: 0;
+        margin: 0 !important;
         padding-bottom: 1rem;
         border-bottom: 1px dotted #b4b4b4;
         border-width: 2px;
@@ -335,7 +335,7 @@
       flex-grow: 2;
       h1 {
         padding: 0;
-        margin: 0;
+        margin: 0 !important;
         padding-bottom: 1rem;
         border-bottom: 1px dotted #b4b4b4;
         border-width: 2px;
@@ -1081,8 +1081,6 @@ div.bullet-arrow {
   }
 }
 
-
-
 @media (width <=900px) {
   div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols{
     div{
@@ -1102,4 +1100,10 @@ div.bullet-arrow {
       }
     }
   }
+}
+
+.column-rule {
+  border-top: 1px solid var(--grayRule);
+  border-bottom: 1px solid var(--grayRule);
+  margin: 3.2rem 0;
 }
