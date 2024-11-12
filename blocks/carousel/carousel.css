@@ -426,7 +426,7 @@
         }
       }
       div.carousel-slide-content {
-        width: 100%;
+        width: auto;
         text-align: center;
         margin: 0;
         /* align-self: center; */
