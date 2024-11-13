@@ -170,17 +170,17 @@ function constructDictionary(matching, filterBy) {
   return dictionary;
 }
 
-function constructDropdown(dictionary, filterBy) {
+function constructDropdown(dictionary, filterBy, defaultFilterOption) {
   const filterDropdown = createTag('select', {
     class: 'filterDropdown',
     id: `${filterBy}`,
   });
 
   const allDropdownItem = createTag('option', { value: '' });
-  allDropdownItem.textContent = 'Select';
+  allDropdownItem.textContent = defaultFilterOption || 'Select';
   filterDropdown.append(allDropdownItem);
 
-  Object.keys(dictionary).forEach((filterValue) => {
+  Object.keys(dictionary).sort().forEach((filterValue) => {
     if (filterValue.length > 0) {
       const dropdownItem = createTag('option', { value: `${filterValue}` });
       dropdownItem.innerText = filterValue;
@@ -354,7 +354,8 @@ export default async function decorate(block) {
 
   // Create Filter Dropdown
   if (filterDictionary) {
-    const filterDropdown = constructDropdown(filterDictionary, filterBy);
+    const defaultFilterOption = config[propertyNames.defaultFilterOption];
+    const filterDropdown = constructDropdown(filterDictionary, filterBy, defaultFilterOption);
 
     // When value changes, clear out results and add matching values.
     filterDropdown.addEventListener('change', () => {
