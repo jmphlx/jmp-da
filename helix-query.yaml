@@ -35,8 +35,8 @@ indices:
         select: head > meta[name="industry"]
         value: |
           attribute(el, "content")
-      capabilities:
-        select: head > meta[name="capabilitiy"]
+      capability:
+        select: head > meta[name="capability"]
         value: |
           attribute(el, "content")
       product:
@@ -142,8 +142,8 @@ indices:
         select: head > meta[name="industry"]
         value: |
           attribute(el, "content")
-      capabilities:
-        select: head > meta[name="capabilitiy"]
+      capability:
+        select: head > meta[name="capability"]
         value: |
           attribute(el, "content")
       product:
@@ -219,8 +219,8 @@ indices:
         select: head > meta[name="industry"]
         value: |
           attribute(el, "content")
-      capabilities:
-        select: head > meta[name="capabilitiy"]
+      capability:
+        select: head > meta[name="capability"]
         value: |
           attribute(el, "content")
       product:
@@ -328,8 +328,8 @@ indices:
         select: head > meta[name="industry"]
         value: |
           attribute(el, "content")
-      capabilities:
-        select: head > meta[name="capabilitiy"]
+      capability:
+        select: head > meta[name="capability"]
         value: |
           attribute(el, "content")
       product:
