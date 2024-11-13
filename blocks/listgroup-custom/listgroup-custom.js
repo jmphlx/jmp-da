@@ -12,22 +12,6 @@ import {
 
 import { createTag } from '../../scripts/helper.js';
 
-const propertyNames = {
-  filter: 'filter',
-  displayProperties: 'displayproperties',
-  limit: 'limit',
-  sortBy: 'sort-by',
-  sortOrder: 'sort-order',
-  emptyResultsMessage: 'empty-results-message',
-  columns: 'columns',
-  groupBy: 'group-by',
-  filterBy: 'filter-by',
-  tabProperty: 'tab-property',
-  tabs: 'tabs',
-  startingFolder: 'startingfolder',
-  defaultFilterOption: 'defaultfilteroption',
-};
-
 let useFilter = false;
 let useTabs = false;
 
@@ -89,7 +73,7 @@ function pageMatches(page, filters) {
 
 function writeAsOneGroup(matching, config) {
   const wrapper = document.createElement('ul');
-  const columns = config[propertyNames.columns] ? config[propertyNames.columns] : 5;
+  const columns = config.columns ? config.columns : 5;
   wrapper.classList = `listOfItems image-list list-tile col-size-${columns}`;
   if (useTabs) {
     wrapper.setAttribute('role', 'tabpanel');
@@ -108,7 +92,7 @@ function writeAsOneGroup(matching, config) {
 
     const htmlOutput = [];
 
-    config[propertyNames.displayProperties].forEach((prop) => {
+    config.displayProperties.forEach((prop) => {
       let span;
       if (prop === 'image') {
         span = `<span class="image"><img src="${item[prop]}"/></span>`;
@@ -235,12 +219,12 @@ function buildListItems(block, matching, tabDictionary, config) {
     }
   }
 
-  const limit = config[propertyNames.limit];
+  const limit = config.limit;
   if (limit !== undefined && pageSelection?.length > limit) {
     pageSelection = pageSelection.slice(0, limit);
   }
 
-  const emptyResultsMessage = config[propertyNames.emptyResultsMessage];
+  const emptyResultsMessage = config.emptyResultsMessage;
   if ((pageSelection === undefined || pageSelection.length === 0)
       && emptyResultsMessage !== undefined) {
     const emptyResultsDiv = document.createElement('div');
@@ -342,16 +326,16 @@ export default async function decorate(block) {
 
   const { data: allPages } = await getJsonFromUrl(languageIndexUrl);
 
-  const filterField = config[propertyNames.filter];
+  const filterField = config.filter;
   // Ignored if filter is a json file.
-  const startingFolder = config[propertyNames.startingFolder];
+  const startingFolder = config.startingFolder;
   const filters = filterField?.includes('.json') ? await getJsonFromUrl(filterField) : buildSimplifiedFilter(filterField, startingFolder);
-  const sortBy = config[propertyNames.sortBy]?.toLowerCase();
-  const sortOrder = config[propertyNames.sortOrder]?.toLowerCase();
-  const groupBy = config[propertyNames.groupBy];
-  const filterBy = config[propertyNames.filterBy];
-  const tabProperty = config[propertyNames.tabProperty]?.toLowerCase();
-  const tabsArray = config[propertyNames.tabs];
+  const sortBy = config.sortBy?.toLowerCase();
+  const sortOrder = config.sortOrder?.toLowerCase();
+  const groupBy = config.groupBy;
+  const filterBy = config.filterBy;
+  const tabProperty = config.tabProperty?.toLowerCase();
+  const tabsArray = config.tabs;
   useTabs = tabProperty && tabsArray;
   useFilter = filterBy;
 

@@ -9,11 +9,6 @@ import {
   getBlockConfig,
 } from '../../scripts/jmp.js';
 
-const propertyNames = {
-  displayProperties: 'displayproperties',
-  emptyResultsMessage: 'emptyresultsmessage',
-};
-
 const ogNames = {
   title: 'og:title',
   image: 'og:image',
@@ -33,7 +28,7 @@ export default async function decorate(block) {
   const config = getBlockConfig(block);
   block.textContent = '';
 
-  const emptyResultsMessage = config[propertyNames.emptyResultsMessage];
+  const emptyResultsMessage = config.emptyResultsMessage;
   const pageList = config.pages;
   const columns = config.columns ? config.columns : 5;
 
@@ -66,7 +61,7 @@ export default async function decorate(block) {
 
       const htmlOutput = [];
 
-      config[propertyNames.displayProperties]?.forEach((prop) => {
+      config.displayProperties?.forEach((prop) => {
         const pagePropVal = getMetaValue(prop, doc);
         let span;
         if (prop === 'image') {

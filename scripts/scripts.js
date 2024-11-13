@@ -101,12 +101,12 @@ function updateSectionIds(main) {
 }
 
 /**
- * If the page has a page-style, import the appropriate css as well.
+ * If the page has a pageStyle, import the appropriate css as well.
  * Got from Adobe support.
  * @author JMP
  */
 function decoratePageStyles() {
-  const pageStyle = getMetadata('page-style');
+  const pageStyle = getMetadata('pageStyle');
   if (pageStyle && pageStyle.trim().length > 0) {
     loadCSS(`${`${window.location.protocol}//${window.location.host}`}/styles/pages/${pageStyle.toLowerCase()}.css`);
     document.body.classList.add(pageStyle.toLowerCase());

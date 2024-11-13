@@ -188,7 +188,7 @@
 }
 .success-story-hero {
   background-color: #f4f4f4;
-  padding-bottom: 2em;
+  padding: 2.4rem 0;
   div {
     div:first-child {
       display: flex;
@@ -196,7 +196,7 @@
       align-self: center;
       h1 {
         padding: 0;
-        margin: 0;
+        margin: 0 !important;
         padding-bottom: 1rem;
         border-bottom: 1px dotted #b4b4b4;
         border-width: 2px;
@@ -207,30 +207,16 @@
       }
       h6 {
         font-family: "anova-bold", sans-serif;
-        padding-left: 7px;
         &:before {
+          content: url('../../../icons/bubbles-orange.svg');
           display: inline-block;
-          background: var(--orange);
-          border-radius: 50%;
-          padding: 0;
-          content: '';
-          height: 12px;
+          height: 16px;
           width: 12px;
           position: relative;
-          left: -6px;
-          top: 0;
-        }
-        &:after {
-          display: block;
-          background: var(--orange);
-          border-radius: 50%;
-          padding: 0;
-          content: '';
-          height: 6px;
-          width: 6px;
-          position: relative;
-          left: 1px;
-          top: -20px;
+          left: 0;
+          margin-bottom: 5px;
+          vertical-align: middle;
+          padding-right: 8px;
         }
       }
       img, picture {
@@ -256,6 +242,7 @@
           object-fit: cover;
           border-radius: 5px;
           object-position: center;
+          height: 100%;
         }
       }
     }
@@ -267,13 +254,18 @@
     font-size: 1.4rem;
     padding-bottom: .25rem;
   }
+  @media (width <= 900px) {
+    h6 {
+      padding-top: 0;
+    }
+  }
 }
 /* video story hero */
 .section:has(div.video-story-hero ) {
   background-color: #f4f4f4;
 }
 .video-story-hero {
-  padding-bottom: 2em;
+  padding: 2.4rem 0;
   div {
     div:first-child {
       display: flex;
@@ -281,41 +273,31 @@
       align-self: center;
       h1 {
         padding: 0;
-        margin: 0;
+        margin: 0 !important;
         padding-bottom: 1rem;
         border-bottom: 1px dotted #b4b4b4;
         border-width: 2px;
-        font-size: clamp(2.4rem, 4vw + 1rem, 4.2rem);
+      }
+      h2 {
+        border-bottom: 1px dotted #b4b4b4;
+        border-width: 2px;
+        padding-bottom: 1rem;
       }
       p {
         margin: 1rem 0 !important;
       }
       h6 {
         font-family: "anova-bold", sans-serif;
-        padding-left: 10px;
         &:before {
+          content: url('../../../icons/bubbles-orange.svg');
           display: inline-block;
-          background: var(--orange);
-          border-radius: 50%;
-          padding: 0;
-          content: '';
-          height: 12px;
+          height: 16px;
           width: 12px;
           position: relative;
-          left: -6px;
-          top: 0;
-        }
-        &:after {
-          display: block;
-          background: var(--orange);
-          border-radius: 50%;
-          padding: 0;
-          content: '';
-          height: 6px;
-          width: 6px;
-          position: relative;
-          left: 1px;
-          top: -20px;
+          left: 0;
+          margin-bottom: 5px;
+          vertical-align: middle;
+          padding-right: 8px;
         }
       }
       img {
@@ -328,15 +310,22 @@
         }
       }
     }
-    div.button-container {
-      display: block;
-      height: auto;
-      width: 100%;
-      align-items: center;
-      @media (width <=899px) {
-        width: 100%;
-        margin: 0;
-        order: 0;
+    div {
+      p.embed {
+        display: grid;
+        height: 100%;
+        /* width: 100%; */
+        /* align-items: center; */
+        div {
+          display: flex;
+          flex-direction: column;
+          align-self: center;
+        }
+        @media (width <=899px) {
+          width: 100%;
+          margin: 0;
+          order: 0;
+        }
       }
     }
   }
@@ -363,7 +352,7 @@
       flex-grow: 2;
       h1 {
         padding: 0;
-        margin: 0;
+        margin: 0 !important;
         padding-bottom: 1rem;
         border-bottom: 1px dotted #b4b4b4;
         border-width: 2px;
@@ -374,30 +363,16 @@
       }
       h6 {
         font-family: "anova-bold", sans-serif;
-        padding-left: 10px;
         &:before {
+          content: url('../../../icons/bubbles-orange.svg');
           display: inline-block;
-          background: var(--orange);
-          border-radius: 50%;
-          padding: 0;
-          content: '';
-          height: 12px;
+          height: 16px;
           width: 12px;
           position: relative;
-          left: -6px;
-          top: 0;
-        }
-        &:after {
-          display: block;
-          background: var(--orange);
-          border-radius: 50%;
-          padding: 0;
-          content: '';
-          height: 6px;
-          width: 6px;
-          position: relative;
-          left: 1px;
-          top: -20px;
+          left: 0;
+          margin-bottom: 5px;
+          vertical-align: middle;
+          padding-right: 8px;
         }
       }
       img {
@@ -405,8 +380,6 @@
       }
       @media (width <=899px) {
         padding-bottom: 2rem;
-      }
-      @media (width <=899px) {
         align-self: unset;
       }
     }
@@ -1123,8 +1096,6 @@ div.bullet-arrow {
   }
 }
 
-
-
 @media (width <=900px) {
   div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols{
     div{
@@ -1142,6 +1113,21 @@ div.bullet-arrow {
       div{
         padding-bottom:0;
       }
+    }
+  }
+}
+
+.column-rule {
+  border-top: 1px solid var(--grayRule);
+  border-bottom: 1px solid var(--grayRule);
+  margin: 3.2rem 0;
+}
+
+.full-image {
+  picture {
+    height: auto !important;
+    img {
+      object-fit: contain !important;
     }
   }
 }
