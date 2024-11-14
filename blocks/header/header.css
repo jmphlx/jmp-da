@@ -48,7 +48,7 @@ header .nav-wrapper {
     display: grid;
   }
 
-  header nav.is-scrolled {
+  header .nav-wrapper.is-scrolled {
     transform: translate3d(0,-36px,0);
   }
 } 
@@ -403,7 +403,7 @@ header nav .nav-utility-row {
     justify-content: space-between;
     padding: 0 2rem;
     &.is-scrolled {
-      transform: translate3d(0,100px,0);
+      transform: translate3d(0,-36px,0);
     }
     .nav-drop[aria-expanded="true"] {
       &:after {

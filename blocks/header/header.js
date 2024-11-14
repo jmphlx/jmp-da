@@ -351,7 +351,6 @@ export default async function decorate(block) {
 
   const utilRowWrapper = createTag('div', { class: 'nav-utility-row' });
   utilRowWrapper.append(navTools);
-  hideUtilityOnScroll(nav, utilRowWrapper);
   nav.prepend(utilRowWrapper);
 
   await buildMobileMenu(nav);
@@ -375,5 +374,7 @@ export default async function decorate(block) {
   const navWrapper = createTag('div', {
     class: 'nav-wrapper',
   }, nav);
+
+  hideUtilityOnScroll(navWrapper, utilRowWrapper);
   block.append(navWrapper);
 }
