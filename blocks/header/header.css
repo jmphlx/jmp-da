@@ -46,7 +46,11 @@ header .nav-wrapper {
     min-height: 0; 
     overflow: visible; 
     display: grid;
-  } 
+  }
+
+  header .nav-wrapper.is-scrolled {
+    transform: translate3d(0,-36px,0);
+  }
 } 
 
 header nav p {
@@ -398,6 +402,9 @@ header nav .nav-utility-row {
     align-items: center;
     justify-content: space-between;
     padding: 0 2rem;
+    &.is-scrolled {
+      transform: translate3d(0,-36px,0);
+    }
     .nav-drop[aria-expanded="true"] {
       &:after {
         width: 0; 

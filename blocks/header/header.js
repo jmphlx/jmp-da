@@ -166,6 +166,20 @@ function addNavDropToggle(section, sections) {
   }
 }
 
+function hideUtilityOnScroll(nav, utilityNav) {
+  document.addEventListener('scroll', () => {
+    const scrollTop = (window.scrollY !== undefined) ? window.scrollY
+      : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+    if (scrollTop > 100) {
+      utilityNav.classList.add('is-scrolled');
+      nav.classList.add('is-scrolled');
+    } else {
+      utilityNav.classList.remove('is-scrolled');
+      nav.classList.remove('is-scrolled');
+    }
+  });
+}
+
 async function buildMobileMenu(nav) {
   const mobileMenu = createTag('div', { class: 'nav-mobile-menu' });
   let sections = nav.querySelector('.nav-sections');
@@ -360,5 +374,7 @@ export default async function decorate(block) {
   const navWrapper = createTag('div', {
     class: 'nav-wrapper',
   }, nav);
+
+  hideUtilityOnScroll(navWrapper, utilRowWrapper);
   block.append(navWrapper);
 }
