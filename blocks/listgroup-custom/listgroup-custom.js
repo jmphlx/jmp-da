@@ -115,8 +115,10 @@ function writeAsAZGroups(matching, groupBy, groupProperty, blockObj) {
   const dictionary = matching.reduce((groups, page) => {
     const startingLetter = page[groupProperty][0]?.toLowerCase();
     // either push to an existing letter entry or create one
-    if (groups[startingLetter]) groups[startingLetter].push(page);
-    else groups[startingLetter] = [page];
+    if (startingLetter !== undefined) {
+      if (groups[startingLetter]) groups[startingLetter].push(page);
+      else groups[startingLetter] = [page]; 
+    }
 
     return groups;
   }, {});
