@@ -356,7 +356,7 @@ export default async function decorate(block) {
 
   // Create Filter Dropdown
   if (filterDictionary) {
-    const defaultFilterOption = config[propertyNames.defaultFilterOption];
+    const defaultFilterOption = config.defaultFilterOption;
     const filterDropdown = constructDropdown(filterDictionary, filterBy, defaultFilterOption);
 
     // When value changes, clear out results and add matching values.

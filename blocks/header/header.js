@@ -173,6 +173,7 @@ function hideUtilityOnScroll(nav, utilityNav) {
     if (scrollTop > 100) {
       utilityNav.classList.add('is-scrolled');
       nav.classList.add('is-scrolled');
+      closeAllNavSections(utilityNav);
     } else {
       utilityNav.classList.remove('is-scrolled');
       nav.classList.remove('is-scrolled');
