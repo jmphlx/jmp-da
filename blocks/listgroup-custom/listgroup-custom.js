@@ -117,7 +117,7 @@ function writeAsAZGroups(matching, groupBy, groupProperty, blockObj) {
     // either push to an existing letter entry or create one
     if (startingLetter !== undefined) {
       if (groups[startingLetter]) groups[startingLetter].push(page);
-      else groups[startingLetter] = [page]; 
+      else groups[startingLetter] = [page];
     }
 
     return groups;

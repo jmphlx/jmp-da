@@ -107,6 +107,14 @@ indices:
         select: head > meta[name="country"]
         value: |
           attribute(el, "content") 
+      application:
+        select: head > meta[name="application"]
+        value: |
+          attribute(el, "content")
+      displayLabel:
+        select: head > meta[name="displaylabel"]
+        value: |
+          attribute(el, "content") 
 
 #SKP ENGLISH CONTENT#
   skp-en:
@@ -290,6 +298,14 @@ indices:
       country:
         select: head > meta[name="country"]
         value: |
+          attribute(el, "content")
+      application:
+        select: head > meta[name="application"]
+        value: |
+          attribute(el, "content")
+      displayLabel:
+        select: head > meta[name="displaylabel"]
+        value: |
           attribute(el, "content") 
 
 #ENGLISH CONTENT#
@@ -399,4 +415,12 @@ indices:
       country:
         select: head > meta[name="country"]
         value: |
-          attribute(el, "content") 
+          attribute(el, "content")
+      application:
+        select: head > meta[name="application"]
+        value: |
+          attribute(el, "content")
+      displayLabel:
+        select: head > meta[name="displaylabel"]
+        value: |
+          attribute(el, "content")
