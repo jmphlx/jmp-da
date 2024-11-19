@@ -198,16 +198,16 @@
         padding: 0;
         margin: 0 !important;
         padding-bottom: 1rem;
-        border-bottom: 1px dotted #b4b4b4;
+        /* border-bottom: 1px dotted #b4b4b4; */
         border-width: 2px;
         font-size: clamp(2.4rem, 4vw + 1rem, 4.2rem);
       }
       p {
-        margin: 1rem 0 !important;
+        margin: 0 0 1rem 0 !important;
       }
       h6 {
         font-family: "anova-bold", sans-serif;
-        &:before {
+        /* &:before {
           content: url('../../../icons/bubbles-orange.svg');
           display: inline-block;
           height: 16px;
@@ -217,7 +217,7 @@
           margin-bottom: 5px;
           vertical-align: middle;
           padding-right: 8px;
-        }
+        } */
       }
       img, picture {
         max-width: 128px;
@@ -275,12 +275,12 @@
         padding: 0;
         margin: 0 !important;
         padding-bottom: 1rem;
-        border-bottom: 1px dotted #b4b4b4;
-        border-width: 2px;
+        /* border-bottom: 1px dotted #b4b4b4; */
+        /* border-width: 2px; */
       }
       h2 {
-        border-bottom: 1px dotted #b4b4b4;
-        border-width: 2px;
+        /* border-bottom: 1px dotted #b4b4b4; */
+        /* border-width: 2px; */
         padding-bottom: 1rem;
       }
       p {
@@ -288,7 +288,7 @@
       }
       h6 {
         font-family: "anova-bold", sans-serif;
-        &:before {
+        /* &:before {
           content: url('../../../icons/bubbles-orange.svg');
           display: inline-block;
           height: 16px;
@@ -298,7 +298,7 @@
           margin-bottom: 5px;
           vertical-align: middle;
           padding-right: 8px;
-        }
+        } */
       }
       img {
         max-width: 200px
@@ -354,8 +354,8 @@
         padding: 0;
         margin: 0 !important;
         padding-bottom: 1rem;
-        border-bottom: 1px dotted #b4b4b4;
-        border-width: 2px;
+        /* border-bottom: 1px dotted #b4b4b4;
+        border-width: 2px; */
         font-size: clamp(2.4rem, 4vw + 1rem, 4.2rem);
       }
       p {
@@ -363,7 +363,7 @@
       }
       h6 {
         font-family: "anova-bold", sans-serif;
-        &:before {
+        /* &:before {
           content: url('../../../icons/bubbles-orange.svg');
           display: inline-block;
           height: 16px;
@@ -373,7 +373,7 @@
           margin-bottom: 5px;
           vertical-align: middle;
           padding-right: 8px;
-        }
+        } */
       }
       img {
         max-width: 200px
@@ -599,7 +599,7 @@ div.clm-75-25 {
 .disclaimer {
   div {
     font-size: 12px;
-    color: var(--gray7);
+    color: #cecece;
   }
 }
 .image-float {
