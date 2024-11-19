@@ -136,7 +136,7 @@ div.listgroup-custom  {
         height: 100%;
         flex: 1 0 auto;
       }
-      .navigation-title, .resourceType {
+      .navigation-title, .resourceType, .displayLabel {
         order: 1;
         font-size: 13px;
         font-family: var(--font-secondary);
@@ -168,7 +168,7 @@ div.listgroup-custom  {
       }
     }
     :hover {
-      .navigation-title, .resourceType {
+      .navigation-title, .resourceType, .displayLabel {
         color: var(--orange);
       }
       .title {
@@ -246,7 +246,7 @@ div.listgroup-custom  {
             border: none;
           }
         }
-        .navigation-title, .resourceType {
+        .navigation-title, .resourceType, .displayLabel {
           grid-area: navigation-title;
           font-size: 1.3rem;
           color: var(--gray7);
@@ -299,7 +299,7 @@ div.listgroup-custom  {
           .title {
             font-size: 3.6rem;
           }
-          .navigation-title, .resourceType {
+          .navigation-title, .resourceType, .displayLabel {
             margin-top: 2rem;
             font-size: 2.1rem;
           }
@@ -328,7 +328,7 @@ div.listgroup-custom  {
             }
           }
         }
-        .navigation-title, .resourceType {
+        .navigation-title, .resourceType, .displayLabel {
           color: var(--link-hover-color) !important;
           text-decoration: none;
         }
@@ -352,7 +352,7 @@ div.listgroup-custom  {
             .title {
               font-size: 1.6rem;
             }
-            .navigation-title, .resourceType {
+            .navigation-title, .resourceType, .displayLabel {
               margin-top: 0;
               font-size: 1.3rem;
             }
@@ -411,7 +411,7 @@ div.listgroup-custom  {
             border: none;
           }
         }
-        .navigation-title, .resourceType {
+        .navigation-title, .resourceType, .displayLabel {
           grid-area: navigation-title;
           font-size: 1.3rem;
           color: var(--gray7);
@@ -470,7 +470,7 @@ div.listgroup-custom  {
             }
           }
         }
-        .navigation-title, .resourceType {
+        .navigation-title, .resourceType, .displayLabel {
           color: var(--link-hover-color) !important;
           text-decoration: none;
         }
@@ -493,7 +493,7 @@ div.listgroup-custom  {
             .title {
               font-size: 1.6rem;
             }
-            .navigation-title, .resourceType {
+            .navigation-title, .resourceType, .displayLabel {
               margin-top: 0;
               font-size: 1.3rem;
             }
@@ -571,7 +571,7 @@ div.listgroup-custom  {
       color: var(--blueLight);
     }
   }
-  .navigation-title, .resourceType {
+  .navigation-title, .resourceType, .displayLabel {
     display: none  !important;
   }
   .abstract, .description, .displayDescription {
@@ -639,7 +639,7 @@ div.listgroup-custom  {
       color: var(--blueLight);
     }
   }
-  .navigation-title, .resourceType {
+  .navigation-title, .resourceType, .displayLabel {
     display: none  !important;
   }
   .abstract, .description, .displayDescription {

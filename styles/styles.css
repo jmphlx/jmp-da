@@ -342,17 +342,17 @@ sub {
 }
 /* text alignment */
 .text-center {
-  h1, h2, h3, h4, h5, p {
+  h1, h2, h3, h4, h5, h6, p {
     text-align: center;
   }
 }
 .text-left {
-  h1, h2, h3, h4, h5, p {
+  h1, h2, h3, h4, h5, h6, p {
     text-align: left !important;
   }
 }
 .text-right {
-  h1, h2, h3, h4, h5, p {
+  h1, h2, h3, h4, h5, h6, p {
     text-align: right;
   }
 }
@@ -384,17 +384,26 @@ div.text-light {
   strong {
     color: #ffffff !important;
   }
+  p {
+    a {
+      color: var(--yellow) !important;
+      text-decoration: underline;
+      &:hover {
+        color: var(--orange) !important;
+      }
+    }
+  }
   :has(h6 + h1){
     h6{
-    text-transform: uppercase;
-    margin-bottom: 0;
+      text-transform: uppercase;
+      margin-bottom: 0;
+    }
   }
-}
-:is(h1){
-  +h2, +h3, +h4, +h5, +h6{
-  opacity: .7;
+  :is(h1){
+    +h2, +h3, +h4, +h5, +h6{
+    opacity: .7;
+    }
   }
-}
 }
 
 /* section metadata */
@@ -1151,7 +1160,7 @@ a:hover {
       display: block;
       width: 1em;
       height: 1em;
-      top: 48%;
+      top: 42%;
       right: 50%;
       transform: translate(calc(-50% + 90px), calc(-50%));
       text-align: end;
@@ -1373,22 +1382,22 @@ main img {
   height: auto;
 }
 .image-size-50 img {
-   width: 50%;
+   width: 50% !important;
 }
 .image-size-60 img {
-  width: 60%;
+  width: 60% !important;
 }
 .image-size-70 img {
-  width: 70%;
+  width: 70% !important;
 }
 .image-size-80 img {
-  width: 80%;
+  width: 80% !important;
 }
 .image-size-90 img {
-  width: 90%;
+  width: 90% !important;
 }
 .image-size-100 img {
-  width: 100%;
+  width: 100% !important;
 }
 @media (width <=900px) {
   .image-size-50, .image-size-60, .image-size-70, .image-size-80, .image-size-90, .image-size-100 {
