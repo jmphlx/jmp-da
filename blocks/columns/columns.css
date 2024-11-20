@@ -600,15 +600,14 @@ div.clm-75-25 {
   gap: 10px;
   width: 100%;
   min-width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 2.4rem;
   flex-direction: row;
   div {
     display: grid;
     grid-template-columns: 2fr 4fr;
-    column-gap: 5%;
+    column-gap: 1.6rem;
     width: 100%;
     min-width: 100%;
-    margin-bottom: 20px;
     div {
       display: block;
     }
@@ -618,16 +617,13 @@ div.clm-75-25 {
     }
   }
   div.columns-img-col {
-    max-width: 284px;
-    aspect-ratio: 1;
     picture {
       max-width: 284px;
       aspect-ratio: 1;
       img {
         display: block;
-        height: 100%;
+        /* height: 100%; */
         width: auto;
-        max-width: 100%;
         object-fit: cover;
         object-position: center;
         border-radius: 5px;
