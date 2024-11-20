@@ -548,7 +548,20 @@ ul {
     ul {
     padding: 0 0 0 2rem; 
       li {
+        margin-left: 8px;
+        position: relative;
         text-indent: -8px;
+        &:has(ul) {
+          margin-left: 0;
+          ul {
+            margin-bottom: 0;
+          }
+        }
+        p {
+          display: inline;
+          margin-left: -3px !important;
+          text-indent: 5px !important;
+        }
       } 
       li::marker {
         content: '';
@@ -558,6 +571,7 @@ ul {
         width: 7px;
         display: inline-block;
         font-size: 80%;
+        /* padding-right: 5px; */
       }
     }
   }
