@@ -106,7 +106,7 @@ function updateSectionIds(main) {
  * @author JMP
  */
 function decoratePageStyles() {
-  const pageStyle = getMetadata('pageStyle');
+  const pageStyle = getMetadata('pagestyle');
   if (pageStyle && pageStyle.trim().length > 0) {
     loadCSS(`${`${window.location.protocol}//${window.location.host}`}/styles/pages/${pageStyle.toLowerCase()}.css`);
     document.body.classList.add(pageStyle.toLowerCase());
