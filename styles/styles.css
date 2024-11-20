@@ -681,7 +681,7 @@ a:hover {
 .button-tertiary {
   a.button:any-link, button {
     border: 2px solid var(--blue);
-    color: var(--blue);
+    color: var(--blue) !important;
     background-color: white;
     font-family: "anova-regular", sans-serif;
   }
@@ -737,7 +737,7 @@ a:hover {
     margin-bottom: 2rem !important;
     a.button {
       border: 2px solid var(--blue);
-      color: var(--blue);
+      color: var(--blue) !important;
       /* background-color: transparent; */
       background-color: white;
     }
