@@ -595,6 +595,47 @@ div.clm-75-25 {
     }
   }
 }
+.author-bio-small {
+  display: block;
+  gap: 10px;
+  width: 100%;
+  min-width: 100%;
+  margin-bottom: 20px;
+  flex-direction: row;
+  div {
+    display: grid;
+    grid-template-columns: 2fr 4fr;
+    column-gap: 5%;
+    width: 100%;
+    min-width: 100%;
+    margin-bottom: 20px;
+    div {
+      display: block;
+    }
+    p {
+      margin: 0;
+      line-height: 1.5;
+    }
+  }
+  div.columns-img-col {
+    max-width: 284px;
+    aspect-ratio: 1;
+    picture {
+      max-width: 284px;
+      aspect-ratio: 1;
+      img {
+        display: block;
+        height: 100%;
+        width: auto;
+        max-width: 100%;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 5px;
+        aspect-ratio: 1;
+      }
+    }
+  }
+}
 /* Disclaimer text */
 .disclaimer {
   div {
