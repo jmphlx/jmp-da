@@ -617,16 +617,17 @@ div.clm-75-25 {
     }
   }
   div.columns-img-col {
+    max-width: 284px;
     picture {
-      max-width: 284px;
       aspect-ratio: 1;
       img {
-        display: block;
-        /* height: 100%; */
+        /* display: block;
+        height: 100%;
         width: auto;
         object-fit: cover;
         object-position: center;
-        border-radius: 5px;
+        border-radius: 5px; */
+        object-fit: cover;
         aspect-ratio: 1;
       }
     }
