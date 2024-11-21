@@ -631,6 +631,9 @@
       overflow: hidden;
       transition: all 0.7s ease;
       border: 1px solid var(--grayRule);
+      h4 {
+        text-align: left !important;
+      }
       &:after {
         /* content: url('../../../icons/arrow-icon-blue.svg'); */
         content: '';
