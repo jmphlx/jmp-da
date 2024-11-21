@@ -287,6 +287,9 @@ h1 + h5 {
   &:has(+ :is(h1, h2, h4)) {
     margin-bottom: 0;
   }
+  &:has(+ :is(p)) {
+    margin-bottom: 8px;
+  }
 }
 /* h4:has( + p img){
   @media (width <=600px) {
