@@ -487,6 +487,9 @@ div.blue-orange-gradient {
 div.teal-lightgreen-gradient {
   background: linear-gradient(45deg, #007481 15%, #9CCB3B 95%);
 }
+div.teal-purple-gradient {
+  background: linear-gradient(45deg, #007481 15%, #643695 95%);
+}
 div.purple-lightred-gradient {
   background: linear-gradient(45deg, #643695 15%, #F04B4B 95%);
 }
