@@ -389,7 +389,7 @@ div.text-light {
       color: var(--yellow) !important;
       text-decoration: underline;
       &:hover {
-        color: var(--orange) !important;
+        filter: brightness(115%);
       }
     }
   }
