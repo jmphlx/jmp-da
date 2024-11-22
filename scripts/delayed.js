@@ -47,10 +47,10 @@ function loadGTM() {
 
 addTrustArc();
 
-// const gtmActive = false; // TO-DO: Remove before site goes live.
-const gtmActive = !window.location.hostname.includes('localhost')
-  && !document.location.hostname.includes('.hlx.page')
-  && !document.location.hostname.includes('.aem.page');
+const gtmActive = false; // TO-DO: Remove before site goes live.
+// const gtmActive = !window.location.hostname.includes('localhost')
+//   && !document.location.hostname.includes('.hlx.page')
+//   && !document.location.hostname.includes('.aem.page');
 
 if (gtmActive) {
   loadGTM();
