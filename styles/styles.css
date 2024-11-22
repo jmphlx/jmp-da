@@ -382,7 +382,7 @@ sub {
   h1, h2, h3, h4, h5, h6, p {
     text-align: center;
   }
-  &:has(blockquote){
+  &:is(blockquote){
     :first-child:is(p, h1, h2, h3, h4, h5, h6):before {
       content: '\201C';
       width: 1em;
@@ -404,7 +404,7 @@ sub {
   h1, h2, h3, h4, h5, h6, p {
     text-align: right;
   }
-  &:has(blockquote){
+  &:is(blockquote){
     :first-child:is(p, h1, h2, h3, h4, h5, h6):before {
       content: '\201C';
       width: 1em;
