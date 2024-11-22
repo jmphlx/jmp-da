@@ -47,14 +47,14 @@ div.quote-small .quote-quotation {
   width: 1em;
   /* top: 0.275em;
   left: -35px; */
-  margin: 50px 0 0 -48px;
+  margin: 64px 0 0 -48px;
 
 }
 * *.quote blockquote .quote-quotation > :last-child:after {
   content: '\201D';
   /* bottom: -0.175em;
   right: 105px; */
-  margin: 80px 0 0 -16px;
+  margin: 96px 0 0 -40px;
 }
 .img-float-right {
   p {
