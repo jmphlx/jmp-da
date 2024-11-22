@@ -217,15 +217,15 @@ blockquote {
   }
   &.rule-padding-small {
     padding: 2.4rem 0 0 0;
-    margin: 0 0 3.2em 0;
+    margin: 0 0 3.2rem 0;
   }
   &.rule-padding-medium {
     padding: 3.2rem 0 0 0;
     margin: 0 0 4.8rem 0;
   }
   &.rule-padding-large {
-    padding: 4.8rem 0 0 0;
-    margin: 0 0 5.6rem 0;
+    padding: 5.6rem 0 0 0;
+    margin: 0 0 6.4rem 0;
   }
 }
 /* headings + p */
@@ -377,6 +377,18 @@ sub {
   h1, h2, h3, h4, h5, h6, p {
     text-align: center;
   }
+  &:has(blockquote){
+    :first-child:is(p, h1, h2, h3, h4, h5, h6):before {
+      content: '\201C';
+      width: 1em;
+      margin: 60px 0 0 -90px;
+    }
+    :first-child:is(p, h1, h2, h3, h4, h5, h6):after {
+      content: '\201D';
+      width: 1em;
+      margin: 72px 0 0 -84px;
+    }
+  }
 }
 .text-left {
   h1, h2, h3, h4, h5, h6, p {
@@ -386,6 +398,18 @@ sub {
 .text-right {
   h1, h2, h3, h4, h5, h6, p {
     text-align: right;
+  }
+  &:has(blockquote){
+    :first-child:is(p, h1, h2, h3, h4, h5, h6):before {
+      content: '\201C';
+      width: 1em;
+      margin: 60px 0 0 -144px;
+    }
+    :first-child:is(p, h1, h2, h3, h4, h5, h6):after {
+      content: '\201D';
+      width: 1em;
+      margin: 72px 0 0 -136px;
+    }
   }
 }
 .heading-center {
