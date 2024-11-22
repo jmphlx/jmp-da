@@ -159,67 +159,151 @@ const createMetadataBlock = (document) => {
       if (el.content) meta.SiteArea.push(el.content);
     });
   }
-
+  //find the <meta property="date"> element
   const date = document.querySelector('[property="date"]');
   if (date) meta.Date = date.content;
   //find the <meta property="date"> element
   const tCard = document.querySelector('[name="twitter:card"]');
   if (tCard) meta['twitter:card'] = tCard.content;
+  //find the <meta property="date"> element
   const tSite = document.querySelector('[name="twitter:site"]');
   if (tCard) meta['twitter:site'] = tSite.content;  
+  //helper to create the metadata block
   const metaBlock = WebImporter.Blocks.getMetadataBlock(document, meta);
   //returning the meta object might be usefull to other rules
   return metaBlock;
 };
-
-const createHighlight = (document) => {
-  const doc = {};
+const createFragment = (document) => {
   const cells = [
-    ['columns'],
+    ['fragment'],
   ]
-  
-  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt8 div.parsys_column.cq-colctrl-lt8-c0 div.text.parbase.section div');
-
-
-  const rhText = document.createElement('div');
-
-  const link = document.createElement('a');
-  link.innerText = "Enroll now";
-  link.href = "https://support.sas.com/edu/viewmyelearn.html?activationCode=FAEJMPST";
-  lhText.append(link);
-
-  // const vid = rhText.querySelector("lightbox-brightcove");
-  // console.log("DREW LOOK HERE");
-  // console.log(typeof rhText);
-  
-  cells.push([lhText, rhText]);
+  const anchor = document.createElement('a');
+  anchor.href = 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/resource-breadcrumb';
+  anchor.innerText = 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/resource-breadcrumb';
+  console.log("LOOK HERE DREW");
+  console.log(anchor);
+  cells.push([anchor]);
+  console.log(cells);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
-const createTopics = (document) => {
-  const doc = {};
+
+//get any full width 'hero' with only text likes
+const createDivider = (document) => {
   const cells = [
-    ['columns'],
+    ['divider'],
   ]
+  return WebImporter.DOMUtils.createTable(cells, document);
+};
+
+const createInternalDivider = (document) => {
+  const cells = [
+    ['horizontal-rule (rule-padding-small)'],
+  ]
+  return WebImporter.DOMUtils.createTable(cells, document);
+};
+
+const createLeftHandRail = (document) => {
+
+  const column = document.querySelector("div.par.parsys div.styledcontainer.parbase div.container.billboard div.par.parsys");
+  column.className = "";
+  const paragraphs = column.children;
+  console.log(column);
+  // for(let el of paragraphs) {
+  //   console.log(el);
+  //   console.log(el.innerText);
+  //   console.log("links are below");
+  //   const links = el.getElementsByTagName("a");
+  //   for(let link of links) {
+  //     console.log(link.href);
+  //     const href = link.href;
+  //     const isSearch = href.slice(0,50);
+  //     console.log(link.innerText);
+  //     console.log(isSearch);
+  //     if (isSearch === "http://localhost:3001/en_us/search/support.html?q=") {
+  //       console.log("truuuuuuuuuuuuuuuuuuuu");
+  //       let query = link.innerText;
+  //       query = query.replace(/\"/g,'').replace('.','');
+  //       console.log(query);
+  //       link.href = "https://edge-www.jmp.com/support/help/en/18.1/#search/" + query;
+  //       console.log(link.href);
+  //     };
+  //   };
+  //   console.log(links);
+  //   if (el.className === "horizontalline parbase section") {
+  //     console.log("Get spaced idiot!");
+  //     let spacer = createInternalDivider(document);
+  //     el.replaceWith(spacer);
+  //     console.log("Get spaced idiot!");
+  //     console.log(el);
+  //   };
+  //   el.className = "";
+  // };
+
+  return column;
+  };
+
+  const createQuickStart = (document) => {
+    const cells = [
+      ['cards (extra-space, block-top-padding-small)'],
+    ]
+
+    const leftCell = document.createElement("a");
+    const picture = document.createElement("picture");
+    const pic = document.createElement("img");
+    const rightCell = document.createElement("div");
+
+    pic.src = "https://www.jmp.com/en_us/online-statistics-course/resources/design-of-experiments/_jcr_content/par/styledcontainer_e089/par/lightbox_b417/lightboxThumbnail.img.jpg/1551199879413.jpg";
+    leftCell.href = "/modals/stips/jmp-quick-start-video";
+    picture.append(pic);
+    leftCell.append(picture);
+    // leftCell.append(pic);
+    console.log("DREW LOOK HERE");
+    console.log(leftCell);
+
+    const title = document.createElement("h5");
+    title.innerText = "JMP Quick Start Video";
+    rightCell.append(title)
+
+    const blurb = document.createElement("p");
+    blurb.innerText = "Enhance your learning by following along in JMP. Watch this video to see how easy it is to get started.";
+    rightCell.append(blurb);
   
-  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt9 div.parsys_column.cq-colctrl-lt9-c0');
-  const rhText = document.querySelector('div.parsys_column.cq-colctrl-lt9 div.parsys_column.cq-colctrl-lt9-c1');
+    cells.push([leftCell, rightCell]);
+    console.log(cells);
+    if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
+  };
 
-  const headers = lhText.querySelectorAll('h2');
-
-  headers.forEach((elem) => {
-
-    elem.outerHTML = "<h3>" + elem.innerHTML + '</h3>';
-  });
-
+const createRightHandRail = (document) => {
+  const newDiv = document.createElement("div");
   
 
-  // const page = title.innerText.trim().replaceAll(" ","-").toLowerCase();
-  // rhText.setAttribute("href",`https://main--jmp-da--jmphlx.hlx.page/modals/${page}`);
-  // rhText.setAttribute("src", "https://www.jmp.com" + rhText.getAttribute('src'));
-  
-  cells.push([lhText, rhText]);
-  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
+  const column = document.querySelector("div.container.billboard div.par.parsys div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c1 div.image.parbase.section div");
+  console.log(column.lastElementChild);
+  const image = document.createElement("img");
+
+  console.log(column);
+
+  console.log(column.getAttribute("data-asset"));
+
+  console.log(image);
+
+  const originPic = column.firstElementChild;
+  console.log("this is the pic");
+  console.log(originPic);
+  if (originPic.hasAttribute("data-asset")){
+    image.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +originPic.getAttribute("data-asset");
+  } else {
+    image.src = "https://www.jmp.com" + originPic.getAttribute("src");
+  }
+  console.log(image);
+
+  newDiv.append(image);
+
+  const quickStart = createQuickStart(document);
+  newDiv.append(quickStart);
+
+  return newDiv;
 };
 
 
@@ -247,53 +331,15 @@ const createDoublSM = (document, style) => {
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
 };
 
-const createDoublSM2 = (document, style) => {
+const createSM2 = (document) => {
   const cells = [
     ['section-metadata'],
   ]
 
-  const pic = document.createElement('img');
-  pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com/content/dam/jmp/images/design/data-visualization-illustrations/bubble-plot-wide-01.png";
-
-  cells.push(['background-image', pic]);
-  cells.push(['Style', style]);
+  
+  cells.push(['Style', 'section-top-padding-small, section-padding-large, bullet-arrow']);
   console.log(cells);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
-};
-
-
-const createTrial = (document) => {
-  const main = document.createElement('div');
-
-  const link1 = document.createElement('a');
-  link1.innerHTML = "Try JMP free"
-  link1.setAttribute("href", "https://www.jmp.com/en_us/download-jmp-free-trial.html");
-  main.append(link1);
-
-  main.append(document.createElement('p'));
-
-  const link2 = document.createElement('a');
-  link2.innerHTML = "Buy JMP now"
-  link2.setAttribute("href", "https://www.jmp.com/en_us/software/buy-jmp.html");
-  main.append(link2);
-
-  console.log("LOOK HERE DREW PLEASE");
-  console.log(main);
-
-
-
-  return main; 
-};
-
-const createContact = (document) => {
-  
-
-  const link1 = document.createElement('a');
-  link1.innerHTML = "Contact us"
-  link1.setAttribute("href", "en/about/contact/contact-us-form");
-
-
-  return link1; 
 };
 
 export default {
@@ -302,21 +348,21 @@ export default {
     //create the container div/section
     const section = document.createElement('div');
     const sectionBreak = document.createElement('hr');
-    
-    const title = document.querySelector('div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section div');
-    console.log(title.innerText);
-    title.classList.remove("text-parbase-section");
-    if (title) section.append(title);
+
+    // const title = document.querySelector('div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section div');
+    // console.log(title.innerText);
+    // title.classList.remove("text-parbase-section");
+    // if (title) section.append(title);
 
 
-    const topSectionMeta = createDoublSM(document, 'blue, background-fill, text-light , section-top-padding-small, section-padding-xsmall');
+    const topSectionMeta = createDoublSM(document, 'blue, background-fill, text-light , section-top-padding-small');
     if(topSectionMeta) section.append(topSectionMeta);
 
     section.append(document.createElement('hr'));
 
     const backlink = document.createElement('a');
     backlink.innerText = "Back to Course Overview";
-    backlink.href = "/en/online-statistics-course";
+    backlink.href = "/en/online-statistics-course/resources";
     section.append(backlink);
 
     const sectionMetadata = createSM(document, 'text-link-back, section-top-padding-small, section-padding-none');
@@ -324,35 +370,20 @@ export default {
 
     section.append(document.createElement('hr'));
 
-    const title2 = document.createElement('h1');
-    const heading = document.querySelector("div.par.parsys div.text.parbase.section div h1");
-    console.log(heading);
-    title2.innerText = heading.innerText;
-   
-    console.log(title2.innerText);
-    title2.classList.remove("text-parbase-section");
-    if (title2) section.append(title2);
+    const lhrail = createLeftHandRail( document);
+    console.log(lhrail)
+    if (lhrail) section.append(lhrail);
 
+    // const divider = createDivider(document);
+    // if (divider) section.append(divider);
 
+    // const rightHR = createRightHandRail(document);
+    // console.log(rightHR);
+    // if (rightHR) section.append(rightHR);
 
-    const bio = createHighlight(document);
-    if (bio) section.append(bio);
-
-    const sectionMetadata2 = createSM(document, 'section-top-padding-none ');
+    const sectionMetadata2 = createSM2(document);
     if(sectionMetadata2) section.append(sectionMetadata2);
-
-    section.append(document.createElement('hr'));
-
-    const topics = document.createElement('h4');
-    topics.innerText = "Specific topics covered in this module include:";
-    section.append(topics);
-
-    const relatedTopics = createTopics(document);
-    if (relatedTopics) section.append(relatedTopics);
-
-    const sectionMetadata3 = createSM(document, 'section-padding-none');
-    if(sectionMetadata3) section.append(sectionMetadata3);
-
+  
     const meta = createMetadataBlock(document);
     if (meta) section.append(meta);
     

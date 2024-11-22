@@ -171,49 +171,64 @@ const createMetadataBlock = (document) => {
   //returning the meta object might be usefull to other rules
   return metaBlock;
 };
-const createFragment = (document, link) => {
+
+const createHighlight = (document) => {
+  const doc = {};
   const cells = [
-    ['fragment'],
+    ['columns'],
   ]
-  const anchor = document.createElement('a');
-  anchor.href = link;
-  anchor.innerText = link;
-  cells.push([anchor]);
+  
+  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt8 div.parsys_column.cq-colctrl-lt8-c0 div.text.parbase.section div');
+  const rhText = document.createElement('div');
+
+  const link = document.createElement('a');
+  link.innerText = "Enroll now";
+  link.href = 'https://support.sas.com/edu/viewmyelearn.html?activationCode=FAEJMPST';
+  link.target = "_blank";
+  lhText.append(link);
+
+  // const vid = rhText.querySelector("lightbox-brightcove");
+  // console.log("DREW LOOK HERE");
+  // console.log(typeof rhText);
+  
+  cells.push([lhText, rhText]);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
-const createEmbed = (document) => {
+const createTopics = (document) => {
+  const doc = {};
   const cells = [
-    ['embed'],
+    ['columns'],
   ]
-  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt2-c0 div.videoBrightcove.section ');
-  console.log("LOOK HERE");
-  console.log(lhText.firstElementChild.firstElementChild.getAttribute("data-video-id"));
-  const link = lhText.firstElementChild.firstElementChild.getAttribute("data-video-id");
+  
+  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt9 div.parsys_column.cq-colctrl-lt9-c0');
+  const rhText = document.querySelector('div.parsys_column.cq-colctrl-lt9 div.parsys_column.cq-colctrl-lt9-c1');
 
+  const headers = lhText.querySelectorAll('h2');
 
-  const anchor = document.createElement('a');
-  anchor.href = link;
-  anchor.innerText = link;
-  cells.push([anchor]);
+  headers.forEach((elem) => {
+
+    elem.outerHTML = "<h3>" + elem.innerHTML + '</h3>';
+  });
+
+  const headers2 = rhText.querySelectorAll('h2');
+
+  headers2.forEach((elem) => {
+
+    elem.outerHTML = "<h3>" + elem.innerHTML + '</h3>';
+  });
+
+  
+
+  // const page = title.innerText.trim().replaceAll(" ","-").toLowerCase();
+  // rhText.setAttribute("href",`https://main--jmp-da--jmphlx.hlx.page/modals/${page}`);
+  // rhText.setAttribute("src", "https://www.jmp.com" + rhText.getAttribute('src'));
+  
+  cells.push([lhText, rhText]);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
 
-const createDivider = (document) => {
-  const cells = [
-    ['divider'],
-  ]
-  return WebImporter.DOMUtils.createTable(cells, document);
-};
-
-const createInternalDivider = (document) => {
-  const cells = [
-    ['horizontal-rule (rule-padding-small)'],
-  ]
-  return WebImporter.DOMUtils.createTable(cells, document);
-};
- 
 const createSM = (document, style) => {
   const cells = [
     ['section-metadata'],
@@ -230,7 +245,7 @@ const createDoublSM = (document, style) => {
   ]
 
   const pic = document.createElement('img');
-  pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com/content/dam/jmp/images/data-viz/jmp-data-viz-scatterplot-background.png";
+  pic.src = "https://www.jmp.com/en_us/online-statistics-course/_jcr_content/par/styledcontainer_b465/image.img.jpg/1539725705859.jpg";
 
   cells.push(['background-image', pic]);
   cells.push(['Style', style]);
@@ -242,145 +257,50 @@ const createDoublSM2 = (document, style) => {
   const cells = [
     ['section-metadata'],
   ]
-  cells.push(['layout', "2 column"]);
+
+  const pic = document.createElement('img');
+  pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com/content/dam/jmp/images/design/data-visualization-illustrations/bubble-plot-wide-01.png";
+
+  cells.push(['background-image', pic]);
   cells.push(['Style', style]);
   console.log(cells);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
 };
 
-const createHubspot = (document, redirectTarget) => {
-  const cells = [
-    ['hubspot'],
-  ]
-  const headline = document.createElement("h5")
-  headline.innerText = "Register now for this free webinar.";
-  cells.push(['headline', headline]);
-  cells.push(['region', "na1"]);
-  cells.push(['Portal ID', "20983899"]);
-  cells.push(['Form ID', "0c4fb313-4d9e-4f03-a46c-86c000e70171"]);
-  cells.push(['lead source', "Webcast (On-Demand)"]);
-  cells.push(['Last Action', "Webcast (On-Demand)"]);
-  cells.push(['salesforce campaign id', "7017h0000016z4iAAA"]);
-  cells.push(['redirectTarget', redirectTarget]);
-  console.log(cells);
-  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
+
+const createTrial = (document) => {
+  const main = document.createElement('div');
+
+  const link1 = document.createElement('a');
+  link1.innerHTML = "Try JMP free"
+  link1.setAttribute("href", "https://www.jmp.com/en_us/download-jmp-free-trial.html");
+  main.append(link1);
+
+  main.append(document.createElement('p'));
+
+  const link2 = document.createElement('a');
+  link2.innerHTML = "Buy JMP now"
+  link2.setAttribute("href", "https://www.jmp.com/en_us/software/buy-jmp.html");
+  main.append(link2);
+
+  console.log("LOOK HERE DREW PLEASE");
+  console.log(main);
+
+
+
+  return main; 
 };
 
-const createLeftHandRail = (document) => {
-  const column = document.querySelector("div.parsys_column.cq-colctrl-lt8 div.parsys_column.cq-colctrl-lt8-c0");
-  column.className = "";
-  console.log("DREW LOOK HERE")
-  console.log(column);
-  const content = document.createElement("div");
-  const children = column.children;
-  console.log("DREW LOOK HERE");
-  console.log(column);
-  console.log(children);
+const createContact = (document) => {
+  
 
-  for (var i = 0; i < children.length; i++) {
-    console.log(children[i]);
-    if (children[i].className === "text parbase section") {
-      let doohikey = children[i].cloneNode(true);
-      content.append(doohikey);
-      console.log(children);
-    };
+  const link1 = document.createElement('a');
+  link1.innerHTML = "Contact us"
+  link1.setAttribute("href", "en/about/contact/contact-us-form");
 
-    if (children[i].className === "textimage parbase section") {
-      let speaker = createInlineSpeaker(document,children[i]);
-      content.append(speaker);
-    };
-  };
-  return content;
 
+  return link1; 
 };
-
-const createInlineSpeaker = (document, column) => {
-  const cells = [['columns (image-float, image-size-medium, block-top-padding-small)'],]
-  const content = document.createElement("div");
-  
-
-  console.log(column.firstElementChild.firstElementChild.firstElementChild);
-
-  
-
-  const pic = document.createElement("img");
-
-  const originPic = column.firstElementChild.firstElementChild.firstElementChild;
-  if (originPic.hasAttribute("data-asset")){
-    pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +originPic.getAttribute("data-asset");
-  } else {
-    pic.src = "https://www.jmp.com" + originPic.getAttribute("src");
-  }
-
-  content.append(pic);
-  const paragraphs = column.firstElementChild.children;
-  console.log("LOOK HERE DREW!!!");
-  console.log(paragraphs[1]);
-  let thingy = paragraphs[1].cloneNode(true);
-  thingy.classList = "";
-  content.append(thingy);
-  cells.push([content]);
-
-  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
-  };
-
-const createSpeaker = (document, speaker) => {
-  const cells = [['columns (image-size-small, block-top-padding-small)'],]
-  const paragraphs = speaker.children;
-  const pic = document.createElement("img");
-  const originPic = paragraphs[0].firstElementChild;
-  if (originPic.hasAttribute("data-asset")){
-    pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +originPic.getAttribute("data-asset");
-  } else {
-    pic.src = "https://www.jmp.com" + originPic.getAttribute("src");
-  }
-
-  
-  // pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" + paragraphs[0].firstElementChild.getAttribute("data-asset");
-
-  
-  console.log(pic);
-
-  cells.push([pic,paragraphs[1]]);
-
-  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
-  };
-
-const createFinalSpeaker = (document, speaker) => {
-  const cells = [['columns (image-size-small, block-top-padding-small, block-padding-small)'],]
-  const paragraphs = speaker.children;
-  const pic = document.createElement("img");
-  pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" + paragraphs[0].firstElementChild.getAttribute("data-asset");
-
-  
-  console.log(pic);
-
-  cells.push([pic,paragraphs[1]]);
-
-  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
-  };
-
-const createRighthandRail = (document) => {
-  const column = document.querySelectorAll("div.parsys_column.cq-colctrl-lt8 div.parsys_column.cq-colctrl-lt8-c0 div.textimage.parbase.section");
-  console.log(column);
-  const content = document.createElement("div");
-  
-  for (var i = 1; i < column.length; i++) {
-    if (i != (column.length-1)){
-      let test = createSpeaker(document,column[i].firstElementChild);
-      content.append(test);
-    } else {
-      let test = createFinalSpeaker(document,column[i].firstElementChild);
-      content.append(test);
-    };
-
-  };
-
-
-  return content;
-
-};
-
 
 export default {
   transformDOM: ({ document }) => {
@@ -389,58 +309,55 @@ export default {
     const section = document.createElement('div');
     const sectionBreak = document.createElement('hr');
     
-    
-    const header = document.createElement('h3');
-    header.innerText = "TIME TO INNOVATE";
-    console.log(header);
-    if (header) section.append(header);
+    const title = document.querySelector('div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section div');
+    console.log(title.innerText);
+    title.classList.remove("text-parbase-section");
+    if (title) section.append(title);
 
 
-    const topSectionMeta = createDoublSM(document, 'blue-orange-gradient, text-light, tti-logo-h, opacity-100, background-image');
+    const topSectionMeta = createDoublSM(document, 'blue, background-fill, text-light , section-top-padding-small, section-padding-xsmall');
     if(topSectionMeta) section.append(topSectionMeta);
 
     section.append(document.createElement('hr'));
 
+    const backlink = document.createElement('a');
+    backlink.innerText = "Back to Course Overview";
+    backlink.href = "/en/online-statistics-course";
+    section.append(backlink);
 
-    const fragment = createFragment(document, `https://main--jmp-da--jmphlx.hlx.live/fragments/en/resources/resource-back-button`);
-    if (fragment) section.append(fragment);
-
-    const sectionMetadata = createSM(document, 'text-link-back, section-padding-none, section-top-padding-small');
+    const sectionMetadata = createSM(document, 'text-link-back, section-top-padding-small, section-padding-none');
     if(sectionMetadata) section.append(sectionMetadata);
 
     section.append(document.createElement('hr'));
 
-    const subheader = document.createElement('h6');
-    subheader.innerText = "ON-DEMAND WEBINAR";
-    if (subheader) section.append(subheader);
-
-    const highlight = document.querySelector('div.container.marquee-compact div.par.parsys div.textimage.parbase.section div div.text h1');
-    console.log(highlight.innerText.trim().replaceAll(" ","-").replaceAll(":","").toLowerCase());
-    highlight.classList.remove("nametag");
-    if (highlight) section.append(highlight);
-
-    const lhrail = createLeftHandRail( document);
-    console.log(lhrail)
-    if (lhrail) section.append(lhrail);
-
-    const internalDivider = createInternalDivider(document);
-    if (internalDivider) section.append(internalDivider);
+    const title2 = document.createElement('h1');
+    const heading = document.querySelector("div.par.parsys div.text.parbase.section div h1");
+    console.log(heading);
+    title2.innerText = heading.innerText;
+   
+    console.log(title2.innerText);
+    title2.classList.remove("text-parbase-section");
+    if (title2) section.append(title2);
 
 
-    const rhRail = createRighthandRail(document);
-    if (rhRail) section.append(rhRail);
+    const bio = createHighlight(document);
+    if (bio) section.append(bio);
 
-    const divider = createDivider(document);
-    if (divider) section.append(divider);
+    const sectionMetadata2 = createSM(document, 'section-top-padding-none ');
+    if(sectionMetadata2) section.append(sectionMetadata2);
 
-    const redirectTarget = `/en/ondemand/time-to-innovate/${highlight.innerText.trim().replaceAll(" ","-").replaceAll(":","").toLowerCase()}/watch`;
+    section.append(document.createElement('hr'));
 
-    const hubspot = createHubspot(document, redirectTarget);
-    if (hubspot) section.append(hubspot);
-    
-    const sectionMetadata3 = createDoublSM2(document, 'columns-60-40, section-top-padding-small, section-padding-large');
+    const topics = document.createElement('h4');
+    topics.innerText = "Specific topics covered in this module include:";
+    section.append(topics);
+
+    const relatedTopics = createTopics(document);
+    if (relatedTopics) section.append(relatedTopics);
+
+    const sectionMetadata3 = createSM(document, 'section-padding-none');
     if(sectionMetadata3) section.append(sectionMetadata3);
-  
+
     const meta = createMetadataBlock(document);
     if (meta) section.append(meta);
     

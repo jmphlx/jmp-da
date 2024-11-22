@@ -38,14 +38,16 @@ const createMetadataBlock = (document) => {
     const splitChar = '|';
     meta.resourceType = [];
     meta.resourceOptions = [];
-    meta.capabilityType = [];
+    meta.capability = [];
     meta.product = [];
     meta.industry = [];
-    meta.redirectUrl = [];
+    meta.redirectTarget = [];
     //events arrays
     meta.eventType = [];
     meta.eventTime = [];
     meta.eventSeries = [];
+    meta.robots = [];
+    meta.robots.push("noindex");
     jmpMeta.forEach((el) => {
       if (el.content){ 
           // console.log("SplitContents:");
@@ -79,7 +81,7 @@ const createMetadataBlock = (document) => {
             //meta.capabilityType = [];
             //console.log("el.content splits below");
             //console.log(el.content.split(splitChar)[1]);
-            meta.capabilityType.push(el.content.split(splitChar)[1]);
+            meta.capability.push(el.content.split(splitChar)[1]);
           }
           // console.log("metaCapabilityType below"); 
           // console.log(meta.capabilityType);
@@ -152,21 +154,6 @@ const createMetadataBlock = (document) => {
       });
     }
   }
-  const siteAreaMeta = document.querySelectorAll('[property="siteArea"]');
-  if (siteAreaMeta) {
-    meta.SiteArea = [];
-    siteAreaMeta.forEach((el) => {
-      if (el.content) meta.SiteArea.push(el.content);
-    });
-  }
-
-  const date = document.querySelector('[property="date"]');
-  if (date) meta.Date = date.content;
-  //find the <meta property="date"> element
-  const tCard = document.querySelector('[name="twitter:card"]');
-  if (tCard) meta['twitter:card'] = tCard.content;
-  const tSite = document.querySelector('[name="twitter:site"]');
-  if (tCard) meta['twitter:site'] = tSite.content;  
   const metaBlock = WebImporter.Blocks.getMetadataBlock(document, meta);
   //returning the meta object might be usefull to other rules
   return metaBlock;
@@ -182,20 +169,24 @@ const createFragment = (document, link) => {
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
-const createEmbed = (document) => {
+
+const createEmbed = (document, video) => {
   const cells = [
     ['embed'],
   ]
-  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt2-c0 div.videoBrightcove.section ');
-  console.log("LOOK HERE");
-  console.log(lhText.firstElementChild.firstElementChild.getAttribute("data-video-id"));
-  const link = lhText.firstElementChild.firstElementChild.getAttribute("data-video-id");
+  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt8-c1 div.styledcontainer.parbase div.container.shaded.rounded.bordered div.par.parsys div.videoBrightcove.section');
+  console.log("LOOK HERE IT SHOULD BE THE VIDEO ID");
+  
+
+  const link = video.firstElementChild.firstElementChild.getAttribute("data-video-id");
+  console.log(link);
 
 
   const anchor = document.createElement('a');
   anchor.href = link;
   anchor.innerText = link;
   cells.push([anchor]);
+
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
@@ -230,7 +221,7 @@ const createDoublSM = (document, style) => {
   ]
 
   const pic = document.createElement('img');
-  pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com/content/dam/jmp/images/data-viz/jmp-data-viz-scatterplot-background.png";
+  pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com/content/dam/jmp/images/data-viz/jmp-data-viz-bivariate-background.png";
 
   cells.push(['background-image', pic]);
   cells.push(['Style', style]);
@@ -248,26 +239,19 @@ const createDoublSM2 = (document, style) => {
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
 };
 
-const createHubspot = (document, redirectTarget) => {
+const createResources = (document, text) => {
   const cells = [
-    ['hubspot'],
+    ['columns (bullet-arrow)'],
   ]
-  const headline = document.createElement("h5")
-  headline.innerText = "Register now for this free webinar.";
-  cells.push(['headline', headline]);
-  cells.push(['region', "na1"]);
-  cells.push(['Portal ID', "20983899"]);
-  cells.push(['Form ID', "0c4fb313-4d9e-4f03-a46c-86c000e70171"]);
-  cells.push(['lead source', "Webcast (On-Demand)"]);
-  cells.push(['Last Action', "Webcast (On-Demand)"]);
-  cells.push(['salesforce campaign id', "7017h0000016z4iAAA"]);
-  cells.push(['redirectTarget', redirectTarget]);
-  console.log(cells);
-  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
+  
+  cells.push([text]);
+
+  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
+
 const createLeftHandRail = (document) => {
-  const column = document.querySelector("div.parsys_column.cq-colctrl-lt8 div.parsys_column.cq-colctrl-lt8-c0");
+  const column = document.querySelectorAll("div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0")[0];
   column.className = "";
   console.log("DREW LOOK HERE")
   console.log(column);
@@ -280,14 +264,30 @@ const createLeftHandRail = (document) => {
   for (var i = 0; i < children.length; i++) {
     console.log(children[i]);
     if (children[i].className === "text parbase section") {
+      console.log("just text");
       let doohikey = children[i].cloneNode(true);
-      content.append(doohikey);
+      if (doohikey.firstElementChild.firstElementChild.tagName === "H6") {
+        content.append(createResources(document, doohikey));
+
+      } else {content.append(doohikey)};
+      
       console.log(children);
     };
 
     if (children[i].className === "textimage parbase section") {
+      console.log("text and image");
       let speaker = createInlineSpeaker(document,children[i]);
       content.append(speaker);
+    };
+
+    if (children[i].className === "videoBrightcove section") {
+      console.log("video");
+      let speaker = createEmbed(document, children[i]);
+      content.append(speaker);
+    };
+
+    if (children[i].className === "horizontalline parbase section") {
+      content.append(createInternalDivider(document));
     };
   };
   return content;
@@ -298,7 +298,6 @@ const createInlineSpeaker = (document, column) => {
   const cells = [['columns (image-float, image-size-medium, block-top-padding-small)'],]
   const content = document.createElement("div");
   
-
   console.log(column.firstElementChild.firstElementChild.firstElementChild);
 
   
@@ -306,18 +305,21 @@ const createInlineSpeaker = (document, column) => {
   const pic = document.createElement("img");
 
   const originPic = column.firstElementChild.firstElementChild.firstElementChild;
+  console.log("this is the pic");
+  console.log(originPic);
   if (originPic.hasAttribute("data-asset")){
     pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +originPic.getAttribute("data-asset");
   } else {
     pic.src = "https://www.jmp.com" + originPic.getAttribute("src");
   }
 
+  console.log(pic);
+
   content.append(pic);
   const paragraphs = column.firstElementChild.children;
-  console.log("LOOK HERE DREW!!!");
+  const thingy = paragraphs[1].cloneNode(true);
+  console.log("this should be the text")
   console.log(paragraphs[1]);
-  let thingy = paragraphs[1].cloneNode(true);
-  thingy.classList = "";
   content.append(thingy);
   cells.push([content]);
 
@@ -360,25 +362,47 @@ const createFinalSpeaker = (document, speaker) => {
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
   };
 
-const createRighthandRail = (document) => {
-  const column = document.querySelectorAll("div.parsys_column.cq-colctrl-lt8 div.parsys_column.cq-colctrl-lt8-c0 div.textimage.parbase.section");
-  console.log(column);
-  const content = document.createElement("div");
+  const createCard = (document) => {
+    const cells = [
+      ['cards (text-link, extra-space)'],
+    ]
+    const content = document.createElement("div");
+    const tip = document.createElement("h4");
+    tip.innerText = "Tip: Get even more out of this webinar"
+    content.append(tip);
   
-  for (var i = 1; i < column.length; i++) {
-    if (i != (column.length-1)){
-      let test = createSpeaker(document,column[i].firstElementChild);
-      content.append(test);
-    } else {
-      let test = createFinalSpeaker(document,column[i].firstElementChild);
-      content.append(test);
-    };
-
+    const blurb = document.createElement("p");
+    blurb.innerText = "For a hands-on learning experience, download a free trial of JMP to follow along with the presenter.";
+    content.append(blurb);
+  
+    const download = document.createElement("a");
+    download.innerText = "Download Now";
+    download.href = "https://www.jmp.com/en_us/download-jmp-free-trial.html";
+    content.append(download);
+  
+    cells.push([content]);
+    if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
   };
 
+const createRighthandRail = (document) => {
+  const content = document.createElement("div");
 
+  content.append(createCard(document));
+  content.append(createFragment(document,"https://main--jmp-da--jmphlx.hlx.live/fragments/en/contact/contact-jmp-sales"))
+  
   return content;
 
+};
+
+const createButtonLink = (document) => {
+  const cells = [
+    ['columns (button-center)'],
+  ]
+  const anchor = document.createElement('a');
+  anchor.href = "/en/software/collaborative-analytics-software";
+  anchor.innerText = "About JMP Live";
+  cells.push([anchor]);
+  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
 
@@ -390,13 +414,17 @@ export default {
     const sectionBreak = document.createElement('hr');
     
     
-    const header = document.createElement('h3');
-    header.innerText = "TIME TO INNOVATE";
-    console.log(header);
-    if (header) section.append(header);
+    const subheader = document.createElement('h6');
+    subheader.innerText = "ON-DEMAND WEBINAR";
+    if (subheader) section.append(subheader);
+
+    const highlight = document.querySelector('div.container.marquee div.par.parsys div.text.parbase.section div h1');
+    console.log(highlight.innerText.trim().replaceAll(" ","-").replaceAll(":","").toLowerCase());
+    highlight.classList.remove("nametag");
+    if (highlight) section.append(highlight);
 
 
-    const topSectionMeta = createDoublSM(document, 'blue-orange-gradient, text-light, tti-logo-h, opacity-100, background-image');
+    const topSectionMeta = createDoublSM(document, 'blue-lightblue-gradient, background-image, text-light, section-padding-small');
     if(topSectionMeta) section.append(topSectionMeta);
 
     section.append(document.createElement('hr'));
@@ -410,35 +438,24 @@ export default {
 
     section.append(document.createElement('hr'));
 
-    const subheader = document.createElement('h6');
-    subheader.innerText = "ON-DEMAND WEBINAR";
-    if (subheader) section.append(subheader);
-
-    const highlight = document.querySelector('div.container.marquee-compact div.par.parsys div.textimage.parbase.section div div.text h1');
-    console.log(highlight.innerText.trim().replaceAll(" ","-").replaceAll(":","").toLowerCase());
-    highlight.classList.remove("nametag");
-    if (highlight) section.append(highlight);
+    
 
     const lhrail = createLeftHandRail( document);
     console.log(lhrail)
     if (lhrail) section.append(lhrail);
 
-    const internalDivider = createInternalDivider(document);
-    if (internalDivider) section.append(internalDivider);
-
-
-    const rhRail = createRighthandRail(document);
-    if (rhRail) section.append(rhRail);
+    // const internalDivider = createInternalDivider(document);
+    // if (internalDivider) section.append(internalDivider);
+    
 
     const divider = createDivider(document);
     if (divider) section.append(divider);
 
-    const redirectTarget = `/en/ondemand/time-to-innovate/${highlight.innerText.trim().replaceAll(" ","-").replaceAll(":","").toLowerCase()}/watch`;
 
-    const hubspot = createHubspot(document, redirectTarget);
+    const hubspot = createRighthandRail(document);
     if (hubspot) section.append(hubspot);
     
-    const sectionMetadata3 = createDoublSM2(document, 'columns-60-40, section-top-padding-small, section-padding-large');
+    const sectionMetadata3 = createDoublSM2(document, 'columns-75-25, section-top-padding-none, section-padding-large');
     if(sectionMetadata3) section.append(sectionMetadata3);
   
     const meta = createMetadataBlock(document);

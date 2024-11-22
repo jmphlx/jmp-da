@@ -46,6 +46,9 @@ const createMetadataBlock = (document) => {
     meta.eventType = [];
     meta.eventTime = [];
     meta.eventSeries = [];
+    meta.robots = [];
+    meta.robots.push("noindex");
+    meta.robots.push("nofollow");
     jmpMeta.forEach((el) => {
       if (el.content){ 
           // console.log("SplitContents:");
@@ -223,7 +226,7 @@ const createLeftHandRail = (document) => {
       if (isSearch === "http://localhost:3001/en_us/search/support.html?q=") {
         console.log("truuuuuuuuuuuuuuuuuuuu");
         let query = link.innerText;
-        query = query.replace(/\"/g,'').replace('.','');
+        query = query.replace(/\"/g,'').replace('.','').replace(/\“/g,'').replace(/\”/g,''); 
         console.log(query);
         link.href = "https://edge-www.jmp.com/support/help/en/18.1/#search/" + query;
         console.log(link.href);
@@ -248,11 +251,18 @@ const createLeftHandRail = (document) => {
       ['cards (extra-space, block-top-padding-small)'],
     ]
 
-    const leftCell = document.createElement("img");
+    const leftCell = document.createElement("a");
+    const picture = document.createElement("picture");
+    const pic = document.createElement("img");
     const rightCell = document.createElement("div");
 
-    leftCell.src = "https://www.jmp.com/en_us/online-statistics-course/resources/design-of-experiments/_jcr_content/par/styledcontainer_e089/par/lightbox_b417/lightboxThumbnail.img.jpg/1551199879413.jpg";
+    pic.src = "https://www.jmp.com/en_us/online-statistics-course/resources/design-of-experiments/_jcr_content/par/styledcontainer_e089/par/lightbox_b417/lightboxThumbnail.img.jpg/1551199879413.jpg";
     leftCell.href = "/modals/stips/jmp-quick-start-video";
+    picture.append(pic);
+    leftCell.append(picture);
+    // leftCell.append(pic);
+    console.log("DREW LOOK HERE");
+    console.log(leftCell);
 
     const title = document.createElement("h5");
     title.innerText = "JMP Quick Start Video";
@@ -269,6 +279,7 @@ const createLeftHandRail = (document) => {
 
 const createRightHandRail = (document) => {
   const newDiv = document.createElement("div");
+  
 
   const column = document.querySelector("div.container.billboard div.par.parsys div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c1 div.image.parbase.section div");
   console.log(column.lastElementChild);
@@ -278,7 +289,16 @@ const createRightHandRail = (document) => {
 
   console.log(column.getAttribute("data-asset"));
 
-  image.src = "https://www.jmp.com" + column.lastElementChild.firstElementChild.firstElementChild.getAttribute("src");
+  console.log(image);
+
+  const originPic = column.firstElementChild;
+  console.log("this is the pic");
+  console.log(originPic);
+  if (originPic.hasAttribute("data-asset")){
+    image.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +originPic.getAttribute("data-asset");
+  } else {
+    image.src = "https://www.jmp.com" + originPic.getAttribute("src");
+  }
   console.log(image);
 
   newDiv.append(image);
@@ -353,10 +373,6 @@ export default {
 
     section.append(document.createElement('hr'));
 
-
-
-
-
     const lhrail = createLeftHandRail( document);
     console.log(lhrail)
     if (lhrail) section.append(lhrail);
@@ -367,10 +383,6 @@ export default {
     const rightHR = createRightHandRail(document);
     console.log(rightHR);
     if (rightHR) section.append(rightHR);
-
-
-
-
 
     const sectionMetadata2 = createSM2(document);
     if(sectionMetadata2) section.append(sectionMetadata2);
