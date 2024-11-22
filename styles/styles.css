@@ -36,6 +36,7 @@ html {
   --green: #0D782F;
   --greenLight: #9CCB3B;
   --yellow: #FFC610;
+  --yellowHover: #ffe48e;
   --teal: #007481;
   --tealLight: #3EBDAC;
   /* JMP Brand neutral */
@@ -420,7 +421,7 @@ div.text-light {
       color: var(--yellow) !important;
       text-decoration: underline;
       &:hover {
-        filter: brightness(115%);
+        color: var(--yellowHover) !important;
       }
     }
   }
