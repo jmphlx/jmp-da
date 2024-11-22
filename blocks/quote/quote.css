@@ -2,12 +2,12 @@
   padding: 0 20px;
   max-width: 1084px;
   display: block;
-  margin:3em auto; 
+  margin: 3em auto;
   .quote-quotation {
-    p, h1, h2, h3, h4, h5{
-      font-family: "anova-light","Arial","Helvetica",sans-serif;
+    p, h1, h2, h3, h4, h5 {
+      font-family: "anova-light", "Arial", "Helvetica", sans-serif;
       font-weight: normal;
-      font-size: 2.8rem; 
+      font-size: 2.8rem;
       color: #643695;
       margin: 32px auto;
       position: relative;
@@ -26,15 +26,12 @@
     }
   }
 }
-
 div.quote-small .quote-quotation {
   p, h1, h2, h3, h4, h5 {
     font-size: 1.9rem;
   }
 }
-
-.quote blockquote .quote-quotation > :first-child:before,
-.quote blockquote .quote-quotation > :last-child:after {
+.quote blockquote .quote-quotation > :first-child:before, .quote blockquote .quote-quotation > :last-child:after {
   content: "";
   font-family: "Georgia", cursive;
   line-height: 0;
@@ -45,20 +42,20 @@ div.quote-small .quote-quotation {
   color: #f2f2f2;
   z-index: -1;
 }
-
 .quote blockquote .quote-quotation > :first-child:before {
   content: '\201C';
   width: 1em;
-  top: 0.275em;
-  left: -35px;
-}
+  /* top: 0.275em;
+  left: -35px; */
+  margin: 64px 0 0 -48px;
 
+}
 * *.quote blockquote .quote-quotation > :last-child:after {
   content: '\201D';
-  bottom: -0.175em;
-  right: 105px;
+  /* bottom: -0.175em;
+  right: 105px; */
+  margin: 96px 0 0 -40px;
 }
-
 .img-float-right {
   p {
     font-size: 1.9rem !important;
@@ -72,9 +69,10 @@ div.quote-small .quote-quotation {
     min-width: 275px;
     margin: 0 0 1rem 3rem;
   }
-  @media (width <= 600px) {
+  @media (width <=600px) {
     img {
       float: none;
     }
   }
 }
+
