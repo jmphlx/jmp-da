@@ -76,6 +76,9 @@
 } */
 
 .extra-space {
+  &.cards > ul {
+    grid-template-columns: auto;
+  }
   &.cards > ul > li {
     padding: 2rem;
     div.cards-card-body {
