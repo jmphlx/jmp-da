@@ -10,6 +10,13 @@
       "path": "/tools/tags.html"
     },
     {
+      "id": "da-tags",
+      "title": "Tag Browser",
+      "environments": ["edit"],
+      "daLibrary": true,
+      "url": "https://aem-tags--jmp-da--jmphlx.hlx.live/tools/tags.html"
+    },
+    {
       "id": "datepicker",
       "title": "Date Picker",
       "environments": ["da-edit"],
