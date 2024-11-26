@@ -599,7 +599,10 @@ div.blue {
 div.dark-blue {
   background: var(--blueDark);
 }
-
+/* ordered list */
+ol{
+  padding: 0 0 0 18px; 
+}
 /* bullets JMP blue  */
 ul {
   padding: 0 0 0 16px; 
