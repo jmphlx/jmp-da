@@ -4,9 +4,10 @@
  */
 /*  global hbspt  */
 
-import { getBlockConfig,
-    getLanguage,
- } from '../../scripts/jmp.js';
+import {
+  getBlockConfig,
+  getLanguage,
+} from '../../scripts/jmp.js';
 
 const embedHubspot = (config) => {
   // clean up hubspot url query paramaters
@@ -22,7 +23,7 @@ const embedHubspot = (config) => {
   scriptHubspot.src = 'https://js.hsforms.net/forms/embed/v2.js';
 
   let redirect = config.redirectTarget;
-  let regex = /^(\/)*\.\//i;
+  const regex = /^(\/)*\.\//i;
   if (redirect.match(regex)) {
     redirect = redirect.replace(regex, `/${getLanguage()}/`);
   }
