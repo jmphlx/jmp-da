@@ -17,7 +17,7 @@ export default async function decorate(block) {
     const id = toClassName(tab.textContent);
 
     // decorate tabpanel
-    let tabpanel = block.children[i];
+    const tabpanel = block.children[i];
     tabpanel.className = 'tabs-panel';
     tabpanel.id = `tabpanel-${id}`;
     tabpanel.setAttribute('aria-hidden', !!i);
@@ -25,8 +25,8 @@ export default async function decorate(block) {
     tabpanel.setAttribute('role', 'tabpanel');
 
     const childrenArray = Array.from(tabpanel.children);
-    childrenArray.forEach((col, i) => {
-      col.classList.add(`column-${i}`);
+    childrenArray.forEach((col, j) => {
+      col.classList.add(`column-${j}`);
     });
 
     if (!hasWrapper(tabpanel.lastElementChild)) {
