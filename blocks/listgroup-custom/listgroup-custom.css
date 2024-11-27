@@ -231,7 +231,7 @@ div.listgroup-custom  {
             "img navigation-title"
             "img title"
             "img abstract";
-        grid-template-rows: .5fr .25fr 2fr;
+        grid-template-rows: .25fr .125fr auto;
         grid-template-columns: 40% auto;
         flex-flow: wrap;
         flex-direction: row;
@@ -267,7 +267,7 @@ div.listgroup-custom  {
         }
         .abstract, .description, .displayDescription {
           grid-area: abstract;
-          display: block;
+          display: flex;
           padding: 0 0 2rem 0;
           margin: 0 1.6rem 2rem 0;
           color: #333333 !important;
@@ -293,6 +293,7 @@ div.listgroup-custom  {
       }
       &:first-child {
         width: 100%;
+        min-height: 355px;
         a {
           grid-template-columns: 49.25% auto;
           column-gap: 3.2rem;
@@ -346,6 +347,7 @@ div.listgroup-custom  {
         min-height: 225px;
         &:first-child {
           width: 100%;
+          min-height: 225px;
           a {
             grid-template-columns: 40% auto;
             column-gap: 1.6rem;
