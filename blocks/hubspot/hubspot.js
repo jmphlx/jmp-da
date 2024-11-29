@@ -4,7 +4,10 @@
  */
 /*  global hbspt  */
 
-import { getBlockConfig } from '../../scripts/jmp.js';
+import {
+  getBlockConfig,
+  getLanguage,
+} from '../../scripts/jmp.js';
 
 const embedHubspot = (config) => {
   // clean up hubspot url query paramaters
@@ -19,8 +22,11 @@ const embedHubspot = (config) => {
   scriptHubspot.setAttribute('type', 'text/javascript');
   scriptHubspot.src = 'https://js.hsforms.net/forms/embed/v2.js';
 
-  // eslint-disable-next-line no-unused-vars
-  const redirect = config.redirectTarget;
+  let redirect = config.redirectTarget;
+  const regex = /^(\/)*\.\//i;
+  if (redirect.match(regex)) {
+    redirect = redirect.replace(regex, `/${getLanguage()}/`);
+  }
 
   // adds event listener to add embed code on load
   scriptHubspot.addEventListener('load', () => {
@@ -28,7 +34,7 @@ const embedHubspot = (config) => {
       region: config.region,
       portalId: config.portalId,
       formId: config.formId,
-      redirectUrl: config.redirectTarget,
+      redirectUrl: redirect,
       sfdcCampaignId,
       onFormReady($form) {
         const hiddenField2 = $form.find('input[name="last_action"]');

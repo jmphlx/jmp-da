@@ -20,6 +20,14 @@ const isLangSupported = isLanguageSupported(pageLanguage);
 const lang = isLangSupported ? pageLanguage : 'en';
 document.documentElement.lang = lang;
 
+/**
+ * Returns the page language
+ * @returns {string} page language
+ */
+function getLanguage() {
+  return lang;
+}
+
 /*
  * Check if an array includes all values of another array
 Are all of the values in Array B included in Array A?
@@ -488,6 +496,7 @@ export {
   getBlockProperty,
   getJsonFromUrl,
   getLangMenuPageUrl,
+  getLanguage,
   getLanguageIndex,
   getLanguageFooter,
   getLanguageNav,
