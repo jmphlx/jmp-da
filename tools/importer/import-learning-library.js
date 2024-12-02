@@ -237,8 +237,8 @@ const createTopic = (document) => {
     const paragraph = document.createElement("p");
     const link = document.createElement("a");
     console.log(children);
-    link.innerText = children[1].firstElementChild.firstElementChild.getAttribute("data-video-id");
-    link.href = children[1].firstElementChild.firstElementChild.getAttribute("data-video-id");
+    link.innerText = children[2].firstElementChild.firstElementChild.getAttribute("data-video-id");
+    link.href = children[2].firstElementChild.firstElementChild.getAttribute("data-video-id");
     paragraph.append(link);
     rhDiv.append(paragraph);
     console.log("DREW LOOK HERE");
