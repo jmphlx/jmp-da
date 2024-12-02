@@ -41,15 +41,7 @@ const createMetadataBlock = (document) => {
   if (jmpMeta) {
     const splitChar = '|';
     meta.resourceType = [];
-    meta.resourceType.push("Case Study");
-    const displayLabel = document.getElementsByTagName("h6");
-    console.log("this is the display label");
-    console.log(displayLabel);
-    meta.displayLabel = displayLabel[0].innerText;
     meta.resourceOptions = [];
-    meta.application = [];
-    meta.course = [];
-    meta.userLevel = [];
     meta.capability = [];
     meta.product = [];
     meta.industry = [];
@@ -64,29 +56,14 @@ const createMetadataBlock = (document) => {
           // console.log(el.content.split(splitChar));
           // handle custom page tags
           // handle resourceType 
-
-          if (el.content.split(splitChar).length === 4){
-            if (el.content.split(splitChar)[2] == 'By Application'){
-              console.log(el.content.split(splitChar));
-              meta.application.push(el.content.split(splitChar)[3] + ",");
-            };
-            if (el.content.split(splitChar)[2] == 'By Level'){
-              meta.userLevel.push(el.content.split(splitChar)[3] + ",");
-            };
-        };
-          if (el.content.split(splitChar).length === 3){
-            if (el.content.split(splitChar)[1] == 'Topic'){
-              meta.course.push(el.content.split(splitChar)[2] + ",");
-          };
-        }
           if (el.content.split(splitChar)[0] == 'Content Type'){
             //meta.resourceType = [];
             //console.log("el.content splits below");
             //console.log(el.content.split(splitChar)[1]);
             if (el.content.split(splitChar)[1] == 'Success Story'){
-              meta.resourceType.push("Customer Story" + ",");
+              meta.resourceType.push("Customer Story");
             } else {
-            meta.resourceType.push(el.content.split(splitChar)[1] + ",");}
+            meta.resourceType.push(el.content.split(splitChar)[1]);}
           }
           // console.log("metaResourceType below"); 
           // console.log(meta.resourceType);
@@ -183,109 +160,42 @@ const createMetadataBlock = (document) => {
   //returning the meta object might be usefull to other rules
   return metaBlock;
 };
-
-const createFragment = (document) => {
+const createFragment = (document, link) => {
   const cells = [
     ['fragment'],
   ]
   const anchor = document.createElement('a');
-  anchor.href = 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/academic/case-studies-back-button';
-  anchor.innerText = 'https://main--jmp-da--jmphlx.hlx.live/fragments/en/academic/case-studies-back-button';
+  anchor.href = link;
+  anchor.innerText = link;
   cells.push([anchor]);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
-const createHero = (document) => {
-  const doc = {};
+const createEmbed = (document) => {
   const cells = [
-    ['columns (success-story-hero, text-link-caret-left, block-top-padding-small)'],
+    ['embed'],
   ]
-  //grab hero image
+  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt8-c1 div.styledcontainer.parbase div.container.shaded.rounded.bordered div.par.parsys div.videoBrightcove.section');
+  console.log("LOOK HERE");
+  if (lhText){
+  console.log(lhText.firstElementChild.firstElementChild.getAttribute("data-video-id"));
+  const link = lhText.firstElementChild.firstElementChild.getAttribute("data-video-id");
 
-  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0');
 
-  const links = lhText.getElementsByTagName("a");
-  console.log("Hero Links");
-  console.log(links);
-  for (let link of links) {
-    const path = link.href.slice(21,link.href.length);
-    link.href = "https://edge-www.jmp.com" + path;
-  };
-
-  const rhText = document.querySelector('div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c1');
-  let images = lhText.getElementsByTagName("img");
-  console.log(images);
-  for (let el of images) {
-    el.setAttribute('src',"https://www.jmp.com" + el.getAttribute("src"));
-  };
-  const pic = document.createElement("img");
-  const originPic = rhText.firstElementChild.children[1].firstElementChild;
-  console.log("this is the pic");
-  console.log(originPic);
-  if (originPic.hasAttribute("data-asset")){
-    pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +originPic.getAttribute("data-asset");
-  } else {
-    pic.src = "https://www.jmp.com" + originPic.getAttribute("src");
-  }
-  console.log(pic);
-
-  cells.push([lhText.cloneNode(true), pic]);
-  
+  const anchor = document.createElement('a');
+  anchor.href = link;
+  anchor.innerText = link;
+  cells.push([anchor]);
+};
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
-//get any full width 'hero' with only text likes
+
 const createDivider = (document) => {
   const cells = [
     ['divider'],
   ]
   return WebImporter.DOMUtils.createTable(cells, document);
-};
-
-const createLeftHandRail = (document) => {
-  const content = document.createElement("div");
-  const lhRail = document.querySelector('div.parsys_column.cq-colctrl-lt1 div.parsys_column.cq-colctrl-lt1-c0');
-  const kids = lhRail.children;
-  for (var i = 0; i < kids.length; i+=2) {
-    const pic = document.createElement("img");
-    const originPic = kids[i].children[1].firstElementChild;
-    console.log("this is the pic");
-    console.log(originPic);
-    if (originPic.hasAttribute("data-asset")){
-      pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +originPic.getAttribute("data-asset");
-    } else {
-      pic.src = "https://www.jmp.com" + originPic.getAttribute("src");
-    }
-    console.log(pic);
-    const text = kids[i+1];
-    console.log(text);
-    content.append(createAuthor(document, pic,text.cloneNode(true)));
-
-  };
-  return content;
-
-};
-
-const createRightHandRail = (document) => {
-  const rhRail = document.querySelector('div.parsys_column.cq-colctrl-lt1 div.parsys_column.cq-colctrl-lt1-c1');
-  const links = rhRail.getElementsByTagName("a");
-  console.log("Hero Links");
-  console.log(links);
-  for (let link of links) {
-    const path = link.href.slice(21,link.href.length);
-    link.href = "https://edge-www.jmp.com" + path;
-  };
-  const content = document.createElement("div");
-  const kids = rhRail.children;
-  for (let el of kids) {
-    if (el.className === "horizontalline parbase section") {
-      content.append(createInternalDivider(document));
-    } else {
-      content.append(el.cloneNode(true));
-    };
-  };
-
-  return content;
 };
 
 const createInternalDivider = (document) => {
@@ -294,44 +204,8 @@ const createInternalDivider = (document) => {
   ]
   return WebImporter.DOMUtils.createTable(cells, document);
 };
-
-const createAuthor = (document, image, text) => {
-  const cells = [['columns (author-bio-small)']]
-  console.log("author elelments");
-
-  cells.push([image,text]);
-  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
-  };
-
-const createButtonLink = (document) => {
-  const button = document.querySelector(' div.parsys_column.cq-colctrl-lt1.cols-halfgutter div.parsys_column.cq-colctrl-lt1-c1 div.reference.parbase div.cq-dd-paragraph div.text.parbase div.trial-button p span.button');
-  return button;
-}
-
-const createDisclaimer = (document) => {
-  const cells = [
-    ['columns (disclaimer)'],
-  ]
-
-  const disclaimer = document.querySelector('div.trial-button p small span.txt-light');
-  if (disclaimer){
-    cells.push([disclaimer.innerHTML]);
-  }
-  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
-};
-
-const createSM = (document) => {
-  const cells = [
-    ['section-metadata'],
-  ]
-
-  cells.push(['layout','2 Column']);
-  cells.push(['Style', 'columns-25-75, text-link-caret-left, section-padding-large']);
-  console.log(cells);
-  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
-};
-
-const createSectionMetadata = (document, style) => {
+ 
+const createSM = (document, style) => {
   const cells = [
     ['section-metadata'],
   ]
@@ -341,41 +215,261 @@ const createSectionMetadata = (document, style) => {
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
 };
 
+const createDoublSM = (document, style) => {
+  const cells = [
+    ['section-metadata'],
+  ]
+
+  const pic = document.createElement('img');
+  pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com/content/dam/jmp/images/data-viz/jmp-data-viz-bar-chart-background.png";
+
+  cells.push(['background-image', pic]);
+  cells.push(['Style', style]);
+  console.log(cells);
+  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
+};
+
+const createDoublSM2 = (document, style) => {
+  const cells = [
+    ['section-metadata'],
+  ]
+  cells.push(['layout', "2 column"]);
+  cells.push(['Style', style]);
+  console.log(cells);
+  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
+};
+
+
+const createSection = (document, section) => {
+  const cells = [['columns (text-left)'],]
+
+  console.log(section);
+
+  const left = section.querySelector("div.parsys_column.cq-colctrl-lt3 div.parsys_column.cq-colctrl-lt3-c0");
+  const middle = section.querySelector("div.parsys_column.cq-colctrl-lt3 div.parsys_column.cq-colctrl-lt3-c1");
+  const right = section.querySelector("div.parsys_column.cq-colctrl-lt3 div.parsys_column.cq-colctrl-lt3-c2"); 
+
+  const port = left.cloneNode(true);
+  const aft = middle.cloneNode(true);
+  const starboard = right.cloneNode(true);
+
+  const bobs = [port,aft,starboard];
+
+  for (var i = 0; i < 3; i++) {
+    const content = document.createElement("div");
+    console.log("this is the section:");
+    console.log(bobs[i]);
+
+    const pic = document.createElement("img");
+    const originPic = bobs[i].querySelector("div.image.parbase.section");
+    console.log("this is the pic");
+    console.log(originPic);
+    if (originPic.children[1].firstElementChild.hasAttribute("data-asset")){
+      pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +originPic.children[1].firstElementChild.getAttribute("data-asset");
+      console.log("found it!");
+    } else {
+      pic.src = "https://www.jmp.com" + originPic.getAttribute("src");
+    }
+
+    let text = bobs[i].querySelectorAll("div.text.parbase.section");
+
+    fixLinks(document,text);
+
+    content.append(text[0]);
+    content.append(pic);
+    content.append(text[1]);
+    content.append(text[2]);
+    bobs[i] = content;
+  };
+
+  cells.push(bobs);
+  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
+
+};
+
+
+const createLastSection = (document, section) => {
+  const cells = [['columns (text-left)'],]
+
+  console.log(section);
+
+  const left = section.querySelector("div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0");
+  const right = section.querySelector("div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c1"); 
+
+  const port = left.cloneNode(true);
+  const starboard = right.cloneNode(true);
+
+  const bobs = [port,starboard];
+
+  for (var i = 0; i < 2; i++) {
+    const content = document.createElement("div");
+    console.log("this is the section:");
+    console.log(bobs[i]);
+
+    const pic = document.createElement("img");
+    const originPic = bobs[i].querySelector("div.image.parbase.section");
+    console.log("this is the pic");
+    console.log(originPic);
+    if (originPic.children[1].firstElementChild.hasAttribute("data-asset")){
+      pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +originPic.children[1].firstElementChild.getAttribute("data-asset");
+      console.log("found it!");
+    } else {
+      pic.src = "https://www.jmp.com" + originPic.getAttribute("src");
+    }
+
+    const text = bobs[i].querySelectorAll("div.text.parbase.section");
+
+    fixLinks(document,text);
+    content.append(text[0]);
+    content.append(pic);
+    content.append(text[1]);
+    content.append(text[2]);
+    bobs[i] = content;
+  };
+
+
+
+  cells.push(bobs);
+  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
+
+};
+
+const fixLinks = (document, section) => {
+  const title = document.querySelector("div.parsys_column.cq-colctrl-lt13 div.parsys_column.cq-colctrl-lt13-c0 div.text.parbase.section div h1");
+  
+  const highlight = title.cloneNode(true);
+
+  const path = highlight.innerText.trim().replaceAll(" ","-").replaceAll(":","").toLowerCase();
+
+  console.log("checking if link path is correct");
+  console.log(title);
+  console.log(highlight);
+  console.log(path);
+
+  console.log(section);
+
+  console.log(section[2]);
+
+  const links = section[section.length-1].querySelectorAll("ul.list-arrow li a");
+  console.log(links);
+  for (let link of links) {
+    console.log(link.href);
+    const pointer = link.href.split("www.jmp.com")[1];
+    console.log(typeof pointer)
+    // const destination = pointer.cloneNode(true);
+
+    
+    if (link.href.includes("#m-") ) {
+      console.log("WE GOT A HIT GAMERS");
+      link.href = `/modals/en/course-materials/${path}/${pointer}`;
+      console.log(link.href);
+    };
+  };
+};
+
+
+const createTable = (document) => {
+  const nav = document.createElement("ul");
+
+    const essentials = document.createElement("h6");
+    const essentialsLink = document.createElement("a");
+    essentialsLink.href = "#the-essentials-1";
+    essentialsLink.innerText = "The Essentials";
+    essentials.append(essentialsLink);
+    nav.append(essentials);
+
+    const enhancements = document.createElement("h6");
+    const enhancementsLink = document.createElement("a");
+    enhancementsLink.href = "#enhancements-1";
+    enhancementsLink.innerText = "Enhancements";
+    enhancements.append(enhancementsLink);
+    nav.append(enhancements);
+    
+    const resources = document.createElement("h6");
+    const resourcesLink = document.createElement("a");
+    resourcesLink.href = "##additional-resources-1";
+    resourcesLink.innerText = "Additional Resources";
+    resources.append(resourcesLink);
+    nav.append(resources);
+    return(nav);
+};
+
 export default {
   transformDOM: ({ document }) => {
     const main = document.querySelector('main');
     //create the container div/section
     const section = document.createElement('div');
     const sectionBreak = document.createElement('hr');
+    // fixLinks(document);
+    
 
-    const fragment = createFragment(document);
-    if (fragment) section.append(fragment);
+    const highlight = document.querySelector('div.parsys_column.cq-colctrl-lt13 div.parsys_column.cq-colctrl-lt13-c0 div.text.parbase.section');
+    // console.log(highlight.innerText.trim().replaceAll(" ","-").replaceAll(":","").toLowerCase());
+    const title = highlight.cloneNode(true)
+    title.className = "";
+    if (highlight) section.append(title);
 
-    const sectionMetadata = createSectionMetadata(document, 'gray, section-top-padding-small, section-padding-none');
+
+    const topSectionMeta = createDoublSM(document, 'purple-blue-gradient, background-image-narrow, text-light, section-padding-small, text-75');
+    if(topSectionMeta) section.append(topSectionMeta);
+
+    section.append(document.createElement('hr'));
+
+    
+    const nav = createTable(document);
+    section.append(nav);
+
+    const rule = createInternalDivider(document);
+    section.append(rule);
+
+
+    const sectionMetadata = createSM(document, 'text-center, jump-nav, block-padding-none');
     if(sectionMetadata) section.append(sectionMetadata);
 
     section.append(document.createElement('hr'));
 
-    const vidHero = createHero(document);
-    if (vidHero) section.append(vidHero);
+    const essentials = document.createElement("h2");
+    essentials.innerText = "The Essentials";
+    section.append(essentials)
 
-    const sectionMetadata2 = createSectionMetadata(document, 'text-link-caret-left, section-top-padding-none');
-    if(sectionMetadata2) section.append(sectionMetadata2);
+
+    const Top = createSection(document, document.querySelectorAll("div.par.parsys div.parsys_column.cq-colctrl-lt3")[1]);
+    if (Top) section.append(Top);
+
+    const rule2 = createInternalDivider(document);
+    section.append(rule2);
+
+    const Enhancements = document.createElement("h2");
+    Enhancements.innerText = "Enhancements";
+    section.append(Enhancements);
+
+    const middle = createSection(document, document.querySelectorAll("div.par.parsys div.parsys_column.cq-colctrl-lt3")[2]);
+    if (middle) section.append(middle);
+
+    const rule3 = createInternalDivider(document);
+    section.append(rule3);
+
+    const Resources = document.createElement("h2");
+    Resources.innerText = "Additional Resources";
+    section.append(Resources);
+
+    const bottom = createSection(document, document.querySelectorAll("div.par.parsys div.parsys_column.cq-colctrl-lt3")[3]);
+    if (bottom) section.append(bottom);
+    
+    const sectionMetadata3 = createDoublSM2(document, 'columns-60-40, section-top-padding-small, section-padding-large, form-content-right');
+    if(sectionMetadata3) section.append(sectionMetadata3);
 
     section.append(document.createElement('hr'));
 
-    const lhrail = createLeftHandRail( document,);
-    console.log(lhrail);
-    if (lhrail) section.append(lhrail);
+    const question = document.createElement("p");
+    const link = document.createElement("a");
+    link.href = "/en/academic/contact-academic";
+    link.innerText = "Have a Question? Contact us";
+    question.append(link);
+    section.append(question);
 
-    const divider = createDivider(document);
-    if (divider) section.append(divider);
-
-    const rightHR = createRightHandRail(document);
-    if (rightHR) section.append(rightHR);
-
-    const sectionMetadata3 = createSM(document);
-    if(sectionMetadata3) section.append(sectionMetadata3);
+    const sectionMetadata4 = createDoublSM2(document, 'button-center, text-link-large, gray');
+    if(sectionMetadata4) section.append(sectionMetadata4);
   
     const meta = createMetadataBlock(document);
     if (meta) section.append(meta);
