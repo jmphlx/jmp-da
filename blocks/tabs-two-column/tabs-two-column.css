@@ -1,3 +1,7 @@
+.tabs-two-column {
+  margin-bottom: 3.2rem;
+}
+
 .tabs-list {
   padding-left: 5%;
   padding-top: 1em;
@@ -42,7 +46,7 @@
   border: 1px solid var(--grayRule);
   border-radius: 5px 5px 0 0;
   padding: 8px 16px;
-  background-color: var(--gray);
+  background-color: #fafafa;
   color: var(--blue);
   font-family: var(--font-secondary);
   font-size: 1.5rem;
@@ -213,8 +217,11 @@ div.tabs-wrapper div.tabs.block div.tabs-list .tabs-tab {
     align-items: center;
     background: linear-gradient(to right, #fafafa 50%, #ffffff 50%);
     .column-1,  .column-2 {
-      padding: 0 1.6rem;
+      padding: 0 2.4rem;
       width: 50%;
+      p, h1, h2, h3 ,h4 ,h5, h6 {
+        text-align: left !important;
+      }
     }
   }
   @media (width <= 800px) {
@@ -226,7 +233,7 @@ div.tabs-wrapper div.tabs.block div.tabs-list .tabs-tab {
       border: 1px solid var(--grayRule);
       border-radius: 5px 5px 0 0;
       padding: 8px 16px;
-      background-color: var(--gray);
+      background-color: #fafafa;
       color: var(--blue);
       font-family: var(--font-secondary);
       font-size: 1.5rem;
