@@ -129,7 +129,7 @@ div.listgroup-fixed, div.listgroup  {
         filter: saturate(1);
       }
       .navigation-title {
-        color: var(--orange);
+        color: var(--link-hover-color);
       }
       .title {
         color: var(--blue);

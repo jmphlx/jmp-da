@@ -249,7 +249,7 @@
   }
   /* H6 labels */ :is(h6):has(+ :is(h1, h2, h3, h4, h5)) {
     font-family: "anova-bold", sans-serif;
-    color: var(--orange);
+    color: var(--blue);
     text-transform: uppercase;
     font-size: 1.4rem;
     padding-bottom: .25rem;

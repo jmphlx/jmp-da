@@ -169,7 +169,7 @@ div.listgroup-custom  {
     }
     :hover {
       .navigation-title, .resourceType, .displayLabel {
-        color: var(--orange);
+        color: var(--link-hover-color);
       }
       .title {
         color: var(--blue);
