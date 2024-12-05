@@ -1487,6 +1487,11 @@ main img {
     }
   }
 }
+.image-center {
+  p:has(picture) {
+    text-align: center;
+  }
+}
 .icon {
   display: inline-block;
   height: 24px;
