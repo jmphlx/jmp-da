@@ -1483,7 +1483,7 @@ main img {
 @media (width <=900px) {
   .image-size-50, .image-size-60, .image-size-70, .image-size-80, .image-size-90, .image-size-100 {
     img {
-      width: 100%;
+      width: 100% !important;
     }
   }
 }
