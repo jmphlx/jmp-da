@@ -40,6 +40,9 @@ const createMetadataBlock = (document) => {
   const jmpMeta = document.querySelectorAll('[property="jmp"]');
   if (jmpMeta) {
     const splitChar = '|';
+    meta.nav = ["/en/statistics-knowledge-portal/nav"];
+    meta.suffix =  ["| Introduction to Statistics | JMP"];
+    meta.pageStyle = ["skp"];
     meta.resourceType = [];
     meta.resourceOptions = [];
     meta.capability = [];
@@ -171,22 +174,14 @@ const createFragment = (document, link) => {
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
-const createEmbed = (document) => {
+const createEmbed = (document, link) => {
   const cells = [
     ['embed'],
   ]
-  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt8-c1 div.styledcontainer.parbase div.container.shaded.rounded.bordered div.par.parsys div.videoBrightcove.section');
-  console.log("LOOK HERE");
-  if (lhText){
-  console.log(lhText.firstElementChild.firstElementChild.getAttribute("data-video-id"));
-  const link = lhText.firstElementChild.firstElementChild.getAttribute("data-video-id");
-
-
   const anchor = document.createElement('a');
   anchor.href = link;
   anchor.innerText = link;
   cells.push([anchor]);
-};
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
@@ -239,160 +234,301 @@ const createDoublSM2 = (document, style) => {
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
 };
 
+const createContent = (document) => {
+  const body = document.querySelector("div.parsys_column.cq-colctrl-lt1 div.parsys_column.cq-colctrl-lt1-c1");
+  const content = document.createElement("div");
 
-const createSection = (document, section) => {
-  const cells = [['columns (text-left)'],]
+  console.log(body);
+  console.log(body.children);
 
-  console.log(section);
+  const children = body.children;
+;
+  for (var i = 0; i < children.length; i++) {
+    const kid = children[i].cloneNode(true);
+    console.log(kid)
 
-  const left = section.querySelector("div.parsys_column.cq-colctrl-lt3 div.parsys_column.cq-colctrl-lt3-c0");
-  const middle = section.querySelector("div.parsys_column.cq-colctrl-lt3 div.parsys_column.cq-colctrl-lt3-c1");
-  const right = section.querySelector("div.parsys_column.cq-colctrl-lt3 div.parsys_column.cq-colctrl-lt3-c2"); 
 
-  const port = left.cloneNode(true);
-  const aft = middle.cloneNode(true);
-  const starboard = right.cloneNode(true);
 
-  const bobs = [port,aft,starboard];
+    if (kid.className === "styledcontainer parbase") {
+      const peek = kid.firstElementChild;
+      console.log(peek.className);
+      if (peek.className === "container float-right aside "){
+        const col2 = children[i+1].cloneNode(true);
+        const blueBoy = createBlueColumns(document,kid, col2);
+        content.append(blueBoy);
+        i += 1;
+        console.log(i);
+      } else if (peek.className === "container compact aside "){
+        const blueGirl = createBlueSection(document,peek);
+        content.append(blueGirl);
+      }else if (peek.className === "container  aside "){
+        const accordion = createStyledAccordion(document,peek);
+        content.append(accordion);
+      };
 
-  for (var i = 0; i < 3; i++) {
-    const content = document.createElement("div");
-    console.log("this is the section:");
-    console.log(bobs[i]);
+    }else if (kid.className === "text parbase section"){
+      if (kid.firstElementChild.className ==="boxed"){
+        console.log("that top section");
+        const topper = createTopper(document, kid);
+        content.append(topper);
+      } else if (kid.firstElementChild.firstElementChild){
+        if (kid.firstElementChild.firstElementChild.tagName === "TABLE"){
+          console.log("DREW LOOK WE DID IT WILD SUCCESS!!!!!");
+          const myTable = createMyTable(document,kid.firstElementChild.firstElementChild.firstElementChild);
+          content.append(myTable);
+        }else{content.append(kid);};
 
-    const pic = document.createElement("img");
-    const originPic = bobs[i].querySelector("div.image.parbase.section");
-    console.log("this is the pic");
-    console.log(originPic);
-    if (originPic.children[1].firstElementChild.hasAttribute("data-asset")){
-      pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +originPic.children[1].firstElementChild.getAttribute("data-asset");
-      console.log("found it!");
-    } else {
-      pic.src = "https://www.jmp.com" + originPic.getAttribute("src");
-    }
+      }else{
+        console.log("regular text");
+        content.append(kid);
+      };
+    } else if (kid.className === "image parbase section"){
+      const pic = document.createElement("img");
+      console.log("the image");
+      if (kid.children[1].firstElementChild.hasAttribute("data-asset")){
+        pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +kid.children[1].firstElementChild.getAttribute("data-asset");
+      } else {
+        pic.src = "https://www.jmp.com" + originPic.getAttribute("src");
+      }
+      content.append(pic);
+      if (kid.children[1].children[1]){
+        const caption = createCaption(document,kid.children[1].children[1].innerText);
+        content.append(caption);
+      };
+    }else if (kid.className === "accordion parbase"){
+      const accordion = createAccordion(document,kid);
+      content.append(accordion);
+    } else if (kid.className === "lightbox section"){
+      if (kid.firstElementChild.className === "screenshot "){
+        const pic = document.createElement("img");
+        console.log("the image");
+        const originPic = kid.querySelectorAll("span[data-cmp-src]");
+        console.log(kid);
+        console.log(originPic);
+        pic.src = "https://www.jmp.com" + originPic[0].getAttribute("data-cmp-src");
+        content.append(pic);
+        console.log(pic);
+      }else if (kid.firstElementChild.className === "video "){
+        const placeholder = kid.querySelectorAll("iframe[src]");
+        console.log("THIS IS THE VIDEO");
+        console.log(placeholder);
+        const link = placeholder[0].getAttribute("src");
+        const embed = createEmbed(document,link);
+        content.append(embed);
+      };
+    };
 
-    let text = bobs[i].querySelectorAll("div.text.parbase.section");
-
-    fixLinks(document,text);
-
-    content.append(text[0]);
-    content.append(pic);
-    content.append(text[1]);
-    content.append(text[2]);
-    bobs[i] = content;
   };
 
-  cells.push(bobs);
-  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
-
-};
-
-
-const createLastSection = (document, section) => {
-  const cells = [['columns (text-left)'],]
-
-  console.log(section);
-
-  const left = section.querySelector("div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0");
-  const right = section.querySelector("div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c1"); 
-
-  const port = left.cloneNode(true);
-  const starboard = right.cloneNode(true);
-
-  const bobs = [port,starboard];
-
-  for (var i = 0; i < 2; i++) {
-    const content = document.createElement("div");
-    console.log("this is the section:");
-    console.log(bobs[i]);
-
-    const pic = document.createElement("img");
-    const originPic = bobs[i].querySelector("div.image.parbase.section");
-    console.log("this is the pic");
-    console.log(originPic);
-    if (originPic.children[1].firstElementChild.hasAttribute("data-asset")){
-      pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +originPic.children[1].firstElementChild.getAttribute("data-asset");
-      console.log("found it!");
-    } else {
-      pic.src = "https://www.jmp.com" + originPic.getAttribute("src");
-    }
-
-    const text = bobs[i].querySelectorAll("div.text.parbase.section");
-
-    fixLinks(document,text);
-    content.append(text[0]);
-    content.append(pic);
-    content.append(text[1]);
-    content.append(text[2]);
-    bobs[i] = content;
-  };
-
-
-
-  cells.push(bobs);
-  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
-
-};
-
-const fixLinks = (document, section) => {
-  const title = document.querySelector("div.parsys_column.cq-colctrl-lt13 div.parsys_column.cq-colctrl-lt13-c0 div.text.parbase.section div h1");
   
-  const highlight = title.cloneNode(true);
 
-  const path = highlight.innerText.trim().replaceAll(" ","-").replaceAll(":","").toLowerCase();
+  return(content);
+};
 
-  console.log("checking if link path is correct");
-  console.log(title);
-  console.log(highlight);
-  console.log(path);
+
+const createMyTable = (document,section) => {
+  const cells = [['table (table, striped)'],];
 
   console.log(section);
 
-  console.log(section[2]);
 
-  const links = section[section.length-1].querySelectorAll("ul.list-arrow li a");
-  console.log(links);
-  for (let link of links) {
-    console.log(link.href);
-    const pointer = link.href.split("www.jmp.com")[1];
-    console.log(typeof pointer)
-    // const destination = pointer.cloneNode(true);
+  const content = [];
+  const children = section.children
+  for (var i = 0; i < children.length; i++) {
+    const myRow = []
+    const row = children[i];
+    const inCells = row.children;
+    for (let cell of inCells){
+      myRow.push(cell.innerText);
+    };
+    cells.push(myRow);
+  };
 
-    
-    if (link.href.includes("#m-") ) {
-      console.log("WE GOT A HIT GAMERS");
-      link.href = `/modals/en/course-materials/${path}/${pointer}`;
-      console.log(link.href);
+
+
+  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
+};
+
+const createStyledAccordion = (document, section) => {
+  const cells = [['accordion (skp-blue-accordion)'],];
+
+  let accordion = null;
+
+  if (section.children[1].firstElementChild.className === "accordionwrapper parbase"){
+    accordion = section.children[1].firstElementChild.firstElementChild.firstElementChild.firstElementChild;
+  }else {
+    console.log("this should have ran goddamit");
+    accordion = section.children[1];
+  };
+  
+  const header = accordion.children[0];
+  const title = document.createElement("h3");
+  const style = document.createElement("b");
+  style.innerText = header.innerText;
+  title.append(style);
+
+  const summary = accordion.children[1];
+  const children = summary.firstElementChild.children;
+  const content = document.createElement("div");
+  for (var i = 0; i < children.length; i++) {
+    const kid = children[i].cloneNode(true);
+    if (kid.className === "text parbase section"){
+        content.append(kid);
+    } else if (kid.className === "image parbase section"){
+      const pic = document.createElement("img");
+      console.log("the image");
+      if (kid.children[1].firstElementChild.hasAttribute("data-asset")){
+        pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +kid.children[1].firstElementChild.getAttribute("data-asset");
+      } else {
+        pic.src = "https://www.jmp.com" + originPic.getAttribute("src");
+      }
+      content.append(pic);
+      if (kid.children[1].children[1]){
+        const caption = document.createElement("p");
+        const italics = document.createElement("i");
+        italics.innerText = kid.children[1].children[1].innerText;
+        caption.append(italics);
+        content.append(caption);
+      };
     };
   };
+
+  const output = [title,content];
+  cells.push(output);
+
+  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
+};
+
+const createAccordion = (document, section) => {
+  const cells = [['accordion (skp-blue-accordion)'],];
+
+  const accordion = section
+  
+  const header = accordion.children[0];
+  const title = document.createElement("h3");
+  const style = document.createElement("b");
+  style.innerText = header.innerText;
+  title.append(style);
+
+  const summary = accordion.children[1];
+  const children = summary.firstElementChild.children;
+  const content = document.createElement("div");
+  for (var i = 0; i < children.length; i++) {
+    const kid = children[i].cloneNode(true);
+    if (kid.className === "text parbase section"){
+        content.append(kid);
+    } else if (kid.className === "image parbase section"){
+      const pic = document.createElement("img");
+      console.log("the image");
+      if (kid.children[1].firstElementChild.hasAttribute("data-asset")){
+        pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +kid.children[1].firstElementChild.getAttribute("data-asset");
+      } else {
+        pic.src = "https://www.jmp.com" + originPic.getAttribute("src");
+      }
+      content.append(pic);
+      if (kid.children[1].children[1]){
+        const caption = document.createElement("p");
+        const italics = document.createElement("i");
+        italics.innerText = kid.children[1].children[1].innerText;
+        caption.append(italics);
+        content.append(caption);
+      };
+    };
+  };
+
+  const output = [title,content];
+  cells.push(output);
+
+  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
 
-const createTable = (document) => {
-  const nav = document.createElement("ul");
 
-    const essentials = document.createElement("h6");
-    const essentialsLink = document.createElement("a");
-    essentialsLink.href = "#the-essentials-1";
-    essentialsLink.innerText = "The Essentials";
-    essentials.append(essentialsLink);
-    nav.append(essentials);
+const createBlueSection = (document, stuff) => {
+  const cells = [['columns (skp-blue-column, no-gray-border)'],];
 
-    const enhancements = document.createElement("h6");
-    const enhancementsLink = document.createElement("a");
-    enhancementsLink.href = "#enhancements-1";
-    enhancementsLink.innerText = "Enhancements";
-    enhancements.append(enhancementsLink);
-    nav.append(enhancements);
-    
-    const resources = document.createElement("h6");
-    const resourcesLink = document.createElement("a");
-    resourcesLink.href = "##additional-resources-1";
-    resourcesLink.innerText = "Additional Resources";
-    resources.append(resourcesLink);
-    nav.append(resources);
-    return(nav);
+  const content = document.createElement("div");
+  const children = stuff.children[1].children;
+  for (var i = 0; i < children.length; i++) {
+    const kid = children[i].cloneNode(true);
+    if (kid.className === "text parbase section"){
+        content.append(kid);
+    } else if (kid.className === "image parbase section"){
+      const pic = document.createElement("img");
+      console.log("the image");
+      if (kid.children[1].firstElementChild.hasAttribute("data-asset")){
+        pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +kid.children[1].firstElementChild.getAttribute("data-asset");
+      } else {
+        pic.src = "https://www.jmp.com" + originPic.getAttribute("src");
+      }
+      content.append(pic);
+      if (kid.children[1].children[1]){
+
+        const caption = document.createElement("p");
+        const italics = document.createElement("i");
+        italics.innerText = kid.children[1].children[1].innerText;
+        caption.append(italics);
+        content.append(caption);
+      };
+    };
+  };
+
+  const output = [content];
+  cells.push(output);
+
+  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
+
+const createCaption = (document, text) => {
+  const cells = [['columns (figure, text-center)'],];
+  const caption = document.createElement("p");
+  const italics = document.createElement("i");
+  italics.innerText = text;
+  caption.append(italics);
+
+  const content = [caption];
+  cells.push(content);
+
+  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
+};
+
+const createTopper = (document, section) => {
+  const cells = [['columns (box-shadow)'],];
+
+  const content = [section];
+  cells.push(content);
+
+  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
+};
+
+
+const createBlueColumns = (document, col1,col2) => {
+  const cells = [['styled-columns (blue-aside)'],]
+  cells.push(["column-blue","column-2"]);
+  const leftCol = document.createElement("div");
+
+  const kids = col1.firstElementChild.children[1].children;
+
+  for (let el of kids) {
+    if (el.className === "text parbase section"){
+      leftCol.append(el.cloneNode(true));
+    }  else if (el.className === "videoBrightcove section"){
+      const link = el.firstElementChild.firstElementChild.getAttribute("data-video-id");
+      const anchor = document.createElement('a');
+      anchor.href = link;
+      anchor.innerText = link;
+      leftCol.append(anchor);
+    };
+  };
+
+  console.log(leftCol);
+
+  cells.push([leftCol,col2]);
+
+  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
+
+};
+
 
 export default {
   transformDOM: ({ document }) => {
@@ -403,74 +539,31 @@ export default {
     // fixLinks(document);
     
 
-    const highlight = document.querySelector('div.parsys_column.cq-colctrl-lt13 div.parsys_column.cq-colctrl-lt13-c0 div.text.parbase.section');
+    const highlight = document.querySelector('div.parsys_column.cq-colctrl-lt1 div.parsys_column.cq-colctrl-lt1-c1 div.title.section h1');
     // console.log(highlight.innerText.trim().replaceAll(" ","-").replaceAll(":","").toLowerCase());
-    const title = highlight.cloneNode(true)
-    title.className = "";
+    let title = null;
+    if (highlight) {
+      title = highlight.cloneNode(true)
+      title.className = "";
+    };
+    
     if (highlight) section.append(title);
 
 
-    const topSectionMeta = createDoublSM(document, 'purple-blue-gradient, background-image-narrow, text-light, section-padding-small, text-75');
+    const topSectionMeta = createSM(document, 'section-padding-none');
     if(topSectionMeta) section.append(topSectionMeta);
 
     section.append(document.createElement('hr'));
 
     
-    const nav = createTable(document);
-    section.append(nav);
-
-    const rule = createInternalDivider(document);
-    section.append(rule);
+    const body = createContent(document);
+    section.append(body);
 
 
-    const sectionMetadata = createSM(document, 'text-center, jump-nav, block-padding-none');
+    const sectionMetadata = createDoublSM2(document, 'columns-75-25, section-top-padding-xsmall');
     if(sectionMetadata) section.append(sectionMetadata);
 
-    section.append(document.createElement('hr'));
-
-    const essentials = document.createElement("h2");
-    essentials.innerText = "The Essentials";
-    section.append(essentials)
-
-
-    const Top = createSection(document, document.querySelectorAll("div.par.parsys div.parsys_column.cq-colctrl-lt3")[1]);
-    if (Top) section.append(Top);
-
-    const rule2 = createInternalDivider(document);
-    section.append(rule2);
-
-    const Enhancements = document.createElement("h2");
-    Enhancements.innerText = "Enhancements";
-    section.append(Enhancements);
-
-    const middle = createSection(document, document.querySelectorAll("div.par.parsys div.parsys_column.cq-colctrl-lt3")[2]);
-    if (middle) section.append(middle);
-
-    const rule3 = createInternalDivider(document);
-    section.append(rule3);
-
-    const Resources = document.createElement("h2");
-    Resources.innerText = "Additional Resources";
-    section.append(Resources);
-
-    const bottom = createSection(document, document.querySelectorAll("div.par.parsys div.parsys_column.cq-colctrl-lt3")[3]);
-    if (bottom) section.append(bottom);
     
-    const sectionMetadata3 = createDoublSM2(document, 'columns-60-40, section-top-padding-small, section-padding-large, form-content-right');
-    if(sectionMetadata3) section.append(sectionMetadata3);
-
-    section.append(document.createElement('hr'));
-
-    const question = document.createElement("p");
-    const link = document.createElement("a");
-    link.href = "/en/academic/contact-academic";
-    link.innerText = "Have a Question? Contact us";
-    question.append(link);
-    section.append(question);
-
-    const sectionMetadata4 = createDoublSM2(document, 'button-center, text-link-large, gray');
-    if(sectionMetadata4) section.append(sectionMetadata4);
-  
     const meta = createMetadataBlock(document);
     if (meta) section.append(meta);
     
