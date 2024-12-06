@@ -1808,19 +1808,18 @@ div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-60-40, div.
 }
 /* section widths */
 .section-width-50 {
-  width: 50%;
-  margin: 0 auto;
-  @media (width <=600px) {
-    width: unset;
-    margin: unset;
+  > div {
+    width: 50%;
+  }
+}
+.section-width-66 {
+  > div {
+    width: 66%;
   }
 }
 .section-width-75 {
-  width: 75%;
-  margin: 0 auto;
-  @media (width <=600px) {
-    width: unset;
-    margin: unset;
+  > div {
+    width: 75%;
   }
 }
 /* Resource Center Articles */
