@@ -1875,6 +1875,13 @@ div.interview-body {
   }
 }
 /* text width */
+.text-50, .text-60, .text-66, .text-75 {
+  .default-content-wrapper {
+    p.button-container {
+      width: unset;
+    }
+  }
+}
 .text-50 {
   .default-content-wrapper {
     h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
