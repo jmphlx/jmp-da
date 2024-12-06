@@ -418,8 +418,10 @@ sub {
   }
 }
 .heading-center {
-  h1, h2, h3, h4, h5, h6 {
-    text-align: center !important;
+  div:first-child {
+    h1, h2, h3, h4, h5, h6 {
+      text-align: center;
+    }
   }
 }
 .heading-left {
@@ -1801,6 +1803,23 @@ div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-60-40, div.
         margin-bottom: 2rem;
       }
     }
+  }
+}
+/* section widths */
+.section-width-50 {
+  width: 50%;
+  margin: 0 auto;
+  @media (width <=600px) {
+    width: unset;
+    margin: unset;
+  }
+}
+.section-width-75 {
+  width: 75%;
+  margin: 0 auto;
+  @media (width <=600px) {
+    width: unset;
+    margin: unset;
   }
 }
 /* Resource Center Articles */
