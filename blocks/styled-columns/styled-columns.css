@@ -176,9 +176,9 @@
         position: absolute;
         right: -3.25%;
         top: 50%;
-        transform: translate(21px, -25px);
+        transform: translate(21px, -25px) !important;
         z-index: 1;
-        width: 25px;
+        width: 25px !important;
         margin: 5px;
         /* @media @r-tablet {
           right: -1.25em;
@@ -260,9 +260,9 @@
           margin: 0 auto;
         }
         &:after {
-          left: calc(0% - 25px);
-          transform: rotate(90deg);
-          bottom: -72px;
+          left: calc(0% - 0px) !important;
+          transform: rotate(90deg) !important;
+          bottom: -64px !important;
           top: auto;
           margin: 0 auto;
           /* rotate: 90deg; */
