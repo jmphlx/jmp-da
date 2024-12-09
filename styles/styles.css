@@ -281,7 +281,7 @@ h1 + h5 {
 }
 :is(h3) {
   &:has(+ :is(h4)) {
-    margin-bottom: .5rem !important;
+    margin-bottom: 1rem !important;
   }
   &:has(+ :is(p, ul, ol)) {
     margin-bottom: .5rem !important;
@@ -317,6 +317,11 @@ h1 + h5 {
     }
   }
 }
+}
+:is(h5) {
+  &:has(+ :is(p, ul, ol)) {
+    margin-bottom: .5rem !important;
+  }
 }
 :is(h6) {
   &:has(+ :is(h1, h2, h4)) {
