@@ -75,7 +75,7 @@
   width: var(--slide-content-width, auto);
 }
 .carousel-nav-off {
-  .carousel .carousel-slide-indicators {
+  &.carousel .carousel-slide-indicators, .carousel .carousel-slide-indicators {
     display: none;
   }
 }
