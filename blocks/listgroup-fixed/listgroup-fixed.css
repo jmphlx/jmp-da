@@ -48,7 +48,7 @@ div.listgroup-fixed, div.listgroup  {
     }
 }
 
-.listgroup ul.col-size-5 li, .listgroup-fxed ul.col-size-5 li {
+.listgroup ul.col-size-5 li, .listgroup-fixed ul.col-size-5 li {
     margin: 0 1.25% 1.5rem 1.25%;
     width: 17.5%;
     @media (width <= 900px) {
