@@ -462,7 +462,17 @@ function sortPageList(pageList, sortBy, sortOrder) {
         return (a.title < b.title ? -1 : 1);
       });
       break;
-    case 'releasedate':
+    case 'releaseDate':
+      sortedList.sort((a, b) => {
+        if (sortOrder !== undefined && sortOrder === 'descending') {
+          return ((new Date(a.releaseDate) - new Date(b.releaseDate)) < 0
+            ? 1 : -1);
+        }
+        return ((new Date(a.releaseDate) - new Date(b.releaseDate)) < 0
+          ? -1 : 1);
+      });
+      break;
+    case '':
       sortedList.sort((a, b) => {
         if (sortOrder !== undefined && sortOrder === 'descending') {
           return ((new Date(a.releaseDate) - new Date(b.releaseDate)) < 0
@@ -475,11 +485,9 @@ function sortPageList(pageList, sortBy, sortOrder) {
     default:
       sortedList.sort((a, b) => {
         if (sortOrder !== undefined && sortOrder === 'descending') {
-          return ((new Date(a.releaseDate) - new Date(b.releaseDate)) < 0
-            ? 1 : -1);
+          return (a[sortBy]).localeCompare(b[sortBy], undefined, { numeric: true }) * -1;
         }
-        return ((new Date(a.releaseDate) - new Date(b.releaseDate)) < 0
-          ? -1 : 1);
+        return (a[sortBy]).localeCompare(b[sortBy], undefined, { numeric: true });
       });
   }
   return sortedList;

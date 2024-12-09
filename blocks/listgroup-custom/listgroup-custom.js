@@ -332,7 +332,7 @@ export default async function decorate(block) {
   // Ignored if filter is a json file.
   const startingFolder = config.startingFolder;
   const filters = filterField?.includes('.json') ? await getJsonFromUrl(filterField) : buildSimplifiedFilter(filterField, startingFolder);
-  const sortBy = config.sortBy?.toLowerCase();
+  const sortBy = config.sortBy;
   const sortOrder = config.sortOrder?.toLowerCase();
   const groupBy = config.groupBy;
   const filterBy = config.filterBy;
