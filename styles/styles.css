@@ -1189,7 +1189,9 @@ a:hover {
     color: var(--link-hover-color) !important;
   }
 }
-.modal-text-link {
+.modal-text-link, .modal-text-link-light {
+  transition-duration: 0.5s;
+  transition-timing-function: ease;
   .button-container {
     margin: 1em 0 !important;
   }
@@ -1202,7 +1204,7 @@ a:hover {
     min-width: 200px;
     margin: 0 auto !important;
     padding: 5px !important;
-    transition-duration: 0.2s;
+    transition-duration: 0.5s;
     transition-timing-function: ease;
     position: relative;
     z-index: 1;
@@ -1210,18 +1212,20 @@ a:hover {
       content: '\25B6';
       display: inline-block;
       vertical-align: middle;
-      width: 1em;
-      height: 1em;
+      width: 1.6rem;
+      height: 1.6rem;
       text-align: end;
       color: #333333;
-      line-height: 1.15;
-      font-size: 1.2rem;
+      line-height: 1.35;
+      font-size: 1.3rem;
       position: relative;
       padding: 3px;
       margin-right: 6px;
       bottom: 2px;
       border-radius: 18px;
       border: 2px solid #333333;
+      transition-duration: 0.5s;
+      transition-timing-function: ease;
     }
   }
   a.button:hover {
@@ -1229,6 +1233,16 @@ a:hover {
     &:before {
       color: var(--blue) !important;
       border-color: var(--blue);
+    }
+  }
+}
+.modal-text-link-light {
+  transition-duration: .5s !important;
+  transition-timing-function: ease;
+  a.button {
+    &:before {
+      color: #ffffff;
+      border: 2px solid #ffffff;
     }
   }
 }
