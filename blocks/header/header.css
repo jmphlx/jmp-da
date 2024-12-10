@@ -315,7 +315,7 @@ header nav .nav-sections ul > li > ul > li {
   header nav .nav-sections > ul > li[aria-expanded="false"] {
     > p {
       padding-bottom: 3px;
-      margin-bottom: 0;
+      margin-bottom: 0 !important;
       &:after {
         content: '';
         display: inline-block;
