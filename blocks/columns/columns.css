@@ -1138,9 +1138,9 @@ div.bullet-arrow {
 @media (width <=900px) {
   div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols{
     div{
-      div{
+      /* div{
         padding-bottom: 3.2rem;
-      }
+      } */
       div:last-child{
         padding-bottom:0;
       }
@@ -1169,4 +1169,19 @@ div.bullet-arrow {
       object-fit: contain !important;
     }
   }
+}
+
+.row-padding {
+  div {
+    padding-bottom: 1rem;
+  }
+  @media (width <= 900px) {
+    div {
+      padding-bottom: 0;
+    }
+  }
+}
+
+div:empty {
+  padding-bottom: 0 !important;
 }

@@ -30,7 +30,7 @@ div.listgroup-fixed, div.listgroup  {
 }
 
 .listgroup ul.col-size-3 li, .listgroup-fixed ul.col-size-3 li {
-    width: 22.5%;
+    width: 30%;
     margin: 0 1.25% 1.5rem 1.25%;
     @media (width <= 600px) {
         width: 47.5%;
