@@ -352,6 +352,11 @@ h6:has(+ h6){
  margin-bottom: .25em;
  opacity: .7;
 }
+:is(p) {
+  &:has(+ :is(ul, ol)) {
+    margin-bottom: .5rem !important;
+  }
+}
 
 code, pre {
   font-family: var(--fixed-font-family);
@@ -626,6 +631,7 @@ ul {
         margin-left: 8px;
         position: relative;
         text-indent: -8px;
+        margin-bottom: 4px;
         &:has(ul) {
           margin-left: 0;
           ul {

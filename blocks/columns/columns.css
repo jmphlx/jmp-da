@@ -1034,6 +1034,7 @@ div.bullet-arrow {
     padding: 0 0 0 2rem;
     li {
       text-indent: -8px;
+      margin-bottom: 4px;
     }
     li::marker {
       content: '';
