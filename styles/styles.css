@@ -500,9 +500,15 @@ main .section {
   }
   &.section-padding-medium {
     padding-bottom: 64px !important;
+    @media (width <= 900px) {
+      padding-bottom: 32px !important;
+    }
   }
   &.section-padding-large {
     padding-bottom: 96px !important;
+    @media (width <= 900px) {
+      padding-bottom: 32px !important;
+    }
   }
   &.section-padding-xlarge {
     padding-bottom: 128px;
