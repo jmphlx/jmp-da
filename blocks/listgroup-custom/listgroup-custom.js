@@ -184,7 +184,7 @@ async function constructDropdown(dictionary, filterBy, defaultFilterOption, tran
   filterDropdown.append(allDropdownItem);
 
   let useTranslation;
-  if (translateFilter != undefined) {
+  if (translateFilter !== undefined) {
     const pageLanguage = getLanguage();
     const data = await getJsonFromUrl(translateFilter);
     const { data: translations } = data[pageLanguage];
@@ -194,7 +194,8 @@ async function constructDropdown(dictionary, filterBy, defaultFilterOption, tran
   Object.keys(dictionary).sort().forEach((filterValue) => {
     if (filterValue.length > 0) {
       const dropdownItem = createTag('option', { value: `${filterValue}` });
-      dropdownItem.innerText = useTranslation != undefined ? useTranslation[filterValue] : filterValue;
+      dropdownItem.innerText = useTranslation !== undefined ? useTranslation[filterValue]
+        : filterValue;
       filterDropdown.append(dropdownItem);
     }
   });
@@ -368,7 +369,12 @@ export default async function decorate(block) {
   if (filterDictionary) {
     const defaultFilterOption = config.defaultFilterOption;
 
-    const filterDropdown = await constructDropdown(filterDictionary, filterBy, defaultFilterOption, translateFilter);
+    const filterDropdown = await constructDropdown(
+      filterDictionary,
+      filterBy,
+      defaultFilterOption,
+      translateFilter,
+    );
 
     // When value changes, clear out results and add matching values.
     filterDropdown.addEventListener('change', () => {
