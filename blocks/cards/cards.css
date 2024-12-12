@@ -127,6 +127,9 @@
     p.button-container {
       margin: 1em 0;
     }
+    ul {
+      padding: 1rem 0 0 2rem;
+    }
   }
   @media (width <=900px) {
     > ul {
@@ -813,6 +816,7 @@
             transition: all 0.5s ease;
             display: block;
             object-fit: cover;
+            opacity: .2;
           }
         }
         &:hover {
@@ -837,6 +841,10 @@
           z-index: 1;
           font-size: var(--heading-font-size-s);
           font-family: "anova-regular", sans-serif;
+        }
+        p, h1,h2, h3, h4 , h5 , h6 {
+          color: var(--white);
+          z-index: 1;
         }
       }
       &:hover {
@@ -955,6 +963,20 @@
         }
         .cards-card-body {
           margin-top: 170px;
+        }
+      }
+    }
+  }
+  &.blue-purple {
+    ul {
+      li {
+        background: linear-gradient(45deg, #0378CD 15%, #643695 95%);
+        .cards-card-body {
+          p.button-container {
+            a {
+              background-color: var(--orange);
+            }
+          }
         }
       }
     }

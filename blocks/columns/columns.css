@@ -1134,6 +1134,9 @@ div.bullet-arrow {
     margin-bottom: 0;
   }
 }
+/* div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
+  padding-bottom: 3.2rem;
+} */
 
 /* @media (width <=900px) {
   div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols{
