@@ -338,6 +338,7 @@ header nav .nav-sections ul > li > ul > li {
     border-bottom: 3px solid var(--orange);
     box-sizing: border-box;
     > p {
+      margin-bottom: 0 !important;
       &:after {
         content: '';
         display: inline-block;
