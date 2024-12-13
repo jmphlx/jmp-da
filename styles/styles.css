@@ -1042,7 +1042,7 @@ a:hover {
     text-indent: -1em;
     a {
       line-height: 1.3;
-      /* margin-left: 1rem; */
+      margin-left: 1rem;
       text-indent: -.5em;
       &:before {
         content: url('../../../icons/arrow-orange.svg');
@@ -1363,6 +1363,7 @@ a:hover {
           font-size: 80%;
         }
         a {
+          margin-left: 0 !important;
           &:before {
             display: none;
           }
@@ -1385,7 +1386,7 @@ a:hover {
     border-radius: 10px;
     box-sizing: border-box;
     line-height: unset !important;
-    padding: 15px !important;
+    padding: 15px 15px 15px 20px !important;
     a {
       width: max-content;
       font-size: 1.6rem;
@@ -1459,7 +1460,7 @@ a:hover {
     background: rgba(0, 0, 0, .025);
     column-count: 3;
     margin: 0 0 10px 0;
-    padding: 5px 20px 20px 36px;
+    padding: 5px 20px 20px 40px;
     border-radius: 0 0 10px 10px;
     li {
       break-inside: avoid-column;
