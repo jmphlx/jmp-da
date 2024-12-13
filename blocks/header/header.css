@@ -491,6 +491,7 @@ header nav .nav-tools ul > li {
   display: flex;
   p {
     display: flex;
+    margin-bottom: 0 !important;
     picture {
       display: flex;
       img {
@@ -586,7 +587,7 @@ header nav .nav-tools .fa-icon {
   header nav .nav-tools ul {
     display: flex;
     justify-content: flex-end;
-    gap: 20px;
+    gap: 20px 16px;
     align-self: center;
   }
 
