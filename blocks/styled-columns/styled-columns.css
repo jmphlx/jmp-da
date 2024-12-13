@@ -323,8 +323,6 @@
   }
 }
   
-
-
 /* venn diagram */
 .section:has(div.leveraging-jmp-venn) {
   background-color: #f5f5f5;
@@ -334,7 +332,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 7em 7em;
-  margin: 3em 0 4em 0;
+  margin: 0 0 6.4rem 0;
   .upper-left, .upper-right, .lower-left, .lower-right {
     width: 100%;
     ul {
@@ -348,10 +346,13 @@
         height: 220px;
         position: absolute;
         right: -50px;
-        top: 50%;
+        top: 175%;
         width: 220px;
         transform: translateY(-50%);
         z-index: 3;
+        @media (width <= 1000px) {
+          top: 49.5%;
+        }
       }
       li {
         align-self: center;
@@ -370,7 +371,7 @@
             height: .66em;
             position: absolute;
             left: 56%;
-            top: 51%;
+            top: 175%;
             transform: translateX(-50%) translateY(-50%);
             width: .66em;
             z-index: 10;
@@ -391,7 +392,7 @@
             height: 220px;
             position: absolute;
             right: -50px;
-            top: 50%;
+            top: 175%;
             width: 220px;
             transform: translateY(-50%);
             z-index: 4;
@@ -401,7 +402,7 @@
             content: '';
             position: absolute;
             right: 0;
-            top: 50%;
+            top: 175%;
             width: 100%;
             z-index: 0;
           }
