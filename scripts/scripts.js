@@ -191,31 +191,84 @@ export function buildLayoutContainer(main) {
   main.querySelectorAll(':scope > .section[data-layout]').forEach((section) => {
     const wrapper = document.createElement('div');
     wrapper.classList.add('layout-wrapper');
-    const numberOfGroups = parseInt(section.getAttribute('data-layout'), 10);
+    const layoutType = section.getAttribute('data-layout');
+    const numberOfGroups = parseInt(layoutType, 10);
 
-    // Create all group divs.
-    for (let i = 1; i <= numberOfGroups; i++) {
-      const noGroupDiv = document.createElement('div');
-      noGroupDiv.classList.add(`group-${i}`);
-      wrapper.append(noGroupDiv);
+    if (layoutType.includes('column')) {
+      buildColumns(wrapper, section, numberOfGroups);
+    } else if (layoutType.includes('accordion')) {
+      console.log('accordion');
+      wrapper.classList.add('accordion-wrapper');
+      buildAccordions(wrapper, section, numberOfGroups);
     }
-
-    // Sort elements into groups. Every time you hit separator, increment group #.
-    let currentGroupNumber = 1;
-
-    [...section.children].forEach((child) => {
-      const curr = wrapper.querySelector(`.group-${currentGroupNumber}`);
-      if (child.classList.contains('divider-wrapper')) {
-        currentGroupNumber += 1;
-        child.remove();
-      } else {
-        curr.append(child);
-      }
-    });
-
-    // Add all groups back to the page.
-    section.append(wrapper);
   });
+}
+
+export function buildColumns(wrapper, section, numberOfGroups) {
+  // Create all group divs.
+  for (let i = 1; i <= numberOfGroups; i++) {
+    const noGroupDiv = document.createElement('div');
+    noGroupDiv.classList.add(`group-${i}`);
+    wrapper.append(noGroupDiv);
+  }
+
+  // Sort elements into groups. Every time you hit separator, increment group #.
+  let currentGroupNumber = 1;
+
+  [...section.children].forEach((child) => {
+    const curr = wrapper.querySelector(`.group-${currentGroupNumber}`);
+    if (child.classList.contains('divider-wrapper')) {
+      currentGroupNumber += 1;
+      child.remove();
+    } else {
+      curr.append(child);
+    }
+  });
+
+  // Add all groups back to the page.
+  section.append(wrapper);
+}
+
+
+export function buildAccordions(wrapper, section, numberOfGroups) {
+  // Create all group divs.
+  for (let i = 1; i <= numberOfGroups; i++) {
+    const summary = document.createElement('summary');
+    summary.className = 'accordion-item-label';
+    summary.classList.add(`accordion-${i}`);
+
+    const body = document.createElement('div');
+    body.className = 'accordion-item-body';
+
+    const details = document.createElement('details');
+    details.className = 'accordion-item';
+    details.classList.add(`accordion-${i}`);
+    details.append(summary, body);
+    wrapper.append(details);
+  }
+
+  // Sort elements into groups. Every time you hit separator, increment group #.
+  let currentGroupNumber = 1;
+
+  [...section.children].forEach((child) => {
+    const curr = wrapper.querySelector(`.accordion-${currentGroupNumber}`);
+    if (child.classList.contains('divider-wrapper')) {
+      currentGroupNumber += 1;
+      console.log(child);
+      const config = readBlockConfig(child.querySelector('div'));
+      console.log(config.accordiontitle);
+      curr.querySelector('summary').prepend(config.accordiontitle);
+      child.remove();
+    } else {
+      curr.querySelector('.accordion-item-body').append(child);
+    }
+  });
+
+  const lastItem = wrapper.querySelector(`.accordion-${numberOfGroups} summary`);
+  lastItem.prepend(section.getAttribute('data-accordiontitle'));
+
+  // Add all groups back to the page.
+  section.append(wrapper);
 }
 
 /** End more JMP */
