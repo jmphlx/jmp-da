@@ -181,29 +181,10 @@ export function wrapImgsInLinks(container) {
 /* JMP HEADER END */
 
 /** JMP Section Group Layout Support */
-/**
- * Builds multi column layout within a section.
- * Expect layout to be written as '# column' i.e. '2 column' or '3 column'.
- * Only intended to support groups of 2 or 3.
- * @param {Element} main The container element
- */
-export function buildLayoutContainer(main) {
-  main.querySelectorAll(':scope > .section[data-layout]').forEach((section) => {
-    const wrapper = document.createElement('div');
-    wrapper.classList.add('layout-wrapper');
-    const layoutType = section.getAttribute('data-layout');
-    const numberOfGroups = parseInt(layoutType, 10);
 
-    if (layoutType.includes('column')) {
-      buildColumns(wrapper, section, numberOfGroups);
-    } else if (layoutType.includes('accordion')) {
-      console.log('accordion');
-      wrapper.classList.add('accordion-wrapper');
-      buildAccordions(wrapper, section, numberOfGroups);
-    }
-  });
-}
-
+/*
+ * Separate the page into multiple divs using the dividers.
+*/
 export function buildColumns(wrapper, section, numberOfGroups) {
   // Create all group divs.
   for (let i = 1; i <= numberOfGroups; i++) {
@@ -229,7 +210,9 @@ export function buildColumns(wrapper, section, numberOfGroups) {
   section.append(wrapper);
 }
 
-
+/*
+ * Separate the page into multiple accordions using the dividers.
+*/
 export function buildAccordions(wrapper, section, numberOfGroups) {
   // Create all group divs.
   for (let i = 1; i <= numberOfGroups; i++) {
@@ -254,9 +237,7 @@ export function buildAccordions(wrapper, section, numberOfGroups) {
     const curr = wrapper.querySelector(`.accordion-${currentGroupNumber}`);
     if (child.classList.contains('divider-wrapper')) {
       currentGroupNumber += 1;
-      console.log(child);
       const config = readBlockConfig(child.querySelector('div'));
-      console.log(config.accordiontitle);
       curr.querySelector('summary').prepend(config.accordiontitle);
       child.remove();
     } else {
@@ -271,6 +252,28 @@ export function buildAccordions(wrapper, section, numberOfGroups) {
   section.append(wrapper);
 }
 
+/**
+ * Builds multi group layout within a section.
+ * Expect layout to be written as '# column' i.e. '2 column' or '3 column'.
+ * OR to use accordions i.e. '2 accordion' or '3 accordion'.
+ * Only intended to support column groups of 2 or 3. Can support any number of accordions.
+ * @param {Element} main The container element
+ */
+export function buildLayoutContainer(main) {
+  main.querySelectorAll(':scope > .section[data-layout]').forEach((section) => {
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('layout-wrapper');
+    const layoutType = section.getAttribute('data-layout');
+    const numberOfGroups = parseInt(layoutType, 10);
+
+    if (layoutType.includes('accordion')) {
+      wrapper.classList.add('accordion-wrapper');
+      buildAccordions(wrapper, section, numberOfGroups);
+    } else {
+      buildColumns(wrapper, section, numberOfGroups);
+    }
+  });
+}
 /** End more JMP */
 
 /**
