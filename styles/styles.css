@@ -737,7 +737,7 @@ a:hover {
     width: 100%;
   }
   .button-container:last-child {
-    margin: 1rem 0 3.2rem 0 !important;
+    margin: 0 0 3.2rem 0 !important;
   }
   &.text-link .button-container {
     text-align: center;
@@ -1863,16 +1863,28 @@ div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-60-40, div.
 .section-width-50 {
   > div {
     width: 50%;
+    margin: auto;
+    @media (width <= 600px) {
+      width: 100%;
+    }
   }
 }
 .section-width-66 {
   > div {
     width: 66%;
+    margin: auto;
+    @media (width <= 600px) {
+      width: 100%;
+    }
   }
 }
 .section-width-75 {
   > div {
     width: 75%;
+    margin: auto;
+    @media (width <= 600px) {
+      width: 100%;
+    }
   }
 }
 /* Resource Center Articles */
