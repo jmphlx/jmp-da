@@ -573,6 +573,9 @@ div.teal-purple-gradient {
 div.purple-lightred-gradient {
   background: linear-gradient(45deg, #643695 15%, #F04B4B 95%);
 }
+div.red-purple-gradient {
+  background: linear-gradient(45deg, #B11A29 15%, #643695 95%);
+}
 div.lightred-purple-gradient {
   background: linear-gradient(45deg, #F04B4B 15%, #643695 95%);
 }
@@ -679,7 +682,7 @@ a:hover {
   display: inline-block;
   text-align: left;
   /* width: max-content; */
-  margin: .5em 1em 2em 0;
+  margin: 1rem 1rem 3.2rem 0;
   line-height: 100%;
   a.button:any-link, button {
     font-family: var(--font-secondary);
@@ -708,52 +711,64 @@ a:hover {
     margin-bottom: 10px !important;
   } */
 }
-.button-center {
+/* .button-center {
   .button-container {
       text-align: center;
       width: 100%;
   }
-  /* .button-container:first-child {
+  .button-container:first-child {
     margin: .5em .5em .5em 50% !important;
   }
   .button-container:last-child {
     margin: .5em 0 2em .5em !important;
-  } */
+  }
   &.text-link .button-container {
     text-align: center;
     width: 100%;
   }
-}
-/* left button in 2 button pair */
-.button-center :is(p.button-container):has(+ :is(p.button-container)) {
-  display: inline-flex;
-  width: 50%;
-  margin: 0 !important;
-  a.button {
-    margin: .5em .5em .5em auto;
-  }
-  @media (width <=600px) {
+} */
+/* 2 buttons centered */
+.button-center {
+  .button-container {
+    text-align: center;
     width: 100%;
-    a.button {
-      margin: .5em auto .5em auto;
+  }
+  &.text-link .button-container {
+    text-align: center;
+    width: 100%;
+  }
+  &:has(.default-content-wrapper p.button-container + p.button-container) {
+    display: flex !important;
+    flex-flow: column wrap;
+    .default-content-wrapper {
+      text-align: center;
+      p.button-container {
+        display: inline-block;
+        width: auto;
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+    @media (width <= 900px) {
+      display: flex !important;
+      flex-flow: column wrap;
+      .default-content-wrapper {
+        margin: auto;
+      }
+    }
+    @media (width <= 600px) {
+      display: block;
+      .default-content-wrapper {
+        margin: auto !important;
+        p.button-container {
+          width: 100%;
+        }
+      }
     }
   }
 }
-/* right button in 2 button pair */
-.button-center p.button-container + p.button-container {
-  display: inline-flex;
-  width: 50%;
-  margin: 0 !important;
-  a.button {
-    margin: .5em auto 2em .5em;
-  }
-  @media (width <=600px) {
-    width: 100%;
-    a.button {
-      margin: .5em auto 2em auto;
-    }
-  }
-}
+
 .button-right {
   p.button-container {
     width: 100%;
