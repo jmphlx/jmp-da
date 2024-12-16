@@ -4,10 +4,11 @@
   "editUrlPattern": "https://da.live/edit#/{{org}}/{{site}}{{pathname}}",
   "plugins": [
     {
-      "id": "jmptags",
-      "title": "JMP Tags",
-      "environments": ["da-edit"],
-      "path": "/tools/tags.html"
+      "id": "da-tags",
+      "title": "AEM Tags",
+      "environments": ["edit"],
+      "daLibrary": true,
+      "url": "https://aem-tags--jmp-da--jmphlx.aem.live/tools/tags.html"
     },
     {
       "id": "datepicker",

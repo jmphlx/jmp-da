@@ -1,18 +1,24 @@
-// Import SDK
-// eslint-disable-next-line import/no-unresolved
 import DA_SDK from 'https://da.live/nx/utils/sdk.js';
+import './tag-browser.js';
 
-// Import Web Component
-import './tag-selector.js';
+async function getAemRepo(project, opts) {
+  const configUrl = `https://admin.da.live/config/${project.org}/${project.repo}`;
+  const resp = await fetch(configUrl, opts);
+  if (!resp.ok) return null;
+  const json = await resp.json();
+  const { value: repoId } = json.data.find((entry) => entry.key === 'aem.repositoryId');
+  if (repoId) return repoId;
+  return null;
+}
 
 (async function init() {
-  const { project, token, actions } = await DA_SDK;
-  const tagSelector = document.createElement('da-tag-selector');
-  tagSelector.project = project;
-  tagSelector.token = token;
-  tagSelector.actions = actions;
-  tagSelector.datasource = 'tools/tagbrowser/tag-categories.json';
-  tagSelector.iscategory = true;
-  tagSelector.displayName = 'Categories';
-  document.body.append(tagSelector);
+  const { context, actions, token } = await DA_SDK;
+  if (!context || !token) return;
+  const opts = { headers: { Authorization: `Bearer ${token}` } };
+  const aemRepo = await getAemRepo(context, opts);
+  if (!aemRepo) return;
+  const daTagBrowser = document.createElement('da-tag-browser');
+  daTagBrowser.aemRepo = aemRepo;
+  daTagBrowser.token = token;
+  document.body.querySelector('main').append(daTagBrowser);
 }());
