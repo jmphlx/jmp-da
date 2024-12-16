@@ -733,6 +733,9 @@ a:hover {
     text-align: center;
     width: 100%;
   }
+  .button-container:last-child {
+    margin: 1rem 0 3.2rem 0 !important;
+  }
   &.text-link .button-container {
     text-align: center;
     width: 100%;
