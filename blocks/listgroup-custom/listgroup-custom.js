@@ -7,6 +7,7 @@ import {
   getBlockConfig,
   getJsonFromUrl,
   getLanguageIndex,
+  getLanguage,
   sortPageList,
 } from '../../scripts/jmp.js';
 
@@ -172,7 +173,7 @@ function constructDictionary(matching, filterBy) {
   return dictionary;
 }
 
-function constructDropdown(dictionary, filterBy, defaultFilterOption) {
+async function constructDropdown(dictionary, filterBy, defaultFilterOption, translateFilter) {
   const filterDropdown = createTag('select', {
     class: 'filterDropdown',
     id: `${filterBy}`,
@@ -182,10 +183,19 @@ function constructDropdown(dictionary, filterBy, defaultFilterOption) {
   allDropdownItem.textContent = defaultFilterOption || 'Select';
   filterDropdown.append(allDropdownItem);
 
+  let useTranslation;
+  if (translateFilter !== undefined) {
+    const pageLanguage = getLanguage();
+    const data = await getJsonFromUrl(translateFilter);
+    const { data: translations } = data[pageLanguage];
+    useTranslation = translations[0];
+  }
+
   Object.keys(dictionary).sort().forEach((filterValue) => {
     if (filterValue.length > 0) {
       const dropdownItem = createTag('option', { value: `${filterValue}` });
-      dropdownItem.innerText = filterValue;
+      dropdownItem.innerText = useTranslation !== undefined ? useTranslation[filterValue]
+        : filterValue;
       filterDropdown.append(dropdownItem);
     }
   });
@@ -336,6 +346,7 @@ export default async function decorate(block) {
   const sortOrder = config.sortOrder?.toLowerCase();
   const groupBy = config.groupBy;
   const filterBy = config.filterBy;
+  const translateFilter = config.translateFilter;
   const tabProperty = config.tabProperty?.toLowerCase();
   const tabsArray = config.tabs;
   useTabs = tabProperty && tabsArray;
@@ -357,7 +368,13 @@ export default async function decorate(block) {
   // Create Filter Dropdown
   if (filterDictionary) {
     const defaultFilterOption = config.defaultFilterOption;
-    const filterDropdown = constructDropdown(filterDictionary, filterBy, defaultFilterOption);
+
+    const filterDropdown = await constructDropdown(
+      filterDictionary,
+      filterBy,
+      defaultFilterOption,
+      translateFilter,
+    );
 
     // When value changes, clear out results and add matching values.
     filterDropdown.addEventListener('change', () => {
