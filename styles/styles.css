@@ -1514,6 +1514,71 @@ main .section[data-layout="50/50"] .layout-wrapper > div {
 main .section[data-layout="33/33/33"] .layout-wrapper > div {
   flex: 1 calc(33.33% - 5px);
 }
+/* Layout Accordion */
+ main .section .layout-wrapper.accordion-wrapper {
+  clear: both;
+  display: flex;
+  flex-direction: column;
+  .accordion-item {
+    summary {
+      color: var(--blue);
+      width: calc(100% - 48px);
+      position: relative;
+      padding: 0 2rem 0 4.8rem;
+      cursor: pointer;
+      list-style: none;
+      overflow: auto;
+      transition: background-color 0.2s;
+    }
+  }
+  details[open] summary {
+    background-color: var(--light-color);
+    h3, .accordion-item-label, strong {
+      color: var(--blue) !important;
+    }
+  }
+  details summary:hover {
+    h3, .accordion-item-label, strong, summary, p {
+      color: var(--link-hover-color) !important;
+    }
+    &:before {
+      background-color: var(--link-hover-color) !important;;
+    }
+  }
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+  details summary:before {
+    content: '';
+    background-image: url('../../../icons/arrow-white.svg');
+    background-color: #0378cd;
+    background-size: 30%;
+    background-repeat: no-repeat;
+    background-position: 54%;
+    width: 2.4rem;
+    height: 2.4rem;
+    position: absolute;
+    border-radius: 50%;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    transition: transform 0.5s ease, color 0.5s ease;
+  }
+  details[open] summary:before {
+    transform: translateY(-50%) rotate(-90deg);
+  }
+  details .accordion-item-body {
+    padding: 0 1.6rem 1.6rem 4.8rem;
+    margin-bottom: 0;
+  }
+  details[open] .accordion-item-body {
+    border-top: 1px solid var(--dark-color);
+    background-color: none;
+    p {
+      clear: both;
+    }
+  }
+}
 main img {
   max-width: 100%;
   width: auto;
