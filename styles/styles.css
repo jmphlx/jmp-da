@@ -638,7 +638,7 @@ ul {
 .bullet-arrow {
   .default-content-wrapper  {
     ul {
-    padding: 0 0 0 2rem; 
+    padding: 0 0 0 1rem; 
       li {
         margin-left: 8px;
         position: relative;
@@ -1021,6 +1021,7 @@ a:hover {
   font-family: "anova-regular", sans-serif;
   font-size: 1.6rem;
   a:link {
+    line-height: 1.75;
     text-decoration: none;
     :hover {
       color: var(--link-hover-color);
