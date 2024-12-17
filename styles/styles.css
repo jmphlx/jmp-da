@@ -948,6 +948,31 @@ a:hover {
   }
   }
 }
+.text-link-stack {
+  > div {
+    p.button-container {
+      width: 100%;
+      height: max-content;
+      margin: 0 !important;
+      margin-bottom: 0 !important;
+      a {
+        /* height: 2rem !important; */
+        overflow-wrap: break-word;
+        line-height: 1.35 !important;
+      }
+    }
+    p.button-container:last-child {
+      margin-bottom: 2.4rem !important;
+    }
+    p.button-container:has(+ h4, + h5, + h6) {
+      margin-bottom: 1.6rem !important;
+    }
+    :is(p.button-container):has(+ :is(p.button-container)) {
+      margin-bottom: 0 !important;
+    }
+  }
+}
+
 .text-link-light .button-container, .text-link-light-center .button-container {
   a:link, a.button:any-link {
     border: none;
