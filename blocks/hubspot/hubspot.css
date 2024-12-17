@@ -78,6 +78,27 @@
   background-color: #f4f4f4;
   border-radius: 10px;
   border: 1px solid var(--gray10);
+  label {
+    span {
+      margin-bottom: 1rem !important;
+    }
+  }
+  div.input {
+    max-width: 100%;
+    margin-bottom: 0;
+    input {
+      width: calc(100% - 32px);
+      min-height: 27px;
+      padding: 0 1.6rem;
+      background-color: #fafafa;
+      border: 1px solid var(--grayLight);
+      border-radius: 5px;
+      margin: 1rem 0;
+    }
+    select {
+      width: 100%;
+    }
+  }
   div {
     margin-bottom: 2.4rem;
   }
