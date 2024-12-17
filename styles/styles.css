@@ -1674,12 +1674,12 @@ main img {
     }
   }
 .block-padding-none {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote, .quote {
     padding-bottom: 0 !important;
   }
 }
 .block-padding-xsmall {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote  {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote, .quote  {
     padding-bottom: 16px;
     &.columns:has(&.embed){
       .embed{
@@ -1689,7 +1689,7 @@ main img {
   }
 }
 .block-padding-small {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, .quote {
     padding-bottom: 32px;
     &.columns:has(&.embed){
       .embed{
@@ -1699,7 +1699,7 @@ main img {
   }
 }
 .block-padding-medium {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote  {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote, .quote  {
     padding-bottom: 64px;
     &.columns:has(&.embed){
       .embed{
@@ -1709,7 +1709,7 @@ main img {
   }
 }
 .block-padding-large {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote  {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote, .quote  {
     padding-bottom: 96px;
     &.columns:has(&.embed){
       .embed{
@@ -1722,7 +1722,7 @@ main img {
   }
 }
   .block-padding-xlarge {
-    &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote  {
+    &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote, .quote  {
       padding-bottom: 128px;
       &.columns:has(&.embed){
         .embed{
