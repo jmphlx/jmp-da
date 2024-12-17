@@ -78,10 +78,12 @@
 
 .extra-space {
   &.cards > ul {
-    grid-template-columns: auto;
+    display: block;
+    /* grid-template-columns: auto; */
   }
   &.cards > ul > li {
     padding: 2rem;
+    margin-bottom: 1.6rem;
     div.cards-card-body {
       margin: 1.6rem 0;
     }
