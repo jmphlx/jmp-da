@@ -142,6 +142,9 @@ div.section.copyright {
     inset: 0;
   }
   .columns-wrapper {
+    .columns-2-cols {
+      padding-bottom: 0;
+    }
     .columns {
       div {
         max-width: unset;

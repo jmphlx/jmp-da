@@ -65,6 +65,57 @@
     order: unset;
   }
 }
+.columns-wrapper {
+  .button-container {
+    display: inline-block;
+    text-align: left;
+    margin: 1rem 1rem 3.2rem 0;
+    line-height: 100%;
+  }
+  div.button-center {
+    .button-container {
+      text-align: center;
+      width: 100%;
+    }
+    .button-container:last-child {
+      margin: 0 0 3.2rem 0 !important;
+    }
+    &.text-link .button-container {
+      text-align: center;
+      width: 100%;
+    }
+    div:has( p.button-container + p.button-container) {
+      display: flex !important;
+      flex-flow: row wrap;
+      justify-content: center;
+      p.button-container {
+        margin-top: 0 !important;
+        display: inline-block;
+        width: max-content;
+        flex-direction: row;
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+      @media (width <= 900px) {
+        display: flex !important;
+        flex-flow: row wrap;
+        .default-content-wrapper {
+          margin: auto;
+        }
+      }
+      @media (width <= 600px) {
+        display: block;
+        .default-content-wrapper {
+          margin: auto !important;
+          p.button-container {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }  
+}
 .columns-bullets-center {
   display: flex;
   justify-content: center;
