@@ -1085,9 +1085,11 @@ div.bullet-arrow {
     li {
       text-indent: -8px;
       margin-bottom: 4px;
+      display: block;
     }
     li::marker {
       content: '';
+      display: none;
     }
     li:before {
       content: url('../../../icons/arrow-orange.svg');
