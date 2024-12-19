@@ -222,6 +222,20 @@
       }
     }
   }
+  div.hs_error_rollup {
+    ul.hs-error-msgs {
+      li {
+        label {
+          line-height: 18px;
+          white-space: normal;
+          font-family: var(--font-secondary);
+          color: #e22e36;
+          font-size: 14px;
+          list-style: none;
+        }
+      }
+    }
+  }
   @media (width <=900px) {
     margin-top: 48px;
   }
