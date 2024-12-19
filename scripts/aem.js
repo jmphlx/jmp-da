@@ -262,9 +262,10 @@ async function loadScript(src, attrs) {
  */
 function getMetadata(name, doc = document) {
   const attr = name && name.includes(':') ? 'property' : 'name';
-  const meta = [...doc.head.querySelectorAll(`meta[${attr}="${name}"]`)]
+  let meta = [...doc.head.querySelectorAll(`meta[${attr}="${name}"]`)]
     .map((m) => m.content)
     .join(', ');
+  meta = meta === 'about:error' ? '' : meta;
   return meta || '';
 }
 

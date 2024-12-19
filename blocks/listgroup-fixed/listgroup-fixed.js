@@ -8,6 +8,9 @@ import {
 import {
   getBlockConfig,
 } from '../../scripts/jmp.js';
+import {
+  getDefaultMetaImage,
+} from '../../scripts/scripts.js';
 
 const ogNames = {
   title: 'og:title',
@@ -65,7 +68,8 @@ export default async function decorate(block) {
         const pagePropVal = getMetaValue(prop, doc);
         let span;
         if (prop === 'image') {
-          span = `<span class="${prop}"><img src="${pagePropVal}"/></span>`;
+          const imageValue = !pagePropVal ? getDefaultMetaImage() : pagePropVal;
+          span = `<span class="${prop}"><img src="${imageValue}"/></span>`;
         } else {
           span = `<span class="${prop}">${pagePropVal}</span>`;
         }

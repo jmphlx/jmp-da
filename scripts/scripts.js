@@ -27,6 +27,8 @@ import { createTag } from './helper.js';
 
 let isSKPPage = false;
 
+const defaultMetaImage = `${window.location.origin}/icons/jmp-com-share.jpg`;
+
 /**
  * OUT OF THE BOX code that impacts our hero blocks.
  * To be removed if no other issues found.
@@ -330,9 +332,12 @@ function addTitleSuffix() {
 function setMetaImage() {
   const imageMeta = getMetadata('image');
   if (!imageMeta) {
-    const defaultMetaImage = `${window.location.origin}/icons/jmp-com-share.jpg`;
     document.querySelector('meta[property="og:image"]')?.setAttribute('content', defaultMetaImage);
   }
+}
+
+export function getDefaultMetaImage() {
+  return defaultMetaImage;
 }
 
 /**

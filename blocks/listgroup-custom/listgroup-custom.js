@@ -11,6 +11,8 @@ import {
   sortPageList,
 } from '../../scripts/jmp.js';
 
+import { getDefaultMetaImage } from '../../scripts/scripts.js';
+
 import { createTag } from '../../scripts/helper.js';
 
 let useFilter = false;
@@ -96,7 +98,8 @@ function writeAsOneGroup(matching, config) {
     config.displayProperties.forEach((prop) => {
       let span;
       if (prop === 'image') {
-        span = `<span class="image"><img src="${item[prop]}"/></span>`;
+        const imageValue = !item[prop] ? getDefaultMetaImage() : item[prop];
+        span = `<span class="image"><img src="${imageValue}"/></span>`;
       } else {
         span = `<span class="${prop}">${item[prop]}</span>`;
       }
