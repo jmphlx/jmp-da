@@ -468,7 +468,7 @@
   }
 }
 /* starting new colunms ratio */
-div.clm-10-90, div.clm-50-50, div.clm-60-40, div.clm-40-60, div.clm-66-33, div.clm-33-66, div.clm-25-75, div.clm-75-25 {
+div.clm-8-92, div.clm-10-90, div.clm-50-50, div.clm-60-40, div.clm-40-60, div.clm-66-33, div.clm-33-66, div.clm-25-75, div.clm-75-25 {
   .columns-img-col {
     img {
       border: 2px solid var(--gray10);
@@ -494,14 +494,6 @@ div.clm-10-90, div.clm-50-50, div.clm-60-40, div.clm-40-60, div.clm-66-33, div.c
     padding: 0 0 0 0 !important;
   }
 }
-/* No gray border on images in columns */
-.no-gray-border {
-  .columns-img-col, .columns, &.columns-img-col, &.columns {
-    img {
-      border: none !important;
-    }
-  }
-}
 .text-vertical-center {
   .columns > div {
     display: flex;
@@ -509,6 +501,14 @@ div.clm-10-90, div.clm-50-50, div.clm-60-40, div.clm-40-60, div.clm-66-33, div.c
   }
   &.columns > div > div {
     align-self: center !important;
+  }
+}
+div.clm-8-92 {
+  div > div:nth-child(1) {
+    min-width: 8%;
+  }
+  div > div:nth-child(2) {
+    min-width: 92%;
   }
 }
 div.clm-10-90 {
@@ -1245,3 +1245,27 @@ div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
 div:empty {
   padding-bottom: 0 !important;
 }
+/* .step-list styles handles the numbered list on the JMP Student Edition Get Started page */
+.columns-wrapper:has(.step-list){
+  .columns > div{
+   gap: 2.4rem;
+   width: 75%;
+   @media (width <= 900px){
+      gap: .8rem;
+      width: 100%;
+   }
+}
+div > div > div:nth-child(1){
+  p{
+    display: block;
+    text-align:center;
+    background: #0378cd;
+    color:white;
+    width: 48px;
+    height: 48px;
+    border-radius: 64px;
+    font-size: 2.4rem;
+    padding: 1.4rem .8rem 0 .8rem;
+   }
+ }  
+}  

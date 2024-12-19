@@ -579,9 +579,6 @@ div.red-purple-gradient {
 div.lightred-purple-gradient {
   background: linear-gradient(45deg, #F04B4B 15%, #643695 95%);
 }
-div.red-purple-gradient {
-  background: linear-gradient(45deg, #B11A29 15%, #643695 95%);
-}
 div.purple-blue-gradient {
   background: linear-gradient(45deg, #643695 15%, #0378CD 95%);
 }
@@ -2105,6 +2102,18 @@ div.interview-body {
       width: 75%;
     }
   }
+  & :has(.indent-left){
+    padding-left: 3.2rem;
+      .columns{
+      width:75%;
+      }
+    @media (width <= 900px){
+      padding-left: 1.6rem;
+      .columns{
+        width:95%;
+      }
+    }
+  }
   @media (width <= 900px) {
     .default-content-wrapper {
       h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
@@ -2113,3 +2122,18 @@ div.interview-body {
     }
   }
 }
+/* Adds a gray border to all images by default */
+.default-content-wrapper{
+  &:has(p, h1, h2, h3, h4, h5, h6){
+    img{
+    border: 2px solid var(--gray10);
+    border-radius: 5px;
+    }
+  }
+}
+/* Removes the gray border on images */
+ .no-gray-border {
+    img{
+      border: none !important;
+    }
+  }
