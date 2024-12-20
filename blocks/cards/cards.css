@@ -1100,3 +1100,119 @@
     }
   }
 }
+
+.opt-in {
+  position: relative;
+  ul {
+    display: flex;
+    justify-content: left;
+    li {
+      width: 480px;
+      border-radius: 5px;
+      background-color: transparent;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.7s ease;
+      border: 1px solid var(--grayRule);
+      :after {
+        /* content: url('../../../icons/arrow-icon-blue.svg'); */
+        content: '';
+        border: 3px solid var(--green);
+        border-width: 0 3px 3px 0;
+        /* width: 12px; */
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 6px;
+        margin: 12px 12px 0 0;
+        /* border-radius: 0 10px 0 50px; */
+        z-index: -1;
+        transform: rotate(-45deg);
+        /* background-color: #f4f4f4; */
+        /* transition: transform 0.5s ease, color 0.5s ease; */
+      }
+      :before {
+        content:'';
+        width: 12px;
+        height: 16px;
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 12px 12px 20px 20px;
+        border-radius: 0 10px 0 50px;
+        z-index: -1;
+        background-color: #f4f4f4;
+        transition: transform 0.7s ease, color 0.5s ease;
+      }
+      .cards-card-body {
+        flex-direction: row;
+        /* justify-content: center;
+        justify-self: center; */
+        align-items: center;
+        display: flex;
+        padding: 16px 24px 16px 16px;
+        margin: 0;
+        transition: all 0.7s ease;
+        gap: 1.6rem;
+        h4 {
+          color: var(--blue);
+          font-size: var(--heading-font-size-m);
+          font-family: "anova-regular", sans-serif;
+        }
+        p {
+          margin-bottom: 0 !important;
+          picture {
+            display: block;
+            width: 64px;
+          }
+        }
+      }
+      .cards-card-body:nth-child(1) {
+        padding: 0;
+        a {
+          height: 100%;
+          width: 100%;
+          top: 0;
+          left: 0;
+          position: absolute;
+          opacity: 0;
+        }
+      }
+    }
+    li:hover {
+      border: 1px solid var(--green);
+      &:hover {
+        :before {
+          transform: scale(45);
+        }
+      }
+      &:before {
+        opacity: 1 !important;
+        margin-right: 26px;
+        transform: scale(35);
+      }
+      &:after {
+        opacity: 1 !important;
+        margin-right: 8px;
+      }
+    }
+    @media (width <=900px) {
+      flex-wrap: wrap;
+      justify-content: stretch;
+      li {
+        width: 48%;
+        flex: 1 0 auto;
+      }
+    }
+    @media (width <=600px) {
+      flex-wrap: wrap;
+      justify-content: stretch;
+      li {
+        width: 100%;
+        flex: 1 0 auto;
+      }
+    }
+  }
+}
