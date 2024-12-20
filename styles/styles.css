@@ -1531,19 +1531,22 @@ div.breadcrumb {
     margin-bottom: 2rem;
   }
 }
+
 main .section[data-layout] .layout-wrapper {
   display: flex;
   flex-direction: row;
   gap: 3.2rem;
 }
+
 main .section[data-layout="50/50"] .layout-wrapper > div {
   flex: 1 50%;
 }
+
 main .section[data-layout="33/33/33"] .layout-wrapper > div {
   flex: 1 calc(33.33% - 5px);
 }
-/* Layout Accordion */
- main .section .layout-wrapper {
+
+main .section .layout-wrapper {
   gap: 0 !important;
   &.accordion-wrapper {
     clear: both;
@@ -1616,6 +1619,7 @@ main .section[data-layout="33/33/33"] .layout-wrapper > div {
     }
   }
 }
+
 main img {
   max-width: 100%;
   width: auto;
