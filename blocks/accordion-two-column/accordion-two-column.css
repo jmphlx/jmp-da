@@ -14,7 +14,7 @@
   color: var(--blue);
   width: calc(100% - 48px);
   position: relative;
-  padding: 0 2rem 0 4.8rem;
+  padding: 1.6rem 2rem 1.6rem 4.8rem;
   cursor: pointer;
   list-style: none;
   overflow: auto;
@@ -73,7 +73,7 @@
   transform: scaleY(-1) rotate(-225deg);
 }
 .accordion-two-column details .accordion-item-body {
-  padding: 2.4rem 3.2rem 0 4.8rem !important;
+  padding: 0 3.2rem 0 4.8rem !important;
   @media (width <=600px) {
     padding: 0 .9rem;
   }
