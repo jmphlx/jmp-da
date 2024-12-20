@@ -97,10 +97,14 @@
           outline: 1px solid var(--blue);
         }
       }
+      &.invalid {
+        border: 1px solid #e22e36;
+      }
     }
     select {
       width: 100%;
       min-height: 4rem !important;
+      height: 4rem;
       padding: 0  1.2rem;
       background-color: #fafafa;
       margin: .5rem 0 0 0;
