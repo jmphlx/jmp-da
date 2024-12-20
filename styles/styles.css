@@ -1653,12 +1653,12 @@ main img {
   }
 }
 .block-top-padding-none {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote  {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote, &.styled-columns, .styled-columns   {
     padding-top: 0;
   }
 }
 .block-top-padding-xsmall {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote  {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote, &.styled-columns, .styled-columns  {
     padding-top: 16px;
     &.columns:has(&.embed){
       .embed{
@@ -1668,7 +1668,7 @@ main img {
   }
 }
 .block-top-padding-small {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote  {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote, &.styled-columns, .styled-columns   {
     padding-top: 32px;
     &.columns:has(&.embed){
       .embed{
@@ -1678,7 +1678,7 @@ main img {
   }
 }
 .block-top-padding-medium {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote  {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote, &.styled-columns, .styled-columns   {
     padding-top: 64px;
     &.columns:has(&.embed){
       .embed{
@@ -1688,7 +1688,7 @@ main img {
   }
 }
 .block-top-padding-large {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.styled-columns, .styled-columns  {
     padding-top: 96px;   
     &.columns:has(&.embed){
       .embed{
@@ -1702,12 +1702,12 @@ main img {
     }
   }
 .block-padding-none {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote, .quote {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote, .quote, &.styled-columns, .styled-columns  {
     padding-bottom: 0 !important;
   }
 }
 .block-padding-xsmall {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote, .quote  {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote, .quote, &.styled-columns, .styled-columns   {
     padding-bottom: 16px;
     &.columns:has(&.embed){
       .embed{
@@ -1717,7 +1717,7 @@ main img {
   }
 }
 .block-padding-small {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, .quote {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, .quote, &.styled-columns, .styled-columns  {
     padding-bottom: 32px;
     &.columns:has(&.embed){
       .embed{
@@ -1727,7 +1727,7 @@ main img {
   }
 }
 .block-padding-medium {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote, .quote  {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote, .quote, &.styled-columns, .styled-columns   {
     padding-bottom: 64px;
     &.columns:has(&.embed){
       .embed{
@@ -1737,7 +1737,7 @@ main img {
   }
 }
 .block-padding-large {
-  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote, .quote  {
+  &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote, .quote, &.styled-columns, .styled-columns   {
     padding-bottom: 96px;
     &.columns:has(&.embed){
       .embed{
@@ -1750,7 +1750,7 @@ main img {
   }
 }
   .block-padding-xlarge {
-    &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote, .quote  {
+    &.columns, &.cards, &.embed, .columns, .cards, .embed, &.listgroup-custom, &.listgroup-fixed, &.carousel, &.quote, .quote, &.styled-columns, .styled-columns   {
       padding-bottom: 128px;
       &.columns:has(&.embed){
         .embed{
@@ -2138,8 +2138,51 @@ div.interview-body {
   }
 }
 /* Removes the gray border on images */
- .no-gray-border {
-    img{
-      border: none !important;
+.no-gray-border {
+  img{
+    border: none !important;
+  }
+}
+
+/* Bullet arrow left light */
+.bullet-arrow-light {
+.default-content-wrapper, .styled-columns-wrapper  {
+  ul {
+  padding: 0 0 0 1rem; 
+    li {
+      margin-left: 8px;
+      position: relative;
+      text-indent: -8px;
+      margin-bottom: 4px;
+      color: #ffffff;
+      a:any-link {
+        color: var( --white);
+        &:hover{
+          color: rgba(250, 250, 250, .85);
+        }
+    }
+      &:has(ul) {
+        margin-left: 0;
+        ul {
+          margin-bottom: 0;
+        }
+      }
+      p {
+        display: inline;
+        margin-left: -3px !important;
+        text-indent: 5px !important;
+      }
+    } 
+    li::marker {
+      content: '';
+    }
+    li:before {
+      content: url('../../../icons/arrow-white.svg');
+      width: 7px;
+      display: inline-block;
+      font-size: 80%;
+      /* padding-right: 5px; */
     }
   }
+}
+}

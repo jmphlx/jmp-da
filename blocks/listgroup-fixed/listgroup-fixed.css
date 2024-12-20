@@ -628,3 +628,132 @@ div.listgroup-fixed, div.listgroup  {
         }
     }
 }
+/* styling for the bio dsiplays on the Leadership page */
+.bio-listing{
+    ul.list-tile {
+        width: 100%;
+        justify-content: start;
+        margin: 0 0 2.4rem 0;
+        column-gap: .75%;
+        > li {
+            width: 30%;
+            border-radius: 5px;
+            margin: 0 0 1.6rem 0;           
+            a {
+                display: grid;
+                column-gap: 2.4rem;
+                border: 1px solid var(--gray);
+                grid-template-areas: 
+                    "img navigation-title"
+                    "img title"
+                    "img abstract";
+                grid-template-rows: .5fr .5fr 3fr;
+                /* grid-template-columns: 40% auto; */
+                grid-template-columns: 30% auto;
+                flex-flow: wrap;
+                flex-direction: row;
+                margin: 0;
+                transition: all 0.5s ease;
+                span.image {
+                    grid-area: img;
+                    float: left;
+                    width: 100%;
+                    height: 100%;
+                    img {
+                        border-radius: 5px 0 0 5px;
+                        border: none;
+                        object-position: top;
+                    }
+                }
+                /* .navigation-title, .resourceType {
+                    grid-area: navigation-title;
+                    font-size: 1.3rem;
+                    color: var(--gray7);
+                    display: block;
+                    width: 100%;
+                    padding: 2rem 0 0 0;
+                    &:after {
+                        display: none;
+                    }
+                } */
+                .title {
+                    font-size: 1.6rem;
+                    color: var(--blue) !important;
+                    grid-area: title;
+                    display: block;
+                    margin: 0;
+                }
+                .abstract, .displayDescription {
+                    grid-area: abstract;
+                    display: block;
+                    width: 90%;
+                    padding: 0;
+                    margin-bottom: 2rem;
+                }
+                /* &:after {
+                    content:'';
+                    display: block;
+                    width: 1.6rem;
+                    height: 1.6rem;
+                    border: solid var(--blue);
+                    border-width: 0 3px 3px 0;
+                    position: absolute;
+                    top: 48%;
+                    left: auto;
+                    transform: rotate(-45deg) translateY(-50%);
+                    right: 2rem;
+                    opacity: 0;
+                    background: none;
+                    transition: all 0.5s ease;
+                    z-index: 1;
+                    border-radius: 0 !important;
+                } */
+            }
+            :after {
+                display: none;
+            }
+            &:hover {
+                transform: none;
+                a {
+                    border: 1px solid var(--blue);
+                    &:hover {
+                        &:after {
+                        background: none;
+                        right: 1rem;
+                        opacity: 1;
+                        }
+                    }
+                }
+                .navigation-title, .resourceType {
+                    color: var(--link-hover-color) !important;
+                    text-decoration: none;
+                }
+                .title {
+                    color: var(--link-hover-color) !important;
+                    text-decoration: none;
+                }
+            }
+            @media (width <=900px) {
+                width: 100%;
+                min-height: 225px;
+                &:first-child {
+                    width: 100%;
+                    a {
+                        grid-template-columns: 30% auto;
+                        column-gap: 1.6rem;
+                        .title {
+                            font-size: 1.6rem;
+                        }
+                        .navigation-title, .resourceType {
+                            margin-top: 0;
+                            font-size: 1.3rem;
+                        }
+                        .abstract, .displayDescription {
+                            font-size: 1.6rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
