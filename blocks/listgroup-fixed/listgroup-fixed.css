@@ -754,6 +754,28 @@ div.listgroup-fixed, div.listgroup  {
                     }
                 }
             }
+            @media (width <=600px) {
+                width: 100%;
+                min-height: 50%;
+                &:first-child {
+                    width: 100%;
+                    a {
+                        grid-template-columns: 30% auto;
+                        column-gap: 1.6rem;
+                        .title {
+                            font-size: 1.6rem;
+                        }
+                        .navigation-title, .resourceType {
+                            margin-top: 0;
+                            font-size: 1.3rem;
+                        }
+                        .abstract, .displayDescription {
+                            font-size: 1.6rem;
+                        }
+                    }
+                }
+            }
+
         }
     }
 }

@@ -54,6 +54,7 @@
       }
       .accordion-item-body {
         padding-top: 2.4rem !important;
+        line-height: 1.5;
       }
       /* .accordion-item-label {
         :hover{
