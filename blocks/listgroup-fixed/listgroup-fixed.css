@@ -649,7 +649,7 @@ div.listgroup-fixed, div.listgroup  {
                     "img abstract";
                 grid-template-rows: .5fr .5fr 3fr;
                 /* grid-template-columns: 40% auto; */
-                grid-template-columns: 30% auto;
+                grid-template-columns: 104px auto;
                 flex-flow: wrap;
                 flex-direction: row;
                 margin: 0;
@@ -690,24 +690,6 @@ div.listgroup-fixed, div.listgroup  {
                     padding: 0;
                     margin-bottom: 2rem;
                 }
-                /* &:after {
-                    content:'';
-                    display: block;
-                    width: 1.6rem;
-                    height: 1.6rem;
-                    border: solid var(--blue);
-                    border-width: 0 3px 3px 0;
-                    position: absolute;
-                    top: 48%;
-                    left: auto;
-                    transform: rotate(-45deg) translateY(-50%);
-                    right: 2rem;
-                    opacity: 0;
-                    background: none;
-                    transition: all 0.5s ease;
-                    z-index: 1;
-                    border-radius: 0 !important;
-                } */
             }
             :after {
                 display: none;
@@ -735,43 +717,22 @@ div.listgroup-fixed, div.listgroup  {
             }
             @media (width <=900px) {
                 width: 100%;
-                min-height: 225px;
-                &:first-child {
-                    width: 100%;
-                    a {
-                        grid-template-columns: 30% auto;
-                        column-gap: 1.6rem;
-                        .title {
-                            font-size: 1.6rem;
-                        }
-                        .navigation-title, .resourceType {
-                            margin-top: 0;
-                            font-size: 1.3rem;
-                        }
-                        .abstract, .displayDescription {
-                            font-size: 1.6rem;
-                        }
+                height: 150px;
+                a {
+                    grid-template-columns: 150px auto;
+                    column-gap: 1.6rem;
+                    .image{
+                        width: 150px;
                     }
-                }
-            }
-            @media (width <=600px) {
-                width: 100%;
-                min-height: 50%;
-                &:first-child {
-                    width: 100%;
-                    a {
-                        grid-template-columns: 30% auto;
-                        column-gap: 1.6rem;
-                        .title {
-                            font-size: 1.6rem;
-                        }
-                        .navigation-title, .resourceType {
-                            margin-top: 0;
-                            font-size: 1.3rem;
-                        }
-                        .abstract, .displayDescription {
-                            font-size: 1.6rem;
-                        }
+                    .title {
+                        font-size: 1.6rem;
+                    }
+                    .navigation-title, .resourceType {
+                        margin-top: 0;
+                        font-size: 1.3rem;
+                    }
+                    .abstract, .displayDescription {
+                        font-size: 1.6rem;
                     }
                 }
             }
