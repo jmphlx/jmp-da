@@ -980,6 +980,7 @@ a:hover {
 }
 
 .text-link-light .button-container, .text-link-light-center .button-container {
+  margin-bottom: 0 !important;
   a:link, a.button:any-link {
     border: none;
     color: #ffffff !important;
@@ -995,6 +996,7 @@ a:hover {
 }
 .text-link-caret-left .button-container, .text-link-caret-left-light .button-container, .text-link-back .button-container {
   margin-top: 0 !important;
+  margin-bottom: 0 !important;
   font-family: "anova-regular", sans-serif;
   font-size: 1.6rem !important;
   a:link {
@@ -1046,6 +1048,7 @@ a:hover {
 }
 .text-link-caret-right .button-container, .text-link-caret-right ul li {
   margin-top: 0 !important;
+  margin-bottom: 0 !important;
   font-family: "anova-regular", sans-serif;
   font-size: 1.6rem;
   a:link {
