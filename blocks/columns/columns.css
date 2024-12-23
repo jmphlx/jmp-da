@@ -1255,7 +1255,22 @@ div:empty {
    @media (width <= 900px){
       gap: .8rem;
       width: 100%;
+      flex-direction: row;
+      div:nth-child(1){
+        min-width: 12%;
+      }
    }
+   @media (width <= 600px){
+    gap: .8rem;
+    width: 100%;
+    flex-direction: row;
+    div:nth-child(1){
+      min-width:15%;
+    }
+    div:nth-child(2){
+      min-width: 10%;
+    }
+ }
 }
 div > div > div:nth-child(1){
   p{
