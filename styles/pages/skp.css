@@ -32,6 +32,15 @@ main {
   }
 }
 
+.default-content-wrapper{
+  &:has(p, h1, h2, h3, h4, h5, h6){
+    img{
+    border: none;
+    border-radius: 5px;
+    }
+  }
+}
+
 /* Font Styles */
 h1 {
   color: #194573;

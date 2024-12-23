@@ -120,10 +120,10 @@
 /* striped variant */
 .table.striped {
   tbody {
-    tr:nth-child(odd) {
+    tr:nth-child(even) {
       background-color: #f7f7f7 !important;
     }
-    tr:nth-child(even) {
+    tr:nth-child(odd) {
       background-color: #f1f1f1 !important;
     }
   }
