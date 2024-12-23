@@ -147,8 +147,12 @@
     font-size: 2.4rem;
   }
   &.accordion {
+    &:first-child {
+      border-top: none;
+    }
     .accordion-item {
-      border-top: 0;
+      border-top: none !important;
+      border-bottom: none;
     }
   }
 }

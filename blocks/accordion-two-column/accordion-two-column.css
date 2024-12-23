@@ -121,6 +121,9 @@
       padding: 0 !important;
       padding-right: 48px;
     }
+    details {
+      border-bottom: none;
+    }
     .accordion-item {
       line-height: 1;
       border-top: 0;
@@ -130,6 +133,7 @@
       .accordion-item-body {
         padding: 0 2.4rem 0 4.8rem !important;
         margin-bottom: 0 !important;
+        border: none !important;
       }
     }
     div.accordion-two-column {
