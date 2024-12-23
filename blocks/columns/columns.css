@@ -1255,24 +1255,13 @@ div:empty {
    gap: 2.4rem;
    width: 75%;
    @media (width <= 900px){
-      gap: .8rem;
+      gap: 1.6rem;
       width: 100%;
       flex-direction: row;
       div:nth-child(1){
-        min-width: 12%;
+        min-width:64px;
       }
    }
-   @media (width <= 600px){
-    gap: .8rem;
-    width: 100%;
-    flex-direction: row;
-    div:nth-child(1){
-      min-width:15%;
-    }
-    div:nth-child(2){
-      min-width: 10%;
-    }
- }
 }
 div > div > div:nth-child(1){
   p{
@@ -1288,3 +1277,9 @@ div > div > div:nth-child(1){
    }
  }  
 }  
+/* Styling for offers page */
+.block-transparent{
+  width: 50%;
+  background: rgba(255, 255, 255, .85);
+  padding: 1.6rem;
+} 
