@@ -363,6 +363,7 @@
           font-family: "anova-regular", sans-serif;
           font-size: 19px;
           color: #0378cd;
+          margin-bottom: 0;
           /* small circle color */
           &:before {
             background-color: rgba(244, 119, 35, .25);
