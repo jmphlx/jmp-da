@@ -191,6 +191,7 @@
     img {
       min-width: 100%;
       width: 100%;
+      opacity: 1 !important;
     }
   }
 }
@@ -210,6 +211,7 @@
       }
       @media (width <=900px) {
         align-self: unset;
+        margin: 3.2rem 0;
       }
     }
     > div.columns-img-col {
@@ -226,9 +228,9 @@
           border: none;
         }
       }
-      @media (width <=900px) {
+      /* @media (width <=900px) {
         order: 0;
-      }
+      } */
     }
   }
 }
