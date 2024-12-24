@@ -510,7 +510,7 @@ div.clm-8-92 {
     min-width: 8%;
   }
   div > div:nth-child(2) {
-    min-width: 92%;
+    min-width: 90%;
   }
 }
 div.clm-10-90 {
@@ -1256,12 +1256,23 @@ div:empty {
    width: 75%;
    @media (width <= 900px){
       gap: 1.6rem;
-      width: 100%;
+      width: 95%;
+      margin-bottom: 1.6rem;
       flex-direction: row;
       div:nth-child(1){
         min-width:64px;
       }
    }
+    @media (width <= 600px){
+      width: 88%;
+      flex-direction: row;
+      div:nth-child(1){
+        min-width:64px;
+      }
+    }
+    @media (width <= 480px){
+      width:80%;
+    }
 }
 div > div > div:nth-child(1){
   p{
