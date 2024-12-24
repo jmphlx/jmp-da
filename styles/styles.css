@@ -1974,6 +1974,12 @@ div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-60-40, div.
   > div {
     width: 50%;
     margin: auto;
+    @media (width <= 1440px) {
+      width: 80%;
+    }
+    @media (width <= 1200px) {
+      width: 80%;
+    }
     @media (width <= 600px) {
       width: 100%;
     }

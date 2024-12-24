@@ -1292,5 +1292,9 @@ div > div > div:nth-child(1){
 .block-transparent{
   width: 50%;
   background: rgba(255, 255, 255, .85);
-  padding: 1.6rem;
+  padding: 4.0rem;
+  @media (width <= 480px){
+    width: 66%;
+    padding:1.6rem;
+  }
 } 
