@@ -1295,6 +1295,9 @@ div > div > div:nth-child(1){
   padding: 4.0rem;
   @media (width <= 480px){
     width: 66%;
-    padding:1.6rem;
+    padding:2.4rem;
+    h1{
+      margin: 0 0 1.6rem 0 !important;
+    }
   }
 } 
