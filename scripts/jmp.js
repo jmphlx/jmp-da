@@ -62,6 +62,35 @@ async function getJsonFromUrl(route) {
   return null;
 }
 
+async function externalGETRequest(route) {
+  const myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Accept', 'application/json');
+  myHeaders.append('Access-Control-Allow-Origin', '*');
+
+  fetch(route, {
+    headers: myHeaders,
+    referrerPolicy: 'origin',
+  })
+  .then(response => {
+    console.log(response.status);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json(); // Assuming the response is JSON
+  })
+  .then(data => {
+    // Do something with the data
+    console.log(data);
+    return data;
+  })
+  .catch(error => {
+    // Handle errors
+    console.error('error ', { error });
+  });
+  return null;
+}
+
 /**
  * Returns the path of the appropriate nav based on page language.
  * Default to 'en' if language isn't found.
@@ -499,6 +528,7 @@ export {
   containsOperator,
   matchesOperator,
   startsWithOperator,
+  externalGETRequest,
   getBlockConfig,
   getBlockPropertiesList,
   getBlockProperty,
