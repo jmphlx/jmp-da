@@ -285,6 +285,17 @@
   .carousel .carousel-slide-indicator button:disabled, .carousel .carousel-slide-indicator button:hover, .carousel .carousel-slide-indicator button:focus-visible {
     background-color: var(--white);
   }
+  &.text-light {
+    h4 {
+      a {
+        color: var(--yellow) !important;
+        text-decoration: underline;
+        &:hover {
+          color: var(--yellowHover) !important;
+        }
+      }
+    }
+  }
 }
 .carousel-arrows-off {
   .carousel .carousel-navigation-buttons {
