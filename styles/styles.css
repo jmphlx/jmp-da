@@ -2077,59 +2077,43 @@ div.interview-body {
 }
 /* text width */
 .text-50, .text-60, .text-66, .text-75 {
-  .default-content-wrapper {
-    p.button-container {
+  p.button-container {
+    width: unset;
+  }
+}
+.text-50 {
+  h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
+    width: 50%;
+  }
+  @media (width <= 900px) {
+    h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
       width: unset;
     }
   }
 }
-.text-50 {
-  .default-content-wrapper {
-    h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
-      width: 50%;
-    }
-  }
-  @media (width <= 900px) {
-    .default-content-wrapper {
-      h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
-        width: 100%;
-      }
-    }
-  }
-}
 .text-60 {
-  .default-content-wrapper {
-    h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
-      width: 60%;
-    }
+  h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
+    width: 60%;
   }
   @media (width <= 900px) {
-    .default-content-wrapper {
-      h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
-        width: 100%;
-      }
+    h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
+      width: unset;
     }
   }
 }
 .text-66 {
-  .default-content-wrapper {
-    h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
-      width: 66%;
-    }
+  h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
+    width: 66%;
   }
   @media (width <= 900px) {
-    .default-content-wrapper {
-      h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
-        width: 100%;
-      }
+    h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
+      width: unset;
     }
   }
 }
 .text-75 {
-  .default-content-wrapper {
-    h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
-      width: 75%;
-    }
+  h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
+    width: 75%;
   }
   & :has(.indent-left){
     padding-left: 3.2rem;
@@ -2144,10 +2128,8 @@ div.interview-body {
     }
   }
   @media (width <= 900px) {
-    .default-content-wrapper {
-      h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
-        width: 100%;
-      }
+    h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
+      width: unset;
     }
   }
 }
