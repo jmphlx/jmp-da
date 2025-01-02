@@ -70,6 +70,7 @@ async function externalGETRequest(route) {
 
   fetch(route, {
     headers: myHeaders,
+    referrerPolicy: 'no-referrer',
   })
   .then(response => {
     console.log(response.status);
