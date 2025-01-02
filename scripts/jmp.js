@@ -63,24 +63,42 @@ async function getJsonFromUrl(route) {
 }
 
 async function externalGETRequest(route) {
-  await window.fetch(route, {
-    mode: 'no-cors' // This tells fetch to make a CORS request
-  })
-  .then(response => {
-    console.log(response);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json(); // Assuming the response is JSON
-  })
-  .then(data => {
-    // Process the data
-    console.log(data);
-  })
-  .catch(error => {
-    // Handle any errors
-    console.error('Fetch error:', error);
-  });
+  try {
+    window.fetch(route, {
+      mode: 'no-cors'
+    })
+    .then(async response => {
+      console.log(response.status);
+      const json = await response.json();
+      return json;
+    })
+  } catch (error) {
+    console.error('externalGet error', { error });
+  }
+  return null;
+}
+
+// async function externalGETRequest(route) {
+//   await window.fetch(route, {
+//     mode: 'no-cors' // This tells fetch to make a CORS request
+//   })
+//   .then(response => {
+//     console.log(response.status);
+//     console.log(response);
+//     // if (!response.ok) {
+//     //   throw new Error('Network response was not ok');
+//     // }
+//     const data = await response.json();
+//     return data;
+//   })
+//   .then(data => {
+//     // Process the data
+//     console.log(data);
+//   })
+//   .catch(error => {
+//     // Handle any errors
+//     console.error('Fetch error:', error);
+//   });
 
   // const request = new Request(route, {
   //   credentials: 'include',
@@ -89,7 +107,7 @@ async function externalGETRequest(route) {
   // });
   // const fetchPromise = fetch(request);
   // fetchPromise.then((response) => console.log(response));
-}
+// }
 
 /**
  * Returns the path of the appropriate nav based on page language.
