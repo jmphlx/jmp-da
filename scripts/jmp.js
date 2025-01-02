@@ -65,12 +65,11 @@ async function getJsonFromUrl(route) {
 async function externalGETRequest(route) {
   const myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
-  myHeaders.append('Accept', 'application/json');
-  myHeaders.append('Access-Control-Allow-Origin', '*');
+  // myHeaders.append('Accept', 'application/json');
+  // myHeaders.append('Access-Control-Allow-Origin', '*');
 
   fetch(route, {
-    headers: myHeaders,
-    referrerPolicy: 'no-referrer',
+    headers: myHeaders
   })
   .then(response => {
     console.log(response.status);
