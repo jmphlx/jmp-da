@@ -522,6 +522,17 @@ function sortPageList(pageList, sortBy, sortOrder) {
   return sortedList;
 }
 
+function sortAssetList(assetList, sortBy, sortOrder) {
+  const sortedList = assetList;
+  sortedList.sort((a, b) => {
+    if (sortOrder !== undefined && sortOrder === 'descending') {
+      return (a.title < b.title ? 1 : -1);
+    }
+    return (a.title < b.title ? -1 : 1);
+  });
+  return sortedList;
+}
+
 export {
   arrayIncludesAllValues,
   arrayIncludesSomeValues,
@@ -545,5 +556,6 @@ export {
   pageFilterByFolder,
   pageOrFilter,
   parseBlockOptions,
+  sortAssetList,
   sortPageList,
 };

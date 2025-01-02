@@ -9,7 +9,7 @@ import {
   getLanguageIndex,
   externalGETRequest,
   getLanguage,
-  sortPageList,
+  sortAssetList,
 } from '../../scripts/jmp.js';
 
 import { getDefaultMetaImage } from '../../scripts/scripts.js';
@@ -78,10 +78,7 @@ function pageMatches(page, filters) {
 function writeAsOneGroup(matching, config) {
   const wrapper = document.createElement('ul');
   const columns = config.columns ? config.columns : 5;
-  wrapper.classList = `listOfItems image-list list-tile col-size-${columns}`;
-  if (useTabs) {
-    wrapper.setAttribute('role', 'tabpanel');
-  }
+  wrapper.classList = `assetList col-size-${columns}`;
   matching?.forEach((item) => {
     const listItem = document.createElement('li');
     listItem.classList = `${item.resourceOptions}`;
@@ -219,21 +216,8 @@ function applyFilter(matching, filterBy, filterValue) {
   return filteredData;
 }
 
-function buildListItems(block, matching, tabDictionary, config) {
+function buildAssetItems(block, matching, config) {
   let pageSelection = matching;
-  if (useTabs) {
-    const selectedTab = block.querySelector('button[aria-selected="true"].tabs-tab');
-    if (selectedTab.id !== 'all') {
-      pageSelection = tabDictionary[selectedTab.id];
-    }
-  }
-
-  if (useFilter) {
-    const filterDropdown = block.querySelector('select');
-    if (filterDropdown.value) {
-      pageSelection = applyFilter(pageSelection, filterDropdown.id, filterDropdown.value);
-    }
-  }
 
   const limit = config.limit;
   if (limit !== undefined && pageSelection?.length > limit) {
@@ -337,28 +321,21 @@ export default async function decorate(block) {
   const config = getBlockConfig(block);
   block.textContent = '';
   const folderPath = config.folderPath;
-  // const assetServiceURL = 'https://publish-p107857-e1218371.adobeaemcloud.com/services/damservlet';
   const assetServiceURL = 'https://edge-www-dev.jmp.com/services/damservlet';
   console.log(folderPath);
 
 
-  const getAssets = await externalGETRequest(`${assetServiceURL}?path=${folderPath}`);
-  console.log(getAssets);
+  const allAssets = await externalGETRequest(`${assetServiceURL}?path=${folderPath}`);
+  console.log(allAssets);
   const sortBy = config.sortBy;
   const sortOrder = config.sortOrder?.toLowerCase();
 
   let wrapper;
   let matching = [];
-  allPages.forEach((page) => {
-    if (pageMatches(page, filters)) {
-      matching.push(page);
-    }
-  });
-
-  matching = sortPageList(matching, sortBy, sortOrder);
+  matching = sortAssetList(allAssets, sortBy, sortOrder);
 
 
   // Build initial list.
-  wrapper = buildListItems(block, matching, tabDictionary, config);
+  wrapper = buildAssetItems(block, matching, config);
   block.append(wrapper);
 }
