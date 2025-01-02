@@ -337,7 +337,8 @@ export default async function decorate(block) {
   const config = getBlockConfig(block);
   block.textContent = '';
   const folderPath = config.folderPath;
-  const assetServiceURL = 'https://publish-p107857-e1218371.adobeaemcloud.com/services/damservlet';
+  // const assetServiceURL = 'https://publish-p107857-e1218371.adobeaemcloud.com/services/damservlet';
+  const assetServiceURL = 'https://edge-www-dev.jmp.com/services/damservlet';
   console.log(folderPath);
 
 
