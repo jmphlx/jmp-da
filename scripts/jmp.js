@@ -64,7 +64,7 @@ async function getJsonFromUrl(route) {
 
 async function externalGETRequest(route) {
   fetch(route, {
-    mode: 'cors'
+    mode: 'no-cors'
   })
   .then(response => {
     console.log(response.status);
