@@ -62,6 +62,35 @@ async function getJsonFromUrl(route) {
   return null;
 }
 
+async function externalGETRequest(route) {
+  // await window.fetch(route, {
+  //   mode: 'no-cors' // This tells fetch to make a CORS request
+  // })
+  // .then(response => {
+  //   console.log(response);
+  //   if (!response.ok) {
+  //     throw new Error('Network response was not ok');
+  //   }
+  //   return response.json(); // Assuming the response is JSON
+  // })
+  // .then(data => {
+  //   // Process the data
+  //   console.log(data);
+  // })
+  // .catch(error => {
+  //   // Handle any errors
+  //   console.error('Fetch error:', error);
+  // });
+
+  const request = new Request(route, {
+    credentials: 'include',
+    method: 'GET',
+    mode: 'no-cors'
+  });
+  const fetchPromise = fetch(request);
+  fetchPromise.then((response) => console.log(response));
+}
+
 /**
  * Returns the path of the appropriate nav based on page language.
  * Default to 'en' if language isn't found.
@@ -499,6 +528,7 @@ export {
   containsOperator,
   matchesOperator,
   startsWithOperator,
+  externalGETRequest,
   getBlockConfig,
   getBlockPropertiesList,
   getBlockProperty,
