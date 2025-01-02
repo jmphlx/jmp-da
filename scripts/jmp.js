@@ -63,19 +63,23 @@ async function getJsonFromUrl(route) {
 }
 
 async function externalGETRequest(route) {
-  try {
-    window.fetch(route, {
-      mode: 'no-cors'
-    })
-    .then(async response => {
-      console.log(response.status);
-      const json = await response.json();
-      return json;
-    })
-  } catch (error) {
-    console.error('externalGet error', { error });
-  }
-  return null;
+  fetch(route, {
+    mode: 'no-cors'
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json(); // Assuming the response is JSON
+  })
+  .then(data => {
+    // Do something with the data
+    console.log(data);
+  })
+  .catch(error => {
+    // Handle errors
+    console.error('error ', { error });
+  });
 }
 
 // async function externalGETRequest(route) {
