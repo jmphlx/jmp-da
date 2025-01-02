@@ -63,11 +63,15 @@ async function getJsonFromUrl(route) {
 }
 
 async function externalGETRequest(route) {
+
+  const myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Accept', 'application/json');
+
   fetch(route, {
+    headers: myHeaders,
     mode: 'no-cors',
     referrerPolicy: 'no-referrer',
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
   })
   .then(response => {
     console.log(response.status);
