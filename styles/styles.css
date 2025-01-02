@@ -643,6 +643,7 @@ ul {
     ul {
     padding: 0 0 0 1rem; 
       li {
+        display: block;
         margin-left: 8px;
         position: relative;
         text-indent: -8px;
@@ -2173,6 +2174,7 @@ div.interview-body {
   padding: 0 0 0 1rem; 
     li {
       margin-left: 8px;
+      display: block;
       position: relative;
       text-indent: -8px;
       margin-bottom: 4px;
