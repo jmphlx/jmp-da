@@ -63,7 +63,6 @@ async function getJsonFromUrl(route) {
 }
 
 async function externalGETRequest(route) {
-
   const myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   myHeaders.append('Accept', 'application/json');
@@ -82,43 +81,14 @@ async function externalGETRequest(route) {
   .then(data => {
     // Do something with the data
     console.log(data);
+    return data;
   })
   .catch(error => {
     // Handle errors
     console.error('error ', { error });
   });
+  return null;
 }
-
-// async function externalGETRequest(route) {
-//   await window.fetch(route, {
-//     mode: 'no-cors' // This tells fetch to make a CORS request
-//   })
-//   .then(response => {
-//     console.log(response.status);
-//     console.log(response);
-//     // if (!response.ok) {
-//     //   throw new Error('Network response was not ok');
-//     // }
-//     const data = await response.json();
-//     return data;
-//   })
-//   .then(data => {
-//     // Process the data
-//     console.log(data);
-//   })
-//   .catch(error => {
-//     // Handle any errors
-//     console.error('Fetch error:', error);
-//   });
-
-  // const request = new Request(route, {
-  //   credentials: 'include',
-  //   method: 'GET',
-  //   mode: 'no-cors'
-  // });
-  // const fetchPromise = fetch(request);
-  // fetchPromise.then((response) => console.log(response));
-// }
 
 /**
  * Returns the path of the appropriate nav based on page language.
