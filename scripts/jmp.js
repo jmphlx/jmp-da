@@ -66,6 +66,8 @@ async function externalGETRequest(route) {
   fetch(route, {
     mode: 'no-cors',
     referrerPolicy: 'no-referrer',
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
   })
   .then(response => {
     console.log(response.status);
