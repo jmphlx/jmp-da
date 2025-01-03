@@ -253,7 +253,7 @@
           border: solid var(--blue);
           border-width: 0 3px 3px 0;
           position: absolute;
-          top: 48%;
+          top: 47%;
           transform: rotate(-45deg) translateY(-50%);
           right: 3rem;
           opacity: 0;
