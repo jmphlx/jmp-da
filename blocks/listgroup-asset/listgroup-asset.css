@@ -4,8 +4,6 @@ ul {
   margin: 0 -1.25%;
   padding: 0;
   columns: 2;
-  -webkit-columns: 2;
-  -moz-columns: 2;
 }
 
 div.listgroup-asset  {
@@ -32,8 +30,6 @@ div.listgroup-asset  {
       height: 100%;
       width: auto;
       text-decoration: none;
-      display: flex;
-      flex-direction: column;
       position: relative;
       outline: none;
       .title {
@@ -48,9 +44,6 @@ div.listgroup-asset  {
       }
     }
     :hover {
-      .navigation-title, .resourceType, .displayLabel {
-        color: var(--link-hover-color);
-      }
       .title {
         color: var(--blue);
       }
