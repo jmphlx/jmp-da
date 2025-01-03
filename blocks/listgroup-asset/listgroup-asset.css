@@ -27,11 +27,7 @@ div.listgroup-asset  {
     margin-bottom: 2.5%;
     transition: all 0.5s ease-in-out;
     a {
-      background: #FAFAFA;
-      border: 1px solid #D7D7D7;
-      border-radius: 5px;
-      /* padding: 8% 8% 9% 8%; */
-      box-sizing: border-box;
+      background: transparent;
       margin: 0;
       height: 100%;
       width: auto;
@@ -40,29 +36,6 @@ div.listgroup-asset  {
       flex-direction: column;
       position: relative;
       outline: none;
-      img {
-        border-radius: 5px 5px 0 0;
-        border: 1px solid #D7D7D7;
-        padding: 0;
-        transition: color 0.3s ease;
-        object-fit: cover;
-        object-position: center;
-        width: 100%;
-        height: 100%;
-        flex: 1 0 auto;
-      }
-      .navigation-title, .resourceType, .displayLabel {
-        order: 1;
-        font-size: 13px;
-        font-family: var(--font-secondary);
-        font-weight: normal;
-        color: var(--gray7);
-        display: block;
-        padding: 8% 8% .25em 8%;
-        line-height: 20px;
-        text-transform: uppercase;
-        transition: color 0.3s ease;
-      }
       .title {
         order: 2;
         font-family: "anova-regular", "Arial", "Helvetica", sans-serif;
@@ -73,14 +46,6 @@ div.listgroup-asset  {
         transition: color 0.5s ease;
         color: var(--blue) !important;
       }
-      .abstract, .description, .displayDescription {
-        order: 3;
-        color: #666666;
-        font-size: 1.6rem;
-        flex: 1 0 auto;
-        padding: 0 8% 9% 8%;
-        line-height: 138%;
-      }
     }
     :hover {
       .navigation-title, .resourceType, .displayLabel {
@@ -88,7 +53,6 @@ div.listgroup-asset  {
       }
       .title {
         color: var(--blue);
-        /* text-decoration: underline solid var(--blueLight); */
       }
     }
     :after {
@@ -122,193 +86,4 @@ div.listgroup-asset  {
 .listgroup-asset >h1, .listgroup-asset >h2, .listgroup-asset >h3, .listgroup-asset >h4, .listgroup-asset >h5, .listgroup-asset >h6 {
   margin-bottom: 0.5em;
 }
-.listgroup-asset .list-group {
-  display: block;
-  width: 100%;
-  margin-bottom: 0;
-  padding-top: 0;
-  color: orange;
-}
-.listgroup-asset .mcl-2 ul, .listgroup-asset .mcl-3 ul, .listgroup-asset .mcl-4 ul, .listgroup-asset .mcl-5 ul {
-  float: left;
-}
-.listgroup-asset .mcl-2 ul:last-child, .listgroup-asset .mcl-3 ul:last-child, .listgroup-asset .mcl-4 ul:last-child, .listgroup-asset .mcl-5 ul:last-child {
-  margin: 0;
-}
-.listgroup-asset .mcl-2 {
-  padding: 0 0 30px 0;
-}
-.listgroup-asset .mcl-2 ul {
-  width: 45%;
-  margin-right: 5%;
-}
-.listgroup-asset .mcl-2 ul:last-child {
-  width: 45%;
-}
-.listgroup-asset .mcl-3 ul {
-  width: 30%;
-  margin-right: 5%;
-}
-.listgroup-asset .mcl-4 ul {
-  width: 23%;
-  margin-right: 2%;
-}
-.listgroup-asset .mcl-5 ul {
-  width: 18%;
-  margin-right: 2%;
-}
-.listgroup-asset ul {
-  list-style: none;
-  transition: all 0.5s ease;
-}
-.listgroup-asset ul>li {
-  margin-bottom: 1em;
-  transition: all 0.5s ease;
-}
-.listgroup-asset ul>li .primary-title {
-  font-size: 110%;
-}
-.listgroup-asset ul>li .primary-title .release-date, .listgroup-asset ul>li .primary-title .meta-description, .listgroup-asset ul>li .primary-title .description, .listgroup-asset ul>li .primary-title .list-page-title, .listgroup-asset ul>li .primary-title .alternate-listing-title, .listgroup-asset ul>li .primary-title .subtitle {
-  display: inline;
-  font-size: 110%;
-}
-.listgroup-asset ul>li .release-date {
-  display: block;
-  font-size: 80%;
-}
-.listgroup-asset ul>li .meta-description, .listgroup-asset ul>li .description {
-  display: block;
-  font-size: 95%;
-}
-.listgroup-asset ul>li .list-page-title, .listgroup-asset ul>li .alternate-listing-title {
-  display: block;
-  font-size: 80%;
-  
-}
-.listgroup-asset ul>li .subtitle {
-  color: var(--gray3);
-  display: inline-block;
-  transition: all 0.5s ease;
-  font-size: var(--body-font-size-m);
-}
-.listgroup-asset ul>li .tag-category {
-  display: block;
-  text-transform: uppercase;
-}
-.listgroup-asset ul>li .event-type {
-  display: inline-block;
-  margin-left: .5em;
-  padding-left: .5em;
-  border-left: 1px solid ;
-  font-size: 90%;
-  font-style: italic;
-}
-.listgroup-asset ul>li .venue {
-  display: block;
-  font-size: 80%;
-}
-.listgroup-asset ul>li .abstract-toggle {
-  display: block;
-  font-size: 80%;
-  font-weight: normal;
-  text-decoration: none;
-  cursor: pointer;
-  margin: .5em 0 0 37%;
-}
-.listgroup-asset ul>li .abstract {
-  display: block;
-  max-height: inherit;
-  overflow: hidden;
-  margin: 0 0 10px;
-  width: 96%;
-  width: auto;
-  font-size: 90%;
-}
-.listgroup-asset ul>li .abstract.show {
-  max-height: 1500px;
-  padding: 5px 2%;
-}
-.listgroup-asset ul>li .abstract.is-visible {
-  display: block;
-  overflow: visible;
-  padding: 1px 0 0 150px;
-  line-height: 138%;
-}
-#listing .listgroup-asset ul>li {
-  margin-bottom: 1.5em;
-}
-.listgroup-asset ul.listOfItems {
-  padding: 0;
-}
-.listgroup-asset ul.listOfItems.list-arrow {
-  padding: 5px 0 20px 0;
-}
-.listgroup-asset ul.listOfItems.list-arrow>li:before {
-  margin-left: -1.3em;
-  font-size: 80%;
-}
-.listgroup-asset ul.listOfItems.list-arrow>li p {
-  display: inline;
-  margin: 0;
-  padding: 0;
-  line-height: 1;
-}
-.listgroup-asset ul.listOfItems.list-none a {
-  display: block;
-}
-.listgroup-asset ul.listOfItems.list-none.image-list a {
-  display: block;
-}
-.listgroup-asset ul.no-bullet>li {
-  padding-left: 0;
-}
-.listgroup-asset ul.no-bullet>li:before {
-  display: none;
-}
-.listgroup-asset ul.list-tile>li:before {
-  content: none;
-  margin-left: 0;
-}
-.listgroup-asset ul.list-tile>li a .abstract.is-visible {
-  padding: 0;
-}
-.listgroup-asset ul.list-bricks {
-  position: relative;
-}
-.listgroup-asset ul.list-bricks:before {
-  content: '';
-  width: 256px;
-  height: 64px;
-  opacity: 0.5;
-  position: absolute;
-  top: 40px;
-  left: 40%;
-}
-.listgroup-asset ul.list-bricks li {
-  width: 100%;
-  padding: 0;
-  margin: 0;
-}
-.listgroup-asset ul.list-bricks li a .image {
-  display: block;
-  width: 90%;
-  float: none;
-  margin: 10px 5%;
-  text-align: center;
-}
-.listgroup-asset ul.list-bricks li a .tag-category, .listgroup-asset ul.list-bricks li a .content-type {
-  position: absolute;
-  top: 1.5em;
-  left: 5%;
-}
-.listgroup-asset .nullresults ul {
-  padding-bottom: 1em;
-}
-.listgroup-asset .nullresults ul li {
-  border: none;
-  padding: 0 0 0 1.1em;
-}
-.listgroup-asset .nullresults ul li:before {
-  width: 1.5em;
-  margin-left: -1.5em;
-}
+
