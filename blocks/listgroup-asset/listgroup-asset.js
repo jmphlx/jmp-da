@@ -83,13 +83,8 @@ function writeAsOneGroup(matching, config) {
     const listItem = document.createElement('li');
     listItem.classList = `${item.resourceOptions}`;
     const cardLink = document.createElement('a');
-    if (item.redirectTarget.length > 0) {
-      cardLink.href = item.redirectTarget;
-      cardLink.target = '_blank';
-    } else {
-      cardLink.href = item.path;
-      cardLink.target = '_self';
-    }
+    cardLink.href = item.path;
+    cardLink.target = '_self';
 
     const htmlOutput = [];
 
