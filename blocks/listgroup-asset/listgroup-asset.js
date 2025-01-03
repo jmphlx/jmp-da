@@ -11,8 +11,7 @@ import {
 
 function writeAsOneGroup(matching, config) {
   const wrapper = document.createElement('ul');
-  const columns = config.columns ? config.columns : 5;
-  wrapper.classList = `assetList col-size-${columns}`;
+  wrapper.classList = 'assetList';
   matching?.forEach((item) => {
     const listItem = document.createElement('li');
     listItem.classList = `${item.resourceOptions}`;
