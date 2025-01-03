@@ -69,7 +69,7 @@
   padding: 3.2rem;
   background-color: #f4f4f4;
   border-radius: 10px;
-  border: 1px solid var(--gray10);
+  border: 1px solid #d0d0d0;
   label {
     font-size: 14px;
     font-family: var(--font-secondary);
