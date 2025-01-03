@@ -1,8 +1,6 @@
 @import url("/blocks/listgroup/listgroup.css");
 
 ul {
-  display: flex;
-  flex-flow: row wrap;
   margin: 0 -1.25%;
   padding: 0;
   columns: 2;
@@ -21,36 +19,6 @@ div.listgroup-asset  {
   float: left;
   a {
     text-align: left;
-  }
-}
-
-.listgroup-asset ul.col-size-3 li {
-  width: 22.5%;
-  margin: 0 1.25% 1.5rem 1.25%;
-  @media (width <= 600px) {
-    width: 47.5%;
-  }
-}
-
-.listgroup-asset ul.col-size-4 li {
-  margin: 0 1.25% 1.5rem 1.25%;
-  width: 22.5%;
-  @media (width <= 900px) {
-    width: 30.75%;
-  }
-  @media (width <= 600px) {
-    width: 47.5%;
-  }
-}
-
-.listgroup-asset ul.col-size-5 li {
-  margin: 0 1.25% 1.5rem 1.25%;
-  width: 17.5%;
-  @media (width <= 900px) {
-    width: 30.75%;
-  }
-  @media (width <= 600px) {
-    width: 47.5%;
   }
 }
 
