@@ -325,7 +325,8 @@ export default async function decorate(block) {
   console.log(folderPath);
 
 
-  const allAssets = await externalGETRequest(`${assetServiceURL}?path=${folderPath}`);
+  const { data: allAssets } = await getJsonFromUrl(`${assetServiceURL}?path=${folderPath}`);
+  //const allAssets = await externalGETRequest(`${assetServiceURL}?path=${folderPath}`);
   console.log(allAssets);
   const sortBy = config.sortBy;
   const sortOrder = config.sortOrder?.toLowerCase();
