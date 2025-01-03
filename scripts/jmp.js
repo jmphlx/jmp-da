@@ -54,41 +54,11 @@ async function getJsonFromUrl(route) {
     const response = await window.fetch(route);
     if (!response.ok) return null;
     const json = await response.json();
-    console.log(json);
     return json;
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('getJsonFromUrl:', { error });
   }
-  return null;
-}
-
-async function externalGETRequest(route) {
-  const myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
-  myHeaders.append('Accept', 'application/json');
-  myHeaders.append('Access-Control-Allow-Origin', '*');
-
-  await fetch(route, {
-    headers: myHeaders,
-    referrerPolicy: 'origin',
-  })
-  .then(response => {
-    console.log(response.status);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json(); // Assuming the response is JSON
-  })
-  .then(data => {
-    // Do something with the data
-    console.log(data);
-    return data;
-  })
-  .catch(error => {
-    // Handle errors
-    console.error('error ', { error });
-  });
   return null;
 }
 
@@ -523,24 +493,12 @@ function sortPageList(pageList, sortBy, sortOrder) {
   return sortedList;
 }
 
-function sortAssetList(assetList, sortBy, sortOrder) {
-  const sortedList = assetList;
-  sortedList.sort((a, b) => {
-    if (sortOrder !== undefined && sortOrder === 'descending') {
-      return (a.title < b.title ? 1 : -1);
-    }
-    return (a.title < b.title ? -1 : 1);
-  });
-  return sortedList;
-}
-
 export {
   arrayIncludesAllValues,
   arrayIncludesSomeValues,
   containsOperator,
   matchesOperator,
   startsWithOperator,
-  externalGETRequest,
   getBlockConfig,
   getBlockPropertiesList,
   getBlockProperty,
@@ -557,6 +515,5 @@ export {
   pageFilterByFolder,
   pageOrFilter,
   parseBlockOptions,
-  sortAssetList,
   sortPageList,
 };

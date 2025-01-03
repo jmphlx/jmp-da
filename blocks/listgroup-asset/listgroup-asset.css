@@ -55,18 +55,6 @@ div.listgroup-asset  {
         color: var(--blue);
       }
     }
-    :after {
-      content: '';
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: -1;
-      border-radius: 0 0 5px 5px;
-      background: #eeeeee;
-      height: 5px;
-      width: 95%;
-      bottom: -5px;
-    }
   }
   > li:hover {
     transform: translateY(-5px);
