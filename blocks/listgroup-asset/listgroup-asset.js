@@ -70,6 +70,6 @@ export default async function decorate(block) {
   const sortOrder = config.sortOrder?.toLowerCase();
 
   const matching = sortAssetList(allAssets, sortOrder);
-  const wrapper = buildAssetItems(block, matching, config);
+  const wrapper = buildAssetItems(matching, config);
   block.append(wrapper);
 }
