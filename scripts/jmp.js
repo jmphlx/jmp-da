@@ -68,7 +68,7 @@ async function externalGETRequest(route) {
   myHeaders.append('Accept', 'application/json');
   myHeaders.append('Access-Control-Allow-Origin', '*');
 
-  fetch(route, {
+  await fetch(route, {
     headers: myHeaders,
     referrerPolicy: 'origin',
   })
