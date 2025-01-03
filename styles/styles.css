@@ -2082,8 +2082,14 @@ div.interview-body {
   }
 }
 .text-50 {
-  h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
+  h1, h2, h3, h4, h5, h6, p {
     width: 50%;
+  }
+  ol, ul {
+    width: 50%;
+    h1, h2, h3, h4, h5, h6, p, ol, ul{
+      width: 100% !important;
+    }
   }
   @media (width <= 900px) {
     h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
@@ -2092,8 +2098,14 @@ div.interview-body {
   }
 }
 .text-60 {
-  h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
+  h1, h2, h3, h4, h5, h6, p {
     width: 60%;
+  }
+  ol, ul {
+    width: 60%;
+    h1, h2, h3, h4, h5, h6, p, ol, ul{
+      width: 100% !important;
+    }
   }
   @media (width <= 900px) {
     h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
@@ -2102,8 +2114,14 @@ div.interview-body {
   }
 }
 .text-66 {
-  h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
+  h1, h2, h3, h4, h5, h6, p {
     width: 66%;
+  }
+  ol, ul {
+    width: 66%;
+    h1, h2, h3, h4, h5, h6, p, ol, ul{
+      width: 100% !important;
+    }
   }
   @media (width <= 900px) {
     h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
@@ -2112,8 +2130,14 @@ div.interview-body {
   }
 }
 .text-75 {
-  h1, h2, h3, h4, h5, h6, p, dl, ol, ul, pre, blockquote {
+  h1, h2, h3, h4, h5, h6, p {
     width: 75%;
+  }
+  ol, ul {
+    width: 75%;
+    h1, h2, h3, h4, h5, h6, p, ol, ul{
+      width: 100% !important;
+    }
   }
   & :has(.indent-left){
     padding-left: 3.2rem;
