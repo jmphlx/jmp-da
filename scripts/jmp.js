@@ -54,6 +54,7 @@ async function getJsonFromUrl(route) {
     const response = await window.fetch(route);
     if (!response.ok) return null;
     const json = await response.json();
+    console.log(json);
     return json;
   } catch (error) {
     // eslint-disable-next-line no-console
