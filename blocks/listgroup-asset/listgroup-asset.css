@@ -68,3 +68,70 @@ div.listgroup-asset  {
   margin-bottom: 0.5em;
 }
 
+.asset-blocks {
+  ul.assetList {
+    padding: 0;
+    margin-left: 0;
+    columns: 2;
+    > li {
+      width: 100%;
+      float: none;
+      a {
+        width: 100%;
+        display: block;
+        position: relative;
+        outline: none;
+        overflow: hidden;
+        padding: 1rem 1.6rem;
+        border-radius: var(--base-radius);
+        border: 1px solid rgba(0, 0, 0, 0);
+        margin: 0 0 1rem 0;
+        /* width: 92%; */
+        background-color: var(--gray);
+        box-sizing: border-box;
+        text-decoration: none;
+        transition: all 0.5s ease;
+        &:after {
+          content:'';
+          width: 2rem;
+          height: 2rem;
+          border: solid var(--blue);
+          border-width: 0 3px 3px 0;
+          position: absolute;
+          top: 47%;
+          transform: rotate(-45deg) translateY(-50%);
+          right: 3rem;
+          opacity: 0;
+          transition: all 0.5s ease;
+        }
+        span {
+          &:before {
+            content: url('../../../icons/arrow-orange.svg');
+            width: 7px;
+            display: inline-block;
+            font-size: 80%;
+            margin: 0 5px 0 0;
+          }
+        }
+        &:hover {
+          border: 1px solid var(--blue);
+          span {
+            color: var(--link-hover-color);
+          }
+          &:after {
+            right: 2rem;
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+  @media (width <=900px) {
+    ul.assetList {
+      columns: 1;
+      > li {
+        width: unset;
+      }
+    }
+  }
+}

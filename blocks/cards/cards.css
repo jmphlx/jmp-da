@@ -1082,6 +1082,7 @@
   &.cards > ul {
     padding: 0;
     li {
+      display: block;
       li {
         text-indent: -8px;
       } 
