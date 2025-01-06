@@ -125,9 +125,20 @@ div#tabpanel-standard.tabs-panel div table tbody tr td {
   color: #3aaafc;
 }
 
-
 div.tabs-wrapper div.tabs.block div.tabs-list .tabs-tab {
   border-top-right-radius: 3px;
   border-top-left-radius: 3px;
   position: relative;
+}
+
+.tabs-wrapper {
+  .tabs {
+    .tabs-panel  {
+      > div {
+        ul {
+          padding: 0 0 0 17px; 
+        }
+      }
+    }
+  }
 }
