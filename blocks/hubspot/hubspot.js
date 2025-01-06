@@ -74,12 +74,10 @@ const loadEmbed = (block, config) => {
   block.innerHTML = embedHubspot(config);
   block.classList = 'block embed embed-hubspot';
   if (config.headline) {
-    if (typeof config.headline === 'string') {
-      const wrapDiv = createTag('div', { class: 'headline' }, config.headline);
-      block.prepend(wrapDiv);
-    } else {
-      block.prepend(config.headline);
-    }
+    const headlineElement = typeof config.headline === 'string'
+      ? createTag('p', { }, config.headline) : config.headline;
+    const wrapDiv = createTag('div', { class: 'headline' }, headlineElement);
+    block.prepend(wrapDiv);
   }
 
   block.classList.add('form-is-loaded');
