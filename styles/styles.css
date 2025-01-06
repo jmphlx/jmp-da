@@ -272,7 +272,7 @@ h1 + h5 {
   opacity: .9;
 }
 :is(h1):has(+ :is(p)) {
-  margin-bottom: 3.2rem !important;
+  margin-bottom: .5em !important;
 }
 :is(h2) {
   &:has(+ :is(h4, h5)) {
