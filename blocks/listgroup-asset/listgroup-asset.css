@@ -1,6 +1,6 @@
 @import url("/blocks/listgroup/listgroup.css");
 
-ul {
+ul.assetList {
   margin: 0 -1.25%;
   padding: 0;
   columns: 2;
@@ -10,7 +10,7 @@ div.listgroup-asset  {
   padding-top: 0;
 }
 
-.listgroup-asset ul li {
+.listgroup-asset ul.assetList li {
   clear: both;
   list-style-type: none;
   padding: 0;
@@ -20,7 +20,7 @@ div.listgroup-asset  {
   }
 }
 
-.listgroup-asset ul {
+.listgroup-asset ul.assetList {
   > li {
     margin-bottom: 2.5%;
     transition: all 0.5s ease-in-out;
