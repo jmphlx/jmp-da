@@ -1622,6 +1622,107 @@ main .section .layout-wrapper {
       }
     }
   }
+  &.tabs-wrapper {
+    .tabs-list {
+      padding-left: 0;
+      padding-top: 1em;
+      border-bottom: 1px solid #d0d0d0;
+      font-weight: normal;
+      font-family: "anova-med","Arial","Helvetica",sans-serif;  ;
+      display: flex;
+      gap: 8px;
+      max-width: 100%;
+      font-size: var(--body-font-size-xs);
+      border-bottom: 1px solid var(--grayRule);
+      overflow-x: auto;
+    }
+    @media (width >= 600px) {
+      .tabs-list {
+        font-size: var(--body-font-size-s);
+        border-bottom: 1px solid var(--grayRule);
+      }
+    }
+    
+    @media (width >= 900px) {
+      .tabs-list {
+        font-size: 1.6rem;
+      }
+    }
+
+    .tabs-list h3 {
+      color: #0378cd;
+      line-height: 2.5em;
+      font-family: "anova-med","Arial","Helvetica",sans-serif;
+      font-weight: normal;
+      font-size: 1.4rem;
+    }
+
+    .tabs-list button {
+      cursor: pointer;
+      flex: 0 0 max-content;
+      margin: 0;
+      border: 1px solid var(--grayRule);
+      border-radius: 5px 5px 0 0;
+      padding: 8px 16px;
+      background-color: var(--gray);
+      color: var(--blue);
+      font-family: var(--font-secondary);
+      font-size: 1.5rem;
+      line-height: unset;
+      text-align: initial;
+      text-overflow: unset;
+      overflow: unset;
+      white-space: unset;
+      transition: background-color 0.2s;
+      border-bottom: none;
+    }
+
+    .tabs-list button p {
+      margin: 0;
+    }
+
+    .tabs-list .tab-tab {
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+      
+    }
+
+    .tabs-list button[aria-selected='true'] {
+      cursor: pointer;
+      border-bottom: none;
+      background-color: var(--blue) !important;
+      color: white;
+    }
+
+    .tabs-panel {
+      padding: 2rem 0 3.2rem 0;
+      border: none;
+      overflow: auto;
+      @media (width <=900px) {
+        padding: 2rem 0 3.2rem 0;
+      }
+    }
+
+    .tabs-panel[aria-hidden="true"] {
+      display: none;
+    }
+
+    .tabs-panel picture {
+      border: none;
+      border-radius: 0;
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      display: inline-block;
+      padding: 0;
+      border-image-repeat: stretch;
+    }
+
+    .tabs-panel a:hover {
+      text-decoration: none;
+      color: #3aaafc;
+    }
+  }
 }
 
 main img {
