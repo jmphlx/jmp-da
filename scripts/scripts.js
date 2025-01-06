@@ -255,7 +255,7 @@ export function buildAccordions(wrapper, section, numberOfGroups) {
 }
 
 /*
- * Separate the page into multiple accordions using the dividers.
+ * Separate the page into multiple tabs using the dividers.
 */
 export function buildTabs(wrapper, section, numberOfGroups) {
   // build tablist
@@ -263,8 +263,8 @@ export function buildTabs(wrapper, section, numberOfGroups) {
   tablist.className = 'tabs-list';
   tablist.setAttribute('role', 'tablist');
 
-  //Create all tab panels and buttons first.
-  for(let i = 1; i <= numberOfGroups; i++) {
+  // Create all tab panels and buttons first.
+  for (let i = 1; i <= numberOfGroups; i++) {
     const tabpanel = document.createElement('div');
     tabpanel.className = 'tabs-panel';
     tabpanel.id = `tabpanel-${i}`;

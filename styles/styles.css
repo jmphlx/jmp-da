@@ -1626,7 +1626,6 @@ main .section .layout-wrapper {
     .tabs-list {
       padding-left: 0;
       padding-top: 1em;
-      border-bottom: 1px solid #d0d0d0;
       font-weight: normal;
       font-family: "anova-med","Arial","Helvetica",sans-serif;  ;
       display: flex;
