@@ -254,6 +254,67 @@ export function buildAccordions(wrapper, section, numberOfGroups) {
   section.append(wrapper);
 }
 
+/*
+ * Separate the page into multiple tabs using the dividers.
+*/
+export function buildTabs(wrapper, section, numberOfGroups) {
+  // build tablist
+  const tablist = document.createElement('div');
+  tablist.className = 'tabs-list';
+  tablist.setAttribute('role', 'tablist');
+
+  // Create all tab panels and buttons first.
+  for (let i = 1; i <= numberOfGroups; i++) {
+    const tabpanel = document.createElement('div');
+    tabpanel.className = 'tabs-panel';
+    tabpanel.id = `tabpanel-${i}`;
+    tabpanel.setAttribute('aria-hidden', !!i);
+    tabpanel.setAttribute('aria-labelledby', `tab-${i}`);
+    tabpanel.setAttribute('role', 'tabpanel');
+
+    const button = document.createElement('button');
+    button.className = 'tabs-tab';
+    button.id = `tab-${i}`;
+    button.setAttribute('aria-controls', `tabpanel-${i}`);
+    button.setAttribute('aria-selected', !i);
+    button.setAttribute('role', 'tab');
+    button.setAttribute('type', 'button');
+    button.addEventListener('click', () => {
+      section.querySelectorAll('[role=tabpanel]').forEach((panel) => {
+        panel.setAttribute('aria-hidden', true);
+      });
+      tablist.querySelectorAll('button').forEach((btn) => {
+        btn.setAttribute('aria-selected', false);
+      });
+      tabpanel.setAttribute('aria-hidden', false);
+      button.setAttribute('aria-selected', true);
+    });
+    tablist.append(button);
+    wrapper.append(tabpanel);
+  }
+
+  // Sort elements into groups. Every time you hit separator, increment group #.
+  let currentGroupNumber = 1;
+  [...section.children].forEach((child) => {
+    const currTabPanel = wrapper.querySelector(`#tabpanel-${currentGroupNumber}`);
+    const currTabButton = tablist.querySelector(`#tab-${currentGroupNumber}`);
+    if (child.classList.contains('divider-wrapper')) {
+      currentGroupNumber += 1;
+      const config = readBlockConfig(child.querySelector('div'));
+      currTabButton.innerHTML = config.tabtitle;
+      child.remove();
+    } else {
+      currTabPanel.append(child);
+    }
+  });
+
+  const lastButton = tablist.querySelector(`#tab-${numberOfGroups}`);
+  lastButton.innerHTML = section.getAttribute('data-tabtitle');
+
+  wrapper.prepend(tablist);
+  section.append(wrapper);
+}
+
 /**
  * Builds multi group layout within a section.
  * Expect layout to be written as '# column' i.e. '2 column' or '3 column'.
@@ -271,6 +332,9 @@ export function buildLayoutContainer(main) {
     if (layoutType.includes('accordion')) {
       wrapper.classList.add('accordion-wrapper');
       buildAccordions(wrapper, section, numberOfGroups);
+    } else if (layoutType.includes('tabs')) {
+      wrapper.classList.add('tabs-wrapper');
+      buildTabs(wrapper, section, numberOfGroups);
     } else {
       buildColumns(wrapper, section, numberOfGroups);
     }
