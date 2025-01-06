@@ -9,6 +9,8 @@ import {
   getLanguage,
 } from '../../scripts/jmp.js';
 
+import { createTag } from '../../scripts/helper.js';
+
 const embedHubspot = (config) => {
   // clean up hubspot url query paramaters
   const sfdcCampaignId = config.salesforceCampaignId;
@@ -72,7 +74,12 @@ const loadEmbed = (block, config) => {
   block.innerHTML = embedHubspot(config);
   block.classList = 'block embed embed-hubspot';
   if (config.headline) {
-    block.prepend(config.headline);
+    if (typeof config.headline === 'string') {
+      const wrapDiv = createTag('div', { class: 'headline' }, config.headline);
+      block.prepend(wrapDiv);
+    } else {
+      block.prepend(config.headline);
+    }
   }
 
   block.classList.add('form-is-loaded');
