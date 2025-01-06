@@ -1,7 +1,7 @@
 @import url("/blocks/listgroup/listgroup.css");
 
 ul.assetList {
-  margin: 0 -1.25%;
+  margin: 0;
   padding: 0;
   columns: 2;
 }
@@ -73,6 +73,7 @@ div.listgroup-asset  {
     > li {
       width: 100%;
       float: none;
+      break-inside: avoid-column;
       a {
         width: 100%;
         display: block;
