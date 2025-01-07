@@ -114,7 +114,7 @@ function pageAndFilter(pageSelection, filterObject) {
     let flag = true;
     try {
       Object.keys(filterObject).forEach((key) => {
-        const pageValue = item[key].toLowerCase();
+        const pageValue = item[key]?.toLowerCase();
         const filterValue = filterObject[key];
         if (typeof filterValue === 'object') {
           // if filterValue is an array of values
@@ -158,7 +158,7 @@ function pageOrFilter(pageSelection, filterObject) {
   const filteredData = pageSelection.filter((item) => {
     let flag = false;
     Object.keys(filterObject).forEach((key) => {
-      const pageValue = item[key].toLowerCase();
+      const pageValue = item[key]?.toLowerCase();
       const filterValue = filterObject[key];
       if (typeof filterValue === 'object') {
         // if filterValue is an array of values

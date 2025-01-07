@@ -16,7 +16,7 @@ import {
  */
 function pageAnyFilter(pageSelection, tabProperty) {
   return pageSelection.filter((item) => {
-    const pageValue = item[tabProperty].toLowerCase();
+    const pageValue = item[tabProperty]?.toLowerCase();
     return pageValue !== undefined && pageValue.length > 0;
   });
 }
@@ -35,7 +35,7 @@ function createTabPanel(pageSelection, tabPanel) {
   pageSelection.forEach((item) => {
     const listItem = document.createElement('li');
     const cardLink = document.createElement('a');
-    if (item.redirectTarget.length > 0) {
+    if (item.redirectTarget?.length > 0) {
       cardLink.href = item.redirectTarget;
       cardLink.target = '_blank';
     } else {
@@ -115,12 +115,12 @@ export default async function decorate(block) {
 
     // Cut results down to fit within specified limit.
     const limitObjects = optionsObject.limit;
-    if (limitObjects !== undefined && pageSelection.length > limitObjects) {
+    if (limitObjects !== undefined && pageSelection?.length > limitObjects) {
       pageSelection = pageSelection.slice(0, limitObjects);
     }
 
     // if there are no results found and there is an empty results message, display it.
-    if (pageSelection.length === 0 && emptyResultsMessage !== undefined) {
+    if (pageSelection?.length === 0 && emptyResultsMessage !== undefined) {
       createEmptyTabPanel(emptyResultsMessage, tabpanel);
     } else {
       createTabPanel(pageSelection, tabpanel);
