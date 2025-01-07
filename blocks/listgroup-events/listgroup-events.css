@@ -259,6 +259,23 @@
           opacity: 0;
           transition: all 0.5s ease;
         }
+        .tag-category {
+          color: #777777;
+          position: relative;
+          line-height: 1.5;
+          text-transform: uppercase;
+          font-size: var(--body-font-size-xs);
+          &:empty {
+            display: none;
+          }
+          &:before {
+            content: url('../../../icons/arrow-orange.svg');
+            width: 7px;
+            display: inline-block;
+            font-size: 80%;
+            margin: 0 5px 0 0;
+          }
+        }
         .title {
           &:before {
             content: url('../../../icons/arrow-orange.svg');
