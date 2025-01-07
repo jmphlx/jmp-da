@@ -276,15 +276,17 @@
             margin: 0 5px 0 0;
           }
         }
-        /* .title {
-          &:before {
+        .title {
+          padding-bottom: 0;
+          font-size: var(--body-font-size-m);
+          /* &:before {
             content: url('../../../icons/arrow-orange.svg');
             width: 7px;
             display: inline-block;
             font-size: 80%;
             margin: 0 5px 0 0;
-          }
-        } */
+          } */
+        }
         .subtitle {
           color: #333333;
         }
