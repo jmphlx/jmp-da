@@ -276,7 +276,7 @@
             margin: 0 5px 0 0;
           }
         }
-        .title {
+        /* .title {
           &:before {
             content: url('../../../icons/arrow-orange.svg');
             width: 7px;
@@ -284,7 +284,7 @@
             font-size: 80%;
             margin: 0 5px 0 0;
           }
-        }
+        } */
         .subtitle {
           color: #333333;
         }
