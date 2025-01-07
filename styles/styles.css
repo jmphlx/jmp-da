@@ -633,7 +633,7 @@ ol{
 }
 /* bullets JMP blue  */
 ul {
-  padding: 0 0 0 16px; 
+  padding: 0 0 0 18px; 
   li::marker {
     color: var(--blue);
   }
