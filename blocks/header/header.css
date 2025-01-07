@@ -364,12 +364,13 @@ header nav .nav-sections ul > li > ul > li {
   header nav .nav-sections ul > li > ul > li {
     font-size: 15px;
     padding: 0;
-    padding: 6px 12px;
+    /* padding: 6px 12px; */
     cursor: pointer;
     > a {
       display: block;
       text-decoration: none;
-      width: 100%;
+      width: unset;
+      padding: 6px 12px;
     }
     &:hover {
       color: var(--blue);
@@ -429,10 +430,15 @@ header nav .nav-utility-row {
         columns: 2;
         > li {
           font-size: 15px;
-          padding: 6px 12px;
           cursor: pointer;
+          display: flex;
+          flex: 1;
           > a {
             text-decoration: none;
+            width: unset;
+            padding: 6px 12px;
+            height: auto;
+            flex: 1;
           }
           &:hover {
             color: var(--blue);
@@ -488,7 +494,7 @@ header nav .nav-tools ul > li {
   text-decoration: none;
   /* font-weight: 600; */
   /* padding-block: 1rem; */
-  display: flex;
+  display: block;
   p {
     display: flex;
     margin-bottom: 0 !important;
@@ -993,9 +999,13 @@ header nav[aria-expanded="true"] .nav-tools.nav-tools-mobile {
             display: flex !important;
           }
           > li {
-            padding: 5px 10px 5px 0;
+            /* padding: 5px 10px 5px 0; */
             transition: transform .0s;
-            width: max-content;
+            width: unset;
+            a {
+              flex: 1;
+              padding: 5px 10px 5px 0;
+            }
           }
         }
         > p {
