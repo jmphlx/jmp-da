@@ -1,10 +1,12 @@
 indices:
+#MAIN JMP CONTENT#
 #ENGLISH CONTENT#
   jmp-en:
     include:
       - /en/**
     exclude:
       - /en/drafts/**
+      - /en/sandbox/**
     target: /jmp-en.json
     properties:
       author:
@@ -114,81 +116,6 @@ indices:
       displayLabel:
         select: head > meta[name="displaylabel"]
         value: |
-          attribute(el, "content") 
-
-#SKP ENGLISH CONTENT#
-  skp-en:
-    include:
-      - /en/statistics-knowledge-portal/**
-    target: /skp-en.json
-    properties:
-      author:
-        select: head > meta[name="author"]
-        value: |
-          attribute(el, "content")
-      title:
-        select: head > meta[property="og:title"]
-        value: |
-          attribute(el, "content")
-      image:
-        select: head > meta[property="og:image"]
-        value: |
-          match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
-      description:
-        select: head > meta[name="description"]
-        value: |
-          attribute(el, "content")
-      displayDescription:
-        select: head > meta[name="displaydescription"]
-        value: |
-          attribute(el, "content")
-      resourceType:
-        select: head > meta[name="resourcetype"]
-        value: |
-          attribute(el, "content")
-      industry:
-        select: head > meta[name="industry"]
-        value: |
-          attribute(el, "content")
-      capability:
-        select: head > meta[name="capability"]
-        value: |
-          attribute(el, "content")
-      product:
-        select: head > meta[name="product"]
-        value: |
-          attribute(el, "content")
-      releaseDate:
-        select: head > meta[name="releasedate"]
-        value: |
-          attribute(el, "content")
-      redirectTarget:
-        select: head > meta[name="redirecttarget"]
-        value: |
-          attribute(el, "content")
-      resourceOptions:
-        select: head > meta[name="resourceoptions"]
-        value: |
-          attribute(el, "content")
-      eventDateTime:
-        select: head > meta[name="eventdatetime"]
-        value: |
-          attribute(el, "content")
-      eventDisplayTime:
-        select: head > meta[name="eventdisplaytime"]
-        value: |
-          attribute(el, "content")
-      eventType:
-        select: head > meta[name="eventtype"]
-        value: |
-          attribute(el, "content")
-      eventSeries:
-        select: head > meta[name="eventseries"]
-        value: |
-          attribute(el, "content")
-      eventDisplayLabel:
-        select: head > meta[name="eventdisplaylabel"]
-        value: |
           attribute(el, "content")
 
 #SPANISH CONTENT#
@@ -197,6 +124,7 @@ indices:
       - /es/**
     exclude:
       - /es/drafts/**
+      - /es/sandbox/**
     target: /jmp-es.json
     properties:
       author:
@@ -308,12 +236,1339 @@ indices:
         value: |
           attribute(el, "content") 
 
-#ENGLISH CONTENT#
+#GERMAN CONTENT#
+  jmp-de:
+    include:
+      - /de/**
+    exclude:
+      - /de/drafts/**
+      - /de/sandbox/**
+    target: /jmp-de.json
+    properties:
+      author:
+        select: head > meta[name="author"]
+        value: |
+          attribute(el, "content")
+      title:
+        select: head > meta[property="og:title"]
+        value: |
+          attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: |
+          match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, "content")
+      displayDescription:
+        select: head > meta[name="displaydescription"]
+        value: |
+          attribute(el, "content")
+      resourceType:
+        select: head > meta[name="resourcetype"]
+        value: |
+          attribute(el, "content")
+      industry:
+        select: head > meta[name="industry"]
+        value: |
+          attribute(el, "content")
+      capability:
+        select: head > meta[name="capability"]
+        value: |
+          attribute(el, "content")
+      product:
+        select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+      releaseDate:
+        select: head > meta[name="releasedate"]
+        value: |
+          attribute(el, "content")
+      redirectTarget:
+        select: head > meta[name="redirecttarget"]
+        value: |
+          attribute(el, "content")
+      resourceOptions:
+        select: head > meta[name="resourceoptions"]
+        value: |
+          attribute(el, "content")
+      eventDateTime:
+        select: head > meta[name="eventdatetime"]
+        value: |
+          attribute(el, "content")
+      eventDisplayTime:
+        select: head > meta[name="eventdisplaytime"]
+        value: |
+          attribute(el, "content")
+      eventType:
+        select: head > meta[name="eventtype"]
+        value: |
+          attribute(el, "content")
+      eventSeries:
+        select: head > meta[name="eventseries"]
+        value: |
+          attribute(el, "content")
+      eventDisplayLabel:
+        select: head > meta[name="eventdisplaylabel"]
+        value: |
+          attribute(el, "content")
+      bookTypeTitle:
+        select: head > meta[name="booktypetitle"]
+        value: |
+          attribute(el, "content")
+      bookPublishDate:
+        select: head > meta[name="bookpublishdate"]
+        value: |
+          attribute(el, "content")
+      bookAuthor:
+        select: head > meta[name="bookauthor"]
+        value: |
+          attribute(el, "content")
+      bookType:
+        select: head > meta[name="booktype"]
+        value: |
+          attribute(el, "content")
+      course:
+        select: head > meta[name="course"]
+        value: |
+          attribute(el, "content")
+      userLevel:
+        select: head > meta[name="userlevel"]
+        value: |
+          attribute(el, "content")
+      partnerType:
+        select: head > meta[name="partnertype"]
+        value: |
+          attribute(el, "content")  
+      country:
+        select: head > meta[name="country"]
+        value: |
+          attribute(el, "content") 
+      application:
+        select: head > meta[name="application"]
+        value: |
+          attribute(el, "content")
+      displayLabel:
+        select: head > meta[name="displaylabel"]
+        value: |
+          attribute(el, "content")
+
+#FRENCH CONTENT#
+  jmp-fr:
+    include:
+      - /fr/**
+    exclude:
+      - /fr/drafts/**
+      - /fr/sandbox/**
+    target: /jmp-fr.json
+    properties:
+      author:
+        select: head > meta[name="author"]
+        value: |
+          attribute(el, "content")
+      title:
+        select: head > meta[property="og:title"]
+        value: |
+          attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: |
+          match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, "content")
+      displayDescription:
+        select: head > meta[name="displaydescription"]
+        value: |
+          attribute(el, "content")
+      resourceType:
+        select: head > meta[name="resourcetype"]
+        value: |
+          attribute(el, "content")
+      industry:
+        select: head > meta[name="industry"]
+        value: |
+          attribute(el, "content")
+      capability:
+        select: head > meta[name="capability"]
+        value: |
+          attribute(el, "content")
+      product:
+        select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+      releaseDate:
+        select: head > meta[name="releasedate"]
+        value: |
+          attribute(el, "content")
+      redirectTarget:
+        select: head > meta[name="redirecttarget"]
+        value: |
+          attribute(el, "content")
+      resourceOptions:
+        select: head > meta[name="resourceoptions"]
+        value: |
+          attribute(el, "content")
+      eventDateTime:
+        select: head > meta[name="eventdatetime"]
+        value: |
+          attribute(el, "content")
+      eventDisplayTime:
+        select: head > meta[name="eventdisplaytime"]
+        value: |
+          attribute(el, "content")
+      eventType:
+        select: head > meta[name="eventtype"]
+        value: |
+          attribute(el, "content")
+      eventSeries:
+        select: head > meta[name="eventseries"]
+        value: |
+          attribute(el, "content")
+      eventDisplayLabel:
+        select: head > meta[name="eventdisplaylabel"]
+        value: |
+          attribute(el, "content")
+      bookTypeTitle:
+        select: head > meta[name="booktypetitle"]
+        value: |
+          attribute(el, "content")
+      bookPublishDate:
+        select: head > meta[name="bookpublishdate"]
+        value: |
+          attribute(el, "content")
+      bookAuthor:
+        select: head > meta[name="bookauthor"]
+        value: |
+          attribute(el, "content")
+      bookType:
+        select: head > meta[name="booktype"]
+        value: |
+          attribute(el, "content")
+      course:
+        select: head > meta[name="course"]
+        value: |
+          attribute(el, "content")
+      userLevel:
+        select: head > meta[name="userlevel"]
+        value: |
+          attribute(el, "content")
+      partnerType:
+        select: head > meta[name="partnertype"]
+        value: |
+          attribute(el, "content")  
+      country:
+        select: head > meta[name="country"]
+        value: |
+          attribute(el, "content") 
+      application:
+        select: head > meta[name="application"]
+        value: |
+          attribute(el, "content")
+      displayLabel:
+        select: head > meta[name="displaylabel"]
+        value: |
+          attribute(el, "content")
+
+#ITALIAN CONTENT#
+  jmp-it:
+    include:
+      - /it/**
+    exclude:
+      - /it/drafts/**
+      - /it/sandbox/**
+    target: /jmp-it.json
+    properties:
+      author:
+        select: head > meta[name="author"]
+        value: |
+          attribute(el, "content")
+      title:
+        select: head > meta[property="og:title"]
+        value: |
+          attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: |
+          match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, "content")
+      displayDescription:
+        select: head > meta[name="displaydescription"]
+        value: |
+          attribute(el, "content")
+      resourceType:
+        select: head > meta[name="resourcetype"]
+        value: |
+          attribute(el, "content")
+      industry:
+        select: head > meta[name="industry"]
+        value: |
+          attribute(el, "content")
+      capability:
+        select: head > meta[name="capability"]
+        value: |
+          attribute(el, "content")
+      product:
+        select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+      releaseDate:
+        select: head > meta[name="releasedate"]
+        value: |
+          attribute(el, "content")
+      redirectTarget:
+        select: head > meta[name="redirecttarget"]
+        value: |
+          attribute(el, "content")
+      resourceOptions:
+        select: head > meta[name="resourceoptions"]
+        value: |
+          attribute(el, "content")
+      eventDateTime:
+        select: head > meta[name="eventdatetime"]
+        value: |
+          attribute(el, "content")
+      eventDisplayTime:
+        select: head > meta[name="eventdisplaytime"]
+        value: |
+          attribute(el, "content")
+      eventType:
+        select: head > meta[name="eventtype"]
+        value: |
+          attribute(el, "content")
+      eventSeries:
+        select: head > meta[name="eventseries"]
+        value: |
+          attribute(el, "content")
+      eventDisplayLabel:
+        select: head > meta[name="eventdisplaylabel"]
+        value: |
+          attribute(el, "content")
+      bookTypeTitle:
+        select: head > meta[name="booktypetitle"]
+        value: |
+          attribute(el, "content")
+      bookPublishDate:
+        select: head > meta[name="bookpublishdate"]
+        value: |
+          attribute(el, "content")
+      bookAuthor:
+        select: head > meta[name="bookauthor"]
+        value: |
+          attribute(el, "content")
+      bookType:
+        select: head > meta[name="booktype"]
+        value: |
+          attribute(el, "content")
+      course:
+        select: head > meta[name="course"]
+        value: |
+          attribute(el, "content")
+      userLevel:
+        select: head > meta[name="userlevel"]
+        value: |
+          attribute(el, "content")
+      partnerType:
+        select: head > meta[name="partnertype"]
+        value: |
+          attribute(el, "content")  
+      country:
+        select: head > meta[name="country"]
+        value: |
+          attribute(el, "content") 
+      application:
+        select: head > meta[name="application"]
+        value: |
+          attribute(el, "content")
+      displayLabel:
+        select: head > meta[name="displaylabel"]
+        value: |
+          attribute(el, "content")
+
+#JAPANESE CONTENT#
+  jmp-ja:
+    include:
+      - /ja/**
+    exclude:
+      - /ja/drafts/**
+      - /ja/sandbox/**
+    target: /jmp-ja.json
+    properties:
+      author:
+        select: head > meta[name="author"]
+        value: |
+          attribute(el, "content")
+      title:
+        select: head > meta[property="og:title"]
+        value: |
+          attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: |
+          match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, "content")
+      displayDescription:
+        select: head > meta[name="displaydescription"]
+        value: |
+          attribute(el, "content")
+      resourceType:
+        select: head > meta[name="resourcetype"]
+        value: |
+          attribute(el, "content")
+      industry:
+        select: head > meta[name="industry"]
+        value: |
+          attribute(el, "content")
+      capability:
+        select: head > meta[name="capability"]
+        value: |
+          attribute(el, "content")
+      product:
+        select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+      releaseDate:
+        select: head > meta[name="releasedate"]
+        value: |
+          attribute(el, "content")
+      redirectTarget:
+        select: head > meta[name="redirecttarget"]
+        value: |
+          attribute(el, "content")
+      resourceOptions:
+        select: head > meta[name="resourceoptions"]
+        value: |
+          attribute(el, "content")
+      eventDateTime:
+        select: head > meta[name="eventdatetime"]
+        value: |
+          attribute(el, "content")
+      eventDisplayTime:
+        select: head > meta[name="eventdisplaytime"]
+        value: |
+          attribute(el, "content")
+      eventType:
+        select: head > meta[name="eventtype"]
+        value: |
+          attribute(el, "content")
+      eventSeries:
+        select: head > meta[name="eventseries"]
+        value: |
+          attribute(el, "content")
+      eventDisplayLabel:
+        select: head > meta[name="eventdisplaylabel"]
+        value: |
+          attribute(el, "content")
+      bookTypeTitle:
+        select: head > meta[name="booktypetitle"]
+        value: |
+          attribute(el, "content")
+      bookPublishDate:
+        select: head > meta[name="bookpublishdate"]
+        value: |
+          attribute(el, "content")
+      bookAuthor:
+        select: head > meta[name="bookauthor"]
+        value: |
+          attribute(el, "content")
+      bookType:
+        select: head > meta[name="booktype"]
+        value: |
+          attribute(el, "content")
+      course:
+        select: head > meta[name="course"]
+        value: |
+          attribute(el, "content")
+      userLevel:
+        select: head > meta[name="userlevel"]
+        value: |
+          attribute(el, "content")
+      partnerType:
+        select: head > meta[name="partnertype"]
+        value: |
+          attribute(el, "content")  
+      country:
+        select: head > meta[name="country"]
+        value: |
+          attribute(el, "content") 
+      application:
+        select: head > meta[name="application"]
+        value: |
+          attribute(el, "content")
+      displayLabel:
+        select: head > meta[name="displaylabel"]
+        value: |
+          attribute(el, "content")
+
+#KOREAN CONTENT#
+  jmp-ko:
+    include:
+      - /ko/**
+    exclude:
+      - /ko/drafts/**
+      - /ko/sandbox/**
+    target: /jmp-ko.json
+    properties:
+      author:
+        select: head > meta[name="author"]
+        value: |
+          attribute(el, "content")
+      title:
+        select: head > meta[property="og:title"]
+        value: |
+          attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: |
+          match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, "content")
+      displayDescription:
+        select: head > meta[name="displaydescription"]
+        value: |
+          attribute(el, "content")
+      resourceType:
+        select: head > meta[name="resourcetype"]
+        value: |
+          attribute(el, "content")
+      industry:
+        select: head > meta[name="industry"]
+        value: |
+          attribute(el, "content")
+      capability:
+        select: head > meta[name="capability"]
+        value: |
+          attribute(el, "content")
+      product:
+        select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+      releaseDate:
+        select: head > meta[name="releasedate"]
+        value: |
+          attribute(el, "content")
+      redirectTarget:
+        select: head > meta[name="redirecttarget"]
+        value: |
+          attribute(el, "content")
+      resourceOptions:
+        select: head > meta[name="resourceoptions"]
+        value: |
+          attribute(el, "content")
+      eventDateTime:
+        select: head > meta[name="eventdatetime"]
+        value: |
+          attribute(el, "content")
+      eventDisplayTime:
+        select: head > meta[name="eventdisplaytime"]
+        value: |
+          attribute(el, "content")
+      eventType:
+        select: head > meta[name="eventtype"]
+        value: |
+          attribute(el, "content")
+      eventSeries:
+        select: head > meta[name="eventseries"]
+        value: |
+          attribute(el, "content")
+      eventDisplayLabel:
+        select: head > meta[name="eventdisplaylabel"]
+        value: |
+          attribute(el, "content")
+      bookTypeTitle:
+        select: head > meta[name="booktypetitle"]
+        value: |
+          attribute(el, "content")
+      bookPublishDate:
+        select: head > meta[name="bookpublishdate"]
+        value: |
+          attribute(el, "content")
+      bookAuthor:
+        select: head > meta[name="bookauthor"]
+        value: |
+          attribute(el, "content")
+      bookType:
+        select: head > meta[name="booktype"]
+        value: |
+          attribute(el, "content")
+      course:
+        select: head > meta[name="course"]
+        value: |
+          attribute(el, "content")
+      userLevel:
+        select: head > meta[name="userlevel"]
+        value: |
+          attribute(el, "content")
+      partnerType:
+        select: head > meta[name="partnertype"]
+        value: |
+          attribute(el, "content")  
+      country:
+        select: head > meta[name="country"]
+        value: |
+          attribute(el, "content") 
+      application:
+        select: head > meta[name="application"]
+        value: |
+          attribute(el, "content")
+      displayLabel:
+        select: head > meta[name="displaylabel"]
+        value: |
+          attribute(el, "content")
+
+#CHINESE SIMPLIFIED CONTENT#
+  jmp-zh-hans:
+    include:
+      - /zh-hans/**
+    exclude:
+      - /zh-hans/drafts/**
+      - /zh-hans/sandbox/**
+    target: /jmp-zh-hans.json
+    properties:
+      author:
+        select: head > meta[name="author"]
+        value: |
+          attribute(el, "content")
+      title:
+        select: head > meta[property="og:title"]
+        value: |
+          attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: |
+          match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, "content")
+      displayDescription:
+        select: head > meta[name="displaydescription"]
+        value: |
+          attribute(el, "content")
+      resourceType:
+        select: head > meta[name="resourcetype"]
+        value: |
+          attribute(el, "content")
+      industry:
+        select: head > meta[name="industry"]
+        value: |
+          attribute(el, "content")
+      capability:
+        select: head > meta[name="capability"]
+        value: |
+          attribute(el, "content")
+      product:
+        select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+      releaseDate:
+        select: head > meta[name="releasedate"]
+        value: |
+          attribute(el, "content")
+      redirectTarget:
+        select: head > meta[name="redirecttarget"]
+        value: |
+          attribute(el, "content")
+      resourceOptions:
+        select: head > meta[name="resourceoptions"]
+        value: |
+          attribute(el, "content")
+      eventDateTime:
+        select: head > meta[name="eventdatetime"]
+        value: |
+          attribute(el, "content")
+      eventDisplayTime:
+        select: head > meta[name="eventdisplaytime"]
+        value: |
+          attribute(el, "content")
+      eventType:
+        select: head > meta[name="eventtype"]
+        value: |
+          attribute(el, "content")
+      eventSeries:
+        select: head > meta[name="eventseries"]
+        value: |
+          attribute(el, "content")
+      eventDisplayLabel:
+        select: head > meta[name="eventdisplaylabel"]
+        value: |
+          attribute(el, "content")
+      bookTypeTitle:
+        select: head > meta[name="booktypetitle"]
+        value: |
+          attribute(el, "content")
+      bookPublishDate:
+        select: head > meta[name="bookpublishdate"]
+        value: |
+          attribute(el, "content")
+      bookAuthor:
+        select: head > meta[name="bookauthor"]
+        value: |
+          attribute(el, "content")
+      bookType:
+        select: head > meta[name="booktype"]
+        value: |
+          attribute(el, "content")
+      course:
+        select: head > meta[name="course"]
+        value: |
+          attribute(el, "content")
+      userLevel:
+        select: head > meta[name="userlevel"]
+        value: |
+          attribute(el, "content")
+      partnerType:
+        select: head > meta[name="partnertype"]
+        value: |
+          attribute(el, "content")  
+      country:
+        select: head > meta[name="country"]
+        value: |
+          attribute(el, "content") 
+      application:
+        select: head > meta[name="application"]
+        value: |
+          attribute(el, "content")
+      displayLabel:
+        select: head > meta[name="displaylabel"]
+        value: |
+          attribute(el, "content")
+
+#CHINESE TRADITIONAL CONTENT#
+  jmp-zh-hant:
+    include:
+      - /zh-hant/**
+    exclude:
+      - /zh-hant/drafts/**
+      - /zh-hant/sandbox/**
+    target: /jmp-zh-hant.json
+    properties:
+      author:
+        select: head > meta[name="author"]
+        value: |
+          attribute(el, "content")
+      title:
+        select: head > meta[property="og:title"]
+        value: |
+          attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: |
+          match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, "content")
+      displayDescription:
+        select: head > meta[name="displaydescription"]
+        value: |
+          attribute(el, "content")
+      resourceType:
+        select: head > meta[name="resourcetype"]
+        value: |
+          attribute(el, "content")
+      industry:
+        select: head > meta[name="industry"]
+        value: |
+          attribute(el, "content")
+      capability:
+        select: head > meta[name="capability"]
+        value: |
+          attribute(el, "content")
+      product:
+        select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+      releaseDate:
+        select: head > meta[name="releasedate"]
+        value: |
+          attribute(el, "content")
+      redirectTarget:
+        select: head > meta[name="redirecttarget"]
+        value: |
+          attribute(el, "content")
+      resourceOptions:
+        select: head > meta[name="resourceoptions"]
+        value: |
+          attribute(el, "content")
+      eventDateTime:
+        select: head > meta[name="eventdatetime"]
+        value: |
+          attribute(el, "content")
+      eventDisplayTime:
+        select: head > meta[name="eventdisplaytime"]
+        value: |
+          attribute(el, "content")
+      eventType:
+        select: head > meta[name="eventtype"]
+        value: |
+          attribute(el, "content")
+      eventSeries:
+        select: head > meta[name="eventseries"]
+        value: |
+          attribute(el, "content")
+      eventDisplayLabel:
+        select: head > meta[name="eventdisplaylabel"]
+        value: |
+          attribute(el, "content")
+      bookTypeTitle:
+        select: head > meta[name="booktypetitle"]
+        value: |
+          attribute(el, "content")
+      bookPublishDate:
+        select: head > meta[name="bookpublishdate"]
+        value: |
+          attribute(el, "content")
+      bookAuthor:
+        select: head > meta[name="bookauthor"]
+        value: |
+          attribute(el, "content")
+      bookType:
+        select: head > meta[name="booktype"]
+        value: |
+          attribute(el, "content")
+      course:
+        select: head > meta[name="course"]
+        value: |
+          attribute(el, "content")
+      userLevel:
+        select: head > meta[name="userlevel"]
+        value: |
+          attribute(el, "content")
+      partnerType:
+        select: head > meta[name="partnertype"]
+        value: |
+          attribute(el, "content")  
+      country:
+        select: head > meta[name="country"]
+        value: |
+          attribute(el, "content") 
+      application:
+        select: head > meta[name="application"]
+        value: |
+          attribute(el, "content")
+      displayLabel:
+        select: head > meta[name="displaylabel"]
+        value: |
+          attribute(el, "content")
+
+#END OF MAIN JMP CONTENT#
+
+#SKP CONTENT#
+#SKP ENGLISH#
+  skp-en:
+    include:
+      - /en/statistics-knowledge-portal/**
+    target: /skp-en.json
+    properties:
+      author:
+        select: head > meta[name="author"]
+        value: |
+          attribute(el, "content")
+      title:
+        select: head > meta[property="og:title"]
+        value: |
+          attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: |
+          match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, "content")
+      displayDescription:
+        select: head > meta[name="displaydescription"]
+        value: |
+          attribute(el, "content")
+      resourceType:
+        select: head > meta[name="resourcetype"]
+        value: |
+          attribute(el, "content")
+      industry:
+        select: head > meta[name="industry"]
+        value: |
+          attribute(el, "content")
+      capability:
+        select: head > meta[name="capability"]
+        value: |
+          attribute(el, "content")
+      product:
+        select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+      releaseDate:
+        select: head > meta[name="releasedate"]
+        value: |
+          attribute(el, "content")
+      redirectTarget:
+        select: head > meta[name="redirecttarget"]
+        value: |
+          attribute(el, "content")
+      resourceOptions:
+        select: head > meta[name="resourceoptions"]
+        value: |
+          attribute(el, "content")
+
+#SKP SPANISH#
+  skp-es:
+    include:
+      - /es/statistics-knowledge-portal/**
+    target: /skp-es.json
+    properties:
+      author:
+        select: head > meta[name="author"]
+        value: |
+          attribute(el, "content")
+      title:
+        select: head > meta[property="og:title"]
+        value: |
+          attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: |
+          match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, "content")
+      displayDescription:
+        select: head > meta[name="displaydescription"]
+        value: |
+          attribute(el, "content")
+      resourceType:
+        select: head > meta[name="resourcetype"]
+        value: |
+          attribute(el, "content")
+      industry:
+        select: head > meta[name="industry"]
+        value: |
+          attribute(el, "content")
+      capability:
+        select: head > meta[name="capability"]
+        value: |
+          attribute(el, "content")
+      product:
+        select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+      releaseDate:
+        select: head > meta[name="releasedate"]
+        value: |
+          attribute(el, "content")
+      redirectTarget:
+        select: head > meta[name="redirecttarget"]
+        value: |
+          attribute(el, "content")
+      resourceOptions:
+        select: head > meta[name="resourceoptions"]
+        value: |
+          attribute(el, "content")
+
+#SKP GERMAN#
+  skp-de:
+    include:
+      - /de/statistics-knowledge-portal/**
+    target: /skp-de.json
+    properties:
+      author:
+        select: head > meta[name="author"]
+        value: |
+          attribute(el, "content")
+      title:
+        select: head > meta[property="og:title"]
+        value: |
+          attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: |
+          match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, "content")
+      displayDescription:
+        select: head > meta[name="displaydescription"]
+        value: |
+          attribute(el, "content")
+      resourceType:
+        select: head > meta[name="resourcetype"]
+        value: |
+          attribute(el, "content")
+      industry:
+        select: head > meta[name="industry"]
+        value: |
+          attribute(el, "content")
+      capability:
+        select: head > meta[name="capability"]
+        value: |
+          attribute(el, "content")
+      product:
+        select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+      releaseDate:
+        select: head > meta[name="releasedate"]
+        value: |
+          attribute(el, "content")
+      redirectTarget:
+        select: head > meta[name="redirecttarget"]
+        value: |
+          attribute(el, "content")
+      resourceOptions:
+        select: head > meta[name="resourceoptions"]
+        value: |
+          attribute(el, "content")
+
+#SKP FRENCH#
+  skp-fr:
+    include:
+      - /fr/statistics-knowledge-portal/**
+    target: /skp-fr.json
+    properties:
+      author:
+        select: head > meta[name="author"]
+        value: |
+          attribute(el, "content")
+      title:
+        select: head > meta[property="og:title"]
+        value: |
+          attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: |
+          match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, "content")
+      displayDescription:
+        select: head > meta[name="displaydescription"]
+        value: |
+          attribute(el, "content")
+      resourceType:
+        select: head > meta[name="resourcetype"]
+        value: |
+          attribute(el, "content")
+      industry:
+        select: head > meta[name="industry"]
+        value: |
+          attribute(el, "content")
+      capability:
+        select: head > meta[name="capability"]
+        value: |
+          attribute(el, "content")
+      product:
+        select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+      releaseDate:
+        select: head > meta[name="releasedate"]
+        value: |
+          attribute(el, "content")
+      redirectTarget:
+        select: head > meta[name="redirecttarget"]
+        value: |
+          attribute(el, "content")
+      resourceOptions:
+        select: head > meta[name="resourceoptions"]
+        value: |
+          attribute(el, "content")
+
+#SKP ITALIAN#
+  skp-it:
+    include:
+      - /it/statistics-knowledge-portal/**
+    target: /skp-it.json
+    properties:
+      author:
+        select: head > meta[name="author"]
+        value: |
+          attribute(el, "content")
+      title:
+        select: head > meta[property="og:title"]
+        value: |
+          attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: |
+          match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, "content")
+      displayDescription:
+        select: head > meta[name="displaydescription"]
+        value: |
+          attribute(el, "content")
+      resourceType:
+        select: head > meta[name="resourcetype"]
+        value: |
+          attribute(el, "content")
+      industry:
+        select: head > meta[name="industry"]
+        value: |
+          attribute(el, "content")
+      capability:
+        select: head > meta[name="capability"]
+        value: |
+          attribute(el, "content")
+      product:
+        select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+      releaseDate:
+        select: head > meta[name="releasedate"]
+        value: |
+          attribute(el, "content")
+      redirectTarget:
+        select: head > meta[name="redirecttarget"]
+        value: |
+          attribute(el, "content")
+      resourceOptions:
+        select: head > meta[name="resourceoptions"]
+        value: |
+          attribute(el, "content")
+
+#SKP JAPANESE#
+  skp-ja:
+    include:
+      - /ja/statistics-knowledge-portal/**
+    target: /skp-ja.json
+    properties:
+      author:
+        select: head > meta[name="author"]
+        value: |
+          attribute(el, "content")
+      title:
+        select: head > meta[property="og:title"]
+        value: |
+          attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: |
+          match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, "content")
+      displayDescription:
+        select: head > meta[name="displaydescription"]
+        value: |
+          attribute(el, "content")
+      resourceType:
+        select: head > meta[name="resourcetype"]
+        value: |
+          attribute(el, "content")
+      industry:
+        select: head > meta[name="industry"]
+        value: |
+          attribute(el, "content")
+      capability:
+        select: head > meta[name="capability"]
+        value: |
+          attribute(el, "content")
+      product:
+        select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+      releaseDate:
+        select: head > meta[name="releasedate"]
+        value: |
+          attribute(el, "content")
+      redirectTarget:
+        select: head > meta[name="redirecttarget"]
+        value: |
+          attribute(el, "content")
+      resourceOptions:
+        select: head > meta[name="resourceoptions"]
+        value: |
+          attribute(el, "content")
+
+#SKP KOREAN#
+  skp-ko:
+    include:
+      - /ko/statistics-knowledge-portal/**
+    target: /skp-ko.json
+    properties:
+      author:
+        select: head > meta[name="author"]
+        value: |
+          attribute(el, "content")
+      title:
+        select: head > meta[property="og:title"]
+        value: |
+          attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: |
+          match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, "content")
+      displayDescription:
+        select: head > meta[name="displaydescription"]
+        value: |
+          attribute(el, "content")
+      resourceType:
+        select: head > meta[name="resourcetype"]
+        value: |
+          attribute(el, "content")
+      industry:
+        select: head > meta[name="industry"]
+        value: |
+          attribute(el, "content")
+      capability:
+        select: head > meta[name="capability"]
+        value: |
+          attribute(el, "content")
+      product:
+        select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+      releaseDate:
+        select: head > meta[name="releasedate"]
+        value: |
+          attribute(el, "content")
+      redirectTarget:
+        select: head > meta[name="redirecttarget"]
+        value: |
+          attribute(el, "content")
+      resourceOptions:
+        select: head > meta[name="resourceoptions"]
+        value: |
+          attribute(el, "content")
+
+#SKP CHINESE SIMPLIFIED#
+  skp-zh-hans:
+    include:
+      - /zh-hans/statistics-knowledge-portal/**
+    target: /skp-zh-hans.json
+    properties:
+      author:
+        select: head > meta[name="author"]
+        value: |
+          attribute(el, "content")
+      title:
+        select: head > meta[property="og:title"]
+        value: |
+          attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: |
+          match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, "content")
+      displayDescription:
+        select: head > meta[name="displaydescription"]
+        value: |
+          attribute(el, "content")
+      resourceType:
+        select: head > meta[name="resourcetype"]
+        value: |
+          attribute(el, "content")
+      industry:
+        select: head > meta[name="industry"]
+        value: |
+          attribute(el, "content")
+      capability:
+        select: head > meta[name="capability"]
+        value: |
+          attribute(el, "content")
+      product:
+        select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+      releaseDate:
+        select: head > meta[name="releasedate"]
+        value: |
+          attribute(el, "content")
+      redirectTarget:
+        select: head > meta[name="redirecttarget"]
+        value: |
+          attribute(el, "content")
+      resourceOptions:
+        select: head > meta[name="resourceoptions"]
+        value: |
+          attribute(el, "content")
+
+#SKP CHINESE TRADITIONAL#
+  skp-zh-hant:
+    include:
+      - /zh-hant/statistics-knowledge-portal/**
+    target: /skp-zh-hant.json
+    properties:
+      author:
+        select: head > meta[name="author"]
+        value: |
+          attribute(el, "content")
+      title:
+        select: head > meta[property="og:title"]
+        value: |
+          attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: |
+          match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      description:
+        select: head > meta[name="description"]
+        value: |
+          attribute(el, "content")
+      displayDescription:
+        select: head > meta[name="displaydescription"]
+        value: |
+          attribute(el, "content")
+      resourceType:
+        select: head > meta[name="resourcetype"]
+        value: |
+          attribute(el, "content")
+      industry:
+        select: head > meta[name="industry"]
+        value: |
+          attribute(el, "content")
+      capability:
+        select: head > meta[name="capability"]
+        value: |
+          attribute(el, "content")
+      product:
+        select: head > meta[name="product"]
+        value: |
+          attribute(el, "content")
+      releaseDate:
+        select: head > meta[name="releasedate"]
+        value: |
+          attribute(el, "content")
+      redirectTarget:
+        select: head > meta[name="redirecttarget"]
+        value: |
+          attribute(el, "content")
+      resourceOptions:
+        select: head > meta[name="resourceoptions"]
+        value: |
+          attribute(el, "content")
+
+#END OF SKP CONTENT#
+
+#ALL CONTENT#
   jmp-all:
     include:
       - /**
     exclude:
       - /sandbox/**
+      - /drafts/**
     target: /jmp-all.json
     properties:
       author:
