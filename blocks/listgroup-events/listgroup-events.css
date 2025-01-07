@@ -277,8 +277,8 @@
           }
         }
         .title {
-          padding-bottom: 0;
-          font-size: var(--body-font-size-m);
+          padding-bottom: 0 !important;
+          font-size: var(--body-font-size-m) !important;
           /* &:before {
             content: url('../../../icons/arrow-orange.svg');
             width: 7px;
