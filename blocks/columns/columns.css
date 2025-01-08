@@ -699,6 +699,28 @@ div.clm-75-25 {
   }
 }
 /* Image sizes */
+.image-size-xxsmall {
+  img {
+    width: 96px;
+  }
+  div {
+    gap: 2rem;
+  }
+  div.columns-img-col {
+    width: 96px;
+    max-width: 96px;
+    height: auto;
+    picture {
+      width: 100%;
+    }
+  }
+  @media (width <=900px) {
+    div.columns-img-col {
+      width: auto;
+    }
+  }
+}
+
 .image-size-xsmall {
   img {
     width: 128px;
