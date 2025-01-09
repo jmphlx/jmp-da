@@ -306,6 +306,21 @@ function getListFilterOptions(block, propertyNames) {
 }
 
 /**
+ * Given a list of event pages, filter out any whose eventDateTime
+ * is before the current date at 11:59PM EST (23:59).
+ * @param {array} pageSelection array of pages that may match the filter
+ * @returns array of pages with events on or after the current date.
+ */
+function filterOutPastEvents(pageSelection) {
+  const filteredData = pageSelection.filter((item) => {
+    const eventDate = new Date(item.eventDateTime);
+    const midnightOfToday = new Date(new Date().setHours(23, 59, 0, 0));
+    return eventDate >= midnightOfToday;
+  });
+  return filteredData;
+}
+
+/**
  * Given a folderPath, filter the pages down to those inside that folder
  * including nested pages.
  * @param {array} pageSelection array of pages that may match the filter
@@ -499,6 +514,7 @@ export {
   containsOperator,
   matchesOperator,
   startsWithOperator,
+  filterOutPastEvents,
   getBlockConfig,
   getBlockPropertiesList,
   getBlockProperty,
