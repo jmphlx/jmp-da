@@ -18,6 +18,10 @@ export default async function decorate(block) {
   if (nestedTable) {
     block.innerHTML = '';
     const headRow = nestedTable.querySelector('tr');
+    headRow.querySelectorAll('td').forEach((el) => {
+      const headEl = createTag('th', {}, el.innerHTML);
+      el.replaceWith(headEl);
+    });
     const tableHeader = createTag('thead', {}, headRow.innerHTML);
     headRow.replaceWith(tableHeader);
     block.append(nestedTable);
