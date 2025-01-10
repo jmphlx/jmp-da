@@ -72,7 +72,7 @@ function getLanguageNav(isSKP = null) {
   if (isSKP) {
     return isLanguageSupported ? `/${lang}/statistics-knowledge-portal/nav` : '/en/statistics-knowledge-portal/nav';
   }
-  return isLanguageSupported ? `/${lang}/nav` : '/en/nav';
+  return isLanguageSupported ? `/${lang}/navigation/header` : '/en/navigation/header';
 }
 
 /**
@@ -84,7 +84,7 @@ function getLanguageFooter(isSKP = null) {
   if (isSKP) {
     return isLanguageSupported ? `/${lang}/statistics-knowledge-portal/footer` : '/en/statistics-knowledge-portal/footer';
   }
-  return isLanguageSupported ? `/${lang}/footer` : '/en/footer';
+  return isLanguageSupported ? `/${lang}/navigation/footer` : '/en/navigation/footer';
 }
 
 /**
