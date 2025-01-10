@@ -11,6 +11,14 @@ function buildCell(rowIndex) {
 }
 
 export default async function decorate(block) {
+  // If there is a table within the block, only write the nested table.
+  const nestedTable = block.querySelector('table');
+  if (nestedTable) {
+    block.innerHTML = '';
+    block.append(nestedTable);
+    return;
+  }
+
   const table = document.createElement('table');
   const thead = document.createElement('thead');
   const tbody = document.createElement('tbody');
