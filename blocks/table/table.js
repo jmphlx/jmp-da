@@ -4,6 +4,8 @@
  * https://www.hlx.live/developer/block-collection/table
  */
 
+import { createTag } from '../../scripts/helper.js';
+
 function buildCell(rowIndex) {
   const cell = rowIndex ? document.createElement('td') : document.createElement('th');
   if (!rowIndex) cell.setAttribute('scope', 'col');
@@ -15,6 +17,9 @@ export default async function decorate(block) {
   const nestedTable = block.querySelector('table');
   if (nestedTable) {
     block.innerHTML = '';
+    const headRow = nestedTable.querySelector('tr');
+    const tableHeader = createTag('thead', {}, headRow.innerHTML);
+    headRow.replaceWith(tableHeader);
     block.append(nestedTable);
     return;
   }
