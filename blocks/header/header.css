@@ -1091,9 +1091,10 @@ header nav[aria-expanded="true"] .nav-tools.nav-tools-mobile {
     align-self: center;
     font-size: 20px;
     line-height: 19px;
-    padding-left: 2px;
-    /* padding: 5px; */
+    /* padding-left: 2px; */
+    padding: 1px 1px 1px 2px;
     position: absolute;
+    top: 0;
     box-sizing: border-box;
     color: var(--blue);
     width: 18px;
