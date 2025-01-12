@@ -2031,6 +2031,26 @@ div.columns-75-25 {
     }
   }
 }
+div.columns-20-80 {
+  .layout-wrapper {
+    .group-1 {
+      width: 20%;
+    }
+    .group-2 {
+      width: 80%;
+    }
+  }
+}
+div.columns-80-20 {
+  .layout-wrapper {
+    .group-1 {
+      width: 80%;
+    }
+    .group-2 {
+      width: 20%;
+    }
+  }
+}
 div.columns-25-25-25-25 {
   .layout-wrapper {
     .group-1 {
@@ -2048,7 +2068,7 @@ div.columns-25-25-25-25 {
   }
 }
 /* column breakpoints */
-div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-60-40, div.columns-40-60, div.columns-66-33, div.columns-33-66 {
+div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-60-40, div.columns-40-60, div.columns-66-33, div.columns-33-66, div.columns-20-80 , div.columns-80-20 {
   @media (width >=900px) {
     .layout-wrapper {
       column-gap: 64px !important;
@@ -2060,13 +2080,23 @@ div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-60-40, div.
       .group-1 {
         display: block;
         width: auto;
-        margin-bottom: 2rem;
+        margin-bottom: 1.6rem;
       }
       .group-2 {
         display: block;
         width: unset;
-        margin-bottom: 2rem;
+        margin-bottom: 0;
       }
+    }
+  }
+  &.gap-32 {
+    .layout-wrapper {
+      column-gap: 32px !important;
+    }
+  }
+  @media (width <=900px) {
+    .layout-wrapper {
+      column-gap: 32px !important;
     }
   }
 }
@@ -2106,6 +2136,49 @@ div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-60-40, div.
       height: max-content;
       padding: 2.4rem;
     }
+  }
+}
+.section-purple {
+  .layout-wrapper {
+    background-color: var(--purple);
+    .group-1, .group-2 {
+      padding: 2.4rem;
+    }
+  }
+}
+.section-blue {
+  .layout-wrapper {
+    background-color: var(--blue);
+    .group-1, .group-2 {
+      padding: 2.4rem;
+    }
+  }
+}
+.section-gray {
+  .layout-wrapper {
+    background-color: #f4f4f4;
+    .group-1, .group-2 {
+      padding: 2.4rem;
+    }
+  }
+}
+.section-rounded {
+  .layout-wrapper {
+    border-radius: 10px;
+  }
+}
+.section-vertical-center {
+  .group-1, .group-2 {
+    display: flex;
+    align-items: center !important;
+  }
+  &.columns > div > div {
+    align-self: center !important;
+  }
+}
+.gap-32 {
+  .layout-wrapper {
+    column-gap: 32px !important;
   }
 }
 /* section widths */
