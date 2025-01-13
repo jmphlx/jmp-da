@@ -1378,14 +1378,23 @@ input {
 }
 
 /* Simple Header */
+header:has(div.nav-tools:empty) {
+  height: 60px;
+}
 div.nav-utility-row:has(div.nav-tools:empty) {
-  display: none !important;
+  height: 0 !important;
+}
+div.is-scrolled:has(div.nav-tools:empty) {
+  transform: none !important;
 }
 header nav:has(div.nav-tools:empty) {
   display: block;
   height: 56px;
   div.nav-brand {
     height: 56px;
+  }
+  div.nav-utility-row {
+    transform: none !important;
   }
   @media (max-width: 899px) {
     div.nav-hamburger {
