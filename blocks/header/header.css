@@ -51,7 +51,7 @@ header .nav-wrapper {
   header .nav-wrapper.is-scrolled {
     transform: translate3d(0,-36px,0);
   }
-} 
+}
 
 header nav p {
   margin: 0;
@@ -1373,6 +1373,23 @@ input {
           }
         }
       }
+    }
+  }
+}
+
+/* Simple Header */
+div.nav-utility-row:has(div.nav-tools:empty) {
+  display: none !important;
+}
+header nav:has(div.nav-tools:empty) {
+  display: block;
+  height: 56px;
+  div.nav-brand {
+    height: 56px;
+  }
+  @media (max-width: 899px) {
+    div.nav-hamburger {
+      display: none;
     }
   }
 }
