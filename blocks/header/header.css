@@ -1389,7 +1389,7 @@ div.is-scrolled:has(div.nav-tools:empty) {
 }
 header nav:has(div.nav-tools:empty) {
   display: block;
-  height: 56px;
+  height: 60px;
   div.nav-brand {
     height: 56px;
   }
