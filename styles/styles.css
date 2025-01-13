@@ -99,6 +99,10 @@ body {
   color: var(--text-color);
   background-color: var(--background-color);
   display: none;
+  /* No header */
+  header:empty {
+    display: none;
+  }
 }
 body.appear {
   display: block;

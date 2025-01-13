@@ -1,5 +1,5 @@
 footer {
-  padding: 2rem;
+  /* padding: 2rem; */
   background-color: var(--light-color);
   font-size: var(--body-font-size-s);
   .text-link-caret-left-light .button-container, .text-link-caret-left-light ul li {
@@ -69,9 +69,9 @@ div.section.copyright {
   }
 }
 
-.footer-wrapper {
+/* .footer-wrapper {
   background-color: #333333;
-}
+} */
 
 #back-top {
   position: fixed;
@@ -250,6 +250,22 @@ div.section.copyright {
   @media (width <= 600px) {
     .columns-wrapper {
       padding-top: 3.2rem;
+    }
+  }
+}
+
+/* Simple Footer  */
+footer.footer-wrapper { 
+  div.footer {
+    background-color: #333333;
+    max-width: unset;
+    div.columns-container {
+      padding: 3.2rem 3.2rem 2.4rem 3.2rem;
+    }
+    div.copyright {
+      border-top: 2px solid #eeeeee;
+      border-bottom: 2px solid #eeeeee;
+      height: max-content;
     }
   }
 }
