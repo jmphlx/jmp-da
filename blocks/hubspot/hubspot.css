@@ -1,6 +1,6 @@
 .embed-hubspot {
   width: unset;
-  text-align: left;
+  text-align: left !important;
   max-width: 800px;
   margin: 0;
 }
