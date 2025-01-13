@@ -45,6 +45,11 @@
     li {
       width: 100% !important;
     }
+    @media (width <= 600px) {
+      > li {
+        margin-bottom: 0 !important;
+      }
+    }
   }
   @media (width <= 900px) {
     margin-bottom: 3.2rem !important;
