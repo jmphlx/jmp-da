@@ -269,7 +269,7 @@ export function buildTabs(wrapper, section, numberOfGroups) {
     const tabpanel = document.createElement('div');
     tabpanel.className = 'tabs-panel';
     tabpanel.id = `tabpanel-${i}`;
-    tabpanel.setAttribute('aria-hidden', !!i);
+    tabpanel.setAttribute('aria-hidden', i !== 1);
     tabpanel.setAttribute('aria-labelledby', `tab-${i}`);
     tabpanel.setAttribute('role', 'tabpanel');
 
@@ -277,18 +277,23 @@ export function buildTabs(wrapper, section, numberOfGroups) {
     button.className = 'tabs-tab';
     button.id = `tab-${i}`;
     button.setAttribute('aria-controls', `tabpanel-${i}`);
-    button.setAttribute('aria-selected', !i);
+    button.setAttribute('aria-selected', i == 1);
     button.setAttribute('role', 'tab');
     button.setAttribute('type', 'button');
     button.addEventListener('click', () => {
       section.querySelectorAll('[role=tabpanel]').forEach((panel) => {
         panel.setAttribute('aria-hidden', true);
       });
-      tablist.querySelectorAll('button').forEach((btn) => {
+      tablist.querySelectorAll(':scope > button').forEach((btn) => {
         btn.setAttribute('aria-selected', false);
       });
       tabpanel.setAttribute('aria-hidden', false);
       button.setAttribute('aria-selected', true);
+      // Unhide any nested tabs that are selected.
+      tabpanel.querySelectorAll('button[aria-selected=true]').forEach((button) => {
+        const controlledPanel = button.getAttribute('aria-controls');
+        document.getElementById(controlledPanel).setAttribute('aria-hidden', false);
+      });
     });
     tablist.append(button);
     wrapper.append(tabpanel);
