@@ -1627,6 +1627,7 @@ main .section .layout-wrapper {
     }
   }
   &.tabs-wrapper {
+    flex-direction: column;
     .tabs-list {
       padding-left: 0;
       padding-top: 1em;
