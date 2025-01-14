@@ -1,6 +1,7 @@
 /* eslint no-undef: 0 */
 
 import {
+  filterOutPastEvents,
   getBlockProperty,
   getBlockPropertiesList,
   getJsonFromUrl,
@@ -36,6 +37,9 @@ export default async function decorate(block) {
       pageSelection = pageOrFilter(pageSelection, filterOptions);
     }
   }
+
+  // Do not include events whose date has passed.
+  pageSelection = filterOutPastEvents(pageSelection);
 
   // Order filtered pages by event date and time.
   pageSelection.sort((a, b) => ((new Date(a.eventDateTime) - new Date(b.eventDateTime)) < 0
