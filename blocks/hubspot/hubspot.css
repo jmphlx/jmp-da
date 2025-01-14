@@ -6,7 +6,7 @@
 }
 
 .embed > div {
-  display: block;
+  display: block !important;
   justify-content: center;
 }
 
@@ -189,7 +189,7 @@
     }
   }
   div {
-    margin-bottom: 1.6rem;
+    margin-bottom: 1.6rem !important;
     div.hs-richtext {
       p {
         font-size: 12px;
