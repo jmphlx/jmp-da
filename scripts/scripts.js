@@ -277,7 +277,7 @@ export function buildTabs(wrapper, section, numberOfGroups) {
     button.className = 'tabs-tab';
     button.id = `tab-${i}`;
     button.setAttribute('aria-controls', `tabpanel-${i}`);
-    button.setAttribute('aria-selected', i == 1);
+    button.setAttribute('aria-selected', i === 1);
     button.setAttribute('role', 'tab');
     button.setAttribute('type', 'button');
     button.addEventListener('click', () => {
@@ -290,8 +290,8 @@ export function buildTabs(wrapper, section, numberOfGroups) {
       tabpanel.setAttribute('aria-hidden', false);
       button.setAttribute('aria-selected', true);
       // Unhide any nested tabs that are selected.
-      tabpanel.querySelectorAll('button[aria-selected=true]').forEach((button) => {
-        const controlledPanel = button.getAttribute('aria-controls');
+      tabpanel.querySelectorAll('button[aria-selected=true]').forEach((selectedButton) => {
+        const controlledPanel = selectedButton.getAttribute('aria-controls');
         document.getElementById(controlledPanel).setAttribute('aria-hidden', false);
       });
     });
@@ -455,14 +455,22 @@ async function loadLazy(doc) {
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
-  const noHeader = getMetadata('nav') === 'noHeader';
-  const noFooter = getMetadata('footer') === 'noFooter';
+  const headerValue = getMetadata('nav');
+  const footerValue = getMetadata('footer');
+
+  const noHeader = headerValue === 'noHeader';
+  const noFooter = footerValue === 'noFooter';
   includeDelayedScript = !noHeader && !noFooter;
 
   if (!noHeader) {
     // If this is a SKP page, use the SKP header (custom and reduces js).
     if (isSKPPage) {
       const headerBlock = buildBlock('header-skp', '');
+      doc.querySelector('header').append(headerBlock);
+      decorateBlock(headerBlock);
+      loadBlock(headerBlock);
+    } else if (headerValue.toLowerCase() === 'simpleheader') {
+      const headerBlock = buildBlock('header-simple', '');
       doc.querySelector('header').append(headerBlock);
       decorateBlock(headerBlock);
       loadBlock(headerBlock);

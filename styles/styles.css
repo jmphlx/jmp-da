@@ -107,7 +107,7 @@ body {
 body.appear {
   display: block;
 }
-header {
+header.header-wrapper {
   height: var(--nav-height);
 }
 h1, h2, h3, h4, h5, h6 {
