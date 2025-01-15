@@ -19,11 +19,12 @@ export default async function decorate(block) {
     block.innerHTML = '';
     const headRow = nestedTable.querySelector('tr');
     headRow.querySelectorAll('td').forEach((el) => {
-      const headEl = createTag('th', {}, el.innerHTML);
+      const headEl = createTag('th', { scope: 'col' }, el.innerHTML);
       el.replaceWith(headEl);
     });
     const tableHeader = createTag('thead', {}, headRow.innerHTML);
-    headRow.replaceWith(tableHeader);
+    headRow.remove();
+    nestedTable.prepend(tableHeader);
     block.append(nestedTable);
     return;
   }
