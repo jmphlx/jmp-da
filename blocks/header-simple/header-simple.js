@@ -7,7 +7,7 @@ import { getLanguage } from '../../scripts/jmp.js';
  * Use language nav based on page lang. Default to /en/nav.
  */
 async function fetchNavigationHTML() {
-  const navURL = '/' + getLanguage() + '/navigation/header-simple';
+  const navURL = `/${getLanguage()}/navigation/header-simple`;
   const navPath = new URL(navURL, window.location).pathname;
 
   const response = await fetch(`${navPath}.plain.html`);

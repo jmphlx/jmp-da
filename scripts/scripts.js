@@ -277,7 +277,7 @@ export function buildTabs(wrapper, section, numberOfGroups) {
     button.className = 'tabs-tab';
     button.id = `tab-${i}`;
     button.setAttribute('aria-controls', `tabpanel-${i}`);
-    button.setAttribute('aria-selected', i == 1);
+    button.setAttribute('aria-selected', i === 1);
     button.setAttribute('role', 'tab');
     button.setAttribute('type', 'button');
     button.addEventListener('click', () => {
@@ -290,8 +290,8 @@ export function buildTabs(wrapper, section, numberOfGroups) {
       tabpanel.setAttribute('aria-hidden', false);
       button.setAttribute('aria-selected', true);
       // Unhide any nested tabs that are selected.
-      tabpanel.querySelectorAll('button[aria-selected=true]').forEach((button) => {
-        const controlledPanel = button.getAttribute('aria-controls');
+      tabpanel.querySelectorAll('button[aria-selected=true]').forEach((selectedButton) => {
+        const controlledPanel = selectedButton.getAttribute('aria-controls');
         document.getElementById(controlledPanel).setAttribute('aria-hidden', false);
       });
     });
