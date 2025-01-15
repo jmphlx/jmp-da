@@ -117,6 +117,10 @@ indices:
         select: head > meta[name="displaylabel"]
         value: |
           attribute(el, "content")
+      robots:
+        select: head > meta[name="robots"]
+        value: |
+          attribute(el, "content")
 
 #SPANISH CONTENT#
   jmp-es:
@@ -1117,6 +1121,10 @@ indices:
           attribute(el, "content")
       resourceOptions:
         select: head > meta[name="resourceoptions"]
+        value: |
+          attribute(el, "content")
+      robots:
+        select: head > meta[name="robots"]
         value: |
           attribute(el, "content")
 
