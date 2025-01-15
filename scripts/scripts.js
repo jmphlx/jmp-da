@@ -455,14 +455,22 @@ async function loadLazy(doc) {
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
-  const noHeader = getMetadata('nav') === 'noHeader';
-  const noFooter = getMetadata('footer') === 'noFooter';
+  const headerValue = getMetadata('nav');
+  const footerValue = getMetadata('footer');
+
+  const noHeader = headerValue === 'noHeader';
+  const noFooter = footerValue === 'noFooter';
   includeDelayedScript = !noHeader && !noFooter;
 
   if (!noHeader) {
     // If this is a SKP page, use the SKP header (custom and reduces js).
     if (isSKPPage) {
       const headerBlock = buildBlock('header-skp', '');
+      doc.querySelector('header').append(headerBlock);
+      decorateBlock(headerBlock);
+      loadBlock(headerBlock);
+    } else if (headerValue.toLowerCase() === 'simpleheader') {
+      const headerBlock = buildBlock('header-simple', '');
       doc.querySelector('header').append(headerBlock);
       decorateBlock(headerBlock);
       loadBlock(headerBlock);
