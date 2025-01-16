@@ -215,6 +215,9 @@ blockquote {
       display: none;
     }
   }
+  p:has(picture):before, p:has(picture):after {
+    display: none !important;
+  }
 }
 .horizontal-rule {
   border-bottom: 1px solid var(--grayRule);
