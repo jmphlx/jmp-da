@@ -715,6 +715,9 @@ header nav .nav-tools .nav-drop[aria-expanded="true"] .nav-section-heading:after
 }
 
 @media (min-width: 900px) {
+  header nav .nav-drop {
+    transition: transform .5s ease-in-out;
+  }
   header nav .nav-drop > ul {
     display: none;
   }
@@ -730,7 +733,6 @@ header nav .nav-tools .nav-drop[aria-expanded="true"] .nav-section-heading:after
   header nav .nav-drop[aria-expanded="true"] {
     position: relative;
   }
-
   header nav .nav-drop[aria-expanded="true"] > ul {
     background-color: #ffffff;
     height: auto;
@@ -770,6 +772,9 @@ header nav .nav-mobile-menu {
 }
 
 @media (max-width: 900px) {
+  header.header-wrapper {
+    height: 78px;
+  }
   header nav[aria-expanded="true"] .nav-mobile-menu {
     transform: translateX(0);
     transition: transform .3s ease-in-out;
