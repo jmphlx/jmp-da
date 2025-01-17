@@ -349,6 +349,7 @@ header nav .nav-sections ul > li > ul > li {
     /* height: 64px; */
     position: relative;
     border-top: 3px solid transparent;
+    border-bottom: 3px solid #eeeeee;
     box-sizing: border-box;
     border-style: inset;
     border-width: 3px 0 3px 0;
