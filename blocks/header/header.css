@@ -264,7 +264,7 @@ header nav .nav-sections ul > li > ul > li {
     border-style: inset;
     border-width: 0 0 3px 0; */
     font-weight: 600;
-    font-size: 15px;
+    font-size: 14px;
     padding: 0 10px;
     height: 64px;
     display: flex;
@@ -376,10 +376,10 @@ header nav .nav-sections ul > li > ul > li {
     &:before {
       content: '';
       position: absolute;
-      width: 0%;
+      width: 0;
+      right: 0;
       bottom: -3px;
-      transform: translateX(-10px);
-      transition: 500ms;
+      transition: width 500ms;
       height: 3px;
       background-color: var(--grayRule);
     }
@@ -388,6 +388,8 @@ header nav .nav-sections ul > li > ul > li {
       box-sizing: border-box;
       &:before {
         width: 100%;
+        right: auto;
+        left: 0;
       }
     }
   }
@@ -405,13 +407,33 @@ header nav .nav-sections ul > li > ul > li {
       display: block;
       text-decoration: none;
       width: unset;
+      font-family: var(--font-secondary);
       padding: 6px 12px;
+      position: relative;
+      &:before {
+        content: '';
+        position: absolute;
+        width: 0;
+        right: 0;
+        bottom: 1px;
+        transition: width 500ms;
+        height: 1px;
+        background-color: var(--blue);
+      }
+      &:hover {
+        box-sizing: border-box;
+        &:before {
+          width: calc(100%);
+          right: auto;
+          left: 0;
+        }
+      }
     }
     &:hover {
       color: var(--blue);
       background-color: #f4f4f4;
       > a {
-        text-decoration: underline;
+        text-decoration: none;
       }
     }
   }
@@ -808,7 +830,7 @@ header nav .nav-mobile-menu {
   border-top: 2px solid var(--border-color);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 899px) {
   header.header-wrapper {
     height: 78px;
   }
