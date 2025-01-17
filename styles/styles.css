@@ -699,6 +699,7 @@ a:hover {
   margin: 1rem 1rem 3.2rem 0;
   line-height: 100%;
   a.button:any-link, button {
+    position: relative;
     font-family: var(--font-secondary);
     min-width: 200px;
     display: inline-block;
@@ -715,6 +716,7 @@ a:hover {
     overflow: hidden;
     text-overflow: ellipsis;
     border-radius: 5px;
+    transition: all .35s;
   }
   a.button:hover, a.button:focus, button:hover, button:focus {
     background-color: var(--orange-hover);

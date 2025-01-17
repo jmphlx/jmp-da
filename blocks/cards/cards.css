@@ -1364,12 +1364,11 @@
           color: var(--white);
           margin-bottom: 0;
           pointer-events: none;
-          padding-top: 8rem;
+          padding: 8rem 2rem 0 2rem;
+          word-wrap: break-word !important;
           z-index: 1;
           font-size: var(--heading-font-size-s);
           font-family: "anova-regular", sans-serif;
-          border-bottom: 2px solid #f5ba55;
-          width: max-content;
           text-decoration: none;
           &:before {
             z-index: 5;
