@@ -95,6 +95,9 @@
   border: 1px solid;
   border-bottom: 2px solid;
   font-family: var(--font-secondary);
+  h3 {
+    margin-bottom: 0 !important;
+  }
 }
 .table table tbody tr {
   border: 1px solid;
