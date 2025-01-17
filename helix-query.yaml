@@ -3,10 +3,7 @@ indices:
 #ENGLISH CONTENT#
   jmp-en:
     include:
-      - /en/**
-    exclude:
-      - /en/drafts/**
-      - /en/sandbox/**
+      - /**
     target: /jmp-en.json
     properties:
       author:
