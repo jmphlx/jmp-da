@@ -1,519 +1,58 @@
-<!DOCTYPE HTML>
-<html class="sas" lang="en">
-<head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!DOCTYPE html>
+<html>
+  <head>
     <title>Page Not Found | JMP</title>
-<script src="https://www.jmp.com/etc.clientlibs/clientlibs/granite/jquery.min.cee8557e8779d371fe722bbcdd3b3eb7.js"></script>
-<script src="https://www.jmp.com/etc.clientlibs/clientlibs/granite/utils.min.4a192b590a2c2926fb000264370c0588.js"></script>
-<script src="https://www.jmp.com/etc.clientlibs/clientlibs/granite/jquery/granite.min.543d214c88dfa6f4a3233b630c82d875.js"></script>
-<script src="https://www.jmp.com/etc.clientlibs/foundation/clientlibs/jquery.min.dd9b395c741ce2784096e26619e14910.js"></script>
-<script src="https://www.jmp.com/etc.clientlibs/foundation/clientlibs/shared.min.9f3716b2c473fd53ab31b1caa53131a8.js"></script>
-<link href="https://www.jmp.com/etc/designs/jmp/static-b80e58e69704c8079a970ec872602869.css" rel="stylesheet" type="text/css"/><link rel="shortcut icon" type="image/x-icon" href="https://www.jmp.com/etc/designs/jmp/favicon.ico">
-    <link href="https://www.jmp.com/etc/designs/jmp/apple-touch-icon-120x120.png" rel="apple-touch-icon" sizes="120x120"/>
-        <link href="https://www.jmp.com/etc/designs/jmp/apple-touch-icon-152x152.png" rel="apple-touch-icon" sizes="152x152"/>
-        <link href="https://www.jmp.com/etc/designs/jmp/apple-touch-icon-76x76.png" rel="apple-touch-icon" sizes="76x76"/>
-        <link href="https://www.jmp.com/etc/designs/jmp/apple-touch-icon.png" rel="apple-touch-icon"/>
-        <link href="https://www.jmp.com/etc/designs/jmp/apple-touch-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
-        <meta name="description" content="">
-    <link rel="canonical" href="https://www.jmp.com/en_us/404.html"/>
-    <meta name="robots" content="noindex, nofollow"/>
+    <meta name="description" content="">
+    <meta property="og:title" content="Page Not Found">
+    <meta property="og:description" content="">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@JMP_software">
-    <meta property="og:title" content="Page Not Found">
-    <meta property="og:type" content="article">
-    <meta property="og:url" content="https://www.jmp.com/en_us/404.html">
-    <meta property="og:description" content="">
-    <meta property="gms" content="">
-    <meta property="og:image" content="https://www.jmp.com/en_us/_jcr_content/socialShareImage.img.addc5ac8baa64cda8a79c12f3836b927.png">
-  <meta property="date" content="2020-03-03T15:51:26.458-05:00">
- <meta property="siteArea" content="Inherit"> 
+    <meta name="twitter:title" content="Page Not Found">
+    <meta name="twitter:description" content="">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/scripts/aem.js" type="module"></script>
+    <script src="/scripts/scripts.js" type="module"></script>
+    <link rel="stylesheet" href="/styles/styles.css">
+    <script type="module">
+      import { createTag } from '/scripts/helper.js';
+      import { getLanguage } from '/scripts/jmp.js';
+      const lang = getLanguage();
+      const fragPath = `/fragments/${lang}/404`;
+      const fullPath = `https://main--jmp-da--jmphlx.hlx.live${fragPath}`;
+      document.getElementById('fragment').setAttribute('href', fragPath);
+      document.getElementById('fragment').innerText = fullPath;
 
-</head>
-<body class="en_us message clean-nav" data-prefilldomain="https://apigateway.sas.com/prefill/">
+      const headElem = document.querySelector('head');
+      const ogURL = createTag('meta', {
+        property: 'og:url',
+        content: fullPath,
+      });
+      const defaultMetaImage = `${window.location.origin}/icons/jmp-com-share.jpg`;
+      const ogImg = createTag('meta', {
+        property: 'og:image',
+        content: defaultMetaImage,
+      });
+      const canonLink = createTag('link', {
+        rel: 'canonical',
+        href: fullPath
+      });
+      headElem.prepend(canonLink, ogURL, ogImg);
 
-<div id="wrapper">
-<div class="header"><header>
-        <div id="header-wrapper"> 
-            <div class="mod mod-header">
-                <div id="logo"><a href="https://www.jmp.com/en_us/home.html" class="header-branding">JMP Statistical Discovery</a></div><nav id="utility-nav">
-    <ul>
-        <li class="utility-nav-company-fixed-list" id="li-utility-nav-company-fixed-list"><button id="utilahref-company-fixed-list" aria-haspopup="true" aria-owns="utilnav-company-fixed-list" class="is-dropdown">Company</button>
-                   
-                    <div class="ddpanel-wrapper">
-	                    <div id="utilnav-company-fixed-list" class="ddpanel" style="display:none;">
-	                        <button id="close-dd-utilnav-company-fixed-list" class="close"></button>
-	                           
-	                            <div class="par parsys"><div class="listgroup parbase section"><div class="syncmode  sync"></div>
-
-<div role="list" class="mcl-1 numCols-" id="58136f43fa8f4c5084f36abbff866cd7_par_listgroup_copy">   
-        <ul role="presentation" class="listOfItems none-list list-arrow" data-group-limit="5000" displayfirstcount="">
-                <li role="listitem" class="listItem   childpageabout-us ">
-                        <a href='https://www.jmp.com/en_us/company/about-us.html' target='_self'>
-<span class='navigation-title'>
-About JMP</span></a></li>
-                <li role="listitem" class="listItem   childpageleadership ">
-                        <a href='https://www.jmp.com/en_us/company/leadership.html' target='_self'>
-<span class='navigation-title'>
-Our Leadership</span></a></li>
-                <li role="listitem" class="listItem   childpagecareers-at-jmp ">
-                        <a href='https://www.jmp.com/en_us/company/careers-at-jmp.html' target='_self'>
-<span class='navigation-title'>
-Careers with JMP</span></a></li>
-                <li role="listitem" class="listItem   childpagecontact ">
-                        <a href='https://www.jmp.com/en_us/company/contact.html' target='_self'>
-<span class='navigation-title'>
-Contact Us</span></a></li>
-                </ul>
-            </div>
-    </div>
-</div>
-</div>
-                    </div>
-                </li><li class="utility-nav-wwsites" id="li-utility-nav-wwsites"><button id="utilahref-wwsites" aria-haspopup="true" aria-owns="utilnav-wwsites" class="is-dropdown">Worldwide Sites</button>
-                    
-                    <div class="ddpanel-wrapper">
-	                    <div id="utilnav-wwsites" class="ddpanel" style="display:none;">
-	                        <button id="close-dd-utilnav-wwsites" class="close"></button>
-	                           
-	                            <div class="par parsys"><div class="text parbase section"><div class="">
-<p><a href="https://www.jmp.com/en_us/home.html"><span class="icn-arrow">Corporate Site (www.jmp.com)</span></a></p>
-
-
-</div>
-</div>
-<div class="text parbase section"><div class="">
-<p><span class="txt-large">Worldwide Sites</span></p>
-
-
-</div>
-</div>
-<div class="parsys_column cq-colctrl-lt3"><div class="parsys_column cq-colctrl-lt3-c0"><div class="text parbase section"><div class="">
-<ul class="list-flag"><li><a href="https://www.jmp.com/es_ar/home.html">Argentina</a></li><li><a href="https://www.jmp.com/en_au/home.html">Australia</a></li><li><a href="https://www.jmp.com/de_at/home.html">Austria</a></li><li><a href="https://www.jmp.com/en_be/home.html">Belgium</a></li><li><a href="https://www.jmp.com/pt_br/home.html">Brazil</a></li><li><a href="https://www.jmp.com/en_ca/home.html">Canada</a></li><li><a href="https://www.jmp.com/es_cl/home.html">Chile</a></li><li><a href="https://www.jmp.com/zh_cn/home.html">China</a></li><li><a href="https://www.jmp.com/es_co/home.html">Colombia</a></li><li><a href="https://www.jmp.com/en_dk/home.html">Denmark</a></li><li><a href="https://www.jmp.com/en_fi/home.html">Finland</a></li></ul>
-
-
-</div>
-</div>
-</div><div class="parsys_column cq-colctrl-lt3-c1"><div class="text parbase section"><div class="">
-<ul class="list-flag"><li><a href="https://www.jmp.com/fr_fr/home.html">France</a></li><li><a href="https://www.jmp.com/de_de/home.html">Germany</a></li><li><a href="https://www.jmp.com/en_hk/home.html">Hong Kong</a></li><li><a href="https://www.jmp.com/en_is/home.html">Iceland</a></li><li><a href="https://www.jmp.com/en_in/home.html">India</a></li><li><a href="https://www.jmp.com/it_it/home.html">Italy</a></li><li><a href="https://www.jmp.com/ja_jp/home.html">Japan</a></li><li><a href="https://www.jmp.com/ko_kr/home.html">Korea</a></li><li><a href="https://www.jmp.com/en_my/home.html">Malaysia</a></li><li><a href="https://www.jmp.com/es_mx/home.html">Mexico</a></li><li><a href="https://www.jmp.com/en_nl/home.html">Netherlands</a></li></ul>
-
-
-</div>
-</div>
-</div><div class="parsys_column cq-colctrl-lt3-c2"><div class="text parbase section"><div class="">
-<ul class="list-flag"><li><a href="https://www.jmp.com/en_no/home.html">Norway</a></li><li><a href="https://www.jmp.com/es_pe/home.html">Peru</a></li><li><a href="https://www.jmp.com/en_ph/home.html">Philippines</a></li><li><a href="https://www.jmp.com/en_sg/home.html">Singapore</a></li><li><a href="https://www.jmp.com/es_es/home.html">Spain</a></li><li><a href="https://www.jmp.com/en_se/home.html">Sweden</a></li><li><a href="https://www.jmp.com/en_ch/home.html">Switzerland</a></li><li><a href="https://www.jmp.com/zh_tw/home.html">Taiwan</a></li><li><a href="https://www.jmp.com/en_gb/home.html">United Kingdom</a></li><li><a href="https://www.jmp.com/en_us/home.html">United States</a></li></ul>
-
-
-
-
-</div>
-</div>
-</div></div><div style="clear:both"></div></div>
-</div>
-                    </div>
-                </li></ul>
-    <form role="search" id="searchBox" method="get" action="https://www.jmp.com/en_us/search/jmpcom.html">
-    <label for="searchField">Search</label>
-    <input id="searchField" type="text" name="q" placeholder="Search" />
-        <input class="searchButton" type="submit" value="Search" />
-</form></nav></div>
+    </script>
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <div>
+        <div class="fragment unwrap">
+          <div>
+            <div><a id="fragment"></a></div>
+          </div>
         </div>
-        <div class="mdd"><nav id="nav-main">
-<ul>
-<li id="mddli-why-jmp-fixed-list">
-	    <a href="#mdd-why-jmp-fixed-list" id="mdd-why-jmp-fixed-list" role="button" aria-haspopup="true" aria-owns="mddnav-why-jmp-fixed-list" class="nav-cat" tabindex="0">Why JMP</a>
-	        <div class="ddpanel-wrapper">
-        <div id="mddnav-why-jmp-fixed-list" class="ddpanel" style="display: none;">
-                <button id="close-dd-why-jmp-fixed-list" class="close" aria-label="Close"></button>
-                <div class="par parsys"><div class="listgroup parbase section"><div class="syncmode  sync"></div>
-
-<div role="list" class="mcl-1 numCols-" id="4cc2210b6fea4807b98c4ccdf0e40cbc_par_listgroup">   
-        <ul role="presentation" class="listOfItems none-list list-arrow" data-group-limit="5000" displayfirstcount="">
-                <li role="listitem" class="listItem jmpproducts jmpproductsjmp   childpagewhy-jmp ">
-                        <a href='https://www.jmp.com/en_us/software/why-jmp.html' target='_self'>
-<span class='navigation-title'>
-JMP Overview</span></a></li>
-                <li role="listitem" class="listItem jmpproducts jmpproductsjmp jmpproducts jmpproductsjmp-live jmpproducts jmpproductsjmp-pro   childpageanalytic-workflow ">
-                        <a href='https://www.jmp.com/en_us/software/analytic-workflow.html' target='_self'>
-<span class='navigation-title'>
-Streamline your Analytic Workflow</span></a></li>
-                <li role="listitem" class="listItem jmpproducts jmpproductsjmp   childpageengineering-efficiency ">
-                        <a href='https://www.jmp.com/en_us/software/engineering-efficiency.html' target='_self'>
-<span class='navigation-title'>
-Improve Engineering Efficiency</span></a></li>
-                <li role="listitem" class="listItem jmpproducts jmpproductsjmp   childpageleveraging-jmp ">
-                        <a href='https://www.jmp.com/en_us/software/leveraging-jmp.html' target='_self'>
-<span class='navigation-title'>
-Leverage JMP Across the Enterprise</span></a></li>
-                <li role="listitem" class="listItem jmpproducts jmpproductsjmp jmpproducts jmpproductsjmp-live jmpproducts jmpproductsjmp-pro   childpageanalytics-advocate-guide ">
-                        <a href='https://www.jmp.com/en_us/software/analytics-advocate-guide.html' target='_self'>
-<span class='navigation-title'>
-Build an Analytics Culture</span></a></li>
-                <li role="listitem" class="listItem   childpagefeatured ">
-                        <a href='https://www.jmp.com/en_us/customer-stories/customer-listing/featured.html' target='_self'>
-<span class='navigation-title'>
-Our Customers</span></a></li>
-                <li role="listitem" class="listItem academic   childpageacademic ">
-                        <a href='https://www.jmp.com/en_us/academic.html' target='_self'>
-<span class='navigation-title'>
-JMP Academic Program</span></a></li>
-                </ul>
-            </div>
-    </div>
-</div>
-</div>
-        </div>
-    </li>
-<li id="mddli-products-fixed-list">
-	    <a href="#mdd-products-fixed-list" id="mdd-products-fixed-list" role="button" aria-haspopup="true" aria-owns="mddnav-products-fixed-list" class="nav-cat" tabindex="0">Products</a>
-	        <div class="ddpanel-wrapper">
-        <div id="mddnav-products-fixed-list" class="ddpanel" style="display: none;">
-                <button id="close-dd-products-fixed-list" class="close" aria-label="Close"></button>
-                <div class="par parsys"><div class="listgroup parbase section"><div class="syncmode  sync"></div>
-
-<div role="list" class="mcl-1 numCols-" id="fe93e50e7702471f9998b40b39c9c7cc_par_listgroup_copy">   
-        <ul role="presentation" class="listOfItems none-list list-arrow" data-group-limit="5000" displayfirstcount="">
-                <li role="listitem" class="listItem   childpagesoftware ">
-                        <a href='https://www.jmp.com/en_us/software.html' target='_self'>
-<span class='navigation-title'>
-Software Overview</span></a></li>
-                <li role="listitem" class="listItem jmpproducts jmpproductsjmp   childpagedata-analysis-software ">
-                        <a href='https://www.jmp.com/en_us/software/data-analysis-software.html' target='_self'>
-<span class='navigation-title'>
-JMP</span></a></li>
-                <li role="listitem" class="listItem jmpproducts jmpproductsjmp-pro   childpagepredictive-analytics-software ">
-                        <a href='https://www.jmp.com/en_us/software/predictive-analytics-software.html' target='_self'>
-<span class='navigation-title'>
-JMP Pro</span></a></li>
-                <li role="listitem" class="listItem jmpproducts jmpproductsjmp-live   childpagecollaborative-analytics-software ">
-                        <a href='https://www.jmp.com/en_us/software/collaborative-analytics-software.html' target='_self'>
-<span class='navigation-title'>
-JMP Live</span></a></li>
-                <li role="listitem" class="listItem jmpproducts jmpproductsjmp-clinical   childpageclinical-data-analysis-software ">
-                        <a href='https://www.jmp.com/en_us/software/clinical-data-analysis-software.html' target='_self'>
-<span class='navigation-title'>
-JMP Clinical</span></a></li>
-                <li role="listitem" class="listItem jmpproducts jmpproductsjmp jmpjmp-product-version jmpjmp-product-versionjmp-17 jmpproducts jmpproductsjmp-pro jmpjmp-product-version jmpjmp-product-versionjmp-pro-17 jmpproducts jmpproductsjmp-live   childpagenew-in-jmp ">
-                        <a href='https://www.jmp.com/en_us/software/new-release/new-in-jmp.html' target='_self'>
-<span class='navigation-title'>
-New Features</span></a></li>
-                </ul>
-            </div>
-    </div>
-</div>
-</div>
-        </div>
-    </li>
-<li id="mddli-capabilities-fixed-list">
-	    <a href="#mdd-capabilities-fixed-list" id="mdd-capabilities-fixed-list" role="button" aria-haspopup="true" aria-owns="mddnav-capabilities-fixed-list" class="nav-cat" tabindex="0">Capabilities</a>
-	        <div class="ddpanel-wrapper">
-        <div id="mddnav-capabilities-fixed-list" class="ddpanel" style="display: none;">
-                <button id="close-dd-capabilities-fixed-list" class="close" aria-label="Close"></button>
-                <div class="par parsys"><div class="listgroup parbase section"><div class="syncmode  sync"></div>
-
-<div role="list" class="mcl-1 numCols-" id="8d3f6b2b0de04f4a90298354cb2121fb_par_listgroup_copy">   
-        <ul role="presentation" class="listOfItems none-list list-arrow" data-group-limit="5000" displayfirstcount="">
-                <li role="listitem" class="listItem   childpagecapabilities ">
-                        <a href='https://www.jmp.com/en_us/software/capabilities.html' target='_self'>
-<span class='navigation-title'>
-Capabilities Overview</span></a></li>
-                <li role="listitem" class="listItem jmpcapabilities jmpcapabilitiesadvanced-statistical-modeling   childpageadvanced-statistical-modeling ">
-                        <a href='https://www.jmp.com/en_us/software/capabilities/advanced-statistical-modeling.html' target='_self'>
-<span class='navigation-title'>
-Advanced Statistical Modeling </span></a></li>
-                <li role="listitem" class="listItem jmpcapabilities jmpcapabilitiesautomation-and-ing   childpageautomation-and-scripting ">
-                        <a href='https://www.jmp.com/en_us/software/capabilities/automation-and-scripting.html' target='_self'>
-<span class='navigation-title'>
-Automation and Scripting </span></a></li>
-                <li role="listitem" class="listItem jmpcapabilities jmpcapabilitiesbasic-data-analysis-and-modeling   childpagebasic-data-analysis-and-modeling ">
-                        <a href='https://www.jmp.com/en_us/software/capabilities/basic-data-analysis-and-modeling.html' target='_self'>
-<span class='navigation-title'>
-Basic Data Analysis and Modeling</span></a></li>
-                <li role="listitem" class="listItem jmpcapabilities jmpcapabilitiesconsumer-and-market-research   childpageconsumer-and-market-research ">
-                        <a href='https://www.jmp.com/en_us/software/capabilities/consumer-and-market-research.html' target='_self'>
-<span class='navigation-title'>
-Consumer and Market Research</span></a></li>
-                <li role="listitem" class="listItem jmpcapabilities jmpcapabilitiescontent-organization   childpagecontent-organization ">
-                        <a href='https://www.jmp.com/en_us/software/capabilities/content-organization.html' target='_self'>
-<span class='navigation-title'>
-Content Organization</span></a></li>
-                <li role="listitem" class="listItem jmpcapabilities jmpcapabilitiesdata-access   childpagedata-access ">
-                        <a href='https://www.jmp.com/en_us/software/capabilities/data-access.html' target='_self'>
-<span class='navigation-title'>
-Data Access</span></a></li>
-                <li role="listitem" class="listItem jmpcapabilities jmpcapabilitiesdata-blending-and-cleanup   childpagedata-blending-and-cleanup ">
-                        <a href='https://www.jmp.com/en_us/software/capabilities/data-blending-and-cleanup.html' target='_self'>
-<span class='navigation-title'>
-Data Blending and Cleanup</span></a></li>
-                <li role="listitem" class="listItem jmpcapabilities jmpcapabilitiesdata-exploration   childpagedata-exploration-and-visualization ">
-                        <a href='https://www.jmp.com/en_us/software/capabilities/data-exploration-and-visualization.html' target='_self'>
-<span class='navigation-title'>
-Data Exploration and Visualization</span></a></li>
-                <li role="listitem" class="listItem jmpcapabilities jmpcapabilitiesdesign-of-experiments   childpagedesign-of-experiments ">
-                        <a href='https://www.jmp.com/en_us/software/capabilities/design-of-experiments.html' target='_self'>
-<span class='navigation-title'>
-Design of Experiments</span></a></li>
-                <li role="listitem" class="listItem jmpcapabilities jmpcapabilitiesmass-customization   childpagemass-customization ">
-                        <a href='https://www.jmp.com/en_us/software/capabilities/mass-customization.html' target='_self'>
-<span class='navigation-title'>
-Mass Customization</span></a></li>
-                <li role="listitem" class="listItem jmpcapabilities jmpcapabilitiespredictive-modeling-and-machine-learning   childpagepredictive-modeling-and-machine-learning ">
-                        <a href='https://www.jmp.com/en_us/software/capabilities/predictive-modeling-and-machine-learning.html' target='_self'>
-<span class='navigation-title'>
-Predictive Modeling and Machine Learning</span></a></li>
-                <li role="listitem" class="listItem jmpcapabilities jmpcapabilitiesquality-and-process-engineering   childpagequality-and-process-engineering ">
-                        <a href='https://www.jmp.com/en_us/software/capabilities/quality-and-process-engineering.html' target='_self'>
-<span class='navigation-title'>
-Quality and Process Engineering</span></a></li>
-                <li role="listitem" class="listItem jmpcapabilities jmpcapabilitiesreliability-analysis   childpagereliability-analysis ">
-                        <a href='https://www.jmp.com/en_us/software/capabilities/reliability-analysis.html' target='_self'>
-<span class='navigation-title'>
-Reliability Analysis</span></a></li>
-                <li role="listitem" class="listItem jmpcapabilities jmpcapabilitiessharing-and-communicating-results   childpagesharing-and-communicating-results ">
-                        <a href='https://www.jmp.com/en_us/software/capabilities/sharing-and-communicating-results.html' target='_self'>
-<span class='navigation-title'>
-Sharing and Communicating Results </span></a></li>
-                </ul>
-            </div>
-    </div>
-</div>
-</div>
-        </div>
-    </li>
-<li id="mddli-industries-fixed-list">
-	    <a href="#mdd-industries-fixed-list" id="mdd-industries-fixed-list" role="button" aria-haspopup="true" aria-owns="mddnav-industries-fixed-list" class="nav-cat" tabindex="0">Industries</a>
-	        <div class="ddpanel-wrapper">
-        <div id="mddnav-industries-fixed-list" class="ddpanel" style="display: none;">
-                <button id="close-dd-industries-fixed-list" class="close" aria-label="Close"></button>
-                <div class="par parsys"><div class="listgroup parbase section"><div class="syncmode  sync"></div>
-
-<div role="list" class="mcl-1 numCols-" id="c6ef23bb93d14bfd88ed267c5cbda860_par_listgroup_copy">   
-        <ul role="presentation" class="listOfItems none-list list-arrow" data-group-limit="5000" displayfirstcount="">
-                <li role="listitem" class="listItem   childpageindustries ">
-                        <a href='https://www.jmp.com/en_us/industries.html' target='_self'>
-<span class='navigation-title'>
-Industries Overview</span></a></li>
-                <li role="listitem" class="listItem jmpproducts jmpproductsjmp jmpindustry jmpindustrychemistry   childpagedata-analysis-software-for-the-chemical-industry ">
-                        <a href='https://www.jmp.com/en_us/industries/data-analysis-software-for-the-chemical-industry.html' target='_self'>
-<span class='navigation-title'>
-Chemical</span></a></li>
-                <li role="listitem" class="listItem jmpproducts jmpproductsjmp jmpindustry jmpindustryconsumer-products   childpagedata-analysis-software-for-the-consumer-products-industry ">
-                        <a href='https://www.jmp.com/en_us/industries/data-analysis-software-for-the-consumer-products-industry.html' target='_self'>
-<span class='navigation-title'>
-Consumer Products</span></a></li>
-                <li role="listitem" class="listItem jmpproducts jmpproductsjmp jmpindustry jmpindustrypharmaceutical-and-biotech   childpagedata-analysis-software-for-the-pharmaceutical-industry ">
-                        <a href='https://www.jmp.com/en_us/industries/data-analysis-software-for-the-pharmaceutical-industry.html' target='_self'>
-<span class='navigation-title'>
-Pharmaceutical</span></a></li>
-                <li role="listitem" class="listItem jmpproducts jmpproductsjmp jmpindustry jmpindustrysemiconductor   childpagedata-analysis-software-for-the-semiconductor-industry ">
-                        <a href='https://www.jmp.com/en_us/industries/data-analysis-software-for-the-semiconductor-industry.html' target='_self'>
-<span class='navigation-title'>
-Semiconductor</span></a></li>
-                </ul>
-            </div>
-    </div>
-</div>
-</div>
-        </div>
-    </li>
-<li id="mddli-for-users-fixed-list">
-	    <a href="#mdd-for-users-fixed-list" id="mdd-for-users-fixed-list" role="button" aria-haspopup="true" aria-owns="mddnav-for-users-fixed-list" class="nav-cat" tabindex="0">For Users</a>
-	        <div class="ddpanel-wrapper">
-        <div id="mddnav-for-users-fixed-list" class="ddpanel" style="display: none;">
-                <button id="close-dd-for-users-fixed-list" class="close" aria-label="Close"></button>
-                <div class="par parsys"><div class="listgroup parbase section"><div class="syncmode  sync"></div>
-
-<div role="list" class="mcl-1 numCols-" id="c60041f518844d20be1150becb6294ec_par_listgroup_copy">   
-        <ul role="presentation" class="listOfItems none-list list-arrow" data-group-limit="5000" displayfirstcount="">
-                <li role="listitem" class="listItem jmpproducts jmpproductsjmp   childpagefor-users ">
-                        <a href='https://www.jmp.com/en_us/support/for-users.html' target='_self'>
-<span class='navigation-title'>
-For Users Overview</span></a></li>
-                <li role="listitem" class="listItem   childpagelearn-to-use-jmp ">
-                        <a href='https://community.jmp.com/t5/Learn-JMP/ct-p/learn-jmp' target='_self'>
-<span class='navigation-title'>
-Learn to Use JMP</span></a></li>
-                <li role="listitem" class="listItem   childpagejmp-community ">
-                        <a href='https://community.jmp.com/' target='_self'>
-<span class='navigation-title'>
-JMP Community</span></a></li>
-                <li role="listitem" class="listItem   childpageevents ">
-                        <a href='https://www.jmp.com/en_us/events.html' target='_self'>
-<span class='navigation-title'>
-Live Events</span></a></li>
-                <li role="listitem" class="listItem   childpagediscovery-summits ">
-                        <a href='https://discoverysummit.jmp/en/home.html' target='_self'>
-<span class='navigation-title'>
-Discovery Summits</span></a></li>
-                <li role="listitem" class="listItem   childpagesupport ">
-                        <a href='https://www.jmp.com/en_us/support.html' target='_self'>
-<span class='navigation-title'>
-Get Support</span></a></li>
-                </ul>
-            </div>
-    </div>
-</div>
-</div>
-        </div>
-    </li>
-<li id="mddli-buy-jmp">
-	    <a id="mdd-buy-jmp" href="https://www.jmp.com/en_us/software/buy-jmp.html" target="_self">Buy JMP</a>
-	        <div class="ddpanel-wrapper">
-        </div>
-    </li>
-<li id="mddli-try-jmp">
-	    <a id="mdd-try-jmp" href="https://www.jmp.com/en_us/download-jmp-free-trial.html" target="_self">Try JMP</a>
-	        <div class="ddpanel-wrapper">
-        </div>
-    </li>
-</ul>
-    </nav></div>
-</header>
-    </div>
-<div class="breadcrumb"></div>
-<main id="content" tabindex="-1">
-
-<div id="page-content" class="par" >
-<div id="par">
-    <div class="par parsys"><div class="styledcontainer parbase"><div class="container compact "  >
-		<div class="bg bg-op-full  bg-pos-full" style="">
-            <div data-cmp-src="https://www.jmp.com/en_us/404/_jcr_content/par/styledcontainer_ae3f/image.img.jpg/1581533274923.jpg" data-cmp-asset="/content/dam/jmp/images/design/backgrounds/missing-link.jpg" data-cmp-is="image" data-cmp-lazy="true" class="cmp-image cq-dd-image" itemscope itemtype="http://schema.org/ImageObject"><noscript data-cmp-hook-image="noscript"><img src="https://www.jmp.com/en_us/404/_jcr_content/par/styledcontainer_ae3f/image.img.jpg/1581533274923.jpg" alt="Missing Link background" title="Missing Link background" class="cmp-image__image" itemprop="contentUrl" data-cmp-hook-image="image"></noscript></div></div>
-        <div class="par parsys"><div class="styledcontainer parbase"><div class="container  stripe-box "  >
-		<div class="bg " style="">
-            </div>
-        <div class="par parsys"><div class="parsys_column cq-colctrl-lt8"><div class="parsys_column cq-colctrl-lt8-c0"><div class="text parbase section"><div class="">
-<h1>Our web site is evolving.</h1>
-
-<h2>…and you just found the missing link.</h2>
-
-<p>​​While Charles Darwin would be proud of you, you’re probably a little frustrated that you didn’t find the page you wanted.</p>
-
-<p>​​Let us try to help get you back on track. Use the search box above or the links below to jmp on over to some of our other great pages.</p>
-
-<h5><a href="https://www.jmp.com/en_us/home.html"><span class="icn-arrow">jmp.com home page​</span></a></h5>
-
-
-</div>
-</div>
-</div><div class="parsys_column cq-colctrl-lt8-c1"></div></div><div style="clear:both"></div></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-</main>
-
-<div class="footer"><footer id="footer-wrapper">
-		<div class="par parsys"><div class="parsys_column cq-colctrl-lt7"><div class="parsys_column cq-colctrl-lt7-c0"><div class="text parbase section"><div class="">
-<p><span class="txt-large">About<br />
- </span></p>
-
-
-</div>
-</div>
-<div class="text parbase section"><div class="">
-<ul class="list-arrow"><li><a href="https://www.jmp.com/en_us/software/why-jmp.html">Why JMP</a></li><li><a href="https://www.jmp.com/en_us/software.html">Products</a></li><li><a href="https://www.jmp.com/en_us/software/capabilities.html">Capabilities</a></li><li><a href="https://www.jmp.com/en_us/industries.html">Industries</a></li><li><a href="https://www.jmp.com/en_us/academic.html">Academic Program</a></li></ul>
-
-
-</div>
-</div>
-</div><div class="parsys_column cq-colctrl-lt7-c1"><div class="text parbase section"><div class="">
-<p><span class="txt-large">Resources</span></p>
-
-
-</div>
-</div>
-<div class="text parbase section"><div class="">
-<ul class="list-arrow"><li><a href="https://www.jmp.com/en_us/events.html">Live Events</a></li><li><a href="https://www.jmp.com/en_us/customer-stories/customer-listing/featured.html">Our Customers</a></li><li><a href="https://www.jmp.com/en_us/online-statistics-course.html">Online Statistics Course</a></li><li><a href="https://www.jmp.com/en_us/statistics-knowledge-portal.html">Statistics Knowledge Portal<br />
- </a></li><li><a href="https://www.jmp.com/en_us/resources/resource-listings/by-industry/all-industries.html">Resource Center</a></li></ul>
-
-
-</div>
-</div>
-</div><div class="parsys_column cq-colctrl-lt7-c2"><div class="text parbase section"><div class="">
-<p><span class="txt-large">For Users<br />
- </span></p>
-
-
-</div>
-</div>
-<div class="text parbase section"><div class="">
-<ul class="list-arrow"><li><a href="https://www.jmp.com/en_us/redirects/jmp-user-community/community-home.html">User Community</a></li><li><a href="https://community.jmp.com/t5/Learn-JMP/ct-p/learn-jmp">Learn to Use JMP</a></li><li><a href="https://www.jmp.com/en_us/support/online-help.html">Online Documentation</a></li><li><a href="https://discoverysummit.jmp/en/home.html">Discovery Summits</a><a href="https://discoverysummit.jmp/en.html"><br />
-</a></li><li><a href="https://www.jmp.com/en_us/support.html">Support</a></li></ul>
-
-
-</div>
-</div>
-</div><div class="parsys_column cq-colctrl-lt7-c3"><div class="text parbase section"><div class="">
-<p><span class="txt-large">Company<br />
- </span></p>
-
-
-</div>
-</div>
-<div class="text parbase section"><div class="">
-<ul class="list-arrow"><li><a href="https://www.jmp.com/en_us/about.html">About Us</a></li><li><a href="https://www.jmp.com/en_us/redirects/connect-with-jmp/jmp-blog.html">Blogs</a></li><li><a href="https://www.jmp.com/en_us/company/careers-at-jmp.html">Careers<br />
- </a></li><li><a href="https://www.jmp.com/en_us/company/contact.html">Contact Us</a></li></ul>
-
-
-</div>
-</div>
-<div class="icon parbase section"><div class="">
-	<a href="https://www.jmp.com/en_us/redirects/connect-with-jmp/facebook.html"><div is="sas-icon" class="svg is-hidden  "     >
-		<svg enable-background="new 0 0 408.788 408.788" viewBox="0 0 408.788 408.788" xmlns="http://www.w3.org/2000/svg"><path d="m353.701 0h-298.614c-30.422 0-55.085 24.662-55.085 55.085v298.616c0 30.423 24.662 55.085 55.085 55.085h147.275l.251-146.078h-37.951c-4.932 0-8.935-3.988-8.954-8.92l-.182-47.087c-.019-4.959 3.996-8.989 8.955-8.989h37.882v-45.498c0-52.8 32.247-81.55 79.348-81.55h38.65c4.945 0 8.955 4.009 8.955 8.955v39.704c0 4.944-4.007 8.952-8.95 8.955l-23.719.011c-25.615 0-30.575 12.172-30.575 30.035v39.389h56.285c5.363 0 9.524 4.683 8.892 10.009l-5.581 47.087c-.534 4.506-4.355 7.901-8.892 7.901h-50.453l-.251 146.078h87.631c30.422 0 55.084-24.662 55.084-55.084v-298.619c-.001-30.423-24.663-55.085-55.086-55.085z" fill="#475993"/></svg></div>
-		</a></div>
-</div>
-<div class="icon parbase section"><div class="">
-	<a href="https://www.jmp.com/en_us/redirects/connect-with-jmp/linkedin.html"><div is="sas-icon" class="svg is-hidden  "     >
-		<svg enable-background="new 0 0 382 382" viewBox="0 0 382 382" xmlns="http://www.w3.org/2000/svg"><path d="m347.445 0h-312.89c-19.084 0-34.555 15.471-34.555 34.555v312.889c0 19.085 15.471 34.556 34.555 34.556h312.889c19.085 0 34.556-15.471 34.556-34.556v-312.889c0-19.084-15.471-34.555-34.555-34.555zm-229.238 329.844c0 5.554-4.502 10.056-10.056 10.056h-42.806c-5.554 0-10.056-4.502-10.056-10.056v-179.441c0-5.554 4.502-10.056 10.056-10.056h42.806c5.554 0 10.056 4.502 10.056 10.056zm-31.459-206.412c-22.459 0-40.666-18.207-40.666-40.666s18.207-40.666 40.666-40.666 40.666 18.207 40.666 40.666-18.206 40.666-40.666 40.666zm255.162 207.222c0 5.106-4.14 9.246-9.246 9.246h-45.934c-5.106 0-9.246-4.14-9.246-9.246v-84.168c0-12.556 3.683-55.021-32.813-55.021-28.309 0-34.051 29.066-35.204 42.11v97.079c0 5.106-4.139 9.246-9.246 9.246h-44.426c-5.106 0-9.246-4.14-9.246-9.246v-181.061c0-5.106 4.14-9.246 9.246-9.246h44.426c5.106 0 9.246 4.14 9.246 9.246v15.655c10.497-15.753 26.097-27.912 59.312-27.912 73.552 0 73.131 68.716 73.131 106.472z" fill="#0077b7"/></svg></div>
-		</a></div>
-</div>
-<div class="icon parbase section"><div class="">
-	<a href="https://www.jmp.com/en_us/redirects/connect-with-jmp/twitter.html"><div is="sas-icon" class="svg is-hidden  "     >
-		<svg width="1200" height="1227" viewBox="0 0 1200 1227" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" fill="white"/>
-</svg>
-</div>
-		</a></div>
-</div>
-<div class="icon parbase section"><div class="">
-	<a href="https://www.jmp.com/en_us/redirects/connect-with-jmp/youtube.html"><div is="sas-icon" class="svg is-hidden  "     >
-		<svg enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="m501.5 133.1c-5.9-21.9-23.2-39.2-45.1-45.1-40.1-11-200.4-11-200.4-11s-160.3 0-200.3 10.5c-21.5 5.9-39.2 23.6-45.1 45.5-10.6 40.2-10.6 123.2-10.6 123.2s0 83.5 10.5 123.1c5.9 21.9 23.2 39.2 45.1 45.1 40.5 11 200.3 11 200.3 11s160.3 0 200.3-10.5c21.9-5.9 39.2-23.2 45.1-45.1 10.7-40.1 10.7-123.1 10.7-123.1s.4-83.5-10.5-123.6zm-296.5 199.9v-153.5l133.3 76.8z" fill="#f00"/></svg></div>
-		</a></div>
-</div>
-<div class="icon parbase section"><div class="">
-	<a href="https://www.jmp.com/en_us/redirects/connect-with-jmp/instagram.html"><div is="sas-icon" class="svg is-hidden  "     >
-		<svg enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><linearGradient id="a"><stop offset="0" stop-color="#ffc107"/><stop offset=".507" stop-color="#f44336"/><stop offset=".99" stop-color="#9c27b0"/></linearGradient><linearGradient id="b" gradientTransform="matrix(32 0 0 -32 1519 20757)" gradientUnits="userSpaceOnUse" x1="-46.0041" x2="-32.9334" xlink:href="#a" y1="634.1208" y2="647.1917"/><linearGradient id="c" gradientTransform="matrix(32 0 0 -32 1519 20757)" gradientUnits="userSpaceOnUse" x1="-42.2971" x2="-36.6404" xlink:href="#a" y1="637.8279" y2="643.4846"/><linearGradient id="d" gradientTransform="matrix(32 0 0 -32 1519 20757)" gradientUnits="userSpaceOnUse" x1="-35.5456" x2="-34.7919" xlink:href="#a" y1="644.5793" y2="645.3331"/><path d="m352 0h-192c-88.352 0-160 71.648-160 160v192c0 88.352 71.648 160 160 160h192c88.352 0 160-71.648 160-160v-192c0-88.352-71.648-160-160-160zm112 352c0 61.76-50.24 112-112 112h-192c-61.76 0-112-50.24-112-112v-192c0-61.76 50.24-112 112-112h192c61.76 0 112 50.24 112 112z" fill="url(#b)"/><path d="m256 128c-70.688 0-128 57.312-128 128s57.312 128 128 128 128-57.312 128-128-57.312-128-128-128zm0 208c-44.096 0-80-35.904-80-80 0-44.128 35.904-80 80-80s80 35.872 80 80c0 44.096-35.904 80-80 80z" fill="url(#c)"/><circle cx="393.6" cy="118.4" fill="url(#d)" r="17.056"/></svg></div>
-		</a></div>
-</div>
-</div></div><div style="clear:both"></div></div>
-<div id="subfooter">
-				<div class="par parsys"><div class="text parbase section"><div class="">
-<ul
-      class="list-none"><li>© 2024 JMP Statistical Discovery LLC. All Rights Reserved.</li><li><a href="https://www.sas.com/en_us/legal/copyright.html" target="_blank">Terms of Use</a></li><li><a href="https://www.sas.com/privacy/" target="_blank">Privacy Statement</a></li><li><a href="https://www.jmp.com/en_us/company/contact.html" target="_self">Contact Us</a></li></ul>
-
-
-</div>
-</div>
-</div>
-</div>
-		</footer>
-	</div>
-</div><div class="rendertime rendertimestamp"><!--  2024-04-16 15:44:30.728 -->
-</div>
-
-<script src="https://www.jmp.com/etc/clientlibs/sas/commons/encodings.min.f04cc6dea4b679fcee575fcc22494f86.js"></script>
-<script src="https://www.jmp.com/etc/clientlibs/global/foundation_foot.min.ea80ee7522a60769133d074624952bf5.js"></script>
-<link rel="stylesheet" href="https://www.jmp.com/etc.clientlibs/clientlibs/sas/jqueryui.min.a148de6b3165acb6ee6cf11ab828de30.css" type="text/css">
-<script src="https://www.jmp.com/etc.clientlibs/clientlibs/sas/jqueryui.min.ce56079cb674d5bd22664f2c36e680c2.js"></script>
-<script type="text/javascript" src="https://www.jmp.com/etc/designs/jmp/js/static-9d66303cc5717bda0f6a8425fe12f71c.min.js"></script><div id="page-tabs"></div>
-<nav id="back-top" aria-label="Back to Top">
-            <a href="#content">Back to Top</a>
-        </nav>
-    <div id="geobanners" data-geos=""></div></body>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
 </html>
