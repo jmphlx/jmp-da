@@ -81,3 +81,14 @@ div.quote-small .quote-quotation {
   margin: 3.2rem 0;
 }
 
+.quote{
+  &.text-light{
+    p, h1, h2, h3, h4, h5 {
+    color: #ffffff !important;
+    :first-child:before, .first-child:after{
+      color: red !important;
+    }
+    
+    }
+  }
+}
