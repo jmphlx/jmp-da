@@ -87,8 +87,10 @@ div.quote-small .quote-quotation {
     color: #ffffff !important;
     :first-child:before, .first-child:after{
       color: red !important;
+      }
     }
-    
+    :first-child:before, :first-child:after {
+      color: rgba(220, 220, 220, .5) !important;
     }
   }
 }
