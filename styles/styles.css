@@ -315,7 +315,7 @@ h1 + h5 {
     margin-bottom: 1rem;
   }
 }
-:is(h5):has(+h6 +h6 +p) {
+:is(h5):has(+h6 +h6 +p), :is(h5):has(+h6 +h6) {
   line-height:1.6em;
   color:var(--purpleLight);
   margin-bottom: 3.2rem;
