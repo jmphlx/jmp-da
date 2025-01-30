@@ -43,6 +43,11 @@ function showSlide(block, slideIndex = 0) {
   });
 }
 
+// Function to stop auto-scrolling
+function stopAutoScroll(autoScrollInterval) {
+  clearInterval(autoScrollInterval);
+}
+
 // Function to start auto-scrolling
 function startAutoScroll(block) {
   if (block.classList.contains('no-auto-scroll')) return; // Check if auto-scroll is disabled
@@ -68,7 +73,7 @@ function startAutoScroll(block) {
   } else if (block.classList.contains('interval-12s')) {
     intervalTime = 12000; // 12 seconds
   }
-  let autoScrollInterval = setInterval(() => {
+  const autoScrollInterval = setInterval(() => {
     const activeSlideIndex = parseInt(block.dataset.activeSlide, 10);
     showSlide(block, activeSlideIndex + 1); // Move to next slide
   }, intervalTime); // Set interval time (3000 ms = 3 seconds)
@@ -77,11 +82,6 @@ function startAutoScroll(block) {
   block.addEventListener('mouseenter', () => {
     stopAutoScroll(autoScrollInterval);
   }, { once: true });
-}
-
-// Function to stop auto-scrolling
-function stopAutoScroll(autoScrollInterval) {
-  clearInterval(autoScrollInterval);
 }
 
 // Bind events for navigation and interactions
