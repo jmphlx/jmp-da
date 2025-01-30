@@ -1,8 +1,6 @@
 import { fetchPlaceholders } from '../../scripts/aem.js';
 import { parseBlockOptions } from '../../scripts/jmp.js';
 
-let autoScrollInterval;
-
 function updateActiveSlide(slide) {
   const block = slide.closest('.carousel');
   const slideIndex = parseInt(slide.dataset.slideIndex, 10);
@@ -70,14 +68,19 @@ function startAutoScroll(block) {
   } else if (block.classList.contains('interval-12s')) {
     intervalTime = 12000; // 12 seconds
   }
-  autoScrollInterval = setInterval(() => {
+  let autoScrollInterval = setInterval(() => {
     const activeSlideIndex = parseInt(block.dataset.activeSlide, 10);
     showSlide(block, activeSlideIndex + 1); // Move to next slide
   }, intervalTime); // Set interval time (3000 ms = 3 seconds)
+
+  // Mouseenter and Mouseleave
+  block.addEventListener('mouseenter', () => {
+    stopAutoScroll(autoScrollInterval);
+  }, { once: true });
 }
 
 // Function to stop auto-scrolling
-function stopAutoScroll() {
+function stopAutoScroll(autoScrollInterval) {
   clearInterval(autoScrollInterval);
 }
 
@@ -107,11 +110,6 @@ function bindEvents(block) {
   }, { threshold: 0.5 });
   block.querySelectorAll('.carousel-slide').forEach((slide) => {
     slideObserver.observe(slide);
-  });
-
-  // Mouseenter and Mouseleave
-  block.addEventListener('mouseenter', () => {
-    stopAutoScroll(block); // Pause auto-scroll when mouse enters
   });
 
   block.addEventListener('mouseleave', () => {
