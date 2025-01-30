@@ -392,12 +392,12 @@ function addGATracking() {
   const gaTracking = createTag('script', {
     type: 'text/javascript',
   });
-  gaTracking.innerText = "window.addEventListener('message', function(event) {" +
-    "if(event.data.type === 'hsFormCallback' && event.data.eventName === 'onFormReady'){" +
-    'window.dataLayer.push({' + 
-    "'event': 'hubspot-form-ready'," +
-    "'hs-form-guid': event.data.id" +
-    "}); } });console.log('add ga');";
+  gaTracking.innerText = "window.addEventListener('message', function(event) {"
+    + "if(event.data.type === 'hsFormCallback' && event.data.eventName === 'onFormReady'){"
+    + 'window.dataLayer.push({'
+    + "'event': 'hubspot-form-ready',"
+    + "'hs-form-guid': event.data.id"
+    + '}); } });';
 
   document.head.appendChild(gaTracking);
 }
