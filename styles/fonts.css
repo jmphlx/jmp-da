@@ -43,9 +43,12 @@
 
 /* Japan */
 :lang(ja) { 
-  font-family: "anova-regular", "Meiryo", "Hiragino Kaku Gothic Pro", sans-serif; 
+  font-family: "anova-regular", "Meiryo", "MS Gothic", "Hiragino Kaku Gothic Pro", sans-serif; 
   body {
-    font-family: "anova-regular", "Meiryo", sans-serif;
+    font-family: "anova-regular", "MS Gothic", "Meiryo", sans-serif;
+  }
+  strong {
+    font-weight: 700;
   }
 }
 /* Korea */
@@ -54,11 +57,17 @@
   body, li.nav-drop p, p {
     font-family: "anova-regular", "Malgun Gothic", sans-serif;
   }
+  strong {
+    font-weight: 700;
+  }
 }
 /* China */
 :lang(zh-hans), :lang(zh-hant), :lang(zh_hans), :lang(zh_hant) {
   font-family: "anova-regular", "Microsoft Yahei","微软雅黑", sans-serif;
   body {
     font-family: "anova-regular", "Microsoft Yahei","微软雅黑", sans-serif !important;
+  }
+  strong {
+    font-weight: 700;
   }
 }
