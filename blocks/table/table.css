@@ -102,16 +102,21 @@
 .table table tbody tr {
   border: 1px solid;
 }
-.table table td {
-  border: 1px solid #e7e7e7;
-}
 .table table th {
   font-weight: 700;
   border: 1px solid #d0d0d0;
 }
-.table table th, .table table td {
+.table table th, .table table thead tr td {
+  padding: 1rem;
+  text-align: center;
+  p {
+    margin-bottom: 0;
+  }
+}
+.table table td {
   padding: 1rem;
   text-align: left;
+  border: 1px solid #e7e7e7;
   p {
     margin-bottom: 0;
   }

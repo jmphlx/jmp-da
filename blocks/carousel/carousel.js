@@ -1,6 +1,8 @@
 import { fetchPlaceholders } from '../../scripts/aem.js';
 import { parseBlockOptions } from '../../scripts/jmp.js';
 
+let autoScrollInterval;
+
 function updateActiveSlide(slide) {
   const block = slide.closest('.carousel');
   const slideIndex = parseInt(slide.dataset.slideIndex, 10);
@@ -43,6 +45,43 @@ function showSlide(block, slideIndex = 0) {
   });
 }
 
+// Function to start auto-scrolling
+function startAutoScroll(block) {
+  if (block.classList.contains('no-auto-scroll')) return; // Check if auto-scroll is disabled
+
+  let intervalTime = 3000; // Default interval 3 seconds
+
+  if (block.classList.contains('interval-4s')) {
+    intervalTime = 4000; // 4 seconds
+  } else if (block.classList.contains('interval-5s')) {
+    intervalTime = 5000; // 5 seconds
+  } else if (block.classList.contains('interval-6s')) {
+    intervalTime = 6000; // 6 seconds
+  } else if (block.classList.contains('interval-7s')) {
+    intervalTime = 7000; // 7 seconds
+  } else if (block.classList.contains('interval-8s')) {
+    intervalTime = 8000; // 8 seconds
+  } else if (block.classList.contains('interval-9s')) {
+    intervalTime = 9000; // 9 seconds
+  } else if (block.classList.contains('interval-10s')) {
+    intervalTime = 10000; // 10 seconds
+  } else if (block.classList.contains('interval-11s')) {
+    intervalTime = 11000; // 11 seconds
+  } else if (block.classList.contains('interval-12s')) {
+    intervalTime = 12000; // 12 seconds
+  }
+  autoScrollInterval = setInterval(() => {
+    const activeSlideIndex = parseInt(block.dataset.activeSlide, 10);
+    showSlide(block, activeSlideIndex + 1); // Move to next slide
+  }, intervalTime); // Set interval time (3000 ms = 3 seconds)
+}
+
+// Function to stop auto-scrolling
+function stopAutoScroll() {
+  clearInterval(autoScrollInterval);
+}
+
+// Bind events for navigation and interactions
 function bindEvents(block) {
   const slideIndicators = block.querySelector('.carousel-slide-indicators');
   if (!slideIndicators) return;
@@ -68,6 +107,15 @@ function bindEvents(block) {
   }, { threshold: 0.5 });
   block.querySelectorAll('.carousel-slide').forEach((slide) => {
     slideObserver.observe(slide);
+  });
+
+  // Mouseenter and Mouseleave
+  block.addEventListener('mouseenter', () => {
+    stopAutoScroll(block); // Pause auto-scroll when mouse enters
+  });
+
+  block.addEventListener('mouseleave', () => {
+    startAutoScroll(block); // Resume auto-scroll when mouse leaves
   });
 }
 
@@ -104,6 +152,7 @@ function setOptions(block) {
 }
 
 let carouselId = 0;
+
 export default async function decorate(block) {
   carouselId += 1;
   block.setAttribute('id', `carousel-${carouselId}`);
@@ -163,5 +212,6 @@ export default async function decorate(block) {
 
   if (!isSingleSlide) {
     bindEvents(block);
+    startAutoScroll(block); // Start auto-scroll on load
   }
 }

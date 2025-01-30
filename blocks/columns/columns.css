@@ -1338,4 +1338,49 @@ div > div > div:nth-child(1){
       margin: 0 0 1.6rem 0 !important;
     }
   }
-} 
+}
+
+.img-float-right {
+  p {
+    font-size: 1.9rem !important;
+    color: #333333 !important;
+    line-height: 1.35 !important;
+  }
+  img {
+    float: right;
+    border-radius: 50%;
+    width: 35%;
+    min-width: 275px;
+    margin: 0 0 1rem 3rem;
+    border: none;
+  }
+  @media (width <=600px) {
+    img {
+      float: none;
+    }
+  }
+}
+
+.quote-all-text blockquote {
+  p {
+    position: relative;
+  }
+  p:first-child {
+    &:after {
+      display: none;
+    }
+  }
+  p:last-child:after {
+    content: '\201D';
+    font-family: "Georgia", cursive;
+    line-height: 0;
+    /* font-size: 800%; */
+    font-size: 17.0rem;
+    width: 0;
+    height: 0;
+    margin: 80px 0 0 -40px;
+    position: absolute;
+    color: #f2f2f2;
+    z-index: -1;
+  }
+}
