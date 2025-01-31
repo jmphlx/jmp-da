@@ -26,6 +26,7 @@ import { createTag } from './helper.js';
 }());
 
 let isSKPPage = false;
+let includeGATracking = false;
 let includeDelayedScript = true;
 
 const defaultMetaImage = `${window.location.origin}/icons/jmp-com-share.jpg`;
@@ -111,9 +112,13 @@ function updateSectionIds(main) {
 function decoratePageStyles() {
   const pageStyle = getMetadata('pagestyle');
   if (pageStyle && pageStyle.trim().length > 0) {
-    loadCSS(`${`${window.location.protocol}//${window.location.host}`}/styles/pages/${pageStyle.toLowerCase()}.css`);
-    document.body.classList.add(pageStyle.toLowerCase());
-    isSKPPage = pageStyle.toLowerCase() === 'skp';
+    if (pageStyle.toLowerCase() === 'gatracking') {
+      includeGATracking = true;
+    } else {
+      loadCSS(`${`${window.location.protocol}//${window.location.host}`}/styles/pages/${pageStyle.toLowerCase()}.css`);
+      document.body.classList.add(pageStyle.toLowerCase());
+      isSKPPage = pageStyle.toLowerCase() === 'skp';
+    }
   }
 }
 
@@ -383,6 +388,20 @@ function addMathJax() {
   document.head.appendChild(mathJaxScript);
 }
 
+function addGATracking() {
+  const gaTracking = createTag('script', {
+    type: 'text/javascript',
+  });
+  gaTracking.innerText = "window.addEventListener('message', function(event) {"
+    + "if(event.data.type === 'hsFormCallback' && event.data.eventName === 'onFormReady'){"
+    + 'window.dataLayer.push({'
+    + "'event': 'hubspot-form-ready',"
+    + "'hs-form-guid': event.data.id"
+    + '}); } });';
+
+  document.head.appendChild(gaTracking);
+}
+
 /**
  * Apply suffix to document title property without impacting og:title.
  * If a suffix is provided in the metadata properties use it
@@ -421,6 +440,9 @@ async function loadEager(doc) {
   decoratePageStyles();
   if (isSKPPage) {
     addMathJax();
+  }
+  if (includeGATracking) {
+    addGATracking();
   }
   const main = doc.querySelector('main');
   if (main) {
