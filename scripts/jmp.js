@@ -313,9 +313,10 @@ function getListFilterOptions(block, propertyNames) {
  */
 function filterOutPastEvents(pageSelection) {
   const filteredData = pageSelection.filter((item) => {
-    const eventDate = new Date(item.eventDateTime);
-    const midnightOfToday = new Date(new Date().setHours(23, 59, 0, 0));
-    return eventDate >= midnightOfToday;
+    if (!item.offDateTime) {
+      return true;
+    }
+    return new Date(item.offDateTime) >= new Date();
   });
   return filteredData;
 }
