@@ -15,6 +15,6 @@ jobs:
         with:
           script: |
             console.log('hello world')
-            const { default: printStuff } = await import('${{ github.workspace }}/.github/scripts/unpublish-pages.js')
+            const { default: printStuff } = await import('${{ github.workspace }}/scripts/unpublish-pages.js')
 
             await printStuff('my value')
