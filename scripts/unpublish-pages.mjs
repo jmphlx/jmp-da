@@ -1,7 +1,7 @@
 import {
   getAllLanguageIndexes,
   getJsonFromUrl,
-} from '../jmp.js';
+} from '/scripts/jmp.js';
 
 /**
  * Given a list of pages, filter down to event pages where the date has passed
