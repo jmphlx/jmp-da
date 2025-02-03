@@ -2303,7 +2303,7 @@ div.interview-body {
 .section-compact{
   padding: 40px 32px 4px 32px !important;
   @media (width <=600px) {
-    padding: 40px 32px 0px 32px !important;
+    padding: 40px 32px 0 32px !important;
   }
 }
 /* text width */
