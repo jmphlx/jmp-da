@@ -1248,7 +1248,7 @@
         picture {
           display: flex;
           height: 80px;
-          width: 80px;
+          width: auto;
           align-items: flex-start;
           object-fit: contain;
           img {
