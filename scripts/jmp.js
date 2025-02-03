@@ -99,13 +99,14 @@ function getLanguageIndex() {
 
 function getAllLanguageIndexes(includeFullURL) {
   const indexPaths = [];
-  languageIndexes.forEach((lang) => {
+  languageIndexes.forEach((currLang) => {
     if (includeFullURL) {
-      indexPaths.push(`${baseURL}/jmp-${lang}.json`);
+      indexPaths.push(`${baseURL}/jmp-${currLang}.json`);
     } else {
-      indexPaths.push(`/jmp-${lang}.json`);
+      indexPaths.push(`/jmp-${currLang}.json`);
     }
-  })
+  });
+  return indexPaths;
 }
 
 /**
