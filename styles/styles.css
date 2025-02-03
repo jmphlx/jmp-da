@@ -2301,13 +2301,9 @@ div.interview-body {
   padding-bottom: 16px !important;
 }
 .section-compact{
-  padding: 48px 32px 21px 32px;
+  padding: 40px 32px 4px 32px !important;
   @media (width <=600px) {
-    padding-top: 48px;
-    padding-bottom: 0;
-  }
-  @media (width <=480px) {
-    padding: 48px 16px 8px 16px;
+    padding: 40px 32px 0px 32px !important;
   }
 }
 /* text width */
