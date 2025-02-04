@@ -15,9 +15,6 @@ jobs:
         run: echo "Run this every 15 minutes"
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Use the secret
-        run: |
-          echo "API_KEY: ${{ secrets.AUTHORINGAUTHTOKEN }}"
       - name: Run Script
         env:
           AUTH_TOKEN: "${{ secrets.AUTHORINGAUTHTOKEN }}"
@@ -27,4 +24,4 @@ jobs:
             console.log("${{ secrets.AUTHORINGAUTHTOKEN }}")
             const { default: printStuff } = await import('${{ github.workspace }}/scripts/unpublish-pages.mjs')
 
-            await printStuff('$AUTH_TOKEN')
+            await printStuff("${{ secrets.AUTHORINGAUTHTOKEN }}")
