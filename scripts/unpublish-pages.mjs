@@ -21,10 +21,12 @@ function getAllLanguageIndexes(includeFullURL) {
  * @returns {Object} the json data object
 */
 async function getJsonFromUrl(route) {
+  console.log(route);
   try {
     const response = await fetch(route);
     if (!response.ok) return null;
     const json = await response.json();
+    console.log(json);
     return json;
   } catch (error) {
     // eslint-disable-next-line no-console
@@ -57,7 +59,6 @@ export default async function printStuff(printVar) {
   console.log(printVar);
   let pagesToUnpublish = [];
   const languageIndexes = getAllLanguageIndexes(true);
-  console.log(languageIndexes);
 
   // const foundPages = getPastEventsPages('https://main--jmp-da--jmphlx.hlx.live/jmp-en.json');
   // console.log(foundPages);
