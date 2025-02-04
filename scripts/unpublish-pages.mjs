@@ -83,13 +83,11 @@ export default async function printStuff(printVar) {
 
   let pagesToUnpublish = await getPastEventsPages(languageIndexes);
   console.log('test delete from index');
-  const pageURL = baseURL + pagesToUnpublish[0].path;
-  await sendDeleteRequest(printVar, pageURL);
+  await sendDeleteRequest(printVar, pagesToUnpublish[0].path);
   console.log(`deleted page: ${pagesToUnpublish[0]}`);
 
   // pagesToUnpublish.forEach((page) => {
-  //   const pageURL = baseURL + page.path;
-  //   sendDeleteRequest(printVar, pageURL);
-  //   console.log(`deleted page: ${pageURL}`);
+  //   sendDeleteRequest(printVar, page.path);
+  //   console.log(`deleted page: ${page.path}`);
   // });
 }
