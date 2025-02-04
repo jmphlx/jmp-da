@@ -42,11 +42,16 @@ async function getFilteredJSON(route) {
  */
 async function getPastEventsPages(languageIndexes) {
   let pagesToUnpublish = [];
-  languageIndexes.forEach(async (index) => {
-    console.log(index);
+  for(let i = 0; i < languageIndexes.length; i++) {
+    const index = languageIndexes[i];
     const foundPages = await getFilteredJSON(index);
     pagesToUnpublish = pagesToUnpublish.concat(foundPages);
-  });
+  }
+  // languageIndexes.forEach(async (index) => {
+  //   console.log(index);
+  //   const foundPages = await getFilteredJSON(index);
+  //   pagesToUnpublish = pagesToUnpublish.concat(foundPages);
+  // });
   console.log(pagesToUnpublish);
   return pagesToUnpublish;
 }
@@ -81,16 +86,8 @@ export default async function printStuff(printVar) {
   console.log(printVar);
   const languageIndexes = getAllLanguageIndexes(true);
 
-  // const foundPages = getPastEventsPages('https://main--jmp-da--jmphlx.hlx.live/jmp-en.json');
-  // console.log(foundPages);
-
   let pagesToUnpublish = await getPastEventsPages(languageIndexes);
   console.log('test delete from index');
   await sendDeleteRequest(printVar, pagesToUnpublish[0]);
   console.log(`deleted page: ${pagesToUnpublish[0]}`);
-
-  // pagesToUnpublish.forEach((page) => {
-  //   sendDeleteRequest(printVar, page);
-  //   console.log(`deleted page: ${page}`);
-  // });  
 }
