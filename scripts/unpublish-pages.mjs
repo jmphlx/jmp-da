@@ -42,13 +42,13 @@ async function getJsonFromUrl(route) {
 async function getPastEventsPages(languageIndexUrl) {
   console.log(`index ${languageIndexUrl}`);
   const { data: allPages } = await getJsonFromUrl(languageIndexUrl);
-  console.log(allPages);
   const filteredPages = allPages.filter((item) => {
     if (item.offDateTime) {
       return new Date(item.offDateTime) <= new Date();
     }
     return false;
   });
+  console.log(filteredPages);
   return filteredPages;
 }
 
