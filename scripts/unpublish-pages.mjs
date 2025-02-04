@@ -54,6 +54,7 @@ async function getPastEventsPages(languageIndexes) {
 async function sendDeleteRequest(authToken, page) {
   //'https://admin.hlx.page/index/jmphlx/jmp-da/main/en/online-statistics-course/request-access-to-teaching-materials/download-teaching-materials' 
 
+  console.log(authToken);
   console.log(page);
   const url = `https://admin.hlx.page/index/jmphlx/jmp-da/main${page}`;
 
