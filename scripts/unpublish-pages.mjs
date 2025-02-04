@@ -21,12 +21,10 @@ function getAllLanguageIndexes(includeFullURL) {
  * @returns {Object} the json data object
 */
 async function getJsonFromUrl(route) {
-  console.log(route);
   try {
     const response = await fetch(route);
     if (!response.ok) return null;
     const json = await response.json();
-    console.log(json);
     return json;
   } catch (error) {
     // eslint-disable-next-line no-console
