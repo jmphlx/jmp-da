@@ -54,6 +54,31 @@ async function getPastEventsPages(languageIndexUrl) {
   return filteredPages;
 }
 
+async function sendDeleteRequest(authToken, page) {
+  //'https://admin.hlx.page/index/jmphlx/jmp-da/main/en/online-statistics-course/request-access-to-teaching-materials/download-teaching-materials' 
+
+  const url = `https://admin.hlx.page/index/jmphlx/jmp-da/main${page}`;
+
+  await fetch(url, {
+    method: 'DELETE', 
+    headers: {
+      'Authorization': `Bearer ${authToken}` 
+    }
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json(); // If the API returns JSON data
+  })
+  .then(data => {
+    console.log('Resource deleted:', data);
+  })
+  .catch(error => {
+    console.error("Error deleting resource:", error);
+  });
+}
+
 export default async function printStuff(printVar) {
   console.log('stuff');
   console.log(printVar);
@@ -70,5 +95,14 @@ export default async function printStuff(printVar) {
   });
 
   console.log(pagesToUnpublish);
+
+  // pagesToUnpublish.forEach((page) => {
+  //   sendDeleteRequest(printVar, page);
+  //   console.log(`deleted page: ${page}`);
+  // });
+
+  console.log('test delete from index');
+  sendDeleteRequest(printVar, pagesToUnpublish[0]);
+  console.log(`deleted page: ${pagesToUnpublish[0]}`);
   
 }
