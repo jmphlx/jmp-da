@@ -51,12 +51,17 @@ async function getPastEventsPages(languageIndexes) {
   return pagesToUnpublish;
 }
 
-async function sendDeleteRequest(authToken, page) {
+async function sendDeleteRequest(authToken, page, deindex) {
   //'https://admin.hlx.page/index/jmphlx/jmp-da/main/en/online-statistics-course/request-access-to-teaching-materials/download-teaching-materials' 
 
   console.log(authToken);
   console.log(page);
-  const url = `https://admin.hlx.page/index/jmphlx/jmp-da/main${page}`;
+  let url;
+  if (deindex) {
+    url = `https://admin.hlx.page/index/jmphlx/jmp-da/main${page}`;
+  } else {
+    url = `https://admin.hlx.page/live/jmphlx/jmp-da/main${page}`;
+  }
 
   try {
     const response = await fetch(url, {
@@ -85,8 +90,10 @@ export default async function printStuff(printVar) {
 
   let pagesToUnpublish = await getPastEventsPages(languageIndexes);
   console.log('test delete from index');
-  await sendDeleteRequest(printVar, pagesToUnpublish[0].path);
-  console.log(`deleted page: ${pagesToUnpublish[0]}`);
+  await sendDeleteRequest(printVar, pagesToUnpublish[0].path, true);
+  console.log('unpublish page');
+  await sendDeleteRequest(printVar, pagesToUnpublish[0].path, false);
+  console.log(`unpublished page: ${pagesToUnpublish[0]}`);
 
   // pagesToUnpublish.forEach((page) => {
   //   sendDeleteRequest(printVar, page.path);
