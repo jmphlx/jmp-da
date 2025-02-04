@@ -40,17 +40,14 @@ async function getJsonFromUrl(route) {
  * @param {array} pageSelection array of pages that may match the filter
  * @returns array of pages with events on or before the current date time.
  */
-async function getPastEventsPages(languageIndexUrl) {
-  console.log(`index ${languageIndexUrl}`);
-  const { data: allPages } = await getJsonFromUrl(languageIndexUrl);
-  const filteredPages = allPages.filter((item) => {
-    if (item.offDateTime) {
-      return new Date(item.offDateTime) <= new Date();
-    }
-    return false;
+async function getPastEventsPages(languageIndexes) {
+  let pagesToUnpublish = [];
+  languageIndexes.forEach(async (index) => {
+    const foundPages = await getFilteredJSON(index);
+    pagesToUnpublish = pagesToUnpublish.concat(foundPages);
   });
-  console.log(filteredPages);
-  return filteredPages;
+  console.log(pagesToUnpublish);
+  return pagesToUnpublish;
 }
 
 async function getFilteredJSON(route) {
@@ -85,8 +82,10 @@ async function sendDeleteRequest(authToken, page) {
         'Authorization': `Bearer ${authToken}` 
       }
     });
+    console.log(response);
     if (!response.ok) return null;
     const json = await response.json();
+    console.log(json);
     return json;
   } catch (error) {
     // eslint-disable-next-line no-console
@@ -103,13 +102,7 @@ export default async function printStuff(printVar) {
   // const foundPages = getPastEventsPages('https://main--jmp-da--jmphlx.hlx.live/jmp-en.json');
   // console.log(foundPages);
 
-  let pagesToUnpublish = [];
-  languageIndexes.forEach(async (index) => {
-    const foundPages = await getFilteredJSON(index);
-    console.log(foundPages);
-    pagesToUnpublish = pagesToUnpublish.concat(foundPages);
-  });
-
+  let pagesToUnpublish = await getPastEventsPages(languageIndexes);
   console.log(pagesToUnpublish);
   //const pagesToUnpublish = await getPagesToUnpublish(languageIndexes);
 
