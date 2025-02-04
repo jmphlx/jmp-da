@@ -47,11 +47,6 @@ async function getPastEventsPages(languageIndexes) {
     const foundPages = await getFilteredJSON(index);
     pagesToUnpublish = pagesToUnpublish.concat(foundPages);
   }
-  // languageIndexes.forEach(async (index) => {
-  //   console.log(index);
-  //   const foundPages = await getFilteredJSON(index);
-  //   pagesToUnpublish = pagesToUnpublish.concat(foundPages);
-  // });
   console.log(pagesToUnpublish);
   return pagesToUnpublish;
 }
@@ -88,6 +83,13 @@ export default async function printStuff(printVar) {
 
   let pagesToUnpublish = await getPastEventsPages(languageIndexes);
   console.log('test delete from index');
-  await sendDeleteRequest(printVar, pagesToUnpublish[0]);
+  const pageURL = baseURL + pagesToUnpublish[0].path;
+  await sendDeleteRequest(printVar, pageURL);
   console.log(`deleted page: ${pagesToUnpublish[0]}`);
+
+  // pagesToUnpublish.forEach((page) => {
+  //   const pageURL = baseURL + page.path;
+  //   sendDeleteRequest(printVar, pageURL);
+  //   console.log(`deleted page: ${pageURL}`);
+  // });
 }
