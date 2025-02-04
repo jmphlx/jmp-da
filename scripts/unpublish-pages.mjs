@@ -1,5 +1,5 @@
 const languageIndexes = [
-  'en', 'es', 'fr', 'zh', 'de', 'it', 'ko', 'ja', 'zh-hans', 'zh-hant',
+  'en', 'es', 'fr', 'de', 'it', 'ko', 'ja', 'zh-hans', 'zh-hant',
 ];
 const baseURL = 'https://main--jmp-da--jmphlx.hlx.live';
 

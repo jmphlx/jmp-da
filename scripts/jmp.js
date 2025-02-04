@@ -9,7 +9,7 @@ const knownObjectProperties = ['options', 'filters'];
  */
 function isLanguageSupported(language) {
   const languageIndexes = [
-    'en', 'es', 'fr', 'zh', 'de', 'it', 'ko', 'ja', 'zh-hans', 'zh-hant',
+    'en', 'es', 'fr', 'de', 'it', 'ko', 'ja', 'zh-hans', 'zh-hant',
   ];
   return languageIndexes.includes(language);
 }
