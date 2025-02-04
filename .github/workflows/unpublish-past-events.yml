@@ -7,13 +7,17 @@ on:
 
 jobs:
   unpublish:
-    environment: main
+    environment:
+      name: main
     runs-on: ubuntu-latest
     steps:
       - name: Every time
         run: echo "Run this every 15 minutes"
       - name: Checkout repo
         uses: actions/checkout@v4
+      - name: Use the secret
+        run: |
+          echo "API_KEY: ${{ secrets.AUTHORINGAUTHTOKEN }}"
       - name: Run Script
         env:
           AUTH_TOKEN: ${{ secrets.AUTHORINGAUTHTOKEN }}
