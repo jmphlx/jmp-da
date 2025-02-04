@@ -55,7 +55,7 @@ async function getPastEventsPages(languageIndexUrl) {
 
 async function getFilteredJSON(route) {
   try {
-    const response = await window.fetch(route);
+    const response = await fetch(route);
     if (!response.ok) return null;
     const json = await response.json();
     const filteredPages = json.data.filter((item) => {
