@@ -83,20 +83,19 @@ async function sendDeleteRequest(authToken, page, deindex) {
   return null;
 }
 
-export default async function printStuff(printVar) {
-  console.log('stuff');
-  console.log(printVar);
+export default async function unpublishPastEvents(authToken) {
+  console.log(authToken);
   const languageIndexes = getAllLanguageIndexes(true);
 
   let pagesToUnpublish = await getPastEventsPages(languageIndexes);
   console.log('test delete from index');
-  await sendDeleteRequest(printVar, pagesToUnpublish[0].path, true);
+  await sendDeleteRequest(authToken, pagesToUnpublish[0].path, true);
   console.log('unpublish page');
-  await sendDeleteRequest(printVar, pagesToUnpublish[0].path, false);
+  await sendDeleteRequest(authToken, pagesToUnpublish[0].path, false);
   console.log(`unpublished page: ${pagesToUnpublish[0]}`);
 
   // pagesToUnpublish.forEach((page) => {
-  //   sendDeleteRequest(printVar, page.path);
+  //   sendDeleteRequest(authToken, page.path);
   //   console.log(`deleted page: ${page.path}`);
   // });
 }
