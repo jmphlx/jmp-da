@@ -1,4 +1,4 @@
-import * as jmp from '../scripts/jmp.js';
+import pkg from '../scripts/jmp.js';
 
 /**
  * Given a list of pages, filter down to event pages where the date has passed
@@ -8,7 +8,7 @@ import * as jmp from '../scripts/jmp.js';
  */
 async function getPastEventsPages(languageIndexUrl) {
   console.log(`index ${languageIndexUrl}`);
-  const { data: allPages } = await jmp.getJsonFromUrl(languageIndexUrl);
+  const { data: allPages } = await pkg.getJsonFromUrl(languageIndexUrl);
   const filteredPages = allPages.filter((item) => {
     if (item.offDateTime) {
       return new Date(item.offDateTime) <= new Date();
@@ -22,7 +22,7 @@ export default async function printStuff(printVar) {
   console.log('stuff');
   console.log(printVar);
   //const pagesToUnpublish = [];
-  const languageIndexes = jmp.getAllLanguageIndexes(true);
+  const languageIndexes = pkg.getAllLanguageIndexes(true);
   console.log(languageIndexes);
 
   const foundPages = getPastEventsPages('https://main--jmp-da--jmphlx.hlx.live/jmp-en.json');
