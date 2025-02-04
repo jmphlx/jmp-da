@@ -58,8 +58,19 @@ export default async function printStuff(printVar) {
   const languageIndexes = getAllLanguageIndexes(true);
   console.log(languageIndexes);
 
-  const foundPages = getPastEventsPages('https://main--jmp-da--jmphlx.hlx.live/jmp-en.json');
-  console.log(foundPages);
+  try {
+    const response = await fetch('https://main--jmp-da--jmphlx.hlx.live/jmp-en.json');
+    console.log(response);
+    if (!response.ok) return null;
+    const json = await response.json();
+    console.log(json);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('getJsonFromUrl:', { error });
+  }
+
+  //const foundPages = getPastEventsPages('https://main--jmp-da--jmphlx.hlx.live/jmp-en.json');
+  //console.log(foundPages);
 
 
   // languageIndexes.forEach((index) => {
