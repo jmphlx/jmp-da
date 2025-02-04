@@ -15,41 +15,6 @@ function getAllLanguageIndexes(includeFullURL) {
   return indexPaths;
 }
 
-/**
- * Returns a list of properties listed in the block
- * @param {string} route get the Json data from the route
- * @returns {Object} the json data object
-*/
-async function getJsonFromUrl(route) {
-  try {
-    const response = await fetch(route);
-    if (!response.ok) return null;
-    const json = await response.json();
-    console.log(json);
-    return json;
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('getJsonFromUrl:', { error });
-  }
-  return null;
-}
-
-/**
- * Given a list of pages, filter down to event pages where the date has passed
- * the current date time.
- * @param {array} pageSelection array of pages that may match the filter
- * @returns array of pages with events on or before the current date time.
- */
-async function getPastEventsPages(languageIndexes) {
-  let pagesToUnpublish = [];
-  languageIndexes.forEach(async (index) => {
-    const foundPages = await getFilteredJSON(index);
-    pagesToUnpublish = pagesToUnpublish.concat(foundPages);
-  });
-  console.log(pagesToUnpublish);
-  return pagesToUnpublish;
-}
-
 async function getFilteredJSON(route) {
   try {
     const response = await fetch(route);
@@ -67,6 +32,23 @@ async function getFilteredJSON(route) {
     console.error('getJsonFromUrl:', { error });
   }
   return null;
+}
+
+/**
+ * Given a list of pages, filter down to event pages where the date has passed
+ * the current date time.
+ * @param {array} pageSelection array of pages that may match the filter
+ * @returns array of pages with events on or before the current date time.
+ */
+async function getPastEventsPages(languageIndexes) {
+  let pagesToUnpublish = [];
+  languageIndexes.forEach(async (index) => {
+    console.log(index);
+    const foundPages = await getFilteredJSON(index);
+    pagesToUnpublish = pagesToUnpublish.concat(foundPages);
+  });
+  console.log(pagesToUnpublish);
+  return pagesToUnpublish;
 }
 
 async function sendDeleteRequest(authToken, page) {
@@ -103,16 +85,12 @@ export default async function printStuff(printVar) {
   // console.log(foundPages);
 
   let pagesToUnpublish = await getPastEventsPages(languageIndexes);
-  console.log(pagesToUnpublish);
-  //const pagesToUnpublish = await getPagesToUnpublish(languageIndexes);
+  console.log('test delete from index');
+  await sendDeleteRequest(printVar, pagesToUnpublish[0]);
+  console.log(`deleted page: ${pagesToUnpublish[0]}`);
 
   // pagesToUnpublish.forEach((page) => {
   //   sendDeleteRequest(printVar, page);
   //   console.log(`deleted page: ${page}`);
-  // });
-
-  console.log('test delete from index');
-  await sendDeleteRequest(printVar, pagesToUnpublish[0]);
-  console.log(`deleted page: ${pagesToUnpublish[0]}`);
-  
+  // });  
 }
