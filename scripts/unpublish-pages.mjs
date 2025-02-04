@@ -62,7 +62,8 @@ async function sendDeleteRequest(authToken, page) {
     const response = await fetch(url, {
       method: 'DELETE', 
       headers: {
-        'Authorization': `Bearer ${authToken}` 
+        'Authorization': `Bearer ${authToken}` ,
+        'Accept': '*/*'
       }
     });
     console.log(response);
