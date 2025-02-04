@@ -86,8 +86,8 @@ export default async function printStuff(printVar) {
   // console.log(foundPages);
 
 
-  languageIndexes.forEach((index) => {
-    const foundPages = getPastEventsPages(index);
+  languageIndexes.forEach(async (index) => {
+    const foundPages = await getPastEventsPages(index);
     pagesToUnpublish = pagesToUnpublish.concat(foundPages);
   });
 
