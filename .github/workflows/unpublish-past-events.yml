@@ -7,6 +7,7 @@ on:
 
 jobs:
   unpublish:
+    environment: main
     runs-on: ubuntu-latest
     steps:
       - name: Every time
@@ -20,6 +21,8 @@ jobs:
         with:
           script: |
             console.log(process.env.AUTH_TOKEN)
+            console.log(${{ env }});
+            console.log(${{ secrets.AUTHORINGAUTHTOKEN }});
             const { default: printStuff } = await import('${{ github.workspace }}/scripts/unpublish-pages.mjs')
 
             await printStuff('$AUTH_TOKEN')
