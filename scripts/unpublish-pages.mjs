@@ -50,7 +50,6 @@ async function getPastEventsPages(languageIndexUrl) {
     }
     return false;
   });
-  console.log(filteredPages);
   return filteredPages;
 }
 
