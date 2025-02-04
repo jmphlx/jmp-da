@@ -19,7 +19,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            console.log('${{ secrets.AUTHORINGAUTHTOKEN }}')
+            console.log(process.env.AUTH_TOKEN)
             const { default: printStuff } = await import('${{ github.workspace }}/scripts/unpublish-pages.mjs')
 
             await printStuff('$AUTH_TOKEN')
