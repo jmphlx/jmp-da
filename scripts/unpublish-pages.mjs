@@ -55,16 +55,19 @@ async function getPastEventsPages(languageIndexUrl) {
 export default async function printStuff(printVar) {
   console.log('stuff');
   console.log(printVar);
-  //const pagesToUnpublish = [];
+  let pagesToUnpublish = [];
   const languageIndexes = getAllLanguageIndexes(true);
   console.log(languageIndexes);
 
-  const foundPages = getPastEventsPages('https://main--jmp-da--jmphlx.hlx.live/jmp-en.json');
-  console.log(foundPages);
+  // const foundPages = getPastEventsPages('https://main--jmp-da--jmphlx.hlx.live/jmp-en.json');
+  // console.log(foundPages);
 
 
-  // languageIndexes.forEach((index) => {
-  //   const foundPages = getPastEventsPages(index);
-  // })
+  languageIndexes.forEach((index) => {
+    const foundPages = getPastEventsPages(index);
+    pagesToUnpublish = pagesToUnpublish.concat(foundPages);
+  });
+
+  console.log(pagesToUnpublish);
   
 }
