@@ -1,8 +1,4 @@
 const knownObjectProperties = ['options', 'filters'];
-const languageIndexes = [
-  'en', 'es', 'fr', 'zh', 'de', 'it', 'ko', 'ja', 'zh-hans', 'zh-hant',
-];
-const baseURL = 'https://main--jmp-da--jmphlx.hlx.live';
 
 /**
  * Returns if a given 2 or 4 digit language is supported
@@ -12,6 +8,9 @@ const baseURL = 'https://main--jmp-da--jmphlx.hlx.live';
  * @returns {Boolean} true if the index should exist.
  */
 function isLanguageSupported(language) {
+  const languageIndexes = [
+    'en', 'es', 'fr', 'zh', 'de', 'it', 'ko', 'ja', 'zh-hans', 'zh-hant',
+  ];
   return languageIndexes.includes(language);
 }
 /* Set the html lang property based on the page path. Default to 'en'. */
@@ -95,18 +94,6 @@ function getLanguageFooter(isSKP = null) {
  */
 function getLanguageIndex() {
   return isLanguageSupported ? `/jmp-${lang}.json` : '/jmp-en.json';
-}
-
-function getAllLanguageIndexes(includeFullURL) {
-  const indexPaths = [];
-  languageIndexes.forEach((currLang) => {
-    if (includeFullURL) {
-      indexPaths.push(`${baseURL}/jmp-${currLang}.json`);
-    } else {
-      indexPaths.push(`/jmp-${currLang}.json`);
-    }
-  });
-  return indexPaths;
 }
 
 /**
@@ -529,7 +516,6 @@ export {
   matchesOperator,
   startsWithOperator,
   filterOutPastEvents,
-  getAllLanguageIndexes,
   getBlockConfig,
   getBlockPropertiesList,
   getBlockProperty,
