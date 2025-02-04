@@ -78,20 +78,25 @@ async function sendDeleteRequest(authToken, page) {
   });
 }
 
+async function getPagesToUnpublish(languageIndexes) {
+  let pagesToUnpublish = [];
+  languageIndexes.forEach(async (index) => {
+    const foundPages = await getPastEventsPages(index);
+    pagesToUnpublish = pagesToUnpublish.concat(foundPages);
+  });
+
+  console.log(pagesToUnpublish);
+}
+
 export default async function printStuff(printVar) {
   console.log('stuff');
   console.log(printVar);
-  let pagesToUnpublish = [];
   const languageIndexes = getAllLanguageIndexes(true);
 
   // const foundPages = getPastEventsPages('https://main--jmp-da--jmphlx.hlx.live/jmp-en.json');
   // console.log(foundPages);
 
-
-  languageIndexes.forEach(async (index) => {
-    const foundPages = await getPastEventsPages(index);
-    pagesToUnpublish = pagesToUnpublish.concat(foundPages);
-  });
+  const pagesToUnpublish = await getPagesToUnpublish(languageIndexes);
 
   console.log(pagesToUnpublish);
 
@@ -101,7 +106,7 @@ export default async function printStuff(printVar) {
   // });
 
   console.log('test delete from index');
-  sendDeleteRequest(printVar, pagesToUnpublish[0]);
+  await sendDeleteRequest(printVar, pagesToUnpublish[0]);
   console.log(`deleted page: ${pagesToUnpublish[0]}`);
   
 }
