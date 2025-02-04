@@ -53,6 +53,25 @@ async function getPastEventsPages(languageIndexUrl) {
   return filteredPages;
 }
 
+async function getFilteredJSON(route) {
+  try {
+    const response = await window.fetch(route);
+    if (!response.ok) return null;
+    const json = await response.json();
+    const filteredPages = json.data.filter((item) => {
+      if (item.offDateTime) {
+        return new Date(item.offDateTime) <= new Date();
+      }
+      return false;
+    });
+    return filteredPages;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('getJsonFromUrl:', { error });
+  }
+  return null;
+}
+
 async function sendDeleteRequest(authToken, page) {
   //'https://admin.hlx.page/index/jmphlx/jmp-da/main/en/online-statistics-course/request-access-to-teaching-materials/download-teaching-materials' 
 
@@ -76,16 +95,6 @@ async function sendDeleteRequest(authToken, page) {
   return null;
 }
 
-async function getPagesToUnpublish(languageIndexes) {
-  let pagesToUnpublish = [];
-  languageIndexes.forEach(async (index) => {
-    const foundPages = await getPastEventsPages(index);
-    pagesToUnpublish = pagesToUnpublish.concat(foundPages);
-  });
-
-  console.log(pagesToUnpublish);
-}
-
 export default async function printStuff(printVar) {
   console.log('stuff');
   console.log(printVar);
@@ -94,9 +103,15 @@ export default async function printStuff(printVar) {
   // const foundPages = getPastEventsPages('https://main--jmp-da--jmphlx.hlx.live/jmp-en.json');
   // console.log(foundPages);
 
-  const pagesToUnpublish = await getPagesToUnpublish(languageIndexes);
+  let pagesToUnpublish = [];
+  languageIndexes.forEach(async (index) => {
+    const foundPages = await getFilteredJSON(index);
+    console.log(foundPages);
+    pagesToUnpublish = pagesToUnpublish.concat(foundPages);
+  });
 
   console.log(pagesToUnpublish);
+  //const pagesToUnpublish = await getPagesToUnpublish(languageIndexes);
 
   // pagesToUnpublish.forEach((page) => {
   //   sendDeleteRequest(printVar, page);
