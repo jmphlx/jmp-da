@@ -20,11 +20,11 @@ jobs:
           echo "API_KEY: ${{ secrets.AUTHORINGAUTHTOKEN }}"
       - name: Run Script
         env:
-          AUTH_TOKEN: ${{ secrets.AUTHORINGAUTHTOKEN }}
+          AUTH_TOKEN: "${{ secrets.AUTHORINGAUTHTOKEN }}"
         uses: actions/github-script@v7
         with:
           script: |
-            console.log(${{ secrets.AUTHORINGAUTHTOKEN }}))
+            console.log("${{ secrets.AUTHORINGAUTHTOKEN }}")
             const { default: printStuff } = await import('${{ github.workspace }}/scripts/unpublish-pages.mjs')
 
             await printStuff('$AUTH_TOKEN')
