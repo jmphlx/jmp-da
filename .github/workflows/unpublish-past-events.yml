@@ -25,4 +25,4 @@ jobs:
             console.log(process.env.AUTH_TOKEN);
             const { default: printStuff } = await import('${{ github.workspace }}/scripts/unpublish-pages.mjs')
 
-            await printStuff("${{ secrets.AUTHORINGAUTHTOKEN }}")
+            await printStuff(process.env.AUTH_TOKEN)
