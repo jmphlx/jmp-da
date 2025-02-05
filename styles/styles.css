@@ -485,7 +485,7 @@ div.text-light {
   strong {
     color: #ffffff !important;
   }
-  p {
+  p, h4 {
     a {
       color: var(--yellow) !important;
       text-decoration: underline;
