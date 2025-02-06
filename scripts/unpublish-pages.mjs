@@ -83,19 +83,25 @@ async function sendDeleteRequest(authToken, page, deindex) {
   return null;
 }
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export default async function unpublishPastEvents(authToken) {
   console.log(authToken);
   const languageIndexes = getAllLanguageIndexes(true);
 
   let pagesToUnpublish = await getPastEventsPages(languageIndexes);
-  console.log('test delete from index');
-  await sendDeleteRequest(authToken, pagesToUnpublish[0].path, true);
-  console.log('unpublish page');
-  await sendDeleteRequest(authToken, pagesToUnpublish[0].path, false);
-  console.log(`unpublished page: ${pagesToUnpublish[0]}`);
 
-  // pagesToUnpublish.forEach((page) => {
-  //   sendDeleteRequest(authToken, page.path);
-  //   console.log(`deleted page: ${page.path}`);
-  // });
+  for(let i=0; i < pagesToUnpublish.length; i++) {
+    //After every 5 requests, pause for 2 seconds, to avoid going over the rate limit.
+    //Rate is 10 requests per second. Each page needs 2 requests.
+    const page = pagesToUnpublish[i];
+    await sendDeleteRequest(authToken, page.path, true); // Deindex.
+    await sendDeleteRequest(authToken, page.path, false); // Unpublish.
+    console.log(`Unpublished : ${page.path}`);
+    if (i % 5 === 0) {
+      sleep(2000);
+    }
+  }
 }
