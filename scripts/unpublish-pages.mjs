@@ -98,7 +98,7 @@ function buildEmailBody(successPages, failedPages) {
     failedPages.forEach((page) => {
       emailBody += `<li><a href="https://da.live/edit#/jmphlx/jmp-da${page}">${page}</a></li>`;
     });
-    emailBody += '</ul></div';
+    emailBody += '</ul></div>';
 
     if (successPages.length > 0) {
       emailBody += '<div>';
@@ -107,7 +107,7 @@ function buildEmailBody(successPages, failedPages) {
       successPages.forEach((page) => {
         emailBody += `<li><a href="https://da.live/edit#/jmphlx/jmp-da${page}">${page}</a></li>`;
       });
-      emailBody += '</ul></div';
+      emailBody += '</ul></div>';
     }
   } else {
     emailBody += '<div>';
@@ -116,9 +116,9 @@ function buildEmailBody(successPages, failedPages) {
     successPages.forEach((page) => {
       emailBody += `<li><a href="https://da.live/edit#/jmphlx/jmp-da${page}">${page}</a></li>`;
     });
-    emailBody += '</ul></div';
+    emailBody += '</ul></div>';
   }
-  return `<div>${emailHeader}${emailBody}</div`;
+  return `<div>${emailHeader}${emailBody}</div>`;
 }
 
 export default async function unpublishPastEvents(authToken) {
