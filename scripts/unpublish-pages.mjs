@@ -112,9 +112,7 @@ export default async function unpublishPastEvents(authToken) {
     }
   }
 
-  const emailResponse = {};
-  emailResponse.subject = failedPages.length > 0 ? 'Failed to unpublish events' : 'Successfully unpublished events';
-  emailResponse.body = `Successfully unpublished : ${successPages}\n`
+  const textResponse = `${failedPages.length}-Successfully unpublished : ${successPages}\n`
     + `Failed to unpublish  : ${failedPages}`;
-  return emailResponse;
+  return textResponse;
 }
