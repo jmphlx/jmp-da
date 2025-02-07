@@ -36,6 +36,12 @@ jobs:
           IFS="." read -r failedNum bodyText <<< $emailText
           echo "$failedNum"
           echo "$bodyText"
+          if [ ((failedNum)) -gt 0 ]; then
+          echo "subject='Failed to unpublish pages'" >> "$GITHUB_OUTPUT"
+          else
+          echo "subject='Successfully unpublished pages'" >> "$GITHUB_OUTPUT"
+          fi
+          echo "body=$bodyText" >> "$GITHUB_OUTPUT"
       - name: Send Email Notifications
         uses: cinotify/github-action@main
         with:
