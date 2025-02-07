@@ -26,6 +26,7 @@ jobs:
 
             const response = await unpublishPastEvents(process.env.AUTH_TOKEN)
             console.log(response)
+            echo "hello world!"
             return response
           result-encoding: string
       - name: Generate Email
