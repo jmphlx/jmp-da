@@ -31,6 +31,6 @@ jobs:
         uses: cinotify/github-action@main
         with:
           to: 'laurel.timko@jmp.com'
-          subject: "${{steps.unpublish-script.outputs.result.subject}}"
+          subject: "Result ${{steps.unpublish-script.outputs.result.subject}}"
           body: "${{steps.unpublish-script.outputs.result.body}}"
           type: 'text/html'
