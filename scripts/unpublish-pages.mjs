@@ -92,7 +92,7 @@ function sleep(ms) {
 function buildEmailSubject(successPages, failedPages, region) {
   let subjectLine = '';
   const failedWorkflow = failedPages.length > 0;
-  const successfulUnpublishing = successPages > 0;
+  const successfulUnpublishing = successPages.length > 0;
   if (failedWorkflow) {
     subjectLine = `${region} EVENTS WORKFLOW ERROR: Failed to Unpublish Pages`;
   } else if (successfulUnpublishing) {
