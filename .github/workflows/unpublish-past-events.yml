@@ -27,11 +27,10 @@ jobs:
             const response = await unpublishPastEvents(process.env.AUTH_TOKEN)
             console.log(response)
             return response
-          result-encoding: string
       - name: Send Email Notifications
         uses: cinotify/github-action@main
         with:
           to: 'laurel.timko@jmp.com'
-          subject: 'Unpublished pages'
-          body: "${{steps.unpublish-script.outputs.result}}"
+          subject: "${{steps.unpublish-script.outputs.result.subject}}"
+          body: "${{steps.unpublish-script.outputs.result.body}}"
           type: 'text/html'
