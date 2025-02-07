@@ -96,7 +96,7 @@ function buildEmailBody(successPages, failedPages) {
     emailBody += '<div style="color:red;">These pages were not unpublished: </div>';
     emailBody += '<ul>';
     failedPages.forEach((page) => {
-      emailBody += `<li><a href="https://da.live/edit#/jmphlx/jmp-da${page.path}">${page.path}</a></li>`;
+      emailBody += `<li><a href="https://da.live/edit#/jmphlx/jmp-da${page}">${page}</a></li>`;
     });
     emailBody += '</ul></div';
 
@@ -105,7 +105,7 @@ function buildEmailBody(successPages, failedPages) {
       emailBody += '<div style="color:green;">These pages were successfully unpublished: </div>';
       emailBody += '<ul>';
       successPages.forEach((page) => {
-        emailBody += `<li><a href="https://da.live/edit#/jmphlx/jmp-da${page.path}">${page.path}</a></li>`;
+        emailBody += `<li><a href="https://da.live/edit#/jmphlx/jmp-da${page}">${page}</a></li>`;
       });
       emailBody += '</ul></div';
     }
@@ -114,7 +114,7 @@ function buildEmailBody(successPages, failedPages) {
     emailBody += '<div style="color:green;">These pages were successfully unpublished: </div>';
     emailBody += '<ul>';
     successPages.forEach((page) => {
-      emailBody += `<li><a href="https://da.live/edit#/jmphlx/jmp-da${page.path}">${page.path}</a></li>`;
+      emailBody += `<li><a href="https://da.live/edit#/jmphlx/jmp-da${page}">${page}</a></li>`;
     });
     emailBody += '</ul></div';
   }
