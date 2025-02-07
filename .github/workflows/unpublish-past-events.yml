@@ -36,7 +36,6 @@ jobs:
           IFS="." read -r failedNum bodyText <<< $emailText
           echo "$failedNum"
           echo "$bodyText"
-          (( failedNum ))
           num0=0
           if [ "$failedNum" -gt "$num0" ]; then
           echo "subject='Failed to unpublish pages'" >> "$GITHUB_OUTPUT"
