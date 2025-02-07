@@ -26,7 +26,7 @@ jobs:
 
             const response = await unpublishPastEvents(process.env.AUTH_TOKEN)
             console.log(response)
-            core..setOutput("subject", "YAAAASS")
+            core.setOutput("subject", "YAAAASS")
             core.setOutput("body", "hello world")
             return response
           result-encoding: string
