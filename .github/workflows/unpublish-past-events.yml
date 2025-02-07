@@ -28,8 +28,8 @@ jobs:
         with:
           script: |
             const { default: unpublishPastEvents } = await import('${{ github.workspace }}/scripts/unpublish-pages.mjs')
-            console.log(${{ github.event.schedule }})
-            console.log('region ' + ${{ steps.set-region.outputs.region }})
+            console.log('${{ github.event.schedule }}')
+            console.log('${{ steps.set-region.outputs.region }}')
 
             const response = await unpublishPastEvents(process.env.AUTH_TOKEN)
             console.log(response)
