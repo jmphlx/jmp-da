@@ -25,6 +25,7 @@ jobs:
             const { default: unpublishPastEvents } = await import('${{ github.workspace }}/scripts/unpublish-pages.mjs')
 
             return await unpublishPastEvents(process.env.AUTH_TOKEN)
+          result-encoding: string
       - name: Send Email Notifications
         uses: cinotify/github-action@main
         with:
