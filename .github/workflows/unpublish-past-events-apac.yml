@@ -1,4 +1,4 @@
-name: APACUnpublish Past Events
+name: APAC Unpublish Past Events
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
