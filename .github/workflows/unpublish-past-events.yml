@@ -31,7 +31,7 @@ jobs:
       - name: Generate Email
         id: email-prop
         run: >
-          IFS=. read -r failedNum bodyText <<< ${{steps.unpublish-script.outputs.result}}
+          IFS='.' read -r failedNum bodyText <<< ${{steps.unpublish-script.outputs.result}}
           echo "$failedNum"
           echo "$bodyText"
       - name: Send Email Notifications
