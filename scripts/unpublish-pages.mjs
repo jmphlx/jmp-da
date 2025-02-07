@@ -67,7 +67,7 @@ async function sendDeleteRequest(authToken, page, deindex) {
     const response = await fetch(url, {
       method: 'DELETE', 
       headers: {
-        'Authorization': `Bearer ${authToken}` ,
+        'Authorization': `token ${authToken}` ,
         'Accept': '*/*'
       }
     });
@@ -92,16 +92,27 @@ export default async function unpublishPastEvents(authToken) {
   const languageIndexes = getAllLanguageIndexes(true);
 
   let pagesToUnpublish = await getPastEventsPages(languageIndexes);
+  let successPages = [];
+  let failedPages = [];
 
   for(let i=0; i < pagesToUnpublish.length; i++) {
     //After every 5 requests, pause for 2 seconds, to avoid going over the rate limit.
     //Rate is 10 requests per second. Each page needs 2 requests.
     const page = pagesToUnpublish[i];
-    await sendDeleteRequest(authToken, page.path, true); // Deindex.
-    await sendDeleteRequest(authToken, page.path, false); // Unpublish.
+    const deindexResponse = await sendDeleteRequest(authToken, page.path, true); // Deindex.
+    const unpublishResponse = await sendDeleteRequest(authToken, page.path, false); // Unpublish.
+    if (deindexResponse === null || unpublishResponse === null) {
+      failedPages.push(page.path);
+    } else {
+      successPages.push(page.path);
+    }
     console.log(`Unpublished : ${page.path}`);
     if (i % 5 === 0) {
       sleep(2000);
     }
   }
+
+  const textResponse = `Successfully unpublished : ${successPages}\n`
+    + `Failed to unpublish  : ${failedPages}`;
+  return textResponse;
 }
