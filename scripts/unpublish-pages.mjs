@@ -86,6 +86,20 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function buildEmailSubject(successPages, failedPages, region) {
+  let subjectLine = '';
+  const failedWorkflow = failedPages.length > 0;
+  const successfulUnpublishing = successPages > 0;
+  if (failedWorkflow) {
+    subjectLine = `${region} EVENTS WORKFLOW ERROR: Failed to Unpublish Pages`;
+  } else if (successfulUnpublishing) {
+    subjectLine = `${region} events workflow: Successfully Unpublished Past Events`;
+  } else {
+    subjectLine = `No events to unpublish for ${region}`;
+  }
+  return subjectLine;
+}
+
 function buildEmailBody(successPages, failedPages, region) {
   const failedWorkflow = failedPages.length > 0;
   let emailHeader = `<h2>${region} Results of Unpublish Page Workflow</h2>`;
@@ -108,7 +122,7 @@ function buildEmailBody(successPages, failedPages, region) {
       });
       emailBody += '</ul></div>';
     }
-  } else {
+  } else if (successPages.length > 0) {
     emailBody += '<div>';
     emailBody += '<div style="color:green;">These pages were successfully unpublished: </div>';
     emailBody += '<ul>';
@@ -116,6 +130,8 @@ function buildEmailBody(successPages, failedPages, region) {
       emailBody += `<li><a href="https://da.live/edit#/jmphlx/jmp-da${page}">${page}</a></li>`;
     });
     emailBody += '</ul></div>';
+  } else {
+    emailBody += '<div>No pages to unpublish at this time for the given region.</div>';
   }
   return `<div>${emailHeader}${emailBody}</div>`;
 }
@@ -154,7 +170,7 @@ export default async function unpublishPastEvents(authToken, region) {
   const response = {};
   response.numFailed = failedPages.length;
   response.numSuccess = successPages.length;
-  response.subject = failedPages.length > 0 ? `${region} EVENTS WORKFLOW ERROR: Failed to Unpublish Pages` : `${region} events workflow: Successfully Unpublished Past Events`;
+  response.subject = buildEmailSubject(successPages, failedPages, region);
   response.body = buildEmailBody(successPages, failedPages, region);
   return response;
 }
