@@ -78,6 +78,9 @@ async function sendDeleteRequest(authToken, page, deindex) {
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('sendDeleteRequest:', { error });
+    if (error instanceof SyntaxError) {
+      return "still worked as expected";
+    }
   }
   return null;
 }
