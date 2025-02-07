@@ -112,7 +112,7 @@ export default async function unpublishPastEvents(authToken) {
     }
   }
 
-  const textResponse = `${failedPages.length}-Successfully unpublished : ${successPages}\n`
-    + `Failed to unpublish  : ${failedPages}`;
+  const textResponse = `${failedPages.length}-Successfully unpublished ${successPages}\n`
+    + `Failed to unpublish  ${failedPages}`;
   return textResponse;
 }
