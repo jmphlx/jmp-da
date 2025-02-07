@@ -32,6 +32,8 @@ jobs:
         id: email-prop
         run: >
           IFS=- read -r failedNum bodyText <<< ${{steps.unpublish-script.outputs.result}}
+          echo "$failedNum"
+          echo "$bodyText"
           if [ ((failedNum)) -gt 0 ]; then
             echo "subject='Failed to unpublish pages'" >> "$GITHUB_OUTPUT"
           else
