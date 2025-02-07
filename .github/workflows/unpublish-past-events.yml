@@ -32,5 +32,5 @@ jobs:
         with:
           to: 'laurel.timko@jmp.com'
           subject: "Result ${{steps.unpublish-script.outputs.result.subject}}"
-          body: "${{steps.unpublish-script.outputs.result.body}}"
+          body: "Body ${{steps.unpublish-script.outputs.result.body}}"
           type: 'text/html'
