@@ -32,6 +32,7 @@ jobs:
         id: email-prop
         run: >
           emailText="${{steps.unpublish-script.outputs.result}}"
+          echo "$emailText"
           IFS="." read -r failedNum bodyText <<< $emailText
           echo "$failedNum"
           echo "$bodyText"
