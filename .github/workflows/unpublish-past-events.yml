@@ -26,28 +26,14 @@ jobs:
 
             const response = await unpublishPastEvents(process.env.AUTH_TOKEN)
             console.log(response)
-            core.setOutput("body", "hello world");
+            core..setOutput("subject", "YAAAASS")
+            core.setOutput("body", "hello world")
             return response
           result-encoding: string
-      - name: Generate Email
-        id: email-prop
-        run: >
-          emailText="${{steps.unpublish-script.outputs.result}}"
-          echo "$emailText"
-          IFS="." read -r failedNum bodyText <<< $emailText
-          echo "$failedNum"
-          echo "$bodyText"
-          num0=0
-          if [ "$failedNum" -gt "$num0" ]; then
-          echo "subject='Failed to unpublish pages'" >> "$GITHUB_OUTPUT"
-          else
-          echo "subject='Successfully unpublished pages'" >> "$GITHUB_OUTPUT"
-          fi
-          echo "body=$bodyText" >> "$GITHUB_OUTPUT"
       - name: Send Email Notifications
         uses: cinotify/github-action@main
         with:
           to: 'laurel.timko@jmp.com'
-          subject: "Result ${{steps.email-prop.outputs.subject}}"
-          body: "Body ${{steps.email-prop.outputs.body}}"
+          subject: "Result ${{steps.unpublish-script.outputs.subject}}"
+          body: "Body ${{steps.unpublish-script.outputs.body}}"
           type: 'text/html'
