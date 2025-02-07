@@ -87,6 +87,40 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function buildEmailBody(successPages, failedPages) {
+  const failedWorkflow = failedPages.length > 0;
+  let emailHeader = '<h2>Results of Unpublish Page Workflow</h2>';
+  let emailBody;
+  if (failedWorkflow) {
+    emailBody += '<div>';
+    emailBody += '<div style="color:red;">These pages were not unpublished: </div>';
+    emailBody += '<ul>';
+    failedPages.forEach((page) => {
+      emailBody += `<li><a href="https://da.live/edit#/jmphlx/jmp-da${page.path}">${page.path}</a></li>`;
+    });
+    emailBody += '</ul></div';
+
+    if (successPages.length > 0) {
+      emailBody += '<div>';
+      emailBody += '<div style="color:green;">These pages were successfully unpublished: </div>';
+      emailBody += '<ul>';
+      successPages.forEach((page) => {
+        emailBody += `<li><a href="https://da.live/edit#/jmphlx/jmp-da${page.path}">${page.path}</a></li>`;
+      });
+      emailBody += '</ul></div';
+    }
+  } else {
+    emailBody += '<div>';
+    emailBody += '<div style="color:green;">These pages were successfully unpublished: </div>';
+    emailBody += '<ul>';
+    successPages.forEach((page) => {
+      emailBody += `<li><a href="https://da.live/edit#/jmphlx/jmp-da${page.path}">${page.path}</a></li>`;
+    });
+    emailBody += '</ul></div';
+  }
+  return `<div>${emailHeader}${emailBody}</div`;
+}
+
 export default async function unpublishPastEvents(authToken) {
   console.log(authToken);
   const languageIndexes = getAllLanguageIndexes(true);
@@ -116,7 +150,6 @@ export default async function unpublishPastEvents(authToken) {
   response.numFailed = failedPages.length;
   response.numSuccess = successPages.length;
   response.subject = failedPages.length > 0 ? 'ERROR: Event Pages Failed to Unpublish' : 'Successfully Unpublished Past Events';
-  response.body = `<div style="color:green;">These pages succcessfully unpublished ${successPages}</div>`
-    + `<div style="color:red;">These pages were not unpublished ${failedPages}</div>`;
+  response.body = buildEmailBody(successPages, failedPages);
   return response;
 }
