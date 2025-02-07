@@ -2,7 +2,8 @@ name: Unpublish Test
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '10 21 * * *'
+    - cron:  '10 22 * * *' #  run at 5:10PM for Americas and Europe
+    - cron:  '10 8 * * *' # run at 5:10PM for APAC
   workflow_dispatch:
 
 jobs:
@@ -13,6 +14,10 @@ jobs:
     steps:
       - name: Every time
         run: echo "Run this every 15 minutes"
+      - name: Set APAC Timezone Variable
+        id: set-region
+        if: github.event.schedule == '10 22 * * *'
+        run: echo "region='APAC'" >> "$GITHUB_OUTPUT"
       - name: Checkout repo
         uses: actions/checkout@v4
       - name: Run Script
@@ -23,6 +28,8 @@ jobs:
         with:
           script: |
             const { default: unpublishPastEvents } = await import('${{ github.workspace }}/scripts/unpublish-pages.mjs')
+            console.log(${{ github.event.schedule }})
+            console.log('region ' + ${{ steps.set-region.outputs.region }})
 
             const response = await unpublishPastEvents(process.env.AUTH_TOKEN)
             console.log(response)

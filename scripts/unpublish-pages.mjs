@@ -1,11 +1,13 @@
 const languageIndexes = [
   'en', 'es', 'fr', 'de', 'it', 'ko', 'ja', 'zh-hans', 'zh-hant',
 ];
+const languagesAPAC = ['ko', 'ja', 'zh-hans', 'zh-hant'];
+const languagesAMER = ['en', 'es', 'fr', 'de', 'it'];
 const baseURL = 'https://main--jmp-da--jmphlx.hlx.live';
 
-function getAllLanguageIndexes(includeFullURL) {
+function getAllLanguageIndexes(indexesToCheck, includeFullURL) {
   const indexPaths = [];
-  languageIndexes.forEach((currLang) => {
+  indexesToCheck.forEach((currLang) => {
     if (includeFullURL) {
       indexPaths.push(`${baseURL}/jmp-${currLang}.json`);
     } else {
@@ -90,7 +92,7 @@ function sleep(ms) {
 function buildEmailBody(successPages, failedPages) {
   const failedWorkflow = failedPages.length > 0;
   let emailHeader = '<h2>Results of Unpublish Page Workflow</h2>';
-  let emailBody;
+  let emailBody = '';
   if (failedWorkflow) {
     emailBody += '<div>';
     emailBody += '<div style="color:red;">These pages were not unpublished: </div>';
