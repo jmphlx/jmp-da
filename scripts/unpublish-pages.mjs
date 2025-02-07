@@ -5,9 +5,9 @@ const languagesAPAC = ['ko', 'ja', 'zh-hans', 'zh-hant'];
 const languagesAMER = ['en', 'es', 'fr', 'de', 'it'];
 const baseURL = 'https://main--jmp-da--jmphlx.hlx.live';
 
-function getAllLanguageIndexes(indexesToCheck, includeFullURL) {
+function getAllLanguageIndexes(includeFullURL) {
   const indexPaths = [];
-  indexesToCheck.forEach((currLang) => {
+  languageIndexes.forEach((currLang) => {
     if (includeFullURL) {
       indexPaths.push(`${baseURL}/jmp-${currLang}.json`);
     } else {
