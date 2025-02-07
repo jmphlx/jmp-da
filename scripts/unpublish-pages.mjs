@@ -1,13 +1,10 @@
-const languageIndexes = [
-  'en', 'es', 'fr', 'de', 'it', 'ko', 'ja', 'zh-hans', 'zh-hant',
-];
 const languagesAPAC = ['ko', 'ja', 'zh-hans', 'zh-hant'];
 const languagesAMER = ['en', 'es', 'fr', 'de', 'it'];
 const baseURL = 'https://main--jmp-da--jmphlx.hlx.live';
 
-function getAllLanguageIndexes(includeFullURL) {
+function getRegionalLanguageIndexes(includeFullURL, regionalIndexes) {
   const indexPaths = [];
-  languageIndexes.forEach((currLang) => {
+  regionalIndexes.forEach((currLang) => {
     if (includeFullURL) {
       indexPaths.push(`${baseURL}/jmp-${currLang}.json`);
     } else {
@@ -89,9 +86,9 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function buildEmailBody(successPages, failedPages) {
+function buildEmailBody(successPages, failedPages, region) {
   const failedWorkflow = failedPages.length > 0;
-  let emailHeader = '<h2>Results of Unpublish Page Workflow</h2>';
+  let emailHeader = `<h2>${region} Results of Unpublish Page Workflow</h2>`;
   let emailBody = '';
   if (failedWorkflow) {
     emailBody += '<div>';
@@ -123,9 +120,15 @@ function buildEmailBody(successPages, failedPages) {
   return `<div>${emailHeader}${emailBody}</div>`;
 }
 
-export default async function unpublishPastEvents(authToken) {
+export default async function unpublishPastEvents(authToken, region) {
   console.log(authToken);
-  const languageIndexes = getAllLanguageIndexes(true);
+  let languageIndexes;
+
+  if (region === "APAC") {
+    languageIndexes = getRegionalLanguageIndexes(true, languagesAPAC);
+  } else {
+    languageIndexes = getRegionalLanguageIndexes(true, languagesAMER);
+  }
 
   let pagesToUnpublish = await getPastEventsPages(languageIndexes);
   let successPages = [];
@@ -151,7 +154,7 @@ export default async function unpublishPastEvents(authToken) {
   const response = {};
   response.numFailed = failedPages.length;
   response.numSuccess = successPages.length;
-  response.subject = failedPages.length > 0 ? 'ERROR: Event Pages Failed to Unpublish' : 'Successfully Unpublished Past Events';
-  response.body = buildEmailBody(successPages, failedPages);
+  response.subject = failedPages.length > 0 ? `${region} EVENTS WORKFLOW ERROR: Failed to Unpublish Pages` : `${region} events workflow: Successfully Unpublished Past Events`;
+  response.body = buildEmailBody(successPages, failedPages, region);
   return response;
 }
