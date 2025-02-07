@@ -24,12 +24,14 @@ jobs:
           script: |
             const { default: unpublishPastEvents } = await import('${{ github.workspace }}/scripts/unpublish-pages.mjs')
 
-            return await unpublishPastEvents(process.env.AUTH_TOKEN)
+            const response = await unpublishPastEvents(process.env.AUTH_TOKEN)
+            console.log(response)
+            return response
           result-encoding: string
       - name: Send Email Notifications
         uses: cinotify/github-action@main
         with:
           to: 'laurel.timko@jmp.com'
           subject: 'Unpublished pages'
-          body: "${{ steps.unpublish-script.outputs.results }}"
+          body: "${{steps.unpublish-script.outputs.result}}"
           type: 'text/html'
