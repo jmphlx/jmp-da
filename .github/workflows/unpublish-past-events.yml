@@ -26,8 +26,8 @@ jobs:
 
             const response = await unpublishPastEvents(process.env.AUTH_TOKEN)
             console.log(response)
-            core.setOutput("subject", "YAAAASS")
-            core.setOutput("body", "hello world")
+            core.setOutput("subject", response.subject)
+            core.setOutput("body", response.body)
             return response
           result-encoding: string
       - name: Send Email Notifications
