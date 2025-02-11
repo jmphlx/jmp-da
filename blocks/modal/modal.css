@@ -94,3 +94,20 @@ body.modal-open {
 .icon-close img {
   display: none;
 }
+
+.background-white {
+  div {
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 2.4rem;
+  }
+}
+
+.image-center {
+  p:has(picture) {
+    text-align: center;
+    img {
+      margin: 0 auto;
+    }
+  }
+}
