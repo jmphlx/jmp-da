@@ -1984,6 +1984,12 @@ main img {
     width: 275px;
   }
 }
+.icon-jmp-pro-tag {
+  img {
+    border-radius: 4px !important;
+    border: 1px solid var(--purple) !important;
+  }
+}
 /* Column layouts */
 div.columns-50-50 {
   .layout-wrapper {
