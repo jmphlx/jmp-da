@@ -474,20 +474,40 @@
     display: flex;
     justify-content: center;
     margin-bottom: 0;
-    :before {
+    &:before {
       content: url('../../../icons/arrow-orange.svg');
       width: 17px;
       display: inline-block;
       font-size: 80%;
-      margin: auto 10px;
+      margin: auto 10px auto 0;
       vertical-align: middle;
     }
-  }
-  a, a:hover{
-    transition-duration: 0.1s;
-    transition-timing-function: ease-in;
+    a {
+      text-decoration: none;
+      position: relative;
+      text-align: left;
+      &:before {
+        content: '';
+        position: absolute;
+        width: 0;
+        right: 0;
+        bottom: 1px;
+        transition: width 500ms;
+        height: 3px;
+        background-color: var(--blueLight);
+      }
+      &:hover {
+        box-sizing: border-box;
+        &:before {
+          width: calc(100%);
+          right: auto;
+          left: 0;
+        }
+      }
+    }
   }
   @media (width <= 900px) {
+    padding-bottom: 2.4rem !important;
     .carousel-navigation-buttons {
       display: flex;
     }
