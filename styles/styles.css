@@ -271,9 +271,16 @@ h1 + h3 {
 h1 + h4 {
   margin-bottom: 3.2rem !important
 }
+:is(h1):has(+ :is(h4) + p.button-container) {
+  margin-bottom: 1.6rem !important;
+}
 :is(h1):has(+ :is(h5)) {
   margin-bottom: 0 !important;
 }
+:is(h1):has(+ :is(h5) + p.button-container) {
+  margin-bottom: 1.6rem !important;
+}
+
 h1 + h5 {
   margin-bottom: 1.6rem !important;
   opacity: .9;
@@ -313,6 +320,9 @@ h1 + h5 {
 :is(h4) {
   &:has(+ :is(p, ul, ol)) {
     margin-bottom: 1rem;
+  }
+  &:has(+ :is(p.button-container)) {
+    margin-bottom: 1.6rem !important;
   }
 }
 :is(h5):has(+h6 +h6) {
