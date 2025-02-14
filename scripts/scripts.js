@@ -392,7 +392,8 @@ function addGATracking() {
   const gaTracking = createTag('script', {
     type: 'text/javascript',
   });
-  gaTracking.innerText = "window.addEventListener('message', function(event) {"
+  gaTracking.innerText = "window.dataLayer = window.dataLayer || [];"
+    + "window.addEventListener('message', function(event) {"
     + "if(event.data.type === 'hsFormCallback' && event.data.eventName === 'onFormReady'){"
     + 'window.dataLayer.push({'
     + "'event': 'hubspot-form-ready',"
