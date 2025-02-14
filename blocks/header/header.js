@@ -21,6 +21,16 @@ async function fetchNavigationHTML() {
   return response.text();
 }
 
+function closeOnOutsideClick(e) {
+  const nav = document.getElementById('nav');
+  const navSections = nav.querySelector('.nav-sections');
+  const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
+  if (navSectionExpanded !== null && !navSectionExpanded.contains(e.target))  {
+    closeAllNavSections(nav);
+    navSectionExpanded.focus();
+  }
+}
+
 function closeOnEscape(e) {
   if (e.code === 'Escape') {
     const nav = document.getElementById('nav');
@@ -138,8 +148,10 @@ function toggleMenu(nav, forceExpanded = null) {
   if (!expanded || isDesktop.matches) {
     // collapse menu on escape press
     window.addEventListener('keydown', closeOnEscape);
+    window.addEventListener('click', closeOnOutsideClick);
   } else {
     window.removeEventListener('keydown', closeOnEscape);
+    window.removeEventListener('click', closeOnOutsideClick);
   }
 }
 
@@ -361,7 +373,7 @@ export default async function decorate(block) {
     if (sectionHeading) {
       const sections = sectionHeading.closest('.nav-sections, .nav-tools');
       const section = sectionHeading.closest('.nav-drop');
-      if (section && sections) {
+    if (section && sections) {
         e.preventDefault();
         e.stopPropagation();
         toggleNavDrop(section, sections);
