@@ -21,11 +21,34 @@ async function fetchNavigationHTML() {
   return response.text();
 }
 
+/**
+ * Closes all nav sections
+ * @param {Element} nav The nav element
+ */
+function closeAllNavSections(nav) {
+  nav.querySelectorAll('.nav-drop').forEach((section) => {
+    section.setAttribute('aria-expanded', false);
+  });
+
+  nav.querySelectorAll('.drop-expanded').forEach((sections) => {
+    sections.classList.remove('drop-expanded');
+  });
+
+  nav.querySelectorAll('.gnav-search').forEach((section) => {
+    section.setAttribute('aria-expanded', false);
+    section.classList.remove('is-Open');
+  });
+
+  nav.querySelectorAll('.gnav-curtain').forEach((section) => {
+    section.classList.remove('is-Open');
+  });
+}
+
 function closeOnOutsideClick(e) {
   const nav = document.getElementById('nav');
   const navSections = nav.querySelector('.nav-sections');
   const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
-  if (navSectionExpanded !== null && !navSectionExpanded.contains(e.target))  {
+  if (navSectionExpanded !== null && !navSectionExpanded.contains(e.target)) {
     closeAllNavSections(nav);
     navSectionExpanded.focus();
   }
@@ -68,29 +91,6 @@ function decorateLanguageMenu(subList) {
     }
   });
   languageDropdownDecorated = true;
-}
-
-/**
- * Closes all nav sections
- * @param {Element} nav The nav element
- */
-function closeAllNavSections(nav) {
-  nav.querySelectorAll('.nav-drop').forEach((section) => {
-    section.setAttribute('aria-expanded', false);
-  });
-
-  nav.querySelectorAll('.drop-expanded').forEach((sections) => {
-    sections.classList.remove('drop-expanded');
-  });
-
-  nav.querySelectorAll('.gnav-search').forEach((section) => {
-    section.setAttribute('aria-expanded', false);
-    section.classList.remove('is-Open');
-  });
-
-  nav.querySelectorAll('.gnav-curtain').forEach((section) => {
-    section.classList.remove('is-Open');
-  });
 }
 
 function toggleNavDrop(section, sections, forceExpanded = null) {
@@ -373,7 +373,7 @@ export default async function decorate(block) {
     if (sectionHeading) {
       const sections = sectionHeading.closest('.nav-sections, .nav-tools');
       const section = sectionHeading.closest('.nav-drop');
-    if (section && sections) {
+      if (section && sections) {
         e.preventDefault();
         e.stopPropagation();
         toggleNavDrop(section, sections);
