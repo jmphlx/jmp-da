@@ -104,7 +104,7 @@ div.listgroup-fixed, div.listgroup  {
                 flex: 1 0 auto;
                 filter: saturate(.75);
             }
-            .navigation-title, .resourceType {
+            .navigation-title, .resourceType, .displayLabel {
                 order: 1;
                 font-size: 13px;
                 font-family: var(--font-secondary);
@@ -138,7 +138,7 @@ div.listgroup-fixed, div.listgroup  {
             img {
                 filter: saturate(1);
             }
-            .navigation-title, .resourceType {
+            .navigation-title, .resourceType, .displayLabel {
                 color: var(--orange);
             }
             .title {
