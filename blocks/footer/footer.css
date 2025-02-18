@@ -61,6 +61,7 @@ div.section.copyright {
         /* padding-right: 10px; */
         a {
           color: var(--blue);
+          text-decoration: underline;
           /* border-left: 1px solid #DDDDDD; */
           /* margin-left: 1em;
           padding-left: 1em; */
