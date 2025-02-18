@@ -45,7 +45,7 @@ function loadGTM() {
   document.body.prepend(noscriptTag);
 }
 
-addTrustArc();
+//addTrustArc();
 
 const gtmActive = !window.location.hostname.includes('localhost')
   && !document.location.hostname.includes('.hlx.page')
