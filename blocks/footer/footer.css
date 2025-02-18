@@ -49,21 +49,28 @@ div.section.copyright {
     ul {
       display: flex;
       list-style-type: none;
+      flex-flow: row wrap;
       margin: 0;
-      padding-left: 0;
+      padding: 0 2rem;
       li {
         color: #333333;
         text-decoration: none;
+        margin-right: 8px;
+        padding-right: 8px;
+        border-right: 1px solid #DDDDDD;
         /* padding-right: 10px; */
         a {
           color: var(--blue);
-          border-left: 1px solid #DDDDDD;
-          margin-left: 1em;
-          padding-left: 1em;
+          /* border-left: 1px solid #DDDDDD; */
+          /* margin-left: 1em;
+          padding-left: 1em; */
           &:hover {
             color: var(--link-hover-color);
             transition: .3s;
           }
+        }
+        &:last-child {
+          border-right: none;
         }
       }
       @media (width < 900px) {
@@ -73,8 +80,10 @@ div.section.copyright {
     @media (width < 900px) {
       display: block;
       ul {
-        padding-left: 1em;
+        padding-left: 3.2rem;
         li {
+          border-right: none;
+          padding-bottom: .25rem;
           a {
             border-left: 0;
             margin-left: 0;
