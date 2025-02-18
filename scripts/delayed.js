@@ -6,18 +6,6 @@ import { createTag } from './helper.js';
 sampleRUM('cwv');
 
 // add more delayed functionality here
-// Add TrustArc for Cookie Management.
-function addTrustArc() {
-  const divConsentBlackBar = createTag('div', { id: 'consent_blackbar' });
-  const divTEConsent = createTag('div', { id: 'teconsent' });
-  const trustArcScript = createTag('script', {
-    async: 'async',
-    type: 'text/javascript',
-    crossorigin: '',
-    src: '//consent.trustarc.com/notice?domain=jmp.com&c=teconsent&js=nj&noticeType=bb&gtm=1&text=true',
-  });
-  document.querySelector('footer').append(divConsentBlackBar, divTEConsent, trustArcScript);
-}
 
 // google tag manager
 function loadGTM() {
@@ -44,8 +32,6 @@ function loadGTM() {
   noscriptTag.append(gtmIFrame);
   document.body.prepend(noscriptTag);
 }
-
-addTrustArc();
 
 const gtmActive = !window.location.hostname.includes('localhost')
   && !document.location.hostname.includes('.hlx.page')
