@@ -216,13 +216,13 @@ div.listgroup-fixed, div.listgroup  {
                         border: none;
                     }
                 }
-                .navigation-title, .resourceType {
+                .navigation-title, .resourceType, .displayLabel {
                     grid-area: navigation-title;
                     font-size: 1.3rem;
                     color: var(--gray7);
                     display: block;
                     width: 100%;
-                    padding: 2rem 0 0 0;
+                    padding: 2rem 0 0 0 !important;
                     &:after {
                         display: none;
                     }
