@@ -249,7 +249,7 @@ div.listgroup-fixed, div.listgroup  {
                     border: solid var(--blue);
                     border-width: 0 3px 3px 0;
                     position: absolute;
-                    top: 48%;
+                    top: 12%;
                     left: auto;
                     transform: rotate(-45deg) translateY(-50%);
                     right: 2rem;
@@ -413,7 +413,7 @@ div.listgroup-fixed, div.listgroup  {
                     border: solid var(--blue);
                     border-width: 0 3px 3px 0;
                     position: absolute;
-                    top: 48%;
+                    top: 12%;
                     left: auto;
                     transform: rotate(-45deg) translateY(-50%);
                     right: 2rem;
