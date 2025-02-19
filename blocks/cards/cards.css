@@ -1374,7 +1374,7 @@
           &:before {
             z-index: 5;
             margin: 0 auto;
-            content: '\25B6';
+            content: '';
             display: block;
             width: 4rem;
             height: 4rem;
@@ -1390,6 +1390,24 @@
             bottom: 2px;
             border-radius: 50%;
             border: 4px solid #ffffff;
+          }
+          &:after {
+            z-index: 5;
+            margin: 0 auto;
+            content: '';
+            display: block;
+            position: absolute;
+            box-sizing: border-box;
+            border-style: solid;
+            border-top: 16px solid transparent;
+            border-bottom: 16px solid transparent;
+            border-right: 0 solid transparent;
+            border-left: 28px solid #ffffff;
+            top: 40%;
+            right: 50%;
+            transform: translate(calc(-50% + 34px), calc(-50%));
+            transition-duration: .5s;
+            transition-timing-function: ease;
           }
         }
         p, h1,h2, h3, h4 , h5 , h6 {
