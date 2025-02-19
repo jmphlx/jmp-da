@@ -72,7 +72,7 @@ export const embedVidyard = (url) => {
     vidyardEmbed.api.renderPlayer({
       uuid: `${video}`,
       container: document.querySelector('div.embed-vidyard'),
-      autoplay: autoplay,
+      autoplay,
       type: 'inline',
     });
   };
