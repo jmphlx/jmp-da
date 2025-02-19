@@ -32,38 +32,38 @@ const embedHubspot = (config) => {
 
   // adds event listener to add embed code on load
   scriptHubspot.addEventListener('load', () => {
-    hbspt.forms.create({
-      region: config.region,
-      portalId: config.portalId,
-      formId: config.formId,
-      redirectUrl: redirect,
-      sfdcCampaignId,
-      onFormReady($form) {
-        const hiddenField2 = $form.find('input[name="last_action"]');
-        const newValue2 = config.lastAction; // The value you want to append
-        hiddenField2.val(newValue2).change();
-
-        const hiddenField = $form.find('input[name="leadsource"]');
-        const newValue = config.leadSource; // The value you want to append
-        hiddenField.val(newValue).change();
-
-        const emailSFC = $form.find('input[name="salesforce_campaign_event_id"]');
-        const newSFC = sfdcCampaignId;
-        emailSFC.val(newSFC).change();
-      },
-      // eslint-disable-next-line no-unused-vars, no-shadow
-      onFormSubmitted(redirect, $form) {},
-    });
+    console.log('hubspot loaded');
+    const hubspotBlock = document.querySelector('[data-block-name="hubspot"]');
+    const script = document.createElement('script');
+    script.textContent = `
+      console.log('start script block');
+      hbspt.forms.create({
+        region: '${config.region}',
+        portalId: '${config.portalId}',
+        formId: '${config.formId}',
+        redirectUrl: '${redirect}',
+        sfdcCampaignId: '${sfdcCampaignId}',
+        onFormReady($form) {
+          const hiddenField2 = $form.find('input[name="last_action"]');
+          const newValue2 = "${config.lastAction}"; // The value you want to append
+          hiddenField2.val(newValue2).change();
+  
+          const hiddenField = $form.find('input[name="leadsource"]');
+          const newValue = "${config.leadSource}"; // The value you want to append
+          hiddenField.val(newValue).change();
+  
+          const emailSFC = $form.find('input[name="salesforce_campaign_event_id"]');
+          const newSFC = "${sfdcCampaignId}";
+          emailSFC.val(newSFC).change();
+        }
+      });
+      console.log('end script block');`;
+    hubspotBlock.append(script);
   });
 
-  document.head.append(scriptHubspot);
 
-  const embedHTML = `
-  <script>
-    hbspt.forms.create({});
-  </script>
-`;
-  return embedHTML;
+  document.head.append(scriptHubspot);
+  return null;
 };
 
 const loadEmbed = (block, config) => {
@@ -71,7 +71,7 @@ const loadEmbed = (block, config) => {
     return;
   }
 
-  block.innerHTML = embedHubspot(config);
+  embedHubspot(config);
   block.classList = 'block embed embed-hubspot';
   if (config.headline) {
     const headlineElement = typeof config.headline === 'string'
