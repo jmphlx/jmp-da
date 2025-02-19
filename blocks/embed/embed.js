@@ -60,23 +60,37 @@ const embedTwitter = (url) => {
 export const embedVidyard = (url) => {
   const video = url.pathname.split('/').pop(); // breaks out UUID of vidyard URL
 
-  const check = document.getElementsByClassName('modal block');
-  let autoplay = 0;
-  if (check.length > 0) {
-    autoplay += 1;
-  }
-
   loadScript('https://play.vidyard.com/embed/v4.js');
 
-  window.onVidyardAPI = (vidyardEmbed) => {
-    vidyardEmbed.api.renderPlayer({
-      uuid: `${video}`,
-      container: document.querySelector('div.embed-vidyard'),
-      autoplay,
-      type: 'inline',
-    });
-  };
-  return null;
+  const inModalCheck = document.getElementsByClassName('modal block').length > 0;
+  let autoplay = 0;
+  if (inModalCheck) {
+    autoplay += 1;
+    // Include vidyard player without thumbnail when the video is opened in a modal.
+    window.onVidyardAPI = (vidyardEmbed) => {
+      vidyardEmbed.api.renderPlayer({
+        uuid: `${video}`,
+        container: document.querySelector('div.embed-vidyard'),
+        autoplay,
+        type: 'inline',
+      });
+    };
+    return null;
+  }
+
+  // Include vidyard player on the page with preview thumbnail.
+  // Needed for vidyard links in a column block.
+  const embedHTML = `<div> 
+      <img class="vidyard-player-embed"
+      src="https://play.vidyard.com/${video}.jpg"
+      data-uuid="${video}"
+      data-v="4"
+      data-autoplay=${autoplay}
+      data-type="inline"/>
+    </div>`;
+  return embedHTML;
+
+
 };
 
 const loadEmbed = (block, link, autoplay) => {
