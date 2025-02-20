@@ -236,6 +236,9 @@
         position: relative;
         text-align: center;
         transition: all .15s linear;
+        padding: 0 3rem;
+        box-shadow: none;
+        border-style: none;
       }
     }
   }
