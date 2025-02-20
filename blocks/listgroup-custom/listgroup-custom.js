@@ -337,7 +337,7 @@ export default async function decorate(block) {
   block.textContent = '';
 
   // Get language index.
-  const languageIndexUrl = getLanguageIndex();
+  const languageIndexUrl = getLanguageIndex(config.overwriteIndexLanguage);
 
   const { data: allPages } = await getJsonFromUrl(languageIndexUrl);
 

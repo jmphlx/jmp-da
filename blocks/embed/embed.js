@@ -89,8 +89,6 @@ export const embedVidyard = (url) => {
       data-type="inline"/>
     </div>`;
   return embedHTML;
-
-
 };
 
 const loadEmbed = (block, link, autoplay) => {

@@ -92,7 +92,10 @@ function getLanguageFooter(isSKP = null) {
  * Default to 'en' if language isn't found.
  * @returns {string} path to language index
  */
-function getLanguageIndex() {
+function getLanguageIndex(overwriteLanguage = null) {
+  if (overwriteLanguage) {
+    return isLanguageSupported(overwriteLanguage) ? `/jmp-${overwriteLanguage}.json` : '/jmp-en.json';
+  }
   return isLanguageSupported ? `/jmp-${lang}.json` : '/jmp-en.json';
 }
 

@@ -2,7 +2,6 @@
  * Hubspot embed Block
  * Shows hubspot forms on a page
  */
-/*  global hbspt  */
 
 import {
   getBlockConfig,
@@ -32,11 +31,9 @@ const embedHubspot = (config) => {
 
   // adds event listener to add embed code on load
   scriptHubspot.addEventListener('load', () => {
-    console.log('hubspot loaded');
     const hubspotBlock = document.querySelector('[data-block-name="hubspot"]');
-    const script = document.createElement('script');
-    script.textContent = `
-      console.log('start script block');
+    const scriptCreateHubspotForm = document.createElement('script');
+    scriptCreateHubspotForm.textContent = `
       hbspt.forms.create({
         region: '${config.region}',
         portalId: '${config.portalId}',
@@ -56,11 +53,9 @@ const embedHubspot = (config) => {
           const newSFC = "${sfdcCampaignId}";
           emailSFC.val(newSFC).change();
         }
-      });
-      console.log('end script block');`;
-    hubspotBlock.append(script);
+      });`;
+    hubspotBlock.append(scriptCreateHubspotForm);
   });
-
 
   document.head.append(scriptHubspot);
   return null;
