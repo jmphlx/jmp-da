@@ -95,9 +95,8 @@ function getLanguageFooter(isSKP = null) {
 function getLanguageIndex(overwriteLanguage = null) {
   if (overwriteLanguage) {
     return isLanguageSupported(overwriteLanguage) ? `/jmp-${overwriteLanguage}.json` : '/jmp-en.json';
-  } else {
-    return isLanguageSupported ? `/jmp-${lang}.json` : '/jmp-en.json';
   }
+  return isLanguageSupported ? `/jmp-${lang}.json` : '/jmp-en.json';
 }
 
 /**
