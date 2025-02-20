@@ -56,8 +56,10 @@ function createTabPanel(pageSelection, tabPanel) {
 }
 
 export default async function decorate(block) {
+  const overwriteLanguageIndex = getBlockProperty(block, 'overwriteIndexLanguage');
+
   // Get language index.
-  const languageIndexUrl = getLanguageIndex();
+  const languageIndexUrl = getLanguageIndex(overwriteLanguageIndex);
   const { data: allPages, columns: propertyNames } = await getJsonFromUrl(languageIndexUrl);
   let prefilteredPages = allPages;
 
