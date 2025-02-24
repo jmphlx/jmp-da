@@ -157,6 +157,7 @@ div.listgroup-custom  {
         margin: 0 8% .25em 8%;
         transition: color 0.5s ease;
         color: var(--blue) !important;
+        word-break: break-word;
       }
       .abstract, .description, .displayDescription {
         order: 3;
@@ -165,6 +166,7 @@ div.listgroup-custom  {
         flex: 1 0 auto;
         padding: 0 8% 9% 8%;
         line-height: 138%;
+        word-break: break-word;
       }
     }
     :hover {

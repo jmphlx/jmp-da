@@ -53,9 +53,13 @@ div.listgroup-fixed, div.listgroup  {
     width: 17.5%;
     @media (width <= 900px) {
         width: 30.75%;
+        flex-grow: 1;
     }
     @media (width <= 600px) {
         width: 47.5%;
+    }
+    @media (width <= 400px) {
+        width: 100%;
     }
 }
 
@@ -132,6 +136,7 @@ div.listgroup-fixed, div.listgroup  {
                 flex: 1 0 auto;
                 padding: 0 8% 9% 8%;
                 line-height: 138%;
+                word-break: break-word;
             }
         }
         :hover {
