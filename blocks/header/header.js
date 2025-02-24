@@ -4,7 +4,7 @@ import { onSearchInput } from './search.js';
 import { getLangMenuPageUrl, getLanguageNav } from '../../scripts/jmp.js';
 
 // media query match that indicates mobile/tablet width
-const isDesktop = window.matchMedia('(min-width: 900px)');
+const isDesktop = window.matchMedia('(min-width: 1000px)');
 // flag to check if the language dropdown urls were decorated
 let languageDropdownDecorated = false;
 
