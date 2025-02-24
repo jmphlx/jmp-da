@@ -322,6 +322,21 @@ function filterOutPastEvents(pageSelection) {
 }
 
 /**
+ * Given a list of pages, filter out any that have a nonempty Robots property.
+ * @param {array} pageSelection array of pages that may match the filter
+ * @returns array of pages that should be indexed and included in lists/search.
+ */
+function filterOutRobotsNoIndexPages(pageSelection) {
+  const filteredData = pageSelection.filter((item) => {
+    if (!item.robots) {
+      return true;
+    }
+    return item.robots.length === 0;
+  });
+  return filteredData;
+}
+
+/**
  * Given a folderPath, filter the pages down to those inside that folder
  * including nested pages.
  * @param {array} pageSelection array of pages that may match the filter
@@ -516,6 +531,7 @@ export {
   matchesOperator,
   startsWithOperator,
   filterOutPastEvents,
+  filterOutRobotsNoIndexPages,
   getBlockConfig,
   getBlockPropertiesList,
   getBlockProperty,

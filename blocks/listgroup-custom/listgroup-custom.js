@@ -2,6 +2,7 @@
 
 import {
   containsOperator,
+  filterOutRobotsNoIndexPages,
   matchesOperator,
   startsWithOperator,
   getBlockConfig,
@@ -362,6 +363,9 @@ export default async function decorate(block) {
       matching.push(page);
     }
   });
+
+  // Do not include Robots noindex pages.
+  matching = filterOutRobotsNoIndexPages(matching);
 
   matching = sortPageList(matching, sortBy, sortOrder);
 
