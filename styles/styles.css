@@ -737,7 +737,7 @@ a:hover {
     cursor: pointer;
     color: var(--background-color) !important;
     background-color: var(--orange);
-    white-space: nowrap;
+    /* white-space: nowrap; */
     overflow: hidden;
     text-overflow: ellipsis;
     border-radius: 5px;
