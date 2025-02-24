@@ -141,6 +141,9 @@
   align-content: flex-start;
   padding: 0;
   margin: 20px 0;
+  div {
+    gap: 4%;
+  }
   p {
     font-size: 1.6rem;
     text-transform: uppercase;
@@ -183,6 +186,26 @@
     list-style-type: none;
     padding: 0 0 10px 0;
     margin: 0;
+  }
+  @media (width <=999px) {
+    div {
+      flex-flow: row wrap;
+      width: 100%;
+      gap: 4%;
+      div {
+        max-width: 50%;
+        min-width: 47%;
+        padding-bottom: 1.6rem;
+      }
+    }
+  }
+  @media (width <=999px) {
+    div {
+      div {
+        max-width: 100%;
+        padding-bottom: 1.6rem;
+      }
+    }
   }
 }
 /* Home Page Hero */
@@ -740,6 +763,13 @@ div.clm-75-25 {
     div.columns-img-col {
       width: auto;
     }
+  }
+}
+
+.image-square {
+  img {
+    aspect-ratio: 1;
+    object-fit: cover;
   }
 }
 

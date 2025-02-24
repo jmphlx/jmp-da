@@ -5,7 +5,7 @@ header .nav-wrapper {
   position: fixed;
 }
 
-@media (max-width: 899px) {
+@media (max-width: 999px) {
   header {
     height: 75px;
     nav {
@@ -33,7 +33,7 @@ header .nav-wrapper {
   }
 }
 
-@media (width >= 900px) { 
+@media (width >= 1000px) { 
   header nav { 
     justify-content: space-between; 
     padding: 0; 
@@ -141,7 +141,7 @@ header nav[aria-expanded="true"] .nav-hamburger-icon:after {
   transform: rotate(-45deg);
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1000px) {
   header nav .nav-hamburger {
     display: none;
     visibility: hidden;
@@ -155,11 +155,11 @@ header .nav-brand {
   grid-row: 2;
   grid-column: 1;
   padding-left: 2rem;
-  @media (min-width: 900px) {
+  @media (min-width: 1000px) {
     border-bottom: 3px solid #eeeeee;
     border-top: 3px solid rgba(0, 0, 0, 0);
   }
-  @media (max-width: 899px) {
+  @media (max-width: 999px) {
     grid-row: 1;
     padding-left: 0;
   }
@@ -177,9 +177,12 @@ header nav .nav-brand {
       picture {
         display: flex;
       }
-      /* @media (width <=1000px) {
-        width: clamp(100px, 50%, 160px);
-      } */
+      @media (width <=1100px) {
+        width: clamp(130px, 2vw, 160px);
+      }
+      @media (width <=999px) {
+        width: 160px;
+      }
     }
   }
 }
@@ -190,7 +193,7 @@ header nav .nav-sections {
   flex: 1 1 auto;
   display: none;
   visibility: hidden;
-  @media (min-width: 900px) {
+  @media (min-width: 1000px) {
     border-bottom: 3px solid #eeeeee;
     /* border-top: 3px solid rgba(0, 0, 0, 0); */
   }
@@ -200,7 +203,7 @@ header nav .nav-sections ul  {
   list-style: none;
   padding-left: 0;
   margin: 0;
-  @media (min-width: 900px) {
+  @media (min-width: 1000px) {
     height: 64px;
   }
 }
@@ -242,7 +245,7 @@ header nav .nav-sections ul > li > ul > li {
   font-size: 15px;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1000px) {
   header nav .nav-sections {
     display: block;
     visibility: visible;
@@ -292,6 +295,10 @@ header nav .nav-sections ul > li > ul > li {
         &:after {
           display: none;
         }
+        @media (width <=1100px) {
+          padding: 6px;
+          font-size: 14px;
+        }
       }
     }
     &:last-child {
@@ -313,6 +320,10 @@ header nav .nav-sections ul > li > ul > li {
         }
         &:after {
           display: none;
+        }
+        @media (width <=1100px) {
+          padding: 6px;
+          font-size: 14px;
         }
       }
     }
@@ -457,7 +468,7 @@ header nav .nav-utility-row {
   background-color: #fafafa;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1000px) {
   header nav .nav-utility-row {
     display: grid;
     align-items: center;
@@ -641,7 +652,7 @@ header nav .nav-tools .fa-icon {
   padding-inline-end: 8px;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1000px) {
   header nav .nav-tools {
     display: flex;
     order: 0;
@@ -773,7 +784,7 @@ header nav .nav-tools .nav-drop[aria-expanded="true"] .nav-section-heading:after
   transform: rotate(135deg) translateY(12px);
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1000px) {
   header nav .nav-drop {
     transition: transform .5s ease-in-out;
   }
@@ -831,7 +842,7 @@ header nav .nav-mobile-menu {
   border-top: 2px solid var(--border-color);
 }
 
-@media (max-width: 899px) {
+@media (max-width: 999px) {
   header.header-wrapper {
     height: 78px;
   }
@@ -845,7 +856,7 @@ header nav .nav-mobile-menu {
   }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1000px) {
   header nav .nav-mobile-menu {
     display: none;
   }
@@ -1101,7 +1112,7 @@ header nav[aria-expanded="true"] .nav-tools.nav-tools-mobile {
 
 
 /*** Search ***/
-@media (min-width: 900px) {
+@media (min-width: 1000px) {
   header .search-form-container .search-form {
     position: absolute;
     background-color: var(--clr-gray-light);
@@ -1349,7 +1360,7 @@ input {
   margin-top: unset;
 }
 
-@media (max-width: 899px) {
+@media (max-width: 999px) {
   .nav-tools-mobile {
     .gnav-search.is-Open .gnav-search-bar {
       display: inline;
@@ -1461,7 +1472,7 @@ header nav:has(div.nav-tools:empty) {
   div.nav-utility-row {
     transform: none !important;
   }
-  @media (max-width: 899px) {
+  @media (max-width: 999px) {
     div.nav-hamburger {
       display: none;
     }
