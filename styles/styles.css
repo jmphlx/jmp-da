@@ -99,14 +99,26 @@ body {
   color: var(--text-color);
   background-color: var(--background-color);
   display: none;
-  /* No header */
-  header:empty {
-    display: none;
-  }
 }
 body.appear {
   display: block;
 }
+body.basic-mobile {
+  header {
+    height: 75px;
+  }
+}
+body.basic {
+  header {
+    height: 100px;
+  }
+}
+body.noHeader {
+  header:empty {
+    display: none;
+  }
+}
+
 header.header-wrapper {
   height: var(--nav-height);
 }
