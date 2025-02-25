@@ -244,10 +244,6 @@ indices:
         select: head > meta[name="displaylabel"]
         value: |
           attribute(el, "content") 
-      robots:
-        select: head > meta[name="robots"]
-        value: |
-          attribute(el, "content")
 
 #GERMAN CONTENT#
   jmp-de:
@@ -368,10 +364,6 @@ indices:
           attribute(el, "content")
       displayLabel:
         select: head > meta[name="displaylabel"]
-        value: |
-          attribute(el, "content")
-      robots:
-        select: head > meta[name="robots"]
         value: |
           attribute(el, "content")
 
@@ -496,10 +488,6 @@ indices:
         select: head > meta[name="displaylabel"]
         value: |
           attribute(el, "content")
-      robots:
-        select: head > meta[name="robots"]
-        value: |
-          attribute(el, "content")
 
 #ITALIAN CONTENT#
   jmp-it:
@@ -620,10 +608,6 @@ indices:
           attribute(el, "content")
       displayLabel:
         select: head > meta[name="displaylabel"]
-        value: |
-          attribute(el, "content")
-      robots:
-        select: head > meta[name="robots"]
         value: |
           attribute(el, "content")
 
@@ -748,10 +732,6 @@ indices:
         select: head > meta[name="displaylabel"]
         value: |
           attribute(el, "content")
-      robots:
-        select: head > meta[name="robots"]
-        value: |
-          attribute(el, "content")
 
 #KOREAN CONTENT#
   jmp-ko:
@@ -872,10 +852,6 @@ indices:
           attribute(el, "content")
       displayLabel:
         select: head > meta[name="displaylabel"]
-        value: |
-          attribute(el, "content")
-      robots:
-        select: head > meta[name="robots"]
         value: |
           attribute(el, "content")
 
@@ -1000,10 +976,6 @@ indices:
         select: head > meta[name="displaylabel"]
         value: |
           attribute(el, "content")
-      robots:
-        select: head > meta[name="robots"]
-        value: |
-          attribute(el, "content")
 
 #CHINESE TRADITIONAL CONTENT#
   jmp-zh-hant:
@@ -1126,10 +1098,6 @@ indices:
         select: head > meta[name="displaylabel"]
         value: |
           attribute(el, "content")
-      robots:
-        select: head > meta[name="robots"]
-        value: |
-          attribute(el, "content")
 
 #END OF MAIN JMP CONTENT#
 
@@ -1186,10 +1154,6 @@ indices:
           attribute(el, "content")
       resourceOptions:
         select: head > meta[name="resourceoptions"]
-        value: |
-          attribute(el, "content")
-      robots:
-        select: head > meta[name="robots"]
         value: |
           attribute(el, "content")
 
@@ -1306,10 +1270,6 @@ indices:
         select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
-      robots:
-        select: head > meta[name="robots"]
-        value: |
-          attribute(el, "content")
 
 #SKP FRENCH#
   skp-fr:
@@ -1363,10 +1323,6 @@ indices:
           attribute(el, "content")
       resourceOptions:
         select: head > meta[name="resourceoptions"]
-        value: |
-          attribute(el, "content")
-      robots:
-        select: head > meta[name="robots"]
         value: |
           attribute(el, "content")
 
@@ -1424,10 +1380,6 @@ indices:
         select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
-      robots:
-        select: head > meta[name="robots"]
-        value: |
-          attribute(el, "content")
 
 #SKP JAPANESE#
   skp-ja:
@@ -1481,10 +1433,6 @@ indices:
           attribute(el, "content")
       resourceOptions:
         select: head > meta[name="resourceoptions"]
-        value: |
-          attribute(el, "content")
-      robots:
-        select: head > meta[name="robots"]
         value: |
           attribute(el, "content")
 
@@ -1542,10 +1490,6 @@ indices:
         select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
-      robots:
-        select: head > meta[name="robots"]
-        value: |
-          attribute(el, "content")
 
 #SKP CHINESE SIMPLIFIED#
   skp-zh-hans:
@@ -1601,10 +1545,6 @@ indices:
         select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
-      robots:
-        select: head > meta[name="robots"]
-        value: |
-          attribute(el, "content")
 
 #SKP CHINESE TRADITIONAL#
   skp-zh-hant:
@@ -1658,10 +1598,6 @@ indices:
           attribute(el, "content")
       resourceOptions:
         select: head > meta[name="resourceoptions"]
-        value: |
-          attribute(el, "content")
-      robots:
-        select: head > meta[name="robots"]
         value: |
           attribute(el, "content")
 
