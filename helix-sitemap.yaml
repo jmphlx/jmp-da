@@ -1,5 +1,52 @@
+version: 1
+
 sitemaps:
-  en:
-    origin: https://www.jmp.com/
+  site:
+    origin: https://www.jmp.com
     lastmod: YYYY-MM-DD
-    destination: /sitemap.xml
+    languages:
+      en:
+        source: /jmp-en.json
+        destination: /en/sitemap.xml
+        hreflang: en
+        alternate: /en/{path}
+      de:
+        source: /jmp-de.json
+        destination: /de/sitemap.xml
+        hreflang: de
+        alternate: /de/{path}
+      fr:
+        source: /jmp-fr.json
+        destination: /fr/sitemap.xml
+        hreflang: fr
+        alternate: /fr/{path}
+      it:
+        source: /jmp-it.json
+        destination: /it/sitemap.xml
+        hreflang: it
+        alternate: /it/{path}
+      es:
+        source: /jmp-es.json
+        destination: /es/sitemap.xml
+        hreflang: es
+        alternate: /es/{path}
+      ko:
+        source: /jmp-ko.json
+        destination: /ko/sitemap.xml
+        hreflang: ko
+        alternate: /ko/{path}
+      ja:
+        source: /jmp-ja.json
+        destination: /ja/sitemap.xml
+        hreflang: ja
+        alternate: /ja/{path}
+      zh-hant:
+        source: /jmp-zh-hant.json
+        destination: /zh-hant/sitemap.xml
+        hreflang: zh-hant
+        alternate: /zh-hant/{path}
+      zh-hans:
+        source: /jmp-zh-hans.json
+        destination: /zh-hans/sitemap.xml
+        hreflang: zh-hans
+        alternate: /zh-hans/{path}
