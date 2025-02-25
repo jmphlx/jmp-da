@@ -38,7 +38,7 @@ export default async function decorate(block) {
     }
   }
 
-  // Do not include Robots noindex pages. 
+  // Do not include Robots noindex pages.
   pageSelection = filterOutRobotsNoIndexPages(pageSelection);
 
   // Order pages by releaseDate or alphabetically
