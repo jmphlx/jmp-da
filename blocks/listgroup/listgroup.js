@@ -9,7 +9,6 @@ import {
   pageAndFilter,
   pageFilterByFolder,
   pageOrFilter,
-  filterOutRobotsNoIndexPages,
 } from '../../scripts/jmp.js';
 
 export default async function decorate(block) {
@@ -40,7 +39,7 @@ export default async function decorate(block) {
   }
 
   // Do not include Robots noindex pages.
-  pageSelection = filterOutRobotsNoIndexPages(pageSelection);
+  // pageSelection = filterOutRobotsNoIndexPages(pageSelection);
 
   // Order pages by releaseDate or alphabetically
   const sortOrder = optionsObject.sortOrder;
