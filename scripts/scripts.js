@@ -449,6 +449,16 @@ async function loadEager(doc) {
   if (main) {
     decorateMain(main);
     document.body.classList.add('appear');
+
+    const headerValue = getMetadata('nav');
+    const noHeader = headerValue === 'noHeader';
+    if (noHeader) {
+      document.body.classList.add('noHeader');
+    } else if (window.innerWidth >= 900) {
+      document.body.classList.add('basic');
+    } else {
+      document.body.classList.add('basic-mobile');
+    }
     await loadSection(main.querySelector('.section'), waitForFirstImage);
   }
 
