@@ -24,6 +24,19 @@ function getMetaValue(prop, doc) {
   } else {
     val = getMetadata(prop.toLowerCase(), doc);
   }
+
+  // Make images relative to the domain,
+  // and not the meta image which is
+  // relative to the production origin.
+  if (prop === 'image' && val) {
+    try {
+      const { pathname, search } = new URL(val);
+    return `${pathname}${search}`;
+    } catch {
+      return val;
+    }
+  }
+
   return val;
 }
 
