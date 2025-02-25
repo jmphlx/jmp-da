@@ -16,7 +16,7 @@ export async function fetchIndex() {
   if (window.blogIndex.complete) return (window.blogIndex);
   const index = window.blogIndex;
   const languageIndexUrl = getSKPLanguageIndex();
-  const resp = await fetch(`${languageIndexUrl}?limit=${pageSize}`);
+  const resp = await fetch(`${languageIndexUrl}`);
   const json = await resp.json();
   const complete = (json.limit + json.offset) === json.total;
   json.data.forEach((post) => {
