@@ -1,19 +1,8 @@
-header .nav-wrapper {
-  background-color: #ffffff;
-  width: 100%;
-  z-index: 1000;
-  position: fixed;
-}
-
 @media (max-width: 999px) {
   header {
-    height: 75px;
     nav {
       display: grid;
       background-color: #ffffff;
-      height: 75px;
-      border-bottom: 3px solid #eeeeee;
-      padding: 0 2rem;
       .nav-hamburger {
         display: grid;
         grid-row: 1;

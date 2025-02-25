@@ -449,6 +449,11 @@ async function loadEager(doc) {
   if (main) {
     decorateMain(main);
     document.body.classList.add('appear');
+    if (window.innerWidth >= 900) {
+      document.body.classList.add('basic');
+    } else {
+      document.body.classList.add('basic-mobile');
+    }
     await loadSection(main.querySelector('.section'), waitForFirstImage);
   }
 
@@ -498,6 +503,8 @@ async function loadLazy(doc) {
       decorateBlock(headerBlock);
       loadBlock(headerBlock);
     } else {
+      document.body.classList.remove('basic');
+      document.body.classList.remove('basic-mobile');
       loadHeader(doc.querySelector('header'));
     }
   }

@@ -107,6 +107,12 @@ body {
 body.appear {
   display: block;
 }
+body.basic {
+  margin-top: 100px;
+}
+body.basic-mobile {
+  margin-top: 75px;
+}
 header.header-wrapper {
   height: var(--nav-height);
 }
