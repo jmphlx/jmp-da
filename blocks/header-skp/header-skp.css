@@ -1,3 +1,7 @@
+.header {
+  height: auto !important;
+}
+
 .header-skp-wrapper {
   position: relative;
   /* display: flex; */
@@ -88,6 +92,7 @@ header .nav-wrapper {
     .nav-knowledgeportal {
       background: #6ea0cd;
       padding: .5rem 0 1.5rem 3.2rem;
+      z-index: 20;
       h3 {
         margin-bottom: 3px !important;
         font-size: var(--heading-font-size-l);
@@ -107,6 +112,7 @@ header .nav-wrapper {
       display: flex;
       justify-content: stretch;
       align-items: center;
+      z-index: 20;
       ul {
         list-style: none;
         justify-content: flex-end;
@@ -492,6 +498,8 @@ header nav .gnav-search-results {
   flex-direction: column;
   margin: 0 auto;
   display: block;
+  z-index: 20;
+  border-bottom: 3px solid #6ea0cd;
   /* top: 141px;
   position: fixed;
   background: #fff;
