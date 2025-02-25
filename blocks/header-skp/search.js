@@ -72,9 +72,11 @@ async function populateSearchResults(searchTerms, resultsContainer) {
     });
 
     if (!hits.length) {
-      resultsContainer.classList.add('no-Results');
-    } else {
-      resultsContainer.classList.remove('no-Results');
+      const resultsMessage = createTag('p', { class: 'description' }, 'No Results Found');
+      const resultBody = createTag('div', { class: 'results-body' });
+      resultBody.append(resultsMessage);
+      const resultListing = createTag('div', { class: 'result-listing' }, resultBody);
+      resultsContainer.appendChild(resultListing);
     }
   }
 }
