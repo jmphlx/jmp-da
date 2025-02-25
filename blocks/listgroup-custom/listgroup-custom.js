@@ -9,6 +9,7 @@ import {
   getLanguageIndex,
   getLanguage,
   sortPageList,
+  filterOutRobotsNoIndexPages,
 } from '../../scripts/jmp.js';
 
 import { getDefaultMetaImage } from '../../scripts/scripts.js';
@@ -364,7 +365,7 @@ export default async function decorate(block) {
   });
 
   // Do not include Robots noindex pages.
-  // matching = filterOutRobotsNoIndexPages(matching);
+  matching = filterOutRobotsNoIndexPages(matching);
 
   matching = sortPageList(matching, sortBy, sortOrder);
 

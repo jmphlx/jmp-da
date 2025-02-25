@@ -2,6 +2,7 @@
 
 import {
   filterOutPastEvents,
+  filterOutRobotsNoIndexPages,
   getBlockProperty,
   getBlockPropertiesList,
   getJsonFromUrl,
@@ -113,7 +114,7 @@ export default async function decorate(block) {
     }
 
     // Do not include Robots noindex pages.
-    // pageSelection = filterOutRobotsNoIndexPages(pageSelection);
+    pageSelection = filterOutRobotsNoIndexPages(pageSelection);
     // Do not include events whose date has passed.
     pageSelection = filterOutPastEvents(pageSelection);
 
