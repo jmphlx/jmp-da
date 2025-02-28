@@ -156,4 +156,12 @@
       border-bottom: none;
     }
   }
+  :is(h3) {
+    &:has(+ :is(p)) {
+      margin-bottom: 0 !important;
+    }
+  }
+  :is(p):has(+ :is(h3)) {
+    margin-bottom: 1.2rem !important;
+  }
 }

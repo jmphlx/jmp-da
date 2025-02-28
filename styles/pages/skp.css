@@ -28,7 +28,7 @@ main {
 
 @media (width >= 600px) {
   main .section {
-    padding: 64px 5% 32px 5%;
+    padding: 64px 5% 64px 5%;
   }
 }
 
@@ -80,7 +80,7 @@ h2 {
 }
 :is(h2) {
   &:has(+ :is(p)) {
-    margin-bottom: 3.2rem !important;
+    margin-bottom: 1.8rem !important;
   }
 }
 h3 {
@@ -91,9 +91,24 @@ h3 {
   line-height: 1.25em;
   margin-bottom: 1rem !important;
 }
-:is(p):has(+ :is(h2)) {
+:is(h3) {
+  &:has(+ :is(p)) {
+    margin-bottom: 1.8rem !important;
+  }
+}
+:is(p, ul):has(+ :is(h2, h3, h4)) {
   margin-bottom: 3.2rem !important;
 }
+:is(.default-content-wrapper):has(+ :is(.accordion-wrapper)) {
+  margin-bottom: 3.2rem !important;
+}
+:is(div):has(+ :is(div.embed-wrapper)) {
+  margin-bottom: 3.2rem !important;
+}
+/* :is(p):has(picture) {
+  padding-bottom: 2.4rem !important;
+} */
+
 :is(.table-wrapper):has(+ :is(.default-content-wrapper)) {
   margin-bottom: 3.2rem !important;
 }
@@ -370,9 +385,50 @@ body.skp footer {
   :is(p):has(+ :is(h2)) {
     margin-bottom: 1.6rem !important;
   }
+  blockquote {
+    padding-bottom: 1.6rem;
+    margin-left: 2rem;
+    :first-child:is(p, strong, h1, h2, h3, h4, h5, h6) {
+      line-height: 1.2;
+      color: #643695;
+      font-size: var(--heading-font-size-s);
+      z-index: 2;
+      position: relative;
+    }
+    :first-child:before, :first-child:after {
+      content: "";
+      font-family: "Georgia", cursive;
+      line-height: 0;
+      font-size: 17.0rem;
+      width: 0;
+      height: 0;
+      position: absolute;
+      color: #f2f2f2;
+      z-index: 1;
+    }
+    :first-child:is(p, h1, h2, h3, h4, h5, h6):before {
+      content: '\201C';
+      width: 1em;
+      margin: 60px 0 0 -35px;
+    }
+    :first-child:is(p, h1, h2, h3, h4, h5, h6):after {
+      content: '\201D';
+      width: 1em;
+      margin: 72px 0 0 -32px;
+    }
+    .quote-attribution {
+      :first-child:before, :first-child:after {
+        display: none;
+      }
+    }
+    p:has(picture):before, p:has(picture):after {
+      display: none !important;
+    }
+  }
 }
 
 .figure {
+  margin-bottom: 3.2rem;
   p {
     color: #7c9db6;
     font-size: 1.4rem;
@@ -387,6 +443,7 @@ span.mjx-chtml {
 
 div.video-aside {
   gap: 5%;
+  margin-bottom: 2.4rem;
   div > div:nth-child(1) {
     min-width: 57.5%;
   }
