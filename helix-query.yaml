@@ -8,6 +8,7 @@ indices:
     exclude:
       - /en/drafts/**
       - /en/sandbox/**
+      - /en/fragments/**
     target: /jmp-en.json
     properties:
       author:
@@ -130,6 +131,7 @@ indices:
     exclude:
       - /es/drafts/**
       - /es/sandbox/**
+      - /es/fragments/**
     target: /jmp-es.json
     properties:
       author:
@@ -252,6 +254,7 @@ indices:
     exclude:
       - /de/drafts/**
       - /de/sandbox/**
+      - /de/fragments/**
     target: /jmp-de.json
     properties:
       author:
@@ -374,6 +377,7 @@ indices:
     exclude:
       - /fr/drafts/**
       - /fr/sandbox/**
+      - /fr/fragments/**
     target: /jmp-fr.json
     properties:
       author:
@@ -496,6 +500,7 @@ indices:
     exclude:
       - /it/drafts/**
       - /it/sandbox/**
+      - /it/fragments/**
     target: /jmp-it.json
     properties:
       author:
@@ -618,6 +623,7 @@ indices:
     exclude:
       - /ja/drafts/**
       - /ja/sandbox/**
+      - /ja/fragments/**
     target: /jmp-ja.json
     properties:
       author:
@@ -740,6 +746,7 @@ indices:
     exclude:
       - /ko/drafts/**
       - /ko/sandbox/**
+      - /ko/fragments/**
     target: /jmp-ko.json
     properties:
       author:
@@ -862,6 +869,7 @@ indices:
     exclude:
       - /zh-hans/drafts/**
       - /zh-hans/sandbox/**
+      - /zh-hans/fragments/**
     target: /jmp-zh-hans.json
     properties:
       author:
@@ -984,6 +992,7 @@ indices:
     exclude:
       - /zh-hant/drafts/**
       - /zh-hant/sandbox/**
+      - /zh-hant/fragments/**
     target: /jmp-zh-hant.json
     properties:
       author:

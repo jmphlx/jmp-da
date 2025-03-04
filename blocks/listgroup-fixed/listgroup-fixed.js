@@ -31,7 +31,7 @@ function getMetaValue(prop, doc) {
   if (prop === 'image' && val) {
     try {
       const { pathname, search } = new URL(val);
-    return `${pathname}${search}`;
+      return `${pathname}${search}`;
     } catch {
       return val;
     }
