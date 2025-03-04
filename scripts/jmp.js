@@ -527,10 +527,21 @@ function sortPageList(pageList, sortBy, sortOrder) {
   return sortedList;
 }
 
+function debounce(func, delay) {
+  let timeoutId;
+  return function debouncedFunction(...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
+}
+
 export {
   arrayIncludesAllValues,
   arrayIncludesSomeValues,
   containsOperator,
+  debounce,
   matchesOperator,
   startsWithOperator,
   filterOutPastEvents,

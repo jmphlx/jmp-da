@@ -1,16 +1,13 @@
 import { createTag } from '../../scripts/helper.js';
-import { getLanguageIndex } from '../../scripts/jmp.js';
+import { getLanguageIndex, filterOutRobotsNoIndexPages } from '../../scripts/jmp.js';
 
 /**
  * Fetches language index with parameters
  * @returns {object} index with data and path lookup
  */
 export async function fetchIndex() {
-  const pageSize = 500;
   window.blogIndex = window.blogIndex || {
     data: [],
-    byPath: {},
-    offset: 0,
     complete: false,
   };
   if (window.blogIndex.complete) return (window.blogIndex);
@@ -18,13 +15,11 @@ export async function fetchIndex() {
   const languageIndexUrl = getLanguageIndex();
   const resp = await fetch(`${languageIndexUrl}`);
   const json = await resp.json();
-  const complete = (json.limit + json.offset) === json.total;
-  json.data.forEach((post) => {
+  const filteredData = filterOutRobotsNoIndexPages(json.data);
+  filteredData.forEach((post) => {
     index.data.push(post);
-    index.byPath[post.path.split('.')[0]] = post;
   });
-  index.complete = complete;
-  index.offset = json.offset + pageSize;
+  index.complete = true;
   return (index);
 }
 
@@ -53,30 +48,45 @@ async function populateSearchResults(searchTerms, resultsContainer) {
 
     const pages = window.blogIndex.data;
 
-    const hits = [];
+    const titleHits = [];
+    const descriptionHits = [];
     let i = 0;
     for (; i < pages.length; i += 1) {
+      let alreadyIncludedFlag = false;
       const e = pages[i];
-      const text = [e.title, e.description].join(' ').toLowerCase();
 
-      if (terms.every((term) => text.includes(term.toLowerCase()))) {
-        if (hits.length === limit) {
+      // Check the title first, as it is higher priority in the results list.
+      if (terms.every((term) => e.title.toLowerCase().includes(term.toLowerCase()))) {
+        if (titleHits.length === limit) {
           break;
         }
-        hits.push(e);
+        titleHits.push(e);
+        alreadyIncludedFlag = true;
+      }
+
+      // Check the description for the search terms.
+      if (terms.every((term) => e.description.toLowerCase().includes(term.toLowerCase()))) {
+        if (!alreadyIncludedFlag) {
+          descriptionHits.push(e);
+        }
       }
     }
-    hits.forEach((hit) => {
-      const card = decorateCard(hit);
-      resultsContainer.appendChild(card);
-    });
-
-    if (!hits.length) {
+    if (!titleHits.length && !descriptionHits.length) {
       const resultsMessage = createTag('p', { class: 'description' }, 'No Results Found');
       const resultBody = createTag('div', { class: 'results-body' });
       resultBody.append(resultsMessage);
       const resultListing = createTag('div', { class: 'result-listing' }, resultBody);
       resultsContainer.appendChild(resultListing);
+    } else {
+      let hits = titleHits;
+      if (hits.length < limit) {
+        const numDescriptionItems = limit - hits.length;
+        hits = hits.concat(descriptionHits.slice(0, numDescriptionItems));
+      }
+      hits.forEach((hit) => {
+        const card = decorateCard(hit);
+        resultsContainer.appendChild(card);
+      });
     }
   }
 }
