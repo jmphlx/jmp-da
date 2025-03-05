@@ -59,6 +59,13 @@ const embedTwitter = (url) => {
 // vidyard videos
 export const embedVidyard = (url) => {
   const video = url.pathname.split('/').pop(); // breaks out UUID of vidyard URL
+  console.log(video);
+  console.log(url.search);
+  console.log("asdkljasfdjlk;asj;klda")
+
+  const query = url.search;
+  const lang = query.slice(-2);
+  console.log(lang);
 
   loadScript('https://play.vidyard.com/embed/v4.js');
 
@@ -73,6 +80,7 @@ export const embedVidyard = (url) => {
         container: document.querySelector('div.embed-vidyard'),
         autoplay,
         type: 'inline',
+        cc: lang,
       });
     };
     return null;
@@ -86,7 +94,8 @@ export const embedVidyard = (url) => {
       data-uuid="${video}"
       data-v="4"
       data-autoplay=${autoplay}
-      data-type="inline"/>
+      data-type="inline"
+      data-cc="${lang}"/>
     </div>`;
   return embedHTML;
 };
