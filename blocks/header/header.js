@@ -1,7 +1,7 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { createTag } from '../../scripts/helper.js';
 import { onSearchInput } from './search.js';
-import { getLangMenuPageUrl, getLanguageNav } from '../../scripts/jmp.js';
+import { getLangMenuPageUrl, getLanguageNav, debounce } from '../../scripts/jmp.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 1000px)');
@@ -208,8 +208,9 @@ async function buildMobileMenu(nav) {
       tools.querySelector('input').focus();
     });
     const searchInput = searchButton.querySelector('input');
+    const debouncedSearchInput = debounce(onSearchInput, 200);
     searchInput.addEventListener('input', (e) => {
-      onSearchInput(e.target.value, searchButton.querySelector('.gnav-search-results'));
+      debouncedSearchInput(e.target.value, searchButton.querySelector('.gnav-search-results'));
     });
 
     sections.classList.add('nav-sections-mobile');
@@ -241,8 +242,9 @@ function decorateSearchBar() {
   const searchField = createTag('div', { class: 'gnav-search-field' });
   const searchInput = createTag('input', { class: 'gnav-search-input', placeholder: 'Search' });
   const searchResults = createTag('div', { class: 'gnav-search-results' });
+  const debouncedSearchInput = debounce(onSearchInput, 200);
   searchInput.addEventListener('input', (e) => {
-    onSearchInput(e.target.value, searchResults);
+    debouncedSearchInput(e.target.value, searchResults);
   });
 
   searchField.append(searchInput);
