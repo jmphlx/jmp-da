@@ -1,6 +1,6 @@
 import { createTag } from '../../scripts/helper.js';
 import { onSearchInput } from './search.js';
-import { getLanguageNav } from '../../scripts/jmp.js';
+import { getLanguageNav, debounce } from '../../scripts/jmp.js';
 import { decorateBlock, loadBlock } from '../../scripts/aem.js';
 
 // media query match that indicates mobile/tablet width
@@ -47,8 +47,9 @@ function decorateSearchBar(results) {
   const searchBar = createTag('div', { id: 'gnav-search-bar', class: 'gnav-search-bar' });
   const searchField = createTag('div', { class: 'gnav-search-field' });
   const searchInput = createTag('input', { class: 'gnav-search-input', placeholder: 'Search' });
+  const debouncedSearchInput = debounce(onSearchInput, 200);
   searchInput.addEventListener('input', (e) => {
-    onSearchInput(e.target.value, results);
+    debouncedSearchInput(e.target.value, results);
   });
 
   searchField.append(searchInput);

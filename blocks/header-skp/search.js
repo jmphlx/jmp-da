@@ -1,32 +1,11 @@
 import { createTag } from '../../scripts/helper.js';
-import { getSKPLanguageIndex } from '../../scripts/jmp.js';
+import {
+  fetchIndex,
+  getCommonsSheet,
+  getSearchResults,
+  getTopResults,
+} from '../../scripts/search.js';
 
-/**
- * Fetches language index with parameters
- * @returns {object} index with data and path lookup
- */
-export async function fetchIndex() {
-  const pageSize = 500;
-  window.blogIndex = window.blogIndex || {
-    data: [],
-    byPath: {},
-    offset: 0,
-    complete: false,
-  };
-  if (window.blogIndex.complete) return (window.blogIndex);
-  const index = window.blogIndex;
-  const languageIndexUrl = getSKPLanguageIndex();
-  const resp = await fetch(`${languageIndexUrl}`);
-  const json = await resp.json();
-  const complete = (json.limit + json.offset) === json.total;
-  json.data.forEach((post) => {
-    index.data.push(post);
-    index.byPath[post.path.split('.')[0]] = post;
-  });
-  index.complete = complete;
-  index.offset = json.offset + pageSize;
-  return (index);
-}
 
 function decorateCard(hit) {
   const {
@@ -49,34 +28,32 @@ async function populateSearchResults(searchTerms, resultsContainer) {
   resultsContainer.innerHTML = '';
 
   if (terms.length) {
-    await fetchIndex();
+    await fetchIndex(true);
 
-    const pages = window.blogIndex.data;
+    await getCommonsSheet(true);
+    const topResultsKeywords = window.commonsSheet.keywords;
+    const translations = window.commonsSheet.translations;
 
-    const hits = [];
-    let i = 0;
-    for (; i < pages.length; i += 1) {
-      const e = pages[i];
-      const text = [e.title, e.description].join(' ').toLowerCase();
-
-      if (terms.every((term) => text.includes(term.toLowerCase()))) {
-        if (hits.length === limit) {
-          break;
-        }
-        hits.push(e);
-      }
-    }
-    hits.forEach((hit) => {
-      const card = decorateCard(hit);
-      resultsContainer.appendChild(card);
-    });
-
-    if (!hits.length) {
-      const resultsMessage = createTag('p', { class: 'description' }, 'No Results Found');
+    const topResults = getTopResults(searchTerms, topResultsKeywords);
+    // Include topResults length. If topResults pages are found in the search results,
+    // we want to remove them so there are no duplicates but still reach the limit.
+    let searchResults = getSearchResults(terms, limit + topResults?.length);
+    if (!topResults?.length && !searchResults?.length) {
+      const noResultsText = !Object.keys(translations).length ? 'No Results Found' : translations['No Results Found'];
+      const resultsMessage = createTag('p', { class: 'description' }, noResultsText);
       const resultBody = createTag('div', { class: 'results-body' });
       resultBody.append(resultsMessage);
       const resultListing = createTag('div', { class: 'result-listing' }, resultBody);
       resultsContainer.appendChild(resultListing);
+    } else {
+      let hits = [...new Set([...topResults ,...searchResults])];
+      if (hits?.length > limit) {
+        hits = hits.slice(0, limit);
+      }
+      hits.forEach((hit) => {
+        const card = decorateCard(hit);
+        resultsContainer.appendChild(card);
+      });
     }
   }
 }
