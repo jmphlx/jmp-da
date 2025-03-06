@@ -1,27 +1,10 @@
 import { createTag } from '../../scripts/helper.js';
-import { getLanguageIndex, filterOutRobotsNoIndexPages } from '../../scripts/jmp.js';
-
-/**
- * Fetches language index with parameters
- * @returns {object} index with data and path lookup
- */
-export async function fetchIndex() {
-  window.blogIndex = window.blogIndex || {
-    data: [],
-    complete: false,
-  };
-  if (window.blogIndex.complete) return (window.blogIndex);
-  const index = window.blogIndex;
-  const languageIndexUrl = getLanguageIndex();
-  const resp = await fetch(`${languageIndexUrl}`);
-  const json = await resp.json();
-  const filteredData = filterOutRobotsNoIndexPages(json.data);
-  filteredData.forEach((post) => {
-    index.data.push(post);
-  });
-  index.complete = true;
-  return (index);
-}
+import {
+  fetchIndex,
+  getCommonsSheet,
+  getSearchResults,
+  getTopResults,
+} from '../../scripts/search.js';
 
 function decorateCard(hit) {
   const {
@@ -46,42 +29,27 @@ async function populateSearchResults(searchTerms, resultsContainer) {
   if (terms.length) {
     await fetchIndex();
 
-    const pages = window.blogIndex.data;
+    await getCommonsSheet();
+    const topResultsKeywords = window.commonsSheet.keywords;
+    const translations = window.commonsSheet.translations;
 
-    const titleHits = [];
-    const descriptionHits = [];
-    let i = 0;
-    for (; i < pages.length; i += 1) {
-      let alreadyIncludedFlag = false;
-      const e = pages[i];
+    const topResults = getTopResults(searchTerms, topResultsKeywords);
+    // Include topResults length. If topResults pages are found in the search results,
+    // we want to remove them so there are no duplicates but still reach the limit.
+    const adjustedLimit = topResults ? limit + topResults.length : limit;
+    const searchResults = getSearchResults(terms, adjustedLimit);
 
-      // Check the title first, as it is higher priority in the results list.
-      if (terms.every((term) => e.title.toLowerCase().includes(term.toLowerCase()))) {
-        if (titleHits.length === limit) {
-          break;
-        }
-        titleHits.push(e);
-        alreadyIncludedFlag = true;
-      }
-
-      // Check the description for the search terms.
-      if (terms.every((term) => e.description.toLowerCase().includes(term.toLowerCase()))) {
-        if (!alreadyIncludedFlag) {
-          descriptionHits.push(e);
-        }
-      }
-    }
-    if (!titleHits.length && !descriptionHits.length) {
-      const resultsMessage = createTag('p', { class: 'description' }, 'No Results Found');
+    if (!topResults?.length && !searchResults?.length) {
+      const noResultsText = !Object.keys(translations).length ? 'No Results Found' : translations['No Results Found'];
+      const resultsMessage = createTag('p', { class: 'description' }, noResultsText);
       const resultBody = createTag('div', { class: 'results-body' });
       resultBody.append(resultsMessage);
       const resultListing = createTag('div', { class: 'result-listing' }, resultBody);
       resultsContainer.appendChild(resultListing);
     } else {
-      let hits = titleHits;
-      if (hits.length < limit) {
-        const numDescriptionItems = limit - hits.length;
-        hits = hits.concat(descriptionHits.slice(0, numDescriptionItems));
+      let hits = [...new Set([...topResults, ...searchResults])];
+      if (hits?.length > limit) {
+        hits = hits.slice(0, limit);
       }
       hits.forEach((hit) => {
         const card = decorateCard(hit);
