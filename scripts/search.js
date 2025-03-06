@@ -32,6 +32,21 @@ async function fetchIndex(isSKP = false) {
   return (index);
 }
 
+function convertKeysToLowerCase(obj) {
+  if (typeof obj !== 'object' || obj === null) {
+    return obj;
+  }
+
+  if (Array.isArray(obj)) {
+    return obj.map(convertKeysToLowerCase);
+  }
+
+  return Object.keys(obj).reduce((acc, key) => {
+    acc[key.toLowerCase()] = convertKeysToLowerCase(obj[key]);
+    return acc;
+  }, {});
+}
+
 /**
  * Fetches the appropriate sheet from DA
  * that contains translations and top results pages
@@ -49,7 +64,8 @@ async function getCommonsSheet(isSKP = false) {
   const commons = window.commonsSheet;
   const pageLanguage = getLanguage();
   const commonsUrl = isSKP ? `${searchSheetFolder}/skp-${pageLanguage}.json` : `${searchSheetFolder}/${pageLanguage}.json`;
-  const jsonData = await getJsonFromUrl(commonsUrl);
+  let jsonData = await getJsonFromUrl(commonsUrl);
+  jsonData = convertKeysToLowerCase(jsonData);
   if (jsonData) {
     commons.keywords = jsonData.keywords.data[0];
     commons.translations = jsonData.translations.data[0];
