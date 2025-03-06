@@ -4,7 +4,7 @@ import {
   getLanguageIndex,
   getSKPLanguageIndex,
   filterOutRobotsNoIndexPages,
-} from '../../scripts/jmp.js';
+} from './jmp.js';
 
 const searchSheetFolder = '/commons/search';
 
@@ -59,7 +59,7 @@ async function getCommonsSheet(isSKP = false) {
     keywords: {},
     translations: {},
     complete: false,
-  }
+  };
   if (window.commonsSheet.complete) return (window.commonsSheet);
   const commons = window.commonsSheet;
   const pageLanguage = getLanguage();
@@ -134,7 +134,7 @@ function getTopResults(searchTerms, topResultsKeywords) {
     const topPages = [];
     const topPaths = topResultsKeywords[searchString].replaceAll('*', getLanguage()).split(',');
     topPaths.forEach((path) => {
-      const found = pages.find(page => page.path === path);
+      const found = pages.find((page) => page.path === path);
       if (found) {
         topPages.push(found);
       }

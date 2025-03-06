@@ -36,7 +36,8 @@ async function populateSearchResults(searchTerms, resultsContainer) {
     const topResults = getTopResults(searchTerms, topResultsKeywords);
     // Include topResults length. If topResults pages are found in the search results,
     // we want to remove them so there are no duplicates but still reach the limit.
-    let searchResults = getSearchResults(terms, limit + topResults?.length);
+    const adjustedLimit = topResults ? limit + topResults.length : limit;
+    const searchResults = getSearchResults(terms, adjustedLimit);
 
     if (!topResults?.length && !searchResults?.length) {
       const noResultsText = !Object.keys(translations).length ? 'No Results Found' : translations['No Results Found'];
@@ -46,7 +47,7 @@ async function populateSearchResults(searchTerms, resultsContainer) {
       const resultListing = createTag('div', { class: 'result-listing' }, resultBody);
       resultsContainer.appendChild(resultListing);
     } else {
-      let hits = [...new Set([...topResults ,...searchResults])];
+      let hits = [...new Set([...topResults, ...searchResults])];
       if (hits?.length > limit) {
         hits = hits.slice(0, limit);
       }
