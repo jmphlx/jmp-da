@@ -360,7 +360,8 @@ export default async function decorate(block) {
           if (!window.commonsSheet) {
             await getCommonsSheet();
           }
-          const translationString = window.commonsSheet.translations[translationEnum.SEARCH.toLowerCase()];
+          const translationString = window.commonsSheet.translations[
+            translationEnum.SEARCH.toLowerCase()];
           if (translationString) {
             searchBar.querySelector('input').placeholder = translationString;
           }

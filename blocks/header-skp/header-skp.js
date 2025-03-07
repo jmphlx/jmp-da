@@ -4,7 +4,6 @@ import { getLanguageNav, debounce } from '../../scripts/jmp.js';
 import { decorateBlock, loadBlock } from '../../scripts/aem.js';
 import { getCommonsSheet, getTranslationStringEnum } from '../../scripts/search.js';
 
-
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
 
@@ -53,7 +52,7 @@ async function decorateSearchBar(results) {
   }
   const translationEnum = getTranslationStringEnum();
   const translationString = window.commonsSheet.translations[translationEnum.SEARCH.toLowerCase()];
-  const placeholderValue = translationString ? translationString : translationEnum.SEARCH;
+  const placeholderValue = !translationString ? translationEnum.SEARCH : translationString;
   const searchInput = createTag('input', { class: 'gnav-search-input', placeholder: placeholderValue });
   const debouncedSearchInput = debounce(onSearchInput, 200);
   searchInput.addEventListener('input', (e) => {
