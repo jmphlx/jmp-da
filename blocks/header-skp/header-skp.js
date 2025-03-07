@@ -2,6 +2,8 @@ import { createTag } from '../../scripts/helper.js';
 import { onSearchInput } from './search.js';
 import { getLanguageNav, debounce } from '../../scripts/jmp.js';
 import { decorateBlock, loadBlock } from '../../scripts/aem.js';
+import { getCommonsSheet, getTranslationStringEnum } from '../../scripts/search.js';
+
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
@@ -43,10 +45,16 @@ function toggleMobileSearch(nav, searchBar, forceExpanded = null) {
   searchBar.querySelector('input').focus();
 }
 
-function decorateSearchBar(results) {
+async function decorateSearchBar(results) {
   const searchBar = createTag('div', { id: 'gnav-search-bar', class: 'gnav-search-bar' });
   const searchField = createTag('div', { class: 'gnav-search-field' });
-  const searchInput = createTag('input', { class: 'gnav-search-input', placeholder: 'Search' });
+  if (!window.commonsSheet) {
+    await getCommonsSheet(true);
+  }
+  const translationEnum = getTranslationStringEnum();
+  const translationString = window.commonsSheet.translations[translationEnum.SEARCH.toLowerCase()];
+  const placeholderValue = translationString ? translationString : translationEnum.SEARCH;
+  const searchInput = createTag('input', { class: 'gnav-search-input', placeholder: placeholderValue });
   const debouncedSearchInput = debounce(onSearchInput, 200);
   searchInput.addEventListener('input', (e) => {
     debouncedSearchInput(e.target.value, results);
@@ -84,14 +92,14 @@ export default async function decorate(block) {
 
   const navTools = nav.querySelector('.nav-tools');
   if (navTools) {
-    // Add Search search
+    // Add Search
     navTools.classList.add('search-icon');
     navTools.classList.add('gnav-search');
     const searchButton = navTools.querySelector('picture');
     const results = createTag('div', { class: 'gnav-search-results' });
     nav.append(results);
-    const searchBar = decorateSearchBar(results);
-    searchButton.addEventListener('click', () => {
+    const searchBar = await decorateSearchBar(results);
+    searchButton.addEventListener('click', async () => {
       toggleMobileSearch(nav, searchBar);
     });
     searchBar.setAttribute('aria-expanded', 'false');
