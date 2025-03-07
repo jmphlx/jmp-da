@@ -148,7 +148,7 @@ function getTopResults(searchTerms, topResultsKeywords) {
         topPages.push(found);
       }
     });
-    return topPages.length > 0 ? topPages : null;
+    return topPages.length > 0 ? topPages : [];
   }
   return [];
 }
