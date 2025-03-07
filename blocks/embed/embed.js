@@ -60,11 +60,13 @@ const embedTwitter = (url) => {
 export const embedVidyard = (url) => {
   const video = url.pathname.split('/').pop(); // breaks out UUID of vidyard URL
   console.log(video);
-  console.log(url.search);
+  console.log(url.search.indexOf("cc="));
+  console.log(url.search.substring(4,6));
   console.log("asdkljasfdjlk;asj;klda")
 
   const query = url.search;
-  const lang = query.slice(-2);
+  const caption = url.search.indexOf("cc=");
+  const lang = url.search.substring(caption + 3,caption + 5);
   console.log(lang);
 
   loadScript('https://play.vidyard.com/embed/v4.js');
