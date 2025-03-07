@@ -4,6 +4,7 @@ import {
   getCommonsSheet,
   getSearchResults,
   getTopResults,
+  getTranslationStringEnum,
 } from '../../scripts/search.js';
 
 function decorateCard(hit) {
@@ -33,6 +34,8 @@ async function populateSearchResults(searchTerms, resultsContainer) {
     const topResultsKeywords = window.commonsSheet.keywords;
     const translations = window.commonsSheet.translations;
 
+    const translationsEnum = getTranslationStringEnum();
+
     const topResults = getTopResults(searchTerms, topResultsKeywords);
     // Include topResults length. If topResults pages are found in the search results,
     // we want to remove them so there are no duplicates but still reach the limit.
@@ -40,7 +43,8 @@ async function populateSearchResults(searchTerms, resultsContainer) {
     const searchResults = getSearchResults(terms, adjustedLimit);
 
     if (!topResults?.length && !searchResults?.length) {
-      const noResultsText = !Object.keys(translations).length ? 'No Results Found' : translations['No Results Found'];
+      const noResultsText = !Object.keys(translations).length ? translationsEnum.NO_RESULTS_FOUND
+        : translations[translationsEnum.NO_RESULTS_FOUND.toLowerCase()];
       const resultsMessage = createTag('p', { class: 'description' }, noResultsText);
       const resultBody = createTag('div', { class: 'results-body' });
       resultBody.append(resultsMessage);

@@ -8,6 +8,15 @@ import {
 
 const searchSheetFolder = '/commons/search';
 
+const translationStrings = Object.freeze({
+  NO_RESULTS_FOUND: 'No Results Found',
+  SEARCH: 'Search',
+});
+
+function getTranslationStringEnum() {
+  return translationStrings;
+}
+
 /**
  * Fetches language index with parameters
  * if SKP page, return skp index
@@ -149,4 +158,5 @@ export {
   getCommonsSheet,
   getSearchResults,
   getTopResults,
+  getTranslationStringEnum,
 };
