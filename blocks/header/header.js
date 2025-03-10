@@ -2,6 +2,7 @@ import { getMetadata } from '../../scripts/aem.js';
 import { createTag } from '../../scripts/helper.js';
 import { onSearchInput } from './search.js';
 import { getLangMenuPageUrl, getLanguageNav, debounce } from '../../scripts/jmp.js';
+import { getCommonsSheet, getTranslationStringEnum } from '../../scripts/search.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 1000px)');
@@ -237,10 +238,10 @@ async function buildMobileMenu(nav) {
   nav.append(mobileMenu);
 }
 
-function decorateSearchBar() {
+function decorateSearchBar(translationEnum) {
   const searchBar = createTag('aside', { id: 'gnav-search-bar', class: 'gnav-search-bar' });
   const searchField = createTag('div', { class: 'gnav-search-field' });
-  const searchInput = createTag('input', { class: 'gnav-search-input', placeholder: 'Search' });
+  const searchInput = createTag('input', { class: 'gnav-search-input', placeholder: translationEnum.SEARCH });
   const searchResults = createTag('div', { class: 'gnav-search-results' });
   const debouncedSearchInput = debounce(onSearchInput, 200);
   searchInput.addEventListener('input', (e) => {
@@ -353,8 +354,17 @@ export default async function decorate(block) {
         navTool.classList.add('search-icon');
         navTool.classList.add('gnav-search');
         const searchButton = navTool.querySelector('picture');
-        const searchBar = decorateSearchBar();
-        searchButton.addEventListener('click', () => {
+        const translationEnum = getTranslationStringEnum();
+        const searchBar = decorateSearchBar(translationEnum);
+        searchButton.addEventListener('click', async () => {
+          if (!window.commonsSheet) {
+            await getCommonsSheet();
+          }
+          const translationString = window.commonsSheet.translations[
+            translationEnum.SEARCH.toLowerCase()];
+          if (translationString) {
+            searchBar.querySelector('input').placeholder = translationString;
+          }
           toggleSearch(navTool);
           searchBar.focus();
         });
