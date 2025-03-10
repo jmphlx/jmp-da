@@ -24,12 +24,12 @@ function getTranslationStringEnum() {
  * @returns {object} index with data and path lookup
  */
 async function fetchIndex(isSKP = false) {
-  window.blogIndex = window.blogIndex || {
+  window.searchIndex = window.searchIndex || {
     data: [],
     complete: false,
   };
-  if (window.blogIndex.complete) return (window.blogIndex);
-  const index = window.blogIndex;
+  if (window.searchIndex.complete) return (window.searchIndex);
+  const index = window.searchIndex;
   const languageIndexUrl = isSKP ? getSKPLanguageIndex() : getLanguageIndex();
   const resp = await fetch(`${languageIndexUrl}`);
   const json = await resp.json();
@@ -92,7 +92,7 @@ async function getCommonsSheet(isSKP = false) {
  * @returns {Array} a list of pages and their metadata that match the search terms
  */
 function getSearchResults(terms, limit) {
-  const pages = window.blogIndex.data;
+  const pages = window.searchIndex.data;
   const titleHits = [];
   const descriptionHits = [];
   let i = 0;
@@ -139,7 +139,7 @@ function getTopResults(searchTerms, topResultsKeywords) {
   const keys = Object.keys(topResultsKeywords);
 
   if (keys?.includes(searchString)) {
-    const pages = window.blogIndex.data;
+    const pages = window.searchIndex.data;
     const topPages = [];
     const topPaths = topResultsKeywords[searchString].replaceAll('*', getLanguage()).split(',');
     topPaths.forEach((path) => {
