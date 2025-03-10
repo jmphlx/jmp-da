@@ -455,7 +455,11 @@ async function loadEager(doc) {
     if (noHeader) {
       document.body.classList.add('noHeader');
     } else if (isSKPPage) {
-      document.body.classList.add('skp-header');
+      if (window.innerWidth >= 900) {
+        document.body.classList.add('skp-header');
+      } else {
+        document.body.classList.add('skp-header-mobile');
+      }
     } else if (window.innerWidth >= 900) {
       document.body.classList.add('basic');
     } else {
