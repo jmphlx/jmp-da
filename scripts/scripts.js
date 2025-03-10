@@ -93,6 +93,20 @@ function buildSectionBackground(main) {
 }
 
 /**
+ * Remove div from horizontal-rule element so it doesn't try to build
+ * as a block. We only need the horizontal-rule style (and other styles)
+ * on it's own empty element.
+ * @param {*} main the Container Element
+ * @author JMP
+ */
+function buildHorizontalRule(main) {
+  main.querySelectorAll('div.horizontal-rule').forEach((line) => {
+    const pElement = createTag('p', { class: line.classList.toString() });
+    line.replaceWith(pElement);
+  });
+}
+
+/**
  * Get all sections that have a data-id attribute and change data-id to id.
  * @param {*} main The container element
  * @author JMP
@@ -131,6 +145,7 @@ export function buildAutoBlocks(main) {
   try {
     // buildHeroBlock(main);
     buildSectionBackground(main);
+    buildHorizontalRule(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
