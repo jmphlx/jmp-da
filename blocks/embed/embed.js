@@ -59,15 +59,15 @@ const embedTwitter = (url) => {
 // vidyard videos
 export const embedVidyard = (url) => {
   const video = url.pathname.split('/').pop(); // breaks out UUID of vidyard URL
-  console.log(video);
-  console.log(url.search.indexOf("cc="));
-  console.log(url.search.substring(4,6));
-  console.log("asdkljasfdjlk;asj;klda")
+  let lang = ''; // initialize empty string for cc
 
-  const query = url.search;
-  const caption = url.search.indexOf("cc=");
-  const lang = url.search.substring(caption + 3,caption + 5);
-  console.log(lang);
+  const query = url.search; // check url query, find cc parameter
+  const caption = url.search.indexOf('cc=');
+
+  if (caption >= 0) {
+    // check if cc is present in query, if so get language code
+    lang = url.search.substring(caption + 3, caption + 5);
+  }
 
   loadScript('https://play.vidyard.com/embed/v4.js');
 
