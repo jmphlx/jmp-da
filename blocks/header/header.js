@@ -1,7 +1,12 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { createTag } from '../../scripts/helper.js';
 import { onSearchInput } from './search.js';
-import { getLangMenuPageUrl, getLanguageNav, debounce } from '../../scripts/jmp.js';
+import {
+  getLangMenuPageUrl,
+  getLanguageNav,
+  debounce,
+  updateBodyClassOnWindowResize,
+} from '../../scripts/jmp.js';
 import { getCommonsSheet, getTranslationStringEnum } from '../../scripts/search.js';
 
 // media query match that indicates mobile/tablet width
@@ -323,6 +328,7 @@ export default async function decorate(block) {
   // prevent mobile nav behavior on window resize
   toggleMenu(nav, isDesktop.matches);
   isDesktop.addEventListener('change', () => {
+    updateBodyClassOnWindowResize(isDesktop.matches);
     toggleMenu(nav, isDesktop.matches);
     languageDropdownDecorated = false;
   });

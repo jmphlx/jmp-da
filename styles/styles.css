@@ -118,6 +118,11 @@ body.noHeader {
     display: none;
   }
 }
+body.skp-header-mobile {
+  header {
+    height: 191.5px;
+  }
+}
 
 header.header-wrapper {
   height: var(--nav-height);

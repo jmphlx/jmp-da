@@ -1,6 +1,6 @@
 import { createTag } from '../../scripts/helper.js';
 import { onSearchInput } from './search.js';
-import { getLanguageNav, debounce } from '../../scripts/jmp.js';
+import { getLanguageNav, debounce, updateBodyClassOnWindowResize } from '../../scripts/jmp.js';
 import { decorateBlock, loadBlock } from '../../scripts/aem.js';
 import { getCommonsSheet, getTranslationStringEnum } from '../../scripts/search.js';
 
@@ -137,6 +137,7 @@ export default async function decorate(block) {
 
   // close mobile nav if window resizes between desktop and mobile
   isDesktop.addEventListener('change', () => {
+    updateBodyClassOnWindowResize(isDesktop.matches, true);
     toggleHamburgerMenu(nav, false);
   });
 
