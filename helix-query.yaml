@@ -4,11 +4,7 @@ indices:
 #ENGLISH CONTENT#
   jmp-en:
     include:
-      - /en/**
-    exclude:
-      - /en/drafts/**
-      - /en/sandbox/**
-      - /en/fragments/**
+      - /**
     target: /jmp-en.json
     properties:
       author:
@@ -128,10 +124,6 @@ indices:
   jmp-es:
     include:
       - /es/**
-    exclude:
-      - /es/drafts/**
-      - /es/sandbox/**
-      - /es/fragments/**
     target: /jmp-es.json
     properties:
       author:
@@ -1616,10 +1608,6 @@ indices:
   jmp-all:
     include:
       - /**
-    exclude:
-      - /sandbox/**
-      - /drafts/**
-      - /0-sandbox/**
     target: /jmp-all.json
     properties:
       author:
