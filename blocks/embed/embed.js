@@ -59,6 +59,15 @@ const embedTwitter = (url) => {
 // vidyard videos
 export const embedVidyard = (url) => {
   const video = url.pathname.split('/').pop(); // breaks out UUID of vidyard URL
+  let lang = ''; // initialize empty string for cc
+
+  const query = url.search; // check url query, find cc parameter
+  const caption = url.search.indexOf('cc=');
+
+  if (caption >= 0) {
+    // check if cc is present in query, if so get language code
+    lang = url.search.substring(caption + 3, caption + 5);
+  }
 
   loadScript('https://play.vidyard.com/embed/v4.js');
 
@@ -73,6 +82,7 @@ export const embedVidyard = (url) => {
         container: document.querySelector('div.embed-vidyard'),
         autoplay,
         type: 'inline',
+        cc: lang,
       });
     };
     return null;
@@ -86,7 +96,8 @@ export const embedVidyard = (url) => {
       data-uuid="${video}"
       data-v="4"
       data-autoplay=${autoplay}
-      data-type="inline"/>
+      data-type="inline"
+      data-cc="${lang}"/>
     </div>`;
   return embedHTML;
 };
