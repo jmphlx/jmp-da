@@ -537,6 +537,24 @@ function debounce(func, delay) {
   };
 }
 
+function updateBodyClassOnWindowResize(isDesktop, isSKP = false) {
+  if (isSKP) {
+    if (isDesktop) {
+      document.body.classList.remove('skp-header-mobile');
+      document.body.classList.add('skp-header');
+    } else {
+      document.body.classList.remove('skp-header');
+      document.body.classList.add('skp-header-mobile');
+    }
+  } else if (isDesktop) {
+    document.body.classList.remove('basic-mobile');
+    document.body.classList.add('basic');
+  } else {
+    document.body.classList.remove('basic');
+    document.body.classList.add('basic-mobile');
+  }
+}
+
 export {
   arrayIncludesAllValues,
   arrayIncludesSomeValues,
@@ -563,4 +581,5 @@ export {
   pageOrFilter,
   parseBlockOptions,
   sortPageList,
+  updateBodyClassOnWindowResize,
 };
