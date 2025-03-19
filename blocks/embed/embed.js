@@ -61,7 +61,6 @@ export const embedVidyard = (url) => {
   const video = url.pathname.split('/').pop(); // breaks out UUID of vidyard URL
   let lang = ''; // initialize empty string for cc
 
-  const query = url.search; // check url query, find cc parameter
   const caption = url.search.indexOf('cc=');
 
   if (caption >= 0) {
