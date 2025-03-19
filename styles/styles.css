@@ -812,7 +812,7 @@ a:hover {
       }
     }
     @media (width <= 900px) {
-      display: flex !important;
+      display: flex;
       flex-flow: column wrap;
       .default-content-wrapper {
         margin: auto;
