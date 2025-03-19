@@ -799,7 +799,7 @@ a:hover {
     width: 100%;
   }
   &:has(.default-content-wrapper p.button-container + p.button-container) {
-    display: flex !important;
+    display: flex;
     flex-flow: column wrap;
     .default-content-wrapper {
       text-align: center;
