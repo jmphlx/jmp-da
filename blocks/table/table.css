@@ -148,6 +148,9 @@
 }
 .header-blue {
   thead {
+    td {
+      color: #ffffff;
+    }
     tr {
       background-color: var(--blue) !important;
       color: var(--blue);
