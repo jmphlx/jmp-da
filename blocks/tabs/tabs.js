@@ -1,11 +1,26 @@
 // eslint-disable-next-line import/no-unresolved
+import { embedVidyard } from '../embed/embed.js';
 import { toClassName } from '../../scripts/aem.js';
+
+function decorateEmbed(elems) {
+  elems.forEach((elem) => {
+    const embedHTML = embedVidyard(elem);
+    const parentEl = elem.parentElement;
+    parentEl.classList.add('embed', 'embed-ceros');
+    parentEl.innerHTML = embedHTML;
+    elem.remove();
+  });
+}
 
 function hasWrapper(el) {
   return !!el.firstElementChild && window.getComputedStyle(el.firstElementChild).display === 'block';
 }
 
 export default async function decorate(block) {
+  // embed
+  const embedUrls = block.querySelectorAll('a[href*="share.vidyard.com"]');
+
+  decorateEmbed(embedUrls);
   // build tablist
   const tablist = document.createElement('div');
   tablist.className = 'tabs-list';
