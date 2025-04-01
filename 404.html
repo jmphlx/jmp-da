@@ -19,7 +19,7 @@
       import { createTag } from '/scripts/helper.js';
       import { getLanguage } from '/scripts/jmp.js';
       const lang = getLanguage();
-      const fragPath = `/fragments/${lang}/404`;
+      const fragPath = `/${lang}/fragments/404`;
       const fullPath = `https://main--jmp-da--jmphlx.hlx.live${fragPath}`;
       document.getElementById('fragment').setAttribute('href', fragPath);
       document.getElementById('fragment').innerText = fullPath;
