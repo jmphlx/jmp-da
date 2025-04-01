@@ -441,6 +441,38 @@ function setMetaImage() {
   }
 }
 
+/**
+ * Hash Utils
+ * Transform links with a # value that includes '_'
+ * into an <a> with a target value.
+ * Supports _blank, _self, _parent, _top.
+ * It does not support opening a link in a named iframe.
+ * @param {*} doc entire page
+ */
+function addTargetsToLinks(doc) {
+  doc.querySelectorAll('a').forEach((link) => {
+    if (!link.hash) {
+      return;
+    }
+    const hashArray = link.hash?.split(/(?=#)/);
+    let targetVal;
+    if (hashArray.length > 1) {
+      hashArray.forEach((hashVal) => {
+        if (hashVal.indexOf('#_') > -1) {
+          targetVal = hashVal;
+        }
+      });
+    } else if (hashArray[0].indexOf('#_') > -1) {
+      targetVal = hashArray[0];
+    }
+
+    if (targetVal) {
+      link.hash = link.hash.replace(targetVal, '');
+      link.target = targetVal.substring(1);
+    }
+  });
+}
+
 export function getDefaultMetaImage() {
   return defaultMetaImage;
 }
@@ -500,6 +532,8 @@ async function loadEager(doc) {
  * @param {Element} doc The container element
  */
 async function loadLazy(doc) {
+  // This will transform all the links within the main content.
+  addTargetsToLinks(doc);
   autolinkModals(doc);
 
   const main = doc.querySelector('main');
@@ -517,24 +551,32 @@ async function loadLazy(doc) {
   includeDelayedScript = !noHeader && !noFooter;
 
   if (!noHeader) {
+    let headerLoaded;
     // If this is a SKP page, use the SKP header (custom and reduces js).
     if (isSKPPage) {
       const headerBlock = buildBlock('header-skp', '');
       doc.querySelector('header').append(headerBlock);
       decorateBlock(headerBlock);
-      loadBlock(headerBlock);
+      headerLoaded = loadBlock(headerBlock);
     } else if (headerValue.toLowerCase() === 'simpleheader') {
       const headerBlock = buildBlock('header-simple', '');
       doc.querySelector('header').append(headerBlock);
       decorateBlock(headerBlock);
-      loadBlock(headerBlock);
+      headerLoaded = loadBlock(headerBlock);
     } else {
-      loadHeader(doc.querySelector('header'));
+      headerLoaded = loadHeader(doc.querySelector('header'));
     }
+    headerLoaded.then((result) => {
+      // After loading header, transform links with hashes
+      addTargetsToLinks(result);
+    });
   }
 
   if (!noFooter) {
-    loadFooter(doc.querySelector('footer'));
+    loadFooter(doc.querySelector('footer')).then((result) => {
+      // After loading footer, transform links with hashes
+      addTargetsToLinks(result);
+    });
   }
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
