@@ -1859,6 +1859,9 @@ main img {
 .image-size-70 img {
   width: 70% !important;
 }
+.image-size-75 img {
+  width: 75% !important;
+}
 .image-size-80 img {
   width: 80% !important;
 }
