@@ -1,3 +1,25 @@
+// AEM Experimentation 
+const experimentationConfig = {
+  prodHost: 'www.jmp.com',
+  audiences: {
+    mobile: () => window.innerWidth < 600,
+    desktop: () => window.innerWidth >= 600,
+    // define your custom audiences here as needed
+  }
+};
+
+let runExperimentation;
+let showExperimentationOverlay;
+const isExperimentationEnabled = document.head.querySelector('[name^="experiment"],[name^="campaign-"],[name^="audience-"],[property^="campaign:"],[property^="audience:"]')
+    || [...document.querySelectorAll('.section-metadata div')].some((d) => d.textContent.match(/Experiment|Campaign|Audience/i));
+
+    if (isExperimentationEnabled) {
+  ({
+    loadEager: runExperimentation,
+    loadLazy: showExperimentationOverlay,
+  } = await import('../plugins/experimentation/src/index.js'));
+}
+
 import {
   sampleRUM,
   buildBlock,
@@ -485,6 +507,13 @@ async function loadEager(doc) {
   addTitleSuffix();
   setMetaImage();
   decorateTemplateAndTheme();
+
+  // Instrument Experimentation Plugin 
+
+  if (runExperimentation) {
+    await runExperimentation(document, experimentationConfig);
+  }
+
   decoratePageStyles();
   if (isSKPPage) {
     addMathJax();
@@ -581,6 +610,11 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
+
+  // Experimenetation authoring overlay
+  if (showExperimentationOverlay) {
+    await showExperimentationOverlay(document, experimentationConfig); 
+  }
 }
 
 /**
