@@ -20,6 +20,11 @@
 .columns > div > .columns-img-col {
   order: 0;
 }
+.image-order-2 {
+  .columns-img-col {
+    order: 1 !important;
+  }
+}
 .columns > div > .columns-img-col img {
   display: block;
 }
@@ -255,6 +260,15 @@
         order: 0;
       } */
     }
+  }
+}
+.h6-blue {
+  h6 {
+    font-family: "anova-bold", sans-serif;
+    color: var(--blue);
+    text-transform: uppercase;
+    font-size: 1.4rem;
+    padding-bottom: .25rem;
   }
 }
 /* resource center columns */
@@ -526,6 +540,9 @@ div.clm-8-92, div.clm-10-90, div.clm-50-50, div.clm-60-40, div.clm-40-60, div.cl
   }
   &.columns > div > div {
     align-self: center !important;
+    @media (width <=900px) {
+      width: 100%;
+    }
   }
 }
 div.clm-8-92 {
