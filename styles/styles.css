@@ -172,7 +172,7 @@ h6 {
 }
 p, dl, ol, ul, pre, blockquote {
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 1em;
   font-weight: normal;
 }
 strong {
@@ -318,7 +318,7 @@ h1 + h5 {
     margin-bottom: 1rem !important;
   }
   &:has(+ :is(p, ul, ol)) {
-    margin-bottom: .5rem !important;
+    margin-bottom: .5em !important;
   }
   &:has(+ :is(p.button-container)) {
     margin-bottom: 1.6rem !important;
@@ -411,6 +411,11 @@ h6:has(+ h6){
     margin-bottom: 1rem !important;
   }
 } */
+:is(p) {
+  &:has(+ :is(h3, h4, h5)) {
+    margin-bottom: 1.5em;
+  }
+}
 
 code, pre {
   font-family: var(--fixed-font-family);
