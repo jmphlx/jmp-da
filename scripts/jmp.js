@@ -1,3 +1,5 @@
+import { getDefaultMetaImage } from './scripts.js';
+
 const knownObjectProperties = ['options', 'filters'];
 
 /**
@@ -555,6 +557,27 @@ function updateBodyClassOnWindowResize(isDesktop, isSKP = false) {
   }
 }
 
+/**
+ * Utility for including an image in listgroup card.
+ * First check for displayImage.
+ * If no displayImage, look for og:image or image property.
+ * If no og:image, then use the default meta image..
+ * @param {*} propertyName
+ * @param {*} item
+ * @returns html string output of image card
+ */
+function writeImagePropertyInList(propertyName, item) {
+  let imageSrc;
+  if (item.displayImage) {
+    imageSrc = item.displayImage;
+  } else if (item.image) {
+    imageSrc = item.image;
+  } else {
+    imageSrc = getDefaultMetaImage();
+  }
+  return `<span class="${propertyName}"><img src="${imageSrc}"/></span>`;
+}
+
 export {
   arrayIncludesAllValues,
   arrayIncludesSomeValues,
@@ -582,4 +605,5 @@ export {
   parseBlockOptions,
   sortPageList,
   updateBodyClassOnWindowResize,
+  writeImagePropertyInList,
 };
