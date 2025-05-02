@@ -7,10 +7,8 @@ import {
 } from '../../scripts/aem.js';
 import {
   getBlockConfig,
+  writeImagePropertyInList,
 } from '../../scripts/jmp.js';
-import {
-  getDefaultMetaImage,
-} from '../../scripts/scripts.js';
 
 const ogNames = {
   title: 'og:title',
@@ -80,9 +78,12 @@ export default async function decorate(block) {
       config.displayProperties?.forEach((prop) => {
         const pagePropVal = getMetaValue(prop, doc);
         let span;
-        if (prop === 'image') {
-          const imageValue = !pagePropVal ? getDefaultMetaImage() : pagePropVal;
-          span = `<span class="${prop}"><img src="${imageValue}"/></span>`;
+        if (prop === 'image' || prop === 'displayImage') {
+          const imageItem = {
+            image: getMetaValue('image', doc),
+            displayImage: getMetaValue('displayImage', doc),
+          };
+          span = writeImagePropertyInList(prop, imageItem);
         } else {
           span = `<span class="${prop}">${pagePropVal}</span>`;
         }

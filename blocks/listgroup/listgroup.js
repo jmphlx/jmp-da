@@ -12,6 +12,8 @@ import {
   filterOutRobotsNoIndexPages,
 } from '../../scripts/jmp.js';
 
+import { getDefaultMetaImage } from '../../scripts/scripts.js';
+
 export default async function decorate(block) {
   const overwriteLanguageIndex = getBlockProperty(block, 'overwriteIndexLanguage');
   // Get language index.
@@ -79,7 +81,15 @@ export default async function decorate(block) {
     <span class="navigation-title">${item.resourceType}</span>
     <span class="title">${item.title}</span>`;
     if (optionsObject.images === undefined || optionsObject.images.toLowerCase() !== 'off') {
-      htmlOutput += `<span class="cmp-image image"><img src="${item.image}"/></span>`;
+      let imageSrc;
+      if (item.displayImage) {
+        imageSrc = item.displayImage;
+      } else if (item.image) {
+        imageSrc = item.image;
+      } else {
+        imageSrc = getDefaultMetaImage();
+      }
+      htmlOutput += `<span class="cmp-image image"><img src="${imageSrc}"/></span>`;
     }
     htmlOutput += `<span class="abstract">${item.displayDescription}</span>`;
     cardLink.innerHTML = htmlOutput;
