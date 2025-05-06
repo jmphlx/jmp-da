@@ -17,7 +17,6 @@ import { createTag } from '../../scripts/helper.js';
 
 let useFilter = false;
 let useTabs = false;
-let displayAmount;
 
 function lowercaseObj(obj) {
   const newObj = {};
@@ -367,16 +366,19 @@ function loadMoreItems(matching, block, config) {
   console.log('load more');
   const listElement = block.querySelector('ul');
   if (listElement) {
+    let currDisplayNum = listElement.getAttribute('data-displaynum');
     const limit = config.limit;
-    displayAmount = displayAmount | limit;
-    const startingItem = displayAmount;
-    const columns = config.columns;
+    currDisplayNum = currDisplayNum | limit;
+    const startingItem = currDisplayNum;
+    const columns = config.columns ? config.columns : 5;
     const rows = 3;
     const numOfAddedItems = rows * columns;
-    displayAmount = displayAmount + numOfAddedItems;
-    console.log(`add items ${startingItem} to ${displayAmount}`);
-    const matchingItemsToAdd = matching.slice(startingItem, displayAmount);
-    if (displayAmount > matching.length) {
+    currDisplayNum = currDisplayNum + numOfAddedItems;
+    console.log(`${numOfAddedItems}`);
+    console.log(`add items ${startingItem} to ${currDisplayNum}`);
+    listElement.setAttribute('data-displaynum', currDisplayNum);
+    const matchingItemsToAdd = matching.slice(startingItem, currDisplayNum);
+    if (currDisplayNum > matching.length) {
       // no more results.
       block.querySelector('button').disabled = true;
     } 
