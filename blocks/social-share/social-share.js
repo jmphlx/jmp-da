@@ -40,19 +40,12 @@ function createMobileShareLink(shareType) {
     classList: shareType,
   });
 
-  let urlPath;
-  if (window.location.hostname === 'localhost') {
-    urlPath = `https://www.jmp.com${window.location.pathname}`;
-  } else {
-    urlPath = encodeURIComponent(window.location.href);
-  }
-
   spanEl.addEventListener('click', async (e) => {
     if (navigator.canShare) {
       try {
         await navigator.share({
           title: `${document.title}`,
-          text: `${urlPath}`,
+          text: `Check out this blog post: ${window.location.href}`,
         });
       } catch (error) {
       }
