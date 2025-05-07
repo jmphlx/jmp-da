@@ -4,3 +4,28 @@
     width: 22px;
   }
 }
+
+#copy-to-clipboard .copied-to-clipboard {
+  position: relative;
+  top: 30px;
+  right: -8px;
+  display: flex;
+  justify-content: center;
+  width: 112px;
+  padding: 8px 4px;
+  background: var(--blue);
+  color: white;
+  text-align: center;
+  animation: fade-out ease 1s;
+  animation-delay: 4.1s;
+}
+
+#copy-to-clipboard .copied-to-clipboard::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  right: 11px;
+  margin-left: -8px;
+  border: 8px solid transparent;
+  border-bottom-color: var(--color-gray-800);
+}

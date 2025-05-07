@@ -33,7 +33,7 @@ function createShareLinkIcon(shareType) {
   return spanEl;
 }
 
-function createWebShareLink(shareType) {
+function createMobileShareLink(shareType) {
   const spanEl = document.createElement('span');
   const icon = createTag('img', {
     src: `${window.location.origin}/icons/${shareType}-icon.svg`,
@@ -48,11 +48,61 @@ function createWebShareLink(shareType) {
           text: "Testing share JMP",
         });
       } catch (error) {
-        alert(`Error: ${error.message}`);
       }
     }
   });
   spanEl.append(icon);
+  return spanEl;
+}
+
+async function copyToClipboard(button, copyTxt) {
+  try {
+    await navigator.clipboard.writeText(window.location.href);
+    button.setAttribute('title', copyTxt);
+    button.setAttribute('aria-label', copyTxt);
+
+    const tooltip = createTag('div', { role: 'status', 'aria-live': 'polite', class: 'copied-to-clipboard' }, copyTxt);
+    button.append(tooltip);
+
+    setTimeout(() => {
+      /* c8 ignore next 1 */
+      tooltip.remove();
+    }, 3000);
+    button.classList.remove('copy-failure');
+    button.classList.add('copy-success');
+  } catch (e) {
+    button.classList.add('copy-failure');
+    button.classList.remove('copy-success');
+  }
+}
+
+function createCopyLinkButton() {
+  const spanEl = document.createElement('span');
+
+  const link = document.createElement('a');
+  link.setAttribute('id', 'copy-to-clipboard');
+  link.setAttribute('data-type', 'copylink');
+  let urlPath;
+  if (window.location.hostname === 'localhost') {
+    urlPath = `https://www.jmp.com${window.location.pathname}`;
+  } else {
+    urlPath = encodeURIComponent(window.location.href);
+  }
+  link.href = urlPath;
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    // copy link
+    copyToClipboard(link, 'Copied Link to Clipboard');
+    return false;
+  });
+
+  const icon = createTag('img', {
+    src: `${window.location.origin}/icons/youtube-icon.svg`,
+    classList: 'copylink',
+  });
+  
+  link.append(icon);
+  spanEl.append(link);
   return spanEl;
 }
 
@@ -67,10 +117,10 @@ export default async function decorate(block) {
     wrapper.append(createShareLinkIcon('linkedin'));
   }
   if (block.classList.contains('instagram')) {
-    wrapper.append(createWebShareLink('instagram'));
+    wrapper.append(createMobileShareLink('instagram'));
   }
   if (block.classList.contains('copylink')) {
-
+    wrapper.append(createCopyLinkButton());
   }
   block.append(wrapper);
 }
