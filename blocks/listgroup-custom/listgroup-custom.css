@@ -1332,6 +1332,11 @@ ul.group-header {
 }
 
 .partners {
+  &.no-tabs {
+    .filterDropdown {
+      display: block !important;
+    }
+  }
   .filterDropdown {
     padding: .5rem 1rem !important;
   }
