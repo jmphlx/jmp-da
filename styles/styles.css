@@ -2234,6 +2234,21 @@ div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-60-40, div.
       column-gap: 32px !important;
     }
   }
+  &.column-gap-16 {
+    .layout-wrapper{
+      column-gap: 16px !important;
+    }
+  }
+  &.column-gap-24 {
+    .layout-wrapper{
+      column-gap: 24px !important;
+    }
+  }
+  &.column-gap-32 {
+    .layout-wrapper{
+      column-gap: 32px !important;
+    }
+  }
 }
 .group-1-gray {
   .layout-wrapper {
