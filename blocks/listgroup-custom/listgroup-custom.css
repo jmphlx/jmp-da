@@ -852,7 +852,7 @@ div.listgroup-custom  {
     margin: 0;
     column-gap: 0;
     li {
-      border-radius: 20px;
+      border-radius: 10px;
       margin: 0;
       margin-bottom: 2%;
       width: 100%;
@@ -861,7 +861,7 @@ div.listgroup-custom  {
         display: flex;
         flex-wrap: wrap;
         box-sizing: border-box;
-        border-radius: 20px;
+        border-radius: 10px;
         border: 1px solid var(--gray);
         margin: 0;
         transition: all 0.5s ease;
@@ -873,7 +873,7 @@ div.listgroup-custom  {
           padding-right: 2rem;
           float: left;
           img {
-            border-radius: 20px 0 0 20px;
+            border-radius: 10px 0 0 10px;
             border: none;
           }
         }
@@ -886,7 +886,7 @@ div.listgroup-custom  {
           width: max-content;
           padding: 4px 1.6rem !important;
           margin-left: 2rem;
-          border-radius: 20px;
+          border-radius: 10px;
           background-color: var(--blue);
           &:after {
             display: none;
@@ -987,7 +987,7 @@ div.listgroup-custom  {
             width: auto;
             padding-right: 0;
             img {
-              border-radius: 20px 20px 0 0;
+              border-radius: 10px 10px 0 0;
               border: none;
             }
           }
@@ -1022,16 +1022,20 @@ div.listgroup-custom  {
     margin-top: 2rem !important;
   }
   .navigation-title, .resourceType, .displayLabel {
-    font-size: 12px !important;
+    font-size: 10px !important;
     color: var(--white) !important;
     display: block;
     position: absolute;
-    top: 2rem;
+    top: 1rem;
+    left: 1rem;
     width: max-content;
-    padding: 4px 1.6rem !important;
-    margin-left: 2rem;
-    border-radius: 20px;
+    max-width: 50%;
+    padding: 4px 6px !important;
+    line-height: 1.2 !important;
+    margin-left: 0;
+    border-radius: 5px;
     background-color: var(--blue);
+    font-family: var(--font-bold) !important;
     &:after {
       display: none;
     }

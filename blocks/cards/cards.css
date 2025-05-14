@@ -1184,6 +1184,11 @@
 
 .figure-callout {
   position: relative;
+  &.rounded-10 {
+    li {
+      border-radius: 10px;
+    }
+  }
   &.rounded-20 {
     li {
       border-radius: 20px;
@@ -1192,6 +1197,14 @@
   &.block-padding-none {
     > ul {
       padding: 0 !important;
+    }
+  }
+  &.padding-small {
+    .cards-card-body {
+      padding: 2rem !important;
+      p:last-child {
+        margin-bottom: 0;
+      }
     }
   }
   > ul {
