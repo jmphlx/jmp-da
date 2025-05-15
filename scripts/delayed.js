@@ -9,6 +9,7 @@ sampleRUM('cwv');
 
 function addConsentChangeListener() {
   console.log('add my own listener');
+  console.log(dataLayer);
   const eventName = 'Consent Changed';
   document.addEventListener(eventName, (event) => {
     console.log('found change');
