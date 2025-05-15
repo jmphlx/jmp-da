@@ -25,11 +25,17 @@ function getCookie(cname) {
 
 function checkConsentCookie() {
   console.log('add my own listener');
+  let consentStatus = 3;
   const functionalCookieRegex = /permit(.*)2(.*)/;
   const consentCookie = getCookie('cmapi_cookie_privacy');
   if (consentCookie && consentCookie.match(functionalCookieRegex)) {
     console.log('allow functional cookies');
+    consentStatus = 1;
   }
+
+  const scriptTag = document.createElement('script');
+  scriptTag.innerHTML(`window.VWO = window.VWO || []; window.VWO.init = window.VWO.init || function(state) { window.VWO.consentState = state; } window.VWO.init(${consentStatus});`);
+  document.head.append(scriptTag);
 }
 
 // google tag manager
@@ -58,11 +64,11 @@ function loadGTM() {
   document.body.prepend(noscriptTag);
 }
 
+checkConsentCookie();
 const gtmActive = !window.location.hostname.includes('localhost')
   && !document.location.hostname.includes('.hlx.page')
   && !document.location.hostname.includes('.aem.page');
 
 if (gtmActive) {
   loadGTM();
-  checkConsentCookie();
 }
