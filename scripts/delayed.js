@@ -8,10 +8,12 @@ sampleRUM('cwv');
 // add more delayed functionality here
 
 function addConsentChangeListener() {
-  self.addEventListener('Consent Changed', (event) => {
+  console.log('add my own listener');
+  const eventName = 'Consent Changed';
+  document.addEventListener(eventName, (event) => {
     console.log('found change');
     console.log(event);
-  });
+  }, false);
 }
 
 // google tag manager
