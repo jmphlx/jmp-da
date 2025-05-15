@@ -7,6 +7,13 @@ sampleRUM('cwv');
 
 // add more delayed functionality here
 
+function addConsentChangeListener() {
+  self.addEventListener('Consent Changed', (event) => {
+    console.log('found change');
+    console.log(event);
+  });
+}
+
 // google tag manager
 function loadGTM() {
   const scriptTag = document.createElement('script');
@@ -39,4 +46,5 @@ const gtmActive = !window.location.hostname.includes('localhost')
 
 if (gtmActive) {
   loadGTM();
+  addConsentChangeListener();
 }
