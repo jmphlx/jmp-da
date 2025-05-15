@@ -10,6 +10,10 @@ sampleRUM('cwv');
 function addConsentChangeListener() {
   console.log('add my own listener');
   const functionalCookieRegex = /permit(.*)2(.*)/;
+  if (!window.truste || !window.truste.util || typeof window.truste.util.readCookie !== 'function') {
+    console.log('cant read cookie');
+    return false;
+  }
   var cmapi_cookie_privacy = window.truste.util.readCookie("cmapi_cookie_privacy") || '';
   if (cmapi_cookie_privacy && cmapi_cookie_privacy.matches(functionalCookieRegex)) {
     console.log('allow functional cookies');
