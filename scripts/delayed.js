@@ -3,28 +3,15 @@ import {
   sampleRUM,
   getMetadata,
 } from './aem.js';
-import { createTag } from './helper.js';
+import {
+  createTag,
+  getCookie,
+} from './helper.js';
 
 // Core Web Vitals RUM collection
 sampleRUM('cwv');
 
 // add more delayed functionality here
-
-function getCookie(cname) {
-  let name = cname + "=";
-  let decodedCookie = decodeURIComponent(document.cookie);
-  let ca = decodedCookie.split(';');
-  for(let i = 0; i <ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
-}
 
 function checkConsentCookie() {
   console.log('add my own listener');
@@ -80,5 +67,4 @@ const vwoTracking = getMetadata('vwotracking');
 const enableRegexPattern = /enable(d)*/g;
 if (vwoTracking && vwoTracking.match(enableRegexPattern)) {
   checkConsentCookie();
-
 }
