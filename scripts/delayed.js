@@ -27,7 +27,7 @@ function checkConsentCookie() {
   console.log('add my own listener');
   const functionalCookieRegex = /permit(.*)2(.*)/;
   const consentCookie = getCookie('cmapi_cookie_privacy');
-  if (consentCookie && consentCookie.matches(functionalCookieRegex)) {
+  if (consentCookie && consentCookie.match(functionalCookieRegex)) {
     console.log('allow functional cookies');
   }
 }
