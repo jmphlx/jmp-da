@@ -459,11 +459,11 @@ function addThirdPartyScripts() {
   if (includeGATracking) {
     addGATracking();
   }
-  // const vwoTracking = getMetadata('vwotracking');
-  // const enableRegexPattern = /enable(d)*/g;
-  // if (vwoTracking && vwoTracking.match(enableRegexPattern)) {
-  //   addVWOTracking();
-  // }
+  const vwoTracking = getMetadata('vwotracking');
+  const enableRegexPattern = /enable(d)*/g;
+  if (vwoTracking && vwoTracking.match(enableRegexPattern)) {
+    addVWOTracking();
+  }
 }
 
 /**
