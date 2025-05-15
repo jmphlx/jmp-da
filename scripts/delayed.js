@@ -7,15 +7,27 @@ sampleRUM('cwv');
 
 // add more delayed functionality here
 
-function addConsentChangeListener() {
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+function checkConsentCookie() {
   console.log('add my own listener');
   const functionalCookieRegex = /permit(.*)2(.*)/;
-  if (!window.truste || !window.truste.util || typeof window.truste.util.readCookie !== 'function') {
-    console.log('cant read cookie');
-    return false;
-  }
-  var cmapi_cookie_privacy = window.truste.util.readCookie("cmapi_cookie_privacy") || '';
-  if (cmapi_cookie_privacy && cmapi_cookie_privacy.matches(functionalCookieRegex)) {
+  const consentCookie = getCookie('cmapi_cookie_privacy');
+  if (consentCookie && consentCookie.matches(functionalCookieRegex)) {
     console.log('allow functional cookies');
   }
 }
@@ -52,5 +64,5 @@ const gtmActive = !window.location.hostname.includes('localhost')
 
 if (gtmActive) {
   loadGTM();
-  addConsentChangeListener();
+  checkConsentCookie();
 }
