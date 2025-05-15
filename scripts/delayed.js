@@ -9,12 +9,11 @@ sampleRUM('cwv');
 
 function addConsentChangeListener() {
   console.log('add my own listener');
-  console.log(dataLayer);
-  const eventName = 'Consent Changed';
-  document.addEventListener(eventName, (event) => {
-    console.log('found change');
-    console.log(event);
-  }, false);
+  const functionalCookieRegex = /permit(.*)2(.*)/;
+  var cmapi_cookie_privacy = window.truste.util.readCookie("cmapi_cookie_privacy") || '';
+  if (cmapi_cookie_privacy && cmapi_cookie_privacy.matches(functionalCookieRegex)) {
+    console.log('allow functional cookies');
+  }
 }
 
 // google tag manager
