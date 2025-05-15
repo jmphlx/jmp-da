@@ -1,5 +1,8 @@
 // eslint-disable-next-line import/no-cycle
-import { sampleRUM } from './aem.js';
+import {
+  sampleRUM,
+  getMetadata,
+} from './aem.js';
 import { createTag } from './helper.js';
 
 // Core Web Vitals RUM collection
