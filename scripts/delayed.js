@@ -34,7 +34,7 @@ function checkConsentCookie() {
   }
 
   const scriptTag = document.createElement('script');
-  scriptTag.innerHTML = `window.VWO = window.VWO || []; window.VWO.init = window.VWO.init || function(state) { window.VWO.consentState = state; } window.VWO.init(${consentStatus});`;
+  scriptTag.innerText = `window.VWO = window.VWO || []; window.VWO.init = window.VWO.init || function(state) { window.VWO.consentState = state; } window.VWO.init(${consentStatus});`;
   document.head.append(scriptTag);
 }
 
