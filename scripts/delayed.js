@@ -14,7 +14,6 @@ sampleRUM('cwv');
 // add more delayed functionality here
 
 function checkConsentCookie() {
-  console.log('add my own listener');
   let consentStatus = 3;
   const functionalCookieRegex = /permit(.*)2(.*)/;
   const consentCookie = getCookie('cmapi_cookie_privacy');
