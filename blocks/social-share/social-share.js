@@ -3,6 +3,7 @@ import { createTag } from '../../scripts/helper.js';
 const linkUrls = {
   'facebook': 'https://www.facebook.com/sharer/sharer.php?u=',
   'linkedin': 'https://www.linkedin.com/shareArticle?url=',
+  'bluesky': 'https://bsky.app/intent/compose?text='
 }
 
 function createShareLinkIcon(shareType) {
@@ -25,7 +26,7 @@ function createShareLinkIcon(shareType) {
 
   const icon = createTag('img', {
     src: `${window.location.origin}/icons/${shareType}-icon.svg`,
-    classList: shareType,
+    class: shareType,
   });
   
   link.append(icon);
@@ -37,7 +38,7 @@ function createMobileShareLink(shareType) {
   const spanEl = document.createElement('span');
   const icon = createTag('img', {
     src: `${window.location.origin}/icons/${shareType}-icon.svg`,
-    classList: shareType,
+    class: shareType,
   });
 
   spanEl.addEventListener('click', async (e) => {
@@ -97,8 +98,8 @@ function createCopyLinkButton() {
   });
 
   const icon = createTag('img', {
-    src: `${window.location.origin}/icons/youtube-icon.svg`,
-    classList: 'copylink',
+    src: `${window.location.origin}/icons/copylink-icon.svg`,
+    class: 'copylink',
   });
   
   link.append(icon);
@@ -108,19 +109,28 @@ function createCopyLinkButton() {
 
 export default async function decorate(block) {
   block.textContent = '';
-  console.log(`Classes ${block.classList}`);
   const wrapper = document.createElement('div');
-  if (block.classList.contains('facebook')) {
-    wrapper.append(createShareLinkIcon('facebook'));
-  }
-  if (block.classList.contains('linkedin')) {
-    wrapper.append(createShareLinkIcon('linkedin'));
-  }
-  if (block.classList.contains('instagram')) {
-    wrapper.append(createMobileShareLink('instagram'));
-  }
-  if (block.classList.contains('copylink')) {
-    wrapper.append(createCopyLinkButton());
-  }
+  block.classList.forEach((value) => {
+    switch(value) {
+      case 'facebook':
+        wrapper.append(createShareLinkIcon('facebook'));
+        break;
+      case 'linkedin':
+        wrapper.append(createShareLinkIcon('linkedin'));
+        break;
+      case 'instagram':
+        wrapper.append(createMobileShareLink('instagram'));
+        break;
+      case 'copylink':
+        wrapper.append(createCopyLinkButton());
+        break;
+      case 'bluesky':
+        wrapper.append(createShareLinkIcon('bluesky'));
+        break;
+      default:
+        //Do nothing.
+        break;
+    }
+  });
   block.append(wrapper);
 }

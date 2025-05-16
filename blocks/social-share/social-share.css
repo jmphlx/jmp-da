@@ -1,8 +1,8 @@
-.social-share {
-  img {
-    height: 22px;
-    width: 22px;
-  }
+
+img.facebook,img.linkedin,img.instagram,img.copylink,img.bluesky {
+  height: 22px;
+  width: 22px;
+  filter: brightness(0) saturate(100%) invert(34%) sepia(51%) saturate(3791%) hue-rotate(187deg) brightness(89%) contrast(98%);
 }
 
 #copy-to-clipboard .copied-to-clipboard {
