@@ -25,11 +25,6 @@ function checkConsentCookie() {
       window.VWO.init = window.VWO.init || function(state) { window.VWO.consentState = state; }
       window.VWO.init(${consentStatus});`;
     document.head.appendChild(scriptTag);
-  } else {
-    const preconnectLink = document.querySelector('link[href="https://dev.visualwebsiteoptimizer.com"]');
-    preconnectLink.remove();
-    const vwoCodeScript = document.querySelector('script#vwoCode');
-    vwoCodeScript.remove();
   }
 }
 
