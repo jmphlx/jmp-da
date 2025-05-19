@@ -1028,14 +1028,13 @@ div.listgroup-custom  {
     position: absolute;
     top: 1rem;
     left: 1rem;
-    width: max-content;
+    width: min-content;
     max-width: 50%;
     padding: 4px 6px !important;
     line-height: 1.2 !important;
     margin-left: 0;
     border-radius: 5px;
     background-color: var(--blue);
-    font-family: var(--font-bold) !important;
     &:after {
       display: none;
     }
