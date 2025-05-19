@@ -13,10 +13,15 @@ import {
   writeImagePropertyInList,
 } from '../../scripts/jmp.js';
 
+import { loadScript } from '../../scripts/aem.js';
 import { createTag } from '../../scripts/helper.js';
 
 let useFilter = false;
 let useTabs = false;
+
+const dateProperties = [
+  'releaseDate',
+];
 
 function lowercaseObj(obj) {
   const newObj = {};
@@ -105,6 +110,49 @@ function writeItems(matching, config, listElement) {
   });
 }
 
+function isDateProperty(propertyName) {
+  let isDate = -1;
+  dateProperties.forEach((datePropertyName, index) => {
+    if (propertyName.startsWith(datePropertyName)) {
+      isDate = index;
+      return;
+    }
+  });
+  return isDate;
+}
+
+function checkForDateProperties(displayProperties) {
+  let dateFound = false;
+  displayProperties.forEach((prop) => {
+    if (isDateProperty(prop)) {
+      dateFound = true;
+      return;
+    }
+  })
+  return dateFound;
+}
+
+
+function processDate(dateProperty, prop, item) {
+  let span;
+  const dateFormatRegex = /(?<=\()(.*?)(?=\))/g;
+  const dateFormatString = prop.match(dateFormatRegex);
+
+  if (dateFormatString && dateFormatString.length > 0) {
+    const adjustedPropName = dateProperties[dateProperty];
+    if (item[adjustedPropName]) {
+      const adjustedDate = dateFns.format(item[adjustedPropName], dateFormatString[0]);
+      //console.log(`old date format ${item[adjustedPropName]} New format ${adjustedDate}`);
+      span = `<span class="${adjustedPropName}">${adjustedDate}</span>`;
+    }
+  } else {
+    // Treat date like normal
+    span = `<span class="${prop}">${item[prop]}</span>`;
+  }
+  return span;
+}
+
+
 function writeAsOneGroup(matching, config) {
   const wrapper = document.createElement('ul');
   const columns = config.columns ? config.columns : 5;
@@ -128,8 +176,11 @@ function writeAsOneGroup(matching, config) {
 
     config.displayProperties.forEach((prop) => {
       let span;
+      const dateProperty = isDateProperty(prop);
       if (prop === 'image' || prop === 'displayImage') {
         span = writeImagePropertyInList(prop, item);
+      } else if (dateProperty >= 0) {
+        span = processDate(dateProperty, prop, item);
       } else {
         span = `<span class="${prop}">${item[prop]}</span>`;
       }
@@ -391,6 +442,11 @@ function loadMoreItems(matching, block, config) {
 export default async function decorate(block) {
   const config = getBlockConfig(block);
   block.textContent = '';
+
+  const includesDateProperty = checkForDateProperties(config.displayProperties)
+  if (includesDateProperty) {
+   await loadScript('https://cdn.jsdelivr.net/npm/date-fns@4.1.0/cdn.min.js');
+  }
 
   // Get language index.
   const languageIndexUrl = getLanguageIndex(config.overwriteIndexLanguage);
