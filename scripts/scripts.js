@@ -17,7 +17,10 @@ import {
   loadCSS,
   readBlockConfig,
 } from './aem.js';
-import { createTag } from './helper.js';
+import {
+  createTag,
+  getCookie,
+} from './helper.js';
 
 (async function loadDa() {
   if (!new URL(window.location.href).searchParams.get('dapreview')) return;
@@ -462,7 +465,11 @@ function addThirdPartyScripts() {
   const vwoTracking = getMetadata('vwotracking');
   const enableRegexPattern = /enable(d)*/g;
   if (vwoTracking && vwoTracking.match(enableRegexPattern)) {
-    addVWOTracking();
+    const functionalCookieRegex = /permit(.*)2(.*)/;
+    const consentCookie = getCookie('cmapi_cookie_privacy');
+    if (consentCookie && consentCookie.match(functionalCookieRegex)) {
+      addVWOTracking();
+    }
   }
 }
 
