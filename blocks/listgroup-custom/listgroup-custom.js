@@ -112,26 +112,25 @@ function writeItems(matching, config, listElement) {
 
 function isDateProperty(propertyName) {
   let isDate = -1;
-  dateProperties.forEach((datePropertyName, index) => {
-    if (propertyName.startsWith(datePropertyName)) {
-      isDate = index;
-      return;
+  for (let i = 0; i < dateProperties.length; i++) {
+    if (propertyName.startsWith(dateProperties[i])) {
+      isDate = i;
+      break;
     }
-  });
+  }
   return isDate;
 }
 
 function checkForDateProperties(displayProperties) {
   let dateFound = false;
-  displayProperties.forEach((prop) => {
-    if (isDateProperty(prop)) {
+  for (let i = 0; i < displayProperties.length; i++) {
+    if (isDateProperty(displayProperties[i])) {
       dateFound = true;
-      return;
+      break;
     }
-  })
+  }
   return dateFound;
 }
-
 
 function processDate(dateProperty, prop, item) {
   let span;
@@ -142,7 +141,7 @@ function processDate(dateProperty, prop, item) {
     const adjustedPropName = dateProperties[dateProperty];
     if (item[adjustedPropName]) {
       const adjustedDate = dateFns.format(item[adjustedPropName], dateFormatString[0]);
-      //console.log(`old date format ${item[adjustedPropName]} New format ${adjustedDate}`);
+      // console.log(`old date format ${item[adjustedPropName]} New format ${adjustedDate}`);
       span = `<span class="${adjustedPropName}">${adjustedDate}</span>`;
     }
   } else {
@@ -151,7 +150,6 @@ function processDate(dateProperty, prop, item) {
   }
   return span;
 }
-
 
 function writeAsOneGroup(matching, config) {
   const wrapper = document.createElement('ul');
@@ -443,9 +441,9 @@ export default async function decorate(block) {
   const config = getBlockConfig(block);
   block.textContent = '';
 
-  const includesDateProperty = checkForDateProperties(config.displayProperties)
+  const includesDateProperty = checkForDateProperties(config.displayProperties);
   if (includesDateProperty) {
-   await loadScript('https://cdn.jsdelivr.net/npm/date-fns@4.1.0/cdn.min.js');
+    await loadScript('https://cdn.jsdelivr.net/npm/date-fns@4.1.0/cdn.min.js');
   }
 
   // Get language index.
