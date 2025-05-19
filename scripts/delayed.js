@@ -26,8 +26,8 @@ function checkConsentCookie() {
       window.VWO.init(${consentStatus});`;
     document.head.appendChild(scriptTag);
   } else {
-    const preconnectLink = document.querySelector('link#vwoLink');
-    preconnectLink.remove();
+    // const preconnectLink = document.querySelector('link#vwoLink');
+    // preconnectLink.remove();
     const vwoCodeScript = document.querySelector('script#vwoCode');
     vwoCodeScript.remove();
   }
