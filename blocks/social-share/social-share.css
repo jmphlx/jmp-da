@@ -31,7 +31,7 @@ img.facebook,img.linkedin,img.instagram,img.copylink,img.bluesky {
   }
 }
 
-#copy-to-clipboard .copied-to-clipboard::after {
+#copy-to-clipboard .copied-to-clipboard:after {
   content: '';
   position: absolute;
   bottom: 100%;

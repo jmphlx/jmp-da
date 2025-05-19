@@ -368,12 +368,12 @@ function loadMoreItems(matching, block, config) {
   if (listElement) {
     let currDisplayNum = listElement.getAttribute('data-displaynum');
     const limit = config.limit;
-    currDisplayNum = currDisplayNum | limit;
+    currDisplayNum = currDisplayNum || limit;
     const startingItem = currDisplayNum;
     const columns = config.columns ? config.columns : 5;
     const rows = 3;
     const numOfAddedItems = rows * columns;
-    currDisplayNum = currDisplayNum + numOfAddedItems;
+    currDisplayNum += numOfAddedItems;
     console.log(`${numOfAddedItems}`);
     console.log(`add items ${startingItem} to ${currDisplayNum}`);
     listElement.setAttribute('data-displaynum', currDisplayNum);
@@ -381,7 +381,7 @@ function loadMoreItems(matching, block, config) {
     if (currDisplayNum > matching.length) {
       // no more results.
       block.querySelector('button').disabled = true;
-    } 
+    }
     console.log(matchingItemsToAdd);
     console.log(listElement);
     writeItems(matchingItemsToAdd, config, listElement);
@@ -465,15 +465,14 @@ export default async function decorate(block) {
 
   block.append(wrapper);
 
-
   // Add Load More Button
   if (config.loadMore) {
     if (config.limit && matching && matching.length > config.limit) {
       const loadMoreDiv = document.createElement('div');
-      loadMoreDiv.className = "load-more-container";
+      loadMoreDiv.className = 'load-more-container';
       const loadMoreButton = document.createElement('button');
       loadMoreButton.className = 'load-more-button';
-      loadMoreButton.innerHTML = "Load More";
+      loadMoreButton.innerHTML = 'Load More';
       loadMoreButton.addEventListener('click', () => {
         loadMoreItems(matching, block, config);
       });

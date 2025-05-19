@@ -1,10 +1,10 @@
 import { createTag } from '../../scripts/helper.js';
 
 const linkUrls = {
-  'facebook': 'https://www.facebook.com/sharer/sharer.php?u=',
-  'linkedin': 'https://www.linkedin.com/shareArticle?url=',
-  'bluesky': 'https://bsky.app/intent/compose?text='
-}
+  facebook: 'https://www.facebook.com/sharer/sharer.php?u=',
+  linkedin: 'https://www.linkedin.com/shareArticle?url=',
+  bluesky: 'https://bsky.app/intent/compose?text=',
+};
 
 function createShareLinkIcon(shareType) {
   const spanEl = document.createElement('span');
@@ -20,7 +20,7 @@ function createShareLinkIcon(shareType) {
   link.href = `${linkUrls[shareType]}${urlPath}`;
   link.addEventListener('click', (e) => {
     e.preventDefault();
-    window.open(link.href, 'shareWindow','height=450, width=550, top=' + (window.height / 2 - 275) + ', left=' + (window.width / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+    window.open(link.href, 'shareWindow', `height=450, width-550, top=${window.height / 2 - 275}, left=${window.width / 2 - 225}, toolbar=0, location=0, menubar=0, directories=0, scrollbars=0`);
     return false;
   });
 
@@ -28,7 +28,7 @@ function createShareLinkIcon(shareType) {
     src: `${window.location.origin}/icons/${shareType}-icon.svg`,
     class: shareType,
   });
-  
+
   link.append(icon);
   spanEl.append(link);
   return spanEl;
@@ -41,7 +41,7 @@ function createMobileShareLink(shareType) {
     class: shareType,
   });
 
-  spanEl.addEventListener('click', async (e) => {
+  spanEl.addEventListener('click', async () => {
     if (navigator.canShare) {
       try {
         await navigator.share({
@@ -49,6 +49,7 @@ function createMobileShareLink(shareType) {
           text: `Check out this blog post: ${window.location.href}`,
         });
       } catch (error) {
+        console.log('Cannot share url');
       }
     }
   });
@@ -101,7 +102,7 @@ function createCopyLinkButton() {
     src: `${window.location.origin}/icons/copylink-icon.svg`,
     class: 'copylink',
   });
-  
+
   link.append(icon);
   spanEl.append(link);
   return spanEl;
@@ -111,7 +112,7 @@ export default async function decorate(block) {
   block.textContent = '';
   const wrapper = document.createElement('div');
   block.classList.forEach((value) => {
-    switch(value) {
+    switch (value) {
       case 'facebook':
         wrapper.append(createShareLinkIcon('facebook'));
         break;
@@ -128,7 +129,7 @@ export default async function decorate(block) {
         wrapper.append(createShareLinkIcon('bluesky'));
         break;
       default:
-        //Do nothing.
+        // Do nothing.
         break;
     }
   });
