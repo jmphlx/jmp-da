@@ -425,6 +425,7 @@ function addGATracking() {
  */
 function addVWOTracking() {
   const vwoLink = createTag('link', {
+    id: 'vwoLink',
     rel: 'preconnect',
     href: 'https://dev.visualwebsiteoptimizer.com',
   });
