@@ -549,6 +549,9 @@ main .section {
   &.section-padding-none {
     padding-bottom: 0 !important;
   }
+  &.section-padding-16 {
+    padding-bottom: 16px !important;
+  }
   &.section-padding-xsmall {
     padding-bottom: 32px !important;
   }
@@ -2166,6 +2169,26 @@ div.columns-75-25 {
     }
   }
 }
+div.columns-70-30 {
+  .layout-wrapper {
+    .group-1 {
+      width: 70%;
+    }
+    .group-2 {
+      width: 30%;
+    }
+  }
+}
+div.columns-30-70 {
+  .layout-wrapper {
+    .group-1 {
+      width: 30%;
+    }
+    .group-2 {
+      width: 70%;
+    }
+  }
+}
 div.columns-20-80 {
   .layout-wrapper {
     .group-1 {
@@ -2203,7 +2226,7 @@ div.columns-25-25-25-25 {
   }
 }
 /* column breakpoints */
-div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-60-40, div.columns-40-60, div.columns-66-33, div.columns-33-66, div.columns-20-80 , div.columns-80-20 {
+div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-30-70, div.columns-70-30, div.columns-60-40, div.columns-40-60, div.columns-66-33, div.columns-33-66, div.columns-20-80 , div.columns-80-20 {
   @media (width >=900px) {
     .layout-wrapper {
       column-gap: 64px !important;
@@ -2231,6 +2254,21 @@ div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-60-40, div.
   }
   @media (width <=900px) {
     .layout-wrapper {
+      column-gap: 32px !important;
+    }
+  }
+  &.column-gap-16 {
+    .layout-wrapper{
+      column-gap: 16px !important;
+    }
+  }
+  &.column-gap-24 {
+    .layout-wrapper{
+      column-gap: 24px !important;
+    }
+  }
+  &.column-gap-32 {
+    .layout-wrapper{
       column-gap: 32px !important;
     }
   }

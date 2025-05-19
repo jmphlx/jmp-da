@@ -1184,6 +1184,29 @@
 
 .figure-callout {
   position: relative;
+  &.rounded-10 {
+    li {
+      border-radius: 10px;
+    }
+  }
+  &.rounded-20 {
+    li {
+      border-radius: 20px;
+    }
+  }
+  &.block-padding-none {
+    > ul {
+      padding: 0 !important;
+    }
+  }
+  &.padding-small {
+    .cards-card-body {
+      padding: 2rem !important;
+      p:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
   > ul {
     display: flex;
     flex-wrap: wrap;
@@ -1202,8 +1225,8 @@
         border-width: 0 3px 3px 0;
         display: inline-block;
         position: absolute;
-        right: 0;
-        top: 0;
+        right: 8px;
+        top: 8px;
         padding: 6px;
         margin: 12px 12px 0 0;
         transform: rotate(-45deg);
@@ -1259,6 +1282,9 @@
             width: auto;
             object-fit: contain;
           }
+        }
+        &:last-child {
+          padding-bottom: 0;
         }
         strong {
           color: #ffffff;
