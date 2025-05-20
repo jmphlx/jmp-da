@@ -2,8 +2,6 @@ import { getDefaultMetaImage } from './scripts.js';
 
 const knownObjectProperties = ['options', 'filters'];
 
-const dateProperties = ['releaseDate'];
-
 /**
  * Returns if a given 2 or 4 digit language is supported
  * by JMP. Support means that it should have it's own
@@ -580,32 +578,9 @@ function writeImagePropertyInList(propertyName, item) {
   return `<span class="${propertyName}"><img src="${imageSrc}"/></span>`;
 }
 
-function isDateProperty(propertyName) {
-  let isDate = -1;
-  for (let i = 0; i < dateProperties.length; i++) {
-    if (propertyName.startsWith(dateProperties[i])) {
-      isDate = i;
-      break;
-    }
-  }
-  return isDate;
-}
-
-function checkForDateProperties(displayProperties) {
-  let dateFound = false;
-  for (let i = 0; i < displayProperties.length; i++) {
-    if (isDateProperty(displayProperties[i])) {
-      dateFound = true;
-      break;
-    }
-  }
-  return dateFound;
-}
-
 export {
   arrayIncludesAllValues,
   arrayIncludesSomeValues,
-  checkForDateProperties,
   containsOperator,
   debounce,
   matchesOperator,
@@ -623,7 +598,6 @@ export {
   getLanguageNav,
   getListFilterOptions,
   getSKPLanguageIndex,
-  isDateProperty,
   isLanguageSupported,
   pageAndFilter,
   pageFilterByFolder,

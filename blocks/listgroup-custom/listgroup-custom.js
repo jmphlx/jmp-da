@@ -11,12 +11,12 @@ import {
   sortPageList,
   filterOutRobotsNoIndexPages,
   writeImagePropertyInList,
-  isDateProperty,
-  checkForDateProperties,
 } from '../../scripts/jmp.js';
 
 import { loadScript } from '../../scripts/aem.js';
 import { createTag } from '../../scripts/helper.js';
+
+const dateProperties = ['releaseDate'];
 
 let useFilter = false;
 let useTabs = false;
@@ -75,6 +75,28 @@ function pageMatches(page, filters) {
     return true;
   }
   return false;
+}
+
+function isDateProperty(propertyName) {
+  let isDate = -1;
+  for (let i = 0; i < dateProperties.length; i++) {
+    if (propertyName.startsWith(dateProperties[i])) {
+      isDate = i;
+      break;
+    }
+  }
+  return isDate;
+}
+
+function checkForDateProperties(displayProperties) {
+  let dateFound = false;
+  for (let i = 0; i < displayProperties.length; i++) {
+    if (isDateProperty(displayProperties[i])) {
+      dateFound = true;
+      break;
+    }
+  }
+  return dateFound;
 }
 
 function processDate(dateProperty, prop, item) {
