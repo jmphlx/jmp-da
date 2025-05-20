@@ -2473,6 +2473,31 @@ div.blog-hero {
     }
   }
 }
+.social-share-top-right {
+  .group-1 {
+    width: 50%;
+  }
+  .group-2 {
+    display: flex;
+    width: 50%;
+    justify-content: flex-end;
+    gap: 1rem;
+    p {
+      margin-bottom: 0;
+    }
+    .social-share-wrapper {
+      img {
+        padding-top: 0;
+      }
+    }
+  }
+  @media (width <=900px) {
+    .layout-wrapper {
+      display: flex !important;
+      flex-direction: row;
+    }
+  }
+}
 div.interview-body {
   .layout-wrapper {
     column-gap: 64px !important;
