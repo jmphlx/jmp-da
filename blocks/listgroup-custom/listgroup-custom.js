@@ -74,6 +74,37 @@ function pageMatches(page, filters) {
   return false;
 }
 
+function writeItems(matching, config, listElement) {
+  matching?.forEach((item) => {
+    const listItem = document.createElement('li');
+    listItem.classList = `${item.resourceOptions}`;
+    const cardLink = document.createElement('a');
+    if (item.redirectTarget?.length > 0) {
+      cardLink.href = item.redirectTarget;
+      cardLink.target = '_blank';
+    } else {
+      cardLink.href = item.path;
+      cardLink.target = '_self';
+    }
+
+    const htmlOutput = [];
+
+    config.displayProperties.forEach((prop) => {
+      let span;
+      if (prop === 'image' || prop === 'displayImage') {
+        span = writeImagePropertyInList(prop, item);
+      } else {
+        span = `<span class="${prop}">${item[prop]}</span>`;
+      }
+      htmlOutput.push(span);
+    });
+    cardLink.innerHTML = htmlOutput.join('');
+
+    listItem.append(cardLink);
+    listElement.append(listItem);
+  });
+}
+
 function writeAsOneGroup(matching, config) {
   const wrapper = document.createElement('ul');
   const columns = config.columns ? config.columns : 5;
@@ -331,6 +362,32 @@ function buildSimplifiedFilter(filterString, startingFolder) {
   return filterObj;
 }
 
+function loadMoreItems(matching, block, config) {
+  console.log('load more');
+  const listElement = block.querySelector('ul');
+  if (listElement) {
+    let currDisplayNum = listElement.getAttribute('data-displaynum');
+    const limit = config.limit;
+    currDisplayNum = currDisplayNum || limit;
+    const startingItem = currDisplayNum;
+    const columns = config.columns ? config.columns : 5;
+    const rows = 3;
+    const numOfAddedItems = rows * columns;
+    currDisplayNum += numOfAddedItems;
+    console.log(`${numOfAddedItems}`);
+    console.log(`add items ${startingItem} to ${currDisplayNum}`);
+    listElement.setAttribute('data-displaynum', currDisplayNum);
+    const matchingItemsToAdd = matching.slice(startingItem, currDisplayNum);
+    if (currDisplayNum > matching.length) {
+      // no more results.
+      block.querySelector('button').disabled = true;
+    }
+    console.log(matchingItemsToAdd);
+    console.log(listElement);
+    writeItems(matchingItemsToAdd, config, listElement);
+  }
+}
+
 export default async function decorate(block) {
   const config = getBlockConfig(block);
   block.textContent = '';
@@ -361,6 +418,8 @@ export default async function decorate(block) {
       matching.push(page);
     }
   });
+
+  console.log(`Found items ${matching.length}`);
 
   // Do not include Robots noindex pages.
   matching = filterOutRobotsNoIndexPages(matching);
@@ -403,5 +462,22 @@ export default async function decorate(block) {
   } else {
     wrapper = buildListItems(block, matching, tabDictionary, config);
   }
+
   block.append(wrapper);
+
+  // Add Load More Button
+  if (config.loadMore) {
+    if (config.limit && matching && matching.length > config.limit) {
+      const loadMoreDiv = document.createElement('div');
+      loadMoreDiv.className = 'load-more-container';
+      const loadMoreButton = document.createElement('button');
+      loadMoreButton.className = 'load-more-button';
+      loadMoreButton.innerHTML = 'Load More';
+      loadMoreButton.addEventListener('click', () => {
+        loadMoreItems(matching, block, config);
+      });
+      loadMoreDiv.append(loadMoreButton);
+      block.append(loadMoreDiv);
+    }
+  }
 }

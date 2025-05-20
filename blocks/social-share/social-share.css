@@ -1,0 +1,42 @@
+
+img.facebook,img.linkedin,img.instagram,img.copylink,img.bluesky {
+  height: 22px;
+  width: 22px;
+  padding: 4px;
+  filter: brightness(0) saturate(100%) invert(34%) sepia(51%) saturate(3791%) hue-rotate(187deg) brightness(89%) contrast(98%);
+}
+
+
+@media (min-width: 601px) {
+  img.instagram {
+    display: none;
+  }
+}
+
+#copy-to-clipboard {
+  position: relative;
+  .copied-to-clipboard {
+    position: absolute;
+    top: 30px;
+    right: -8px;
+    display: flex;
+    justify-content: center;
+    width: 112px;
+    padding: 8px 4px;
+    background: var(--blue);
+    color: white;
+    text-align: center;
+    animation: fade-out ease 1s;
+    animation-delay: 4.1s;
+  }
+}
+
+#copy-to-clipboard .copied-to-clipboard:after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  right: 11px;
+  margin-left: -8px;
+  border: 8px solid transparent;
+  border-bottom-color: var(--color-gray-800);
+}
