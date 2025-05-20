@@ -1634,20 +1634,23 @@ ul.group-header {
 
   .load-more-button {
     border: 2px solid var(--blue);
+    border: 0;
+    border-radius: 5px;
     color: var(--background-color);
     background-color: var(--blue);
-    padding: 15px 32px;
+    padding: 14px 20px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    cursor: pointer;
   }
   .load-more-button:hover:not([disabled]) {
     background-color: var(--blue-hover);
   }
   button:disabled, button[disabled] {
     border: 1px solid #999999;
-    background-color: #cccccc;
-    color: #666666;
+    background-color: #d0d0d0;
+    color: #333333;
   }
 }
