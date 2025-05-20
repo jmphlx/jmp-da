@@ -580,7 +580,6 @@ div.listgroup-fixed, div.listgroup  {
           margin-left: 2rem;
           border-radius: 5px;
           background-color: var(--blue);
-					font-family: var(--font-bold);
           &:after {
             display: none;
           }
@@ -712,11 +711,9 @@ div.listgroup-fixed, div.listgroup  {
   }
   ul.list-tile {
     margin: 0;
-    /* column-gap: 2.4rem; */
 		display: flexbox;
 		width: 100%;
 		grid-auto-rows: 1fr;
-		/* grid-template-columns: auto; */
     li {
       margin: 0;
       margin-bottom: 2.4rem;

@@ -1028,14 +1028,13 @@ div.listgroup-custom  {
     position: absolute;
     top: 1rem;
     left: 1rem;
-    width: max-content;
+    width: min-content;
     max-width: 50%;
     padding: 4px 6px !important;
     line-height: 1.2 !important;
     margin-left: 0;
     border-radius: 5px;
     background-color: var(--blue);
-    font-family: var(--font-bold) !important;
     &:after {
       display: none;
     }
@@ -1043,8 +1042,10 @@ div.listgroup-custom  {
       color: var(--white) !important;
     }
   }
-  .eventDisplayTime {
+  .releaseDate {
     order: 4;
+    color: #666666;
+    padding: 0 8% 5% 8%;
   }
 }
 
@@ -1635,20 +1636,23 @@ ul.group-header {
 
   .load-more-button {
     border: 2px solid var(--blue);
+    border: 0;
+    border-radius: 5px;
     color: var(--background-color);
     background-color: var(--blue);
-    padding: 15px 32px;
+    padding: 14px 20px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    cursor: pointer;
   }
   .load-more-button:hover:not([disabled]) {
     background-color: var(--blue-hover);
   }
   button:disabled, button[disabled] {
     border: 1px solid #999999;
-    background-color: #cccccc;
-    color: #666666;
+    background-color: #d0d0d0;
+    color: #333333;
   }
 }

@@ -402,3 +402,44 @@ div.subnav-compact {
   }
 }
 
+.blog-sub-nav {
+  &.sub-nav-item-1-disabled {
+    .subnav nav.main ul {
+      li:first-child {
+        display: none;
+      }
+    }
+  }
+  &.blog-gray {
+    nav.main {
+      padding: 1.6rem 1.6rem 1rem 1.6rem;
+      border-radius: 10px;
+      background-color: #fafafa;
+    }
+  }
+  .subnav {
+    nav.main {
+      ul {
+        margin: 0;
+        li {
+          background-color: var(--gray10); 
+          border: none;
+          a {
+            color: var(--text-color);
+            font-family: var(--font-primary);
+            font-size: 14px;
+            line-height: 1.35;
+            padding: 5px 8px;
+            border: none;
+          }
+          &:hover {
+            a {
+              color: white;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

@@ -2272,6 +2272,17 @@ div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-30-70, div.
       column-gap: 32px !important;
     }
   }
+  &.section-group-reverse {
+    @media (width <=900px) {
+      .layout-wrapper {
+        display: flex !important;
+        flex-direction: column-reverse;
+        .group-2 {
+          margin-bottom: 2.4rem;
+        }
+      }
+    }
+  }
 }
 .group-1-gray {
   .layout-wrapper {
@@ -2412,6 +2423,78 @@ div.success-story-body {
         background-color: #f4f4f4;
         border-radius: var(--base-radius);
       }
+    }
+  }
+}
+div.blog-hero {
+  .layout-wrapper {
+    div.group-1 {
+      display: flex;
+      flex-direction: column;
+      align-self: center;
+      h1 {
+        padding: 0;
+        margin: 0 !important;
+        padding-bottom: 1rem;
+        /* border-bottom: 1px dotted #b4b4b4; */
+        border-width: 2px;
+        font-size: clamp(2.4rem, 4vw + 1rem, 4.2rem);
+      }
+      p {
+        margin: 0 0 2.4rem 0;
+      }
+      h6 {
+        font-family: "anova-bold", sans-serif;
+        font-size: 14px;
+        text-transform: uppercase;
+        color: var(--blue);
+      }
+    }
+    div.group-2 {
+      .default-content-wrapper {
+        height: 100%;
+        p {
+          margin-bottom: 0;
+          height: 100%;
+          picture {
+            vertical-align: middle;
+            height: auto;
+            width: 100%;
+            img {
+              display: block;
+              object-fit: cover;
+              border-radius: 5px;
+              object-position: center;
+              height: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.social-share-top-right {
+  .group-1 {
+    width: 50%;
+  }
+  .group-2 {
+    display: flex;
+    width: 50%;
+    justify-content: flex-end;
+    gap: 1rem;
+    p {
+      margin-bottom: 0;
+    }
+    .social-share-wrapper {
+      img {
+        padding-top: 0;
+      }
+    }
+  }
+  @media (width <=900px) {
+    .layout-wrapper {
+      display: flex !important;
+      flex-direction: row;
     }
   }
 }
