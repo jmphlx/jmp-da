@@ -1042,8 +1042,10 @@ div.listgroup-custom  {
       color: var(--white) !important;
     }
   }
-  .eventDisplayTime {
+  .releaseDate {
     order: 4;
+    color: #666666;
+    padding: 0 8% 5% 8%;
   }
 }
 
