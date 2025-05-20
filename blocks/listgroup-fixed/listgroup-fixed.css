@@ -1106,3 +1106,9 @@ div.listgroup-fixed, div.listgroup  {
         }
     }
 }
+
+.listgroup-image-square {
+  span.image {
+    aspect-ratio: 1;
+  }
+}
