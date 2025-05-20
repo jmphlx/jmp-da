@@ -13,7 +13,6 @@ import {
   writeImagePropertyInList,
   isDateProperty,
   checkForDateProperties,
-  processDate,
 } from '../../scripts/jmp.js';
 
 import { loadScript } from '../../scripts/aem.js';
@@ -76,6 +75,25 @@ function pageMatches(page, filters) {
     return true;
   }
   return false;
+}
+
+function processDate(dateProperty, prop, item) {
+  let span;
+  const dateFormatRegex = /(?<=\()(.*?)(?=\))/g;
+  const dateFormatString = prop.match(dateFormatRegex);
+
+  if (dateFormatString && dateFormatString.length > 0) {
+    const adjustedPropName = dateProperties[dateProperty];
+    if (item[adjustedPropName]) {
+      const adjustedDate = dateFns.format(item[adjustedPropName], dateFormatString[0]);
+      // console.log(`old date format ${item[adjustedPropName]} New format ${adjustedDate}`);
+      span = `<span class="${adjustedPropName}">${adjustedDate}</span>`;
+    }
+  } else {
+    // Treat date like normal
+    span = `<span class="${prop}">${item[prop]}</span>`;
+  }
+  return span;
 }
 
 function writeItems(matching, config, listElement) {

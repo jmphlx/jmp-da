@@ -602,25 +602,6 @@ function checkForDateProperties(displayProperties) {
   return dateFound;
 }
 
-function processDate(dateProperty, prop, item) {
-  let span;
-  const dateFormatRegex = /(?<=\()(.*?)(?=\))/g;
-  const dateFormatString = prop.match(dateFormatRegex);
-
-  if (dateFormatString && dateFormatString.length > 0) {
-    const adjustedPropName = dateProperties[dateProperty];
-    if (item[adjustedPropName]) {
-      const adjustedDate = dateFns.format(item[adjustedPropName], dateFormatString[0]);
-      // console.log(`old date format ${item[adjustedPropName]} New format ${adjustedDate}`);
-      span = `<span class="${adjustedPropName}">${adjustedDate}</span>`;
-    }
-  } else {
-    // Treat date like normal
-    span = `<span class="${prop}">${item[prop]}</span>`;
-  }
-  return span;
-}
-
 export {
   arrayIncludesAllValues,
   arrayIncludesSomeValues,
@@ -648,7 +629,6 @@ export {
   pageFilterByFolder,
   pageOrFilter,
   parseBlockOptions,
-  processDate,
   sortPageList,
   updateBodyClassOnWindowResize,
   writeImagePropertyInList,
