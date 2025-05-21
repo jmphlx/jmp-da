@@ -1,4 +1,5 @@
 /* eslint no-undef: 0 */
+/* eslint consistent-return: 0 */
 
 import {
   containsOperator,
@@ -147,6 +148,48 @@ function writeItems(matching, config, listElement) {
     listItem.append(cardLink);
     listElement.append(listItem);
   });
+}
+
+function loadMoreItems(matching, block, config) {
+  console.log('load more');
+  const listElement = block.querySelector('ul');
+  if (listElement) {
+    let currDisplayNum = listElement.getAttribute('data-displaynum');
+    const limit = config.limit;
+
+    currDisplayNum = currDisplayNum ? parseInt(currDisplayNum, 10) : parseInt(limit, 10);
+    const startingItem = currDisplayNum;
+    const columns = config.columns ? config.columns : 5;
+    const rows = 3;
+    const numOfAddedItems = rows * columns;
+    console.log(`numOfAddedItems ${numOfAddedItems}`);
+    currDisplayNum += numOfAddedItems;
+    console.log(`add items ${startingItem} to ${currDisplayNum}`);
+    listElement.setAttribute('data-displaynum', currDisplayNum);
+    const matchingItemsToAdd = matching.slice(startingItem, currDisplayNum);
+    if (currDisplayNum > matching.length) {
+      // no more results.
+      block.querySelector('button').disabled = true;
+    }
+    writeItems(matchingItemsToAdd, config, listElement);
+  }
+}
+
+function addLoadMoreButton(block, config, matching) {
+  const loadMoreDiv = document.createElement('div');
+  loadMoreDiv.className = 'load-more-container';
+  const loadMoreButton = document.createElement('button');
+  loadMoreButton.className = 'load-more-button';
+  loadMoreButton.innerHTML = 'Load More';
+  loadMoreButton.addEventListener('click', () => {
+    loadMoreItems(matching, block, config);
+  });
+  // Disable button if already at the limit
+  if (config.limit && matching && matching.length <= config.limit) {
+    loadMoreButton.disabled = true;
+  }
+  loadMoreDiv.append(loadMoreButton);
+  block.append(loadMoreDiv);
 }
 
 function writeAsOneGroup(matching, config) {
@@ -311,6 +354,8 @@ function buildListItems(block, matching, tabDictionary, config) {
     }
   }
 
+  const filteredPages = pageSelection;
+
   const limit = config.limit;
   if (limit !== undefined && pageSelection?.length > limit) {
     pageSelection = pageSelection.slice(0, limit);
@@ -325,12 +370,24 @@ function buildListItems(block, matching, tabDictionary, config) {
     return emptyResultsDiv;
   }
 
-  return writeAsOneGroup(pageSelection, config);
+  const listItems = writeAsOneGroup(pageSelection, config);
+  block.append(listItems);
+
+  // Add Load More Button
+  // Load More needs the pageSelection before limit is applied.
+  if (config.loadMore) {
+    addLoadMoreButton(block, config, filteredPages);
+  }
 }
 
 function reBuildList(matching, block, tabDictionary, config) {
   block.querySelector('.listOfItems').remove();
-  block.append(buildListItems(block, matching, tabDictionary, config));
+  if (config.loadMore) {
+    // Also remove load more button so it can be rebuilt with
+    // proper matching list for assigned filter.
+    block.querySelector('.load-more-container').remove();
+  }
+  buildListItems(block, matching, tabDictionary, config);
 }
 
 function constructTabsObject(tabsArray) {
@@ -409,32 +466,6 @@ function buildSimplifiedFilter(filterString, startingFolder) {
   return filterObj;
 }
 
-function loadMoreItems(matching, block, config) {
-  console.log('load more');
-  const listElement = block.querySelector('ul');
-  if (listElement) {
-    let currDisplayNum = listElement.getAttribute('data-displaynum');
-    const limit = config.limit;
-    currDisplayNum = currDisplayNum || limit;
-    const startingItem = currDisplayNum;
-    const columns = config.columns ? config.columns : 5;
-    const rows = 3;
-    const numOfAddedItems = rows * columns;
-    currDisplayNum += numOfAddedItems;
-    console.log(`${numOfAddedItems}`);
-    console.log(`add items ${startingItem} to ${currDisplayNum}`);
-    listElement.setAttribute('data-displaynum', currDisplayNum);
-    const matchingItemsToAdd = matching.slice(startingItem, currDisplayNum);
-    if (currDisplayNum > matching.length) {
-      // no more results.
-      block.querySelector('button').disabled = true;
-    }
-    console.log(matchingItemsToAdd);
-    console.log(listElement);
-    writeItems(matchingItemsToAdd, config, listElement);
-  }
-}
-
 export default async function decorate(block) {
   const config = getBlockConfig(block);
   block.textContent = '';
@@ -463,7 +494,6 @@ export default async function decorate(block) {
   useTabs = tabProperty && tabsArray;
   useFilter = filterBy;
 
-  let wrapper;
   let matching = [];
   allPages.forEach((page) => {
     if (pageMatches(page, filters)) {
@@ -510,26 +540,8 @@ export default async function decorate(block) {
   // Build initial list.
   // Group by does not work with filter or tabs.
   if (groupBy && matching.length > 0) {
-    wrapper = writeAsAZGroups(matching, groupBy, sortBy, config);
+    block.append(writeAsAZGroups(matching, groupBy, sortBy, config));
   } else {
-    wrapper = buildListItems(block, matching, tabDictionary, config);
-  }
-
-  block.append(wrapper);
-
-  // Add Load More Button
-  if (config.loadMore) {
-    if (config.limit && matching && matching.length > config.limit) {
-      const loadMoreDiv = document.createElement('div');
-      loadMoreDiv.className = 'load-more-container';
-      const loadMoreButton = document.createElement('button');
-      loadMoreButton.className = 'load-more-button';
-      loadMoreButton.innerHTML = 'Load More';
-      loadMoreButton.addEventListener('click', () => {
-        loadMoreItems(matching, block, config);
-      });
-      loadMoreDiv.append(loadMoreButton);
-      block.append(loadMoreDiv);
-    }
+    buildListItems(block, matching, tabDictionary, config);
   }
 }
