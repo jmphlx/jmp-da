@@ -421,6 +421,15 @@ function addGATracking() {
   document.head.appendChild(gaTracking);
 }
 
+function initializeVWO(consentStatus) {
+  const scriptTag = document.createElement('script');
+  console.log('going to append script')
+  scriptTag.innerHTML = `window.VWO = window.VWO || [];
+    window.VWO.init = window.VWO.init || function(state) { window.VWO.consentState = state; }
+    window.VWO.init(${consentStatus});alert('initiated VWO');`;
+  document.head.appendChild(scriptTag);
+}
+
 /**
  * Add script tag for VWO Tracking when enabled.
  * Needs to be added in the head before main is loaded in order
@@ -449,6 +458,7 @@ function addVWOTracking() {
 
   document.head.appendChild(vwoLink);
   document.head.appendChild(vwoTracking);
+  initializeVWO(1);
 }
 
 /**
