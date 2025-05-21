@@ -24,7 +24,7 @@ function checkConsentCookie() {
     console.log('going to append script')
     scriptTag.innerHTML = `window.VWO = window.VWO || [];
       window.VWO.init = window.VWO.init || function(state) { window.VWO.consentState = state; }
-      window.VWO.init(${consentStatus});console.log('initiated VWO');`;
+      window.VWO.init(${consentStatus});alert('initiated VWO');`;
     document.head.appendChild(scriptTag);
   }
 }
