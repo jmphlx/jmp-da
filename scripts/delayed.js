@@ -21,9 +21,10 @@ function checkConsentCookie() {
     console.log('allow functional cookies');
     consentStatus = 1;
     const scriptTag = document.createElement('script');
+    console.log('going to append script')
     scriptTag.innerHTML = `window.VWO = window.VWO || [];
       window.VWO.init = window.VWO.init || function(state) { window.VWO.consentState = state; }
-      window.VWO.init(${consentStatus});`;
+      window.VWO.init(${consentStatus});console.log('initiated VWO');`;
     document.head.appendChild(scriptTag);
   }
 }
