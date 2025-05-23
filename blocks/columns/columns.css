@@ -1072,6 +1072,9 @@ div.clm-80-20 {
       text-align: left !important;
       margin-left: 84px;
     }
+    p:has(span.icon) {
+      margin-bottom: 0;
+    }
   }
 }
 .text-grid {
