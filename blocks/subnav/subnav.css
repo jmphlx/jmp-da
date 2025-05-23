@@ -414,7 +414,12 @@ div.subnav-compact {
     nav.main {
       padding: 1.6rem 1.6rem 1rem 1.6rem;
       border-radius: 10px;
-      background-color: #fafafa;
+      background-color: #f4f4f4;
+      ul {
+        li {
+          background-color: #ffffff !important;
+        }
+      }
     }
   }
   .subnav {
@@ -436,6 +441,15 @@ div.subnav-compact {
             a {
               color: white;
             }
+          }
+        }
+        li.active a {
+          color: #FFFFFF;
+        }
+        @media (width <= 600px) {
+          display: block;
+          li {
+            margin: 0 10px .5em 0 !important;
           }
         }
       }
