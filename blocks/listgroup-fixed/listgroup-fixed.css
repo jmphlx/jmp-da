@@ -607,7 +607,7 @@ div.listgroup-fixed, div.listgroup  {
           height: auto;
           max-height: max-content;
         }
-        .eventDisplayTime {
+        .releaseDate {
           color: #333333;
           font-family: var(--font-secondary);
           display: block;
@@ -694,7 +694,7 @@ div.listgroup-fixed, div.listgroup  {
             padding: 0 1.6rem 0 1.6rem;
             width: auto;
           }
-          .eventDisplayTime {
+          .releaseDate {
             padding: 0 1.6rem 0 1.6rem;
             width: auto;
             margin-bottom: 2rem !important;
@@ -723,7 +723,7 @@ div.listgroup-fixed, div.listgroup  {
 				grid-template-areas: 
 					"img displayLabel"
 					"img title"
-					"img eventDisplayTime";
+					"img releaseDate";
 				grid-template-rows: .5fr 4fr auto;
 				column-gap: 2%;
 				grid-template-columns: 36% auto;
@@ -768,7 +768,7 @@ div.listgroup-fixed, div.listgroup  {
 					grid-column: 2;
 					grid-row: 2;
         }
-        .eventDisplayTime {
+        .releaseDate {
           color: #333333;
           font-family: var(--font-secondary);
 					font-size: 1.2rem;
@@ -831,7 +831,7 @@ div.listgroup-fixed, div.listgroup  {
             padding: 0 1.6rem 0 1.6rem;
             width: auto;
           }
-          .eventDisplayTime {
+          .releaseDate {
             padding: 0 1.6rem 0 1.6rem;
             width: auto;
             margin-bottom: 2rem !important;

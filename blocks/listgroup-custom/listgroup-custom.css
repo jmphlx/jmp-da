@@ -226,7 +226,7 @@ div.listgroup-custom  {
         line-height: 138%;
         word-break: break-word;
       }
-      .eventDisplayTime {
+      .releaseDate {
         order: 4;
         color: #666666;
         padding: 0 8% 5% 8%;
@@ -915,7 +915,7 @@ div.listgroup-custom  {
           height: auto;
           max-height: max-content;
         }
-        .eventDisplayTime {
+        .releaseDate (MMM d, yyyy) {
           color: #333333;
           font-family: var(--font-secondary);
           display: block;
@@ -1002,7 +1002,7 @@ div.listgroup-custom  {
             padding: 0 1.6rem 0 1.6rem;
             width: auto;
           }
-          .eventDisplayTime {
+          .releaseDate {
             padding: 0 1.6rem 0 1.6rem;
             width: auto;
             margin-bottom: 2rem !important;
@@ -1118,6 +1118,145 @@ div.listgroup-custom  {
   }
   .abstract, .description, .displayDescription {
     display: none;
+  }
+}
+
+.blog-list-aside {
+  .col-size-5 {
+    margin-right: 0;
+  }
+  ul.list-tile {
+    margin: 0;
+		display: flexbox;
+		width: 100%;
+		grid-auto-rows: 1fr;
+    li {
+      margin: 0;
+      margin-bottom: 2.4rem;
+			width: 100%;
+      a {
+				display: grid;
+				grid-template-areas: 
+					"img displayLabel"
+					"img title"
+					"img releaseDate";
+				grid-template-rows: .5fr 4fr auto;
+				column-gap: 2%;
+				grid-template-columns: 36% auto;
+        border-radius: 20px;
+        border: none;
+        margin: 0;
+        transition: all 0.5s ease;
+				background: none !important;
+				flex-wrap: wrap;
+				min-height: 120px;
+        span.image {
+          width: 100%;
+          height: 100%;
+					grid-column: 1;
+					grid-row: 1 / 4;
+					aspect-ratio: 3 !important;
+          img {
+            border-radius: 10px;
+            border: none;
+          }
+        }
+        .navigation-title, .resourceType, .displayLabel {
+          font-size: 10px !important;
+					font-family: var(--font-bold) !important;
+          color: var(--blue);
+          display: block;
+          padding: 0 0 4px 0 !important;
+          margin: 0;
+					line-height: 1.1;
+					width: 100%;
+          &:after {
+            display: none;
+          }
+        }
+        .title {
+          color: var(--gray3) !important;  
+					margin: 0;
+					flex: 1 1;
+					line-height: 1.2;
+          font-size: 1.4rem;
+          padding-bottom: 1rem;
+					grid-column: 2;
+					grid-row: 2;
+        }
+        .releaseDate {
+          color: #333333;
+          font-family: var(--font-secondary);
+					font-size: 1.2rem;
+          display: block;
+          order: 3;
+          padding-left: 0;
+          padding-bottom: 0;
+					margin: 0;
+					grid-column: 2;
+					grid-row: 3;
+        }
+      }
+      :after {
+        display: none;
+      }
+      &:hover {
+        transform: none;
+				background-color: #FAFAFA;
+				border-radius: 10px;
+        .navigation-title, .resourceType, .displayLabel {
+					color: var(--link-hover-color) !important;
+          text-decoration: none;
+        }
+        .title {
+          color: var(--link-hover-color) !important;
+          text-decoration: none;
+        }
+        &:after {
+          right: 2rem;
+          opacity: 1;
+        }
+      }
+    }
+  }
+  @media (width <=600px) {
+    ul.list-tile {
+      li {
+        width: 100%;
+        min-height: 225px;
+        a {
+          display: grid;
+          column-gap: 1.6rem;
+          box-sizing: border-box;
+          border: 1px solid var(--gray);
+          max-height: none;
+          span.image {
+            width: auto;
+            padding-right: 0;
+            img {
+              border-radius: 20px 20px 0 0;
+              border: none;
+            }
+          }
+          .title {
+            padding: 0 1.6rem 0 1.6rem;
+            width: auto;
+          }
+          .navigation-title, .resourceType, .displayLabel {
+            padding: 2rem 1.6rem 0 1.6rem;
+          }
+          .abstract, .description, .displayDescription {
+            padding: 0 1.6rem 0 1.6rem;
+            width: auto;
+          }
+          .releaseDate {
+            padding: 0 1.6rem 0 1.6rem;
+            width: auto;
+            margin-bottom: 2rem !important;
+          }
+        }
+      }
+    }
   }
 }
 
