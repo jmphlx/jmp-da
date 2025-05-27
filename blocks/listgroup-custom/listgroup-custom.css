@@ -915,7 +915,7 @@ div.listgroup-custom  {
           height: auto;
           max-height: max-content;
         }
-        .releaseDate (MMM d, yyyy) {
+        .releaseDate {
           color: #333333;
           font-family: var(--font-secondary);
           display: block;
