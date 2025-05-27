@@ -1125,6 +1125,13 @@ div.listgroup-custom  {
   .col-size-5 {
     margin-right: 0;
   }
+  &.item-1-disabled {
+    ul {
+      li:first-child {
+        display: none;
+      }
+    }
+  }
   ul.list-tile {
     margin: 0;
 		display: flexbox;
