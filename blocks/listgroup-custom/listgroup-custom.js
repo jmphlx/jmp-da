@@ -347,8 +347,10 @@ function buildListItems(block, matching, tabDictionary, config) {
     }
   }
 
-  if (useFilter) {
-    const filterDropdown = block.querySelector('select');
+  const filterDropdown = block.querySelector('select');
+
+
+  if (filterDropdown) {
     if (filterDropdown.value) {
       pageSelection = applyFilter(pageSelection, filterDropdown.id, filterDropdown.value);
     }
