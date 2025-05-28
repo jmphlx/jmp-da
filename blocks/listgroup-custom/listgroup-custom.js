@@ -30,6 +30,19 @@ function lowercaseObj(obj) {
   return newObj;
 }
 
+function createCardHTML(prop, item) {
+  let span;
+  const dateProperty = isDateProperty(prop);
+  if (prop === 'image' || prop === 'displayImage') {
+    span = writeImagePropertyInList(prop, item);
+  } else if (dateProperty >= 0) {
+    span = processDate(dateProperty, prop, item);
+  } else {
+    span = `<span class="${prop}">${item[prop]}</span>`;
+  }
+  return span;
+}
+
 function conditionMatches(page, condition) {
   const lcPage = lowercaseObj(page);
   const lcCond = lowercaseObj(condition);
@@ -135,12 +148,7 @@ function writeItems(matching, config, listElement) {
     const htmlOutput = [];
 
     config.displayProperties.forEach((prop) => {
-      let span;
-      if (prop === 'image' || prop === 'displayImage') {
-        span = writeImagePropertyInList(prop, item);
-      } else {
-        span = `<span class="${prop}">${item[prop]}</span>`;
-      }
+      let span = createCardHTML(prop, item);
       htmlOutput.push(span);
     });
     cardLink.innerHTML = htmlOutput.join('');
@@ -214,15 +222,7 @@ function writeAsOneGroup(matching, config) {
     const htmlOutput = [];
 
     config.displayProperties.forEach((prop) => {
-      let span;
-      const dateProperty = isDateProperty(prop);
-      if (prop === 'image' || prop === 'displayImage') {
-        span = writeImagePropertyInList(prop, item);
-      } else if (dateProperty >= 0) {
-        span = processDate(dateProperty, prop, item);
-      } else {
-        span = `<span class="${prop}">${item[prop]}</span>`;
-      }
+      let span = createCardHTML(prop, item);
       htmlOutput.push(span);
     });
     cardLink.innerHTML = htmlOutput.join('');
