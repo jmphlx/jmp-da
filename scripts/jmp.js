@@ -365,7 +365,7 @@ async function getLangMenuPageUrl(languagePage) {
 
   try {
     const response = await fetch(languageCurrPage);
-    if (!response.ok) {
+    if (!response.ok || response.redirected === true) {
       return null;
     }
     return languageCurrPage;
