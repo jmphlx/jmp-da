@@ -32,6 +32,7 @@ html {
   --purpleLight: #9D57A3;
   --red: #B11A29;
   --redLight: #F04B4B;
+  --redNeon: #fe0b0b;
   --orangeDark: #854200;
   --green: #0D782F;
   --greenLight: #9CCB3B;
@@ -900,6 +901,11 @@ a:hover {
     font-size: 2.1rem !important;
   }
 }
+.button-rounded {
+  a.button:any-link {
+    border-radius: 100px !important;
+  }
+}
 .button-no-underline {
   a {
     text-decoration: none;
@@ -952,6 +958,34 @@ a:hover {
     a.button:hover {
       border: 2px solid var(--link-hover-color);
       color: var(--link-hover-color);
+    }
+  }
+}
+.red-purple-buttons {
+  .button-container:nth-last-child(2) {
+    a.button {
+      border: 2px solid var(--redNeon);
+      color: var(--white) !important;
+      /* background-color: transparent; */
+      background-color: var(--redNeon);
+    }
+    a.button:hover {
+      border: 2px solid var(--red);
+      color: var(--white) !important;
+      background-color: var(--red);
+    }
+  }
+  .button-container:nth-last-child(1) {
+    margin-bottom: 2rem !important;
+    a.button {
+      border: 2px solid var(--purple);
+      color: var(--purple) !important;
+      /* background-color: transparent; */
+      background-color: white;
+    }
+    a.button:hover {
+      border: 2px solid var(--purpleLight);
+      color: var(--purpleLight) !important;
     }
   }
 }
