@@ -654,7 +654,11 @@ div.clm-80-20 {
     }
     p {
       margin: 0;
+      margin-bottom: 1.6rem;
       line-height: 1.5;
+    }
+    p:first-child, p:nth-child(2) {
+      margin-bottom: 0;
     }
   }
   div.columns-img-col {
@@ -688,7 +692,7 @@ div.clm-80-20 {
         display: block;
       }
       p {
-        margin: 1rem 0;
+        margin: 0;
         line-height: 1.5;
       }
     }
@@ -1071,6 +1075,9 @@ div.clm-80-20 {
     h3, h4, h5, p {
       text-align: left !important;
       margin-left: 84px;
+    }
+    p:has(span.icon) {
+      margin-bottom: 0;
     }
   }
 }

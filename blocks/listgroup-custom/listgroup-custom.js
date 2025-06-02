@@ -1,4 +1,5 @@
 /* eslint no-undef: 0 */
+/* eslint consistent-return: 0 */
 
 import {
   containsOperator,
@@ -13,7 +14,10 @@ import {
   writeImagePropertyInList,
 } from '../../scripts/jmp.js';
 
+import { loadScript } from '../../scripts/aem.js';
 import { createTag } from '../../scripts/helper.js';
+
+const dateProperties = ['releaseDate'];
 
 let useFilter = false;
 let useTabs = false;
@@ -24,6 +28,19 @@ function lowercaseObj(obj) {
     newObj[key.toLowerCase()] = obj[key];
   });
   return newObj;
+}
+
+function createCardHTML(prop, item) {
+  let span;
+  const dateProperty = isDateProperty(prop);
+  if (prop === 'image' || prop === 'displayImage') {
+    span = writeImagePropertyInList(prop, item);
+  } else if (dateProperty >= 0) {
+    span = processDate(dateProperty, prop, item);
+  } else {
+    span = `<span class="${prop}">${item[prop]}</span>`;
+  }
+  return span;
 }
 
 function conditionMatches(page, condition) {
@@ -74,6 +91,47 @@ function pageMatches(page, filters) {
   return false;
 }
 
+function isDateProperty(propertyName) {
+  let isDate = -1;
+  for (let i = 0; i < dateProperties.length; i++) {
+    if (propertyName.startsWith(dateProperties[i])) {
+      isDate = i;
+      break;
+    }
+  }
+  return isDate;
+}
+
+function checkForDateProperties(displayProperties) {
+  let dateFound = false;
+  for (let i = 0; i < displayProperties.length; i++) {
+    if (isDateProperty(displayProperties[i])) {
+      dateFound = true;
+      break;
+    }
+  }
+  return dateFound;
+}
+
+function processDate(dateProperty, prop, item) {
+  let span;
+  const dateFormatRegex = /(?<=\()(.*?)(?=\))/g;
+  const dateFormatString = prop.match(dateFormatRegex);
+
+  if (dateFormatString && dateFormatString.length > 0) {
+    const adjustedPropName = dateProperties[dateProperty];
+    if (item[adjustedPropName]) {
+      const adjustedDate = dateFns.format(item[adjustedPropName], dateFormatString[0]);
+      // console.log(`old date format ${item[adjustedPropName]} New format ${adjustedDate}`);
+      span = `<span class="${adjustedPropName}">${adjustedDate}</span>`;
+    }
+  } else {
+    // Treat date like normal
+    span = `<span class="${prop}">${item[prop]}</span>`;
+  }
+  return span;
+}
+
 function writeItems(matching, config, listElement) {
   matching?.forEach((item) => {
     const listItem = document.createElement('li');
@@ -90,12 +148,7 @@ function writeItems(matching, config, listElement) {
     const htmlOutput = [];
 
     config.displayProperties.forEach((prop) => {
-      let span;
-      if (prop === 'image' || prop === 'displayImage') {
-        span = writeImagePropertyInList(prop, item);
-      } else {
-        span = `<span class="${prop}">${item[prop]}</span>`;
-      }
+      let span = createCardHTML(prop, item);
       htmlOutput.push(span);
     });
     cardLink.innerHTML = htmlOutput.join('');
@@ -103,6 +156,48 @@ function writeItems(matching, config, listElement) {
     listItem.append(cardLink);
     listElement.append(listItem);
   });
+}
+
+function loadMoreItems(matching, block, config) {
+  console.log('load more');
+  const listElement = block.querySelector('ul');
+  if (listElement) {
+    let currDisplayNum = listElement.getAttribute('data-displaynum');
+    const limit = config.limit;
+
+    currDisplayNum = currDisplayNum ? parseInt(currDisplayNum, 10) : parseInt(limit, 10);
+    const startingItem = currDisplayNum;
+    const columns = config.columns ? config.columns : 5;
+    const rows = 3;
+    const numOfAddedItems = rows * columns;
+    console.log(`numOfAddedItems ${numOfAddedItems}`);
+    currDisplayNum += numOfAddedItems;
+    console.log(`add items ${startingItem} to ${currDisplayNum}`);
+    listElement.setAttribute('data-displaynum', currDisplayNum);
+    const matchingItemsToAdd = matching.slice(startingItem, currDisplayNum);
+    if (currDisplayNum > matching.length) {
+      // no more results.
+      block.querySelector('button').disabled = true;
+    }
+    writeItems(matchingItemsToAdd, config, listElement);
+  }
+}
+
+function addLoadMoreButton(block, config, matching) {
+  const loadMoreDiv = document.createElement('div');
+  loadMoreDiv.className = 'load-more-container';
+  const loadMoreButton = document.createElement('button');
+  loadMoreButton.className = 'load-more-button';
+  loadMoreButton.innerHTML = 'Load More';
+  loadMoreButton.addEventListener('click', () => {
+    loadMoreItems(matching, block, config);
+  });
+  // Disable button if already at the limit
+  if (config.limit && matching && matching.length <= config.limit) {
+    loadMoreButton.disabled = true;
+  }
+  loadMoreDiv.append(loadMoreButton);
+  block.append(loadMoreDiv);
 }
 
 function writeAsOneGroup(matching, config) {
@@ -127,12 +222,7 @@ function writeAsOneGroup(matching, config) {
     const htmlOutput = [];
 
     config.displayProperties.forEach((prop) => {
-      let span;
-      if (prop === 'image' || prop === 'displayImage') {
-        span = writeImagePropertyInList(prop, item);
-      } else {
-        span = `<span class="${prop}">${item[prop]}</span>`;
-      }
+      let span = createCardHTML(prop, item);
       htmlOutput.push(span);
     });
     cardLink.innerHTML = htmlOutput.join('');
@@ -257,12 +347,16 @@ function buildListItems(block, matching, tabDictionary, config) {
     }
   }
 
-  if (useFilter) {
-    const filterDropdown = block.querySelector('select');
+  const filterDropdown = block.querySelector('select');
+
+
+  if (filterDropdown) {
     if (filterDropdown.value) {
       pageSelection = applyFilter(pageSelection, filterDropdown.id, filterDropdown.value);
     }
   }
+
+  const filteredPages = pageSelection;
 
   const limit = config.limit;
   if (limit !== undefined && pageSelection?.length > limit) {
@@ -278,12 +372,24 @@ function buildListItems(block, matching, tabDictionary, config) {
     return emptyResultsDiv;
   }
 
-  return writeAsOneGroup(pageSelection, config);
+  const listItems = writeAsOneGroup(pageSelection, config);
+  block.append(listItems);
+
+  // Add Load More Button
+  // Load More needs the pageSelection before limit is applied.
+  if (config.loadMore) {
+    addLoadMoreButton(block, config, filteredPages);
+  }
 }
 
 function reBuildList(matching, block, tabDictionary, config) {
   block.querySelector('.listOfItems').remove();
-  block.append(buildListItems(block, matching, tabDictionary, config));
+  if (config.loadMore) {
+    // Also remove load more button so it can be rebuilt with
+    // proper matching list for assigned filter.
+    block.querySelector('.load-more-container').remove();
+  }
+  buildListItems(block, matching, tabDictionary, config);
 }
 
 function constructTabsObject(tabsArray) {
@@ -362,35 +468,14 @@ function buildSimplifiedFilter(filterString, startingFolder) {
   return filterObj;
 }
 
-function loadMoreItems(matching, block, config) {
-  console.log('load more');
-  const listElement = block.querySelector('ul');
-  if (listElement) {
-    let currDisplayNum = listElement.getAttribute('data-displaynum');
-    const limit = config.limit;
-    currDisplayNum = currDisplayNum || limit;
-    const startingItem = currDisplayNum;
-    const columns = config.columns ? config.columns : 5;
-    const rows = 3;
-    const numOfAddedItems = rows * columns;
-    currDisplayNum += numOfAddedItems;
-    console.log(`${numOfAddedItems}`);
-    console.log(`add items ${startingItem} to ${currDisplayNum}`);
-    listElement.setAttribute('data-displaynum', currDisplayNum);
-    const matchingItemsToAdd = matching.slice(startingItem, currDisplayNum);
-    if (currDisplayNum > matching.length) {
-      // no more results.
-      block.querySelector('button').disabled = true;
-    }
-    console.log(matchingItemsToAdd);
-    console.log(listElement);
-    writeItems(matchingItemsToAdd, config, listElement);
-  }
-}
-
 export default async function decorate(block) {
   const config = getBlockConfig(block);
   block.textContent = '';
+
+  const includesDateProperty = checkForDateProperties(config.displayProperties);
+  if (includesDateProperty) {
+    await loadScript('https://cdn.jsdelivr.net/npm/date-fns@4.1.0/cdn.min.js');
+  }
 
   // Get language index.
   const languageIndexUrl = getLanguageIndex(config.overwriteIndexLanguage);
@@ -411,7 +496,6 @@ export default async function decorate(block) {
   useTabs = tabProperty && tabsArray;
   useFilter = filterBy;
 
-  let wrapper;
   let matching = [];
   allPages.forEach((page) => {
     if (pageMatches(page, filters)) {
@@ -458,26 +542,8 @@ export default async function decorate(block) {
   // Build initial list.
   // Group by does not work with filter or tabs.
   if (groupBy && matching.length > 0) {
-    wrapper = writeAsAZGroups(matching, groupBy, sortBy, config);
+    block.append(writeAsAZGroups(matching, groupBy, sortBy, config));
   } else {
-    wrapper = buildListItems(block, matching, tabDictionary, config);
-  }
-
-  block.append(wrapper);
-
-  // Add Load More Button
-  if (config.loadMore) {
-    if (config.limit && matching && matching.length > config.limit) {
-      const loadMoreDiv = document.createElement('div');
-      loadMoreDiv.className = 'load-more-container';
-      const loadMoreButton = document.createElement('button');
-      loadMoreButton.className = 'load-more-button';
-      loadMoreButton.innerHTML = 'Load More';
-      loadMoreButton.addEventListener('click', () => {
-        loadMoreItems(matching, block, config);
-      });
-      loadMoreDiv.append(loadMoreButton);
-      block.append(loadMoreDiv);
-    }
+    buildListItems(block, matching, tabDictionary, config);
   }
 }

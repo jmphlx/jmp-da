@@ -1,32 +1,11 @@
 // eslint-disable-next-line import/no-cycle
-import {
-  sampleRUM,
-  getMetadata,
-} from './aem.js';
-import {
-  createTag,
-  getCookie,
-} from './helper.js';
+import { sampleRUM } from './aem.js';
+import { createTag } from './helper.js';
 
 // Core Web Vitals RUM collection
 sampleRUM('cwv');
 
 // add more delayed functionality here
-
-function checkConsentCookie() {
-  let consentStatus = 3;
-  const functionalCookieRegex = /permit(.*)2(.*)/;
-  const consentCookie = getCookie('cmapi_cookie_privacy');
-  if (consentCookie && consentCookie.match(functionalCookieRegex)) {
-    console.log('allow functional cookies');
-    consentStatus = 1;
-    const scriptTag = document.createElement('script');
-    scriptTag.innerHTML = `window.VWO = window.VWO || [];
-      window.VWO.init = window.VWO.init || function(state) { window.VWO.consentState = state; }
-      window.VWO.init(${consentStatus});`;
-    document.head.appendChild(scriptTag);
-  }
-}
 
 // google tag manager
 function loadGTM() {
@@ -60,10 +39,4 @@ const gtmActive = !window.location.hostname.includes('localhost')
 
 if (gtmActive) {
   loadGTM();
-}
-
-const vwoTracking = getMetadata('vwotracking');
-const enableRegexPattern = /enable(d)*/g;
-if (vwoTracking && vwoTracking.match(enableRegexPattern)) {
-  checkConsentCookie();
 }

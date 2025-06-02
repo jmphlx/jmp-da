@@ -360,13 +360,12 @@ function pageFilterByFolder(pageSelection, folderPath) {
  */
 async function getLangMenuPageUrl(languagePage) {
   const languageDirectory = languagePage.split('/')[1];
-
-  const currPage = pagePath.replace(/\/(.*?)\w+/, '');
+  const currPage = pagePath.replace(/\/(.*?)(?:\/)/, '/');
   const languageCurrPage = `/${languageDirectory}${currPage}`;
 
   try {
     const response = await fetch(languageCurrPage);
-    if (!response.ok) {
+    if (!response.ok || response.redirected === true) {
       return null;
     }
     return languageCurrPage;
