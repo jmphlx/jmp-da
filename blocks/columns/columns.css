@@ -1498,3 +1498,10 @@ div > div > div:nth-child(1){
     z-index: -1;
   }
 }
+
+.text-alert-red {
+  color: #ff0000;
+  strong {
+    color: #ff0000;
+  }
+}
