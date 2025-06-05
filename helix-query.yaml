@@ -127,6 +127,10 @@ indices:
         select: head > meta[name="displayimage"]
         value: |
           attribute(el, "content")
+      blogTopics:
+        select: head > meta[name="blogtopics"]
+        value: |
+          attribute(el, "content")
 
 #SPANISH CONTENT#
   jmp-es:
