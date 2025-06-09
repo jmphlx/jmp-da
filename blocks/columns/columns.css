@@ -1505,3 +1505,11 @@ div > div > div:nth-child(1){
     color: #ff0000;
   }
 }
+
+.order-switch {
+  @media (width <=900px) {
+  div > div:nth-child(2) {
+      order: -1;
+    }
+  }
+}
