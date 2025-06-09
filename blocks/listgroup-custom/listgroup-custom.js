@@ -306,15 +306,19 @@ async function constructDropdown(dictionary, filterBy, defaultFilterOption, tran
   allDropdownItem.textContent = defaultFilterOption || 'Select';
   filterDropdown.append(allDropdownItem);
 
+  let sortedList = Object.keys(dictionary).sort();
   let useTranslation;
   if (translateFilter !== undefined) {
     const pageLanguage = getLanguage();
     const data = await getJsonFromUrl(translateFilter);
     const { data: translations } = data[pageLanguage];
     useTranslation = translations[0];
+    sortedList = Object.keys(dictionary).sort(function(a,b) { 
+      return useTranslation[a] < useTranslation[b] ? -1 : 1;
+    });
   }
 
-  Object.keys(dictionary).sort().forEach((filterValue) => {
+  sortedList.forEach((filterValue) => {
     if (filterValue.length > 0) {
       const dropdownItem = createTag('option', { value: `${filterValue}` });
       dropdownItem.innerText = useTranslation !== undefined ? useTranslation[filterValue]
