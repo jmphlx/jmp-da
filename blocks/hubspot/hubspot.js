@@ -41,7 +41,7 @@ const embedHubspot = (config) => {
         redirectUrl: '${redirect}',
         sfdcCampaignId: '${sfdcCampaignId}',
         onFormReady($form) {
-          const hiddenField2 = $form.find('input[name="last_action"]');
+          const hiddenField2 = $form.find('input[name="last_action__c"]');
           const newValue2 = "${config.lastAction}"; // The value you want to append
           hiddenField2.val(newValue2).change();
   
