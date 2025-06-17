@@ -1,0 +1,130 @@
+body {
+  font-family: "anova-light", arial, helvetica, sans-serif;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 1em;
+  margin: 0;
+}
+
+li {
+  margin: 4px 0;
+  cursor: pointer;
+}
+
+.toggle::before {
+  content: '▶';
+  display: inline-block;
+  margin-right: 5px;
+  transition: transform 0.2s;
+}
+
+.open > .toggle::before {
+  content: '▼';
+}
+
+.children {
+  display: none;
+  margin-left: 1em;
+}
+
+.open > .children {
+  display: block;
+}
+
+.item-name {
+  display: inline-block;
+}
+
+#selected-container, #saved-tags {
+  margin-top: 20px;
+  font-weight: bold;
+  color: #333;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
+
+#selected-container {
+  display: flex;
+  align-items: center;
+  div {
+    padding: 5px;
+  }
+}
+
+#selected-tag {
+    display: inline-block;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: 2px solid transparent;
+    padding: 6px 10px;
+    text-align: center;
+    font-size: 1rem;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 5px;
+    transition: all .35s;
+    margin: 0.25em;
+  &.tag-added {
+    background-color: #3aaafc;
+    color: white;
+  }
+}
+
+.buttons {
+  margin-top: 10px;
+}
+
+.buttons button {
+  margin-right: 10px;
+}
+
+button {
+    display: inline-block;
+    background-color: #ff5000;
+    font-weight: bold;
+    color: white;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: 2px solid transparent;
+    padding: 6px 10px;
+    text-align: center;
+    font-size: 1rem;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 5px;
+    transition: all .35s;
+    margin: 0.25em;
+}
+
+#saved-tags ul {
+  font-weight: normal;
+  padding-left: 1.5em;
+  li {
+    display: inline-block;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: 2px solid transparent;
+    padding: 6px 10px;
+    text-align: center;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: #0378cd;
+    color: white;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 5px;
+    transition: all .35s;
+    margin: 0.25em;
+    /* &:after {
+      margin: 0.5em;
+      content: 'x';
+    } */
+    &:hover {
+      background-color: #00619d;
+    }
+  }
+}

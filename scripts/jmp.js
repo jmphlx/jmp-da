@@ -65,6 +65,28 @@ async function getJsonFromUrl(route) {
 }
 
 /**
+ * This is to be used only for when testing with a
+ * local AEM instance. Used for testing /services/*
+ * @param {*} route 
+ * @returns 
+ */
+async function getJsonFromLocalhostUrl(route) {
+  try {
+    const response = await window.fetch(route, {
+      credentials: 'include',
+    });
+    if (!response.ok) return null;
+    const json = await response.json();
+    console.log(json);
+    return json;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('getJsonFromUrl:', { error });
+  }
+  return null;
+}
+
+/**
  * Returns the path of the appropriate nav based on page language.
  * Default to 'en' if language isn't found.
  * @param {boolean} true if the SKP index is needed.
@@ -589,6 +611,7 @@ export {
   getBlockConfig,
   getBlockPropertiesList,
   getBlockProperty,
+  getJsonFromLocalhostUrl,
   getJsonFromUrl,
   getLangMenuPageUrl,
   getLanguage,
