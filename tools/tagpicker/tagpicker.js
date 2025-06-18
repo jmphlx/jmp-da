@@ -7,7 +7,8 @@ import {
 } from '../../scripts/jmp.js';
 
 //const tagURL = 'http://localhost:4502/services/tagsservlet';
-const tagURL = 'https://jmp.com/services/tagsservlet';
+//const tagURL = 'https://jmp.com/services/tagsservlet';
+const tagURL = 'https://author-p107857-e1299068.adobeaemcloud.com/services/tagsservlet';
 
 const selectedTagDisplay = document.getElementById("selected-tag");
 const addedTagsList = document.getElementById("tags-list");
