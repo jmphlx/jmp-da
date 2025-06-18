@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AEM Tag Picker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="icon" href="data:,">
+    <!-- Import DA App SDK -->
+    <script src="https://da.live/nx/utils/sdk.js" type="module"></script>
+    <!-- Project App Logic -->
+    <script src="/tools/tagpicker/tagpicker.js" type="module"></script>
+
+    <link rel="stylesheet" type="text/css" href="/tools/tagpicker/tagpicker.css">
+  </head>
+  <body>
+    <h2>AEM Tag Picker</h2>
+    <div id="menu-container"></div>
+
+    <div id="selected-container">
+      <div id="selected-label">Selected Tag:</div>
+      <div id="selected-tag">(none)</div>
+    </div>
+
+    <div id="button-container"class="buttons">
+    </div>
+
+    <div id="saved-tags">
+      Saved tags:
+      <ul id="tags-list"></ul>
+    </div>
+    <button id="saveTags">Insert Tags</button>
+  </body>
+</html>
