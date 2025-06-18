@@ -3,12 +3,11 @@ import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 
 import {
   getJsonFromUrl,
-  getJsonFromLocalhostUrl,
+  // getJsonFromLocalhostUrl,
 } from '../../scripts/jmp.js';
 
 //const tagURL = 'http://localhost:4502/services/tagsservlet';
-//const tagURL = 'https://jmp.com/services/tagsservlet';
-const tagURL = 'https://author-p107857-e1299068.adobeaemcloud.com/services/tagsservlet';
+const tagURL = 'https://jmp.com/services/tagsservlet';
 
 const selectedTagDisplay = document.getElementById("selected-tag");
 const addedTagsList = document.getElementById("tags-list");
@@ -121,8 +120,7 @@ function submitTags(e, actions) {
 async function init() {
   const { actions } = await DA_SDK;
 
-  //const tagData = await getJsonFromUrl(tagURL);
-  const tagData = await getJsonFromLocalhostUrl(tagURL);
+  const tagData = await getJsonFromUrl(tagURL);
 
   const menu = createMenu(tagData);
 
