@@ -321,8 +321,15 @@ async function constructDropdown(dictionary, filterBy, defaultFilterOption, tran
   sortedList.forEach((filterValue) => {
     if (filterValue.length > 0) {
       const dropdownItem = createTag('option', { value: `${filterValue}` });
-      dropdownItem.innerText = useTranslation !== undefined ? useTranslation[filterValue]
-        : filterValue;
+      if (useTranslation) {
+        if (useTranslation[filterValue]) {
+          dropdownItem.innerText = useTranslation[filterValue];
+        } else {
+          dropdownItem.innerText = filterValue;
+        }
+      } else {
+        dropdownItem.innerText = filterValue;
+      }
       filterDropdown.append(dropdownItem);
     }
   });
