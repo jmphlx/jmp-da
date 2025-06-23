@@ -1045,6 +1045,9 @@ div.listgroup-custom  {
     }
     button:disabled {
       background-color: #d0d0d0;
+      &:hover {
+        background-color: #d0d0d0;
+      }
     }
   }
    ul.list-tile {
@@ -1096,78 +1099,6 @@ div.listgroup-custom  {
       }
     }
    }
-}
-
-.learning-library {
-  ul.list-tile {
-    display: block;
-    background-color: rgba(0, 0, 0, .025);
-    /* width: 100%; */
-    border-radius: 10px;
-    padding: 20px !important;
-    column-count: 3;
-    margin: 0 0 2rem 0;
-    > li {
-      float: none;
-      break-inside: avoid-column;
-      line-height: 1.3;
-      margin: 0;
-      text-indent: -.5em;
-      width: 100% !important;
-      margin-left: 20px !important;
-      a {
-        background: none;
-        border: none;
-        height: auto;
-        width: auto;
-        text-decoration: none;
-        text-indent: -10px;
-        display: block;
-        flex-direction: column;
-        position: relative;
-        outline: none;
-        margin-bottom: 5px;
-        :hover {
-          color: var(--link-hover-color) !important;
-          text-decoration: underline solid var(--link-hover-color) !important;
-        }
-      }
-      :after {
-        display: none;
-      }
-      &:hover {
-        transform: translateY(0);
-        transition: none;
-      }
-    }
-    @media (width <=900px) {
-      column-count: 2 !important;
-    }
-    @media (width <=600px) {
-      column-count: 1 !important;
-    }
-  }
-  .title {
-    margin: 0 2rem .25rem 1rem !important;
-    &:before {
-      content: url('../../../icons/arrow-orange.svg');
-      width: 7px;
-      display: inline-block;
-      margin-left: -20px;
-      font-size: 80%;
-      padding-left: 12px;
-      text-indent: -8px;
-    }
-    :hover {
-      color: var(--blueLight);
-    }
-  }
-  .navigation-title, .resourceType, .displayLabel {
-    display: none  !important;
-  }
-  .abstract, .description, .displayDescription {
-    display: none;
-  }
 }
 
 .blog-list-aside {
@@ -1272,7 +1203,79 @@ div.listgroup-custom  {
       }
     }
   }
-  
+}
+
+
+.learning-library {
+  ul.list-tile {
+    display: block;
+    background-color: rgba(0, 0, 0, .025);
+    /* width: 100%; */
+    border-radius: 10px;
+    padding: 20px !important;
+    column-count: 3;
+    margin: 0 0 2rem 0;
+    > li {
+      float: none;
+      break-inside: avoid-column;
+      line-height: 1.3;
+      margin: 0;
+      text-indent: -.5em;
+      width: 100% !important;
+      margin-left: 20px !important;
+      a {
+        background: none;
+        border: none;
+        height: auto;
+        width: auto;
+        text-decoration: none;
+        text-indent: -10px;
+        display: block;
+        flex-direction: column;
+        position: relative;
+        outline: none;
+        margin-bottom: 5px;
+        :hover {
+          color: var(--link-hover-color) !important;
+          text-decoration: underline solid var(--link-hover-color) !important;
+        }
+      }
+      :after {
+        display: none;
+      }
+      &:hover {
+        transform: translateY(0);
+        transition: none;
+      }
+    }
+    @media (width <=900px) {
+      column-count: 2 !important;
+    }
+    @media (width <=600px) {
+      column-count: 1 !important;
+    }
+  }
+  .title {
+    margin: 0 2rem .25rem 1rem !important;
+    &:before {
+      content: url('../../../icons/arrow-orange.svg');
+      width: 7px;
+      display: inline-block;
+      margin-left: -20px;
+      font-size: 80%;
+      padding-left: 12px;
+      text-indent: -8px;
+    }
+    :hover {
+      color: var(--blueLight);
+    }
+  }
+  .navigation-title, .resourceType, .displayLabel {
+    display: none  !important;
+  }
+  .abstract, .description, .displayDescription {
+    display: none;
+  }
 }
 
 .learning-library-topics {
