@@ -907,7 +907,7 @@ div.listgroup-custom  {
         .blogTopics {
           color: var(--purpleLight);
           font-family: var(--font-secondary);
-          font-size: 12px !important;
+          font-size: 14px !important;
           display: block;
           width: max-content;
           order: 4;
