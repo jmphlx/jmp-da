@@ -20,6 +20,11 @@
 .columns > div > .columns-img-col {
   order: 0;
 }
+.logo-size-small {
+  img {
+    max-width: 80px !important;
+  }
+}
 .image-order-2 {
   .columns-img-col {
     order: 1 !important;
