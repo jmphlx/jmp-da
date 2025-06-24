@@ -275,7 +275,7 @@ function writeAsAZGroups(matching, groupBy, groupProperty, blockObj) {
 function constructDictionary(matching, filterBy) {
   const dictionary = matching.reduce((filterGroups, page) => {
     const lcPage = lowercaseObj(page);
-    const filterValue = lcPage[filterBy];
+    const filterValue = lcPage[filterBy.toLowerCase()];
     // is filterValue a list of values.
     if (filterValue && filterValue.indexOf(',') > 0) {
       const filterValueArray = filterValue.split(',');
