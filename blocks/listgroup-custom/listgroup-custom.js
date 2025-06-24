@@ -339,12 +339,13 @@ async function constructDropdown(dictionary, filterBy, defaultFilterOption, tran
 
 function applyFilter(matching, filterBy, filterValue) {
   const filteredData = matching.filter((item) => {
+    const lcPage = lowercaseObj(item);
     // Need to check if it is an array and contains
     const conditionObject = {
       property: filterBy,
       value: filterValue,
     };
-    return containsOperator(item, conditionObject);
+    return containsOperator(lcPage, conditionObject);
   });
   return filteredData;
 }
