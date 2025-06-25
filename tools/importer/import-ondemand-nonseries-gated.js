@@ -1,6 +1,8 @@
 // customer stories import.js
 /* eslint-disable */
 const createMetadataBlock = (document) => {
+  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0');
+  console.log(lhText);
   const meta = {};
   //find the <title> element
   const title = document.querySelector('title');
@@ -19,6 +21,8 @@ const createMetadataBlock = (document) => {
     console.log("this ran");
     meta.displayDescription = descDisp.content;
   }
+
+  
 
   //find the <meta property="og:type"> element
   const type = document.querySelector('[property="og:type"]');
@@ -57,9 +61,9 @@ const createMetadataBlock = (document) => {
             //console.log("el.content splits below");
             //console.log(el.content.split(splitChar)[1]);
             if (el.content.split(splitChar)[1] == 'Success Story'){
-              meta.resourceType.push("Customer Story" + ",");
+              meta.resourceType.push("Customer Story");
             } else {
-            meta.resourceType.push(el.content.split(splitChar)[1] + ",");}
+            meta.resourceType.push(el.content.split(splitChar)[1]);}
           }
           // console.log("metaResourceType below"); 
           // console.log(meta.resourceType);
@@ -255,6 +259,8 @@ const createHubspot = (document, redirectTarget) => {
 
 const createLeftHandRail = (document) => {
   const column = document.querySelectorAll("div.parsys_column.cq-colctrl-lt8 div.parsys_column.cq-colctrl-lt8-c0")[0];
+  console.log("the column");
+  console.log(column)
   column.className = "";
   console.log("DREW LOOK HERE")
   console.log(column);
@@ -281,6 +287,18 @@ const createLeftHandRail = (document) => {
 
     if (children[i].className === "horizontalline parbase section") {
       content.append(createInternalDivider(document));
+    }
+    if (children[i].className === "image parbase section"){
+      const pic = document.createElement("img");
+      console.log("the image");
+      if (children[i].children[1].firstElementChild.hasAttribute("data-asset")){
+        pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +children[i].children[1].firstElementChild.getAttribute("data-asset");
+      } 
+      content.append(pic);
+      if (children[i].children[1].children[1]){
+        const caption = createCaption(document,kid.children[1].children[1].innerText);
+        content.append(caption);
+      };
     };
   };
   return content;
@@ -389,10 +407,10 @@ export default {
     subheader.innerText = "ON-DEMAND WEBINAR";
     if (subheader) section.append(subheader);
 
-    const highlight = document.querySelector('div.container.marquee div.par.parsys div.text.parbase.section div h1');
+    const highlight = document.querySelector('div.container.marquee-compact div.par.parsys div.textimage.parbase.section div div.text h1');
     console.log(highlight.innerText.trim().replaceAll(" ","-").replaceAll(":","").toLowerCase());
     highlight.classList.remove("nametag");
-    if (highlight) section.append(highlight);
+    if (highlight) section.append(highlight.cloneNode(true));
 
 
     const topSectionMeta = createDoublSM(document, 'blue-lightblue-gradient, background-image, text-light, section-padding-small');

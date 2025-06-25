@@ -177,33 +177,90 @@ const createBio = (document) => {
     ['columns (clm-25-75)'],
   ]
   //grab hero image
-  const heroCss = '#content div#page-content.par div#par div.par.parsys div.styledcontainer.parbase div.container.left-side div.par.parsys div.reference.parbase div.cq-dd-paragraph div.styledcontainer_9f05.styledcontainer.parbase div';
-  const hero = document.querySelector(heroCss);
+  
   const lhText = document.querySelector('div.par.parsys div.textimage.parbase.section div.authorbio div');
+  // console.log(lhText);
+  if (lhText){
+    console.log("Tad Look here");
+    console.log(lhText);
+    const pic = document.createElement("img");
+    const url = lhText.querySelectorAll("div[dat-asset]");
+    console.log("this is the url");
+    console.log(url);
+    if (lhText.firstElementChild.hasAttribute("data-asset")){
+      pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +lhText.firstElementChild.getAttribute("data-asset");
+      console.log("has data asset");
+      console.log(pic);
+    } else {
+      pic.src = "https://www.jmp.com" + lhText.firstElementChild.getAttribute("src");
+      console.log("has src");
+    }
+
+    const rhText = document.querySelector('div.par.parsys div.textimage.parbase.section div.authorbio div.text');
+    console.log(rhText);
+
+    cells.push([pic, rhText]);
+  };
+  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
+};
+
+const createBio2 = (document) => {
+  const doc = {};
+  const cells = [
+    ['columns (clm-25-75)'],
+  ]
+  //grab hero image
+  
+  const lhText = document.querySelector('div.par.parsys div.textimage.parbase.section div div');
   // console.log(lhText);
   console.log("Tad Look here");
   console.log(lhText);
-  lhText.firstElementChild.setAttribute('data-asset',"https://www.jmp.com" + lhText.firstElementChild.getAttribute("data-asset"));
-  lhText.firstElementChild.firstElementChild.setAttribute('src',lhText.firstElementChild.getAttribute("data-asset"));
+  const pic = document.createElement("img");
+  const url = lhText.querySelectorAll("div[dat-asset]");
+  console.log(url);
+  if (lhText.firstElementChild.hasAttribute("data-asset")){
+    pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +lhText.firstElementChild.getAttribute("data-asset");
+  } else {
+    pic.src = "https://www.jmp.com" + lhText.getAttribute("src");
+  }
 
-  console.log(lhText.innerHTML);
-  const rhText = document.querySelector('div.par.parsys div.textimage.parbase.section div.authorbio div.text');
+  const rhText = document.querySelector('div.par.parsys div.textimage.parbase.section div div.text');
   console.log(rhText);
 
-  cells.push([lhText, rhText]);
+  cells.push([pic, rhText]);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
 
 
 const createTitle = (document) => {
-  const title = document.querySelector('.container div.par.parsys div.text.parbase.section div');
+  const title = document.querySelectorAll('.container div.par.parsys div.text.parbase.section');
   console.log(title)
-  title.querySelector('h3').outerHTML = "<h1>" + title.querySelector('h3').innerHTML + '</h1>';
-  title.querySelector('h4').outerHTML = "<h6>" + title.querySelector('h4').innerHTML + '</h6>';
-  console.log("DREW LOOK HERE");
-  console.log(title);
-  return title;
+  if (title.length > 1) {
+    title[1].querySelector('h3').outerHTML = "<h1>" + title[1].querySelector('h3').innerHTML + '</h1>';
+    title[1].querySelector('h4').outerHTML = "<h6>" + title[1].querySelector('h4').innerHTML + '</h6>';
+    console.log("DREW LOOK HERE");
+    console.log(title);
+    title[1].className = "";
+  } else {
+    const check = title[0].querySelector('h3') !== null;
+    if (check) {
+      title[0].querySelector('h3').outerHTML = "<h1>" + title[0].querySelector('h3').innerHTML + '</h1>';
+      title[0].querySelector('h4').outerHTML = "<h6>" + title[0].querySelector('h4').innerHTML + '</h6>';
+      console.log("DREW LOOK HERE");
+      console.log(title);
+      title[0].className = "";
+    } else {
+      title[0].querySelector('h2').outerHTML = "<h6>" + title[0].querySelector('h2').innerHTML + '</h6>';
+      console.log("DREW LOOK HERE");
+      console.log(title);
+      title[0].className = "";
+    };
+    
+  };
+
+  
+  return title[title.length-1];
   };
 
 
@@ -212,7 +269,10 @@ const createSM = (document) => {
     ['section-metadata'],
   ]
 
-  cells.push(['background-image','']);
+  const pic = document.createElement('img');
+  pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com/content/dam/jmp/images/design/data-visualization-illustrations/bubble-plot-wide-01.png";
+
+  cells.push(['background-image',pic]);
   cells.push(['Style', 'purple-blue-gradient, light-text, place-background-image,']);
   console.log(cells);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
@@ -248,7 +308,7 @@ export default {
 
     const bio = createBio(document);
     console.log("bio create");
-    if (bio) section.append(bio);
+    if (bio) {section.append(bio)} else {section.append(createBio2(document))};
 
     const sectionMetadata2 = createSM2(document);
     if(sectionMetadata2) section.append(sectionMetadata2);

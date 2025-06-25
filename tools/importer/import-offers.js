@@ -171,22 +171,23 @@ const createFragment = (document, link) => {
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
-const createEmbed = (document) => {
+const createEmbed = (document, video) => {
   const cells = [
     ['embed'],
   ]
   const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt8-c1 div.styledcontainer.parbase div.container.shaded.rounded.bordered div.par.parsys div.videoBrightcove.section');
-  console.log("LOOK HERE");
-  if (lhText){
-  console.log(lhText.firstElementChild.firstElementChild.getAttribute("data-video-id"));
-  const link = lhText.firstElementChild.firstElementChild.getAttribute("data-video-id");
+  console.log("LOOK HERE IT SHOULD BE THE VIDEO ID");
+  
+
+  const link = video.firstElementChild.firstElementChild.getAttribute("data-video-id");
+  console.log(link);
 
 
   const anchor = document.createElement('a');
   anchor.href = link;
   anchor.innerText = link;
   cells.push([anchor]);
-};
+
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
@@ -221,7 +222,7 @@ const createDoublSM = (document, style) => {
   ]
 
   const pic = document.createElement('img');
-  pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com/content/dam/jmp/images/events/technically-speaking/events-background-003.png";
+  pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com/content/dam/jmp/images/data-viz/jmp-data-viz-scatterplot-background.png";
 
   cells.push(['background-image', pic]);
   cells.push(['Style', style]);
@@ -239,32 +240,15 @@ const createDoublSM2 = (document, style) => {
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
 };
 
-const createHubspot = (document, redirectTarget) => {
-  const cells = [
-    ['hubspot'],
-  ]
-  const headline = document.createElement("h5")
-  headline.innerText = "Register now for this free webinar.";
-  cells.push(['headline', headline]);
-  cells.push(['region', "na1"]);
-  cells.push(['PortalID', "20983899"]);
-  cells.push(['FormID', "0c4fb313-4d9e-4f03-a46c-86c000e70171"]);
-  cells.push(['leadsource', "Webcast (On-Demand)"]);
-  cells.push(['LastAction', "Webcast (On-Demand)"]);
-  cells.push(['salesforcecampaignid', "7017h0000016z4iAAA"]);
-  cells.push(['redirectTarget', redirectTarget]);
-  console.log(cells);
-  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
-};
 
 const createLeftHandRail = (document) => {
-  const column = document.querySelectorAll("div.parsys_column.cq-colctrl-lt8 div.parsys_column.cq-colctrl-lt8-c0")[0];
+  const column = document.querySelector("div.parsys_column.cq-colctrl-lt13-c0 ");
   column.className = "";
   console.log("DREW LOOK HERE")
   console.log(column);
   const content = document.createElement("div");
   const children = column.children;
-  console.log("DREW LOOK HERE");
+  console.log("DREW LOOK HERE LEFT");
   console.log(column);
   console.log(children);
 
@@ -277,16 +261,45 @@ const createLeftHandRail = (document) => {
       console.log(children);
     };
 
+    if (children[i].className === "image parbase section") {
+      console.log("just image");
+      const pic = document.createElement("img");
+
+      const originPic = children[i].firstElementChild.firstElementChild.firstElementChild;
+      console.log("this is the pic");
+      console.log(originPic);
+      if (originPic.hasAttribute("data-asset")){
+        pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +originPic.getAttribute("data-asset");
+      } else {
+        pic.src = "https://www.jmp.com" + originPic.getAttribute("src");
+      }
+
+      console.log(pic);
+
+      content.append(pic);
+    };
+
     if (children[i].className === "textimage parbase section") {
       console.log("text and image");
       let speaker = createInlineSpeaker(document,children[i]);
       content.append(speaker);
     };
 
-    // if (i === 0) {
-    //   content.append(createInternalDivider(document));
-    // };
+    if (children[i].className === "videoBrightcove section") {
+      console.log("video");
+      let speaker = createEmbed(document, children[i]);
+      content.append(speaker);
+    };
+
+    if (children[i].className === "horizontalline parbase section") {
+      content.append(createInternalDivider(document));
+    };
   };
+
+  const contact = document.querySelector("div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0");
+  console.log(contact);
+  content.append(contact);
+
   return content;
 
 };
@@ -323,61 +336,81 @@ const createInlineSpeaker = (document, column) => {
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
   };
 
-const createSpeaker = (document, speaker) => {
-  const cells = [['columns (image-size-small, block-top-padding-small)'],]
-  const paragraphs = speaker.children;
-  const pic = document.createElement("img");
-  const originPic = paragraphs[0].firstElementChild;
-  if (originPic.hasAttribute("data-asset")){
-    pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +originPic.getAttribute("data-asset");
-  } else {
-    pic.src = "https://www.jmp.com" + originPic.getAttribute("src");
-  }
-
-  
-  // pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" + paragraphs[0].firstElementChild.getAttribute("data-asset");
-
-  
-  console.log(pic);
-
-  cells.push([pic,paragraphs[1]]);
-
-  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
-  };
-
-const createFinalSpeaker = (document, speaker) => {
-  const cells = [['columns (image-size-small, block-top-padding-small, block-padding-small)'],]
-  const paragraphs = speaker.children;
-  const pic = document.createElement("img");
-  pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" + paragraphs[0].firstElementChild.getAttribute("data-asset");
-
-  
-  console.log(pic);
-
-  cells.push([pic,paragraphs[1]]);
-
-  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
-  };
-
 const createRighthandRail = (document) => {
-  const column = document.querySelectorAll("div.parsys_column.cq-colctrl-lt8 div.parsys_column.cq-colctrl-lt8-c0 div.textimage.parbase.section");
+  const column = document.querySelector("div.parsys_column.cq-colctrl-lt13-c1");
+  column.className = "";
+  console.log("DREW LOOK HERE RIGHT")
   console.log(column);
   const content = document.createElement("div");
-  
-  for (var i = 1; i < column.length; i++) {
-    if (i != (column.length-1)){
-      let test = createSpeaker(document,column[i].firstElementChild);
-      content.append(test);
-    } else {
-      let test = createFinalSpeaker(document,column[i].firstElementChild);
-      content.append(test);
+  const children = column.children;
+  console.log("DREW LOOK HERE");
+  console.log(column);
+  console.log(children);
+
+  for (var i = 0; i < children.length; i++) {
+    console.log(children[i]);
+    if (children[i].className === "text parbase section") {
+      console.log("just text");
+      let doohikey = children[i].cloneNode(true);
+      content.append(doohikey);
+      console.log(children);
     };
 
+    if (children[i].className === "image parbase section") {
+      console.log("just image");
+      const pic = document.createElement("img");
+
+      const originPic = children[i].children[1].firstElementChild;
+      console.log("this is the pic");
+      console.log(originPic);
+      if (originPic.hasAttribute("data-asset")){
+        pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +originPic.getAttribute("data-asset");
+      } else {
+        pic.src = "https://www.jmp.com" + originPic.getAttribute("src");
+      }
+
+      console.log(pic);
+
+      content.append(pic);
+    };
+
+    if (children[i].className === "textimage parbase section") {
+      console.log("text and image");
+      let speaker = createInlineSpeaker(document,children[i]);
+      content.append(speaker);
+    };
+
+    if (children[i].className === "videoBrightcove section") {
+      console.log("video");
+      let speaker = createEmbed(document, children[i]);
+      content.append(speaker);
+    };
+
+    if (children[i].className === "horizontalline parbase section") {
+      content.append(createInternalDivider(document));
+    };
+
+    if (children[i].className === "btn parbase") {
+      content.append(createButtonLink(document));
+    };
   };
 
-
+  const contact = document.querySelector("div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c1");
+  console.log(contact);
+  content.append(contact)
   return content;
 
+};
+
+const createButtonLink = (document) => {
+  const cells = [
+    ['columns (button-center)'],
+  ]
+  const anchor = document.createElement('a');
+  anchor.href = "/en/software/collaborative-analytics-software";
+  anchor.innerText = "About JMP Live";
+  cells.push([anchor]);
+  if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
 
@@ -388,11 +421,11 @@ export default {
     const section = document.createElement('div');
     const sectionBreak = document.createElement('hr');
     
-    
-    const header = document.createElement('h3');
-    header.innerText = "TECHNICALLY SPEAKING";
-    console.log(header);
-    if (header) section.append(header);
+
+    const highlight = document.querySelector('div.parsys_column.cq-colctrl-lt13-c0 div.text.parbase.section div h1');
+    console.log(highlight.innerText.trim().replaceAll(" ","-").replaceAll(":","").toLowerCase());
+    highlight.classList.remove("nametag");
+    if (highlight) section.append(highlight.cloneNode(true));
 
 
     const topSectionMeta = createDoublSM(document, 'blue-purple-gradient, background-image-narrow, text-light');
@@ -409,14 +442,7 @@ export default {
 
     section.append(document.createElement('hr'));
 
-    const subheader = document.createElement('h6');
-    subheader.innerText = "ON-DEMAND WEBINAR";
-    if (subheader) section.append(subheader);
-
-    const highlight = document.querySelector('div.text.parbase.section div h3');
-    console.log(highlight.innerText.trim().replaceAll(" ","-").replaceAll(":","").toLowerCase());
-    highlight.classList.remove("nametag");
-    if (highlight) section.append(highlight);
+    
 
     const lhrail = createLeftHandRail( document);
     console.log(lhrail)
@@ -426,22 +452,14 @@ export default {
     // if (internalDivider) section.append(internalDivider);
     
 
-
-    const rhRail = createRighthandRail(document);
-    if (rhRail) section.append(rhRail);
-
     const divider = createDivider(document);
     if (divider) section.append(divider);
 
-    const embed = createEmbed(document);
-    if (embed) section.append(embed);
 
-    const redirectTarget = `/en/ondemand/technically-speaking/${highlight.innerText.trim().replaceAll(" ","-").replaceAll(":","").toLowerCase()}/watch`;
-
-    const hubspot = createHubspot(document, redirectTarget);
+    const hubspot = createRighthandRail(document);
     if (hubspot) section.append(hubspot);
     
-    const sectionMetadata3 = createDoublSM2(document, 'columns-60-40, section-top-padding-small, section-padding-large');
+    const sectionMetadata3 = createDoublSM2(document, 'columns-60-40, section-top-padding-small, section-padding-large, form-content-right');
     if(sectionMetadata3) section.append(sectionMetadata3);
   
     const meta = createMetadataBlock(document);

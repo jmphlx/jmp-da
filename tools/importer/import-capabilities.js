@@ -1,6 +1,8 @@
 // customer stories import.js
 /* eslint-disable */
 const createMetadataBlock = (document) => {
+  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0');
+  console.log(lhText);
   const meta = {};
   //find the <title> element
   const title = document.querySelector('title');
@@ -20,6 +22,8 @@ const createMetadataBlock = (document) => {
     meta.displayDescription = descDisp.content;
   }
 
+  
+
   //find the <meta property="og:type"> element
   const type = document.querySelector('[property="og:type"]');
   if (type) meta.Type = type.content;
@@ -38,10 +42,10 @@ const createMetadataBlock = (document) => {
     const splitChar = '|';
     meta.resourceType = [];
     meta.resourceOptions = [];
-    meta.capabilityType = [];
+    meta.capability = [];
     meta.product = [];
     meta.industry = [];
-    meta.redirectUrl = [];
+    meta.redirectTarget = [];
     //events arrays
     meta.eventType = [];
     meta.eventTime = [];
@@ -57,9 +61,9 @@ const createMetadataBlock = (document) => {
             //console.log("el.content splits below");
             //console.log(el.content.split(splitChar)[1]);
             if (el.content.split(splitChar)[1] == 'Success Story'){
-              meta.resourceType.push("Customer Story" + ",");
+              meta.resourceType.push("Customer Story");
             } else {
-            meta.resourceType.push(el.content.split(splitChar)[1] + ",");}
+            meta.resourceType.push(el.content.split(splitChar)[1]);}
           }
           // console.log("metaResourceType below"); 
           // console.log(meta.resourceType);
@@ -79,7 +83,7 @@ const createMetadataBlock = (document) => {
             //meta.capabilityType = [];
             //console.log("el.content splits below");
             //console.log(el.content.split(splitChar)[1]);
-            meta.capabilityType.push(el.content.split(splitChar)[1]);
+            meta.capability.push(el.content.split(splitChar)[1]);
           }
           // console.log("metaCapabilityType below"); 
           // console.log(meta.capabilityType);
@@ -152,23 +156,6 @@ const createMetadataBlock = (document) => {
       });
     }
   }
-  const siteAreaMeta = document.querySelectorAll('[property="siteArea"]');
-  if (siteAreaMeta) {
-    meta.SiteArea = [];
-    siteAreaMeta.forEach((el) => {
-      if (el.content) meta.SiteArea.push(el.content);
-    });
-  }
-  //find the <meta property="date"> element
-  const date = document.querySelector('[property="date"]');
-  if (date) meta.Date = date.content;
-  //find the <meta property="date"> element
-  const tCard = document.querySelector('[name="twitter:card"]');
-  if (tCard) meta['twitter:card'] = tCard.content;
-  //find the <meta property="date"> element
-  const tSite = document.querySelector('[name="twitter:site"]');
-  if (tCard) meta['twitter:site'] = tSite.content;  
-  //helper to create the metadata block
   const metaBlock = WebImporter.Blocks.getMetadataBlock(document, meta);
   //returning the meta object might be usefull to other rules
   return metaBlock;
@@ -190,15 +177,30 @@ const createTopic = (document, title) => {
     ['columns'],
   ]
   
-  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0');
+  const left = document.querySelector('div.container.segment.first div.par.parsys div.parsys_column.cq-colctrl-lt8 div.parsys_column.cq-colctrl-lt8-c0');
+  console.log("this is the left hand text of the first section");
+  console.log(left);
+  const lhText = left.cloneNode(true);
 
 
-  const rhText = document.querySelector('div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c1 div.lightbox.section div.video a.text-bottom div.image div span.cmp-image img.cmp-image__image');
-  const page = title.innerText.trim().replaceAll(" ","-").toLowerCase();
-  rhText.setAttribute("href",`https://main--jmp-da--jmphlx.hlx.page/modals/${page}`);
-  rhText.setAttribute("src", "https://www.jmp.com" + rhText.getAttribute('src'));
+  const right = document.querySelector('div.par.parsys div.parbase.section div.lightbox-brightcove template');
+  const rhText = right.cloneNode(true);
+  // const page = title.innerText.trim().replaceAll(" ","-").toLowerCase();
+  // rhText.setAttribute("href",`https://main--jmp-da--jmphlx.hlx.page/modals/${page}`);
+  // rhText.setAttribute("src", "https://www.jmp.com" + rhText.getAttribute('src'));
+
+  console.log("LOOK HERE");
+  console.log(rhText.content.querySelector("video-js"));
+  console.log("the video ID");
+  console.log(rhText.content.querySelector("video-js").getAttribute("data-video-id"));
+  const link = rhText.content.querySelector("video-js").getAttribute("data-video-id");
+
+
+  const anchor = document.createElement('a');
+  anchor.href = link;
+  anchor.innerText = link;
   
-  cells.push([lhText, rhText]);
+  cells.push([lhText, anchor]);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
@@ -327,7 +329,7 @@ const createDoublSM = (document, style) => {
   ]
 
   const pic = document.createElement('img');
-  pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com/content/dam/jmp/images/software/scatterplot-v1-iilustration.png";
+  pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com/content/dam/jmp/images/data-viz/jmp-data-viz-scatterplot-background.png";
 
   cells.push(['background-image', pic]);
   cells.push(['Style', style]);
@@ -353,21 +355,21 @@ const createDoublSM2 = (document, style) => {
 const createTrial = (document) => {
   const main = document.createElement('div');
 
-  const link1 = document.createElement('a');
-  link1.innerHTML = "Try JMP free"
-  link1.setAttribute("href", "https://www.jmp.com/en_us/download-jmp-free-trial.html");
+  const buttons = document.querySelectorAll("div.dark-button-center ul.list-none li span.button a");
+  if (buttons.length > 0){
+
+  const link1 = buttons[0].cloneNode(true);
   main.append(link1);
 
   main.append(document.createElement('p'));
+  
 
-  const link2 = document.createElement('a');
-  link2.innerHTML = "Buy JMP now"
-  link2.setAttribute("href", "https://www.jmp.com/en_us/software/buy-jmp.html");
+  const link2 = buttons[1].cloneNode(true);
   main.append(link2);
 
   console.log("LOOK HERE DREW PLEASE");
   console.log(main);
-
+  };
 
 
   return main; 
@@ -377,7 +379,7 @@ const createContact = (document) => {
   
 
   const link1 = document.createElement('a');
-  link1.innerHTML = "Contact us"
+  link1.innerHTML = document.querySelector("div.dark-button-center p span.button a").innerHTML;
   link1.setAttribute("href", "en/about/contact/contact-us-form");
 
 
@@ -390,27 +392,9 @@ const createAnalytic = (document) => {
     ['columns'],
   ]
 
-  const link1 = document.createElement('div');
-  link1.innerHTML = `<div class="verticalspacer parbase section"><div class=" vspace" style="height: 20px; ">
-  </div>
-</div>
-<div class="text parbase section"><div class="">
-<h2>JMP<sup>®</sup> Analytic Capabilities</h2>
-
-<p>See everything that JMP<sup>®</sup> can do for you and your organization, from data access and cleaning, to exploration and visualization, all the way through sharing and communicating your results.</p>
-
-
-</div>
-</div>
-<div class="text parbase section"><div class="sub-capability-cards">
-<p><a href="https://www.jmp.com/en_us/software/capabilities.html">All capabilities</a></p>
-
-<p><a href="https://www.jmp.com/en_us/software/analytic-workflow.html">Analytic workflow</a></p>
-
-
-</div>
-</div>`;
-
+  const link1 = document.querySelector("div.reference.parbase div.cq-dd-paragraph div.styledcontainer_fadb.styledcontainer.parbase div.container div.par.parsys div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0 ");
+  console.log("analytic content");
+  console.log(link1);
   const pic = document.createElement('img');
   pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com/content/dam/jmp/images/why-jmp/why-JMP-img_600-v2.png";
 
@@ -434,7 +418,7 @@ export default {
     if (title) section.append(header);
 
 
-    const topSectionMeta = createDoublSM(document, 'blue-purple-gradient, background-image, light-text');
+    const topSectionMeta = createDoublSM(document, 'blue-purple-gradient, text-light');
     if(topSectionMeta) section.append(topSectionMeta);
 
     section.append(document.createElement('hr'));
@@ -451,21 +435,13 @@ export default {
 
 
 
-    const quote = createQuote(document);
-    if(quote) section.append(quote);
-
-    const sectionMetadata2 = createSM(document, 'section-padding-none');
-    if(sectionMetadata2) section.append(sectionMetadata2);
-
-    section.append(document.createElement('hr'));
+    
 
 
 
     const card = createCards(document);
     if(card) section.append(card);
 
-    const divider = createDivider(document);
-    if (divider) section.append(divider);
 
     const highlight = document.querySelector('div.par.parsys div.styledcontainer.parbase div.container div.par.parsys div.text.parbase.section div.nametag');
     highlight.classList.remove("nametag");
@@ -483,8 +459,16 @@ export default {
 
     section.append(sectionBreak);
 
+    const quote = createQuote(document);
+    if(quote) section.append(quote);
+
+    const sectionMetadata2 = createSM(document, 'section-padding-none');
+    if(sectionMetadata2) section.append(sectionMetadata2);
+
+    section.append(document.createElement('hr'));
+
     const bestDisc = document.createElement('h3');
-    bestDisc.innerText = "The best discoveries start with JMP";
+    bestDisc.innerText = document.querySelector("div.text.parbase.section div.dark-button-center h2").innerText;
     bestDisc.classList.remove("nametag");
     section.append(bestDisc);
 
@@ -492,7 +476,7 @@ export default {
     const trial = createTrial(document);
     if(trial) section.append(trial);
 
-    const middleSectionMeta = createDoublSM(document, 'blue-purple-gradient, text-center, background-image, block-padding-small, light-text, button-light, button-center');
+    const middleSectionMeta = createDoublSM(document, 'blue-purple-gradient, text-center, background-image, block-padding-small, text-light, button-light, button-center');
     if(middleSectionMeta) section.append(middleSectionMeta);
 
     section.append(document.createElement('hr'));
@@ -506,14 +490,21 @@ export default {
     section.append(document.createElement('hr'));
 
     const nextStep = document.createElement('h3');
-    nextStep.innerText = "Ready to take the next step?";
+    const reference = document.querySelectorAll("div.text.parbase.section div.dark-button-center h2");
+    console.log(reference);
+    if (reference.length > 1){
+    nextStep.innerText = reference[1].innerText;
     nextStep.classList.remove("nametag");
+    } else {
+    nextStep.innerText = reference[0].innerText;
+    nextStep.classList.remove("nametag");
+    }
     section.append(nextStep);
 
     const contact = createContact(document);
     if(contact) section.append(contact);
 
-    const bottomSectionMeta = createDoublSM(document, 'blue-purple-gradient, text-center, background-image, block-padding-small, light-text, button-light, button-center');
+    const bottomSectionMeta = createDoublSM(document, 'blue-purple-gradient, text-center, background-image, block-padding-small, text-light, button-light, button-center');
     if(bottomSectionMeta) section.append(bottomSectionMeta);
   
     const meta = createMetadataBlock(document);

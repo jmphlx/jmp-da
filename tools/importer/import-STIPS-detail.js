@@ -1,6 +1,8 @@
 // customer stories import.js
 /* eslint-disable */
 const createMetadataBlock = (document) => {
+  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0');
+  console.log(lhText);
   const meta = {};
   //find the <title> element
   const title = document.querySelector('title');
@@ -20,6 +22,8 @@ const createMetadataBlock = (document) => {
     meta.displayDescription = descDisp.content;
   }
 
+  
+
   //find the <meta property="og:type"> element
   const type = document.querySelector('[property="og:type"]');
   if (type) meta.Type = type.content;
@@ -38,10 +42,10 @@ const createMetadataBlock = (document) => {
     const splitChar = '|';
     meta.resourceType = [];
     meta.resourceOptions = [];
-    meta.capabilityType = [];
+    meta.capability = [];
     meta.product = [];
     meta.industry = [];
-    meta.redirectUrl = [];
+    meta.redirectTarget = [];
     //events arrays
     meta.eventType = [];
     meta.eventTime = [];
@@ -57,9 +61,9 @@ const createMetadataBlock = (document) => {
             //console.log("el.content splits below");
             //console.log(el.content.split(splitChar)[1]);
             if (el.content.split(splitChar)[1] == 'Success Story'){
-              meta.resourceType.push("Customer Story" + ",");
+              meta.resourceType.push("Customer Story");
             } else {
-            meta.resourceType.push(el.content.split(splitChar)[1] + ",");}
+            meta.resourceType.push(el.content.split(splitChar)[1]);}
           }
           // console.log("metaResourceType below"); 
           // console.log(meta.resourceType);
@@ -79,7 +83,7 @@ const createMetadataBlock = (document) => {
             //meta.capabilityType = [];
             //console.log("el.content splits below");
             //console.log(el.content.split(splitChar)[1]);
-            meta.capabilityType.push(el.content.split(splitChar)[1]);
+            meta.capability.push(el.content.split(splitChar)[1]);
           }
           // console.log("metaCapabilityType below"); 
           // console.log(meta.capabilityType);
@@ -152,21 +156,6 @@ const createMetadataBlock = (document) => {
       });
     }
   }
-  const siteAreaMeta = document.querySelectorAll('[property="siteArea"]');
-  if (siteAreaMeta) {
-    meta.SiteArea = [];
-    siteAreaMeta.forEach((el) => {
-      if (el.content) meta.SiteArea.push(el.content);
-    });
-  }
-
-  const date = document.querySelector('[property="date"]');
-  if (date) meta.Date = date.content;
-  //find the <meta property="date"> element
-  const tCard = document.querySelector('[name="twitter:card"]');
-  if (tCard) meta['twitter:card'] = tCard.content;
-  const tSite = document.querySelector('[name="twitter:site"]');
-  if (tCard) meta['twitter:site'] = tSite.content;  
   const metaBlock = WebImporter.Blocks.getMetadataBlock(document, meta);
   //returning the meta object might be usefull to other rules
   return metaBlock;
@@ -182,16 +171,30 @@ const createHighlight = (document) => {
   const rhText = document.createElement('div');
 
   const link = document.createElement('a');
-  link.innerText = "Enroll now";
+  const buttonText = document.querySelector("div.btn.parbase a span.lrg.align-left.none.txt-light");
+  if (buttonText) {link.innerText = buttonText.innerText} else {
+  link.innerText = document.querySelector("div.parsys_column.cq-colctrl-lt8-c0 div.btn.parbase a span.lrg.align-left.none.txt-light.transparent").innerText};
   link.href = 'https://support.sas.com/edu/viewmyelearn.html?activationCode=FAEJMPST';
   link.target = "_blank";
   lhText.append(link);
+
+  const vid = document.querySelector("div.lightbox.section div.video div");
+  const vid2 = vid.children[1].firstElementChild.firstElementChild.firstElementChild.firstElementChild;
+  const vid3 = vid2.content.querySelector("video-js").getAttribute("data-video-id");
+  console.log("trying to find the vidoe");
+  console.log(vid);
+  console.log(vid2);
+
+
+  const anchor = document.createElement('a');
+  anchor.href = vid3;
+  anchor.innerText = vid3;
 
   // const vid = rhText.querySelector("lightbox-brightcove");
   // console.log("DREW LOOK HERE");
   // console.log(typeof rhText);
   
-  cells.push([lhText, rhText]);
+  cells.push([lhText, anchor]);
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
@@ -349,7 +352,7 @@ export default {
     section.append(document.createElement('hr'));
 
     const topics = document.createElement('h4');
-    topics.innerText = "Specific topics covered in this module include:";
+    topics.innerText = document.querySelector("div.par.parsys div.styledcontainer.parbase div.container.billboard div.par.parsys div.text.parbase.section div h3").innerText;
     section.append(topics);
 
     const relatedTopics = createTopics(document);

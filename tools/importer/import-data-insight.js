@@ -1,6 +1,8 @@
 // customer stories import.js
 /* eslint-disable */
 const createMetadataBlock = (document) => {
+  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0');
+  console.log(lhText);
   const meta = {};
   //find the <title> element
   const title = document.querySelector('title');
@@ -20,6 +22,8 @@ const createMetadataBlock = (document) => {
     meta.displayDescription = descDisp.content;
   }
 
+  
+
   //find the <meta property="og:type"> element
   const type = document.querySelector('[property="og:type"]');
   if (type) meta.Type = type.content;
@@ -38,10 +42,10 @@ const createMetadataBlock = (document) => {
     const splitChar = '|';
     meta.resourceType = [];
     meta.resourceOptions = [];
-    meta.capabilityType = [];
+    meta.capability = [];
     meta.product = [];
     meta.industry = [];
-    meta.redirectUrl = [];
+    meta.redirectTarget = [];
     //events arrays
     meta.eventType = [];
     meta.eventTime = [];
@@ -57,9 +61,9 @@ const createMetadataBlock = (document) => {
             //console.log("el.content splits below");
             //console.log(el.content.split(splitChar)[1]);
             if (el.content.split(splitChar)[1] == 'Success Story'){
-              meta.resourceType.push("Customer Story" + ",");
+              meta.resourceType.push("Customer Story");
             } else {
-            meta.resourceType.push(el.content.split(splitChar)[1] + ",");}
+            meta.resourceType.push(el.content.split(splitChar)[1]);}
           }
           // console.log("metaResourceType below"); 
           // console.log(meta.resourceType);
@@ -79,7 +83,7 @@ const createMetadataBlock = (document) => {
             //meta.capabilityType = [];
             //console.log("el.content splits below");
             //console.log(el.content.split(splitChar)[1]);
-            meta.capabilityType.push(el.content.split(splitChar)[1]);
+            meta.capability.push(el.content.split(splitChar)[1]);
           }
           // console.log("metaCapabilityType below"); 
           // console.log(meta.capabilityType);
@@ -152,21 +156,6 @@ const createMetadataBlock = (document) => {
       });
     }
   }
-  const siteAreaMeta = document.querySelectorAll('[property="siteArea"]');
-  if (siteAreaMeta) {
-    meta.SiteArea = [];
-    siteAreaMeta.forEach((el) => {
-      if (el.content) meta.SiteArea.push(el.content);
-    });
-  }
-
-  const date = document.querySelector('[property="date"]');
-  if (date) meta.Date = date.content;
-  //find the <meta property="date"> element
-  const tCard = document.querySelector('[name="twitter:card"]');
-  if (tCard) meta['twitter:card'] = tCard.content;
-  const tSite = document.querySelector('[name="twitter:site"]');
-  if (tCard) meta['twitter:site'] = tSite.content;  
   const metaBlock = WebImporter.Blocks.getMetadataBlock(document, meta);
   //returning the meta object might be usefull to other rules
   return metaBlock;
@@ -398,10 +387,10 @@ export default {
     const sectionBreak = document.createElement('hr');
     
     
-    const header = document.createElement('h3');
-    header.innerText = "DATA INSIGHT";
-    console.log(header);
-    if (header) section.append(header);
+    // const header = document.createElement('h3');
+    // header.innerText = "DATA INSIGHT";
+    // console.log(header);
+    // if (header) section.append(header);
 
 
     const topSectionMeta = createDoublSM(document, 'purple-lightred-gradient, background-image-narrow, text-light');
@@ -419,7 +408,9 @@ export default {
     section.append(document.createElement('hr'));
 
     const subheader = document.createElement('h6');
-    subheader.innerText = "ON-DEMAND WEBINAR";
+    console.log("the subheader");
+    console.log(document.querySelector("div.container.subnav-compact div.par.parsys div.text.parbase.section div h4"));
+    // subheader.innerText = document.querySelector("div.container.subnav-compact div.par.parsys div.text.parbase.section div h4").innerText;
     if (subheader) section.append(subheader);
 
     const highlight = document.querySelector('div.container.marquee div.par.parsys div.text.parbase.section div h1');

@@ -1,6 +1,8 @@
 // customer stories import.js
 /* eslint-disable */
 const createMetadataBlock = (document) => {
+  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0');
+  console.log(lhText);
   const meta = {};
   //find the <title> element
   const title = document.querySelector('title');
@@ -20,6 +22,8 @@ const createMetadataBlock = (document) => {
     meta.displayDescription = descDisp.content;
   }
 
+  
+
   //find the <meta property="og:type"> element
   const type = document.querySelector('[property="og:type"]');
   if (type) meta.Type = type.content;
@@ -38,10 +42,10 @@ const createMetadataBlock = (document) => {
     const splitChar = '|';
     meta.resourceType = [];
     meta.resourceOptions = [];
-    meta.capabilityType = [];
+    meta.capability = [];
     meta.product = [];
     meta.industry = [];
-    meta.redirectUrl = [];
+    meta.redirectTarget = [];
     //events arrays
     meta.eventType = [];
     meta.eventTime = [];
@@ -57,9 +61,9 @@ const createMetadataBlock = (document) => {
             //console.log("el.content splits below");
             //console.log(el.content.split(splitChar)[1]);
             if (el.content.split(splitChar)[1] == 'Success Story'){
-              meta.resourceType.push("Customer Story" + ",");
+              meta.resourceType.push("Customer Story");
             } else {
-            meta.resourceType.push(el.content.split(splitChar)[1] + ",");}
+            meta.resourceType.push(el.content.split(splitChar)[1]);}
           }
           // console.log("metaResourceType below"); 
           // console.log(meta.resourceType);
@@ -79,7 +83,7 @@ const createMetadataBlock = (document) => {
             //meta.capabilityType = [];
             //console.log("el.content splits below");
             //console.log(el.content.split(splitChar)[1]);
-            meta.capabilityType.push(el.content.split(splitChar)[1]);
+            meta.capability.push(el.content.split(splitChar)[1]);
           }
           // console.log("metaCapabilityType below"); 
           // console.log(meta.capabilityType);
@@ -152,23 +156,6 @@ const createMetadataBlock = (document) => {
       });
     }
   }
-  const siteAreaMeta = document.querySelectorAll('[property="siteArea"]');
-  if (siteAreaMeta) {
-    meta.SiteArea = [];
-    siteAreaMeta.forEach((el) => {
-      if (el.content) meta.SiteArea.push(el.content);
-    });
-  }
-  //find the <meta property="date"> element
-  const date = document.querySelector('[property="date"]');
-  if (date) meta.Date = date.content;
-  //find the <meta property="date"> element
-  const tCard = document.querySelector('[name="twitter:card"]');
-  if (tCard) meta['twitter:card'] = tCard.content;
-  //find the <meta property="date"> element
-  const tSite = document.querySelector('[name="twitter:site"]');
-  if (tCard) meta['twitter:site'] = tSite.content;  
-  //helper to create the metadata block
   const metaBlock = WebImporter.Blocks.getMetadataBlock(document, meta);
   //returning the meta object might be usefull to other rules
   return metaBlock;
@@ -190,26 +177,38 @@ const createFragment = (document) => {
 const createHero = (document) => {
   const doc = {};
   const cells = [
-    ['columns (success-story-hero)'],
+    ['columns (video-story-hero)'],
   ]
   //grab hero image
   const heroCss = '#content div#page-content.par div#par div.par.parsys div.styledcontainer.parbase div.container.article-template.article-title div.par.parsys div.parsys_column.cq-colctrl-lt0';
   const hero = document.querySelector(heroCss);
-  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt9 div.parsys_column.cq-colctrl-lt9-c0 div.image.parbase.section div');
-  // console.log(lhText);
-  console.log("Tad Look here");
+  
+  //grab right hand text 
+  const rhText = document.querySelector('div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0 div.text.parbase.section');
+  const lefty = document.createElement("div");
+  const lhText = document.createElement("img");
+  const originPic = document.querySelector("div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c1 div.textimage.parbase.section div.boxed div");
+  if (originPic.firstElementChild.hasAttribute("data-asset")){
+    lhText.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +originPic.firstElementChild.getAttribute("data-asset");
+  } else {
+    lhText.src = "https://www.jmp.com" + originPic.firstElementChild.getAttribute("src");
+  }
+  console.log("pics");
+  console.log(originPic);
   console.log(lhText);
-  lhText.firstElementChild.setAttribute('data-asset',"https://www.jmp.com" + lhText.firstElementChild.getAttribute("data-asset"));
-  lhText.firstElementChild.firstElementChild.setAttribute('src',lhText.firstElementChild.getAttribute("data-asset"));
+  lefty.append(lhText);
+  lefty.append(originPic.children[1]);
+  const quote = document.querySelector("div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c1 div.textimage.parbase.section div.text");
+  console.log(quote);
+  lefty.append(quote);
 
-  console.log(lhText.innerHTML);
-  const rhText = document.querySelector('div.container.article div.par.parsys div.text.parbase.section');
-  // console.log(rhText);
-  rhText.querySelector('h2').outerHTML = "<p>" + rhText.querySelector('h2').innerHTML + '</p>'
-  rhText.querySelector('h6').innerText = "Success Story"
-  console.log("here!!!! here!!!!!!");
-  console.log(rhText.querySelector('h2'));
-  cells.push([rhText, lhText]);
+  // let images = lhText.getElementsByTagName("img");
+  // console.log(images);
+  // for (let el of images) {
+  //   el.setAttribute('src',"https://www.jmp.com" + el.getAttribute("src"));
+  // };
+  cells.push([rhText, lefty]);
+  
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
@@ -243,34 +242,130 @@ const createLeftHandRail = (document) => {
   return newDiv;
   };
 
+  const createQuote = (document, pics, text) => {
+    const cells = [
+      ['columns (block-padding-small, block-top-padding-small, column-rule)'],
+    ]
+
+    const pic = document.createElement("img");
+    pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" + pics[0].getAttribute("data-asset");
+  
+    cells.push([pic, text]);
+    
+    console.log(cells);
+    /* disclaimer = document.querySelector('');
+    if (disclaimer) {
+      //cells.push([]);
+    }*/
+    if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
+  };
+
+  const createCarousel = (document, pics, peas) => {
+    const cells = [
+      ['carousel (block-padding-small, block-top-padding-small, carousel-rule)'],
+    ]
+
+    for (var i = 0; i < pics.length; i++) {
+      const pic = document.createElement("img");
+      pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" + pics[i].getAttribute("data-asset");
+      if (peas.length > i){
+        cells.push([pic,peas[i]]);
+      } else {
+        cells.push([pic,""])
+      };
+      
+    };
+    
+    
+    console.log(cells);
+    /* disclaimer = document.querySelector('');
+    if (disclaimer) {
+      //cells.push([]);
+    }*/
+    if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);  
+  };
+
 const createRightHandRail = (document) => {
   const newDiv = document.createElement("div");
 
-  const paragraphs = document.querySelectorAll('.container.article .par.parsys .text.parbase.section div:has(p)');
-  paragraphs.forEach((el) => {
-    // console.log('This is the header');
-    // console.log(el.innerHTML);
-    const header = el.querySelector('h3');
+  const paragraphs = document.querySelectorAll('div.parsys_column.cq-colctrl-lt2 div.parsys_column.cq-colctrl-lt2-c0')[1];
+  console.log("right hand rale");
 
-    if (header) {
-      const myHeader = document.createElement('h3');
-      myHeader.innerHTML = header.innerHTML;
-      // console.log('Header Ran');
-      // console.log(myHeader.innerText);
-      newDiv.appendChild(myHeader);
-    }
+  console.log(paragraphs);
+  const bits = paragraphs.cloneNode(true);
+  const children = bits.children;
+  for (var i = 1; i < children.length; i++) {
+    if (children[i].className === "text parbase section"){
+      newDiv.append(children[i].cloneNode(true));
+    }else if (children[i].className === "styledcontainer parbase"){
+      const pics = children[i].querySelectorAll("[data-asset]");
+      console.log("these are the pics in the section");
+      console.log(pics);
+      if (pics.length > 1) {
+        const peas = children[i].querySelectorAll("div.text");
+        console.log(peas);
+        const carousel = createCarousel(document, pics, peas);
+        newDiv.append(carousel);
+
+      } else if (pics.length === 1){
+        const quote = createQuote(document, pics,children[i].querySelector("div.text"))
+        newDiv.append(quote);
+
+
+      };
+
+    }else if (children[i].className === "lightbox section"){
+      if (children[i].firstElementChild.className === "screenshot "){
+        const pic = document.createElement("img");
+        console.log("the image");
+        const originPic = children[i].querySelectorAll("span[data-cmp-src]");
+        console.log(children[i]);
+        console.log(originPic);
+        pic.src = "https://www.jmp.com" + originPic[0].getAttribute("data-cmp-src");
+        newDiv.append(pic);
+        console.log(pic);
+      }else if (children[i].firstElementChild.className === "video "){
+        const placeholder = children[i].querySelectorAll("iframe[src]");
+        console.log("THIS IS THE VIDEO");
+        console.log(placeholder);
+        const link = placeholder[0].getAttribute("src");
+        const embed = createEmbed(document,link);
+        newDiv.append(embed);
+      };
+    };;
+
+    // }else{
+    //   throw new Error("Unhandled Element");
+
+    // };
+  };
+
+
+
+  // paragraphs.forEach((el) => {
+  //   // console.log('This is the header');
+  //   // console.log(el.innerHTML);
+  //   const header = el.querySelector('h3');
+
+  //   if (header) {
+  //     const myHeader = document.createElement('h3');
+  //     myHeader.innerHTML = header.innerHTML;
+  //     // console.log('Header Ran');
+  //     // console.log(myHeader.innerText);
+  //     newDiv.appendChild(myHeader);
+  //   }
     
-    const p = el.querySelectorAll('p');
-    p.forEach((elem) => {
-      const myP = document.createElement('p');
-      myP.innerHTML = elem.innerHTML;
-      // console.log('p ran');
-      // console.log(myP.innerText);
-      newDiv.appendChild(myP);
-    });
-  });
+  //   const p = el.querySelectorAll('p');
+  //   p.forEach((elem) => {
+  //     const myP = document.createElement('p');
+  //     myP.innerHTML = elem.innerHTML;
+  //     // console.log('p ran');
+  //     // console.log(myP.innerText);
+  //     newDiv.appendChild(myP);
+  //   });
+  // });
   
-  // console.log(newDiv.innerText);
+  // // console.log(newDiv.innerText);
   return newDiv;
 };
 
@@ -320,7 +415,6 @@ export default {
     console.log(fragment);
     if (fragment) section.append(fragment);
 
-    section.append(":search:")
 
     const vidHero = createHero(document);
     if (vidHero) section.append(vidHero);
@@ -339,8 +433,8 @@ export default {
     const button = createButtonLink(document);
     if (button) section.append(button);
 
-    const disclaimer = createDisclaimer(document);
-    if (disclaimer) section.append(disclaimer);
+    // const disclaimer = createDisclaimer(document);
+    // if (disclaimer) section.append(disclaimer);
 
     const sectionMetadata = createSM(document);
     if(sectionMetadata) section.append(sectionMetadata);

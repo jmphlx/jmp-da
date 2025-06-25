@@ -1,6 +1,8 @@
 // customer stories import.js
 /* eslint-disable */
 const createMetadataBlock = (document) => {
+  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0');
+  console.log(lhText);
   const meta = {};
   //find the <title> element
   const title = document.querySelector('title');
@@ -20,9 +22,11 @@ const createMetadataBlock = (document) => {
     meta.displayDescription = descDisp.content;
   }
 
+  
+
   //find the <meta property="og:type"> element
-  // const type = document.querySelector('[property="og:type"]');
-  // if (type) meta.Type = type.content;
+  const type = document.querySelector('[property="og:type"]');
+  if (type) meta.Type = type.content;
   //find the <meta property="og:image"> element
   const img = document.querySelector('[property="og:image"]');
   if (img && img.content) {
@@ -38,10 +42,10 @@ const createMetadataBlock = (document) => {
     const splitChar = '|';
     meta.resourceType = [];
     meta.resourceOptions = [];
-    meta.capabilityType = [];
+    meta.capability = [];
     meta.product = [];
     meta.industry = [];
-    meta.redirectUrl = [];
+    meta.redirectTarget = [];
     //events arrays
     meta.eventType = [];
     meta.eventTime = [];
@@ -57,9 +61,9 @@ const createMetadataBlock = (document) => {
             //console.log("el.content splits below");
             //console.log(el.content.split(splitChar)[1]);
             if (el.content.split(splitChar)[1] == 'Success Story'){
-              meta.resourceType.push("Customer Story" + ",");
+              meta.resourceType.push("Customer Story");
             } else {
-            meta.resourceType.push(el.content.split(splitChar)[1] + ",");}
+            meta.resourceType.push(el.content.split(splitChar)[1]);}
           }
           // console.log("metaResourceType below"); 
           // console.log(meta.resourceType);
@@ -79,7 +83,7 @@ const createMetadataBlock = (document) => {
             //meta.capabilityType = [];
             //console.log("el.content splits below");
             //console.log(el.content.split(splitChar)[1]);
-            meta.capabilityType.push(el.content.split(splitChar)[1]);
+            meta.capability.push(el.content.split(splitChar)[1]);
           }
           // console.log("metaCapabilityType below"); 
           // console.log(meta.capabilityType);
@@ -152,23 +156,6 @@ const createMetadataBlock = (document) => {
       });
     }
   }
-  const siteAreaMeta = document.querySelectorAll('[property="siteArea"]');
-  if (siteAreaMeta) {
-    meta.SiteArea = [];
-    siteAreaMeta.forEach((el) => {
-      if (el.content) meta.SiteArea.push(el.content);
-    });
-  }
-  //find the <meta property="date"> element
-  const date = document.querySelector('[property="date"]');
-  if (date) meta.Date = date.content;
-  //find the <meta property="date"> element
-  const tCard = document.querySelector('[name="twitter:card"]');
-  if (tCard) meta['twitter:card'] = tCard.content;
-  //find the <meta property="date"> element
-  const tSite = document.querySelector('[name="twitter:site"]');
-  if (tCard) meta['twitter:site'] = tSite.content;  
-  //helper to create the metadata block
   const metaBlock = WebImporter.Blocks.getMetadataBlock(document, meta);
   //returning the meta object might be usefull to other rules
   return metaBlock;
@@ -237,8 +224,8 @@ const createTopic = (document) => {
     const paragraph = document.createElement("p");
     const link = document.createElement("a");
     console.log(children);
-    link.innerText = children[2].firstElementChild.firstElementChild.getAttribute("data-video-id");
-    link.href = children[2].firstElementChild.firstElementChild.getAttribute("data-video-id");
+    link.innerText = children[1].firstElementChild.firstElementChild.getAttribute("data-video-id");
+    link.href = children[1].firstElementChild.firstElementChild.getAttribute("data-video-id");
     paragraph.append(link);
     rhDiv.append(paragraph);
     console.log("DREW LOOK HERE");

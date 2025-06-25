@@ -488,9 +488,9 @@ export default {
 
     section.append(document.createElement('hr'));
 
-    const subheader = document.createElement('h6');
-    subheader.innerText = "ON-DEMAND WEBINAR";
-    if (subheader) section.append(subheader);
+    // const subheader = document.createElement('h6');
+    // subheader.innerText = "ON-DEMAND WEBINAR";
+    // if (subheader) section.append(subheader);
 
     const highlight = document.querySelector('div.par.parsys div.text.parbase.section div h1');
     console.log(highlight.innerText.trim().replaceAll(" ","-").replaceAll(":","").toLowerCase());

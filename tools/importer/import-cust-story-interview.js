@@ -1,6 +1,8 @@
 // customer stories import.js
 /* eslint-disable */
 const createMetadataBlock = (document) => {
+  const lhText = document.querySelector('div.parsys_column.cq-colctrl-lt0 div.parsys_column.cq-colctrl-lt0-c0');
+  console.log(lhText);
   const meta = {};
   //find the <title> element
   const title = document.querySelector('title');
@@ -20,6 +22,8 @@ const createMetadataBlock = (document) => {
     meta.displayDescription = descDisp.content;
   }
 
+  
+
   //find the <meta property="og:type"> element
   const type = document.querySelector('[property="og:type"]');
   if (type) meta.Type = type.content;
@@ -38,10 +42,10 @@ const createMetadataBlock = (document) => {
     const splitChar = '|';
     meta.resourceType = [];
     meta.resourceOptions = [];
-    meta.capabilityType = [];
+    meta.capability = [];
     meta.product = [];
     meta.industry = [];
-    meta.redirectUrl = [];
+    meta.redirectTarget = [];
     //events arrays
     meta.eventType = [];
     meta.eventTime = [];
@@ -57,9 +61,9 @@ const createMetadataBlock = (document) => {
             //console.log("el.content splits below");
             //console.log(el.content.split(splitChar)[1]);
             if (el.content.split(splitChar)[1] == 'Success Story'){
-              meta.resourceType.push("Customer Story" + ",");
+              meta.resourceType.push("Customer Story");
             } else {
-            meta.resourceType.push(el.content.split(splitChar)[1] + ",");}
+            meta.resourceType.push(el.content.split(splitChar)[1]);}
           }
           // console.log("metaResourceType below"); 
           // console.log(meta.resourceType);
@@ -79,7 +83,7 @@ const createMetadataBlock = (document) => {
             //meta.capabilityType = [];
             //console.log("el.content splits below");
             //console.log(el.content.split(splitChar)[1]);
-            meta.capabilityType.push(el.content.split(splitChar)[1]);
+            meta.capability.push(el.content.split(splitChar)[1]);
           }
           // console.log("metaCapabilityType below"); 
           // console.log(meta.capabilityType);
@@ -152,28 +156,10 @@ const createMetadataBlock = (document) => {
       });
     }
   }
-  const siteAreaMeta = document.querySelectorAll('[property="siteArea"]');
-  if (siteAreaMeta) {
-    meta.SiteArea = [];
-    siteAreaMeta.forEach((el) => {
-      if (el.content) meta.SiteArea.push(el.content);
-    });
-  }
-  //find the <meta property="date"> element
-  const date = document.querySelector('[property="date"]');
-  if (date) meta.Date = date.content;
-  //find the <meta property="date"> element
-  const tCard = document.querySelector('[name="twitter:card"]');
-  if (tCard) meta['twitter:card'] = tCard.content;
-  //find the <meta property="date"> element
-  const tSite = document.querySelector('[name="twitter:site"]');
-  if (tCard) meta['twitter:site'] = tSite.content;  
-  //helper to create the metadata block
   const metaBlock = WebImporter.Blocks.getMetadataBlock(document, meta);
   //returning the meta object might be usefull to other rules
   return metaBlock;
 };
-
 const createFragment = (document) => {
   const cells = [
     ['fragment'],
@@ -195,13 +181,26 @@ const createHero = (document) => {
   const hero = document.querySelector(heroCss);
   if (hero){
     //grab right hand text 
-    const rhText = hero.querySelector('div.parsys_column.cq-colctrl-lt0-c0 div.text.parbase.section div');
-    const lhText = hero.querySelector('div.parsys_column.cq-colctrl-lt0-c1 div div');
-    let images = lhText.getElementsByTagName("img");
-    console.log(images);
-    for (let el of images) {
-      el.setAttribute('src',"https://www.jmp.com" + el.getAttribute("src"));
-    };
+    const rhText = hero.querySelector('#customer-story.container div.par.parsys div.text.parbase.section');
+    const lefty = document.createElement("div");
+    const lhText = document.createElement("img");
+    const originPic = document.querySelector("div.parsys_column.cq-colctrl-lt0-c1 div.image.parbase.section div");
+    if (originPic.firstElementChild.hasAttribute("data-asset")){
+      lhText.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +originPic.firstElementChild.getAttribute("data-asset");
+    } else {
+      lhText.src = "https://www.jmp.com" + originPic.firstElementChild.getAttribute("src");
+    }
+    console.log("pics");
+    console.log(originPic);
+    console.log(lhText);
+    lefty.append(lhText);
+    lefty.append(originPic.children[1]);
+
+    // let images = lhText.getElementsByTagName("img");
+    // console.log(images);
+    // for (let el of images) {
+    //   el.setAttribute('src',"https://www.jmp.com" + el.getAttribute("src"));
+    // };
     cells.push([rhText, lhText]);
   }
   if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
@@ -218,22 +217,39 @@ const createDivider = (document) => {
 const createLeftHandRail = (document) => {
   const lhRail = document.querySelector('div.parsys_column.cq-colctrl-lt1.cols-halfgutter div.parsys_column.cq-colctrl-lt1-c0');
   if (lhRail){
-    console.log("DREW LOOK HERE");
+    const content = document.createElement("div");
+    console.log(lhRail);
+    const children = lhRail.children;
+    for (var i = 0; i < children.length; i++) {
+      const kid = children[i].cloneNode(true);
+      console.log("this is kid " + i);
+      console.log(kid)
+
+      if (kid.className === "text parbase section"){
+        content.append(kid);
+      } else if (kid.className === "image parbase section"){
+        const pic = document.createElement("img");
+        console.log("the image");
+        console.log(kid.children[1].firstElementChild);
+        if (kid.children[1].firstElementChild.hasAttribute("data-asset")){
+          console.log("we have a real data asset");
+          pic.src = "https://publish-p107857-e1299068.adobeaemcloud.com" +kid.children[1].firstElementChild.getAttribute("data-asset");
+        } else {
+          console.log("someone copy/pasted");
+          pic.src = "https://www.jmp.com" + kid.children[1].firstElementChild.getAttribute("src");
+        }
+        content.append(pic);
+        if (kid.children[1].children[1]){
+          const caption = createCaption(document,kid.children[1].children[1].innerText);
+          content.append(caption);
+        };
+      }
     
-    lhRail.classList.remove('parsys_column');
-    lhRail.classList.remove('cq-colctrl-lt1-c0');
-    let images = lhRail.getElementsByTagName("img");
-    console.log(images);
-    for (let el of images) {
-      el.setAttribute('src',"https://www.jmp.com" + el.getAttribute("src"));
-    };
-    console.log(images);
-    // lhRail.firstElementChild.setAttribute('data-asset',"https://www.jmp.com" + lhRail.firstElementChild.getAttribute("data-asset"));
-    // lhRail.firstElementChild.firstElementChild.setAttribute('src',lhRail.firstElementChild.getAttribute("data-asset"));
-   console.log(lhRail);
-    return lhRail;
+
+    
   }
-  
+  return content;
+}
   //if (cells.length > 1) return WebImporter.DOMUtils.createTable(cells, document);
 };
 
@@ -284,6 +300,7 @@ export default {
     if (fragment) section.append(fragment);
 
     const vidHero = createHero(document);
+    console.log(vidHero.innerText);
     if (vidHero) section.append(vidHero);
 
     section.append(document.createElement('hr'));
