@@ -2099,7 +2099,7 @@ main img {
 }
 .icon-m {
   .icon {
-    height: auto;
+    height: 64px;
     width: 64px;
   }
 }
