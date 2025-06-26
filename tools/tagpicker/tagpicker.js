@@ -118,7 +118,6 @@ function submitTags(e, actions) {
 
   actions.sendText(convertSavedTagsToString());
   actions.sendText('does anything work?');
-  actions.sendHTML('<input type="text">Test?</input>');
   actions.sendText('por que?');
   actions.sendHTML('<div style="color:blue;">Hi there</div>');
   actions.closeLibrary();
