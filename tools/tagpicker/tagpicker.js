@@ -115,8 +115,10 @@ function convertSavedTagsToString() {
 
 function submitTags(e, actions) {
   e.stopPropagation();
-  actions.sendHTML('<p>Hi there</p>');
+
+  actions.sendHTML('<link rel="stylesheet" href="https://aem-393--jmp-da--jmphlx.aem.live/styles/da-styles.css"/>');
   actions.sendText(convertSavedTagsToString());
+  actions.sendHTML('<p class="jmp-slug">Hi there</p>');
   actions.closeLibrary();
 }
 
