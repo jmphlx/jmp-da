@@ -117,7 +117,6 @@ function submitTags(e, actions) {
   e.stopPropagation();
 
   actions.sendText(convertSavedTagsToString());
-  actions.sendHTML('<ul><li>hello there</li><ul>');
   actions.sendText('does anything work?');
   actions.sendHTML('<input type="text">Test?</input>');
   actions.sendText('por que?');
