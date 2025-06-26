@@ -1,35 +1,4 @@
 /**
- * Convert the element from the block into the
- * dropdown list. Apply active class to list item
- * if the link url matches the current page.
- * @param {Element} dropdownItems
- * @param {String} activePage
- * @returns {Element} unordered list with all list items.
- */
-export function constructDropdown(dropdownItems, activePage) {
-  const wrapper = document.createElement('ul');
-  wrapper.classList = 'sub';
-  dropdownItems.querySelectorAll('li').forEach((item) => {
-    if (activePage === item.children[0].href) {
-      item.classList.add('active');
-    }
-    wrapper.append(item);
-  });
-
-  return wrapper;
-}
-
-/**
- * Closes all nav sections
- * @param {Element} nav The nav element
- */
-function closeAllNavSections(nav) {
-  nav.querySelectorAll('.is-open').forEach((sections) => {
-    sections.classList.remove('is-open');
-  });
-}
-
-/**
  * Determine if any list items in the unordered list have the
  * active class applied.
  * @param {Element} block
@@ -39,69 +8,114 @@ function isDropdownActive(block) {
   return block.querySelectorAll('.active').length > 0;
 }
 
+/**
+ * Close all dropdowns with the is-open class below this element.
+ * @param {HTMLElement} element - current li element
+ */
+function closeAllNested(element) {
+  element.classList.remove('is-open');
+  const children = element.querySelectorAll('li.is-open');
+  children.forEach((child) => child.classList.remove('is-open'));
+}
+
+/**
+ * When another top level dropdown is clicked, all other top level dropdowns
+ * should close.
+ * @param {HTMLElement} clicked
+ */
+function closeOtherDropdowns(clicked) {
+  const siblings = Array.from(clicked.parentElement.children);
+  siblings.forEach((sibling) => {
+    if (sibling !== clicked) {
+      sibling.classList.remove('is-open');
+      closeAllNested(sibling);
+    }
+  });
+}
+
+/**
+ * Create a subdropdown.
+ * @param {*} dropdownItems
+ * @returns ul html element
+ */
+function createDropdown(dropdownItems) {
+  const ul = document.createElement('ul');
+  ul.classList.add('sub');
+  const dropdownList = dropdownItems.querySelectorAll(':scope > li');
+  dropdownList.forEach((item) => {
+    const buttonLevel = item.children[0];
+    const childItems = item.children[1];
+    // eslint-disable-next-line no-use-before-define
+    const li = createListItem(buttonLevel, childItems);
+    ul.append(li);
+  });
+  return ul;
+}
+
+/**
+ * Create an li within a ul.
+ * @param {*} parentElement - the element with the name of the item on it.
+ * @param {*} childElements - any child elements indicating it is a subdropdown.
+ * @returns li element
+ */
+function createListItem(parentElement, childElements) {
+  const li = document.createElement('li');
+  let isDropdown = false;
+
+  const parentLink = parentElement.tagName === 'A' ? parentElement : parentElement.querySelector('a');
+  if (parentLink) {
+    if (parentLink.classList.contains('button')) {
+      parentLink.classList.remove('button');
+    }
+    li.append(parentLink);
+  } else {
+    li.textContent = parentElement.textContent;
+  }
+  if (childElements && childElements.children?.length > 0) {
+    li.classList.add('is-dropdown');
+    isDropdown = true;
+    if (childElements.tagName !== 'UL') {
+      li.append(createDropdown(childElements.querySelector('ul')));
+    } else {
+      li.append(createDropdown(childElements));
+    }
+    li.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const clicked = e.target.closest('li');
+      closeOtherDropdowns(clicked);
+      if (li.classList.contains('is-open')) {
+        li.classList.remove('is-open');
+      } else {
+        li.classList.add('is-open');
+      }
+    });
+  }
+  if (li.querySelector('a').href === window.location.href
+      || (isDropdown && isDropdownActive(li))) {
+    li.classList.add('active');
+  }
+
+  return li;
+}
+
 export default async function decorate(block) {
-  const activePage = window.location.href;
   const wrapper = document.createElement('nav');
   wrapper.classList = 'main';
   const listOfDropdowns = document.createElement('ul');
+  listOfDropdowns.classList.add('topLevel');
 
-  while (block.firstElementChild !== undefined && block.firstElementChild !== null) {
-    const buttonLevel = block.firstElementChild?.children.item(0);
-    const buttonName = buttonLevel.textContent;
-    const dropdownItems = block.firstElementChild?.children.item(1);
+  // Iterate over table rows
+  while (block.firstElementChild) {
+    const row = block.firstElementChild;
     block.firstElementChild.remove();
 
-    const isDropdown = dropdownItems !== undefined
-      && dropdownItems !== null
-      && dropdownItems.querySelectorAll('li') !== undefined
-      && dropdownItems.querySelectorAll('li').length > 0;
-    const topLevelLink = buttonLevel.querySelector('a');
-    const topLevelLinkedBtn = isDropdown
-      && topLevelLink
-      && topLevelLink.href;
+    // Look for second column.
+    const buttonLevel = row?.children?.item(0);
+    const dropdownItems = row?.children?.item(1);
 
-    const listItem = document.createElement('li');
-
-    if (isDropdown) {
-      listItem.classList = 'is-dropdown';
-      if (topLevelLinkedBtn) {
-        const link = document.createElement('a');
-        link.href = buttonLevel.querySelector('a').href;
-        link.innerText = `${buttonName}`;
-        listItem.append(link);
-      } else {
-        listItem.innerHTML = `${buttonName}`;
-
-        listItem.addEventListener('click', () => {
-          let closeDropdown = false;
-          if (listItem.classList.contains('is-open')) {
-            // The dropdown is already open. Close it again.
-            closeDropdown = true;
-          }
-          closeAllNavSections(block);
-          if (!closeDropdown) {
-            listItem.classList.add('is-open');
-          }
-        });
-      }
-
-      const dropdownListItems = constructDropdown(dropdownItems, activePage);
-      listItem.append(dropdownListItems);
-    } else {
-      const link = document.createElement('a');
-      link.href = buttonLevel.querySelector('a').href;
-      link.innerText = `${buttonName}`;
-      listItem.append(link);
-    }
-
-    if ((isDropdown && isDropdownActive(listItem))
-      || (topLevelLinkedBtn && listItem.querySelector('a').href === activePage)
-      || (!isDropdown && listItem.querySelector('a').href === activePage)) {
-      listItem.classList.add('active');
-    }
-    listOfDropdowns.append(listItem);
+    const li = createListItem(buttonLevel, dropdownItems);
+    listOfDropdowns.append(li);
   }
-
   wrapper.append(listOfDropdowns);
   block.append(wrapper);
 }
