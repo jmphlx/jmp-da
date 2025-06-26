@@ -234,6 +234,9 @@ div.subnav.skpsubnav nav.main ul li.is-dropdown.active {
     color: #194573;
   }
 }
+.subnav nav.main ul li.is-open.is-dropdown:before, .subnav nav.main ul li.is-open.is-dropdown > a:before {
+  display: none !important;
+}
 
 /* div.subnav.skpsubnav {
   @media (width >= 900px) {
