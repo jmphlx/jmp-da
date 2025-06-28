@@ -1,0 +1,2 @@
+Response code for https://edge-www.jmp.com/en/resources/on-demand/technically-speaking/build-and-choose-better-models-faster-data-scientists-in-a-box: 200
+Response code for https://edge-www.jmp.com/en/resources/on-demand/technically-speaking/leveraging-free-text-data-to-build-better-models: 200

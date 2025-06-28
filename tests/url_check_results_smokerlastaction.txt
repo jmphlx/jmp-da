@@ -1,0 +1,4 @@
+Response code for https://edge-www.jmp.com/en/download-jmp-free-trial: 200
+Response code for https://edge-www.jmp.com/en/resources/white-papers/choosing-the-right-design: 200
+Response code for https://edge-www.jmp.com/en/resources/white-papers/moving-from-minitab-to-jmp-and-jmp-pro-a-transition-guide-version-2: 200
+Response code for https://edge-www.jmp.com/en/industries/data-analysis-software-for-the-chemical-industry/schedule-a-jmp-demo: 200

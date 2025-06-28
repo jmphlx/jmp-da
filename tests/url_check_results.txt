@@ -1,0 +1,1 @@
+Response code for https://www.jmp.com/en_us/academic/course-materials/adv-course-page-template/reference-content.html: 200

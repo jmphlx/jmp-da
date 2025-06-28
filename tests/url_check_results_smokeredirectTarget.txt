@@ -1,0 +1,5 @@
+Response code for https://edge-www.jmp.com/en/download-jmp-free-trial: 200
+Response code for https://edge-www.jmp.com/en/online-statistics-course/predictive-modeling-and-text-mining: 200
+Response code for https://edge-www.jmp.com/en/online-statistics-course/exploratory-data-analysis: 200
+Response code for https://edge-www.jmp.com/en/learning-library/topics/reliability-and-survivability/accelerated-life-testing: 200
+Response code for https://edge-www.jmp.com/en/learning-library/topics/data-mining-and-predictive-modeling/text-mining-describing-unstructured-text-data: 200

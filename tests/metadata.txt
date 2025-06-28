@@ -1,0 +1,28 @@
+https://edge-www.jmp.com/en/customer-stories/murata-electronics
+  name:description: Discover how automated data integration processes in JMP extract monumental value from the digital factory.
+  property:og:title: Murata Finland | JMP
+  property:og:description: Discover how automated data integration processes in JMP extract monumental value from the digital factory.
+  property:og:url: https://edge-www.jmp.com/en/customer-stories/murata-electronics
+  property:og:image: https://edge-www.jmp.com/en/customer-stories/media_158d20c9fdf024396cc1127f7de8464f920ca49c8.jpeg?width=1200&format=pjpg&optimize=medium
+  property:og:image:secure_url: https://edge-www.jmp.com/en/customer-stories/media_158d20c9fdf024396cc1127f7de8464f920ca49c8.jpeg?width=1200&format=pjpg&optimize=medium
+  name:twitter:card: summary_large_image
+  name:twitter:title: Murata Finland | JMP
+  name:twitter:description: Discover how automated data integration processes in JMP extract monumental value from the digital factory.
+  name:twitter:image: https://edge-www.jmp.com/en/customer-stories/media_158d20c9fdf024396cc1127f7de8464f920ca49c8.jpeg?width=1200&format=pjpg&optimize=medium
+  name:author: JMP Statistical Discovery
+  name:viewport: width=device-width, initial-scale=1
+
+https://edge-www.jmp.com/en/customer-stories/murata-electronics1
+  name:viewport: width=device-width, initial-scale=1.0
+  name:description: 
+  name:robots: noindex, nofollow
+  name:twitter:card: summary_large_image
+  name:twitter:site: @JMP_software
+  property:og:title: Page Not Found
+  property:og:type: article
+  property:og:url: https://www.jmp.com/en_us/404.html
+  property:og:description: 
+  property:gms: 
+  property:og:image: https://www.jmp.com/en_us/_jcr_content/socialShareImage.img.addc5ac8baa64cda8a79c12f3836b927.png
+  property:date: 2020-03-03T15:51:26.458-05:00
+  property:siteArea: Inherit

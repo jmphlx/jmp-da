@@ -1,0 +1,3 @@
+Response code for https://edge-www.jmp.com/en/download-jmp-free-trial: 200
+Response code for https://edge-www.jmp.com/en/resources/on-demand/technically-speaking/how-to-model-complex-high-dimensional-chemical-spectra: 200
+Response code for https://edge-www.jmp.com/en/resources/on-demand/time-to-innovate/glean-and-visualise-deeper-insight-from-your-data: 200
