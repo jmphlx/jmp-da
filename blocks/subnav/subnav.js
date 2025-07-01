@@ -8,6 +8,20 @@ function isDropdownActive(block) {
   return block.querySelectorAll('.active').length > 0;
 }
 
+function addHovers(ul) {
+  if (ul.classList.contains('sub')) {
+    const listItems = ul.querySelectorAll('li.is-dropdown');
+    listItems.forEach((li) => {
+      li.addEventListener('mouseenter', () => {
+        li.classList.add('is-open');
+      });
+      li.addEventListener('mouseleave', () => {
+        li.classList.remove('is-open');
+      });
+    });
+  }
+}
+
 /**
  * Close all dropdowns with the is-open class below this element.
  * @param {HTMLElement} element - current li element
@@ -49,6 +63,7 @@ function createDropdown(dropdownItems) {
     const li = createListItem(buttonLevel, childItems);
     ul.append(li);
   });
+  addHovers(ul);
   return ul;
 }
 
