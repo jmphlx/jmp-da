@@ -6,6 +6,13 @@ img.facebook,img.linkedin,img.instagram,img.copylink,img.bluesky {
   filter: brightness(0) saturate(100%) invert(34%) sepia(51%) saturate(3791%) hue-rotate(187deg) brightness(89%) contrast(98%);
 }
 
+.social-share-purple-red {
+  .social-share-wrapper {
+    img.facebook,img.linkedin,img.instagram,img.copylink,img.bluesky {
+      filter: brightness(0) saturate(100%) invert(23%) sepia(22%) saturate(3872%) hue-rotate(244deg) brightness(98%) contrast(92%);
+    }
+  }
+}
 
 @media (min-width: 601px) {
   img.instagram {
