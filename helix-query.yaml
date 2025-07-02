@@ -132,7 +132,7 @@ indices:
         value: |
           attribute(el, "content")
       tags:
-        select: head > meta[name="article:tag"]
+        select: head > meta[property="article:tag"]
         value: |
           attribute(el, "content")
 
@@ -263,7 +263,7 @@ indices:
         value: |
           attribute(el, "content")
       tags:
-        select: head > meta[name="article:tag"]
+        select: head > meta[property="article:tag"]
         value: |
           attribute(el, "content")
 
@@ -394,7 +394,7 @@ indices:
         value: |
           attribute(el, "content")
       tags:
-        select: head > meta[name="article:tag"]
+        select: head > meta[property="article:tag"]
         value: |
           attribute(el, "content")
 
@@ -525,7 +525,7 @@ indices:
         value: |
           attribute(el, "content")
       tags:
-        select: head > meta[name="article:tag"]
+        select: head > meta[property="article:tag"]
         value: |
           attribute(el, "content")
 
@@ -656,7 +656,7 @@ indices:
         value: |
           attribute(el, "content")
       tags:
-        select: head > meta[name="article:tag"]
+        select: head > meta[property="article:tag"]
         value: |
           attribute(el, "content")
 
@@ -787,7 +787,7 @@ indices:
         value: |
           attribute(el, "content")
       tags:
-        select: head > meta[name="article:tag"]
+        select: head > meta[property="article:tag"]
         value: |
           attribute(el, "content")
 
@@ -918,7 +918,7 @@ indices:
         value: |
           attribute(el, "content")
       tags:
-        select: head > meta[name="article:tag"]
+        select: head > meta[property="article:tag"]
         value: |
           attribute(el, "content")
 
@@ -1049,7 +1049,7 @@ indices:
         value: |
           attribute(el, "content")
       tags:
-        select: head > meta[name="article:tag"]
+        select: head > meta[property="article:tag"]
         value: |
           attribute(el, "content")
 
@@ -1180,7 +1180,7 @@ indices:
         value: |
           attribute(el, "content")
       tags:
-        select: head > meta[name="article:tag"]
+        select: head > meta[property="article:tag"]
         value: |
           attribute(el, "content")
 
@@ -1246,7 +1246,7 @@ indices:
         value: |
           attribute(el, "content")
       tags:
-        select: head > meta[name="article:tag"]
+        select: head > meta[property="article:tag"]
         value: |
           attribute(el, "content")
 
@@ -1309,7 +1309,7 @@ indices:
         value: |
           attribute(el, "content")
       tags:
-        select: head > meta[name="article:tag"]
+        select: head > meta[property="article:tag"]
         value: |
           attribute(el, "content")
 
@@ -1372,7 +1372,7 @@ indices:
         value: |
           attribute(el, "content")
       tags:
-        select: head > meta[name="article:tag"]
+        select: head > meta[property="article:tag"]
         value: |
           attribute(el, "content")
 
@@ -1435,7 +1435,7 @@ indices:
         value: |
           attribute(el, "content")
       tags:
-        select: head > meta[name="article:tag"]
+        select: head > meta[property="article:tag"]
         value: |
           attribute(el, "content")
 
@@ -1498,7 +1498,7 @@ indices:
         value: |
           attribute(el, "content")
       tags:
-        select: head > meta[name="article:tag"]
+        select: head > meta[property="article:tag"]
         value: |
           attribute(el, "content")
 
@@ -1561,7 +1561,7 @@ indices:
         value: |
           attribute(el, "content")
       tags:
-        select: head > meta[name="article:tag"]
+        select: head > meta[property="article:tag"]
         value: |
           attribute(el, "content")
 
@@ -1624,7 +1624,7 @@ indices:
         value: |
           attribute(el, "content")
       tags:
-        select: head > meta[name="article:tag"]
+        select: head > meta[property="article:tag"]
         value: |
           attribute(el, "content")
 
@@ -1687,7 +1687,7 @@ indices:
         value: |
           attribute(el, "content")
       tags:
-        select: head > meta[name="article:tag"]
+        select: head > meta[property="article:tag"]
         value: |
           attribute(el, "content")
 
@@ -1750,7 +1750,7 @@ indices:
         value: |
           attribute(el, "content")
       tags:
-        select: head > meta[name="article:tag"]
+        select: head > meta[property="article:tag"]
         value: |
           attribute(el, "content")
 
@@ -1883,6 +1883,6 @@ indices:
         value: |
           attribute(el, "content")
       tags:
-        select: head > meta[name="article:tag"]
+        select: head > meta[property="article:tag"]
         value: |
           attribute(el, "content")
