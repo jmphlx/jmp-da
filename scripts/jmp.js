@@ -2,20 +2,6 @@ import { getDefaultMetaImage } from './scripts.js';
 
 const knownObjectProperties = ['options', 'filters'];
 
-const tagMap = {
-  'industry': 'industry',
-  'product': 'product',
-  'capability': 'capability',
-  'eventType': 'event-type',
-  'eventSeries': 'event-series',
-  'resourceType': 'resource-type',
-  'resourceOptions': 'resource-options',
-  'blogTopics': 'blog-topic',
-  'academic': 'academic',
-  'course': 'academic:course',
-  'application': 'academic:application',
-};
-
 /**
  * Returns if a given 2 or 4 digit language is supported
  * by JMP. Support means that it should have it's own
@@ -613,10 +599,6 @@ function writeImagePropertyInList(propertyName, item) {
   return `<span class="${propertyName}"><img src="${imageSrc}"/></span>`;
 }
 
-function isTagProperty(propertyName) {
-  return Object.keys(tagMap).includes(propertyName);
-}
-
 export {
   arrayIncludesAllValues,
   arrayIncludesSomeValues,
@@ -639,7 +621,6 @@ export {
   getListFilterOptions,
   getSKPLanguageIndex,
   isLanguageSupported,
-  isTagProperty,
   pageAndFilter,
   pageFilterByFolder,
   pageOrFilter,

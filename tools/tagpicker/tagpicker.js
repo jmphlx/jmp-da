@@ -115,7 +115,6 @@ function convertSavedTagsToString() {
 
 function submitTags(e, actions) {
   e.stopPropagation();
-
   actions.sendText(convertSavedTagsToString());
   actions.closeLibrary();
 }
