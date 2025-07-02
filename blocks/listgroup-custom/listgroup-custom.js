@@ -12,6 +12,7 @@ import {
   sortPageList,
   filterOutRobotsNoIndexPages,
   writeImagePropertyInList,
+  isTagProperty,
 } from '../../scripts/jmp.js';
 
 import { loadScript } from '../../scripts/aem.js';
@@ -33,6 +34,9 @@ function lowercaseObj(obj) {
 function createCardHTML(prop, item) {
   let span;
   const dateProperty = isDateProperty(prop);
+  if (isTagProperty(prop)) {
+    console.log('found tag');
+  }
   if (prop === 'image' || prop === 'displayImage') {
     span = writeImagePropertyInList(prop, item);
   } else if (dateProperty >= 0) {
