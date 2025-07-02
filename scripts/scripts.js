@@ -660,3 +660,15 @@ async function loadSidekick() {
   }
 }());
 
+(async function loadDAStyles() {
+  const { searchParams } = new URL(window.location.href);
+  const refParam = searchParams.get('ref');
+  if (refParam && refParam === 'aem-393') {
+    console.log('found in my branch');
+    const cssSheet = document.createElement('link');
+    cssSheet.href = 'https://aem-393--jmp-da--jmphlx.aem.live/styles/da-styles.css';
+    cssSheet.rel = 'stylesheet';
+    document.querySelector('head').append(cssSheet);
+  }
+}());
+
