@@ -264,7 +264,7 @@ indices:
           attribute(el, "content")
       tags:
         select: head > meta[property="article:tag"]
-        value: |
+        values: |
           attribute(el, "content")
 
 #GERMAN CONTENT#
@@ -395,7 +395,7 @@ indices:
           attribute(el, "content")
       tags:
         select: head > meta[property="article:tag"]
-        value: |
+        values: |
           attribute(el, "content")
 
 #FRENCH CONTENT#
@@ -526,7 +526,7 @@ indices:
           attribute(el, "content")
       tags:
         select: head > meta[property="article:tag"]
-        value: |
+        values: |
           attribute(el, "content")
 
 #ITALIAN CONTENT#
@@ -657,7 +657,7 @@ indices:
           attribute(el, "content")
       tags:
         select: head > meta[property="article:tag"]
-        value: |
+        values: |
           attribute(el, "content")
 
 #JAPANESE CONTENT#
@@ -788,7 +788,7 @@ indices:
           attribute(el, "content")
       tags:
         select: head > meta[property="article:tag"]
-        value: |
+        values: |
           attribute(el, "content")
 
 #KOREAN CONTENT#
@@ -919,7 +919,7 @@ indices:
           attribute(el, "content")
       tags:
         select: head > meta[property="article:tag"]
-        value: |
+        values: |
           attribute(el, "content")
 
 #CHINESE SIMPLIFIED CONTENT#
@@ -1050,7 +1050,7 @@ indices:
           attribute(el, "content")
       tags:
         select: head > meta[property="article:tag"]
-        value: |
+        values: |
           attribute(el, "content")
 
 #CHINESE TRADITIONAL CONTENT#
@@ -1181,7 +1181,7 @@ indices:
           attribute(el, "content")
       tags:
         select: head > meta[property="article:tag"]
-        value: |
+        values: |
           attribute(el, "content")
 
 #END OF MAIN JMP CONTENT#
@@ -1247,7 +1247,7 @@ indices:
           attribute(el, "content")
       tags:
         select: head > meta[property="article:tag"]
-        value: |
+        values: |
           attribute(el, "content")
 
 #SKP SPANISH#
@@ -1310,7 +1310,7 @@ indices:
           attribute(el, "content")
       tags:
         select: head > meta[property="article:tag"]
-        value: |
+        values: |
           attribute(el, "content")
 
 #SKP GERMAN#
@@ -1373,7 +1373,7 @@ indices:
           attribute(el, "content")
       tags:
         select: head > meta[property="article:tag"]
-        value: |
+        values: |
           attribute(el, "content")
 
 #SKP FRENCH#
@@ -1436,7 +1436,7 @@ indices:
           attribute(el, "content")
       tags:
         select: head > meta[property="article:tag"]
-        value: |
+        values: |
           attribute(el, "content")
 
 #SKP ITALIAN#
@@ -1499,7 +1499,7 @@ indices:
           attribute(el, "content")
       tags:
         select: head > meta[property="article:tag"]
-        value: |
+        values: |
           attribute(el, "content")
 
 #SKP JAPANESE#
@@ -1562,7 +1562,7 @@ indices:
           attribute(el, "content")
       tags:
         select: head > meta[property="article:tag"]
-        value: |
+        values: |
           attribute(el, "content")
 
 #SKP KOREAN#
@@ -1625,7 +1625,7 @@ indices:
           attribute(el, "content")
       tags:
         select: head > meta[property="article:tag"]
-        value: |
+        values: |
           attribute(el, "content")
 
 #SKP CHINESE SIMPLIFIED#
@@ -1688,7 +1688,7 @@ indices:
           attribute(el, "content")
       tags:
         select: head > meta[property="article:tag"]
-        value: |
+        values: |
           attribute(el, "content")
 
 #SKP CHINESE TRADITIONAL#
@@ -1751,7 +1751,7 @@ indices:
           attribute(el, "content")
       tags:
         select: head > meta[property="article:tag"]
-        value: |
+        values: |
           attribute(el, "content")
 
 #END OF SKP CONTENT#
@@ -1884,5 +1884,5 @@ indices:
           attribute(el, "content")
       tags:
         select: head > meta[property="article:tag"]
-        value: |
+        values: |
           attribute(el, "content")
