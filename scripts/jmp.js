@@ -3,17 +3,17 @@ import { getDefaultMetaImage } from './scripts.js';
 const knownObjectProperties = ['options', 'filters'];
 
 const tagMap = {
-  'industry': 'industry',
-  'product': 'product',
-  'capability': 'capability',
-  'eventType': 'event-type',
-  'eventSeries': 'event-series',
-  'resourceType': 'resource-type',
-  'resourceOptions': 'resource-options',
-  'blogTopics': 'blog-topic',
-  'academic': 'academic',
-  'course': 'academic:course',
-  'application': 'academic:application',
+  industry: 'industry',
+  product: 'product',
+  capability: 'capability',
+  eventType: 'event-type',
+  eventSeries: 'event-series',
+  resourceType: 'resource-type',
+  resourceOptions: 'resource-options',
+  blogTopics: 'blog-topic',
+  academic: 'academic',
+  course: 'academic:course',
+  application: 'academic:application',
 };
 
 /**
@@ -81,8 +81,8 @@ async function getJsonFromUrl(route) {
 /**
  * This is to be used only for when testing with a
  * local AEM instance. Used for testing /services/*
- * @param {*} route 
- * @returns 
+ * @param {*} route
+ * @returns json response
  */
 async function getJsonFromLocalhostUrl(route) {
   try {
@@ -91,7 +91,6 @@ async function getJsonFromLocalhostUrl(route) {
     });
     if (!response.ok) return null;
     const json = await response.json();
-    console.log(json);
     return json;
   } catch (error) {
     // eslint-disable-next-line no-console
@@ -476,11 +475,9 @@ function getBlockConfig(block) {
   return config;
 }
 
-function containsOperator(pageObj, condObj) {
+function doStringContains(pageValue, filterValue) {
   let flag = true;
-  const propertyName = condObj.property.toLowerCase();
-  const filterValue = condObj.value.toLowerCase();
-  const pageValue = pageObj[propertyName];
+
   try {
     // filterValue is an array
     if (filterValue.indexOf(',') > 0) {
@@ -510,6 +507,28 @@ function containsOperator(pageObj, condObj) {
     }
   } catch (e) {
     flag = false;
+  }
+  return flag;
+}
+
+function containsOperator(pageObj, condObj) {
+  let flag = true;
+  const propertyName = condObj.property.toLowerCase();
+  const filterValue = condObj.value.toLowerCase();
+  const pageValue = pageObj[propertyName];
+
+  if (typeof pageValue === 'object') {
+    // Still need to check if filterValue
+    // is a string that should be an array.
+    if (filterValue.indexOf(',') > 0) {
+      const filterValueArray = filterValue.split(',');
+      const trimmedFilter = filterValueArray.map((str) => str.trim().toLowerCase());
+      flag = arrayIncludesAllValues(pageValue, trimmedFilter);
+    } else {
+      flag = pageValue.includes(filterValue);
+    }
+  } else {
+    flag = doStringContains(pageValue, filterValue);
   }
   return flag;
 }

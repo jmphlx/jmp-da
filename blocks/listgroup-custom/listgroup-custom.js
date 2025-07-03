@@ -31,6 +31,36 @@ function lowercaseObj(obj) {
   return newObj;
 }
 
+function isDateProperty(propertyName) {
+  let isDate = -1;
+  for (let i = 0; i < dateProperties.length; i++) {
+    if (propertyName.startsWith(dateProperties[i])) {
+      isDate = i;
+      break;
+    }
+  }
+  return isDate;
+}
+
+function processDate(dateProperty, prop, item) {
+  let span;
+  const dateFormatRegex = /(?<=\()(.*?)(?=\))/g;
+  const dateFormatString = prop.match(dateFormatRegex);
+
+  if (dateFormatString && dateFormatString.length > 0) {
+    const adjustedPropName = dateProperties[dateProperty];
+    if (item[adjustedPropName]) {
+      const adjustedDate = dateFns.format(item[adjustedPropName], dateFormatString[0]);
+      // console.log(`old date format ${item[adjustedPropName]} New format ${adjustedDate}`);
+      span = `<span class="${adjustedPropName}">${adjustedDate}</span>`;
+    }
+  } else {
+    // Treat date like normal
+    span = `<span class="${prop}">${item[prop]}</span>`;
+  }
+  return span;
+}
+
 function createCardHTML(prop, item) {
   let span;
   const dateProperty = isDateProperty(prop);
@@ -95,17 +125,6 @@ function pageMatches(page, filters) {
   return false;
 }
 
-function isDateProperty(propertyName) {
-  let isDate = -1;
-  for (let i = 0; i < dateProperties.length; i++) {
-    if (propertyName.startsWith(dateProperties[i])) {
-      isDate = i;
-      break;
-    }
-  }
-  return isDate;
-}
-
 function checkForDateProperties(displayProperties) {
   let dateFound = false;
   for (let i = 0; i < displayProperties.length; i++) {
@@ -115,25 +134,6 @@ function checkForDateProperties(displayProperties) {
     }
   }
   return dateFound;
-}
-
-function processDate(dateProperty, prop, item) {
-  let span;
-  const dateFormatRegex = /(?<=\()(.*?)(?=\))/g;
-  const dateFormatString = prop.match(dateFormatRegex);
-
-  if (dateFormatString && dateFormatString.length > 0) {
-    const adjustedPropName = dateProperties[dateProperty];
-    if (item[adjustedPropName]) {
-      const adjustedDate = dateFns.format(item[adjustedPropName], dateFormatString[0]);
-      // console.log(`old date format ${item[adjustedPropName]} New format ${adjustedDate}`);
-      span = `<span class="${adjustedPropName}">${adjustedDate}</span>`;
-    }
-  } else {
-    // Treat date like normal
-    span = `<span class="${prop}">${item[prop]}</span>`;
-  }
-  return span;
 }
 
 function writeItems(matching, config, listElement) {
@@ -152,7 +152,7 @@ function writeItems(matching, config, listElement) {
     const htmlOutput = [];
 
     config.displayProperties.forEach((prop) => {
-      let span = createCardHTML(prop, item);
+      const span = createCardHTML(prop, item);
       htmlOutput.push(span);
     });
     cardLink.innerHTML = htmlOutput.join('');
@@ -226,7 +226,7 @@ function writeAsOneGroup(matching, config) {
     const htmlOutput = [];
 
     config.displayProperties.forEach((prop) => {
-      let span = createCardHTML(prop, item);
+      const span = createCardHTML(prop, item);
       htmlOutput.push(span);
     });
     cardLink.innerHTML = htmlOutput.join('');
@@ -317,9 +317,8 @@ async function constructDropdown(dictionary, filterBy, defaultFilterOption, tran
     const data = await getJsonFromUrl(translateFilter);
     const { data: translations } = data[pageLanguage];
     useTranslation = translations[0];
-    sortedList = Object.keys(dictionary).sort(function(a,b) { 
-      return useTranslation[a] < useTranslation[b] ? -1 : 1;
-    });
+    sortedList = Object.keys(dictionary)
+      .sort((a, b) => (useTranslation[a] < useTranslation[b] ? -1 : 1));
   }
 
   sortedList.forEach((filterValue) => {
@@ -364,7 +363,6 @@ function buildListItems(block, matching, tabDictionary, config) {
   }
 
   const filterDropdown = block.querySelector('select');
-
 
   if (filterDropdown) {
     if (filterDropdown.value) {
