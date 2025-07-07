@@ -1122,11 +1122,12 @@ div.listgroup-custom  {
 			width: 100%;
       a {
 				display: grid;
-				grid-template-areas: 
+        grid-area: auto;
+				/* grid-template-areas: 
 					"img title"
 					"img releaseDate"
-          "img blogTopics";
-				grid-template-rows: .5fr 2fr auto;
+          "img blogTopics"; */
+				grid-template-rows: 2fr .5fr auto;
 				column-gap: 2%;
 				grid-template-columns: 36% auto;
         border-radius: 20px;
@@ -1150,24 +1151,24 @@ div.listgroup-custom  {
         .title {
           color: var(--purple) !important;  
 					margin: 0;
-					flex: 1 1;
+					flex: 1 1 !important;
 					line-height: 1.2;
           font-size: 1.6rem;
           padding-bottom: 1rem;
 					grid-column: 2;
-					grid-row: 2;
+					grid-row: 1;
         }
         .releaseDate {
           color: #333333;
           font-family: var(--font-secondary);
-					font-size: 1.2rem;
+					font-size: 1.4rem;
           display: block;
           /* order: 3; */
           padding-left: 0;
           padding-bottom: 0;
-					margin: 0;
 					grid-column: 2;
-					grid-row: 3;
+					grid-row: 2;
+          margin: 0 0 8px 0 !important;
         }
         .blogTopics {
           color: var(--purpleLight);
@@ -1175,7 +1176,6 @@ div.listgroup-custom  {
           font-size: 14px !important;
           display: block;
           width: fit-content;
-          margin: 0 0 8px 0 !important;
           padding: 2px 4px !important;
           border-radius: 5px;
           background-color: var(--gray10);
