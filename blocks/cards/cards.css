@@ -1610,15 +1610,16 @@
       /* background-color: #fafafa;
       z-index: -100 !important; */
       li {
+        border-radius: 10px;
         .cards-card-body {
           flex-direction: column;
           align-items: flex-start;
-          h5 {
+          gap: 1rem;
+          h5, h6, strong {
+            color: var(--purple);
             margin-bottom: 0 !important;
+            font-family: var(--font-secondary);
           }
-          /* h1, h2, h3, h4, h5, h6, p {
-            z-index: 200 !important;
-          } */
         }
         :before {
           content:'';
