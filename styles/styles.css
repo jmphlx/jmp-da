@@ -149,7 +149,7 @@ h1 {
 }
 .h1-blog {
   h1 {
-    background: linear-gradient(45deg, #643695 40%, #F04B4B 100%);
+    background: linear-gradient(160deg, #643695 30%, #F04B4B 70%);
     background-clip: text;
     color: transparent;
   }
