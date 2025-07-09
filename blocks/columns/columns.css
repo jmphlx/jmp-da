@@ -355,6 +355,69 @@
     }
   }
 }
+.blog-story-hero {
+  background-color: #f4f4f4;
+  padding: 2.4rem 0;
+  div {
+    div:first-child {
+      display: flex;
+      flex-direction: column;
+      align-self: center;
+      h1 {
+        padding: 0;
+        margin: 0 !important;
+        padding-bottom: 1rem;
+        /* border-bottom: 1px dotted #b4b4b4; */
+        border-width: 2px;
+        font-size: clamp(2.4rem, 4vw + 1rem, 4.2rem);
+      }
+      p {
+        margin: 0 0 1rem 0 !important;
+      }
+      h5 {
+        color: var(--purple);
+      }
+      img, picture {
+        max-width: 128px;
+        border: 0;
+        margin-bottom: 0 !important;
+      }
+      @media (width <=900px) {
+        padding-bottom: 2rem;
+      }
+    }
+    > div.columns-img-col {
+      display: flex;
+      align-items: center;
+      order: 1;
+      picture {
+        vertical-align: middle;
+        height: 400px;
+        width: 100%;
+        display: flex;
+        img {
+          display: block;
+          object-fit: cover;
+          border-radius: 5px;
+          object-position: center;
+          height: 100%;
+        }
+      }
+    }
+  }
+  /* H6 labels */ :is(h6):has(+ :is(h1, h2, h3, h4, h5)) {
+    font-family: "anova-bold", sans-serif;
+    color: var(--redLight);
+    text-transform: uppercase;
+    font-size: 1.4rem;
+    padding-bottom: .25rem;
+  }
+  @media (width <= 900px) {
+    h6 {
+      padding-top: 0;
+    }
+  }
+}
 /* video story hero */
 .section:has(div.video-story-hero ) {
   background-color: #f4f4f4;
