@@ -10,6 +10,7 @@ import {
   getJsonFromUrl,
   getLanguageIndex,
   getLanguage,
+  isTagProperty,
   sortPageList,
   filterOutRobotsNoIndexPages,
   writeImagePropertyInList,
@@ -67,7 +68,7 @@ async function getTagTranslations() {
 }
 
 function writeOutTagProperties(prop, item) {
-  const tagsProperty = item['tags'];
+  const tagsProperty = item.tags;
   if (!tagsProperty || !window.tagtranslations) {
     // No tags or no translations so default to old method.
     return item[prop];
@@ -75,14 +76,14 @@ function writeOutTagProperties(prop, item) {
 
   const convertedProp = convertCamelToKebabCase(prop);
   const tagsValue = Object.values(tagsProperty);
-  let tagsArray = []; 
+  const tagsArray = [];
   tagsValue.forEach((tag) => {
     if (tag.startsWith(convertedProp)) {
-      //Found the prop string. Convert it to displayable format
+      // Found the prop string. Convert it to displayable format
       tagsArray.push(window.tagtranslations[tag]);
     }
   });
-  return tagsArray.join(", ");
+  return tagsArray.join(', ');
 }
 
 function createCardHTML(prop, item) {
@@ -161,7 +162,7 @@ function checkForDateProperties(displayProperties) {
 
 function checkForTagProperties(displayProperties) {
   let tagFound = false;
-    for (let i = 0; i < displayProperties.length; i++) {
+  for (let i = 0; i < displayProperties.length; i++) {
     if (isTagProperty(displayProperties[i])) {
       tagFound = true;
       break;
