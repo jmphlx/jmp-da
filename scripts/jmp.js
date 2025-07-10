@@ -14,6 +14,11 @@ const tagMap = {
   academic: 'academic',
   course: 'academic:course',
   application: 'academic:application',
+  userLevel: 'user-level',
+  bookType: 'book-type',
+  funnelStage: 'funnel-stage',
+  partnerType: 'partner-type',
+  country: 'country',
 };
 
 /**
@@ -94,7 +99,7 @@ async function getJsonFromLocalhostUrl(route) {
     return json;
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('getJsonFromUrl:', { error });
+    console.error('getJsonFromLocalhostUrl:', { error });
   }
   return null;
 }
@@ -636,10 +641,15 @@ function isTagProperty(propertyName) {
   return Object.keys(tagMap).includes(propertyName);
 }
 
+function convertCamelToKebabCase(str) {
+  return str.replace(/[A-Z]+(?![a-z])|[A-Z]/g, ($, ofs) => (ofs ? "-" : "") + $.toLowerCase());
+}
+
 export {
   arrayIncludesAllValues,
   arrayIncludesSomeValues,
   containsOperator,
+  convertCamelToKebabCase,
   debounce,
   matchesOperator,
   startsWithOperator,

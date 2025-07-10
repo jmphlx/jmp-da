@@ -3,6 +3,7 @@
 
 import {
   containsOperator,
+  convertCamelToKebabCase,
   matchesOperator,
   startsWithOperator,
   getBlockConfig,
@@ -19,6 +20,7 @@ import { loadScript } from '../../scripts/aem.js';
 import { createTag } from '../../scripts/helper.js';
 
 const dateProperties = ['releaseDate'];
+const tagTranslationsBaseURL = 'https://www.jmp.com/services/tagsservlet';
 
 let useFilter = false;
 let useTabs = false;
@@ -51,7 +53,6 @@ function processDate(dateProperty, prop, item) {
     const adjustedPropName = dateProperties[dateProperty];
     if (item[adjustedPropName]) {
       const adjustedDate = dateFns.format(item[adjustedPropName], dateFormatString[0]);
-      // console.log(`old date format ${item[adjustedPropName]} New format ${adjustedDate}`);
       span = `<span class="${adjustedPropName}">${adjustedDate}</span>`;
     }
   } else {
@@ -61,13 +62,36 @@ function processDate(dateProperty, prop, item) {
   return span;
 }
 
+async function getTagTranslations() {
+  const pageLanguage = getLanguage();
+  window.tagtranslations = window.tagtranslations || await getJsonFromUrl(`${tagTranslationsBaseURL}.${pageLanguage}`);
+}
+
+function writeOutTagProperties(prop, item) {
+  const tagsProperty = item['tags'];
+  if (!tagsProperty || !window.tagtranslations) {
+    // No tags or no translations so default to old method.
+    return item[prop];
+  }
+
+  const convertedProp = convertCamelToKebabCase(prop);
+  const tagsValue = Object.values(tagsProperty);
+  let tagsArray = []; 
+  tagsValue.forEach((tag) => {
+    if (tag.startsWith(convertedProp)) {
+      //Found the prop string. Convert it to displayable format
+      tagsArray.push(window.tagtranslations[tag]);
+    }
+  });
+  return tagsArray.join(", ");
+}
+
 function createCardHTML(prop, item) {
   let span;
   const dateProperty = isDateProperty(prop);
   if (isTagProperty(prop)) {
-    console.log('found tag');
-  }
-  if (prop === 'image' || prop === 'displayImage') {
+    span = `<span class="${prop}">${writeOutTagProperties(prop, item)}</span>`;
+  } else if (prop === 'image' || prop === 'displayImage') {
     span = writeImagePropertyInList(prop, item);
   } else if (dateProperty >= 0) {
     span = processDate(dateProperty, prop, item);
@@ -136,6 +160,17 @@ function checkForDateProperties(displayProperties) {
   return dateFound;
 }
 
+function checkForTagProperties(displayProperties) {
+  let tagFound = false;
+    for (let i = 0; i < displayProperties.length; i++) {
+    if (isTagProperty(displayProperties[i])) {
+      tagFound = true;
+      break;
+    }
+  }
+  return tagFound;
+}
+
 function writeItems(matching, config, listElement) {
   matching?.forEach((item) => {
     const listItem = document.createElement('li');
@@ -163,7 +198,6 @@ function writeItems(matching, config, listElement) {
 }
 
 function loadMoreItems(matching, block, config) {
-  console.log('load more');
   const listElement = block.querySelector('ul');
   if (listElement) {
     let currDisplayNum = listElement.getAttribute('data-displaynum');
@@ -174,7 +208,6 @@ function loadMoreItems(matching, block, config) {
     const columns = config.columns ? config.columns : 5;
     const rows = 3;
     const numOfAddedItems = rows * columns;
-    console.log(`numOfAddedItems ${numOfAddedItems}`);
     currDisplayNum += numOfAddedItems;
     console.log(`add items ${startingItem} to ${currDisplayNum}`);
     listElement.setAttribute('data-displaynum', currDisplayNum);
@@ -489,6 +522,11 @@ export default async function decorate(block) {
   const includesDateProperty = checkForDateProperties(config.displayProperties);
   if (includesDateProperty) {
     await loadScript('https://cdn.jsdelivr.net/npm/date-fns@4.1.0/cdn.min.js');
+  }
+
+  const includesTagProperty = checkForTagProperties(config.displayProperties);
+  if (includesTagProperty) {
+    await getTagTranslations();
   }
 
   // Get language index.
