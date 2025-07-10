@@ -86,7 +86,7 @@
     }
     &.is-open {
       &:after {
-        transform: rotate(-45deg);
+        transform: rotate(-45deg,50deg);
       }
     }
     &.active {
@@ -223,6 +223,7 @@
   position: absolute;
   z-index: 9;
 }
+
 .subnav nav.main ul li.is-open ul {
   display: flex;
   flex-direction: column;
@@ -241,6 +242,14 @@
       &:hover {
         text-decoration: underline;
       }
+    }
+    ul {
+      display: none;
+    }
+  }
+  li.is-open {
+    ul {
+      display: flex;
     }
   }
 }

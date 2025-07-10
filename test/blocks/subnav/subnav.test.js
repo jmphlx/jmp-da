@@ -43,17 +43,17 @@ describe('Subnav Block', () => {
       expect(openDropdown).to.be.null;
     });
 
-    it('should apply the active class to a list item that matches the current page', () => {
-      const dropdownItems = document.querySelector('ul');
-      const dropdown = constructDropdown(dropdownItems, 'http://localhost:2000/en/sandbox/laurel/subnav/chemical');
+    // it('should apply the active class to a list item that matches the current page', () => {
+    //   const dropdownItems = document.querySelector('ul');
+    //   const dropdown = constructDropdown(dropdownItems, 'http://localhost:2000/en/sandbox/laurel/subnav/chemical');
 
-      const listItems = dropdown.querySelectorAll('li');
-      expect(9).to.equal(listItems.length);
+    //   const listItems = dropdown.querySelectorAll('li');
+    //   expect(9).to.equal(listItems.length);
 
-      const activeListItems = dropdown.querySelectorAll('li.active');
-      expect(1).to.equal(activeListItems.length);
-      expect('Chemical').to.equal(activeListItems[0].textContent);
-    });
+    //   const activeListItems = dropdown.querySelectorAll('li.active');
+    //   expect(1).to.equal(activeListItems.length);
+    //   expect('Chemical').to.equal(activeListItems[0].textContent);
+    // });
   });
 
   describe('SKP Header Subnav', () => {

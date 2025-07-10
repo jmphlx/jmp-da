@@ -147,6 +147,13 @@ h1 {
     font-size: var(--heading-font-size-xxxl);
   }
 }
+.h1-blog {
+  h1 {
+    background: linear-gradient(160deg, #643695 30%, #F04B4B 70%);
+    background-clip: text;
+    color: transparent;
+  }
+}
 h2 {
   font-size: var(--heading-font-size-xl);
   line-height: 1.25;
@@ -1236,10 +1243,28 @@ a:hover {
       }
     }
   }
-  
   @media (width <=900px) {
     a:link, a:any-link, a.button:any-link {
       margin-bottom: 2rem !important;
+    }
+  }
+}
+.purple-red-back-button {
+  .text-link-back .button-container, .text-link-back ul li {
+    a:link, a:any-link, a.button:any-link {
+      color: var(--purple) !important;
+      &:before {
+        content: '';
+        border: 2px solid var(--redNeon);
+        border-radius: 0 1px 0 0;
+        border-width: 2px 2px 0 0;
+      }
+      &:after {
+        display: none;
+      }
+      &:hover {
+        color: var(--purpleLight) !important;
+      }
     }
   }
 }
@@ -2099,7 +2124,7 @@ main img {
 }
 .icon-m {
   .icon {
-    height: auto;
+    height: 64px;
     width: 64px;
   }
 }

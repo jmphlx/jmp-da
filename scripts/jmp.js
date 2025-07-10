@@ -668,7 +668,6 @@ export {
   getListFilterOptions,
   getSKPLanguageIndex,
   isLanguageSupported,
-  isTagProperty,
   pageAndFilter,
   pageFilterByFolder,
   pageOrFilter,

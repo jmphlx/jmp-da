@@ -1605,6 +1605,63 @@
 
 .opt-in {
   position: relative;
+  &.purple-red {
+    ul {
+      /* background-color: #fafafa;
+      z-index: -100 !important; */
+      li {
+        border-radius: 10px;
+        .cards-card-body {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+          h5, h6, strong {
+            color: var(--purple);
+            margin-bottom: 0 !important;
+            font-family: var(--font-secondary);
+          }
+        }
+        :before {
+          content:'';
+          z-index: -100 !important;
+          width: 12px;
+          height: 16px;
+          display: inline-block;
+          position: absolute;
+          right: -2px;
+          top: 0;
+          padding: 12px 12px 20px 20px;
+          border-radius: 0 10px 0 50px;
+          background-color: #f4f4f4;
+          /* background: linear-gradient(45deg, #643695 40%, #F04B4B 100%) !important; */
+          transition: transform 0.7s ease, color 0.5s ease;
+        }
+        :after {
+          content: '';
+          border: 3px solid var(--redLight);
+          border-width: 0 3px 3px 0;
+          z-index: 10;
+        }
+        &:hover {
+          border: 1px solid var(--purple);
+          &:hover {
+            :before {
+              transform: scale(45);
+            }
+          }
+          &:before {
+            opacity: 1 !important;
+            margin-right: 26px;
+            transform: scale(35);
+          }
+          &:after {
+            opacity: 1 !important;
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+  }
   ul {
     display: flex;
     justify-content: left;
@@ -1631,8 +1688,8 @@
         /* border-radius: 0 10px 0 50px; */
         z-index: -1;
         transform: rotate(-45deg);
-        /* background-color: #f4f4f4; */
-        /* transition: transform 0.5s ease, color 0.5s ease; */
+        background-color: #f4f4f4;
+        transition: transform 0.5s ease, color 0.5s ease;
       }
       :before {
         content:'';
@@ -1644,7 +1701,7 @@
         top: 0;
         padding: 12px 12px 20px 20px;
         border-radius: 0 10px 0 50px;
-        z-index: -1;
+        z-index: -1 !important;
         background-color: #f4f4f4;
         transition: transform 0.7s ease, color 0.5s ease;
       }
@@ -1688,6 +1745,7 @@
       &:hover {
         :before {
           transform: scale(45);
+          z-index: -1 !important;
         }
       }
       &:before {

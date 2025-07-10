@@ -131,6 +131,10 @@ indices:
         select: head > meta[name="blogtopics"]
         value: |
           attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: |
+          attribute(el, "content")
 
 #SPANISH CONTENT#
   jmp-es:
@@ -257,6 +261,10 @@ indices:
       displayImage:
         select: head > meta[name="displayimage"]
         value: |
+          attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: |
           attribute(el, "content")
 
 #GERMAN CONTENT#
@@ -385,6 +393,10 @@ indices:
         select: head > meta[name="displayimage"]
         value: |
           attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: |
+          attribute(el, "content")
 
 #FRENCH CONTENT#
   jmp-fr:
@@ -511,6 +523,10 @@ indices:
       displayImage:
         select: head > meta[name="displayimage"]
         value: |
+          attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: |
           attribute(el, "content")
 
 #ITALIAN CONTENT#
@@ -639,6 +655,10 @@ indices:
         select: head > meta[name="displayimage"]
         value: |
           attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: |
+          attribute(el, "content")
 
 #JAPANESE CONTENT#
   jmp-ja:
@@ -765,6 +785,10 @@ indices:
       displayImage:
         select: head > meta[name="displayimage"]
         value: |
+          attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: |
           attribute(el, "content")
 
 #KOREAN CONTENT#
@@ -893,6 +917,10 @@ indices:
         select: head > meta[name="displayimage"]
         value: |
           attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: |
+          attribute(el, "content")
 
 #CHINESE SIMPLIFIED CONTENT#
   jmp-zh-hans:
@@ -1019,6 +1047,10 @@ indices:
       displayImage:
         select: head > meta[name="displayimage"]
         value: |
+          attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: |
           attribute(el, "content")
 
 #CHINESE TRADITIONAL CONTENT#
@@ -1147,6 +1179,10 @@ indices:
         select: head > meta[name="displayimage"]
         value: |
           attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: |
+          attribute(el, "content")
 
 #END OF MAIN JMP CONTENT#
 
@@ -1209,6 +1245,10 @@ indices:
         select: head > meta[name="displayimage"]
         value: |
           attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: |
+          attribute(el, "content")
 
 #SKP SPANISH#
   skp-es:
@@ -1267,6 +1307,10 @@ indices:
       displayImage:
         select: head > meta[name="displayimage"]
         value: |
+          attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: |
           attribute(el, "content")
 
 #SKP GERMAN#
@@ -1327,6 +1371,10 @@ indices:
         select: head > meta[name="displayimage"]
         value: |
           attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: |
+          attribute(el, "content")
 
 #SKP FRENCH#
   skp-fr:
@@ -1385,6 +1433,10 @@ indices:
       displayImage:
         select: head > meta[name="displayimage"]
         value: |
+          attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: |
           attribute(el, "content")
 
 #SKP ITALIAN#
@@ -1445,6 +1497,10 @@ indices:
         select: head > meta[name="displayimage"]
         value: |
           attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: |
+          attribute(el, "content")
 
 #SKP JAPANESE#
   skp-ja:
@@ -1503,6 +1559,10 @@ indices:
       displayImage:
         select: head > meta[name="displayimage"]
         value: |
+          attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: |
           attribute(el, "content")
 
 #SKP KOREAN#
@@ -1563,6 +1623,10 @@ indices:
         select: head > meta[name="displayimage"]
         value: |
           attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: |
+          attribute(el, "content")
 
 #SKP CHINESE SIMPLIFIED#
   skp-zh-hans:
@@ -1622,6 +1686,10 @@ indices:
         select: head > meta[name="displayimage"]
         value: |
           attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: |
+          attribute(el, "content")
 
 #SKP CHINESE TRADITIONAL#
   skp-zh-hant:
@@ -1680,6 +1748,10 @@ indices:
       displayImage:
         select: head > meta[name="displayimage"]
         value: |
+          attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: |
           attribute(el, "content")
 
 #END OF SKP CONTENT#
@@ -1809,4 +1881,8 @@ indices:
       displayImage:
         select: head > meta[name="displayimage"]
         value: |
+          attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: |
           attribute(el, "content")

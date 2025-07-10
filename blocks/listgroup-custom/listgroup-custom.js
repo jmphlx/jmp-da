@@ -13,7 +13,6 @@ import {
   sortPageList,
   filterOutRobotsNoIndexPages,
   writeImagePropertyInList,
-  isTagProperty,
 } from '../../scripts/jmp.js';
 
 import { loadScript } from '../../scripts/aem.js';
