@@ -3,12 +3,14 @@
 
 import {
   containsOperator,
+  convertCamelToKebabCase,
   matchesOperator,
   startsWithOperator,
   getBlockConfig,
   getJsonFromUrl,
   getLanguageIndex,
   getLanguage,
+  isTagProperty,
   sortPageList,
   filterOutRobotsNoIndexPages,
   writeImagePropertyInList,
@@ -18,6 +20,7 @@ import { loadScript } from '../../scripts/aem.js';
 import { createTag } from '../../scripts/helper.js';
 
 const dateProperties = ['releaseDate'];
+const tagTranslationsBaseURL = 'https://www.jmp.com/services/tagsservlet';
 
 let useFilter = false;
 let useTabs = false;
@@ -30,10 +33,65 @@ function lowercaseObj(obj) {
   return newObj;
 }
 
+function isDateProperty(propertyName) {
+  let isDate = -1;
+  for (let i = 0; i < dateProperties.length; i++) {
+    if (propertyName.startsWith(dateProperties[i])) {
+      isDate = i;
+      break;
+    }
+  }
+  return isDate;
+}
+
+function processDate(dateProperty, prop, item) {
+  let span;
+  const dateFormatRegex = /(?<=\()(.*?)(?=\))/g;
+  const dateFormatString = prop.match(dateFormatRegex);
+
+  if (dateFormatString && dateFormatString.length > 0) {
+    const adjustedPropName = dateProperties[dateProperty];
+    if (item[adjustedPropName]) {
+      const adjustedDate = dateFns.format(item[adjustedPropName], dateFormatString[0]);
+      span = `<span class="${adjustedPropName}">${adjustedDate}</span>`;
+    }
+  } else {
+    // Treat date like normal
+    span = `<span class="${prop}">${item[prop]}</span>`;
+  }
+  return span;
+}
+
+async function getTagTranslations() {
+  const pageLanguage = getLanguage();
+  window.tagtranslations = window.tagtranslations || await getJsonFromUrl(`${tagTranslationsBaseURL}.${pageLanguage}`);
+}
+
+function writeOutTagProperties(prop, item) {
+  const tagsProperty = item.tags;
+  if (!tagsProperty || !window.tagtranslations) {
+    // No tags or no translations so default to old method.
+    return item[prop];
+  }
+
+  const convertedProp = convertCamelToKebabCase(prop);
+  const tagsValue = Object.values(tagsProperty);
+  const tagsArray = [];
+  tagsValue.forEach((tag) => {
+    if (tag.startsWith(convertedProp)) {
+      // Found the prop string. Convert it to displayable format
+      tagsArray.push(window.tagtranslations[tag]);
+    }
+  });
+  return tagsArray.join(', ');
+}
+
 function createCardHTML(prop, item) {
   let span;
   const dateProperty = isDateProperty(prop);
-  if (prop === 'image' || prop === 'displayImage') {
+  if (isTagProperty(prop)) {
+    span = `<span class="${prop}">${writeOutTagProperties(prop, item)}</span>`;
+  } else if (prop === 'image' || prop === 'displayImage') {
     span = writeImagePropertyInList(prop, item);
   } else if (dateProperty >= 0) {
     span = processDate(dateProperty, prop, item);
@@ -91,17 +149,6 @@ function pageMatches(page, filters) {
   return false;
 }
 
-function isDateProperty(propertyName) {
-  let isDate = -1;
-  for (let i = 0; i < dateProperties.length; i++) {
-    if (propertyName.startsWith(dateProperties[i])) {
-      isDate = i;
-      break;
-    }
-  }
-  return isDate;
-}
-
 function checkForDateProperties(displayProperties) {
   let dateFound = false;
   for (let i = 0; i < displayProperties.length; i++) {
@@ -113,23 +160,15 @@ function checkForDateProperties(displayProperties) {
   return dateFound;
 }
 
-function processDate(dateProperty, prop, item) {
-  let span;
-  const dateFormatRegex = /(?<=\()(.*?)(?=\))/g;
-  const dateFormatString = prop.match(dateFormatRegex);
-
-  if (dateFormatString && dateFormatString.length > 0) {
-    const adjustedPropName = dateProperties[dateProperty];
-    if (item[adjustedPropName]) {
-      const adjustedDate = dateFns.format(item[adjustedPropName], dateFormatString[0]);
-      // console.log(`old date format ${item[adjustedPropName]} New format ${adjustedDate}`);
-      span = `<span class="${adjustedPropName}">${adjustedDate}</span>`;
+function checkForTagProperties(displayProperties) {
+  let tagFound = false;
+  for (let i = 0; i < displayProperties.length; i++) {
+    if (isTagProperty(displayProperties[i])) {
+      tagFound = true;
+      break;
     }
-  } else {
-    // Treat date like normal
-    span = `<span class="${prop}">${item[prop]}</span>`;
   }
-  return span;
+  return tagFound;
 }
 
 function writeItems(matching, config, listElement) {
@@ -148,7 +187,7 @@ function writeItems(matching, config, listElement) {
     const htmlOutput = [];
 
     config.displayProperties.forEach((prop) => {
-      let span = createCardHTML(prop, item);
+      const span = createCardHTML(prop, item);
       htmlOutput.push(span);
     });
     cardLink.innerHTML = htmlOutput.join('');
@@ -159,7 +198,6 @@ function writeItems(matching, config, listElement) {
 }
 
 function loadMoreItems(matching, block, config) {
-  console.log('load more');
   const listElement = block.querySelector('ul');
   if (listElement) {
     let currDisplayNum = listElement.getAttribute('data-displaynum');
@@ -170,7 +208,6 @@ function loadMoreItems(matching, block, config) {
     const columns = config.columns ? config.columns : 5;
     const rows = 3;
     const numOfAddedItems = rows * columns;
-    console.log(`numOfAddedItems ${numOfAddedItems}`);
     currDisplayNum += numOfAddedItems;
     console.log(`add items ${startingItem} to ${currDisplayNum}`);
     listElement.setAttribute('data-displaynum', currDisplayNum);
@@ -222,7 +259,7 @@ function writeAsOneGroup(matching, config) {
     const htmlOutput = [];
 
     config.displayProperties.forEach((prop) => {
-      let span = createCardHTML(prop, item);
+      const span = createCardHTML(prop, item);
       htmlOutput.push(span);
     });
     cardLink.innerHTML = htmlOutput.join('');
@@ -313,9 +350,8 @@ async function constructDropdown(dictionary, filterBy, defaultFilterOption, tran
     const data = await getJsonFromUrl(translateFilter);
     const { data: translations } = data[pageLanguage];
     useTranslation = translations[0];
-    sortedList = Object.keys(dictionary).sort(function(a,b) { 
-      return useTranslation[a] < useTranslation[b] ? -1 : 1;
-    });
+    sortedList = Object.keys(dictionary)
+      .sort((a, b) => (useTranslation[a] < useTranslation[b] ? -1 : 1));
   }
 
   sortedList.forEach((filterValue) => {
@@ -360,7 +396,6 @@ function buildListItems(block, matching, tabDictionary, config) {
   }
 
   const filterDropdown = block.querySelector('select');
-
 
   if (filterDropdown) {
     if (filterDropdown.value) {
@@ -487,6 +522,11 @@ export default async function decorate(block) {
   const includesDateProperty = checkForDateProperties(config.displayProperties);
   if (includesDateProperty) {
     await loadScript('https://cdn.jsdelivr.net/npm/date-fns@4.1.0/cdn.min.js');
+  }
+
+  const includesTagProperty = checkForTagProperties(config.displayProperties);
+  if (includesTagProperty) {
+    await getTagTranslations();
   }
 
   // Get language index.
