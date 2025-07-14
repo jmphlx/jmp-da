@@ -69,7 +69,7 @@ async function getTagTranslations() {
 
 function writeOutTagProperties(prop, item) {
   const tagsProperty = item.tags;
-  if (!tagsProperty || !window.tagtranslations) {
+  if (!tagsProperty || tagsProperty.length < 1 || !window.tagtranslations) {
     // No tags or no translations so default to old method.
     return item[prop];
   }
@@ -80,7 +80,12 @@ function writeOutTagProperties(prop, item) {
   tagsValue.forEach((tag) => {
     if (tag.startsWith(convertedProp)) {
       // Found the prop string. Convert it to displayable format
-      tagsArray.push(window.tagtranslations[tag]);
+      if (window.tagtranslations[tag]) {
+        tagsArray.push(window.tagtranslations[tag]);
+      } else {
+        // Couldn't find translation of prop.
+        tagsArray.push(item[prop]);
+      }
     }
   });
   return tagsArray.join(', ');
