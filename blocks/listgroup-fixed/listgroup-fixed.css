@@ -98,7 +98,7 @@ div.listgroup-fixed, div.listgroup  {
             outline: none;
             img {
                 border-radius: 5px 5px 0 0;
-                border: 1px solid #D7D7D7;
+                /* border: 1px solid #D7D7D7; */
                 padding: 0;
                 transition: color 0.3s ease;
                 object-fit: cover;
