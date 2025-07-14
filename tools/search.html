@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DA App SDK Sample</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="https://da.live/nx/public/sl/components.js" type="module"></script>
+        <!-- Import DA App SDK -->
+    <script src="https://da.live/nx/utils/sdk.js" type="module"></script>
+    <!-- Project App Logic -->
+    <script src="/tools/search/search.js" type="module"></script>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" type="text/css" href="/tools/search/search.css">
+  </head>
+  <body>
+    <h1>Advanced Search</h1>
+    <br>
+    <form id="searchQuery">
+      <div id="searchFilters">
+        <sl-select name="scope">Scope
+          <option>Block</option>
+          <option>Metadata</option>
+        </sl-select>
+      </div>
+      <sl-input type="text" name="searchTerms" placeholder="Enter search text"></sl-input>
+      <sl-button name="submitSearch">Submit</sl-button>
+    </form>
+  </body>
+</html>
