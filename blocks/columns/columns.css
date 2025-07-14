@@ -398,7 +398,7 @@
         img {
           display: block;
           object-fit: cover;
-          border-radius: 5px;
+          border-radius: 10px;
           object-position: center;
           height: 100%;
         }
