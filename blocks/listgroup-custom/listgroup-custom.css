@@ -1067,8 +1067,10 @@ div.listgroup-custom  {
     li {
       a {
         .title {
-          margin-top: 2rem !important;
+          margin-top: 1.2rem !important;
+          margin-bottom: 1rem !important;
           color: var(--purple) !important;
+          flex: 1 0 auto;
         }
         .navigation-title, .resourceType, .displayLabel {
           font-size: 10px !important;
@@ -1108,7 +1110,7 @@ div.listgroup-custom  {
           display: block;
           order: 4;
           width: max-content;
-          margin: 0 8% 5% 8% !important;
+          margin: 0 8% 1.6rem 8% !important;
           padding: 4px 8px !important;
           border-radius: 5px;
           /* border: 1px solid var(--gray9); */
@@ -1161,6 +1163,8 @@ div.listgroup-custom  {
 					grid-column: 1;
 					grid-row: 1 / 4;
 					aspect-ratio: 3 !important;
+          border: 1px solid #D7D7D7;
+          border-radius: 10px;
           img {
             border-radius: 10px;
             border: none;
