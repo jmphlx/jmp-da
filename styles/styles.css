@@ -452,9 +452,11 @@ main pre {
 }
 sup {
   font-size: 50%;
+  vertical-align: super;
 }
 sub {
-  vertical-align: text-bottom;
+  font-size: 50%;
+  vertical-align: sub;
 }
 /* text alignment */
 .text-center {
