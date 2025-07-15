@@ -918,7 +918,7 @@ div.listgroup-custom  {
           display: block;
           width: max-content;
           order: 5;
-          margin: 2rem 0 !important;
+          margin: 2rem 0 1rem 0!important;
           padding: 4px 8px !important;
           border-radius: 5px;
           /* border: 1px solid var(--gray9); */
@@ -1047,7 +1047,7 @@ div.listgroup-custom  {
 .blog-list {
   .filterDropdown {
     padding: .5rem 1rem !important;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
   }
   div.load-more-container {
     .load-more-button {
