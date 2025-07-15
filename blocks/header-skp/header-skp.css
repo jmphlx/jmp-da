@@ -259,13 +259,6 @@ header .nav-wrapper {
                       font-size: 1.9rem;
                       padding-left: 0;
                       margin: 0;
-                      /* &:before {
-                        display: inline-block;
-                        opacity: .7;
-                        padding-right: 5px;
-                        width: .75rem !important;
-                        content: url('../../../icons/arrow-white.svg');
-                      } */
                       &:before {
                         content:'';
                         display: block;
@@ -284,17 +277,42 @@ header .nav-wrapper {
                         margin-bottom: 4px;
                       }
                     }
+                    ul.sub {
+                      li {
+                        a {
+                          color: rgba(255, 255, 255, 0.7);
+                          &:before {
+                            height: .5rem;
+                            width: .5rem;
+                            border-radius: 50% !important;
+                            border: 0 !important;
+                            background-color: rgba(255, 255, 255, 0.7) !important;
+                            /* border-color: #194573; */
+                          }
+                        }
+                      }
+                      li.active {
+                        a {
+                          &:before {
+                            height: .5rem;
+                            width: .5rem;
+                            border-radius: 50% !important;
+                            border: 0 !important;
+                            background-color: #194573 !important;
+                            /* border-color: #194573; */
+                          }
+                        }
+                      }
+                    }
                     &:hover {
                       transform: translate3d(5px, 0, 0);
                       a {
                         color: #ffffff;
                       }
-                      a:before {
-                        border-color: #194573;
-                      }
                     }
                     &.active {
                       border-left: 0;
+                      background-color: transparent;
                       a {
                         color: #ffffff;
                         &:before {
@@ -305,7 +323,11 @@ header .nav-wrapper {
                         a {
                         color: #ffffff !important;
                         &:before {
-                          border-color: #194573 !important;
+                          height: .5rem;
+                          width: .5rem;
+                          border-radius: 50% !important;
+                          border: 0 !important;
+                          background-color: #194573 !important;
                         }
                       }
                       }

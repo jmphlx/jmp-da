@@ -347,14 +347,22 @@ div.subnav.skpsubnav nav.main ul {
         display: block;
         li {
           a:before {
-            border-color: #7c9db6 !important;
+            height: .5rem;
+            width: .5rem;
+            border-radius: 50% !important;
+            border: 0;
+            background-color: #7c9db6 !important;
           }
         }
         li.active {
           border: 0;
           padding: 0 0 0 5px;
           a:before {
-            border-color: #194573 !important;
+            height: .5rem;
+            width: .5rem;
+            border-radius: 50% !important;
+            border: 0;
+            background-color: #194573 !important;
           }
         }
       }
