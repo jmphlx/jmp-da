@@ -854,7 +854,7 @@ div.listgroup-custom  {
     li {
       border-radius: 10px;
       margin: 0;
-      margin-bottom: 2%;
+      margin-bottom: 0;
       width: 100%;
       min-height: 400px;
       a {
