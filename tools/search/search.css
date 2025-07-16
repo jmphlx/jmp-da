@@ -3,5 +3,15 @@
 }
 
 .result-item {
-  padding: 10px;
+  padding: 5px;
 }
+
+.hidden {
+  display: none;
+}
+
+/*
+.expandable {
+  display: none;
+}
+*/
