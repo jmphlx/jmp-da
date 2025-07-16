@@ -1057,6 +1057,7 @@ div.listgroup-custom  {
       }
     }
     button:disabled {
+      display: none;
       background-color: #d0d0d0;
       &:hover {
         background-color: #d0d0d0;
