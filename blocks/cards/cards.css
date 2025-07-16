@@ -102,6 +102,14 @@
     margin-bottom: 1.6rem;
     div.cards-card-body {
       margin: 1.6rem 0;
+      p.button-container {
+        &:has( + :is(p.button-container)) {
+          margin: 0 !important;
+        }
+      }
+      p.button-container + p.button-container {
+        margin: 0 !important;
+      }
     }
   }
   @media (width <= 900px) {
