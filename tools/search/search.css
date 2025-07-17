@@ -10,6 +10,43 @@
   display: none;
 }
 
+p.button-container {
+    display: inline-block;
+    background-color: #ff5000;
+    font-weight: bold;
+    color: white;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: 2px solid transparent;
+    padding: 6px 10px;
+    text-align: center;
+    font-size: 1rem;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 5px;
+    transition: all .35s;
+    margin: 0.25em;
+}
+
+#copy-to-clipboard {
+  position: relative;
+  .copied-to-clipboard {
+    position: absolute;
+    top: 10px;
+    right: -8px;
+    display: flex;
+    justify-content: center;
+    width: 112px;
+    background-color: #3aaafc;
+    border-radius: 5px;
+    color: white;
+    text-align: center;
+    animation: fade-out ease 1s;
+    animation-delay: 4.1s;
+  }
+}
+
 /*
 .expandable {
   display: none;

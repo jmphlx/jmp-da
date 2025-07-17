@@ -2,9 +2,11 @@
 import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
 import { daFetch, saveToDa } from 'https://da.live/nx/utils/daFetch.js';
+import { createTag } from '../../scripts/helper.js';
 
 const defaultpath = '/jmphlx/jmp-da/en/sandbox/laurel/listgroups';
 const editPagePath = 'https://da.live/edit#';
+const previewURL = 'https://main--jmp-da--jmphlx.aem.page';
 const org = 'jmphlx';
 const repo = 'jmp-da';
 const pathPrefix = `/${org}/${repo}`;
@@ -23,7 +25,7 @@ function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-function adjustItemPathForPut(itemPath) {
+function getPagePathFromFullUrl(itemPath) {
   const splitItemPath = itemPath.split('/');
   splitItemPath.splice(1,2);
   let basicItemPath = splitItemPath.join('/');
@@ -31,10 +33,15 @@ function adjustItemPathForPut(itemPath) {
   if (htmlExtension) {
     basicItemPath = basicItemPath.substring(0, htmlExtension);
   }
+  console.log(basicItemPath);
+  return basicItemPath;
+}
+
+function adjustItemPathForPut(itemPath) {
   const urlObject = {
     org: org,
     repo: repo,
-    pathname: basicItemPath,
+    pathname: getPagePathFromFullUrl(itemPath),
   };
   return urlObject;
 }
@@ -76,6 +83,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
       if (filtered.length) {
         const matchingEntry = {
           path: item.path,
+          pagePath: getPagePathFromFullUrl(item.path),
           elements: filtered,
           original: item
         };
@@ -88,6 +96,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
     } else {
       const matchingEntry = {
         path: item.path,
+        pagePath: getPagePathFromFullUrl(item.path),
         elements: elements,
         original: item,
       };
@@ -124,39 +133,99 @@ async function doSearch(queryObject, replaceFlag) {
 
 }
 
-function writeOutResults(results, queryString, queryObject) {
+function createResultItem(item, highlightTerm) {
+  const resultItem = document.createElement('div');
+  const resultLink = document.createElement('a');
+  resultLink.href = `${editPagePath}${item.path.replace('.html', '')}`;
+  resultLink.target = '_blank';
+  resultLink.textContent = item.path;
+  resultItem.classList.add('result-item');
+  resultItem.append(resultLink);
+  const resultDetails = document.createElement('div');
+  resultDetails.classList.add('expandable');
+  const resultText = document.createElement('ul');
+  const elements = item.elements;
+  elements.forEach((el) => {
+    const li = document.createElement('li');
+    const clone = el.cloneNode(true);
+    clone.innerHTML = highlightKeyword(clone.innerHTML, highlightTerm);
+    li.append(clone);
+    resultText.append(li);
+  })
+  resultDetails.append(resultText);
+  resultItem.append(resultDetails);
+
+  return resultItem;
+}
+
+async function copyToClipboard(button, clipboardTxt, copyTxt) {
+  try {
+    await navigator.clipboard.writeText(clipboardTxt);
+    button.setAttribute('title', copyTxt);
+    button.setAttribute('aria-label', copyTxt);
+
+    const tooltip = createTag('div', { role: 'status', 'aria-live': 'polite', class: 'copied-to-clipboard' }, copyTxt);
+    button.parentElement.append(tooltip);
+
+    setTimeout(() => {
+      /* c8 ignore next 1 */
+      tooltip.remove();
+    }, 3000);
+    button.classList.remove('copy-failure');
+    button.classList.add('copy-success');
+  } catch (e) {
+    console.log(e);
+    button.classList.add('copy-failure');
+    button.classList.remove('copy-success');
+  }
+}
+
+function writeOutResults(results, queryString, queryObject, duration, replaceFlag) {
+  const highlightTerm = replaceFlag ?
+    document.querySelector('[name="replaceText"]').value : queryObject.keyword;
+  
+  const resultsContainer = document.querySelector('.results-container');
+  resultsContainer.innerHTML = '';
+
   const resultsHeader = document.createElement('h2');
   resultsHeader.classList.add('results-header');
   resultsHeader.textContent = `Search Results for \"${queryString}\"`;
-  document.body.append(resultsHeader);
-  
-  const resultsContainer = document.createElement('div');
-  resultsContainer.classList.add('results-container');
+  const resultsData = document.createElement('div');
 
+  const urlList = [];
+
+  const resultsList = document.createElement('div');
+  resultsList.classList.add('results-list');
   results.forEach((item) => {
-    const resultItem = document.createElement('div');
-    const resultLink = document.createElement('a');
-    resultLink.href = `${editPagePath}${item.path.replace('.html', '')}`;
-    resultLink.target = '_blank';
-    resultLink.textContent = item.path;
-    resultItem.classList.add('result-item');
-    resultItem.append(resultLink);
-    const resultDetails = document.createElement('div');
-    resultDetails.classList.add('expandable');
-    const resultText = document.createElement('ul');
-    const elements = item.elements;
-    elements.forEach((el) => {
-      const li = document.createElement('li');
-      const clone = el.cloneNode(true);
-      clone.innerHTML = highlightKeyword(clone.innerHTML, queryObject.keyword);
-      li.append(clone);
-      resultText.append(li);
-    })
-    resultDetails.append(resultText);
-    resultItem.append(resultDetails);
-    resultsContainer.append(resultItem);
+    const resultItem = createResultItem(item, highlightTerm);
+    resultsList.append(resultItem);
+    urlList.push(`${previewURL}${item.pagePath}`);
   });
 
+  const searchSummary = document.createElement('span');
+  searchSummary.classList.add('summary');
+  searchSummary.textContent = `${results.length} found for \"${queryString}\"`;
+
+  const searchTime = document.createElement('span');
+  searchTime.classList.add('search-time');
+  searchTime.textContent = `Search completed in ${duration.toFixed(2)} seconds`;
+
+  const copyContainer = createTag('span', {
+    id: 'copy-to-clipboard',
+  })
+
+  const copyButton = createTag('p', {
+    class: 'button-container',
+  });
+  copyButton.textContent = 'Copy Results To Clipboard for Bulk Publish';
+  copyContainer.append(copyButton);
+  copyContainer.addEventListener('click', function() {
+    copyToClipboard(copyButton, urlList.join('\n'), 'Copied');
+  });
+
+  resultsData.append(searchSummary, searchTime, copyContainer);
+
+  resultsContainer.append(resultsHeader, resultsData, resultsList);
   document.body.append(resultsContainer);
 }
 
@@ -164,7 +233,7 @@ function getQuery() {
   const queryString = document.querySelector('[name="searchTerms"]').value;
 
   const scope = {};
-  let keyword = "";
+  let keyword = '';
 
   const scopeRegex = /(\w+):([^\s]+)/g;
   let remaining = queryString;
@@ -176,7 +245,7 @@ function getQuery() {
   }
 
   const phraseMatch = remaining.match(/"([^"]+)"|(.+)/);
-  keyword = phraseMatch ? (phraseMatch[1] || phraseMatch[2]) : "";
+  keyword = phraseMatch ? (phraseMatch[1] || phraseMatch[2]) : '';
 
   return { scope, keyword: keyword.trim() };
 }
@@ -199,25 +268,11 @@ async function doReplace(dom, elements, pageSourceUrl, keyword) {
 
 }
 
-async function testCall(actions) {
-  const fullpath = `https://admin.da.live/source/jmphlx/jmp-da/en/sandbox/laurel/custom-listgroup/with-filter.html`;
-  const resp = await actions.daFetch(fullpath);
-  console.log(resp)
-}
-
-async function tryCall(actions) {
-  const fullpath = `https://admin.da.live/source/jmphlx/jmp-da/en/sandbox/laurel/custom-listgroup/with-filter.html`;
-  const resp = await actions.daFetch(fullpath);
-  console.log(resp)
-}
-
 (async function init() {
   // eslint-disable-next-line no-unused-vars
   //const { actions } = await DA_SDK;
 
   const { context, token } = await DA_SDK;
-  console.log(context);
-  console.log(token);
 
   
   //console.log(actions);
@@ -247,6 +302,7 @@ async function tryCall(actions) {
         replaceFlag = true;
       }
     }
+    const startTime = performance.now();
 
     // Get Search Terms.
     const queryObject = getQuery();
@@ -258,9 +314,11 @@ async function tryCall(actions) {
     console.log(replaceFlag);
     const results = await doSearch(queryObject, replaceFlag);
     window.searchResults = results;
+    const endTime = performance.now();
+    const duration = (endTime - startTime) * 0.001;
 
     // Output results.
-    writeOutResults(results, queryString, queryObject);
+    writeOutResults(results, queryString, queryObject, duration, replaceFlag,);
   });
 
 }());
