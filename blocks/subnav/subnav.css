@@ -313,6 +313,46 @@ div.subnav.dropdown-flyout {
               right: 10px;
             }
           }
+          li.is-dropdown.active {
+            background: white !important;
+            &:after {
+              border-color: var(--blue) !important
+            }
+            a {
+              background-color: var(--gray);
+              color: var(--blue);
+              text-decoration: underline;
+            }
+            ul.sub {
+              > li.is-dropdown {
+                background-color: white !important;
+                color: var(--gray3) !important;
+                a {
+                  background-color: white !important;
+                  color: var(--gray3) !important;
+                  text-decoration: none;
+                  &:hover {
+                    background-color: var(--gray) !important;
+                    color: var(--blue) !important;
+                  }
+                }
+              }
+              a {
+                  background-color: white !important;
+                  color: var(--gray3) !important;
+                  text-decoration: none;
+                  &:hover {
+                    background-color: var(--gray) !important;
+                    color: var(--blue) !important;
+                    text-decoration: underline !important;
+                  }
+                }
+              li {
+                background-color: white !important;
+                color: var(--gray3) !important;
+              }
+            }
+          }
           li.is-dropdown {
             &:hover {
               transition: all ease .3s;
