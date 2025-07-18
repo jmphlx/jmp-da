@@ -10,6 +10,14 @@ img.facebook,img.linkedin,img.instagram,img.copylink,img.bluesky {
   .social-share-wrapper {
     img.facebook,img.linkedin,img.instagram,img.copylink,img.bluesky {
       filter: brightness(0) saturate(100%) invert(23%) sepia(22%) saturate(3872%) hue-rotate(244deg) brightness(98%) contrast(92%);
+      &:hover {
+        transition: transform ease .5s;
+        transform: translateY(-2px);
+        filter: brightness(0) saturate(100%) invert(60%) sepia(86%) saturate(4761%) hue-rotate(333deg) brightness(99%) contrast(90%);
+      }
+      &:not(:hover) {
+        transition: transform ease .5s;
+      }
     }
   }
 }

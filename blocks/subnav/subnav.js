@@ -8,19 +8,20 @@ function isDropdownActive(block) {
   return block.querySelectorAll('.active').length > 0;
 }
 
-// function addHovers(ul) {
-//   if (ul.classList.contains('sub')) {
-//     const listItems = ul.querySelectorAll('li.is-dropdown');
-//     listItems.forEach((li) => {
-//       li.addEventListener('mouseenter', () => {
-//         li.classList.add('is-open');
-//       });
-//       li.addEventListener('mouseleave', () => {
-//         li.classList.remove('is-open');
-//       });
-//     });
-//   }
-// }
+function addHovers(ul) {
+  const subLists = ul.querySelectorAll('ul.sub');
+  subLists.forEach((list) => {
+    const listItems = list.querySelectorAll('li.is-dropdown');
+    listItems.forEach((li) => {
+      li.addEventListener('mouseenter', () => {
+        li.classList.add('is-open');
+      });
+      li.addEventListener('mouseleave', () => {
+        li.classList.remove('is-open');
+      });
+    });
+  });
+}
 
 /**
  * Close all dropdowns with the is-open class below this element.
@@ -63,7 +64,6 @@ function createDropdown(dropdownItems) {
     const li = createListItem(buttonLevel, childItems);
     ul.append(li);
   });
-  // addHovers(ul);
   return ul;
 }
 
@@ -130,6 +130,9 @@ export default async function decorate(block) {
 
     const li = createListItem(buttonLevel, dropdownItems);
     listOfDropdowns.append(li);
+  }
+  if (block.classList.contains('dropdown-flyout')) {
+    addHovers(listOfDropdowns);
   }
   wrapper.append(listOfDropdowns);
   block.append(wrapper);
