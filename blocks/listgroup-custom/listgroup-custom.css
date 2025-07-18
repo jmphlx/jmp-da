@@ -1133,6 +1133,35 @@ div.listgroup-custom  {
       }
     }
   }
+  &.add-display-description {
+    ul.list-tile {
+      li {
+        a {
+          grid-template-rows: .5fr auto .25fr auto !important;
+          span.image {
+            width: 100%;
+            height: 100%;
+            grid-column: 1;
+            grid-row: 1 / 5;
+          }
+          .title {
+            grid-row: 1;
+          }
+          .displayDescription {
+            grid-row: 2;
+            padding-left: 0;
+            font-size: 14px;
+          }
+          .releaseDate {
+            grid-row: 3;
+          }
+          .blogTopics {
+            grid-row: 4;
+          }
+        }
+      }
+    }
+  }
   ul.list-tile {
     margin: 0;
 		width: 100%;
