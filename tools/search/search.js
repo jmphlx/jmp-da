@@ -11,6 +11,16 @@ const org = 'jmphlx';
 const repo = 'jmp-da';
 const pathPrefix = `/${org}/${repo}`;
 
+class SearchResult {
+  constructor(item, elements, classStyle) {
+    this.path = item.path;
+    this.pagePath = getPagePathFromFullUrl(item.path);
+    this.elements = elements;
+    this.original = item;
+    this.classStyle = classStyle;
+  }
+}
+
 function highlightKeyword(text, keyword) {
   const regex = new RegExp(`(${escapeRegExp(keyword)})`, 'gi');
   return text.replace(regex, '<mark>$1</mark>');
@@ -33,7 +43,6 @@ function getPagePathFromFullUrl(itemPath) {
   if (htmlExtension) {
     basicItemPath = basicItemPath.substring(0, htmlExtension);
   }
-  console.log(basicItemPath);
   return basicItemPath;
 }
 
@@ -62,31 +71,44 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
   const dom = new DOMParser().parseFromString(text, 'text/html');
 
   let elements = [];
+  let classStyle;
 
-  // Narrow search to blocks
   if (queryObject.scope.block) {
     const blockName = queryObject.scope.block;
-    elements = dom.querySelectorAll(`div.${blockName}`);
+    classStyle = 'block';
+    if (queryObject.scope.property) {
+      const propertyName = queryObject.scope.property;
+      classStyle = 'property';
+      const foundProperties = Array.from(dom.querySelectorAll(`div.${blockName} p`)).filter(field => 
+        field.children.length == 0 && field.textContent.trim() === propertyName);
+      foundProperties.forEach((prop) => {
+        elements.push(prop.parentElement.parentElement);
+      });
+    } else {
+      elements = dom.querySelectorAll(`div.${blockName}`);
+    }
+  }
+
+  if (elements.length === 0 && queryObject.scope.property) {
+    const propertyName = queryObject.scope.property;
+    classStyle = 'property';
+    const foundProperties = Array.from(dom.querySelectorAll('p')).filter(ele => ele.children.length === 0 && ele.textContent.trim() === propertyName);
+    foundProperties.forEach((prop) => {
+      elements.push(prop.parentElement.parentElement);
+    });
   }
 
   if (elements.length) {
     if (queryObject.keyword) {
       const filtered = [];
       elements.forEach((el) => {
-        console.log(el);
         if (el.textContent.toLowerCase().includes(queryObject.keyword.toLowerCase())) {
-          // found an item
           filtered.push(el);
-          console.log(el);
         }
       });
       if (filtered.length) {
-        const matchingEntry = {
-          path: item.path,
-          pagePath: getPagePathFromFullUrl(item.path),
-          elements: filtered,
-          original: item
-        };
+        console.log(filtered);
+        const matchingEntry = new SearchResult(item, filtered, classStyle);
         matching.push(matchingEntry);
         if(replaceFlag) {
           const urlObject = adjustItemPathForPut(item.path);
@@ -94,12 +116,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
         }
       }
     } else {
-      const matchingEntry = {
-        path: item.path,
-        pagePath: getPagePathFromFullUrl(item.path),
-        elements: elements,
-        original: item,
-      };
+      const matchingEntry = new SearchResult(item, elements, classStyle);
       matching.push(matchingEntry);
     }
   }
@@ -113,7 +130,6 @@ async function doSearch(queryObject, replaceFlag) {
   let path = defaultpath;
 
   if (queryObject.scope.path) {
-    console.log('has a path');
     let providedPath = queryObject.scope.path;
     if (!providedPath.startsWith(pathPrefix)) {
       path = pathPrefix.concat(providedPath);
@@ -130,23 +146,38 @@ async function doSearch(queryObject, replaceFlag) {
   await results;
 
   return matching;
-
 }
 
 function createResultItem(item, highlightTerm) {
-  const resultItem = document.createElement('div');
-  const resultLink = document.createElement('a');
-  resultLink.href = `${editPagePath}${item.path.replace('.html', '')}`;
-  resultLink.target = '_blank';
-  resultLink.textContent = item.path;
-  resultItem.classList.add('result-item');
-  resultItem.append(resultLink);
-  const resultDetails = document.createElement('div');
-  resultDetails.classList.add('expandable');
+  const resultItem = createTag('div', { class: 'result-item' });
+  const resultHeader = createTag('div', {
+    class: 'result-header',
+  })
+  const pagePath = createTag('div', {
+    class: 'page-path',
+  }, `${item.path}`);
+
+  const link = createTag('a', { href: `${editPagePath}${item.path.replace('.html', '')}`,
+    target: '_blank' });
+
+  const openPageIcon = createTag('img', {
+    src: `${window.location.origin}/icons/new-tab-icon.svg`,
+    class: 'open-page',
+  });
+  link.append(openPageIcon);
+  resultHeader.append(pagePath, link);
+
+  resultItem.append(resultHeader);
+
+  const resultDetails = createTag('div', {
+    class: 'result-details',
+  })
   const resultText = document.createElement('ul');
   const elements = item.elements;
   elements.forEach((el) => {
-    const li = document.createElement('li');
+    const li = createTag('li', {
+      class: `html-result ${item.classStyle}`
+    });
     const clone = el.cloneNode(true);
     clone.innerHTML = highlightKeyword(clone.innerHTML, highlightTerm);
     li.append(clone);
@@ -154,6 +185,15 @@ function createResultItem(item, highlightTerm) {
   })
   resultDetails.append(resultText);
   resultItem.append(resultDetails);
+
+  resultItem.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (this.classList.contains('open')) {
+      this.classList.remove('open');
+    } else {
+      this.classList.add('open');
+    }
+  });
 
   return resultItem;
 }
@@ -217,11 +257,19 @@ function writeOutResults(results, queryString, queryObject, duration, replaceFla
   const copyButton = createTag('p', {
     class: 'button-container',
   });
-  copyButton.textContent = 'Copy Results To Clipboard for Bulk Publish';
+  copyButton.textContent = 'Copy Result URLs To Clipboard';
   copyContainer.append(copyButton);
   copyContainer.addEventListener('click', function() {
     copyToClipboard(copyButton, urlList.join('\n'), 'Copied');
   });
+
+  const bulkEditorButton = createTag('a', {
+    class: 'button',
+    href: 'https://da.live/apps/bulk',
+    target: '_blank',
+  }, 'Open Bulk Operations Tool');
+  copyContainer.append(bulkEditorButton);
+
 
   resultsData.append(searchSummary, searchTime, copyContainer);
 
@@ -318,7 +366,7 @@ async function doReplace(dom, elements, pageSourceUrl, keyword) {
     const duration = (endTime - startTime) * 0.001;
 
     // Output results.
-    writeOutResults(results, queryString, queryObject, duration, replaceFlag,);
+    writeOutResults(results, queryString, queryObject, duration, replaceFlag);
   });
 
 }());
