@@ -119,6 +119,26 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
       const matchingEntry = new SearchResult(item, elements, classStyle);
       matching.push(matchingEntry);
     }
+  } else {
+    // If the block and property scopes were null, then still try to do keyword search
+    if (!queryObject.scope.block && !queryObject.scope.property && queryObject.keyword) {
+      const $newDom = $(dom);
+
+      $($newDom).find(`*:contains("${queryObject.keyword}")`).filter(function () {
+        return $(this).children((`*:contains("${queryObject.keyword}")`)).length === 0;
+      }).each(function() {
+        elements.push($(this).get(0));
+      });
+
+      if (elements.length) {
+        const matchingEntry = new SearchResult(item, elements, undefined);
+        matching.push(matchingEntry);
+        if(replaceFlag) {
+          const urlObject = adjustItemPathForPut(item.path);
+          doReplace(dom, elements, urlObject, queryObject.keyword);
+        }
+      }
+    }
   }
 
   return null;
