@@ -1,15 +1,11 @@
 // eslint-disable-next-line import/no-unresolved
 import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
-import { daFetch, saveToDa } from 'https://da.live/nx/utils/daFetch.js';
-import { createTag } from '../../scripts/helper.js';
+import { createTag, saveToDa, DA_CONSTANTS } from '../../scripts/helper.js';
 
 const defaultpath = '/jmphlx/jmp-da/en/sandbox/laurel/listgroups';
-const editPagePath = 'https://da.live/edit#';
-const previewURL = 'https://main--jmp-da--jmphlx.aem.page';
-const org = 'jmphlx';
-const repo = 'jmp-da';
-const pathPrefix = `/${org}/${repo}`;
+const pathPrefix = `/${DA_CONSTANTS.org}/${DA_CONSTANTS.repo}`;
+let actions, token;
 
 class SearchResult {
   constructor(item, elements, classStyle) {
@@ -46,15 +42,6 @@ function getPagePathFromFullUrl(itemPath) {
   return basicItemPath;
 }
 
-function adjustItemPathForPut(itemPath) {
-  const urlObject = {
-    org: org,
-    repo: repo,
-    pathname: getPagePathFromFullUrl(itemPath),
-  };
-  return urlObject;
-}
-
 async function handleSearch(item, queryObject, matching, replaceFlag) {
   // Die if not a document
   if (!item.path.endsWith('.html')) return;
@@ -62,7 +49,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
   const pageSourceUrl = `https://admin.da.live/source${item.path}`;
 
   // Fetch the doc & convert to DOM
-  const resp = await daFetch(pageSourceUrl);
+  const resp = await actions.daFetch(pageSourceUrl);
   if (!resp.ok) {
     console.log('Could not fetch item');
     return;
@@ -89,6 +76,12 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
     }
   }
 
+  if (elements.length === 0 && queryObject.scope.tag) {
+    const tagName = queryObject.scope.tag;
+    elements = dom.querySelectorAll(`${tagName}`);
+    console.log(elements);
+  }
+
   if (elements.length === 0 && queryObject.scope.property) {
     const propertyName = queryObject.scope.property;
     classStyle = 'property';
@@ -111,8 +104,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
         const matchingEntry = new SearchResult(item, filtered, classStyle);
         matching.push(matchingEntry);
         if(replaceFlag) {
-          const urlObject = adjustItemPathForPut(item.path);
-          doReplace(dom, filtered, urlObject, queryObject.keyword);
+          doReplace(dom, filtered, getPagePathFromFullUrl(item.path), queryObject.keyword);
         }
       }
     } else {
@@ -134,8 +126,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
         const matchingEntry = new SearchResult(item, elements, undefined);
         matching.push(matchingEntry);
         if(replaceFlag) {
-          const urlObject = adjustItemPathForPut(item.path);
-          doReplace(dom, elements, urlObject, queryObject.keyword);
+          doReplace(dom, elements, getPagePathFromFullUrl(item.path), queryObject.keyword);
         }
       }
     }
@@ -152,7 +143,7 @@ async function doSearch(queryObject, replaceFlag) {
   if (queryObject.scope.path) {
     let providedPath = queryObject.scope.path;
     if (!providedPath.startsWith(pathPrefix)) {
-      path = pathPrefix.concat(providedPath);
+      path = `${pathPrefix}${providedPath}`;
     } else {
       path = providedPath;
     }
@@ -177,7 +168,7 @@ function createResultItem(item, highlightTerm) {
     class: 'page-path',
   }, `${item.path}`);
 
-  const link = createTag('a', { href: `${editPagePath}${item.path.replace('.html', '')}`,
+  const link = createTag('a', { href: `${DA_CONSTANTS.editUrl}${item.path.replace('.html', '')}`,
     target: '_blank' });
 
   const openPageIcon = createTag('img', {
@@ -259,7 +250,7 @@ function writeOutResults(results, queryString, queryObject, duration, replaceFla
   results.forEach((item) => {
     const resultItem = createResultItem(item, highlightTerm);
     resultsList.append(resultItem);
-    urlList.push(`${previewURL}${item.pagePath}`);
+    urlList.push(`${DA_CONSTANTS.previewUrl}${item.pagePath}`);
   });
 
   const searchSummary = document.createElement('span');
@@ -319,7 +310,6 @@ function getQuery() {
 }
 
 async function doReplace(dom, elements, pageSourceUrl, keyword) {
-  console.log('do replace now');
   const replaceText = document.querySelector('[name="replaceText"]').value;
 
   elements.forEach((el) => {
@@ -330,20 +320,17 @@ async function doReplace(dom, elements, pageSourceUrl, keyword) {
   const html = dom.body.querySelector('main');
   console.log(html.innerHTML);
   console.log('try to save');
-  const response = saveToDa(html.innerHTML, pageSourceUrl);
+  console.log(pageSourceUrl);
+  const response = saveToDa(html.innerHTML, pageSourceUrl, token);
   console.log(response);
-  console.log('done');
 
 }
 
 (async function init() {
-  // eslint-disable-next-line no-unused-vars
-  //const { actions } = await DA_SDK;
+  const sdk = await DA_SDK;
+  actions = sdk.actions;
+  token = sdk.token;
 
-  const { context, token } = await DA_SDK;
-
-  
-  //console.log(actions);
   const replaceCheckbox = document.querySelector('#replaceAction');
   const replaceTextbox = document.querySelector('[name="replaceText"]');
   replaceCheckbox.addEventListener('change', () => {
