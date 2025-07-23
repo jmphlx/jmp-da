@@ -1,20 +1,27 @@
 // eslint-disable-next-line import/no-unresolved
 import DA_SDK from 'https://da.live/nx/utils/sdk.js';
+// eslint-disable-next-line import/no-unresolved
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
 import { createTag, saveToDa, DA_CONSTANTS } from '../../scripts/helper.js';
 
 const defaultpath = '/jmphlx/jmp-da/en/sandbox/laurel/listgroups';
 const pathPrefix = `/${DA_CONSTANTS.org}/${DA_CONSTANTS.repo}`;
-let actions, token;
+let actions;
+let token;
 
 class SearchResult {
   constructor(item, elements, classStyle) {
     this.path = item.path;
+    // eslint-disable-next-line no-use-before-define
     this.pagePath = getPagePathFromFullUrl(item.path);
     this.elements = elements;
     this.original = item;
     this.classStyle = classStyle;
   }
+}
+
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function highlightKeyword(text, keyword) {
@@ -27,19 +34,30 @@ function replaceKeyword(text, keyword, replacement) {
   return text.replace(regex, replacement);
 }
 
-function escapeRegExp(string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
 function getPagePathFromFullUrl(itemPath) {
   const splitItemPath = itemPath.split('/');
-  splitItemPath.splice(1,2);
+  splitItemPath.splice(1, 2);
   let basicItemPath = splitItemPath.join('/');
   const htmlExtension = basicItemPath.indexOf('.html');
   if (htmlExtension) {
     basicItemPath = basicItemPath.substring(0, htmlExtension);
   }
   return basicItemPath;
+}
+
+async function doReplace(dom, elements, pageSourceUrl, keyword) {
+  const replaceText = document.querySelector('[name="replaceText"]').value;
+
+  elements.forEach((el) => {
+    console.log(el);
+    el.innerHTML = replaceKeyword(el.innerHTML, keyword, replaceText);
+  });
+
+  const html = dom.body.querySelector('main');
+  console.log(html.innerHTML);
+  console.log('try to save');
+  console.log(pageSourceUrl);
+  saveToDa(html.innerHTML, pageSourceUrl, token);
 }
 
 async function handleSearch(item, queryObject, matching, replaceFlag) {
@@ -66,8 +84,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
     if (queryObject.scope.property) {
       const propertyName = queryObject.scope.property;
       classStyle = 'property';
-      const foundProperties = Array.from(dom.querySelectorAll(`div.${blockName} p`)).filter(field => 
-        field.children.length == 0 && field.textContent.trim() === propertyName);
+      const foundProperties = Array.from(dom.querySelectorAll(`div.${blockName} p`)).filter((field) => field.children.length === 0 && field.textContent.trim() === propertyName);
       foundProperties.forEach((prop) => {
         elements.push(prop.parentElement.parentElement);
       });
@@ -85,7 +102,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
   if (elements.length === 0 && queryObject.scope.property) {
     const propertyName = queryObject.scope.property;
     classStyle = 'property';
-    const foundProperties = Array.from(dom.querySelectorAll('p')).filter(ele => ele.children.length === 0 && ele.textContent.trim() === propertyName);
+    const foundProperties = Array.from(dom.querySelectorAll('p')).filter((ele) => ele.children.length === 0 && ele.textContent.trim() === propertyName);
     foundProperties.forEach((prop) => {
       elements.push(prop.parentElement.parentElement);
     });
@@ -103,7 +120,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
         console.log(filtered);
         const matchingEntry = new SearchResult(item, filtered, classStyle);
         matching.push(matchingEntry);
-        if(replaceFlag) {
+        if (replaceFlag) {
           doReplace(dom, filtered, getPagePathFromFullUrl(item.path), queryObject.keyword);
         }
       }
@@ -111,28 +128,24 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
       const matchingEntry = new SearchResult(item, elements, classStyle);
       matching.push(matchingEntry);
     }
-  } else {
+  } else if (!queryObject.scope.block && !queryObject.scope.property && queryObject.keyword) {
     // If the block and property scopes were null, then still try to do keyword search
-    if (!queryObject.scope.block && !queryObject.scope.property && queryObject.keyword) {
-      const $newDom = $(dom);
+    const $newDom = $(dom);
 
-      $($newDom).find(`*:contains("${queryObject.keyword}")`).filter(function () {
-        return $(this).children((`*:contains("${queryObject.keyword}")`)).length === 0;
-      }).each(function() {
-        elements.push($(this).get(0));
-      });
+    $($newDom).find(`*:contains("${queryObject.keyword}")`).filter(function () {
+      return $(this).children((`*:contains("${queryObject.keyword}")`)).length === 0;
+    }).each(function () {
+      elements.push($(this).get(0));
+    });
 
-      if (elements.length) {
-        const matchingEntry = new SearchResult(item, elements, undefined);
-        matching.push(matchingEntry);
-        if(replaceFlag) {
-          doReplace(dom, elements, getPagePathFromFullUrl(item.path), queryObject.keyword);
-        }
+    if (elements.length) {
+      const matchingEntry = new SearchResult(item, elements, undefined);
+      matching.push(matchingEntry);
+      if (replaceFlag) {
+        doReplace(dom, elements, getPagePathFromFullUrl(item.path), queryObject.keyword);
       }
     }
   }
-
-  return null;
 }
 
 async function doSearch(queryObject, replaceFlag) {
@@ -141,7 +154,7 @@ async function doSearch(queryObject, replaceFlag) {
   let path = defaultpath;
 
   if (queryObject.scope.path) {
-    let providedPath = queryObject.scope.path;
+    const providedPath = queryObject.scope.path;
     if (!providedPath.startsWith(pathPrefix)) {
       path = `${pathPrefix}${providedPath}`;
     } else {
@@ -150,9 +163,10 @@ async function doSearch(queryObject, replaceFlag) {
   }
 
   // Crawl the tree of content
-  const { results } = await crawl({ path,
+  const { results } = await crawl({
+    path,
     callback: (item) => handleSearch(item, queryObject, matching, replaceFlag),
-    concurrent: 50
+    concurrent: 50,
   });
   await results;
 
@@ -163,13 +177,15 @@ function createResultItem(item, highlightTerm) {
   const resultItem = createTag('div', { class: 'result-item' });
   const resultHeader = createTag('div', {
     class: 'result-header',
-  })
+  });
   const pagePath = createTag('div', {
     class: 'page-path',
   }, `${item.path}`);
 
-  const link = createTag('a', { href: `${DA_CONSTANTS.editUrl}${item.path.replace('.html', '')}`,
-    target: '_blank' });
+  const link = createTag('a', {
+    href: `${DA_CONSTANTS.editUrl}${item.path.replace('.html', '')}`,
+    target: '_blank',
+  });
 
   const openPageIcon = createTag('img', {
     src: `${window.location.origin}/icons/new-tab-icon.svg`,
@@ -182,18 +198,18 @@ function createResultItem(item, highlightTerm) {
 
   const resultDetails = createTag('div', {
     class: 'result-details',
-  })
+  });
   const resultText = document.createElement('ul');
   const elements = item.elements;
   elements.forEach((el) => {
     const li = createTag('li', {
-      class: `html-result ${item.classStyle}`
+      class: `html-result ${item.classStyle}`,
     });
     const clone = el.cloneNode(true);
     clone.innerHTML = highlightKeyword(clone.innerHTML, highlightTerm);
     li.append(clone);
     resultText.append(li);
-  })
+  });
   resultDetails.append(resultText);
   resultItem.append(resultDetails);
 
@@ -232,15 +248,15 @@ async function copyToClipboard(button, clipboardTxt, copyTxt) {
 }
 
 function writeOutResults(results, queryString, queryObject, duration, replaceFlag) {
-  const highlightTerm = replaceFlag ?
-    document.querySelector('[name="replaceText"]').value : queryObject.keyword;
-  
+  const highlightTerm = replaceFlag
+    ? document.querySelector('[name="replaceText"]').value : queryObject.keyword;
+
   const resultsContainer = document.querySelector('.results-container');
   resultsContainer.innerHTML = '';
 
   const resultsHeader = document.createElement('h2');
   resultsHeader.classList.add('results-header');
-  resultsHeader.textContent = `Search Results for \"${queryString}\"`;
+  resultsHeader.textContent = `Search Results for "${queryString}"`;
   const resultsData = document.createElement('div');
 
   const urlList = [];
@@ -255,7 +271,7 @@ function writeOutResults(results, queryString, queryObject, duration, replaceFla
 
   const searchSummary = document.createElement('span');
   searchSummary.classList.add('summary');
-  searchSummary.textContent = `${results.length} found for \"${queryString}\"`;
+  searchSummary.textContent = `${results.length} found for "${queryString}"`;
 
   const searchTime = document.createElement('span');
   searchTime.classList.add('search-time');
@@ -263,14 +279,14 @@ function writeOutResults(results, queryString, queryObject, duration, replaceFla
 
   const copyContainer = createTag('span', {
     id: 'copy-to-clipboard',
-  })
+  });
 
   const copyButton = createTag('p', {
     class: 'button-container',
   });
   copyButton.textContent = 'Copy Result URLs To Clipboard';
   copyContainer.append(copyButton);
-  copyContainer.addEventListener('click', function() {
+  copyContainer.addEventListener('click', () => {
     copyToClipboard(copyButton, urlList.join('\n'), 'Copied');
   });
 
@@ -280,7 +296,6 @@ function writeOutResults(results, queryString, queryObject, duration, replaceFla
     target: '_blank',
   }, 'Open Bulk Operations Tool');
   copyContainer.append(bulkEditorButton);
-
 
   resultsData.append(searchSummary, searchTime, copyContainer);
 
@@ -298,6 +313,7 @@ function getQuery() {
   let remaining = queryString;
   let match;
 
+  // eslint-disable-next-line no-cond-assign
   while ((match = scopeRegex.exec(queryString)) !== null) {
     scope[match[1]] = match[2];
     remaining = remaining.replace(match[0], '').trim();
@@ -307,23 +323,6 @@ function getQuery() {
   keyword = phraseMatch ? (phraseMatch[1] || phraseMatch[2]) : '';
 
   return { scope, keyword: keyword.trim() };
-}
-
-async function doReplace(dom, elements, pageSourceUrl, keyword) {
-  const replaceText = document.querySelector('[name="replaceText"]').value;
-
-  elements.forEach((el) => {
-    console.log(el);
-    el.innerHTML = replaceKeyword(el.innerHTML, keyword, replaceText);
-  });
-
-  const html = dom.body.querySelector('main');
-  console.log(html.innerHTML);
-  console.log('try to save');
-  console.log(pageSourceUrl);
-  const response = saveToDa(html.innerHTML, pageSourceUrl, token);
-  console.log(response);
-
 }
 
 (async function init() {
@@ -345,17 +344,15 @@ async function doReplace(dom, elements, pageSourceUrl, keyword) {
   const submitButton = document.querySelector('[name="submitSearch"]');
 
   submitButton.addEventListener('click', async () => {
-
     let replaceFlag = false;
 
-    //check if replace is checked.
+    // check if replace is checked.
     if (replaceCheckbox.checked) {
-      if (!confirm('Are you sure you want to replace? This action cannot be undone.')) {
+      if (!window.confirm('Are you sure you want to replace? This action cannot be undone.')) {
         console.log('action cancelled');
         return;
-      } else {
-        replaceFlag = true;
       }
+      replaceFlag = true;
     }
     const startTime = performance.now();
 
@@ -375,5 +372,4 @@ async function doReplace(dom, elements, pageSourceUrl, keyword) {
     // Output results.
     writeOutResults(results, queryString, queryObject, duration, replaceFlag);
   });
-
 }());

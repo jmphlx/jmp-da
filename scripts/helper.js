@@ -1,3 +1,4 @@
+/* eslint object-curly-newline: 0 */
 /**
  * From Adobe blog: https://github.com/adobe/blog/
  * Create an element with ID, class, children, and attributes
@@ -48,6 +49,22 @@ export const DA_CONSTANTS = {
   repo: 'jmp-da',
 };
 
+export function replaceHtml(text) {
+  let inner = text;
+  const fromOrigin = `${DA_CONSTANTS.mainUrl}`;
+  inner = text
+    .replaceAll('./media', `${fromOrigin}/media`)
+    .replaceAll('href="/', `href="${fromOrigin}/`);
+
+  return `
+    <body>
+      <header></header>
+      <main>${inner}</main>
+      <footer></footer>
+    </body>
+  `;
+}
+
 export async function saveToDa(text, pathname, token) {
   const daPath = `/${DA_CONSTANTS.org}/${DA_CONSTANTS.repo}${pathname}`;
   const daHref = `${DA_CONSTANTS.editUrl}${daPath}`;
@@ -64,7 +81,7 @@ export async function saveToDa(text, pathname, token) {
       Authorization: `Bearer ${token}`,
     },
   };
-  console.log(opts);
+
   try {
     const daResp = await fetch(`${DA_CONSTANTS.sourceUrl}${daPath}.html`, opts);
     return { daHref, daStatus: daResp.status, daResp, ok: daResp.ok };
@@ -72,20 +89,4 @@ export async function saveToDa(text, pathname, token) {
     console.log(`Couldn't save ${pathname}`);
     return null;
   }
-}
-
-export function replaceHtml(text) {
-  let inner = text;
-  const fromOrigin = `${DA_CONSTANTS.mainUrl}`;
-  inner = text
-    .replaceAll('./media', `${fromOrigin}/media`)
-    .replaceAll('href="/', `href="${fromOrigin}/`);
-
-  return `
-    <body>
-      <header></header>
-      <main>${inner}</main>
-      <footer></footer>
-    </body>
-  `;
 }
