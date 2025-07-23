@@ -1,0 +1,138 @@
+.advanced-search {
+  margin: 20px;
+}
+
+.result-item {
+  margin: 20px;
+  padding: 5px;
+  border: 1px solid #505050;
+  background-color: #f1f1f1;
+
+  .result-header {
+    display: flex;
+    flex-direction: horizontal;
+    justify-content: space-between;
+  }
+ 
+  .page-path::before {
+      content: '▶';
+      display: inline-block;
+      margin-right: 5px;
+      transition: transform 0.2s;
+  }
+  .result-details {
+    display: none;
+  }
+}
+.result-item.open {
+  .page-path::before {
+    content: '▼';
+  }
+  .result-details {
+    display: inline-block;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+p.button-container {
+    display: inline-block;
+    background-color: #ff5000;
+    font-weight: bold;
+    color: white;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: 2px solid transparent;
+    padding: 6px 10px;
+    text-align: center;
+    font-size: 1rem;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 5px;
+    transition: all .35s;
+    margin: 0.25em;
+}
+
+a.button {
+      display: inline-block;
+    background-color: #00bbee;
+    font-weight: bold;
+    color: white;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: 2px solid transparent;
+    padding: 6px 10px;
+    text-align: center;
+    font-size: 1rem;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 5px;
+    transition: all .35s;
+    margin: 0.25em;
+}
+
+#copy-to-clipboard {
+  position: relative;
+  .copied-to-clipboard {
+    position: absolute;
+    top: 10px;
+    right: -8px;
+    display: flex;
+    justify-content: center;
+    width: 112px;
+    background-color: #3aaafc;
+    border-radius: 5px;
+    color: white;
+    text-align: center;
+    animation: fade-out ease 1s;
+    animation-delay: 4.1s;
+  }
+}
+
+.html-result {
+  padding-bottom: 20px;
+}
+
+.result-details .block {
+  div {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  /* Table rows */
+  div > div {
+    display: table-row;
+  }
+
+  /* Table cells */
+  div > div > div {
+    display: table-cell;
+    border: 1px solid #ccc;
+    padding: 8px;
+    vertical-align: top;
+  }
+}
+
+.result-details .property {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+
+  /* Table rows */
+  div {
+    display: table-row;
+  }
+
+  /* Table cells */
+  div > div {
+    display: table-cell;
+    border: 1px solid #ccc;
+    padding: 8px;
+    vertical-align: top;
+  }
+}
