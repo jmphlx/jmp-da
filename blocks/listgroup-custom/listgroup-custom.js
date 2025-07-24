@@ -62,6 +62,23 @@ function processDate(dateProperty, prop, item) {
   return span;
 }
 
+async function getEmptyResultsMessage(emptyResultString) {
+  if (!emptyResultString) {
+    return undefined;
+  }
+
+  if (emptyResultString.includes('.json')) {
+    const pageLanguage = getLanguage();
+    const data = await getJsonFromUrl(emptyResultString);
+    const { data: translations } = data[pageLanguage];
+    console.log(translations[0]);
+    return translations[0].emptyResultsMessage;
+  } else {
+    // use the string as the empty results message. It won't translate.
+    return emptyResultString;
+  }
+}
+
 async function getTagTranslations() {
   const pageLanguage = getLanguage();
   window.tagtranslations = window.tagtranslations || await getJsonFromUrl(`${tagTranslationsBaseURL}.${pageLanguage}`);
@@ -421,7 +438,8 @@ function buildListItems(block, matching, tabDictionary, config) {
     const emptyResultsDiv = document.createElement('div');
     emptyResultsDiv.classList = 'listOfItems no-results';
     emptyResultsDiv.innerHTML = `<span>${emptyResultsMessage}</span>`;
-    return emptyResultsDiv;
+    block.append(emptyResultsDiv);
+    return;
   }
 
   const listItems = writeAsOneGroup(pageSelection, config);
@@ -552,6 +570,7 @@ export default async function decorate(block) {
   const tabsArray = config.tabs;
   useTabs = tabProperty && tabsArray;
   useFilter = filterBy;
+  config.emptyResultsMessage = await getEmptyResultsMessage(config.emptyResultsMessage);
 
   let matching = [];
   allPages.forEach((page) => {
