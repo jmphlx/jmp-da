@@ -5,7 +5,7 @@ import {
   getJsonFromUrl,
 } from '../../scripts/jmp.js';
 
-import { getEmptyResultsMessage } from '../../scripts/listgroup.js'; 
+import { getEmptyResultsMessage } from '../../scripts/listgroup.js';
 
 /**
  * Assume sort by title alphabetically.
