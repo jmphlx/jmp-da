@@ -13,6 +13,8 @@ import {
   pageOrFilter,
 } from '../../scripts/jmp.js';
 
+import { getEmptyResultsMessage } from '../../scripts/listgroup.js';
+
 export default async function decorate(block) {
   const overwriteLanguageIndex = getBlockProperty(block, 'overwriteIndexLanguage');
 
@@ -24,7 +26,8 @@ export default async function decorate(block) {
 
   const optionsObject = getBlockPropertiesList(block, 'options');
   const startingFolder = getBlockProperty(block, 'startingFolder');
-  const emptyResultsMessage = getBlockProperty(block, 'emptyResultsMessage');
+  const emptyResultsMessageConfig = getBlockProperty(block, 'emptyResultsMessage');
+  const emptyResultsMessage = await getEmptyResultsMessage(emptyResultsMessageConfig);
   const filterOptions = getListFilterOptions(block, propertyNames);
 
   // If startingFolder is not null, then apply location filter FIRST.

@@ -5,13 +5,15 @@ import {
   getJsonFromUrl,
 } from '../../scripts/jmp.js';
 
+import { getEmptyResultsMessage } from '../../scripts/listgroup.js'; 
+
 /**
  * Assume sort by title alphabetically.
  * Assume ascending order (A-Z) unless otherwise specified.
  */
 function sortAssetList(assetList, sortOrder) {
   const sortedList = assetList;
-  sortedList.sort((a, b) => {
+  sortedList?.sort((a, b) => {
     if (sortOrder !== undefined && sortOrder === 'descending') {
       return (a.title < b.title ? 1 : -1);
     }
@@ -29,7 +31,7 @@ function buildAssetItems(matching, config) {
   }
 
   const emptyResultsMessage = config.emptyResultsMessage;
-  if ((pageSelection === undefined || pageSelection.length === 0)
+  if ((pageSelection === null || pageSelection === undefined || pageSelection.length === 0)
       && emptyResultsMessage !== undefined) {
     const emptyResultsDiv = document.createElement('div');
     emptyResultsDiv.classList = 'no-results';
@@ -63,6 +65,7 @@ function buildAssetItems(matching, config) {
 export default async function decorate(block) {
   const config = getBlockConfig(block);
   block.textContent = '';
+  config.emptyResultsMessage = await getEmptyResultsMessage(config.emptyResultsMessage);
   const folderPath = config.folderPath;
   const assetServiceURL = 'https://www.jmp.com/services/damservlet';
 

@@ -9,6 +9,7 @@ import {
   getBlockConfig,
   writeImagePropertyInList,
 } from '../../scripts/jmp.js';
+import { getEmptyResultsMessage } from '../../scripts/listgroup.js';
 
 const ogNames = {
   title: 'og:title',
@@ -42,7 +43,7 @@ export default async function decorate(block) {
   const config = getBlockConfig(block);
   block.textContent = '';
 
-  const emptyResultsMessage = config.emptyResultsMessage;
+  const emptyResultsMessage = await getEmptyResultsMessage(config.emptyResultsMessage);
   const pageList = config.pages;
   const columns = config.columns ? config.columns : 5;
 
