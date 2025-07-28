@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>DA App SDK Sample</title>
+    <title>Advanced Search and Replace</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <!-- Import DA App SDK -->
     <script src="https://da.live/nx/utils/sdk.js" type="module"></script>
@@ -17,11 +17,19 @@
     <br>
     <form id="searchQuery">
       <div id="searchFilters">
-        <!-- <sl-select name="scope">Scope
-          <option>Block</option>
-          <option>Metadata</option>
-        </sl-select>
-      </div> -->
+        <div class="filter-section">
+          <p class="filter-label">Block: </p>
+          <sl-select name="block_scope">
+            <option value="">Select</option>
+          </sl-select>
+        </div>
+        <div class="filter-section">
+          <p class="filter-label">Property: </p>
+          <sl-select name="property_scope">
+            <option value="">Select</option>
+          </sl-select>
+        </div>
+      </div>
       <sl-input type="text" name="searchTerms" placeholder="Enter search text"></sl-input>
       <input type="checkbox" id="replaceAction" name="replaceAction" value="true"/>
       <label for="replaceAction">Replace Text?</label>

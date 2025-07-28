@@ -4,6 +4,7 @@ import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
 import { createTag, saveToDa, DA_CONSTANTS } from '../../scripts/helper.js';
 
+const daSourceUrl = 'https://admin.da.live/source';
 const defaultpath = '/jmphlx/jmp-da/en/sandbox/laurel/listgroups';
 const pathPrefix = `/${DA_CONSTANTS.org}/${DA_CONSTANTS.repo}`;
 let actions;
@@ -64,7 +65,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
   // Die if not a document
   if (!item.path.endsWith('.html')) return;
 
-  const pageSourceUrl = `https://admin.da.live/source${item.path}`;
+  const pageSourceUrl = `${daSourceUrl}${item.path}`;
 
   // Fetch the doc & convert to DOM
   const resp = await actions.daFetch(pageSourceUrl);
@@ -325,10 +326,48 @@ function getQuery() {
   return { scope, keyword: keyword.trim() };
 }
 
+async function buildBlockList(dropdown) {
+  const blockListPath = `${pathPrefix}/docs/library/blocks.json`;
+  const resp = await actions.daFetch(`${daSourceUrl}${blockListPath}`);
+  if (!resp.ok) {
+    console.log('Could not fetch item');
+    return;
+  }
+  const { data: blockOptions } = await resp.json();
+  blockOptions.forEach((option) => {
+    const optionValue = option.name.toLowerCase();
+    const optionElement = createTag('option', {
+      value: optionValue,
+    }, optionValue);
+    dropdown.append(optionElement);
+  });
+}
+
 (async function init() {
   const sdk = await DA_SDK;
   actions = sdk.actions;
   token = sdk.token;
+
+  const searchInputField = document.querySelector('[name="searchTerms"]');
+
+  const dropdown = document.querySelector('[name="block_scope"]');
+  await buildBlockList(dropdown);
+  dropdown.addEventListener('change', () => {
+    const currentValue = searchInputField.value;
+    if (currentValue) {
+      // Need to check if scope is already in field. If so,  change it.
+      const regex = new RegExp(/(?<=block:)[^\s]+/, 'gi');
+      if (currentValue.match(regex)) {
+        searchInputField.value = currentValue.replace(regex, dropdown.value);
+      } else {
+        searchInputField.value += ` block:${dropdown.value}`;
+      }
+    } else {
+      searchInputField.value = `block:${dropdown.value}`;
+    }
+  });
+
+  console.log(dropdown);
 
   const replaceCheckbox = document.querySelector('#replaceAction');
   const replaceTextbox = document.querySelector('[name="replaceText"]');
