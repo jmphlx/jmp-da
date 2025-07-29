@@ -343,31 +343,105 @@ async function buildBlockList(dropdown) {
   });
 }
 
-(async function init() {
-  const sdk = await DA_SDK;
-  actions = sdk.actions;
-  token = sdk.token;
+function buildParentDropdown(dropdown, jsonData, type) {
+  jsonData.forEach((option) => {
+    const optionValue = option[type].toLowerCase();
+    if (optionValue !== 'default') {
+      const optionElement = createTag('option', {
+        value: optionValue,
+      }, optionValue);
+      dropdown.append(optionElement);
+    }
+  });
+}
 
-  const searchInputField = document.querySelector('[name="searchTerms"]');
+function buildPropertiesDropdown(dropdown, nodeName) {
+  // Remove any existing items
+  const shadowRoot = dropdown.shadowRoot;
+  const currOptions = shadowRoot.querySelectorAll('option');
+  currOptions?.forEach((opt) => {
+    if (opt.value) {
+      opt.remove();
+    }
+  })
+  let propertiesList;
+  window.blockProperties.forEach((block) => {
+    if (block.block === nodeName) {
+      propertiesList = block.properties.split(',');
+      return;
+    }
+  });
+  propertiesList?.forEach((prop) => {
+      const optionValue = prop.trim();
+      const optionElement = createTag('option', {
+        value: optionValue,
+        class: 'prop-option',
+      }, optionValue);
+      dropdown.append(optionElement);
+  });
+}
 
-  const dropdown = document.querySelector('[name="block_scope"]');
-  await buildBlockList(dropdown);
-  dropdown.addEventListener('change', () => {
+async function populateDropdowns(searchInputField) {
+  // Do Block
+  const blockDropdown = document.querySelector('[name="block_scope"]');
+  buildParentDropdown(blockDropdown, window.blockProperties, 'block');
+
+  const propertyDrop = document.querySelector('[name="property_scope"]');
+  buildPropertiesDropdown(propertyDrop, 'default');
+
+  blockDropdown.addEventListener('change', () => {
+    buildPropertiesDropdown(propertyDrop, blockDropdown.value);
     const currentValue = searchInputField.value;
     if (currentValue) {
       // Need to check if scope is already in field. If so,  change it.
       const regex = new RegExp(/(?<=block:)[^\s]+/, 'gi');
       if (currentValue.match(regex)) {
-        searchInputField.value = currentValue.replace(regex, dropdown.value);
+        searchInputField.value = currentValue.replace(regex, blockDropdown.value);
       } else {
-        searchInputField.value += ` block:${dropdown.value}`;
+        searchInputField.value += ` block:${blockDropdown.value}`;
       }
     } else {
-      searchInputField.value = `block:${dropdown.value}`;
+      searchInputField.value = `block:${blockDropdown.value}`;
     }
   });
 
-  console.log(dropdown);
+  propertyDrop.addEventListener('change', () => {
+    const currentValue = searchInputField.value;
+    if (currentValue) {
+      // Need to check if scope is already in field. If so,  change it.
+      const regex = new RegExp(/(?<=property:)[^\s]+/, 'gi');
+      if (currentValue.match(regex)) {
+        searchInputField.value = currentValue.replace(regex, propertyDrop.value);
+      } else {
+        searchInputField.value += ` property:${propertyDrop.value}`;
+      }
+    } else {
+      searchInputField.value = `property:${propertyDrop.value}`;
+    }
+  });
+}
+
+async function getConfigurations() {
+  const blockProperties = `${pathPrefix}/docs/library/block-property.json`;
+  const resp = await actions.daFetch(`${daSourceUrl}${blockProperties}`);
+  if (!resp.ok) {
+    console.log('Could not fetch item');
+    window.blockProperties = null;
+  }
+  const { data: blockOptions } = await resp.json();
+  window.blockProperties = blockOptions;
+}
+
+(async function init() {
+  const sdk = await DA_SDK;
+  actions = sdk.actions;
+  token = sdk.token;
+
+  await getConfigurations();
+  console.log(window.blockProperties);
+
+  const searchInputField = document.querySelector('[name="searchTerms"]');
+  populateDropdowns(searchInputField);
 
   const replaceCheckbox = document.querySelector('#replaceAction');
   const replaceTextbox = document.querySelector('[name="replaceText"]');
