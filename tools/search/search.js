@@ -437,6 +437,34 @@ async function getConfigurations() {
   actions = sdk.actions;
   token = sdk.token;
 
+  const openModalButton = document.querySelector('#openModal');
+
+  // Open the modal when the "Open Modal" button is clicked
+  openModalButton.addEventListener('click', () => {
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modalContent');
+    modalContent.innerHTML = '';
+    const iframe = document.createElement('iframe');
+    iframe.src = '/tools/pagetree/pagetree';
+
+    modalContent.appendChild(iframe);
+    modal.style.display = 'flex';
+
+    const channel = new MessageChannel();
+    channel.port1.onmessage = (event) => {
+      console.log('Parent received:', event.data);
+      if (event.data === 'close') {
+        modal.style.display = 'none';
+      }
+    }
+    // Send port2 to iframe once it loads
+    iframe.onload = () => {
+      iframe.contentWindow.postMessage('init', '*', [channel.port2]);
+    };
+  });
+
+
+
   await getConfigurations();
   console.log(window.blockProperties);
 

@@ -18,6 +18,9 @@
     <form id="searchQuery">
       <div id="searchFilters">
         <div class="filter-section">
+          <button id="openModal" class="pageTree">Open Modal</button>
+        </div>
+        <div class="filter-section">
           <p class="filter-label">Block: </p>
           <sl-select name="block_scope">
             <option value="">Select</option>
@@ -29,6 +32,9 @@
             <option value="">Select</option>
           </sl-select>
         </div>
+      </div>
+      <div id="modal">
+        <div id="modalContent"></div>
       </div>
       <sl-input type="text" name="searchTerms" placeholder="Enter search text"></sl-input>
       <input type="checkbox" id="replaceAction" name="replaceAction" value="true"/>

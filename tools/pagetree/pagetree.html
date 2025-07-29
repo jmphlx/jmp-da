@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>File Tree</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- Import DA App SDK -->
+    <script src="https://da.live/nx/utils/sdk.js" type="module"></script>
+    <!-- Project App Logic -->
+    <script src="/tools/pagetree/pagetree.js" type="module"></script>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" type="text/css" href="/tools/pagetree/pagetree.css">
+  </head>
+  <body>
+    <h2>Select a Folder</h2>
+    <div class="message-wrapper hidden">
+      <div class="feedback-message"></div>
+    </div>
+    <div class="info-list-wrapper hidden">
+      <h3>Added fragments:</h3>
+      <ul class="info-list"></ul>
+    </div>
+    <ul id="folderTree" class="folder-tree">
+    </ul>
+    <button class="fragment-btn" 
+      type="reset" 
+      title="Cancel Fetching Fragments" 
+      role="button" 
+      aria-label="Cancel fetching fragments">
+      Cancel
+    </button>
+  </body>
+</html>
