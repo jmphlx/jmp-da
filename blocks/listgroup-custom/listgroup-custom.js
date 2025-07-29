@@ -16,6 +16,8 @@ import {
   writeImagePropertyInList,
 } from '../../scripts/jmp.js';
 
+import { getEmptyResultsMessage } from '../../scripts/listgroup.js';
+
 import { loadScript } from '../../scripts/aem.js';
 import { createTag } from '../../scripts/helper.js';
 
@@ -421,7 +423,8 @@ function buildListItems(block, matching, tabDictionary, config) {
     const emptyResultsDiv = document.createElement('div');
     emptyResultsDiv.classList = 'listOfItems no-results';
     emptyResultsDiv.innerHTML = `<span>${emptyResultsMessage}</span>`;
-    return emptyResultsDiv;
+    block.append(emptyResultsDiv);
+    return;
   }
 
   const listItems = writeAsOneGroup(pageSelection, config);
@@ -552,6 +555,7 @@ export default async function decorate(block) {
   const tabsArray = config.tabs;
   useTabs = tabProperty && tabsArray;
   useFilter = filterBy;
+  config.emptyResultsMessage = await getEmptyResultsMessage(config.emptyResultsMessage);
 
   let matching = [];
   allPages.forEach((page) => {

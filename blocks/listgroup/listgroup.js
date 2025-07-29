@@ -12,6 +12,8 @@ import {
   filterOutRobotsNoIndexPages,
 } from '../../scripts/jmp.js';
 
+import { getEmptyResultsMessage } from '../../scripts/listgroup.js';
+
 import { getDefaultMetaImage } from '../../scripts/scripts.js';
 
 export default async function decorate(block) {
@@ -24,7 +26,8 @@ export default async function decorate(block) {
 
   const optionsObject = getBlockPropertiesList(block, 'options');
   const startingFolder = getBlockProperty(block, 'startingFolder');
-  const emptyResultsMessage = getBlockProperty(block, 'emptyResultsMessage');
+  const emptyResultsMessageConfig = getBlockProperty(block, 'emptyResultsMessage');
+  const emptyResultsMessage = await getEmptyResultsMessage(emptyResultsMessageConfig);
   const filterOptions = getListFilterOptions(block, propertyNames);
 
   // If startingFolder is not null, then apply page location filter FIRST.
