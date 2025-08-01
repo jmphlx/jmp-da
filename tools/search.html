@@ -15,11 +15,17 @@
   <body class="advanced-search">
     <h1>Advanced Search</h1>
     <br>
+    <!-- iframe content -->
+    <button id="mybutton">Open Page Explorer</button>
+    <dialog id="modal">
+      <!-- <h1>Title</h1> -->
+      <!-- <iframe src="https://da.live/app/jmphlx/jmp-da/tools/pagetree/pagetree?ref=local"></iframe> -->
+      <iframe src="/tools/pagetree/pagetree"></iframe>
+      <!-- <button id="submit">Submit</button> -->
+    </dialog>
+    <!-- end of iframe content -->
     <form id="searchQuery">
       <div id="searchFilters">
-        <div class="filter-section">
-          <button id="openModal" class="pageTree">Open Modal</button>
-        </div>
         <div class="filter-section">
           <p class="filter-label">Block: </p>
           <sl-select name="block_scope">
@@ -32,9 +38,18 @@
             <option value="">Select</option>
           </sl-select>
         </div>
-      </div>
-      <div id="modal">
-        <div id="modalContent"></div>
+        <div class="filter-section">
+          <p class="filter-label">HTML: </p>
+          <sl-select name="tag_scope">
+            <option value="">Select</option>
+          </sl-select>
+        </div>
+        <div class="filter-section">
+          <p class="filter-label">Attribute: </p>
+          <sl-select name="attribute_scope">
+            <option value="">Select</option>
+          </sl-select>
+        </div>
       </div>
       <sl-input type="text" name="searchTerms" placeholder="Enter search text"></sl-input>
       <input type="checkbox" id="replaceAction" name="replaceAction" value="true"/>

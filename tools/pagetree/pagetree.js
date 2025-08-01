@@ -2,8 +2,14 @@
 import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 // eslint-disable-next-line import/no-unresolved
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
+import { setImsDetails } from 'https://da.live/nx/utils/daFetch.js';
 
 const BASE = '/en/sandbox/laurel';
+
+let sdk;
+let actions;
+let context;
+let token;
 
 function getBasePathDepth() {
   return BASE.split('/').filter(Boolean).length; // filter(Boolean) removes empty strings
@@ -93,7 +99,6 @@ function createTreeItem(name, node, onClick, context) {
       const basePath = `/${context.org}/${context.repo}`;
       const displayPath = node.path.replace(basePath, '').replace(/\.html$/, '');
       fragmentUrl = displayPath.startsWith('/') ? displayPath : `/${displayPath}`;
-      console.log(fragmentUrl);
     }
     previewIcon.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -144,6 +149,9 @@ function createTreeItem(name, node, onClick, context) {
 
     const toggleFolder = () => {
       hideMessageContainer();
+      console.log(node.path);
+      handleFragmentSelect(actions, node, context);
+
       folderButton.classList.toggle('expanded');
       folderButton.setAttribute('aria-expanded', folderButton.classList.contains('expanded'));
       folderIcon.src = folderButton.classList.contains('expanded')
@@ -253,16 +261,12 @@ function expandToDepth(item, currentDepth, targetDepth) {
  * @param {Object} context - SDK context
  */
 function handleFragmentSelect(actions, file, context) {
-  if (!actions?.sendHTML) {
-    showMessage('Cannot insert fragment: Editor not available', true);
-    return;
-  }
-
+  console.log(file);
   const basePath = `/${context.org}/${context.repo}`;
   const displayPath = file.path.replace(basePath, '').replace(/\.html$/, '');
-  const fragmentUrl = `https://main--${context.repo}--${context.org}.aem.live${displayPath}`;
-  actions.sendHTML(`<span><a href="${fragmentUrl}" class="fragment">${fragmentUrl}</a></span>`);
-  actions.closeLibrary();
+  showMessage(`Selected: ${displayPath}`);
+  window.pagePath = displayPath;
+
 }
 
 function createTree(item, files) {
@@ -270,14 +274,42 @@ function createTree(item, files) {
   files.push(item);
 }
 
-(async function init() {
+window.addEventListener('message', function(event) {
+  if (event.origin === 'http://localhost:3000' || event.origin === 'https://www.jmp.com') {
+    console.log('pagetree');
+    console.log(event.origin);
+  }
+  console.log(event.data);
+  actions = event.data.actions;
+  token = event.data.token;
+  context = event.data.context;
+  setImsDetails(token);
+  init();
+});
+
+async function init() {
   console.log('in init');
-  const { actions, token, context } = await DA_SDK;
+  console.log(token);
+  //const { actions, token, context } = await DA_SDK;
+  // const actions = {};
+  // const context = {};
+  // const token = {};
 
   const folderList = document.querySelector('.folder-tree');
   const cancelBtn = document.querySelector('.fragment-btn[type="reset"]');
+  const submitBtn = document.querySelector('.fragment-btn[type="submit"]');
+  submitBtn.addEventListener('click', ()=> {
+    if (window.pagePath) {
+      window.parent.postMessage(window.pagePath);
+    } else {
+      window.parent.postMessage('');
+    }
+    //window.parent.postMessage('hiiii');
+    console.log('done');
+  });
   const files = [];
 
+  console.log(context);
   const path = `/${context.org}/${context.repo}${BASE}`;
   const basePath = `/${context.org}/${context.repo}`;
   const opts = {
@@ -321,4 +353,4 @@ function createTree(item, files) {
     cancelBtn.disabled = true;
     }
 
-}());
+};
