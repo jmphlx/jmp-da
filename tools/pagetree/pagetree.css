@@ -313,6 +313,11 @@
   outline: none;
 }
 
+.selected-item {
+  background-color: aqua;
+}
+
+
 /* Add these loading state styles */
 .loading-state {
   display: flex;

@@ -7,6 +7,13 @@ const BASE = '/en/sandbox/laurel';
 let context;
 let token;
 
+function setSelectedClass(itemToHighlight) {
+  document.querySelectorAll('.selected-item')?.forEach((item) => {
+    item.classList.remove('selected-item');
+  });
+  itemToHighlight.classList.add('selected-item');
+}
+
 function getBasePathDepth() {
   return BASE.split('/').filter(Boolean).length; // filter(Boolean) removes empty strings
 }
@@ -110,7 +117,10 @@ function createTreeItem(name, node, onClick, context) {
     content.appendChild(button);
     content.appendChild(previewIcon);
     button.title = `Click to insert link for "${displayName}"`;
-    button.addEventListener('click', () => onClick({ path: node.path }));
+    button.addEventListener('click', () => {
+      onClick({path: node.path });
+      setSelectedClass(button);
+    });
   } else {
     const folderButton = document.createElement('button');
     folderButton.className = 'folder-btn';
@@ -132,6 +142,7 @@ function createTreeItem(name, node, onClick, context) {
     folderButton.appendChild(label);
 
     const toggleFolder = () => {
+      setSelectedClass(folderButton);
       handleFolderSelect(node, context);
 
       folderButton.classList.toggle('expanded');
@@ -281,9 +292,6 @@ async function init() {
           context, // Pass context for correct URL
         );
         folderList.appendChild(item);
-
-        // // Expand folders to the target depth
-        // expandToDepth(item, 1, targetDepth);
       });
   } catch (error) {
     showMessage('Failed to load files', true);
