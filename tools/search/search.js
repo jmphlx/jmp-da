@@ -427,6 +427,38 @@ function buildAttributeDropdown(dropdown, nodeName) {
   });
 }
 
+// escape regex metacharacters in the variable
+function escapeRegex(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// builds a lookbehind regex for e.g. "property", "block", etc.
+function makeLookbehindRegex(keyword, flags = 'gi') {
+  const esc = escapeRegex(keyword);
+  // Note: lookbehind must be supported in your runtime
+  return new RegExp(`(?<=${esc}:)\\S+`, flags);
+}
+
+function updateSearchTerms(searchInputField, category, termValue) {
+  const currentValue = searchInputField.value;
+  const exp = makeLookbehindRegex(category);
+  if (currentValue) {
+    // Need to check if scope is already in field. If so,  change it.
+    if (currentValue.match(exp)) {
+      if(!termValue.length) {
+        let adjustedField = currentValue.replace(exp, termValue);
+        searchInputField.value = adjustedField.replace(`${category}:`, '');
+      } else {
+        searchInputField.value = currentValue.replace(exp, termValue);
+      }
+    } else {
+      searchInputField.value += ` ${category}:${termValue}`;
+    }
+  } else {
+    searchInputField.value = `${category}:${termValue}`;
+  }
+}
+
 async function populateDropdowns(searchInputField) {
   // Do Block
   const blockDropdown = document.querySelector('[name="block_scope"]');
@@ -437,33 +469,11 @@ async function populateDropdowns(searchInputField) {
 
   blockDropdown.addEventListener('change', () => {
     buildPropertiesDropdown(propertyDrop, blockDropdown.value);
-    const currentValue = searchInputField.value;
-    if (currentValue) {
-      // Need to check if scope is already in field. If so,  change it.
-      const regex = new RegExp(/(?<=block:)[^\s]+/, 'gi');
-      if (currentValue.match(regex)) {
-        searchInputField.value = currentValue.replace(regex, blockDropdown.value);
-      } else {
-        searchInputField.value += ` block:${blockDropdown.value}`;
-      }
-    } else {
-      searchInputField.value = `block:${blockDropdown.value}`;
-    }
+    updateSearchTerms(searchInputField, 'block', blockDropdown.value);
   });
 
   propertyDrop.addEventListener('change', () => {
-    const currentValue = searchInputField.value;
-    if (currentValue) {
-      // Need to check if scope is already in field. If so,  change it.
-      const regex = new RegExp(/(?<=property:)[^\s]+/, 'gi');
-      if (currentValue.match(regex)) {
-        searchInputField.value = currentValue.replace(regex, propertyDrop.value);
-      } else {
-        searchInputField.value += ` property:${propertyDrop.value}`;
-      }
-    } else {
-      searchInputField.value = `property:${propertyDrop.value}`;
-    }
+    updateSearchTerms(searchInputField, 'property', propertyDrop.value);
   });
 
   const tagDropdown = document.querySelector('[name="tag_scope"]');
@@ -474,33 +484,11 @@ async function populateDropdowns(searchInputField) {
 
   tagDropdown.addEventListener('change', () => {
     buildAttributeDropdown(attributeDropdown, tagDropdown.value);
-    const currentValue = searchInputField.value;
-    if (currentValue) {
-      // Need to check if scope is already in field. If so,  change it.
-      const regex = new RegExp(/(?<=tag:)[^\s]+/, 'gi');
-      if (currentValue.match(regex)) {
-        searchInputField.value = currentValue.replace(regex, tagDropdown.value);
-      } else {
-        searchInputField.value += ` tag:${tagDropdown.value}`;
-      }
-    } else {
-      searchInputField.value = `tag:${tagDropdown.value}`;
-    }
+    updateSearchTerms(searchInputField, 'tag', tagDropdown.value);
   });
 
   attributeDropdown.addEventListener('change', () => {
-    const currentValue = searchInputField.value;
-    if (currentValue) {
-      // Need to check if scope is already in field. If so,  change it.
-      const regex = new RegExp(/(?<=attribute:)[^\s]+/, 'gi');
-      if (currentValue.match(regex)) {
-        searchInputField.value = currentValue.replace(regex, attributeDropdown.value);
-      } else {
-        searchInputField.value += ` attribute:${attributeDropdown.value}`;
-      }
-    } else {
-      searchInputField.value = `attribute:${attributeDropdown.value}`;
-    }
+    updateSearchTerms(searchInputField, 'attribute', attributeDropdown.value);
   });
 }
 
@@ -528,6 +516,8 @@ window.addEventListener('message', function(event) {
   if (event.origin === 'http://localhost:3000' || event.origin === 'https://www.jmp.com') {
     console.log('got my message');
     console.log(event.origin);
+    const searchInputField = document.querySelector('[name="searchTerms"]');
+    updateSearchTerms(searchInputField, 'path', event.data);
   }
   console.log(typeof event.data);
   console.log(event.data);
@@ -547,22 +537,11 @@ window.addEventListener('message', function(event) {
   actions = sdk.actions;
   token = sdk.token;
 
-  //const openModalButton = document.querySelector('#openModal');
-  const mydialog = document.querySelector('#modal');
   const mybutton = document.querySelector('#mybutton');
   mybutton.addEventListener('click', () => {
     console.log('clicked');
-    // const iframe = mydialog.querySelector('iframe');
-    // console.log(iframe);
-    // iframe.contentWindow.postMessage(token);
     document.querySelector('#modal').showModal();
   });
-  const closeDialog = document.querySelector('#submit');
-  closeDialog.addEventListener('click', () => {
-    mydialog.close();
-    console.log(window.pagePath);
-  });
-  console.log(closeDialog);
 
   await getConfigurations();
 

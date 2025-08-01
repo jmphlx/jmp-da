@@ -1,30 +1,14 @@
 // eslint-disable-next-line import/no-unresolved
-import DA_SDK from 'https://da.live/nx/utils/sdk.js';
-// eslint-disable-next-line import/no-unresolved
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
 import { setImsDetails } from 'https://da.live/nx/utils/daFetch.js';
 
 const BASE = '/en/sandbox/laurel';
 
-let sdk;
-let actions;
 let context;
 let token;
 
 function getBasePathDepth() {
   return BASE.split('/').filter(Boolean).length; // filter(Boolean) removes empty strings
-}
-
-/**
- * Hides the message container and updates indicator
- */
-function hideMessageContainer() {
-  const infoWrapper = document.querySelector('.info-list-wrapper');
-  const indicator = document.querySelector('.message-indicator');
-  if (!infoWrapper.classList.contains('hidden')) {
-    infoWrapper.classList.add('hidden');
-    indicator.classList.remove('active');
-  }
 }
 
 /**
@@ -52,7 +36,7 @@ function showMessage(text, isError = false, autoHide = false) {
  * Creates a tree item element
  * @param {string} name - Item name
  * @param {Object} node - Tree node data
- * @param {Function} onClick - Click handler for fragment items
+ * @param {Function} onClick - Click handler for page items
  * @param {Object} context - SDK context (for URL generation)
  * @returns {HTMLElement} Tree item element
  */
@@ -65,15 +49,15 @@ function createTreeItem(name, node, onClick, context) {
 
   if (node.isFile) {
     const button = document.createElement('button');
-    button.className = 'fragment-btn-item';
+    button.className = 'page-btn-item';
     button.setAttribute('role', 'button');
-    button.setAttribute('aria-label', `Insert link for fragment "${name.replace('.html', '')}"`);
+    button.setAttribute('aria-label', `Insert link for page "${name.replace('.html', '')}"`);
 
-    const fragmentIcon = document.createElement('img');
-    fragmentIcon.src = '/icons/file.png';
-    fragmentIcon.alt = 'Fragment';
-    fragmentIcon.className = 'tree-icon';
-    fragmentIcon.setAttribute('aria-hidden', 'true');
+    const pageIcon = document.createElement('img');
+    pageIcon.src = '/icons/file.png';
+    pageIcon.alt = 'Page';
+    pageIcon.className = 'tree-icon';
+    pageIcon.setAttribute('aria-hidden', 'true');
 
     const textSpan = document.createElement('span');
     const displayName = name.replace('.html', '');
@@ -81,8 +65,8 @@ function createTreeItem(name, node, onClick, context) {
 
     // --- Preview Icon ---
     const previewIcon = document.createElement('button');
-    previewIcon.className = 'fragment-preview-btn';
-    previewIcon.setAttribute('aria-label', `Preview fragment "${displayName}"`);
+    previewIcon.className = 'page-preview-btn';
+    previewIcon.setAttribute('aria-label', `Preview page "${displayName}"`);
     previewIcon.title = `Preview "${displayName}"`;
     previewIcon.style.display = 'none'; // Hidden by default
     // Use an eye icon (assume /icons/eye-icon.png exists)
@@ -93,17 +77,17 @@ function createTreeItem(name, node, onClick, context) {
     eyeImg.setAttribute('aria-hidden', 'true');
     previewIcon.appendChild(eyeImg);
 
-    // Always use context to generate fragmentUrl
-    let fragmentUrl = '';
+    // Always use context to generate pageUrl
+    let pageUrl = '';
     if (context && context.org && context.repo) {
       const basePath = `/${context.org}/${context.repo}`;
       const displayPath = node.path.replace(basePath, '').replace(/\.html$/, '');
-      fragmentUrl = displayPath.startsWith('/') ? displayPath : `/${displayPath}`;
+      pageUrl = displayPath.startsWith('/') ? displayPath : `/${displayPath}`;
     }
     previewIcon.addEventListener('click', (e) => {
       e.stopPropagation();
-      if (fragmentUrl) {
-        window.open(fragmentUrl, '_blank');
+      if (pageUrl) {
+        window.open(pageUrl, '_blank');
       }
     });
 
@@ -121,7 +105,7 @@ function createTreeItem(name, node, onClick, context) {
       previewIcon.style.display = 'none';
     });
 
-    button.appendChild(fragmentIcon);
+    button.appendChild(pageIcon);
     button.appendChild(textSpan);
     content.appendChild(button);
     content.appendChild(previewIcon);
@@ -135,7 +119,7 @@ function createTreeItem(name, node, onClick, context) {
     folderButton.setAttribute('aria-label', `Folder ${name}`);
 
     const folderIcon = document.createElement('img');
-    folderIcon.src = '/icons/folder-open.png';
+    folderIcon.src = '/icons/folder.png';
     folderIcon.alt = ''; // Decorative image, using aria-hidden instead
     folderIcon.className = 'tree-icon folder-icon';
     folderIcon.setAttribute('aria-hidden', 'true');
@@ -148,9 +132,7 @@ function createTreeItem(name, node, onClick, context) {
     folderButton.appendChild(label);
 
     const toggleFolder = () => {
-      hideMessageContainer();
-      console.log(node.path);
-      handleFragmentSelect(actions, node, context);
+      handleFolderSelect(node, context);
 
       folderButton.classList.toggle('expanded');
       folderButton.setAttribute('aria-expanded', folderButton.classList.contains('expanded'));
@@ -215,58 +197,25 @@ function createFileTree(files, basePath) {
   return tree;
 }
 
-// Function to expand folder to specific depth
-function expandToDepth(item, currentDepth, targetDepth) {
-  const folderBtn = item.querySelector('.folder-btn');
-  const list = item.querySelector('.tree-list');
-
-  if (folderBtn && list && currentDepth <= targetDepth) {
-    folderBtn.classList.add('expanded');
-    folderBtn.setAttribute('aria-expanded', 'true');
-    const folderIcon = folderBtn.querySelector('.folder-icon');
-    if (folderIcon) {
-      folderIcon.src = '/icons/folder.png';
-    }
-    list.classList.remove('hidden');
-
-    const childFolders = list.querySelectorAll(':scope > .tree-item');
-    childFolders.forEach((childItem) => {
-      expandToDepth(childItem, currentDepth + 1, targetDepth);
-    });
-  }
-}
-
-
-// function expandFolder() {
-//       const folderTree = document.getElementById('folderTree');
-
-//     folderTree.addEventListener('click', (e) => {
-//       const el = e.target;
-//       if (el.tagName === 'SPAN') {
-//         const parentLi = el.parentElement;
-//         parentLi.classList.toggle('expanded');
-
-//         const path = el.dataset.path;
-//         if (path) {
-//           window.parent.postMessage({ type: 'folderSelected', path }, '*');
-//         }
-//       }
-//     });
-// }
-
 /**
- * Handles fragment selection by inserting a link
- * @param {Object} actions - SDK actions object
- * @param {Object} file - Selected fragment file
+ * Handles page selection by setting window variable.
+ * @param {Object} file - Selected page file
  * @param {Object} context - SDK context
  */
-function handleFragmentSelect(actions, file, context) {
-  console.log(file);
+function handlePageSelect(file, context) {
   const basePath = `/${context.org}/${context.repo}`;
   const displayPath = file.path.replace(basePath, '').replace(/\.html$/, '');
   showMessage(`Selected: ${displayPath}`);
   window.pagePath = displayPath;
 
+}
+
+function handleFolderSelect(file, context) {
+  const basePath = `/${context.org}/${context.repo}`;
+  const displayPath = file.path.replace(basePath, '').replace(/[^/]+$/,'');
+  console.log(displayPath);
+  showMessage(`Selected: ${displayPath}`);
+  window.pagePath = displayPath;
 }
 
 function createTree(item, files) {
@@ -276,11 +225,8 @@ function createTree(item, files) {
 
 window.addEventListener('message', function(event) {
   if (event.origin === 'http://localhost:3000' || event.origin === 'https://www.jmp.com') {
-    console.log('pagetree');
     console.log(event.origin);
   }
-  console.log(event.data);
-  actions = event.data.actions;
   token = event.data.token;
   context = event.data.context;
   setImsDetails(token);
@@ -289,27 +235,21 @@ window.addEventListener('message', function(event) {
 
 async function init() {
   console.log('in init');
-  console.log(token);
-  //const { actions, token, context } = await DA_SDK;
-  // const actions = {};
-  // const context = {};
-  // const token = {};
-
   const folderList = document.querySelector('.folder-tree');
-  const cancelBtn = document.querySelector('.fragment-btn[type="reset"]');
-  const submitBtn = document.querySelector('.fragment-btn[type="submit"]');
-  submitBtn.addEventListener('click', ()=> {
+  const cancelBtn = document.querySelector('.pagetree-btn[type="reset"]');
+  const submitBtn = document.querySelector('.pagetree-btn[type="submit"]');
+  submitBtn.addEventListener('click', () => {
     if (window.pagePath) {
       window.parent.postMessage(window.pagePath);
     } else {
       window.parent.postMessage('');
     }
-    //window.parent.postMessage('hiiii');
-    console.log('done');
+  });
+  cancelBtn.addEventListener('click', () => {
+    window.parent.postMessage('');
   });
   const files = [];
 
-  console.log(context);
   const path = `/${context.org}/${context.repo}${BASE}`;
   const basePath = `/${context.org}/${context.repo}`;
   const opts = {
@@ -329,7 +269,6 @@ async function init() {
 
   const tree = createFileTree(files, basePath);
   const targetDepth = getBasePathDepth();
-  console.log(tree);
 
   try {
     Object.entries(tree)
@@ -338,16 +277,16 @@ async function init() {
         const item = createTreeItem(
           name,
           node,
-          (file) => handleFragmentSelect(actions, file, context),
+          (file) => handlePageSelect(file, context),
           context, // Pass context for correct URL
         );
         folderList.appendChild(item);
 
-        // Expand folders to the target depth
-        expandToDepth(item, 1, targetDepth);
+        // // Expand folders to the target depth
+        // expandToDepth(item, 1, targetDepth);
       });
   } catch (error) {
-    showMessage('Failed to load fragments', true);
+    showMessage('Failed to load files', true);
     console.error(error);
     // Also disable cancel button on error
     cancelBtn.disabled = true;
