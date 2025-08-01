@@ -14,14 +14,9 @@ dialog {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
   iframe {
-    width: 400px;
-    height: 400px;
+    width: 500px;
+    height: 500px;
   }
-}
-
-#submitIframe {
-  width: 100px;
-  height: 100px;
 }
 
 #searchFilters {

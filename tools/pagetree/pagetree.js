@@ -2,7 +2,7 @@
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
 import { setImsDetails } from 'https://da.live/nx/utils/daFetch.js';
 
-const BASE = '/en/sandbox/laurel';
+const BASE = '/en';
 
 let context;
 let token;
@@ -277,6 +277,7 @@ async function init() {
     ...opts,
   });
   await results;
+  folderList.innerHTML = '';
 
   const tree = createFileTree(files, basePath);
   const targetDepth = getBasePathDepth();

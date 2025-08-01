@@ -74,8 +74,6 @@ async function doReplace(dom, elements, pageSourceUrl, queryObject, classStyle) 
   }
 
   const html = dom.body.querySelector('main');
-  console.log(html.innerHTML);
-  console.log('try to save');
   console.log(pageSourceUrl);
   saveToDa(html.innerHTML, pageSourceUrl, token);
 }
@@ -514,17 +512,14 @@ async function getConfigurations() {
 
 window.addEventListener('message', function(event) {
   if (event.origin === 'http://localhost:3000' || event.origin === 'https://www.jmp.com') {
-    console.log('got my message');
+    console.log('Got my own message');
     console.log(event.origin);
     const searchInputField = document.querySelector('[name="searchTerms"]');
     updateSearchTerms(searchInputField, 'path', event.data);
   }
-  console.log(typeof event.data);
-  console.log(event.data);
   if (event.origin === 'https://da.live') {
     console.log('got message from DA');
     const iframe = document.querySelector('iframe');
-    console.log(iframe);
     iframe.contentWindow.postMessage(event.data);
   }
   const mydialog = document.querySelector('#modal');
@@ -539,7 +534,6 @@ window.addEventListener('message', function(event) {
 
   const mybutton = document.querySelector('#mybutton');
   mybutton.addEventListener('click', () => {
-    console.log('clicked');
     document.querySelector('#modal').showModal();
   });
 
