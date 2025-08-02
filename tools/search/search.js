@@ -514,7 +514,10 @@ async function getConfigurations() {
 }
 
 window.addEventListener('message', function(event) {
-  if (event.origin === 'http://localhost:3000' || event.origin === 'https://www.jmp.com') {
+  if (event.origin === 'http://localhost:3000'
+    || event.origin === 'https://www.jmp.com'
+    || event.origin === 'https://main--jmp-da--jmphlx.aem.live'
+    || event.origin === 'https://aem-819-v2--jmp-da--jmphlx.aem.live') {
     console.log('Got my own message');
     console.log(event.origin);
     const singleInput = document.getElementById('page-path-input');

@@ -235,7 +235,10 @@ function createTree(item, files) {
 }
 
 window.addEventListener('message', function(event) {
-  if (event.origin === 'http://localhost:3000' || event.origin === 'https://www.jmp.com') {
+  if (event.origin === 'http://localhost:3000'
+  || event.origin === 'https://www.jmp.com'
+  || event.origin === 'https://main--jmp-da--jmphlx.aem.live'
+  || event.origin === 'https://aem-819-v2--jmp-da--jmphlx.aem.live') {
     console.log(event.origin);
   }
   token = event.data.token;
