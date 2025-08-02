@@ -513,24 +513,24 @@ async function getConfigurations() {
   window.tagAttribute = tagOptions;
 }
 
-// window.addEventListener('message', function(event) {
-//   if (event.origin === 'http://localhost:3000'
-//     || event.origin === 'https://www.jmp.com'
-//     || event.origin === 'https://main--jmp-da--jmphlx.aem.live'
-//     || event.origin === 'https://aem-819-v2--jmp-da--jmphlx.aem.live') {
-//     console.log('Got my own message');
-//     console.log(event.origin);
-//     const singleInput = document.getElementById('page-path-input');
-//     singleInput.value = event.data;
-//   }
-//   if (event.origin === 'https://da.live') {
-//     console.log('got message from DA');
-//     const iframe = document.querySelector('iframe');
-//     iframe.contentWindow.postMessage(event.data);
-//   }
-//   const mydialog = document.querySelector('#modal');
-//   mydialog.close();
-// });
+window.addEventListener('message', function(event) {
+  if (event.origin === 'http://localhost:3000'
+    || event.origin === 'https://www.jmp.com'
+    || event.origin === 'https://main--jmp-da--jmphlx.aem.live'
+    || event.origin === 'https://aem-819-v2--jmp-da--jmphlx.aem.live') {
+    console.log('Got my own message');
+    console.log(event.origin);
+    const singleInput = document.getElementById('page-path-input');
+    singleInput.value = event.data;
+  }
+  if (event.origin === 'https://da.live') {
+    console.log('got message from DA');
+    const iframe = document.querySelector('iframe');
+    iframe.contentWindow.postMessage(event.data);
+  }
+  const mydialog = document.querySelector('#modal');
+  mydialog.close();
+});
 
 
 function setupbar() {
