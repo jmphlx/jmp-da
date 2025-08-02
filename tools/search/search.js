@@ -358,6 +358,9 @@ function getQuery() {
   const phraseMatch = remaining.match(/"([^"]+)"|(.+)/);
   keyword = phraseMatch ? (phraseMatch[1] || phraseMatch[2]) : '';
 
+  const pathField = document.querySelector('#page-path-input')?.value;
+  scope.path = pathField;
+
   return { scope, keyword: keyword.trim() };
 }
 
@@ -514,8 +517,8 @@ window.addEventListener('message', function(event) {
   if (event.origin === 'http://localhost:3000' || event.origin === 'https://www.jmp.com') {
     console.log('Got my own message');
     console.log(event.origin);
-    const searchInputField = document.querySelector('[name="searchTerms"]');
-    updateSearchTerms(searchInputField, 'path', event.data);
+    const singleInput = document.getElementById('page-path-input');
+    singleInput.value = event.data;
   }
   if (event.origin === 'https://da.live') {
     console.log('got message from DA');
@@ -526,11 +529,66 @@ window.addEventListener('message', function(event) {
   mydialog.close();
 });
 
+
+function setupbar() {
+    const input = document.getElementById('page-path-input');
+    const toggleBtn = document.getElementById('toggle-edit');
+    const lockIcon = document.getElementById('icon-lock');
+
+    let editable = false;
+
+    function updateLockIcon() {
+      if (editable) {
+        // unlocked
+        lockIcon.setAttribute('stroke', '#ff5000');
+        lockIcon.innerHTML = `
+          <path d="M16 11V7a4 4 0 1 0-8 0"></path>
+          <rect x="5" y="11" width="14" height="10" rx="2" ry="2"></rect>
+        `;
+        toggleBtn.setAttribute('aria-label', 'Disable editing');
+        toggleBtn.setAttribute('aria-pressed', 'true');
+        toggleBtn.title = 'Disable editing';
+      } else {
+        // locked
+        lockIcon.setAttribute('stroke', 'currentcolor');
+        lockIcon.innerHTML = `
+          <path d="M8 11V7a4 4 0 1 1 8 0v4"></path>
+          <rect x="5" y="11" width="14" height="10" rx="2" ry="2"></rect>
+        `;
+        toggleBtn.setAttribute('aria-label', 'Enable editing');
+        toggleBtn.setAttribute('aria-pressed', 'false');
+        toggleBtn.title = 'Enable editing';
+      }
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      editable = !editable;
+      input.disabled = !editable;
+      if (editable) {
+        input.focus();
+        input.setSelectionRange(input.value.length, input.value.length);
+      }
+      updateLockIcon();
+    });
+
+    // Optional: Enter toggles off editing if empty blur behavior
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        input.blur();
+        editable = false;
+        input.disabled = true;
+        updateLockIcon();
+      }
+    });
+}
+
 (async function init() {
   console.log('in init');
   const sdk = await DA_SDK;
   actions = sdk.actions;
   token = sdk.token;
+
+  setupbar();
 
   const mybutton = document.querySelector('#mybutton');
   mybutton.addEventListener('click', () => {
