@@ -69,6 +69,29 @@
       }
     }
   }
+  /* vertical align middle */
+  &.background-image-middle {
+    .background-img-wrapper {
+      .background-img {
+        picture {
+          img {
+            object-position: center;
+          }
+        }
+      }
+    }
+    @media (width <= 900px) {
+      .background-img-wrapper {
+        .background-img {
+          picture {
+            img {
+              object-position: center;
+            }
+          }
+        }
+      }
+    }
+  }
   /* 10% Opacity */
   &.opacity-10.background-img-container {
     & .background-img-wrapper {

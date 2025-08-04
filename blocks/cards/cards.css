@@ -14,6 +14,14 @@
   }
 }
 
+.cards {
+  &.header-purple {
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--purple);
+    }
+  }
+}
+
 .cards > ul > li {
   border: 1px solid var(--grayRule);
   background-color: var(--background-color);
@@ -40,6 +48,15 @@
   margin-top: 0;
 }
 
+.cards-gray {
+  > ul {
+    > li {
+      background-color: #fafafa;
+      border: 1px solid var(--grayRule);
+    }
+  }
+}
+
 .cards-1 {
   ul {
     li {
@@ -53,6 +70,23 @@
   }
   @media (width <= 900px) {
     margin-bottom: 3.2rem !important;
+  }
+}
+
+.cards-2-col {
+  > ul {
+    display: flex;
+    flex-wrap: wrap;
+    /* gap: 24px; */
+    position: relative;
+    > li {
+      border: 1px solid var(--grayRule);
+      border-radius: 5px;
+      width: 48.25%;
+      min-height: 250px;
+      display: flex;
+      position: relative;
+    }
   }
 }
 
@@ -636,6 +670,143 @@
       &:after {
         opacity: 1 !important;
         margin-right: 8px;
+      }
+    }
+    @media (width <=900px) {
+      flex-wrap: wrap;
+      justify-content: stretch;
+      li {
+        width: 48%;
+        flex: 1 0 auto;
+      }
+    }
+    @media (width <=600px) {
+      flex-wrap: wrap;
+      justify-content: stretch;
+      li {
+        width: 100%;
+        flex: 1 0 auto;
+      }
+    }
+  }
+}
+
+.gray-hover-card {
+  position: relative;
+  &.purple-arrow {
+    li:has(a) {
+      :after {
+        content: '';
+        border: 3px solid var(--purple);
+        border-width: 0 3px 3px 0;
+      }
+    }
+  }
+  ul {
+    li {
+      ul {
+        li {
+          width: 100%;
+        }
+      }
+    }
+    li:has(:not(a)) {
+      .cards-card-body:nth-child(1) {
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        position: absolute;
+        opacity: 0;
+        
+      }
+      &:hover {
+        border: 1px solid var(--grayRule);
+      }
+    }
+    li:has(a) {
+      border-radius: 5px;
+      background-color: transparent;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.7s ease;
+      border: 1px solid var(--grayRule);
+      :after {
+        /* content: url('../../../icons/arrow-icon-blue.svg'); */
+        content: '';
+        border: 3px solid var(--blue);
+        border-width: 0 3px 3px 0;
+        /* width: 12px; */
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 6px;
+        margin: 12px 12px 0 0;
+        /* border-radius: 0 10px 0 50px; */
+        /* z-index: -1; */
+        transform: rotate(-45deg);
+        /* background-color: #f4f4f4; */
+        /* transition: transform 0.5s ease, color 0.5s ease; */
+      }
+      :before {
+        content:'';
+        width: 12px;
+        height: 16px;
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 12px 12px 20px 20px;
+        border-radius: 0 10px 0 50px;
+        z-index: -1;
+        background-color: #f4f4f4;
+        transition: transform 0.7s ease, color 0.5s ease;
+      }
+      .cards-card-body {
+        flex-direction: column;
+        /* justify-content: center;
+        justify-self: center; */
+        display: flex;
+        padding: 20px;
+        margin: 0;
+        transition: all 0.7s ease;
+        h4 {
+          color: var(--blue);
+          font-size: var(--heading-font-size-m);
+          font-family: "anova-regular", sans-serif;
+        }
+        p {
+          margin-bottom: 0 !important;
+        }
+      }
+      .cards-card-body:nth-child(1) {
+        padding: 0;
+        a {
+          height: 100%;
+          width: 100%;
+          top: 0;
+          left: 0;
+          position: absolute;
+          opacity: 0;
+        }
+      }
+      &:hover {
+        border: 1px solid var(--blue) !important;
+        &:hover {
+          :before {
+            transform: scale(35);
+          }
+        }
+        &:before {
+          opacity: 1 !important;
+          margin-right: 26px;
+          transform: scale(35);
+        }
+        &:after {
+          opacity: 1 !important;
+          margin-right: 8px;
+        }
       }
     }
     @media (width <=900px) {
