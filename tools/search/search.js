@@ -9,6 +9,7 @@ const defaultpath = '/jmphlx/jmp-da/en/sandbox/laurel/listgroups';
 const pathPrefix = `/${DA_CONSTANTS.org}/${DA_CONSTANTS.repo}`;
 let actions;
 let token;
+const DEFAULT_PROP_LIST =   ['style', 'options'];
 
 class SearchResult {
   constructor(item, elements, classStyle) {
@@ -389,13 +390,16 @@ function buildPropertiesDropdown(dropdown, nodeName) {
       opt.remove();
     }
   });
-  let propertiesList;
+  let propertyList;
   window.blockProperties.forEach((block) => {
-    if (block.block === nodeName) {
-      propertiesList = block.properties.split(',');
+    if (block.name.toLowerCase() === nodeName) {
+      propertyList = block.property.split(',');
     }
   });
-  propertiesList?.forEach((prop) => {
+  if (!propertyList || !propertyList[0].length) {
+    propertyList = DEFAULT_PROP_LIST;
+  }
+  propertyList?.forEach((prop) => {
     const optionValue = prop.trim();
     const optionElement = createTag('option', {
       value: optionValue,
@@ -420,6 +424,9 @@ function buildAttributeDropdown(dropdown, nodeName) {
       attributeList = tag.attribute.split(',');
     }
   });
+  if (!attributeList || !attributeList[0].length) {
+    attributeList = window.tagAttribute[0].attribute.split(',');
+  }
   attributeList?.forEach((attr) => {
     const optionValue = attr.trim();
     const optionElement = createTag('option', {
@@ -465,7 +472,7 @@ function updateSearchTerms(searchInputField, category, termValue) {
 async function populateDropdowns(searchInputField) {
   // Do Block
   const blockDropdown = document.querySelector('[name="block_scope"]');
-  buildParentDropdown(blockDropdown, window.blockProperties, 'block');
+  buildParentDropdown(blockDropdown, window.blockProperties, 'name');
 
   const propertyDrop = document.querySelector('[name="property_scope"]');
   buildPropertiesDropdown(propertyDrop, 'default');
@@ -496,13 +503,16 @@ async function populateDropdowns(searchInputField) {
 }
 
 async function getConfigurations() {
-  const blockProperties = `${pathPrefix}/docs/library/block-property.json`;
+  const blockProperties = `${pathPrefix}/docs/library/blocks.json`;
   const resp = await actions.daFetch(`${daSourceUrl}${blockProperties}`);
   if (!resp.ok) {
     console.log('Could not fetch item');
     window.blockProperties = null;
   }
   const { data: blockOptions } = await resp.json();
+  blockOptions.forEach((block, index) => {
+    blockOptions[index].name = block.name.replaceAll(' ', '-');
+  })
   window.blockProperties = blockOptions;
 
   const tagAttribute = `${pathPrefix}/docs/library/tag-attribute.json`;
