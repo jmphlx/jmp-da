@@ -54,21 +54,25 @@ async function doReplace(dom, elements, pageSourceUrl, queryObject, classStyle) 
   if (classStyle === 'attribute') {
     // Replace only the attribute.
     elements.forEach((el) => {
-      el[queryObject.scope.attribute] = replaceKeyword(el[queryObject.scope.attribute], keyword, replaceText);
-    })
+      el[queryObject.scope.attribute] = replaceKeyword(
+        el[queryObject.scope.attribute],
+        keyword,
+        replaceText,
+      );
+    });
   } else if (classStyle === 'tag') {
     // Replace all instances of the keyword in the html element and all
     // it's children (including textContent).
     elements.forEach((el, index) => {
       const newHTML = replaceKeyword(el.outerHTML, keyword, replaceText);
       const newDomEl = new DOMParser().parseFromString(newHTML, 'text/html');
-      //Apparently need to update the array reference and the element itself.
+      // Apparently need to update the array reference and the element itself.
       elements[index] = newDomEl.body.firstChild;
       el.outerHTML = newHTML;
     });
   } else {
     elements.forEach((el) => {
-      //Replace all intances of the keyword in the text. 
+      // Replace all intances of the keyword in the text.
       el.innerHTML = replaceKeyword(el.innerHTML, keyword, replaceText);
     });
   }
@@ -384,21 +388,20 @@ function buildPropertiesDropdown(dropdown, nodeName) {
     if (opt.value) {
       opt.remove();
     }
-  })
+  });
   let propertiesList;
   window.blockProperties.forEach((block) => {
     if (block.block === nodeName) {
       propertiesList = block.properties.split(',');
-      return;
     }
   });
   propertiesList?.forEach((prop) => {
-      const optionValue = prop.trim();
-      const optionElement = createTag('option', {
-        value: optionValue,
-        class: 'prop-option',
-      }, optionValue);
-      dropdown.append(optionElement);
+    const optionValue = prop.trim();
+    const optionElement = createTag('option', {
+      value: optionValue,
+      class: 'prop-option',
+    }, optionValue);
+    dropdown.append(optionElement);
   });
 }
 
@@ -410,21 +413,20 @@ function buildAttributeDropdown(dropdown, nodeName) {
     if (opt.value) {
       opt.remove();
     }
-  })
+  });
   let attributeList;
   window.tagAttribute.forEach((tag) => {
     if (tag.tag === nodeName) {
       attributeList = tag.attribute.split(',');
-      return;
     }
   });
   attributeList?.forEach((attr) => {
-      const optionValue = attr.trim();
-      const optionElement = createTag('option', {
-        value: optionValue,
-        class: 'attr-option',
-      }, optionValue);
-      dropdown.append(optionElement);
+    const optionValue = attr.trim();
+    const optionElement = createTag('option', {
+      value: optionValue,
+      class: 'attr-option',
+    }, optionValue);
+    dropdown.append(optionElement);
   });
 }
 
@@ -446,8 +448,8 @@ function updateSearchTerms(searchInputField, category, termValue) {
   if (currentValue) {
     // Need to check if scope is already in field. If so,  change it.
     if (currentValue.match(exp)) {
-      if(!termValue.length) {
-        let adjustedField = currentValue.replace(exp, termValue);
+      if (!termValue.length) {
+        const adjustedField = currentValue.replace(exp, termValue);
         searchInputField.value = adjustedField.replace(`${category}:`, '');
       } else {
         searchInputField.value = currentValue.replace(exp, termValue);
@@ -504,7 +506,7 @@ async function getConfigurations() {
   window.blockProperties = blockOptions;
 
   const tagAttribute = `${pathPrefix}/docs/library/tag-attribute.json`;
-    const respTags = await actions.daFetch(`${daSourceUrl}${tagAttribute}`);
+  const respTags = await actions.daFetch(`${daSourceUrl}${tagAttribute}`);
   if (!respTags.ok) {
     console.log('Could not fetch item');
     window.tagAttribute = null;
@@ -513,7 +515,7 @@ async function getConfigurations() {
   window.tagAttribute = tagOptions;
 }
 
-window.addEventListener('message', function(event) {
+window.addEventListener('message', (event) => {
   if (event.origin === 'http://localhost:3000'
     || event.origin === 'https://www.jmp.com'
     || event.origin === 'https://main--jmp-da--jmphlx.aem.live'
@@ -521,7 +523,9 @@ window.addEventListener('message', function(event) {
     console.log('Got my own message');
     console.log(event.origin);
     const singleInput = document.getElementById('page-path-input');
-    singleInput.value = event.data;
+    if (event.data.length) {
+      singleInput.value = event.data;
+    }
   }
   if (event.origin === 'https://da.live') {
     console.log('got message from DA');
@@ -532,57 +536,56 @@ window.addEventListener('message', function(event) {
   mydialog.close();
 });
 
-
 function setupbar() {
-    const input = document.getElementById('page-path-input');
-    const toggleBtn = document.getElementById('toggle-edit');
-    const lockIcon = document.getElementById('icon-lock');
+  const input = document.getElementById('page-path-input');
+  const toggleBtn = document.getElementById('toggle-edit');
+  const lockIcon = document.getElementById('icon-lock');
 
-    let editable = false;
+  let editable = false;
 
-    function updateLockIcon() {
-      if (editable) {
-        // unlocked
-        lockIcon.setAttribute('stroke', '#ff5000');
-        lockIcon.innerHTML = `
-          <path d="M16 11V7a4 4 0 1 0-8 0"></path>
-          <rect x="5" y="11" width="14" height="10" rx="2" ry="2"></rect>
-        `;
-        toggleBtn.setAttribute('aria-label', 'Disable editing');
-        toggleBtn.setAttribute('aria-pressed', 'true');
-        toggleBtn.title = 'Disable editing';
-      } else {
-        // locked
-        lockIcon.setAttribute('stroke', 'currentcolor');
-        lockIcon.innerHTML = `
-          <path d="M8 11V7a4 4 0 1 1 8 0v4"></path>
-          <rect x="5" y="11" width="14" height="10" rx="2" ry="2"></rect>
-        `;
-        toggleBtn.setAttribute('aria-label', 'Enable editing');
-        toggleBtn.setAttribute('aria-pressed', 'false');
-        toggleBtn.title = 'Enable editing';
-      }
+  function updateLockIcon() {
+    if (editable) {
+      // unlocked
+      lockIcon.setAttribute('stroke', '#ff5000');
+      lockIcon.innerHTML = `
+        <path d="M16 11V7a4 4 0 1 0-8 0"></path>
+        <rect x="5" y="11" width="14" height="10" rx="2" ry="2"></rect>
+      `;
+      toggleBtn.setAttribute('aria-label', 'Disable editing');
+      toggleBtn.setAttribute('aria-pressed', 'true');
+      toggleBtn.title = 'Disable editing';
+    } else {
+      // locked
+      lockIcon.setAttribute('stroke', 'currentcolor');
+      lockIcon.innerHTML = `
+        <path d="M8 11V7a4 4 0 1 1 8 0v4"></path>
+        <rect x="5" y="11" width="14" height="10" rx="2" ry="2"></rect>
+      `;
+      toggleBtn.setAttribute('aria-label', 'Enable editing');
+      toggleBtn.setAttribute('aria-pressed', 'false');
+      toggleBtn.title = 'Enable editing';
     }
+  }
 
-    toggleBtn.addEventListener('click', () => {
-      editable = !editable;
-      input.disabled = !editable;
-      if (editable) {
-        input.focus();
-        input.setSelectionRange(input.value.length, input.value.length);
-      }
+  toggleBtn.addEventListener('click', () => {
+    editable = !editable;
+    input.disabled = !editable;
+    if (editable) {
+      input.focus();
+      input.setSelectionRange(input.value.length, input.value.length);
+    }
+    updateLockIcon();
+  });
+
+  // Optional: Enter toggles off editing if empty blur behavior
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      input.blur();
+      editable = false;
+      input.disabled = true;
       updateLockIcon();
-    });
-
-    // Optional: Enter toggles off editing if empty blur behavior
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        input.blur();
-        editable = false;
-        input.disabled = true;
-        updateLockIcon();
-      }
-    });
+    }
+  });
 }
 
 (async function init() {

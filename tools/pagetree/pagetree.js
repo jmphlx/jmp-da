@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
+// eslint-disable-next-line import/no-unresolved
 import { setImsDetails } from 'https://da.live/nx/utils/daFetch.js';
 
 const BASE = '/en';
@@ -12,10 +13,6 @@ function setSelectedClass(itemToHighlight) {
     item.classList.remove('selected-item');
   });
   itemToHighlight.classList.add('selected-item');
-}
-
-function getBasePathDepth() {
-  return BASE.split('/').filter(Boolean).length; // filter(Boolean) removes empty strings
 }
 
 /**
@@ -40,6 +37,26 @@ function showMessage(text, isError = false, autoHide = false) {
 }
 
 /**
+ * Handles page selection by setting window variable.
+ * @param {Object} file - Selected page file
+ * @param {Object} context - SDK context
+ */
+function handlePageSelect(file) {
+  const basePath = `/${context.org}/${context.repo}`;
+  const displayPath = file.path.replace(basePath, '').replace(/\.html$/, '');
+  showMessage(`Selected: ${displayPath}`);
+  window.pagePath = displayPath;
+}
+
+function handleFolderSelect(file) {
+  const basePath = `/${context.org}/${context.repo}`;
+  const displayPath = file.path.replace(basePath, '').replace(/[^/]+$/, '');
+  console.log(displayPath);
+  showMessage(`Selected: ${displayPath}`);
+  window.pagePath = displayPath;
+}
+
+/**
  * Creates a tree item element
  * @param {string} name - Item name
  * @param {Object} node - Tree node data
@@ -47,7 +64,7 @@ function showMessage(text, isError = false, autoHide = false) {
  * @param {Object} context - SDK context (for URL generation)
  * @returns {HTMLElement} Tree item element
  */
-function createTreeItem(name, node, onClick, context) {
+function createTreeItem(name, node, onClick) {
   const item = document.createElement('li');
   item.className = 'tree-item';
 
@@ -118,7 +135,7 @@ function createTreeItem(name, node, onClick, context) {
     content.appendChild(previewIcon);
     button.title = `Click to insert link for "${displayName}"`;
     button.addEventListener('click', () => {
-      onClick({path: node.path });
+      onClick({ path: node.path });
       setSelectedClass(button);
     });
   } else {
@@ -143,7 +160,7 @@ function createTreeItem(name, node, onClick, context) {
 
     const toggleFolder = () => {
       setSelectedClass(folderButton);
-      handleFolderSelect(node, context);
+      handleFolderSelect(node);
 
       folderButton.classList.toggle('expanded');
       folderButton.setAttribute('aria-expanded', folderButton.classList.contains('expanded'));
@@ -166,7 +183,7 @@ function createTreeItem(name, node, onClick, context) {
       Object.entries(node.children)
         .sort(([a], [b]) => a.localeCompare(b))
         .forEach(([childName, childNode]) => {
-          list.appendChild(createTreeItem(childName, childNode, onClick, context));
+          list.appendChild(createTreeItem(childName, childNode, onClick));
         });
 
       item.appendChild(content);
@@ -208,44 +225,10 @@ function createFileTree(files, basePath) {
   return tree;
 }
 
-/**
- * Handles page selection by setting window variable.
- * @param {Object} file - Selected page file
- * @param {Object} context - SDK context
- */
-function handlePageSelect(file, context) {
-  const basePath = `/${context.org}/${context.repo}`;
-  const displayPath = file.path.replace(basePath, '').replace(/\.html$/, '');
-  showMessage(`Selected: ${displayPath}`);
-  window.pagePath = displayPath;
-
-}
-
-function handleFolderSelect(file, context) {
-  const basePath = `/${context.org}/${context.repo}`;
-  const displayPath = file.path.replace(basePath, '').replace(/[^/]+$/,'');
-  console.log(displayPath);
-  showMessage(`Selected: ${displayPath}`);
-  window.pagePath = displayPath;
-}
-
 function createTree(item, files) {
   if (!item.path.endsWith('.html')) return;
   files.push(item);
 }
-
-window.addEventListener('message', function(event) {
-  if (event.origin === 'http://localhost:3000'
-  || event.origin === 'https://www.jmp.com'
-  || event.origin === 'https://main--jmp-da--jmphlx.aem.live'
-  || event.origin === 'https://aem-819-v2--jmp-da--jmphlx.aem.live') {
-    console.log(event.origin);
-  }
-  token = event.data.token;
-  context = event.data.context;
-  setImsDetails(token);
-  init();
-});
 
 async function init() {
   console.log('in init');
@@ -273,7 +256,7 @@ async function init() {
     },
   };
 
-  const { results, cancelCrawl } = crawl({
+  const { results } = crawl({
     path,
     callback: (item) => createTree(item, files),
     throttle: 10,
@@ -283,7 +266,6 @@ async function init() {
   folderList.innerHTML = '';
 
   const tree = createFileTree(files, basePath);
-  const targetDepth = getBasePathDepth();
 
   try {
     Object.entries(tree)
@@ -292,8 +274,7 @@ async function init() {
         const item = createTreeItem(
           name,
           node,
-          (file) => handlePageSelect(file, context),
-          context, // Pass context for correct URL
+          (file) => handlePageSelect(file),
         );
         folderList.appendChild(item);
       });
@@ -302,6 +283,18 @@ async function init() {
     console.error(error);
     // Also disable cancel button on error
     cancelBtn.disabled = true;
-    }
+  }
+}
 
-};
+window.addEventListener('message', (event) => {
+  if (event.origin === 'http://localhost:3000'
+  || event.origin === 'https://www.jmp.com'
+  || event.origin === 'https://main--jmp-da--jmphlx.aem.live'
+  || event.origin === 'https://aem-819-v2--jmp-da--jmphlx.aem.live') {
+    console.log(event.origin);
+  }
+  token = event.data.token;
+  context = event.data.context;
+  setImsDetails(token);
+  init();
+});
