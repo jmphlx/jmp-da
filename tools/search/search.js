@@ -512,7 +512,7 @@ async function getConfigurations() {
   const { data: blockOptions } = await resp.json();
   blockOptions.forEach((block, index) => {
     blockOptions[index].name = block.name.replaceAll(' ', '-');
-  })
+  });
   window.blockProperties = blockOptions;
 
   const tagAttribute = `${pathPrefix}/docs/library/tag-attribute.json`;
