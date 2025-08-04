@@ -3,7 +3,7 @@ import { crawl } from 'https://da.live/nx/public/utils/tree.js';
 // eslint-disable-next-line import/no-unresolved
 import { setImsDetails } from 'https://da.live/nx/utils/daFetch.js';
 
-const BASE = '/en';
+const BASE = '/';
 
 let context;
 let token;
