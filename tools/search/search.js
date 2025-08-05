@@ -4,10 +4,12 @@ import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
 import { createTag, saveToDa, DA_CONSTANTS } from '../../scripts/helper.js';
 
+const daSourceUrl = 'https://admin.da.live/source';
 const defaultpath = '/jmphlx/jmp-da/en/sandbox/laurel/listgroups';
 const pathPrefix = `/${DA_CONSTANTS.org}/${DA_CONSTANTS.repo}`;
 let actions;
 let token;
+const DEFAULT_PROP_LIST =   ['style', 'options'];
 
 class SearchResult {
   constructor(item, elements, classStyle) {
@@ -26,12 +28,12 @@ function escapeRegExp(string) {
 
 function highlightKeyword(text, keyword) {
   const regex = new RegExp(`(${escapeRegExp(keyword)})`, 'gi');
-  return text.replace(regex, '<mark>$1</mark>');
+  return text.replaceAll(regex, '<mark>$1</mark>');
 }
 
 function replaceKeyword(text, keyword, replacement) {
   const regex = new RegExp(`(${escapeRegExp(keyword)})`, 'gi');
-  return text.replace(regex, replacement);
+  return text.replaceAll(regex, replacement);
 }
 
 function getPagePathFromFullUrl(itemPath) {
@@ -45,17 +47,38 @@ function getPagePathFromFullUrl(itemPath) {
   return basicItemPath;
 }
 
-async function doReplace(dom, elements, pageSourceUrl, keyword) {
+async function doReplace(dom, elements, pageSourceUrl, queryObject, classStyle) {
+  console.log('doReplace');
+  const keyword = queryObject.keyword;
   const replaceText = document.querySelector('[name="replaceText"]').value;
 
-  elements.forEach((el) => {
-    console.log(el);
-    el.innerHTML = replaceKeyword(el.innerHTML, keyword, replaceText);
-  });
+  if (classStyle === 'attribute') {
+    // Replace only the attribute.
+    elements.forEach((el) => {
+      el[queryObject.scope.attribute] = replaceKeyword(
+        el[queryObject.scope.attribute],
+        keyword,
+        replaceText,
+      );
+    });
+  } else if (classStyle === 'tag') {
+    // Replace all instances of the keyword in the html element and all
+    // it's children (including textContent).
+    elements.forEach((el, index) => {
+      const newHTML = replaceKeyword(el.outerHTML, keyword, replaceText);
+      const newDomEl = new DOMParser().parseFromString(newHTML, 'text/html');
+      // Apparently need to update the array reference and the element itself.
+      elements[index] = newDomEl.body.firstChild;
+      el.outerHTML = newHTML;
+    });
+  } else {
+    elements.forEach((el) => {
+      // Replace all intances of the keyword in the text.
+      el.innerHTML = replaceKeyword(el.innerHTML, keyword, replaceText);
+    });
+  }
 
   const html = dom.body.querySelector('main');
-  console.log(html.innerHTML);
-  console.log('try to save');
   console.log(pageSourceUrl);
   saveToDa(html.innerHTML, pageSourceUrl, token);
 }
@@ -64,7 +87,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
   // Die if not a document
   if (!item.path.endsWith('.html')) return;
 
-  const pageSourceUrl = `https://admin.da.live/source${item.path}`;
+  const pageSourceUrl = `${daSourceUrl}${item.path}`;
 
   // Fetch the doc & convert to DOM
   const resp = await actions.daFetch(pageSourceUrl);
@@ -95,8 +118,15 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
 
   if (elements.length === 0 && queryObject.scope.tag) {
     const tagName = queryObject.scope.tag;
-    elements = dom.querySelectorAll(`${tagName}`);
-    console.log(elements);
+    let queryString = tagName;
+    classStyle = 'tag';
+
+    if (queryObject.scope.attribute) {
+      const attributeName = queryObject.scope.attribute;
+      queryString += `[${attributeName}*=${queryObject.keyword}]`;
+      classStyle = 'attribute';
+    }
+    elements = dom.querySelectorAll(`${queryString}`);
   }
 
   if (elements.length === 0 && queryObject.scope.property) {
@@ -111,17 +141,28 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
   if (elements.length) {
     if (queryObject.keyword) {
       const filtered = [];
-      elements.forEach((el) => {
-        if (el.textContent.toLowerCase().includes(queryObject.keyword.toLowerCase())) {
+      if (classStyle === 'attribute') {
+        elements.forEach((el) => {
           filtered.push(el);
-        }
-      });
+        });
+      } else if (classStyle === 'tag') {
+        elements.forEach((el) => {
+          if (el.outerHTML.toLowerCase().includes(queryObject.keyword.toLowerCase())) {
+            filtered.push(el);
+          }
+        });
+      } else {
+        elements.forEach((el) => {
+          if (el.textContent.toLowerCase().includes(queryObject.keyword.toLowerCase())) {
+            filtered.push(el);
+          }
+        });
+      }
       if (filtered.length) {
-        console.log(filtered);
         const matchingEntry = new SearchResult(item, filtered, classStyle);
         matching.push(matchingEntry);
         if (replaceFlag) {
-          doReplace(dom, filtered, getPagePathFromFullUrl(item.path), queryObject.keyword);
+          doReplace(dom, filtered, getPagePathFromFullUrl(item.path), queryObject, classStyle);
         }
       }
     } else {
@@ -142,7 +183,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
       const matchingEntry = new SearchResult(item, elements, undefined);
       matching.push(matchingEntry);
       if (replaceFlag) {
-        doReplace(dom, elements, getPagePathFromFullUrl(item.path), queryObject.keyword);
+        doReplace(dom, elements, getPagePathFromFullUrl(item.path), queryObject, undefined);
       }
     }
   }
@@ -322,13 +363,258 @@ function getQuery() {
   const phraseMatch = remaining.match(/"([^"]+)"|(.+)/);
   keyword = phraseMatch ? (phraseMatch[1] || phraseMatch[2]) : '';
 
+  const pathField = document.querySelector('#page-path-input')?.value;
+  scope.path = pathField;
+
   return { scope, keyword: keyword.trim() };
 }
 
+function buildParentDropdown(dropdown, jsonData, type) {
+  jsonData.forEach((option) => {
+    const optionValue = option[type].toLowerCase();
+    if (optionValue !== 'default') {
+      const optionElement = createTag('option', {
+        value: optionValue,
+      }, optionValue);
+      dropdown.append(optionElement);
+    }
+  });
+}
+
+function buildPropertiesDropdown(dropdown, nodeName) {
+  // Remove any existing items
+  const shadowRoot = dropdown.shadowRoot;
+  const currOptions = shadowRoot.querySelectorAll('option');
+  currOptions?.forEach((opt) => {
+    if (opt.value) {
+      opt.remove();
+    }
+  });
+  let propertyList;
+  window.blockProperties.forEach((block) => {
+    if (block.name.toLowerCase() === nodeName) {
+      propertyList = block.property.split(',');
+    }
+  });
+  if (!propertyList || !propertyList[0].length) {
+    propertyList = DEFAULT_PROP_LIST;
+  }
+  propertyList?.forEach((prop) => {
+    const optionValue = prop.trim();
+    const optionElement = createTag('option', {
+      value: optionValue,
+      class: 'prop-option',
+    }, optionValue);
+    dropdown.append(optionElement);
+  });
+}
+
+function buildAttributeDropdown(dropdown, nodeName) {
+  // Remove any existing items
+  const shadowRoot = dropdown.shadowRoot;
+  const currOptions = shadowRoot.querySelectorAll('option');
+  currOptions?.forEach((opt) => {
+    if (opt.value) {
+      opt.remove();
+    }
+  });
+  let attributeList;
+  window.tagAttribute.forEach((tag) => {
+    if (tag.tag === nodeName) {
+      attributeList = tag.attribute.split(',');
+    }
+  });
+  if (!attributeList || !attributeList[0].length) {
+    attributeList = window.tagAttribute[0].attribute.split(',');
+  }
+  attributeList?.forEach((attr) => {
+    const optionValue = attr.trim();
+    const optionElement = createTag('option', {
+      value: optionValue,
+      class: 'attr-option',
+    }, optionValue);
+    dropdown.append(optionElement);
+  });
+}
+
+// escape regex metacharacters in the variable
+function escapeRegex(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// builds a lookbehind regex for e.g. "property", "block", etc.
+function makeLookbehindRegex(keyword, flags = 'gi') {
+  const esc = escapeRegex(keyword);
+  // Note: lookbehind must be supported in your runtime
+  return new RegExp(`(?<=${esc}:)\\S+`, flags);
+}
+
+function updateSearchTerms(searchInputField, category, termValue) {
+  const currentValue = searchInputField.value;
+  const exp = makeLookbehindRegex(category);
+  if (currentValue) {
+    // Need to check if scope is already in field. If so,  change it.
+    if (currentValue.match(exp)) {
+      if (!termValue.length) {
+        const adjustedField = currentValue.replace(exp, termValue);
+        searchInputField.value = adjustedField.replace(`${category}:`, '');
+      } else {
+        searchInputField.value = currentValue.replace(exp, termValue);
+      }
+    } else {
+      searchInputField.value += ` ${category}:${termValue}`;
+    }
+  } else {
+    searchInputField.value = `${category}:${termValue}`;
+  }
+}
+
+async function populateDropdowns(searchInputField) {
+  // Do Block
+  const blockDropdown = document.querySelector('[name="block_scope"]');
+  buildParentDropdown(blockDropdown, window.blockProperties, 'name');
+
+  const propertyDrop = document.querySelector('[name="property_scope"]');
+  buildPropertiesDropdown(propertyDrop, 'default');
+
+  blockDropdown.addEventListener('change', () => {
+    buildPropertiesDropdown(propertyDrop, blockDropdown.value);
+    updateSearchTerms(searchInputField, 'block', blockDropdown.value);
+  });
+
+  propertyDrop.addEventListener('change', () => {
+    updateSearchTerms(searchInputField, 'property', propertyDrop.value);
+  });
+
+  const tagDropdown = document.querySelector('[name="tag_scope"]');
+  buildParentDropdown(tagDropdown, window.tagAttribute, 'tag');
+
+  const attributeDropdown = document.querySelector('[name="attribute_scope"]');
+  buildAttributeDropdown(attributeDropdown, 'default');
+
+  tagDropdown.addEventListener('change', () => {
+    buildAttributeDropdown(attributeDropdown, tagDropdown.value);
+    updateSearchTerms(searchInputField, 'tag', tagDropdown.value);
+  });
+
+  attributeDropdown.addEventListener('change', () => {
+    updateSearchTerms(searchInputField, 'attribute', attributeDropdown.value);
+  });
+}
+
+async function getConfigurations() {
+  const blockProperties = `${pathPrefix}/docs/library/blocks.json`;
+  const resp = await actions.daFetch(`${daSourceUrl}${blockProperties}`);
+  if (!resp.ok) {
+    console.log('Could not fetch item');
+    window.blockProperties = null;
+  }
+  const { data: blockOptions } = await resp.json();
+  blockOptions.forEach((block, index) => {
+    blockOptions[index].name = block.name.replaceAll(' ', '-');
+  });
+  window.blockProperties = blockOptions;
+
+  const tagAttribute = `${pathPrefix}/docs/library/tag-attribute.json`;
+  const respTags = await actions.daFetch(`${daSourceUrl}${tagAttribute}`);
+  if (!respTags.ok) {
+    console.log('Could not fetch item');
+    window.tagAttribute = null;
+  }
+  const { data: tagOptions } = await respTags.json();
+  window.tagAttribute = tagOptions;
+}
+
+window.addEventListener('message', (event) => {
+  if (event.origin === 'http://localhost:3000'
+    || event.origin === 'https://www.jmp.com'
+    || event.origin === 'https://main--jmp-da--jmphlx.aem.live'
+    || event.origin === 'https://aem-819-v2--jmp-da--jmphlx.aem.live') {
+    console.log('Got my own message');
+    console.log(event.origin);
+    const singleInput = document.getElementById('page-path-input');
+    if (event.data.length) {
+      singleInput.value = event.data;
+    }
+  }
+  if (event.origin === 'https://da.live') {
+    console.log('got message from DA');
+    const iframe = document.querySelector('iframe');
+    iframe.contentWindow.postMessage(event.data);
+  }
+  const mydialog = document.querySelector('#modal');
+  mydialog.close();
+});
+
+function setupbar() {
+  const input = document.getElementById('page-path-input');
+  const toggleBtn = document.getElementById('toggle-edit');
+  const lockIcon = document.getElementById('icon-lock');
+
+  let editable = false;
+
+  function updateLockIcon() {
+    if (editable) {
+      // unlocked
+      lockIcon.setAttribute('stroke', '#ff5000');
+      lockIcon.innerHTML = `
+        <path d="M16 11V7a4 4 0 1 0-8 0"></path>
+        <rect x="5" y="11" width="14" height="10" rx="2" ry="2"></rect>
+      `;
+      toggleBtn.setAttribute('aria-label', 'Disable editing');
+      toggleBtn.setAttribute('aria-pressed', 'true');
+      toggleBtn.title = 'Disable editing';
+    } else {
+      // locked
+      lockIcon.setAttribute('stroke', 'currentcolor');
+      lockIcon.innerHTML = `
+        <path d="M8 11V7a4 4 0 1 1 8 0v4"></path>
+        <rect x="5" y="11" width="14" height="10" rx="2" ry="2"></rect>
+      `;
+      toggleBtn.setAttribute('aria-label', 'Enable editing');
+      toggleBtn.setAttribute('aria-pressed', 'false');
+      toggleBtn.title = 'Enable editing';
+    }
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    editable = !editable;
+    input.disabled = !editable;
+    if (editable) {
+      input.focus();
+      input.setSelectionRange(input.value.length, input.value.length);
+    }
+    updateLockIcon();
+  });
+
+  // Optional: Enter toggles off editing if empty blur behavior
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      input.blur();
+      editable = false;
+      input.disabled = true;
+      updateLockIcon();
+    }
+  });
+}
+
 (async function init() {
+  console.log('in init');
   const sdk = await DA_SDK;
   actions = sdk.actions;
   token = sdk.token;
+
+  setupbar();
+
+  const mybutton = document.querySelector('#mybutton');
+  mybutton.addEventListener('click', () => {
+    document.querySelector('#modal').showModal();
+  });
+
+  await getConfigurations();
+
+  const searchInputField = document.querySelector('[name="searchTerms"]');
+  populateDropdowns(searchInputField);
 
   const replaceCheckbox = document.querySelector('#replaceAction');
   const replaceTextbox = document.querySelector('[name="replaceText"]');

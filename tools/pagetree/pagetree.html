@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>File Tree</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- Import DA App SDK -->
+    <script src="https://da.live/nx/utils/sdk.js" type="module"></script>
+    <!-- Project App Logic -->
+    <script src="/tools/pagetree/pagetree.js" type="module"></script>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" type="text/css" href="/tools/pagetree/pagetree.css">
+  </head>
+  <body>
+    <h2>Select a Folder</h2>
+    <div class="message-wrapper hidden">
+      <div class="feedback-message"></div>
+    </div>
+    <ul id="folderTree" class="folder-tree">
+      <div class="loading-state">Loading tree...</div>
+    </ul>
+    <button class="pagetree-btn"
+      type="submit"
+      title="Set path"
+      role="button"
+      aria-label="set path">Submit</button>
+    <button class="pagetree-btn" 
+      type="reset" 
+      title="Cancel Fetching Pages" 
+      role="button" 
+      aria-label="Cancel fetching pages">
+      Cancel
+    </button>
+  </body>
+</html>
