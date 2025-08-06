@@ -772,6 +772,16 @@ div.subnav-compact {
       }
     }
   }
+  @media (width <= 600px) {
+    width: auto;
+    nav.main {
+      ul {
+        li, li.active {
+          width: auto;
+        }
+      }
+    }
+  }
 }
 div.subnav-wrapper:has(.pillar-sub-nav) {
   @media (width >= 1200px) {
