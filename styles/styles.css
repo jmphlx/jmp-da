@@ -187,7 +187,7 @@ p, dl, ol, ul, pre, blockquote {
 strong {
   font-weight: normal;
   font-family: var(--font-bold);
-  color: var(--gray5);
+  /* color: var(--gray5); */
 }
 .text-large {
   p, li {

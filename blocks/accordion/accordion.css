@@ -51,6 +51,16 @@
         list-style: none;
         overflow: auto;
         transition: background-color 0.2s;
+        &.accordion-item-label {
+          :is(p) {
+            &:has(+ :is(h3, h4, h5)) {
+                margin-bottom: 0 !important;
+            }
+          }
+          h5, p {
+            margin-bottom: 0 !important;
+          }
+        }
       }
       .accordion-item-body {
         padding-top: 2.4rem !important;

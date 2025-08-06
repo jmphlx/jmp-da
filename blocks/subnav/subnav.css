@@ -675,6 +675,115 @@ div.subnav-compact {
   }
 }
 
+
+.pillar-sub-nav {
+  width: 100%;
+  border-radius: 10px;
+  background-color: var(--gray);
+  nav.main {
+    ul {
+      margin: 16px;
+      li, li.active {
+        background-color: transparent !important; 
+        border: none;
+        padding: 0 !important;
+        width: calc(100% - 24px);
+        font-size: 16px;
+        margin: 0 0 8px 24px ;
+        a {
+          color: var(--gray3) !important;
+          background-color: transparent !important; 
+          font-family: var(--font-primary);
+          font-size: 14px;
+          line-height: 1.35;
+          border: none;
+        }
+        &:hover {
+          a {
+            color: white;
+          }
+        }
+        ul.sub {
+          display: block !important;
+        }
+      }
+      li:first-child {
+        margin-left: 16px;
+      }
+      li a {
+        padding: 0;
+        &:before {
+          content: "";
+          display: block;
+          background-color: var(--redLight);
+          width: 4px;
+          position: absolute;
+          left: -14px;
+          top: 0;
+          height: 0;
+          transition: all .3s ease;
+        }
+        &:hover {
+          color: var(--purple) !important;
+          &:before {
+            content: "";
+            display: block;
+            background-color: var(--redLight);
+            width: 4px;
+            position: absolute;
+            left: -14px;
+            top: 0;
+            height: 100%;
+            transition: all .3s ease;
+          }
+        }
+      }
+      li.active a {
+        color: var(--purple) !important;
+        font-family: var(--font-secondary);
+        &:before {
+          content: "";
+          display: block;
+          background-color: var(--blueLight);
+          width: 4px;
+          position: absolute;
+          left: -14px;
+          top: 0;
+          height: 100%;
+          transition: all .3s ease;
+        }
+      }
+      @media (width <= 600px) {
+        display: block;
+      }
+    }
+  }
+  @media (width <= 900px) {
+    width: max-content;
+    nav.main {
+      ul {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        li, li.active {
+          display: block;
+          width: max-content;
+        }
+      }
+    }
+  }
+}
+div.subnav-wrapper:has(.pillar-sub-nav) {
+  @media (width >= 1200px) {
+    max-width: 235px;
+  }
+  @media (width >= 901px) {
+    position: sticky;
+    top: 126px;
+  }
+}
+
+
 .subnav-margin-none {
   .subnav nav.main ul {
     margin: 0;
