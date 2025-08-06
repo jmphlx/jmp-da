@@ -5,6 +5,11 @@
   margin: 0 auto 2 auto;
   padding: 0;
   text-align: left;  
+  ul {
+    li {
+      margin-bottom: 1rem;
+    }
+  }
 }
 .columns img {
   width: 100%;
