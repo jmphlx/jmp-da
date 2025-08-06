@@ -236,6 +236,9 @@
     list-style-type: none;
     padding: 0 0 10px 0;
     margin: 0;
+    li {
+      margin-bottom: 0;
+    }
   }
   @media (width <=999px) {
     div {
