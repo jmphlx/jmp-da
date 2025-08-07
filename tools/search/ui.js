@@ -1,0 +1,348 @@
+import { createTag, DA_CONSTANTS } from '../../scripts/helper.js';
+import { escapeRegExp } from './replace.js';
+
+const DEFAULT_PROP_LIST =   ['style', 'options'];
+
+// escape regex metacharacters in the variable
+function escapeRegex(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// builds a lookbehind regex for e.g. "property", "block", etc.
+function makeLookbehindRegex(keyword, flags = 'gi') {
+  const esc = escapeRegex(keyword);
+  // Note: lookbehind must be supported in your runtime
+  return new RegExp(`(?<=${esc}:)\\S+`, flags);
+}
+
+function highlightKeyword(text, keyword) {
+  const regex = new RegExp(`(${escapeRegExp(keyword)})`, 'gi');
+  return text.replaceAll(regex, '<mark>$1</mark>');
+}
+
+function updateSearchTerms(searchInputField, category, termValue) {
+  const currentValue = searchInputField.value;
+  const exp = makeLookbehindRegex(category);
+  if (currentValue) {
+    // Need to check if scope is already in field. If so,  change it.
+    if (currentValue.match(exp)) {
+      if (!termValue.length) {
+        const adjustedField = currentValue.replace(exp, termValue);
+        searchInputField.value = adjustedField.replace(`${category}:`, '');
+      } else {
+        searchInputField.value = currentValue.replace(exp, termValue);
+      }
+    } else {
+      searchInputField.value += ` ${category}:${termValue}`;
+    }
+  } else {
+    searchInputField.value = `${category}:${termValue}`;
+  }
+}
+
+function buildParentDropdown(dropdown, jsonData, type) {
+  jsonData.forEach((option) => {
+    const optionValue = option[type].toLowerCase();
+    if (optionValue !== 'default') {
+      const optionElement = createTag('option', {
+        value: optionValue,
+      }, optionValue);
+      dropdown.append(optionElement);
+    }
+  });
+}
+
+function buildPropertiesDropdown(dropdown, nodeName) {
+  // Remove any existing items
+  const shadowRoot = dropdown.shadowRoot;
+  const currOptions = shadowRoot.querySelectorAll('option');
+  currOptions?.forEach((opt) => {
+    if (opt.value) {
+      opt.remove();
+    }
+  });
+  let propertyList;
+  window.blockProperties.forEach((block) => {
+    if (block.name.toLowerCase() === nodeName) {
+      propertyList = block.property.split(',');
+    }
+  });
+  if (!propertyList || !propertyList[0].length) {
+    propertyList = DEFAULT_PROP_LIST;
+  }
+  propertyList?.forEach((prop) => {
+    const optionValue = prop.trim();
+    const optionElement = createTag('option', {
+      value: optionValue,
+      class: 'prop-option',
+    }, optionValue);
+    dropdown.append(optionElement);
+  });
+}
+
+function buildAttributeDropdown(dropdown, nodeName) {
+  // Remove any existing items
+  const shadowRoot = dropdown.shadowRoot;
+  const currOptions = shadowRoot.querySelectorAll('option');
+  currOptions?.forEach((opt) => {
+    if (opt.value) {
+      opt.remove();
+    }
+  });
+  let attributeList;
+  window.tagAttribute.forEach((tag) => {
+    if (tag.tag === nodeName) {
+      attributeList = tag.attribute.split(',');
+    }
+  });
+  if (!attributeList || !attributeList[0].length) {
+    attributeList = window.tagAttribute[0].attribute.split(',');
+  }
+  attributeList?.forEach((attr) => {
+    const optionValue = attr.trim();
+    const optionElement = createTag('option', {
+      value: optionValue,
+      class: 'attr-option',
+    }, optionValue);
+    dropdown.append(optionElement);
+  });
+}
+
+async function populateDropdowns(searchInputField) {
+  // Do Block
+  const blockDropdown = document.querySelector('[name="block_scope"]');
+  buildParentDropdown(blockDropdown, window.blockProperties, 'name');
+
+  const propertyDrop = document.querySelector('[name="property_scope"]');
+  buildPropertiesDropdown(propertyDrop, 'default');
+
+  blockDropdown.addEventListener('change', () => {
+    buildPropertiesDropdown(propertyDrop, blockDropdown.value);
+    updateSearchTerms(searchInputField, 'block', blockDropdown.value);
+  });
+
+  propertyDrop.addEventListener('change', () => {
+    updateSearchTerms(searchInputField, 'property', propertyDrop.value);
+  });
+
+  const tagDropdown = document.querySelector('[name="tag_scope"]');
+  buildParentDropdown(tagDropdown, window.tagAttribute, 'tag');
+
+  const attributeDropdown = document.querySelector('[name="attribute_scope"]');
+  buildAttributeDropdown(attributeDropdown, 'default');
+
+  tagDropdown.addEventListener('change', () => {
+    buildAttributeDropdown(attributeDropdown, tagDropdown.value);
+    updateSearchTerms(searchInputField, 'tag', tagDropdown.value);
+  });
+
+  attributeDropdown.addEventListener('change', () => {
+    updateSearchTerms(searchInputField, 'attribute', attributeDropdown.value);
+  });
+}
+
+function updateActionMessage(resultsContainer, msg) {
+  resultsContainer.querySelector('.action-results')?.remove();
+  const actionMessage = createTag('span', {
+    class: 'action-results',
+  });
+  actionMessage.textContent = msg;
+  resultsContainer.prepend(actionMessage);
+}
+
+function createResultItem(item, highlightTerm) {
+  const resultItem = createTag('div', { class: 'result-item' });
+  const resultHeader = createTag('div', {
+    class: 'result-header',
+  });
+  const pagePath = createTag('div', {
+    class: 'page-path',
+  }, `${item.path}`);
+
+  const link = createTag('a', {
+    href: `${DA_CONSTANTS.editUrl}${item.path.replace('.html', '')}`,
+    target: '_blank',
+  });
+
+  const openPageIcon = createTag('img', {
+    src: `${window.location.origin}/icons/new-tab-icon.svg`,
+    class: 'open-page',
+  });
+  link.append(openPageIcon);
+  resultHeader.append(pagePath, link);
+
+  resultItem.append(resultHeader);
+
+  const resultDetails = createTag('div', {
+    class: 'result-details',
+  });
+  const resultText = document.createElement('ul');
+  const elements = item.elements;
+  elements.forEach((el) => {
+    const li = createTag('li', {
+      class: `html-result ${item.classStyle}`,
+    });
+    const clone = el.cloneNode(true);
+    clone.innerHTML = highlightKeyword(clone.innerHTML, highlightTerm);
+    li.append(clone);
+    resultText.append(li);
+  });
+  resultDetails.append(resultText);
+  resultItem.append(resultDetails);
+
+  resultItem.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (this.classList.contains('open')) {
+      this.classList.remove('open');
+    } else {
+      this.classList.add('open');
+    }
+  });
+
+  return resultItem;
+}
+
+async function copyToClipboard(button, clipboardTxt, copyTxt) {
+  try {
+    await navigator.clipboard.writeText(clipboardTxt);
+    button.setAttribute('title', copyTxt);
+    button.setAttribute('aria-label', copyTxt);
+
+    const tooltip = createTag('div', { role: 'status', 'aria-live': 'polite', class: 'copied-to-clipboard' }, copyTxt);
+    button.parentElement.append(tooltip);
+
+    setTimeout(() => {
+      /* c8 ignore next 1 */
+      tooltip.remove();
+    }, 3000);
+    button.classList.remove('copy-failure');
+    button.classList.add('copy-success');
+  } catch (e) {
+    console.log(e);
+    button.classList.add('copy-failure');
+    button.classList.remove('copy-success');
+  }
+}
+
+function writeOutResults(results, queryString, queryObject, duration, replaceFlag) {
+  const highlightTerm = replaceFlag
+    ? document.querySelector('[name="replaceText"]').value : queryObject.keyword;
+
+  const resultsContainer = document.querySelector('.results-container');
+  resultsContainer.innerHTML = '';
+
+  const resultsHeader = document.createElement('h2');
+  resultsHeader.classList.add('results-header');
+  resultsHeader.textContent = `Search Results for "${queryString}"`;
+  const resultsData = document.createElement('div');
+
+  const urlList = [];
+
+  const resultsList = document.createElement('div');
+  resultsList.classList.add('results-list');
+  results.forEach((item) => {
+    console.log(item.classStyle);
+    const resultItem = createResultItem(item, highlightTerm);
+    resultsList.append(resultItem);
+    urlList.push(`${DA_CONSTANTS.previewUrl}${item.pagePath}`);
+  });
+
+  const searchSummary = document.createElement('span');
+  searchSummary.classList.add('summary');
+  searchSummary.textContent = `${results.length} found for "${queryString}"`;
+
+  const searchTime = document.createElement('span');
+  searchTime.classList.add('search-time');
+  searchTime.textContent = `Search completed in ${duration.toFixed(2)} seconds`;
+
+  const copyContainer = createTag('span', {
+    id: 'copy-to-clipboard',
+  });
+
+  const copyButton = createTag('p', {
+    class: 'button-container',
+  });
+  copyButton.textContent = 'Copy Result URLs To Clipboard';
+  copyContainer.append(copyButton);
+  copyContainer.addEventListener('click', () => {
+    copyToClipboard(copyButton, urlList.join('\n'), 'Copied');
+  });
+
+  const bulkEditorButton = createTag('a', {
+    class: 'button',
+    href: 'https://da.live/apps/bulk',
+    target: '_blank',
+  }, 'Open Bulk Operations Tool');
+  copyContainer.append(bulkEditorButton);
+
+  resultsData.append(searchSummary, searchTime, copyContainer);
+
+  resultsContainer.append(resultsHeader, resultsData, resultsList);
+  document.body.append(resultsContainer);
+}
+
+function constructPageViewer() {
+  const input = document.getElementById('page-path-input');
+  const toggleBtn = document.getElementById('toggle-edit');
+  const lockIcon = document.getElementById('icon-lock');
+
+  let editable = false;
+
+  function updateLockIcon() {
+    if (editable) {
+      // unlocked
+      lockIcon.setAttribute('stroke', '#ff5000');
+      lockIcon.innerHTML = `
+        <path d="M16 11V7a4 4 0 1 0-8 0"></path>
+        <rect x="5" y="11" width="14" height="10" rx="2" ry="2"></rect>
+      `;
+      toggleBtn.setAttribute('aria-label', 'Disable editing');
+      toggleBtn.setAttribute('aria-pressed', 'true');
+      toggleBtn.title = 'Disable editing';
+    } else {
+      // locked
+      lockIcon.setAttribute('stroke', 'currentcolor');
+      lockIcon.innerHTML = `
+        <path d="M8 11V7a4 4 0 1 1 8 0v4"></path>
+        <rect x="5" y="11" width="14" height="10" rx="2" ry="2"></rect>
+      `;
+      toggleBtn.setAttribute('aria-label', 'Enable editing');
+      toggleBtn.setAttribute('aria-pressed', 'false');
+      toggleBtn.title = 'Enable editing';
+    }
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    editable = !editable;
+    input.disabled = !editable;
+    if (editable) {
+      input.focus();
+      input.setSelectionRange(input.value.length, input.value.length);
+    }
+    updateLockIcon();
+  });
+
+  // Optional: Enter toggles off editing if empty blur behavior
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      input.blur();
+      editable = false;
+      input.disabled = true;
+      updateLockIcon();
+    }
+  });
+}
+
+function closeAdvancedSections() {
+  document.querySelectorAll('.advanced-section.open').forEach((section) => {
+    section.classList.remove('open');
+  });
+}
+
+export {
+  closeAdvancedSections,
+  constructPageViewer,
+  populateDropdowns,
+  updateActionMessage,
+  writeOutResults,
+};
