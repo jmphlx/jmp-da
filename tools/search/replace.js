@@ -52,64 +52,6 @@ function resetDocumentsToOriginalState(token) {
   });
 }
 
-function deleteLine(token) {
-  let msg;
-  try {
-    window.searchResults.forEach((result) => {
-    if (result.classStyle !== 'property') {
-      throw new Error('not a single line property');
-    }
-    console.log(result.pagePath);
-    console.log(result.dom);
-
-    const matchingElements = result.elements;
-    matchingElements.forEach((el) => {
-      console.log(el.parentElement);
-      el.parentElement?.removeChild(el);
-    });
-    const htmlToUse = result.dom.querySelector('main');
-    saveToDa(htmlToUse.innerHTML, result.pagePath, token);
-    console.log('updated')
-    msg = 'Successfully deleted line';
-  });
-  } catch (e) {
-    msg = e;
-  }
-  return msg;
-}
-
-function addLine() {
-  window.searchResults.forEach((result) => {
-    const matchingElements = result.elements;
-
-    matchingElements.forEach((el) => {
-      console.log(result.classStyle);
-      if (result.classStyle === 'property') {
-        console.log('property');
-        const blockLevel = el.parentElement;
-        console.log(blockLevel);
-      } else if(result.classStyle === 'block') {
-        console.log('block');
-      }
-    });
-
-  });
-}
-
-function addRow(block, rowName, rowContent, token) {
-  const rowDiv = createTag('div');
-  const leftCellDiv = createTag('div');
-  const leftCellContent = createTag('p', undefined, rowName);
-  leftCellDiv.append(leftCellContent);
-  const rightCellDiv = createTag('div');
-  const rightCellContent = createTag('p', undefined, rowContent);
-  rightCellDiv.append(rightCellContent);
-  rowDiv.append(leftCellDiv, rightCellDiv);
-  console.log(rowDiv);
-  block.append(rowDiv);
-  console.log(block);
-}
-
 function findLine(parentEl, propertyName) {
   console.log(propertyName);
   let line;
@@ -120,8 +62,125 @@ function findLine(parentEl, propertyName) {
   return line;
 }
 
+function deleteLine(el) {
+  el.parentElement?.removeChild(el);
+}
+
+function deleteLineFromBlock(block, rowName) {
+  let deletedFlag = false;
+  const foundRow = findLine(block, rowName);
+  if (foundRow) {
+    deleteLine(foundRow);
+    deletedFlag = true;
+  }
+  return deletedFlag;
+}
+
+function deleteFromPropertyElement(token, rowName) {
+  console.log(window.searchResults);
+  window.searchResults.forEach((result) => {
+    result.elements.forEach((el) => {
+      if (!rowName) {
+        deleteLine(el);
+      } else {
+        deleteLineFromBlock(el.parentElement, rowName);
+        
+      }
+    });
+    const htmlToUse = result.dom.querySelector('main');
+    console.log(htmlToUse);
+    saveToDa(htmlToUse.innerHTML, result.pagePath, token);
+  });
+}
+
+function deleteFromBlockElement(token, rowName) {
+  window.searchResults.forEach((result) => {
+    result.elements.forEach((el) => {
+      deleteLineFromBlock(el, rowName);
+    });
+    const htmlToUse = result.dom.querySelector('main');
+    saveToDa(htmlToUse.innerHTML, result.pagePath, token);
+  });
+}
+
+function deleteRow(queryObject, token) {
+  let msg;
+  try {
+    const deleteRowName = document.getElementById('deleteRowName').value;
+    const resultClassStyle = window.searchResults[0]?.classStyle;
+    switch (resultClassStyle) {
+      case 'property':
+        // do stuff
+        if (!deleteRowName) {
+          throw new Error('Row name cannot be blank');
+        }
+        if (queryObject.scope.property === deleteRowName) {
+          console.log('row is the same as the search result');
+          deleteFromPropertyElement(token, undefined);
+        } else {
+          //try to find the element in the block.
+          console.log('not the same. look for element');
+          deleteFromPropertyElement(token, deleteRowName);
+        }
+        break;
+      case 'block':
+        if (!deleteRowName) {
+          throw new Error('Row name cannot be blank.');
+        }
+        deleteFromBlockElement(token, rowName);
+        break;
+      case 'tag':
+        throw new Error('not an identifiable block');
+      case 'attribute':
+        throw new Error('not an identifiable block');
+      default:
+
+    }
+    msg = 'successfully deleted';
+  } catch (e) {
+    msg = e;
+  }
+  return msg;
+}
+
+function addRow(block, rowName, rowContent) {
+  const rowDiv = createTag('div');
+  const leftCellDiv = createTag('div');
+  const leftCellContent = createTag('p', undefined, rowName);
+  leftCellDiv.append(leftCellContent);
+  const rightCellDiv = createTag('div');
+  const rightCellContent = createTag('p', undefined, rowContent);
+  rightCellDiv.append(rightCellContent);
+  rowDiv.append(leftCellDiv, rightCellDiv);
+  block.append(rowDiv);
+}
+
+function addNewRow(token) {
+  try {
+    window.searchResults.forEach((result) => {
+      const newRowName = document.querySelector('#add-section > #newRowName').value;
+      console.log(newRowName);
+      const newRowValue = document.querySelector('#add-section > #newRowValue').value;
+
+      result.elements.forEach((el) => {
+        if (result.classStyle === 'property') {
+          addRow(el.parentElement, newRowName, newRowValue);
+        } else if (result.classStyle === 'block') {
+          addRow(el, newRowName, newRowValue);
+        } else {
+          throw new Error('not a block or property object');
+        }
+      });
+      const htmlToUse = result.dom.querySelector('main');
+      saveToDa(htmlToUse.innerHTML, result.pagePath, token);
+    });
+  } catch (e) {
+    return e;
+  }
+  return 'Successfully added row';
+}
+
 function mergeRows(token) {
-  console.log('hello from merge');
   const separator = ' ,';
   try {
     window.searchResults.forEach((result) => {
@@ -158,15 +217,14 @@ function mergeRows(token) {
           Add a new row with the secondRow as the name and el value
           as it's value.
           */
-          const createRowIfNeeded = document.querySelector('#createRowCheckbox');
-          if (!createRowIfNeeded.checked) {
+          if (!document.getElementById('createRowCheckbox').checked) {
           //do not replace.
           throw new Error('Did not specify that new row should be created');
           }
-          addRow(el.parentElement, secondRow, el.children[1]?.textContent, token);
+          addRow(el.parentElement, secondRow, el.children[1]?.textContent);
         }
         // row has either been updated or created, delete the source row
-        el.parentElement.removeChild(el);
+        deleteLine(el);
       });
       console.log(result.dom);
       const htmlToUse = result.dom.querySelector('main');
@@ -179,8 +237,8 @@ function mergeRows(token) {
 }
 
 export {
-  addRow,
-  deleteLine,
+  addNewRow,
+  deleteRow,
   doReplace,
   escapeRegExp,
   mergeRows,

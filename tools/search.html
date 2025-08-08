@@ -79,21 +79,54 @@
       <form id="action-form" class="hidden">
         <div class="advanced-replacement-group">
           <div class="action-radio-buttons">
-            <input type="radio" id="deleteRow" name="advanced-replace" value="delete">
-            <label for="deleteRow">Delete entire row?</label>
-            <input type="radio" id="appendToRow" name="advanced-replace" value="append">
-            <label for="appendToRow">Append To Row?</label>
-            <input type="radio" id="mergeRows" name="advanced-replace" value="merge">
-            <label for="mergeRows">Merge with row?</label>
             <input type="radio" id="addNewRow" name="advanced-replace" value="merge">
             <label for="addNewRow">Add new row?</label>
+            <input type="radio" id="deleteRow" name="advanced-replace" value="delete">
+            <label for="deleteRow">Delete entire row?</label>
+            <input type="radio" id="editRow" name="advanced-replace" value="edit">
+            <label for="editRow">Edit Row?</label>
+            <input type="radio" id="mergeRows" name="advanced-replace" value="merge">
+            <label for="mergeRows">Merge with row?</label>
+            <div id="add-section" class="advanced-section">
+              <label for="newRowName">Name:  </label>
+              <input type="text" id="newRowName" placeholder="New text">
+              <label for="newRowValue">Value:  </label>
+              <input type="text" id="newRowValue" placeholder="New text">
+            </div>
+            <div id="delete-section" class="advanced-section">
+              <label for="deleteRowName">Row To Delete:  </label>
+              <input type="text" id="deleteRowName" placeholder="Row Name">
+            </div>
+            <div id="edit-section" class="advanced-section">
+              <div>
+                <input type="checkbox" id="changeRowName" value="true">
+                <label for="rowName">Change Row Name?</label>
+                <input type="text" id="newRowName" placeholder="New Name">
+              </div>
+              <div>
+                <input type="checkbox" id="changeRowValue" value="true">
+                <label for="rowValue">Change Row Value?</label>
+              </div>
+              <div class="sub-section">
+                <sl-select name="partialEdit">
+                  <option value="whole">Whole Value</option>
+                  <option value="each">Each Item</option>
+                </sl-select>
+                <sl-select name="editTextAction">
+                  <option value="prepend">Prepend</option>
+                  <option value="append">Append</option>
+                  <option value="replace">Replace</option>
+                </sl-select>
+                <input type="text" id="newText" placeholder="New text">
+              </div>
+            </div>
             <div id="merge-section" class="advanced-section">
               <label for="mergeRowName">Row To Merge With?</label>
               <sl-input type="text" id="mergeName" name="mergeRowName" value="" placeholder="Row Name"></sl-input>
-              <sl-input type="checkbox" id="createRowCheckbox" name="createRow" value="true"></sl-input>
-              <label for="createRow">Create Row if it doesn't exist?</label>
+              <input type="checkbox" id="createRowCheckbox" name="createRowCheckbox" value="true"></sl-input>
+              <label for="createRowCheckbox">Create Row if it doesn't exist?</label>
             </div>
-          <button type="button" class="advanced-submit">Delete</button>
+          <button type="button" class="advanced-submit">Submit</button>
           <button type="button" class="undo">Undo Last Action</button>
         </div>
       </form>

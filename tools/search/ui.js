@@ -336,10 +336,65 @@ function constructPageViewer() {
 function closeAdvancedSections() {
   document.querySelectorAll('.advanced-section.open').forEach((section) => {
     section.classList.remove('open');
+    section.querySelectorAll('input[type="checkbox"]').forEach((box) => {
+      box.checked = false;
+    });
+  });
+}
+
+function addActionEventListeners(queryObject) {
+  const deleteRowButton = document.getElementById('deleteRow');
+  const editRowsButton = document.getElementById('editRow');
+  const editSection = document.getElementById('edit-section');
+  const mergeRowsButton = document.getElementById('mergeRows');
+
+  const addNewRowButton = document.getElementById('addNewRow');
+  addNewRowButton.addEventListener('click', () => {
+    closeAdvancedSections();
+    document.getElementById('add-section').classList.add('open');
+  });
+
+  deleteRowButton.addEventListener('click', () => {
+    closeAdvancedSections();
+    const deleteSection = document.getElementById('delete-section');
+    deleteSection.classList.add('open');
+    if (queryObject.scope.property) {
+      // if we know there is a property, set and disable the input
+      deleteSection.querySelector('input').value = queryObject.scope.property; 
+      //deleteSection.querySelector('input').disabled = true;
+    }
+  });
+
+  mergeRowsButton.addEventListener('click', () => {
+    // need to hide any other sections
+    closeAdvancedSections();
+    document.getElementById('merge-section').classList.add('open');
+  });
+
+  editRowsButton.addEventListener('click', () => {
+    closeAdvancedSections();
+    editSection.classList.add('open');
+  });
+  const changeRowNameBox = document.querySelector('#changeRowName');
+  changeRowNameBox?.addEventListener('click', () => {
+    if (changeRowNameBox.checked) {
+      editSection.querySelector('#newRowName').classList.add('open');
+    } else {
+      editSection.querySelector('#newRowName').classList.remove('open');
+    }
+  });
+  const changeRowValueBox = document.querySelector('#changeRowValue');
+  changeRowValueBox?.addEventListener('click', () => {
+    if (changeRowValueBox.checked) {
+      editSection.querySelector('.sub-section').classList.add('open');
+    } else {
+      editSection.querySelector('.sub-section').classList.remove('open');
+    }
   });
 }
 
 export {
+  addActionEventListeners,
   closeAdvancedSections,
   constructPageViewer,
   populateDropdowns,

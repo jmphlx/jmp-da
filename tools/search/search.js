@@ -3,8 +3,8 @@ import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 // eslint-disable-next-line import/no-unresolved
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
 import { DA_CONSTANTS } from '../../scripts/helper.js';
-import { deleteLine, doReplace, mergeRows, resetDocumentsToOriginalState } from './replace.js';
-import { closeAdvancedSections, constructPageViewer, populateDropdowns, updateActionMessage, writeOutResults } from './ui.js';
+import { addNewRow, deleteRow, doReplace, mergeRows, resetDocumentsToOriginalState } from './replace.js';
+import { addActionEventListeners, constructPageViewer, populateDropdowns, updateActionMessage, writeOutResults } from './ui.js';
 
 const daSourceUrl = 'https://admin.da.live/source';
 const defaultpath = '/jmphlx/jmp-da/en/sandbox/laurel/listgroups';
@@ -238,27 +238,35 @@ window.addEventListener('message', (event) => {
   mydialog.close();
 });
 
-function tryToPerformAction(resultsContainer) {
+function tryToPerformAction(queryObject) {
   const deleteRadio = document.querySelector('#deleteRow');
   if (deleteRadio.checked) {
     console.log('try to delete');
     console.log(window.searchResults);
-    const deleteMessage = deleteLine(token);
-    updateActionMessage(resultsContainer, deleteMessage);
-    return;
+    return deleteRow(queryObject, token);
   }
 
   const mergeRadio = document.querySelector('#mergeRows');
   const secondRow = document.querySelector('#mergeName')?.value;
     console.log(secondRow);
+    console.log(document.getElementById('createRowCheckbox'));
   if (mergeRadio.checked) {
     console.log('try to merge');
-    const message = mergeRows(token);
-    console.log(message);
-    return;
+    return mergeRows(token);
   }
 
-  console.log('no option selected');
+  const editRadio = document.getElementById('editRow');
+  if (editRadio.checked) {
+    console.log('try to edit');
+    //message = editRows(token);
+  }
+
+  const addRadio = document.getElementById('addNewRow');
+  if (addRadio.checked) {
+    return addNewRow(token);
+  }
+
+  return 'no option selected';
 }
 
 (async function init() {
@@ -322,21 +330,13 @@ function tryToPerformAction(resultsContainer) {
     const resultsContainer = document.querySelector('.results-container');
     const advancedActions = document.querySelector('#action-form');
     advancedActions?.classList.remove('hidden');
-
-    const deleteRowButton = document.querySelector('#deleteRow');
-    const appendToButton = document.querySelector('#appendToRow');
-    const mergeRowsButton = document.querySelector('#mergeRows');
-    const addNewRowButton = document.querySelector('#addNewRow');
-
-    mergeRowsButton.addEventListener('click', () => {
-      // need to hide any other sections
-      closeAdvancedSections();
-      document.querySelector('#merge-section').classList.add('open');
-    })
+    addActionEventListeners(queryObject);
 
     const advancedSubmitButton = document.querySelector('.advanced-submit');
     advancedSubmitButton.addEventListener('click', () => {
-      tryToPerformAction(resultsContainer);
+      const message = tryToPerformAction(queryObject);
+      console.log(window.searchResults);
+      updateActionMessage(resultsContainer, message);
     });
 
     const undoButton = document.querySelector('.undo');

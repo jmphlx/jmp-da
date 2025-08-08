@@ -192,13 +192,18 @@ a.button {
   display: flex;
   background-color: green;
 }
+
+.advanced-replacement-group {
+  width: 100%;
+}
+
 .advanced-section {
   display: none;
 }
 
 .advanced-section.open {
   display: flex;
-  align-items: center;
+  align-items: left;
   gap: 0.5rem;
   position: relative;
   border: 1px solid #c0c4cc;
@@ -207,6 +212,31 @@ a.button {
   background: #fff;
   box-shadow: 0 2px 6px rgba(0,0,0,0.03);
   margin: 0 10px;
+  &#edit-section {
+    flex-direction: column;
+    #newRowName {
+      display: none;
+      &.open {
+        display: inline;
+        border: 1px solid #c0c4cc;
+      }
+    }
+    .sub-section {
+      display: none;
+      &.open {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      sl-select, input {
+        margin-right: 8px;
+      }
+      #newText {
+        width: 100%;
+        border: 1px solid #c0c4cc;
+      }
+    }
+  }
 }
 
 body {
