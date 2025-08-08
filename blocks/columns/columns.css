@@ -926,6 +926,35 @@ div.clm-80-20 {
     }
   }
 }
+.pillar-author {
+  .condensed-bio {
+    padding-bottom: 0;
+    picture {
+      width: 88px !important;
+      height: 88px !important;
+      img {
+        border: 3px solid var(--blueLight);
+        aspect-ratio: 1 !important;
+      }
+    }
+    h5 {
+      font-size: 16px;
+      margin-bottom: 0 !important;
+      &:first-child {
+        margin-bottom: .25em !important;
+      }
+    }
+    p {
+      display: none;
+    }
+    @media (width <= 900px) {
+      div {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
 /* Disclaimer text */
 .disclaimer {
   div {
