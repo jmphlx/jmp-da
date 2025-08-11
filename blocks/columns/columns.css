@@ -1705,12 +1705,12 @@ div > div > div:nth-child(1){
     }
     p.button-container {
       a.button:any-link, button {
-        background-color: rgba(255, 255, 255, .15);
+        background-color: rgba(0, 0, 0, .125);
         border: 1px solid white;
         font-size: 16px;
         padding: 10px;
         min-width: 160px;
-        margin-bottom: -3px;
+        margin-bottom: -2px;
       }
     }
     h5, a, p {
@@ -1758,12 +1758,12 @@ div > div > div:nth-child(1){
     }
     p.button-container {
       a.button:any-link, button {
-        background-color: rgba(255, 255, 255, .05);
+        background-color: rgba(0, 0, 0, .125);
         border: 1px solid white;
         font-size: 16px;
         padding: 10px;
         min-width: 160px;
-        margin-bottom: -3px;
+        margin-bottom: -2px;
       }
     }
     h5, a, p {
