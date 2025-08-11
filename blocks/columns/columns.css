@@ -1688,40 +1688,101 @@ div > div > div:nth-child(1){
 }
 
 .alert-fade {
-	padding-top: 1em;
-  background: linear-gradient(-45deg, #fe0b0b, #643695, #9D57A3, #0074BE);
+	padding: 1.2rem;
+  background: linear-gradient(-45deg, #fe0b0b, #643695, #9D57A3, #0378CD);
 	background-size: 400% 400%;
 	animation: alert-gradient 19s ease-in-out infinite;
   div {
-    /* display: flex;
+    display: flex;
     justify-content: center;
-    align-items: center; */
+    gap: 16px;
+    align-items: center;
     p {
       font-family: var(--font-secondary);
       font-size: 16px;
+      margin: 0;
       color: #ffffff;
+    }
+    p.button-container {
+      a.button:any-link, button {
+        background-color: rgba(255, 255, 255, .15);
+        border: 1px solid white;
+        font-size: 16px;
+        padding: 10px;
+        min-width: 160px;
+        margin-bottom: -3px;
+      }
     }
     h5, a, p {
       color: #ffffff;
 	  }
 	}
+   @media (width <= 600px) {
+    div {
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
 }
 @keyframes alert-gradient {
   0% {background-position: 0% 50%;}
   50% {background-position: 100% 50%;}
   100% {background-position: 0% 50%;}
 }
-.section:has(.alert-fade) {
+.section:has(.alert-fade), .section:has(.alert-simple) {
   padding: 0;
   position: sticky;
   top: 63px;
   z-index: 100;
   div {
-    width: 100%;
     max-width: 100%;
     margin: 0;
   }
   @media (width <= 999px) {
     top: 77px;
+  }
+}
+.alert-simple {
+	padding: 1.2rem;
+  background: var(--blue);
+  div {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    align-items: center;
+    p {
+      font-family: var(--font-secondary);
+      font-size: 16px;
+      margin: 0;
+      color: #ffffff;
+    }
+    p.button-container {
+      a.button:any-link, button {
+        background-color: rgba(255, 255, 255, .05);
+        border: 1px solid white;
+        font-size: 16px;
+        padding: 10px;
+        min-width: 160px;
+        margin-bottom: -3px;
+      }
+    }
+    h5, a, p {
+      color: #ffffff;
+	  }
+	}
+  &.background-purple {
+    background: var(--purple);
+  }
+  &.background-gradient {
+    /* background: linear-gradient(-90deg, #fe0b0b 0%, #643695 25%, #0378CD); */
+    background:
+    linear-gradient(-20deg, var(--redLight), transparent 40%),
+    linear-gradient(-90deg, var(--purple) 60%, var(--blue));
+  }
+  @media (width <= 600px) {
+    div {
+      flex-direction: column;
+      gap: 8px;
+    }
   }
 }
