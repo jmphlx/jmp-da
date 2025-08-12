@@ -3,7 +3,7 @@ import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 // eslint-disable-next-line import/no-unresolved
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
 import { DA_CONSTANTS } from '../../scripts/helper.js';
-import { addNewRow, deleteRow, doReplace, mergeRows, resetDocumentsToOriginalState } from './replace.js';
+import { addNewRow, deleteRow, doReplace, editRows, mergeRows, resetDocumentsToOriginalState } from './replace.js';
 import { addActionEventListeners, constructPageViewer, populateDropdowns, updateActionMessage, writeOutResults } from './ui.js';
 
 const daSourceUrl = 'https://admin.da.live/source';
@@ -258,7 +258,7 @@ function tryToPerformAction(queryObject) {
   const editRadio = document.getElementById('editRow');
   if (editRadio.checked) {
     console.log('try to edit');
-    //message = editRows(token);
+    return editRows(queryObject, token);
   }
 
   const addRadio = document.getElementById('addNewRow');

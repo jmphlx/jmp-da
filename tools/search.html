@@ -108,11 +108,12 @@
                 <label for="rowValue">Change Row Value?</label>
               </div>
               <div class="sub-section">
-                <sl-select name="partialEdit">
+                <sl-select name="partialEdit" value="whole">
                   <option value="whole">Whole Value</option>
                   <option value="each">Each Item</option>
+                  <option value="keyword">Keyword (if provided)</option>
                 </sl-select>
-                <sl-select name="editTextAction">
+                <sl-select name="editTextAction" value="prepend">
                   <option value="prepend">Prepend</option>
                   <option value="append">Append</option>
                   <option value="replace">Replace</option>

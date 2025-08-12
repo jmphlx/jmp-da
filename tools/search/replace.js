@@ -134,7 +134,7 @@ function deleteRow(queryObject, token) {
       case 'attribute':
         throw new Error('not an identifiable block');
       default:
-
+        throw new Error('could not delete');
     }
     msg = 'successfully deleted';
   } catch (e) {
@@ -157,11 +157,15 @@ function addRow(block, rowName, rowContent) {
 
 function addNewRow(token) {
   try {
+    const newRowName = document.querySelector('#add-section > #newRowName').value;
+    if (!newRowName) {
+      throw new Error('no row name specified');
+    }
+    const newRowValue = document.querySelector('#add-section > #newRowValue').value;
+    if (!newRowValue) {
+      throw new Error('no row value specified');
+    }
     window.searchResults.forEach((result) => {
-      const newRowName = document.querySelector('#add-section > #newRowName').value;
-      console.log(newRowName);
-      const newRowValue = document.querySelector('#add-section > #newRowValue').value;
-
       result.elements.forEach((el) => {
         if (result.classStyle === 'property') {
           addRow(el.parentElement, newRowName, newRowValue);
@@ -180,8 +184,114 @@ function addNewRow(token) {
   return 'Successfully added row';
 }
 
+function changeRowName(rowEl, newRowName) {
+  const rowNameCell = rowEl.children[0];
+  rowNameCell.textContent = newRowName;
+}
+
+function adjustStringValue(currentText, newText, stringLocation) {
+  let newValue;
+  switch (stringLocation) {
+    case 'prepend':
+      newValue = `${newText}${currentText}`;
+      break;
+    case 'append':
+      newValue = `${currentText}${newText}`;
+      break;
+    case 'replace':
+      newValue = newText;
+      break;
+    default:
+      throw new Error('not a valid action');
+  }
+  return newValue;
+}
+
+function changeRowValue(rowEl, newTextValue, editAmount, editStringLocation, queryObject) {
+  console.log('here');
+  const rowValueCell = rowEl.children[1];
+  const currentRowValue = rowValueCell.textContent;
+
+  if (editAmount === 'each') {
+    /* For each, split the string using ',' and then add the newTextValue
+    to each item. Finally rejoin the array as string using ','
+    /* if we need to make change for each element. split string using ','
+      this will give an array. If the , isn't found it is array size 1
+      iterate over the array. For each item, check the string location.
+      prepend, append or replace. after iterating, change the textContent to
+      array.join(',')
+    */
+    const itemList = currentRowValue.split(',');
+      itemList.forEach((item, index) => {
+        itemList[index] = adjustStringValue(item, newTextValue, editStringLocation);
+      });
+    const adjustedStringList = itemList.join(',');
+    rowValueCell.textContent = adjustedStringList;
+  } else if (editAmount === 'whole') {
+    /* For whole, get add newTextValue to location and set textContent */
+   rowValueCell.textContent = adjustStringValue(currentRowValue, newTextValue, editStringLocation);
+  } else if (editAmount === 'keyword') {
+    /* For keyword, error if no keyword is provided.
+    If there is a keyword, add/replace the newTextValue to the keyword.
+    Then replace all instances of the keyword in the row with the new value. */
+    const keyword = queryObject.keyword;
+    if (!keyword) {
+      throw new Error('No Keyword provided');
+    }
+    const adjustedKeyword = adjustStringValue(keyword, newTextValue, editStringLocation);
+    // Replace all intances of the keyword in the text.
+    rowEl.innerHTML = replaceKeyword(rowEl.innerHTML, keyword, adjustedKeyword);
+  }
+}
+
+function editRows(queryObject, token) {
+  console.log('try to edit');
+  let message;
+  const doNameChange = document.getElementById('changeRowName').checked;
+  const doValueChange = document.getElementById('changeRowValue').checked;
+  console.log(`doNameChange? ${doNameChange}. doValueChange? ${doValueChange}`);
+  try {
+    if (!doNameChange && !doValueChange) {
+      throw new Error('no operation selected');
+    }
+    const resultClassStyle = window.searchResults[0]?.classStyle;
+    if (resultClassStyle !== 'property') {
+      throw new Error('property is not selected'); 
+    }
+    const newNameValue = document.querySelector('#edit-section #newRowName')?.value;
+    if (doNameChange && !newNameValue) {
+      throw new Error('no property name provided');
+    }
+    const newTextValue = document.querySelector('#edit-section #newText')?.value;
+    if (doValueChange && !newTextValue) {
+      throw new Error('no value change provided');
+    }
+    const editAmount = document.querySelector('#edit-section [name="partialEdit"]')?.value;
+    console.log(editAmount);
+    const editStringLocation = document.querySelector('#edit-section [name="editTextAction"]')?.value;
+    console.log(editStringLocation);
+    window.searchResults.forEach((result) => {
+      result.elements.forEach((el) => {
+        if (newNameValue) {
+          changeRowName(el, newNameValue);
+        }
+        if (newTextValue) {
+          changeRowValue(el, newTextValue, editAmount, editStringLocation, queryObject);
+        }
+      });
+      const htmlToUse = result.dom.querySelector('main');
+      saveToDa(htmlToUse.innerHTML, result.pagePath, token);
+    });
+  } catch (e) {
+    message = e;
+  }
+  message = "successfully updated row";
+
+  return message;
+}
+
 function mergeRows(token) {
-  const separator = ' ,';
+  const separator = ', ';
   try {
     window.searchResults.forEach((result) => {
       console.log(result);
@@ -240,6 +350,7 @@ export {
   addNewRow,
   deleteRow,
   doReplace,
+  editRows,
   escapeRegExp,
   mergeRows,
   resetDocumentsToOriginalState,
