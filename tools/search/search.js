@@ -20,7 +20,7 @@ import {
 } from './ui.js';
 
 const daSourceUrl = 'https://admin.da.live/source';
-const defaultpath = '/jmphlx/jmp-da/en/sandbox/laurel/listgroups';
+const defaultpath = '/jmphlx/jmp-da/en';
 const pathPrefix = `/${DA_CONSTANTS.org}/${DA_CONSTANTS.repo}`;
 let actions;
 let token;
