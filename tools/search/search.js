@@ -332,14 +332,18 @@ function tryToPerformAction(queryObject) {
     const duration = (endTime - startTime) * 0.001;
 
     const resultsContainer = document.querySelector('.results-container');
-    const advancedActions = document.querySelector('#action-form');
-    advancedActions?.classList.remove('hidden');
-    addActionEventListeners(queryObject);
+    const advancedActionPrompt = document.getElementById('advanced-action-prompt');
+    advancedActionPrompt?.classList.remove('hidden');
+    advancedActionPrompt.querySelector('sl-button').addEventListener('click', () => {
+      const advancedActions = document.querySelector('#action-form');
+      advancedActions?.classList.remove('hidden');
+      addActionEventListeners(queryObject);
 
-    const advancedSubmitButton = document.querySelector('.advanced-submit');
-    advancedSubmitButton.addEventListener('click', () => {
-      const message = tryToPerformAction(queryObject);
-      updateActionMessage(resultsContainer, message);
+      const advancedSubmitButton = document.querySelector('.advanced-submit');
+      advancedSubmitButton.addEventListener('click', () => {
+        const message = tryToPerformAction(queryObject);
+        updateActionMessage(resultsContainer, message);
+      });
     });
 
     const undoButton = document.querySelector('.undo');

@@ -3,6 +3,14 @@
   max-width: 900px;
 }
 
+#advanced-action-prompt {
+  display: flex;
+}
+
+#advanced-action-prompt.hidden {
+  display: none;
+}
+
 #action-form {
   display: flex;
 }
