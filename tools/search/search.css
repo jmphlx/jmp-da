@@ -3,6 +3,22 @@
   max-width: 900px;
 }
 
+#advanced-action-prompt {
+  display: flex;
+}
+
+#advanced-action-prompt.hidden {
+  display: none;
+}
+
+#action-form {
+  display: flex;
+}
+
+#action-form.hidden {
+  display: none;
+}
+
 ::backdrop {
   background: rgba(0, 0, 0, 0.4);
 }
@@ -177,6 +193,57 @@ a.button {
     border: 1px solid #ccc;
     padding: 8px;
     vertical-align: top;
+  }
+}
+
+.action-results {
+  display: flex;
+  background-color: green;
+}
+
+.advanced-replacement-group {
+  width: 100%;
+}
+
+.advanced-section {
+  display: none;
+}
+
+.advanced-section.open {
+  display: flex;
+  align-items: left;
+  gap: 0.5rem;
+  position: relative;
+  border: 1px solid #c0c4cc;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+  margin: 0 10px;
+  &#edit-section {
+    flex-direction: column;
+    #newRowName {
+      display: none;
+      &.open {
+        display: inline;
+        border: 1px solid #c0c4cc;
+      }
+    }
+    .sub-section {
+      display: none;
+      &.open {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      sl-select, input {
+        margin-right: 8px;
+      }
+      #newText {
+        width: 100%;
+        border: 1px solid #c0c4cc;
+      }
+    }
   }
 }
 

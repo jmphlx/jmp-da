@@ -2,38 +2,39 @@
 import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 // eslint-disable-next-line import/no-unresolved
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
-import { createTag, saveToDa, DA_CONSTANTS } from '../../scripts/helper.js';
+import { DA_CONSTANTS } from '../../scripts/helper.js';
+import {
+  addNewRow,
+  deleteRow,
+  doReplace,
+  editRows,
+  mergeRows,
+  resetDocumentsToOriginalState,
+} from './replace.js';
+import {
+  addActionEventListeners,
+  constructPageViewer,
+  populateDropdowns,
+  updateActionMessage,
+  writeOutResults,
+} from './ui.js';
 
 const daSourceUrl = 'https://admin.da.live/source';
-const defaultpath = '/jmphlx/jmp-da/en/sandbox/laurel/listgroups';
+const defaultpath = '/jmphlx/jmp-da/en';
 const pathPrefix = `/${DA_CONSTANTS.org}/${DA_CONSTANTS.repo}`;
 let actions;
 let token;
-const DEFAULT_PROP_LIST =   ['style', 'options'];
 
 class SearchResult {
-  constructor(item, elements, classStyle) {
+  constructor(item, elements, classStyle, dom) {
     this.path = item.path;
     // eslint-disable-next-line no-use-before-define
     this.pagePath = getPagePathFromFullUrl(item.path);
     this.elements = elements;
-    this.original = item;
+    this.dom = dom;
+    this.original = dom.cloneNode(true);
     this.classStyle = classStyle;
   }
-}
-
-function escapeRegExp(string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function highlightKeyword(text, keyword) {
-  const regex = new RegExp(`(${escapeRegExp(keyword)})`, 'gi');
-  return text.replaceAll(regex, '<mark>$1</mark>');
-}
-
-function replaceKeyword(text, keyword, replacement) {
-  const regex = new RegExp(`(${escapeRegExp(keyword)})`, 'gi');
-  return text.replaceAll(regex, replacement);
 }
 
 function getPagePathFromFullUrl(itemPath) {
@@ -45,42 +46,6 @@ function getPagePathFromFullUrl(itemPath) {
     basicItemPath = basicItemPath.substring(0, htmlExtension);
   }
   return basicItemPath;
-}
-
-async function doReplace(dom, elements, pageSourceUrl, queryObject, classStyle) {
-  console.log('doReplace');
-  const keyword = queryObject.keyword;
-  const replaceText = document.querySelector('[name="replaceText"]').value;
-
-  if (classStyle === 'attribute') {
-    // Replace only the attribute.
-    elements.forEach((el) => {
-      el[queryObject.scope.attribute] = replaceKeyword(
-        el[queryObject.scope.attribute],
-        keyword,
-        replaceText,
-      );
-    });
-  } else if (classStyle === 'tag') {
-    // Replace all instances of the keyword in the html element and all
-    // it's children (including textContent).
-    elements.forEach((el, index) => {
-      const newHTML = replaceKeyword(el.outerHTML, keyword, replaceText);
-      const newDomEl = new DOMParser().parseFromString(newHTML, 'text/html');
-      // Apparently need to update the array reference and the element itself.
-      elements[index] = newDomEl.body.firstChild;
-      el.outerHTML = newHTML;
-    });
-  } else {
-    elements.forEach((el) => {
-      // Replace all intances of the keyword in the text.
-      el.innerHTML = replaceKeyword(el.innerHTML, keyword, replaceText);
-    });
-  }
-
-  const html = dom.body.querySelector('main');
-  console.log(pageSourceUrl);
-  saveToDa(html.innerHTML, pageSourceUrl, token);
 }
 
 async function handleSearch(item, queryObject, matching, replaceFlag) {
@@ -108,6 +73,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
       const propertyName = queryObject.scope.property;
       classStyle = 'property';
       const foundProperties = Array.from(dom.querySelectorAll(`div.${blockName} p`)).filter((field) => field.children.length === 0 && field.textContent.trim() === propertyName);
+      console.log(foundProperties);
       foundProperties.forEach((prop) => {
         elements.push(prop.parentElement.parentElement);
       });
@@ -129,7 +95,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
     elements = dom.querySelectorAll(`${queryString}`);
   }
 
-  if (elements.length === 0 && queryObject.scope.property) {
+  if (elements.length === 0 && !queryObject.scope.block && queryObject.scope.property) {
     const propertyName = queryObject.scope.property;
     classStyle = 'property';
     const foundProperties = Array.from(dom.querySelectorAll('p')).filter((ele) => ele.children.length === 0 && ele.textContent.trim() === propertyName);
@@ -159,14 +125,21 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
         });
       }
       if (filtered.length) {
-        const matchingEntry = new SearchResult(item, filtered, classStyle);
+        const matchingEntry = new SearchResult(item, filtered, classStyle, dom);
         matching.push(matchingEntry);
         if (replaceFlag) {
-          doReplace(dom, filtered, getPagePathFromFullUrl(item.path), queryObject, classStyle);
+          doReplace(
+            token,
+            dom,
+            filtered,
+            getPagePathFromFullUrl(item.path),
+            queryObject,
+            classStyle,
+          );
         }
       }
     } else {
-      const matchingEntry = new SearchResult(item, elements, classStyle);
+      const matchingEntry = new SearchResult(item, elements, classStyle, dom);
       matching.push(matchingEntry);
     }
   } else if (!queryObject.scope.block && !queryObject.scope.property && queryObject.keyword) {
@@ -180,10 +153,10 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
     });
 
     if (elements.length) {
-      const matchingEntry = new SearchResult(item, elements, undefined);
+      const matchingEntry = new SearchResult(item, elements, undefined, dom);
       matching.push(matchingEntry);
       if (replaceFlag) {
-        doReplace(dom, elements, getPagePathFromFullUrl(item.path), queryObject, undefined);
+        doReplace(token, dom, elements, getPagePathFromFullUrl(item.path), queryObject, undefined);
       }
     }
   }
@@ -214,136 +187,6 @@ async function doSearch(queryObject, replaceFlag) {
   return matching;
 }
 
-function createResultItem(item, highlightTerm) {
-  const resultItem = createTag('div', { class: 'result-item' });
-  const resultHeader = createTag('div', {
-    class: 'result-header',
-  });
-  const pagePath = createTag('div', {
-    class: 'page-path',
-  }, `${item.path}`);
-
-  const link = createTag('a', {
-    href: `${DA_CONSTANTS.editUrl}${item.path.replace('.html', '')}`,
-    target: '_blank',
-  });
-
-  const openPageIcon = createTag('img', {
-    src: `${window.location.origin}/icons/new-tab-icon.svg`,
-    class: 'open-page',
-  });
-  link.append(openPageIcon);
-  resultHeader.append(pagePath, link);
-
-  resultItem.append(resultHeader);
-
-  const resultDetails = createTag('div', {
-    class: 'result-details',
-  });
-  const resultText = document.createElement('ul');
-  const elements = item.elements;
-  elements.forEach((el) => {
-    const li = createTag('li', {
-      class: `html-result ${item.classStyle}`,
-    });
-    const clone = el.cloneNode(true);
-    clone.innerHTML = highlightKeyword(clone.innerHTML, highlightTerm);
-    li.append(clone);
-    resultText.append(li);
-  });
-  resultDetails.append(resultText);
-  resultItem.append(resultDetails);
-
-  resultItem.addEventListener('click', function (e) {
-    e.stopPropagation();
-    if (this.classList.contains('open')) {
-      this.classList.remove('open');
-    } else {
-      this.classList.add('open');
-    }
-  });
-
-  return resultItem;
-}
-
-async function copyToClipboard(button, clipboardTxt, copyTxt) {
-  try {
-    await navigator.clipboard.writeText(clipboardTxt);
-    button.setAttribute('title', copyTxt);
-    button.setAttribute('aria-label', copyTxt);
-
-    const tooltip = createTag('div', { role: 'status', 'aria-live': 'polite', class: 'copied-to-clipboard' }, copyTxt);
-    button.parentElement.append(tooltip);
-
-    setTimeout(() => {
-      /* c8 ignore next 1 */
-      tooltip.remove();
-    }, 3000);
-    button.classList.remove('copy-failure');
-    button.classList.add('copy-success');
-  } catch (e) {
-    console.log(e);
-    button.classList.add('copy-failure');
-    button.classList.remove('copy-success');
-  }
-}
-
-function writeOutResults(results, queryString, queryObject, duration, replaceFlag) {
-  const highlightTerm = replaceFlag
-    ? document.querySelector('[name="replaceText"]').value : queryObject.keyword;
-
-  const resultsContainer = document.querySelector('.results-container');
-  resultsContainer.innerHTML = '';
-
-  const resultsHeader = document.createElement('h2');
-  resultsHeader.classList.add('results-header');
-  resultsHeader.textContent = `Search Results for "${queryString}"`;
-  const resultsData = document.createElement('div');
-
-  const urlList = [];
-
-  const resultsList = document.createElement('div');
-  resultsList.classList.add('results-list');
-  results.forEach((item) => {
-    const resultItem = createResultItem(item, highlightTerm);
-    resultsList.append(resultItem);
-    urlList.push(`${DA_CONSTANTS.previewUrl}${item.pagePath}`);
-  });
-
-  const searchSummary = document.createElement('span');
-  searchSummary.classList.add('summary');
-  searchSummary.textContent = `${results.length} found for "${queryString}"`;
-
-  const searchTime = document.createElement('span');
-  searchTime.classList.add('search-time');
-  searchTime.textContent = `Search completed in ${duration.toFixed(2)} seconds`;
-
-  const copyContainer = createTag('span', {
-    id: 'copy-to-clipboard',
-  });
-
-  const copyButton = createTag('p', {
-    class: 'button-container',
-  });
-  copyButton.textContent = 'Copy Result URLs To Clipboard';
-  copyContainer.append(copyButton);
-  copyContainer.addEventListener('click', () => {
-    copyToClipboard(copyButton, urlList.join('\n'), 'Copied');
-  });
-
-  const bulkEditorButton = createTag('a', {
-    class: 'button',
-    href: 'https://da.live/apps/bulk',
-    target: '_blank',
-  }, 'Open Bulk Operations Tool');
-  copyContainer.append(bulkEditorButton);
-
-  resultsData.append(searchSummary, searchTime, copyContainer);
-
-  resultsContainer.append(resultsHeader, resultsData, resultsList);
-  document.body.append(resultsContainer);
-}
-
 function getQuery() {
   const queryString = document.querySelector('[name="searchTerms"]').value;
 
@@ -367,139 +210,6 @@ function getQuery() {
   scope.path = pathField;
 
   return { scope, keyword: keyword.trim() };
-}
-
-function buildParentDropdown(dropdown, jsonData, type) {
-  jsonData.forEach((option) => {
-    const optionValue = option[type].toLowerCase();
-    if (optionValue !== 'default') {
-      const optionElement = createTag('option', {
-        value: optionValue,
-      }, optionValue);
-      dropdown.append(optionElement);
-    }
-  });
-}
-
-function buildPropertiesDropdown(dropdown, nodeName) {
-  // Remove any existing items
-  const shadowRoot = dropdown.shadowRoot;
-  const currOptions = shadowRoot.querySelectorAll('option');
-  currOptions?.forEach((opt) => {
-    if (opt.value) {
-      opt.remove();
-    }
-  });
-  let propertyList;
-  window.blockProperties.forEach((block) => {
-    if (block.name.toLowerCase() === nodeName) {
-      propertyList = block.property.split(',');
-    }
-  });
-  if (!propertyList || !propertyList[0].length) {
-    propertyList = DEFAULT_PROP_LIST;
-  }
-  propertyList?.forEach((prop) => {
-    const optionValue = prop.trim();
-    const optionElement = createTag('option', {
-      value: optionValue,
-      class: 'prop-option',
-    }, optionValue);
-    dropdown.append(optionElement);
-  });
-}
-
-function buildAttributeDropdown(dropdown, nodeName) {
-  // Remove any existing items
-  const shadowRoot = dropdown.shadowRoot;
-  const currOptions = shadowRoot.querySelectorAll('option');
-  currOptions?.forEach((opt) => {
-    if (opt.value) {
-      opt.remove();
-    }
-  });
-  let attributeList;
-  window.tagAttribute.forEach((tag) => {
-    if (tag.tag === nodeName) {
-      attributeList = tag.attribute.split(',');
-    }
-  });
-  if (!attributeList || !attributeList[0].length) {
-    attributeList = window.tagAttribute[0].attribute.split(',');
-  }
-  attributeList?.forEach((attr) => {
-    const optionValue = attr.trim();
-    const optionElement = createTag('option', {
-      value: optionValue,
-      class: 'attr-option',
-    }, optionValue);
-    dropdown.append(optionElement);
-  });
-}
-
-// escape regex metacharacters in the variable
-function escapeRegex(str) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-// builds a lookbehind regex for e.g. "property", "block", etc.
-function makeLookbehindRegex(keyword, flags = 'gi') {
-  const esc = escapeRegex(keyword);
-  // Note: lookbehind must be supported in your runtime
-  return new RegExp(`(?<=${esc}:)\\S+`, flags);
-}
-
-function updateSearchTerms(searchInputField, category, termValue) {
-  const currentValue = searchInputField.value;
-  const exp = makeLookbehindRegex(category);
-  if (currentValue) {
-    // Need to check if scope is already in field. If so,  change it.
-    if (currentValue.match(exp)) {
-      if (!termValue.length) {
-        const adjustedField = currentValue.replace(exp, termValue);
-        searchInputField.value = adjustedField.replace(`${category}:`, '');
-      } else {
-        searchInputField.value = currentValue.replace(exp, termValue);
-      }
-    } else {
-      searchInputField.value += ` ${category}:${termValue}`;
-    }
-  } else {
-    searchInputField.value = `${category}:${termValue}`;
-  }
-}
-
-async function populateDropdowns(searchInputField) {
-  // Do Block
-  const blockDropdown = document.querySelector('[name="block_scope"]');
-  buildParentDropdown(blockDropdown, window.blockProperties, 'name');
-
-  const propertyDrop = document.querySelector('[name="property_scope"]');
-  buildPropertiesDropdown(propertyDrop, 'default');
-
-  blockDropdown.addEventListener('change', () => {
-    buildPropertiesDropdown(propertyDrop, blockDropdown.value);
-    updateSearchTerms(searchInputField, 'block', blockDropdown.value);
-  });
-
-  propertyDrop.addEventListener('change', () => {
-    updateSearchTerms(searchInputField, 'property', propertyDrop.value);
-  });
-
-  const tagDropdown = document.querySelector('[name="tag_scope"]');
-  buildParentDropdown(tagDropdown, window.tagAttribute, 'tag');
-
-  const attributeDropdown = document.querySelector('[name="attribute_scope"]');
-  buildAttributeDropdown(attributeDropdown, 'default');
-
-  tagDropdown.addEventListener('change', () => {
-    buildAttributeDropdown(attributeDropdown, tagDropdown.value);
-    updateSearchTerms(searchInputField, 'tag', tagDropdown.value);
-  });
-
-  attributeDropdown.addEventListener('change', () => {
-    updateSearchTerms(searchInputField, 'attribute', attributeDropdown.value);
-  });
 }
 
 async function getConfigurations() {
@@ -528,10 +238,7 @@ async function getConfigurations() {
 window.addEventListener('message', (event) => {
   if (event.origin === 'http://localhost:3000'
     || event.origin === 'https://www.jmp.com'
-    || event.origin === 'https://main--jmp-da--jmphlx.aem.live'
-    || event.origin === 'https://aem-819-v2--jmp-da--jmphlx.aem.live') {
-    console.log('Got my own message');
-    console.log(event.origin);
+    || event.origin === 'https://main--jmp-da--jmphlx.aem.live') {
     const singleInput = document.getElementById('page-path-input');
     if (event.data.length) {
       singleInput.value = event.data;
@@ -546,65 +253,36 @@ window.addEventListener('message', (event) => {
   mydialog.close();
 });
 
-function setupbar() {
-  const input = document.getElementById('page-path-input');
-  const toggleBtn = document.getElementById('toggle-edit');
-  const lockIcon = document.getElementById('icon-lock');
-
-  let editable = false;
-
-  function updateLockIcon() {
-    if (editable) {
-      // unlocked
-      lockIcon.setAttribute('stroke', '#ff5000');
-      lockIcon.innerHTML = `
-        <path d="M16 11V7a4 4 0 1 0-8 0"></path>
-        <rect x="5" y="11" width="14" height="10" rx="2" ry="2"></rect>
-      `;
-      toggleBtn.setAttribute('aria-label', 'Disable editing');
-      toggleBtn.setAttribute('aria-pressed', 'true');
-      toggleBtn.title = 'Disable editing';
-    } else {
-      // locked
-      lockIcon.setAttribute('stroke', 'currentcolor');
-      lockIcon.innerHTML = `
-        <path d="M8 11V7a4 4 0 1 1 8 0v4"></path>
-        <rect x="5" y="11" width="14" height="10" rx="2" ry="2"></rect>
-      `;
-      toggleBtn.setAttribute('aria-label', 'Enable editing');
-      toggleBtn.setAttribute('aria-pressed', 'false');
-      toggleBtn.title = 'Enable editing';
-    }
+function tryToPerformAction(queryObject) {
+  const deleteRadio = document.querySelector('#deleteRow');
+  if (deleteRadio.checked) {
+    return deleteRow(queryObject, token);
   }
 
-  toggleBtn.addEventListener('click', () => {
-    editable = !editable;
-    input.disabled = !editable;
-    if (editable) {
-      input.focus();
-      input.setSelectionRange(input.value.length, input.value.length);
-    }
-    updateLockIcon();
-  });
+  const mergeRadio = document.querySelector('#mergeRows');
+  if (mergeRadio.checked) {
+    return mergeRows(token);
+  }
 
-  // Optional: Enter toggles off editing if empty blur behavior
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      input.blur();
-      editable = false;
-      input.disabled = true;
-      updateLockIcon();
-    }
-  });
+  const editRadio = document.getElementById('editRow');
+  if (editRadio.checked) {
+    return editRows(queryObject, token);
+  }
+
+  const addRadio = document.getElementById('addNewRow');
+  if (addRadio.checked) {
+    return addNewRow(token);
+  }
+
+  return 'no option selected';
 }
 
 (async function init() {
-  console.log('in init');
   const sdk = await DA_SDK;
   actions = sdk.actions;
   token = sdk.token;
 
-  setupbar();
+  constructPageViewer();
 
   const mybutton = document.querySelector('#mybutton');
   mybutton.addEventListener('click', () => {
@@ -644,16 +322,35 @@ function setupbar() {
 
     // Get Search Terms.
     const queryObject = getQuery();
-    console.log(queryObject);
 
     const queryString = document.querySelector('[name="searchTerms"]').value;
 
     // Do Search.
-    console.log(replaceFlag);
     const results = await doSearch(queryObject, replaceFlag);
     window.searchResults = results;
     const endTime = performance.now();
     const duration = (endTime - startTime) * 0.001;
+
+    const resultsContainer = document.querySelector('.results-container');
+    const advancedActionPrompt = document.getElementById('advanced-action-prompt');
+    advancedActionPrompt?.classList.remove('hidden');
+    advancedActionPrompt.querySelector('sl-button').addEventListener('click', () => {
+      const advancedActions = document.querySelector('#action-form');
+      advancedActions?.classList.remove('hidden');
+      addActionEventListeners(queryObject);
+
+      const advancedSubmitButton = document.querySelector('.advanced-submit');
+      advancedSubmitButton.addEventListener('click', () => {
+        const message = tryToPerformAction(queryObject);
+        updateActionMessage(resultsContainer, message);
+      });
+    });
+
+    const undoButton = document.querySelector('.undo');
+    undoButton.addEventListener('click', () => {
+      resetDocumentsToOriginalState(token);
+      updateActionMessage(resultsContainer, 'Successfully Undone');
+    });
 
     // Output results.
     writeOutResults(results, queryString, queryObject, duration, replaceFlag);
