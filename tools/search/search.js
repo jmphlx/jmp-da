@@ -3,8 +3,21 @@ import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 // eslint-disable-next-line import/no-unresolved
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
 import { DA_CONSTANTS } from '../../scripts/helper.js';
-import { addNewRow, deleteRow, doReplace, editRows, mergeRows, resetDocumentsToOriginalState } from './replace.js';
-import { addActionEventListeners, constructPageViewer, populateDropdowns, updateActionMessage, writeOutResults } from './ui.js';
+import {
+  addNewRow,
+  deleteRow,
+  doReplace,
+  editRows,
+  mergeRows,
+  resetDocumentsToOriginalState,
+} from './replace.js';
+import {
+  addActionEventListeners,
+  constructPageViewer,
+  populateDropdowns,
+  updateActionMessage,
+  writeOutResults,
+} from './ui.js';
 
 const daSourceUrl = 'https://admin.da.live/source';
 const defaultpath = '/jmphlx/jmp-da/en/sandbox/laurel/listgroups';
@@ -18,7 +31,6 @@ class SearchResult {
     // eslint-disable-next-line no-use-before-define
     this.pagePath = getPagePathFromFullUrl(item.path);
     this.elements = elements;
-    console.log(JSON.stringify(item));
     this.dom = dom;
     this.original = dom.cloneNode(true);
     this.classStyle = classStyle;
@@ -113,11 +125,17 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
         });
       }
       if (filtered.length) {
-        console.log(dom);
         const matchingEntry = new SearchResult(item, filtered, classStyle, dom);
         matching.push(matchingEntry);
         if (replaceFlag) {
-          doReplace(token, dom, filtered, getPagePathFromFullUrl(item.path), queryObject, classStyle);
+          doReplace(
+            token,
+            dom,
+            filtered,
+            getPagePathFromFullUrl(item.path),
+            queryObject,
+            classStyle,
+          );
         }
       }
     } else {
@@ -220,10 +238,7 @@ async function getConfigurations() {
 window.addEventListener('message', (event) => {
   if (event.origin === 'http://localhost:3000'
     || event.origin === 'https://www.jmp.com'
-    || event.origin === 'https://main--jmp-da--jmphlx.aem.live'
-    || event.origin === 'https://aem-819-v2--jmp-da--jmphlx.aem.live') {
-    console.log('Got my own message');
-    console.log(event.origin);
+    || event.origin === 'https://main--jmp-da--jmphlx.aem.live') {
     const singleInput = document.getElementById('page-path-input');
     if (event.data.length) {
       singleInput.value = event.data;
@@ -241,23 +256,16 @@ window.addEventListener('message', (event) => {
 function tryToPerformAction(queryObject) {
   const deleteRadio = document.querySelector('#deleteRow');
   if (deleteRadio.checked) {
-    console.log('try to delete');
-    console.log(window.searchResults);
     return deleteRow(queryObject, token);
   }
 
   const mergeRadio = document.querySelector('#mergeRows');
-  const secondRow = document.querySelector('#mergeName')?.value;
-    console.log(secondRow);
-    console.log(document.getElementById('createRowCheckbox'));
   if (mergeRadio.checked) {
-    console.log('try to merge');
     return mergeRows(token);
   }
 
   const editRadio = document.getElementById('editRow');
   if (editRadio.checked) {
-    console.log('try to edit');
     return editRows(queryObject, token);
   }
 
@@ -270,7 +278,6 @@ function tryToPerformAction(queryObject) {
 }
 
 (async function init() {
-  console.log('in init');
   const sdk = await DA_SDK;
   actions = sdk.actions;
   token = sdk.token;
@@ -315,18 +322,15 @@ function tryToPerformAction(queryObject) {
 
     // Get Search Terms.
     const queryObject = getQuery();
-    console.log(queryObject);
 
     const queryString = document.querySelector('[name="searchTerms"]').value;
 
     // Do Search.
-    console.log(replaceFlag);
     const results = await doSearch(queryObject, replaceFlag);
     window.searchResults = results;
     const endTime = performance.now();
     const duration = (endTime - startTime) * 0.001;
 
-   
     const resultsContainer = document.querySelector('.results-container');
     const advancedActions = document.querySelector('#action-form');
     advancedActions?.classList.remove('hidden');
@@ -335,7 +339,6 @@ function tryToPerformAction(queryObject) {
     const advancedSubmitButton = document.querySelector('.advanced-submit');
     advancedSubmitButton.addEventListener('click', () => {
       const message = tryToPerformAction(queryObject);
-      console.log(window.searchResults);
       updateActionMessage(resultsContainer, message);
     });
 

@@ -10,7 +10,6 @@ function replaceKeyword(text, keyword, replacement) {
 }
 
 async function doReplace(token, dom, elements, pageSourceUrl, queryObject, classStyle) {
-  console.log('doReplace');
   const keyword = queryObject.keyword;
   const replaceText = document.querySelector('[name="replaceText"]').value;
 
@@ -41,7 +40,6 @@ async function doReplace(token, dom, elements, pageSourceUrl, queryObject, class
   }
 
   const html = dom.body.querySelector('main');
-  console.log(pageSourceUrl);
   saveToDa(html.innerHTML, pageSourceUrl, token);
 }
 
@@ -53,7 +51,6 @@ function resetDocumentsToOriginalState(token) {
 }
 
 function findLine(parentEl, propertyName) {
-  console.log(propertyName);
   let line;
   const foundProperties = Array.from(parentEl.querySelectorAll('p')).filter((ele) => ele.children.length === 0 && ele.textContent.trim() === propertyName);
   foundProperties.forEach((prop) => {
@@ -77,18 +74,15 @@ function deleteLineFromBlock(block, rowName) {
 }
 
 function deleteFromPropertyElement(token, rowName) {
-  console.log(window.searchResults);
   window.searchResults.forEach((result) => {
     result.elements.forEach((el) => {
       if (!rowName) {
         deleteLine(el);
       } else {
         deleteLineFromBlock(el.parentElement, rowName);
-        
       }
     });
     const htmlToUse = result.dom.querySelector('main');
-    console.log(htmlToUse);
     saveToDa(htmlToUse.innerHTML, result.pagePath, token);
   });
 }
@@ -110,16 +104,13 @@ function deleteRow(queryObject, token) {
     const resultClassStyle = window.searchResults[0]?.classStyle;
     switch (resultClassStyle) {
       case 'property':
-        // do stuff
         if (!deleteRowName) {
           throw new Error('Row name cannot be blank');
         }
         if (queryObject.scope.property === deleteRowName) {
-          console.log('row is the same as the search result');
           deleteFromPropertyElement(token, undefined);
         } else {
-          //try to find the element in the block.
-          console.log('not the same. look for element');
+          // try to find the element in the block.
           deleteFromPropertyElement(token, deleteRowName);
         }
         break;
@@ -127,7 +118,7 @@ function deleteRow(queryObject, token) {
         if (!deleteRowName) {
           throw new Error('Row name cannot be blank.');
         }
-        deleteFromBlockElement(token, rowName);
+        deleteFromBlockElement(token, deleteRowName);
         break;
       case 'tag':
         throw new Error('not an identifiable block');
@@ -208,7 +199,6 @@ function adjustStringValue(currentText, newText, stringLocation) {
 }
 
 function changeRowValue(rowEl, newTextValue, editAmount, editStringLocation, queryObject) {
-  console.log('here');
   const rowValueCell = rowEl.children[1];
   const currentRowValue = rowValueCell.textContent;
 
@@ -222,14 +212,14 @@ function changeRowValue(rowEl, newTextValue, editAmount, editStringLocation, que
       array.join(',')
     */
     const itemList = currentRowValue.split(',');
-      itemList.forEach((item, index) => {
-        itemList[index] = adjustStringValue(item, newTextValue, editStringLocation);
-      });
+    itemList.forEach((item, index) => {
+      itemList[index] = adjustStringValue(item, newTextValue, editStringLocation);
+    });
     const adjustedStringList = itemList.join(',');
     rowValueCell.textContent = adjustedStringList;
   } else if (editAmount === 'whole') {
     /* For whole, get add newTextValue to location and set textContent */
-   rowValueCell.textContent = adjustStringValue(currentRowValue, newTextValue, editStringLocation);
+    rowValueCell.textContent = adjustStringValue(currentRowValue, newTextValue, editStringLocation);
   } else if (editAmount === 'keyword') {
     /* For keyword, error if no keyword is provided.
     If there is a keyword, add/replace the newTextValue to the keyword.
@@ -245,18 +235,16 @@ function changeRowValue(rowEl, newTextValue, editAmount, editStringLocation, que
 }
 
 function editRows(queryObject, token) {
-  console.log('try to edit');
   let message;
   const doNameChange = document.getElementById('changeRowName').checked;
   const doValueChange = document.getElementById('changeRowValue').checked;
-  console.log(`doNameChange? ${doNameChange}. doValueChange? ${doValueChange}`);
   try {
     if (!doNameChange && !doValueChange) {
       throw new Error('no operation selected');
     }
     const resultClassStyle = window.searchResults[0]?.classStyle;
     if (resultClassStyle !== 'property') {
-      throw new Error('property is not selected'); 
+      throw new Error('property is not selected');
     }
     const newNameValue = document.querySelector('#edit-section #newRowName')?.value;
     if (doNameChange && !newNameValue) {
@@ -267,9 +255,7 @@ function editRows(queryObject, token) {
       throw new Error('no value change provided');
     }
     const editAmount = document.querySelector('#edit-section [name="partialEdit"]')?.value;
-    console.log(editAmount);
     const editStringLocation = document.querySelector('#edit-section [name="editTextAction"]')?.value;
-    console.log(editStringLocation);
     window.searchResults.forEach((result) => {
       result.elements.forEach((el) => {
         if (newNameValue) {
@@ -285,7 +271,7 @@ function editRows(queryObject, token) {
   } catch (e) {
     message = e;
   }
-  message = "successfully updated row";
+  message = 'successfully updated row';
 
   return message;
 }
@@ -294,49 +280,39 @@ function mergeRows(token) {
   const separator = ', ';
   try {
     window.searchResults.forEach((result) => {
-      console.log(result);
       const objectType = result.classStyle;
       if (objectType !== 'property') {
         throw new Error('need a single propery to merge');
       }
       const secondRow = document.querySelector('#mergeName')?.value;
-      console.log(secondRow);
       result.elements.forEach((el) => {
-        console.log(el.parentElement);
         if (!el.parentElement) {
           throw new Error('invalid parent element');
         }
         const mergeLine = findLine(el.parentElement, secondRow);
-        console.log(mergeLine);
         if (mergeLine) {
           const oldMergeLineContent = mergeLine.children[1]?.textContent;
           /* Have the row it needs to go in.
           Get the found content from el and append it to the oldMerge.
-          and save that value. */ 
-          console.log(oldMergeLineContent);
+          and save that value. */
           const currElContent = el.children[1]?.textContent;
-          console.log(currElContent);
           const newContentString = oldMergeLineContent + separator + currElContent;
-          console.log(newContentString);
-          console.log(mergeLine.children[1]);
-          console.log(mergeLine.children[1].querySelector('p').textContent);
           mergeLine.children[1].querySelector('p').textContent = newContentString;
         } else {
           /* If there is no line in the block, look
-          at the value of the checkbox. If it is checked. 
+          at the value of the checkbox. If it is checked.
           Add a new row with the secondRow as the name and el value
           as it's value.
           */
           if (!document.getElementById('createRowCheckbox').checked) {
-          //do not replace.
-          throw new Error('Did not specify that new row should be created');
+            // do not replace.
+            throw new Error('Did not specify that new row should be created');
           }
           addRow(el.parentElement, secondRow, el.children[1]?.textContent);
         }
         // row has either been updated or created, delete the source row
         deleteLine(el);
       });
-      console.log(result.dom);
       const htmlToUse = result.dom.querySelector('main');
       saveToDa(htmlToUse.innerHTML, result.pagePath, token);
     });

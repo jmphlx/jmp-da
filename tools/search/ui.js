@@ -1,7 +1,7 @@
 import { createTag, DA_CONSTANTS } from '../../scripts/helper.js';
 import { escapeRegExp } from './replace.js';
 
-const DEFAULT_PROP_LIST =   ['style', 'options'];
+const DEFAULT_PROP_LIST = ['style', 'options'];
 
 // escape regex metacharacters in the variable
 function escapeRegex(str) {
@@ -360,8 +360,8 @@ function addActionEventListeners(queryObject) {
     deleteSection.classList.add('open');
     if (queryObject.scope.property) {
       // if we know there is a property, set and disable the input
-      deleteSection.querySelector('input').value = queryObject.scope.property; 
-      //deleteSection.querySelector('input').disabled = true;
+      deleteSection.querySelector('input').value = queryObject.scope.property;
+      // deleteSection.querySelector('input').disabled = true;
     }
   });
 
