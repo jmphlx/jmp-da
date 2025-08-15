@@ -89,6 +89,24 @@
     }
   }
 }
+.cards-3-col {
+  > ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2%;
+    position: relative;
+    justify-content: space-between;
+    > li {
+      border: 1px solid var(--grayRule);
+      border-radius: 5px;
+      width: 31.75%;
+      min-height: 250px;
+      display: flex;
+      position: relative;
+      margin-bottom: 2%;
+    }
+  }
+}
 
 .cards > ul > li img {
   width: 100%;
@@ -776,9 +794,9 @@
           font-size: var(--heading-font-size-m);
           font-family: "anova-regular", sans-serif;
         }
-        p {
+        /* p {
           margin-bottom: 0 !important;
-        }
+        } */
       }
       .cards-card-body:nth-child(1) {
         padding: 0;
