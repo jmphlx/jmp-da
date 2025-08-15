@@ -141,12 +141,12 @@ async function populateDropdowns(searchInputField) {
   });
 }
 
-function updateActionMessage(resultsContainer, msg) {
+function updateActionMessage(resultsContainer, result) {
   resultsContainer.querySelector('.action-results')?.remove();
   const actionMessage = createTag('span', {
-    class: 'action-results',
+    class: `action-results ${result.status}`,
   });
-  actionMessage.textContent = msg;
+  actionMessage.textContent = result.message;
   resultsContainer.prepend(actionMessage);
 }
 

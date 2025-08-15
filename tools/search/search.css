@@ -327,9 +327,14 @@ a.button {
   }
 }
 
-.action-results {
+.action-results.success {
   display: flex;
   background-color: green;
+}
+
+.action-results.error {
+  display: flex;
+  background-color: red;
 }
 
 .advanced-replacement-group {

@@ -4,6 +4,7 @@ import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
 import { DA_CONSTANTS } from '../../scripts/helper.js';
 import {
+  ActionResult,
   addNewRow,
   deleteRow,
   doReplace,
@@ -348,8 +349,14 @@ function tryToPerformAction(queryObject) {
 
     const undoButton = document.querySelector('.undo');
     undoButton.addEventListener('click', () => {
-      resetDocumentsToOriginalState(token);
-      updateActionMessage(resultsContainer, 'Successfully Undone');
+      let resetResult;
+      try {
+        resetDocumentsToOriginalState(token);
+        resetResult = new ActionResult('success', 'Successfully Undone');
+      } catch (e) {
+        resetResult = new ActionResult('error', e);
+      }
+      updateActionMessage(resultsContainer, resetResult);
     });
 
     // Output results.
