@@ -1,5 +1,12 @@
 import { saveToDa, createTag } from '../../scripts/helper.js';
 
+class ActionResult {
+  constructor(status, message) {
+    this.status = status;
+    this.message = message;
+  }
+}
+
 function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
@@ -98,7 +105,6 @@ function deleteFromBlockElement(token, rowName) {
 }
 
 function deleteRow(queryObject, token) {
-  let msg;
   try {
     const deleteRowName = document.getElementById('deleteRowName').value;
     const resultClassStyle = window.searchResults[0]?.classStyle;
@@ -127,11 +133,10 @@ function deleteRow(queryObject, token) {
       default:
         throw new Error('could not delete');
     }
-    msg = 'successfully deleted';
   } catch (e) {
-    msg = e;
+    return new ActionResult('error', e);
   }
-  return msg;
+  return new ActionResult('success', 'Successfully Deleted');
 }
 
 function addRow(block, rowName, rowContent) {
@@ -170,9 +175,9 @@ function addNewRow(token) {
       saveToDa(htmlToUse.innerHTML, result.pagePath, token);
     });
   } catch (e) {
-    return e;
+    return new ActionResult('error', e);
   }
-  return 'Successfully added row';
+  return new ActionResult('success', 'Successfully added row');
 }
 
 function changeRowName(rowEl, newRowName) {
@@ -235,7 +240,6 @@ function changeRowValue(rowEl, newTextValue, editAmount, editStringLocation, que
 }
 
 function editRows(queryObject, token) {
-  let message;
   const doNameChange = document.getElementById('changeRowName').checked;
   const doValueChange = document.getElementById('changeRowValue').checked;
   try {
@@ -269,11 +273,9 @@ function editRows(queryObject, token) {
       saveToDa(htmlToUse.innerHTML, result.pagePath, token);
     });
   } catch (e) {
-    message = e;
+    return new ActionResult('error', e);
   }
-  message = 'successfully updated row';
-
-  return message;
+  return new ActionResult('success', 'Successfully updated row');
 }
 
 function mergeRows(token) {
@@ -317,12 +319,13 @@ function mergeRows(token) {
       saveToDa(htmlToUse.innerHTML, result.pagePath, token);
     });
   } catch (e) {
-    return e;
+    return new ActionResult('error', e);
   }
-  return 'success';
+  return new ActionResult('success', 'Successfully merged');
 }
 
 export {
+  ActionResult,
   addNewRow,
   deleteRow,
   doReplace,
