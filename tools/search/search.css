@@ -44,9 +44,9 @@
     sl-input {
       margin-bottom: 1rem;
     }
-    label {
+    /* label {
       margin-bottom: 8px;
-    }
+    } */
     sl-button {
       margin-bottom: 1rem;
     }
@@ -181,15 +181,16 @@
 }
 
 dialog {
-  width: 500px;
-  height: 500px;
+  width: fit-content;
+  height: 610px;
   padding: 1rem;
   border: none;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
   iframe {
     width: 500px;
-    height: 500px;
+    height: 599px;
+    border: none;
   }
 }
 
@@ -329,7 +330,8 @@ a.button {
 .result-details .block {
   div {
     display: block;
-    width: 100%;
+    width: unset;
+    padding-right: 2rem;
     border-collapse: collapse;
   }
 
@@ -369,6 +371,9 @@ a.button {
 .action-results.success {
   display: flex;
   background-color: green;
+  color: white;
+  padding: 4px 4px 4px 8px;
+  margin-bottom: 1rem;
 }
 
 .action-results.error {
