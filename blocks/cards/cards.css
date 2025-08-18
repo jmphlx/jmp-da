@@ -813,7 +813,7 @@
         border: 1px solid var(--blue) !important;
         &:hover {
           :before {
-            transform: scale(35);
+            transform: scale(40);
           }
         }
         &:before {
