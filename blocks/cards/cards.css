@@ -844,6 +844,17 @@
       }
     }
   }
+  &.cards-1-col {
+    li:has(a) {
+      &:hover {
+        &:hover {
+          :before {
+            transform: scale(60);
+          }
+        }
+      }
+    }
+  }
 }
 
 .hover-card-2 {
