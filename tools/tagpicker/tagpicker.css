@@ -29,9 +29,12 @@ body {
         &:hover {
           background-color: #f4f4f4;
         }
+        ul.children li:before {
+          display: none;
+        }
       }
       li.open {
-        background-color: #f4f4f4;
+        background-color: #fafafa;
       }
     }
   }
