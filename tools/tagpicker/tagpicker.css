@@ -1,5 +1,40 @@
 body {
   font-family: "anova-light", arial, helvetica, sans-serif;
+  h2 {
+    margin: 1rem;
+    font-family: "anova-regular", arial, helvetica, sans-serif;
+  }
+  div.menu-container {
+    width: 48%;
+    margin-right: 2%;
+    float: left;
+    ul {
+      padding-left: 1rem;
+      li {
+        background-color: #fafafa;
+        &:before {
+          content: '';
+          display: inline-block;
+          transform: translateY(-40%) rotate(135deg);
+          width: 8px;
+          height: 8px;
+          border: 2px solid #333333;
+          border-radius: 0 1px 0 0;
+          border-width: 3px 3px 0 0;
+          position: inherit;
+          transition: all 0.35s ease;
+          display: inline-block;
+          margin: 0 8px;
+        }
+        &:hover {
+          background-color: #f4f4f4;
+        }
+      }
+      li.open {
+        background-color: #f4f4f4;
+      }
+    }
+  }
 }
 
 ul {
@@ -14,14 +49,25 @@ li {
 }
 
 .toggle::before {
-  content: '▶';
+  /* content: '▶'; */
+  content: '';
   display: inline-block;
   margin-right: 5px;
-  transition: transform 0.2s;
+  display: inline-block;
+  transform: translateY(-40%) rotate(135deg);
+  width: 8px;
+  height: 8px;
+  border: 2px solid #333333;
+  border-radius: 0 1px 0 0;
+  border-width: 2px 2px 0 0;
+  position: inherit;
+  transition: all 0.35s ease;
+  display: inline-block;
 }
 
 .open > .toggle::before {
-  content: '▼';
+  /* content: '▼'; */
+  transform: rotate(315deg);
 }
 
 .children {
