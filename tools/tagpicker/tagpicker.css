@@ -2,7 +2,7 @@ body {
   font-family: "anova-light", arial, helvetica, sans-serif;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 60px 88px 64px min-content auto;
+  grid-template-rows: 48px 88px 64px min-content auto;
   gap: 16px;
   h2 {
     margin: 1rem;
@@ -61,6 +61,21 @@ body {
   div#button-container {
     grid-column: 2;
     grid-row: 3;
+    button {
+      &:nth-child(1) {
+        background-color: #0378CD;
+        color: white;
+        border: 2px solid transparent;
+      }
+      &:nth-child(2) {
+        background-color: #fafafa;
+        color: #333333;
+        border: 2px solid #cccccc;
+        &:hover {
+          background-color: #f4f4f4;
+        }
+      }
+    }
   }
   #selected-tag {
     display: inline-block;
@@ -203,7 +218,7 @@ li {
 
 button {
   display: inline-block;
-  background-color: #0378CD;
+  background-color: #ff5000;
   font-weight: bold;
   color: white;
   box-sizing: border-box;
@@ -218,12 +233,7 @@ button {
   border-radius: 5px;
   transition: all .35s;
   margin: 0.25em;
-  &:nth-child(2) {
-    background-color: #fafafa;
-    color: #333333;
-    &:hover {
-      background-color: #f4f4f4;
-    }
+  &:hover {
+    background-color: #d94500;
   }
 }
-
