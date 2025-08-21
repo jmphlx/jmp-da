@@ -96,6 +96,7 @@ body {
     transition: all .35s;
     margin: 0.25em;
     &.tag-added {
+      font-family: "anova-regular", arial, helvetica, sans-serif;
       display: inline-block;
       box-sizing: border-box;
       text-decoration: none;
@@ -121,6 +122,7 @@ body {
       font-weight: normal;
       padding: 16px 0 0 0;
       li {
+        font-family: "anova-regular", arial, helvetica, sans-serif;
         display: inline-block;
         box-sizing: border-box;
         text-decoration: none;
@@ -165,15 +167,15 @@ li {
   cursor: pointer;
 }
 
-.toggle::before {
+.toggle:before {
   /* content: '▶'; */
   content: '';
   display: inline-block;
   margin-right: 5px;
   display: inline-block;
   transform: translateY(-40%) rotate(135deg);
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border: 2px solid #333333;
   border-radius: 0 1px 0 0;
   border-width: 2px 2px 0 0;
@@ -182,15 +184,15 @@ li {
   display: inline-block;
 }
 
-.open > .toggle::before {
+li.open:before {
   /* content: '▼'; */
   content: '';
   display: inline-block;
   margin-right: 5px;
   display: inline-block;
   transform: translateY(-40%) rotate(315deg);
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border: 2px solid #333333;
   border-radius: 0 1px 0 0;
   border-width: 2px 2px 0 0;
