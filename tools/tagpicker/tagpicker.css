@@ -52,12 +52,12 @@ body {
             }
           }
           li.toggle {
+            background-color: transparent;
             ul.children {
               padding-left: 0;
+            }
+            &:hover {
               background-color: transparent;
-              &:hover {
-                background-color: transparent;
-              }
             }
           }
         }
@@ -94,12 +94,12 @@ body {
             }
           }
           li.toggle {
+            background-color: transparent;
             ul.children {
               padding-left: 0;
+            }
+            &:hover {
               background-color: transparent;
-              &:hover {
-                background-color: transparent;
-              }
             }
           }
         }
