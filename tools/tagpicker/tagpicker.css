@@ -64,13 +64,18 @@ body {
           border-width: 3px 3px 0 0;
           transition: all 0.35s ease;
         }
+        .item-name {
+          &:hover {
+            background-color: #f4f4f4;
+          }
+        }
         ul.children {
           display: block;
           margin-left: 20px;
           .item-name {
             padding-left: 0;
             &:hover {
-              background-color: #eaeaea;
+              background-color: #f4f4f4;
             }
           }
         }
