@@ -34,6 +34,7 @@ function writeOutTagProperties(prop, doc, propValue) {
   const tagsValue = tagsProperty.split(',');
   const tagsArray = [];
   tagsValue.forEach((tag) => {
+    tag = tag.trim();
     if (tag.trim().startsWith(convertedProp)) {
       // Found the prop string. Convert it to displayable format
       if (window.tagtranslations[tag]) {
