@@ -180,6 +180,7 @@ body {
           background-color: #fafafa;
           border: 2px solid red;
           color: red;
+          text-decoration: line-through;
         }
       }
     }
