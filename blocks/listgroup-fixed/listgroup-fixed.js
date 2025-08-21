@@ -20,6 +20,7 @@ import {
 const ogNames = {
   title: 'og:title',
   image: 'og:image',
+  tags: 'article:tag',
 };
 
 function writeOutTagProperties(prop, doc, propValue) {
