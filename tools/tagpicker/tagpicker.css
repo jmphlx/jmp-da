@@ -115,7 +115,7 @@ body {
         color: #333333;
         border: 2px solid #cccccc;
         &:hover {
-          background-color: #b4b4b4;
+          background-color: #dddddd;
         }
       }
     }
