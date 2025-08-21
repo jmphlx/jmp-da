@@ -22,15 +22,13 @@ body {
           content: '';
           position: absolute;
           display: inline-block;
-          transform: translateY(-0%) rotate(135deg);
+          transform: translateY(0) rotate(135deg);
           width: 8px;
           height: 8px;
           border: 2px solid #707070;
           border-radius: 0 1px 0 0;
           border-width: 3px 3px 0 0;
-          position: inherit;
           transition: all 0.35s ease;
-          display: inline-block;
           margin: 0 8px;
         }
         &:hover {
@@ -42,18 +40,16 @@ body {
       }
       li.toggle.open:before {
         content: '';
+        position: absolute;
         display: inline-block;
         margin-right: 5px;
-        display: inline-block;
-        transform: translateY(-0%) rotate(315deg);
+        transform: translateY(8px) rotate(315deg);
         width: 6px;
         height: 6px;
         border: 2px solid #707070;
         border-radius: 0 1px 0 0;
-        border-width: 2px 2px 0 0;
-        position: inherit;
+        border-width: 3px 3px 0 0;
         transition: all 0.35s ease;
-        display: inline-block;
       }
     }
   }
@@ -201,13 +197,17 @@ li {
 .item-name {
   display: inline-block;
   width: 100%;
+  padding-left: 30px;
 }
 
 .children {
   display: none;
   margin-left: 1rem;
   .item-name {
-    padding-left: 8px;
+    padding-left: 0;
+    &:hover {
+      background-color: #f7f7f7;
+    }
   }
 }
 
