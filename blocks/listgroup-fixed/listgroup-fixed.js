@@ -23,31 +23,6 @@ const ogNames = {
   tags: 'article:tag',
 };
 
-function writeOutTagProperties(prop, doc, propValue) {
-  const tagsProperty = getMetaValue('tags', doc);
-  if (!tagsProperty || tagsProperty.length < 1 || !window.tagtranslations) {
-    // No tags or no translations so default to old method.
-    return propValue;
-  }
-
-  const convertedProp = convertCamelToKebabCase(prop);
-  const tagsValue = tagsProperty.split(',');
-  const tagsArray = [];
-  tagsValue.forEach((tag) => {
-    tag = tag.trim();
-    if (tag.trim().startsWith(convertedProp)) {
-      // Found the prop string. Convert it to displayable format
-      if (window.tagtranslations[tag]) {
-        tagsArray.push(window.tagtranslations[tag]);
-      } else {
-        // Couldn't find translation of prop.
-        tagsArray.push(propValue);
-      }
-    }
-  });
-  return tagsArray.join(', ');
-}
-
 function getMetaValue(prop, doc) {
   let val;
   if (Object.prototype.hasOwnProperty.call(ogNames, prop)) {
@@ -69,6 +44,32 @@ function getMetaValue(prop, doc) {
   }
 
   return val;
+}
+
+function writeOutTagProperties(prop, doc, propValue) {
+  const tagsProperty = getMetaValue('tags', doc);
+  if (!tagsProperty || tagsProperty.length < 1 || !window.tagtranslations) {
+    // No tags or no translations so default to old method.
+    return propValue;
+  }
+
+  const convertedProp = convertCamelToKebabCase(prop);
+  const tagsValue = tagsProperty.split(',');
+  const tagsArray = [];
+  tagsValue.forEach((tag) => {
+    // eslint-disable-next-line no-param-reassign
+    tag = tag.trim();
+    if (tag.trim().startsWith(convertedProp)) {
+      // Found the prop string. Convert it to displayable format
+      if (window.tagtranslations[tag]) {
+        tagsArray.push(window.tagtranslations[tag]);
+      } else {
+        // Couldn't find translation of prop.
+        tagsArray.push(propValue);
+      }
+    }
+  });
+  return tagsArray.join(', ');
 }
 
 export default async function decorate(block) {
@@ -117,7 +118,6 @@ export default async function decorate(block) {
         const pagePropVal = getMetaValue(prop, doc);
         let span;
         if (isTagProperty(prop)) {
-          console.log('found tag property');
           span = `<span class="${prop}">${writeOutTagProperties(prop, doc, pagePropVal)}</span>`;
         } else if (prop === 'image' || prop === 'displayImage') {
           const imageItem = {
