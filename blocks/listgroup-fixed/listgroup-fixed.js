@@ -23,7 +23,7 @@ const ogNames = {
 };
 
 function writeOutTagProperties(prop, doc, propValue) {
-  const tagsProperty = getMetaValue(prop, doc);
+  const tagsProperty = getMetaValue('tags', doc);
   if (!tagsProperty || tagsProperty.length < 1 || !window.tagtranslations) {
     // No tags or no translations so default to old method.
     return propValue;
