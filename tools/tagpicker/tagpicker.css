@@ -58,7 +58,7 @@ body {
       padding: 5px;
     }
   }
-  div.button-container {
+  div#button-container {
     grid-column: 2;
     grid-row: 3;
   }
@@ -107,7 +107,7 @@ body {
         text-decoration: none;
         border: 2px solid #dadada;
         padding: 6px 10px;
-        text-align: center;
+        text-align: left;
         font-size: 1rem;
         cursor: pointer;
         background-color: #fafafa;
@@ -203,7 +203,7 @@ li {
 
 button {
   display: inline-block;
-  background-color: #ff5000;
+  background-color: #0378CD;
   font-weight: bold;
   color: white;
   box-sizing: border-box;
@@ -218,5 +218,12 @@ button {
   border-radius: 5px;
   transition: all .35s;
   margin: 0.25em;
+  &:nth-child(2) {
+    background-color: #fafafa;
+    color: #333333;
+    &:hover {
+      background-color: #f4f4f4;
+    }
+  }
 }
 
