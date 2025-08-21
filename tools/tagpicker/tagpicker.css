@@ -55,7 +55,7 @@ body {
     grid-column: 2;
     grid-row: 2;
     div {
-      padding: 5px;
+      padding: 0 0 8px 0;
     }
   }
   div#button-container {
@@ -66,8 +66,12 @@ body {
         background-color: #0378CD;
         color: white;
         border: 2px solid transparent;
+        &:hover {
+          background-color: #002753;
+        }
       }
       &:nth-child(2) {
+        font-family: "anova-light", arial, helvetica, sans-serif;
         background-color: #fafafa;
         color: #333333;
         border: 2px solid #cccccc;
@@ -113,7 +117,7 @@ body {
     grid-column: 2;
     grid-row: 4;
     ul {
-      display: inline-block;
+      display: block;
       font-weight: normal;
       padding: 16px 0 0 0;
       li {
