@@ -46,6 +46,7 @@ body {
           margin-left: 1rem;
           .item-name {
             padding-left: 0;
+            width: 100%;
             &:hover {
               background-color: #eaeaea;
             }
@@ -78,6 +79,7 @@ body {
           margin-left: 20px;
           .item-name {
             padding-left: 0;
+            width: 100%;
             &:hover {
               background-color: #f4f4f4;
             }
