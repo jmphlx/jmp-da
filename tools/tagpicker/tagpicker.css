@@ -38,6 +38,16 @@ body {
         ul.children li:before {
           display: none;
         }
+        ul.children {
+          display: none;
+          margin-left: 1rem;
+          .item-name {
+            padding-left: 0;
+            &:hover {
+              background-color: #eaeaea;
+            }
+          }
+        }
       }
       li.toggle.open {
         background-color: #fafafa;
@@ -53,6 +63,16 @@ body {
           border-radius: 0 1px 0 0;
           border-width: 3px 3px 0 0;
           transition: all 0.35s ease;
+        }
+        ul.children {
+          display: block;
+          margin-left: 1rem;
+          .item-name {
+            padding-left: 0;
+            &:hover {
+              background-color: #eaeaea;
+            }
+          }
         }
       }
     }
@@ -201,24 +221,12 @@ li {
 .item-name {
   display: inline-block;
   width: 100%;
-  padding-left: 30px;
+  padding-left: 25px;
 }
 
-.children {
-  display: none;
-  margin-left: 1rem;
-  padding-left: 8px;
-  .item-name {
-    padding-left: 0;
-    &:hover {
-      background-color: #eaeaea;
-    }
-  }
-}
-
-.open > .children {
+/* .open > .children {
   display: block;
-}
+} */
 
 .buttons {
   margin-top: 0;
