@@ -31,7 +31,7 @@ function writeOutTagProperties(prop, doc, propValue) {
   }
 
   const convertedProp = convertCamelToKebabCase(prop);
-  const tagsValue = Object.values(tagsProperty);
+  const tagsValue = tagsProperty.split(',');
   const tagsArray = [];
   tagsValue.forEach((tag) => {
     if (tag.startsWith(convertedProp)) {
