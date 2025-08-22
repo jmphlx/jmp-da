@@ -1,7 +1,15 @@
 import {
   getLanguage,
   getJsonFromUrl,
+  isTagProperty,
 } from './jmp.js';
+
+const tagTranslationsBaseURL = 'https://www.jmp.com/services/tagsservlet';
+
+async function getTagTranslations() {
+  const pageLanguage = getLanguage();
+  window.tagtranslations = window.tagtranslations || await getJsonFromUrl(`${tagTranslationsBaseURL}.${pageLanguage}`);
+}
 
 async function getEmptyResultsMessage(emptyResultString) {
   if (!emptyResultString) {
@@ -18,6 +26,19 @@ async function getEmptyResultsMessage(emptyResultString) {
   return emptyResultString;
 }
 
+function checkForTagProperties(displayProperties) {
+  let tagFound = false;
+  for (let i = 0; i < displayProperties.length; i++) {
+    if (isTagProperty(displayProperties[i])) {
+      tagFound = true;
+      break;
+    }
+  }
+  return tagFound;
+}
+
 export {
+  checkForTagProperties,
   getEmptyResultsMessage,
+  getTagTranslations,
 };
