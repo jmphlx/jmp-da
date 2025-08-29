@@ -257,3 +257,44 @@
     }
   }
 }
+
+.hubspot-header-purple-red {
+  .hubspot-wrapper {
+    .headline {
+      h4 {
+        background: linear-gradient(160deg, #643695 30%, #F04B4B 70%);
+        background-size: 200% 200%;
+          animation: alert-gradient 5s ease-in-out infinite;
+        background-clip: text;
+        font-family: var(--font-bold);
+        color: transparent;
+      }
+    }
+    div.hs-submit {
+      margin-bottom: 0 !important;
+      div.actions {
+        input.primary {
+          background: linear-gradient(45deg, #643695, #fe0b0b);
+          background-size: 200% 200%;
+          /* animation: alert-gradient 5s ease-in-out infinite; */
+          border-color: transparent;
+          color: #FFFFFF;
+          font-size: 14px;
+          line-height: 1.3;
+          height: 4rem;
+          width: max-content;
+          border-radius: 5px;
+          &:hover {
+            background-color: linear-gradient(45deg, #fe0b0b, #643695, #fe0b0b, #643695);
+            animation: alert-gradient 5s ease-in-out infinite;
+          }
+        }
+      }
+    }
+  }
+}
+@keyframes alert-gradient {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}

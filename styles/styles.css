@@ -2320,6 +2320,11 @@ div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-30-70, div.
         width: unset;
         margin-bottom: 0;
       }
+      .group-3 {
+        display: block;
+        width: unset;
+        margin-bottom: 0;
+      }
     }
   }
   &.gap-32 {
