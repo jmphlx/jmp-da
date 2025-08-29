@@ -2287,8 +2287,21 @@ div.columns-25-25-25-25 {
     }
   }
 }
+div.columns-33-33-33 {
+  .layout-wrapper {
+    .group-1 {
+      width: 33%;
+    }
+    .group-2 {
+      width: 33%;
+    }
+    .group-3 {
+      width: 33%;
+    }
+  }
+}
 /* column breakpoints */
-div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-30-70, div.columns-70-30, div.columns-60-40, div.columns-40-60, div.columns-66-33, div.columns-33-66, div.columns-20-80 , div.columns-80-20 {
+div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-30-70, div.columns-70-30, div.columns-60-40, div.columns-40-60, div.columns-66-33, div.columns-33-66, div.columns-20-80 , div.columns-80-20, div.columns-33-33-33 {
   @media (width >=900px) {
     .layout-wrapper {
       column-gap: 64px !important;
