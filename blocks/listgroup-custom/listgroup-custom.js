@@ -16,13 +16,16 @@ import {
   writeImagePropertyInList,
 } from '../../scripts/jmp.js';
 
-import { getEmptyResultsMessage } from '../../scripts/listgroup.js';
+import {
+  checkForTagProperties,
+  getEmptyResultsMessage,
+  getTagTranslations,
+} from '../../scripts/listgroup.js';
 
 import { loadScript } from '../../scripts/aem.js';
 import { createTag } from '../../scripts/helper.js';
 
 const dateProperties = ['releaseDate'];
-const tagTranslationsBaseURL = 'https://www.jmp.com/services/tagsservlet';
 
 let useFilter = false;
 let useTabs = false;
@@ -62,11 +65,6 @@ function processDate(dateProperty, prop, item) {
     span = `<span class="${prop}">${item[prop]}</span>`;
   }
   return span;
-}
-
-async function getTagTranslations() {
-  const pageLanguage = getLanguage();
-  window.tagtranslations = window.tagtranslations || await getJsonFromUrl(`${tagTranslationsBaseURL}.${pageLanguage}`);
 }
 
 function writeOutTagProperties(prop, item) {
@@ -165,17 +163,6 @@ function checkForDateProperties(displayProperties) {
     }
   }
   return dateFound;
-}
-
-function checkForTagProperties(displayProperties) {
-  let tagFound = false;
-  for (let i = 0; i < displayProperties.length; i++) {
-    if (isTagProperty(displayProperties[i])) {
-      tagFound = true;
-      break;
-    }
-  }
-  return tagFound;
 }
 
 function writeItems(matching, config, listElement) {
