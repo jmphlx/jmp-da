@@ -3,22 +3,31 @@
 import {
   filterOutPastEvents,
   filterOutRobotsNoIndexPages,
-  getBlockProperty,
+  getBlockConfig,
   getBlockPropertiesList,
   getJsonFromUrl,
   getLanguageIndex,
-  getListFilterOptions,
-  pageAndFilter,
-  pageFilterByFolder,
   pageOrFilter,
 } from '../../scripts/jmp.js';
 
-import { getEmptyResultsMessage } from '../../scripts/listgroup.js';
+import {
+  buildSimplifiedFilter,
+  getEmptyResultsMessage,
+  pageMatches,
+} from '../../scripts/listgroup.js';
 
 /*
  * Apply where a property is not empty.
  */
 function pageAnyFilter(pageSelection, tabProperty) {
+  if (tabProperty.includes('tags:')) {
+    return pageSelection.filter((item) => {
+      const tagsString = tabProperty.replace(/^tags:/, '');
+      const pageValue = item.tags;
+      return pageValue !== undefined && pageValue.length > 0
+        && pageValue.toString().includes(tagsString);
+    });
+  }
   return pageSelection.filter((item) => {
     const pageValue = item[tabProperty]?.toLowerCase();
     return pageValue !== undefined && pageValue.length > 0;
@@ -59,34 +68,28 @@ function createTabPanel(pageSelection, tabPanel) {
 }
 
 export default async function decorate(block) {
-  const overwriteLanguageIndex = getBlockProperty(block, 'overwriteIndexLanguage');
+  const optionsObject = getBlockPropertiesList(block, 'options');
+  const config = getBlockConfig(block);
+  block.textContent = '';
+
+  const overwriteLanguageIndex = config.overwriteIndexLanguage;
 
   // Get language index.
   const languageIndexUrl = getLanguageIndex(overwriteLanguageIndex);
-  const { data: allPages, columns: propertyNames } = await getJsonFromUrl(languageIndexUrl);
-  let prefilteredPages = allPages;
+  const { data: allPages } = await getJsonFromUrl(languageIndexUrl);
 
-  // Get options, tabs, filters.
-  const optionsObject = getBlockPropertiesList(block, 'options');
-  const tabs = getBlockPropertiesList(block, 'tabs');
-  const startingFolder = getBlockProperty(block, 'startingFolder');
-  const emptyResultsMessageConfig = getBlockProperty(block, 'emptyResultsMessage');
-  const emptyResultsMessage = await getEmptyResultsMessage(emptyResultsMessageConfig);
-  const filterOptions = getListFilterOptions(block, propertyNames);
+  const tabs = config.tabs;
+  const startingFolder = config.startingFolder;
+  const emptyResultsMessage = await getEmptyResultsMessage(config.emptyResultsMessage);
+  const filterField = config.filter;
+  const filters = filterField?.includes('.json') ? await getJsonFromUrl(filterField) : buildSimplifiedFilter(filterField, startingFolder);
 
-  // If startingFolder is not null, then apply page location filter FIRST.
-  if (startingFolder !== undefined) {
-    prefilteredPages = pageFilterByFolder(prefilteredPages, startingFolder);
-  }
-
-  // Apply filters if applicable.
-  if (Object.keys(filterOptions).length > 0) {
-    if (optionsObject.filterType !== undefined && optionsObject.filterType.toLowerCase() === 'and') {
-      prefilteredPages = pageAndFilter(prefilteredPages, filterOptions);
-    } else {
-      prefilteredPages = pageOrFilter(prefilteredPages, filterOptions);
+  const matching = [];
+  allPages.forEach((page) => {
+    if (pageMatches(page, filters)) {
+      matching.push(page);
     }
-  }
+  });
 
   const tablist = document.createElement('div');
   tablist.className = 'tabs-list';
@@ -103,7 +106,7 @@ export default async function decorate(block) {
     tabpanel.setAttribute('role', 'tabpanel');
 
     // Add filtered data to tabpanel (reset for each tab)
-    let pageSelection = prefilteredPages;
+    let pageSelection = matching;
 
     const filterObject = {};
 
@@ -111,6 +114,22 @@ export default async function decorate(block) {
     if (tab.toLowerCase() === 'all') {
       // where the tabProperty has any value.
       pageSelection = pageAnyFilter(pageSelection, optionsObject.tabProperty);
+    } else if (optionsObject.tabProperty.includes('tags:')) {
+      const filterCondition = {};
+      filterCondition.Property = 'tags';
+      filterCondition.Value = tab;
+      filterCondition.Operator = 'contains';
+
+      const filterArray = [];
+      filterArray.push(filterCondition);
+      filterObject.data = filterArray;
+      const filtered = [];
+      pageSelection.forEach((page) => {
+        if (pageMatches(page, filterObject)) {
+          filtered.push(page);
+        }
+      });
+      pageSelection = filtered;
     } else {
       filterObject[optionsObject.tabProperty] = tab.toLowerCase();
       pageSelection = pageOrFilter(pageSelection, filterObject);

@@ -1,6 +1,7 @@
 import { getDefaultMetaImage } from './scripts.js';
 
 const knownObjectProperties = ['options', 'filters'];
+const knownObjectCaseSensitiveProperties = ['tabs'];
 
 const tagMap = {
   industry: 'industry',
@@ -414,15 +415,23 @@ async function getLangMenuPageUrl(languagePage) {
   }
 }
 
-function convertStringToJSONObject(stringValue) {
+function convertStringToJSONObject(stringValue, caseSensitive = false) {
   const jsonObj = {};
   const stringList = stringValue.split(',');
   stringList.forEach((item) => {
     if (item.includes('=')) {
       const optionsString = item.split('=', 2);
-      jsonObj[optionsString[0].trim().toLowerCase()] = optionsString[1].trim().toLowerCase();
+      if (caseSensitive) {
+        jsonObj[optionsString[0].trim()] = optionsString[1].trim();
+      } else {
+        jsonObj[optionsString[0].trim().toLowerCase()] = optionsString[1].trim().toLowerCase();
+      }
     } else {
-      jsonObj[item.trim().toLowerCase()] = true;
+      if (caseSensitive) {
+        jsonObj[item.trim()] = true;
+      } else {
+        jsonObj[item.trim().toLowerCase()] = true;
+      }
     }
   });
   return jsonObj;
@@ -442,7 +451,10 @@ function getBlockConfig(block) {
         const col = cols[1];
         const name = cols[0].textContent;
         let value = '';
-        if (knownObjectProperties.includes(name.toLowerCase())) {
+        if (knownObjectCaseSensitiveProperties.includes(name.toLowerCase())) {
+          const stringValue = col.textContent;
+          value = convertStringToJSONObject(stringValue, true);
+        } else if (knownObjectProperties.includes(name.toLowerCase())) {
           const stringValue = col.textContent;
           value = convertStringToJSONObject(stringValue);
         } else if (col.querySelector('a')) {
