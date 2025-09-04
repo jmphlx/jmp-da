@@ -3,46 +3,42 @@
 import {
   filterOutPastEvents,
   filterOutRobotsNoIndexPages,
-  getBlockProperty,
-  getBlockPropertiesList,
+  getBlockConfig,
   getJsonFromUrl,
   getLanguageIndex,
-  getListFilterOptions,
-  pageAndFilter,
-  pageFilterByFolder,
-  pageOrFilter,
 } from '../../scripts/jmp.js';
 
-import { getEmptyResultsMessage } from '../../scripts/listgroup.js';
+import {
+  buildSimplifiedFilter,
+  getEmptyResultsMessage,
+  pageMatches,
+} from '../../scripts/listgroup.js';
 
 export default async function decorate(block) {
-  const overwriteLanguageIndex = getBlockProperty(block, 'overwriteIndexLanguage');
+  const config = getBlockConfig(block);
+  block.textContent = '';
+
+  const overwriteLanguageIndex = config.overwriteIndexLanguage;
 
   // Get language index.
   const languageIndexUrl = getLanguageIndex(overwriteLanguageIndex);
 
-  const { data: allPages, columns: propertyNames } = await getJsonFromUrl(languageIndexUrl);
+  const { data: allPages } = await getJsonFromUrl(languageIndexUrl);
   let pageSelection = allPages;
 
-  const optionsObject = getBlockPropertiesList(block, 'options');
-  const startingFolder = getBlockProperty(block, 'startingFolder');
-  const emptyResultsMessageConfig = getBlockProperty(block, 'emptyResultsMessage');
-  const emptyResultsMessage = await getEmptyResultsMessage(emptyResultsMessageConfig);
-  const filterOptions = getListFilterOptions(block, propertyNames);
+  const optionsObject = config.options;
+  const startingFolder = config.startingFolder;
+  const filterField = config.filter;
+  const filters = filterField?.includes('.json') ? await getJsonFromUrl(filterField) : buildSimplifiedFilter(filterField, startingFolder);
+  const emptyResultsMessage = await getEmptyResultsMessage(config.emptyResultsMessage);
 
-  // If startingFolder is not null, then apply location filter FIRST.
-  if (startingFolder !== undefined) {
-    pageSelection = pageFilterByFolder(pageSelection, startingFolder);
-  }
-
-  // Apply filters if applicable.
-  if (Object.keys(filterOptions).length > 0) {
-    if (optionsObject.filterType !== undefined && optionsObject.filterType.toLowerCase() === 'and') {
-      pageSelection = pageAndFilter(pageSelection, filterOptions);
-    } else {
-      pageSelection = pageOrFilter(pageSelection, filterOptions);
+  const matching = [];
+  allPages.forEach((page) => {
+    if (pageMatches(page, filters)) {
+      matching.push(page);
     }
-  }
+  });
+  pageSelection = matching;
 
   // Do not include Robots noindex pages.
   pageSelection = filterOutRobotsNoIndexPages(pageSelection);
