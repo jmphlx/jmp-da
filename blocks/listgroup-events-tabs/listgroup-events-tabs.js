@@ -7,7 +7,6 @@ import {
   getBlockPropertiesList,
   getJsonFromUrl,
   getLanguageIndex,
-  pageOrFilter,
 } from '../../scripts/jmp.js';
 
 import {
@@ -32,6 +31,44 @@ function pageAnyFilter(pageSelection, tabProperty) {
     const pageValue = item[tabProperty]?.toLowerCase();
     return pageValue !== undefined && pageValue.length > 0;
   });
+}
+
+/*
+ * Apply all filters as an OR. If any condition is true, include the page in the results.
+ */
+function pageOrFilter(pageSelection, filterObject) {
+  const filteredData = pageSelection.filter((item) => {
+    let flag = false;
+    Object.keys(filterObject).forEach((key) => {
+      const pageValue = item[key]?.toLowerCase();
+      const filterValue = filterObject[key];
+      if (typeof filterValue === 'object') {
+        // if filterValue is an array of values
+        // is pageValue also an array of values?
+        if (pageValue !== undefined && pageValue.indexOf(',') > -1) {
+          const list = pageValue.split(',');
+          const trimmedList = list.map((str) => str.trim().toLowerCase());
+          flag = arrayIncludesSomeValues(filterValue, trimmedList);
+        } else {
+          // if filterValue is an array of values
+          // but pageValue is a singular value
+          flag = filterValue.includes(pageValue);
+        }
+      } else if (pageValue !== undefined && pageValue.indexOf(',') > -1) {
+        // if filterValue is a single string.
+        // but pageValue is an array.
+        // Check if pageValue contains filter.
+        const list = pageValue.split(',');
+        const trimmedList = list.map((str) => str.trim().toLowerCase());
+        flag = trimmedList.includes(filterValue);
+      } else {
+        // both pageValue and filterValue are strings so test ===
+        flag = filterValue === pageValue;
+      }
+    });
+    return flag;
+  });
+  return filteredData;
 }
 
 function createEmptyTabPanel(emptyResultsMessage, tabPanel) {
