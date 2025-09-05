@@ -136,5 +136,6 @@ export {
   checkForTagProperties,
   getEmptyResultsMessage,
   getTagTranslations,
+  lowercaseObj,
   pageMatches,
 };

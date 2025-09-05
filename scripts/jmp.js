@@ -426,12 +426,10 @@ function convertStringToJSONObject(stringValue, caseSensitive = false) {
       } else {
         jsonObj[optionsString[0].trim().toLowerCase()] = optionsString[1].trim().toLowerCase();
       }
+    } else if (caseSensitive) {
+      jsonObj[item.trim()] = true;
     } else {
-      if (caseSensitive) {
-        jsonObj[item.trim()] = true;
-      } else {
-        jsonObj[item.trim().toLowerCase()] = true;
-      }
+      jsonObj[item.trim().toLowerCase()] = true;
     }
   });
   return jsonObj;
