@@ -1,6 +1,7 @@
 import { getDefaultMetaImage } from './scripts.js';
 
 const knownObjectProperties = ['options', 'filters'];
+const knownObjectCaseSensitiveProperties = ['tabs'];
 
 const tagMap = {
   industry: 'industry',
@@ -150,90 +151,6 @@ function getSKPLanguageIndex() {
   return isLanguageSupported ? `/skp-${lang}.json` : '/skp-en.json';
 }
 
-/*
- * Apply all filters as an AND. All conditions must be true in order
- * to include the page in the results.
- */
-function pageAndFilter(pageSelection, filterObject) {
-  const filteredData = pageSelection.filter((item) => {
-    let flag = true;
-    try {
-      Object.keys(filterObject).forEach((key) => {
-        const pageValue = item[key]?.toLowerCase();
-        const filterValue = filterObject[key];
-        if (typeof filterValue === 'object') {
-          // if filterValue is an array of values
-          // is pageValue also an array of values?
-          if (pageValue !== undefined && pageValue.indexOf(',') > -1) {
-            const list = pageValue.split(',');
-            const trimmedList = list.map((str) => str.trim().toLowerCase());
-            if (!arrayIncludesAllValues(trimmedList, filterValue)) {
-              throw new Error('condition not met');
-            }
-          } else {
-            // if pageValue is not also an array of values then it can't possibly match.
-            throw new Error('condition not met');
-          }
-        } else if (pageValue !== undefined && pageValue.indexOf(',') > -1) {
-          /* if filterValue is a single string.
-           * but pageValue is an array.
-           * Check if pageValue contains filter. */
-          const list = pageValue.split(',');
-          const trimmedList = list.map((str) => str.trim().toLowerCase());
-          if (!trimmedList.includes(filterValue)) {
-            throw new Error('condition not met');
-          }
-        // both pageValue and filterValue are strings so test ===
-        } else if (filterValue !== pageValue) {
-          throw new Error('condition not met');
-        }
-      });
-    } catch (e) {
-      flag = false;
-    }
-    return flag;
-  });
-  return filteredData;
-}
-
-/*
- * Apply all filters as an OR. If any condition is true, include the page in the results.
- */
-function pageOrFilter(pageSelection, filterObject) {
-  const filteredData = pageSelection.filter((item) => {
-    let flag = false;
-    Object.keys(filterObject).forEach((key) => {
-      const pageValue = item[key]?.toLowerCase();
-      const filterValue = filterObject[key];
-      if (typeof filterValue === 'object') {
-        // if filterValue is an array of values
-        // is pageValue also an array of values?
-        if (pageValue !== undefined && pageValue.indexOf(',') > -1) {
-          const list = pageValue.split(',');
-          const trimmedList = list.map((str) => str.trim().toLowerCase());
-          flag = arrayIncludesSomeValues(filterValue, trimmedList);
-        } else {
-          // if filterValue is an array of values
-          // but pageValue is a singular value
-          flag = filterValue.includes(pageValue);
-        }
-      } else if (pageValue !== undefined && pageValue.indexOf(',') > -1) {
-        // if filterValue is a single string.
-        // but pageValue is an array.
-        // Check if pageValue contains filter.
-        const list = pageValue.split(',');
-        const trimmedList = list.map((str) => str.trim().toLowerCase());
-        flag = trimmedList.includes(filterValue);
-      } else {
-        // both pageValue and filterValue are strings so test ===
-        flag = filterValue === pageValue;
-      }
-    });
-    return flag;
-  });
-  return filteredData;
-}
-
 /**
  * Given a block and an options row, create a JSON object representing
  * the options to be used in the block.
@@ -303,54 +220,6 @@ function getBlockPropertiesList(block, rowName) {
 }
 
 /**
- * Given a block and the name of a property row, return the single value.
- * Does not require this to be the top row in the table.
- * Assumes that the row is a single value.
- * @param {Object} block - html of the table from document representing block
- * @param {string} rowName - name of the properties row
- * @returns string value of the property if found in the block, undefined if not found.
- */
-function getBlockProperty(block, rowName) {
-  let rowValue;
-  const foundItem = Array.from(block.querySelectorAll('div'))
-    .find((el) => el.textContent.toLowerCase() === rowName.toLowerCase());
-
-  const parent = foundItem !== undefined ? foundItem.parentElement : undefined;
-  if (parent !== undefined) {
-    rowValue = parent.children.item(1).textContent;
-    if (rowValue.length > 0) {
-      parent.remove();
-    }
-  }
-  return rowValue;
-}
-
-/**
- * From the remaining rows in the block, create an object to represent the filters.
- * With this method, filter name becomes case insensitive by using the columns property
- * from the index.
- * @param {Object} block - html of the table from document representing block
- * @param {array} propertyNames - names of the properties as they appear in the index
- * @returns json object representing filters to apply to listgroup.
- */
-function getListFilterOptions(block, propertyNames) {
-  const lowerCaseProperties = propertyNames.map((str) => str.toLowerCase());
-  const filterOptions = {};
-  while (block.firstElementChild !== undefined && block.firstElementChild !== null) {
-    let optionName = block.firstElementChild?.children.item(0).textContent;
-    const correctIndex = lowerCaseProperties.indexOf(optionName.toLowerCase());
-    optionName = correctIndex !== -1 ? propertyNames[correctIndex] : optionName;
-    let optionValue = block.firstElementChild?.children.item(1).textContent.toLowerCase();
-    if (optionValue.indexOf(',') > -1) {
-      optionValue = optionValue.split(',').map((str) => str.trim().toLowerCase());
-    }
-    filterOptions[optionName] = optionValue;
-    block.firstElementChild.remove();
-  }
-  return filterOptions;
-}
-
-/**
  * Given a list of event pages, filter out any whose eventDateTime
  * is before the current date at 11:59PM EST (23:59).
  * @param {array} pageSelection array of pages that may match the filter
@@ -382,18 +251,6 @@ function filterOutRobotsNoIndexPages(pageSelection) {
 }
 
 /**
- * Given a folderPath, filter the pages down to those inside that folder
- * including nested pages.
- * @param {array} pageSelection array of pages that may match the filter
- * @param {string} folderPath string path of the folder we are narrowing results to.
- * @returns array of pages within the provided folder
- */
-function pageFilterByFolder(pageSelection, folderPath) {
-  const filteredData = pageSelection.filter((item) => item.path.startsWith(folderPath));
-  return filteredData;
-}
-
-/**
  * Given a page path, determine if the curernt page exists in that language
  * @param {string} languagePage page to check in another language
  * @returns pagePath if the page exists in another language
@@ -414,13 +271,19 @@ async function getLangMenuPageUrl(languagePage) {
   }
 }
 
-function convertStringToJSONObject(stringValue) {
+function convertStringToJSONObject(stringValue, caseSensitive = false) {
   const jsonObj = {};
   const stringList = stringValue.split(',');
   stringList.forEach((item) => {
     if (item.includes('=')) {
       const optionsString = item.split('=', 2);
-      jsonObj[optionsString[0].trim().toLowerCase()] = optionsString[1].trim().toLowerCase();
+      if (caseSensitive) {
+        jsonObj[optionsString[0].trim()] = optionsString[1].trim();
+      } else {
+        jsonObj[optionsString[0].trim().toLowerCase()] = optionsString[1].trim().toLowerCase();
+      }
+    } else if (caseSensitive) {
+      jsonObj[item.trim()] = true;
     } else {
       jsonObj[item.trim().toLowerCase()] = true;
     }
@@ -442,7 +305,10 @@ function getBlockConfig(block) {
         const col = cols[1];
         const name = cols[0].textContent;
         let value = '';
-        if (knownObjectProperties.includes(name.toLowerCase())) {
+        if (knownObjectCaseSensitiveProperties.includes(name.toLowerCase())) {
+          const stringValue = col.textContent;
+          value = convertStringToJSONObject(stringValue, true);
+        } else if (knownObjectProperties.includes(name.toLowerCase())) {
           const stringValue = col.textContent;
           value = convertStringToJSONObject(stringValue);
         } else if (col.querySelector('a')) {
@@ -657,7 +523,6 @@ export {
   filterOutRobotsNoIndexPages,
   getBlockConfig,
   getBlockPropertiesList,
-  getBlockProperty,
   getJsonFromLocalhostUrl,
   getJsonFromUrl,
   getLangMenuPageUrl,
@@ -665,13 +530,9 @@ export {
   getLanguageIndex,
   getLanguageFooter,
   getLanguageNav,
-  getListFilterOptions,
   getSKPLanguageIndex,
   isLanguageSupported,
   isTagProperty,
-  pageAndFilter,
-  pageFilterByFolder,
-  pageOrFilter,
   parseBlockOptions,
   sortPageList,
   updateBodyClassOnWindowResize,
