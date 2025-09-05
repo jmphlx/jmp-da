@@ -140,7 +140,7 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-size: var(--heading-font-size-xxl);
   line-height: 1.25;
-  margin-bottom: 3.2rem;
+  /* margin-bottom: 3.2rem; */
 }
 .h1-large {
   h1 {
@@ -641,6 +641,12 @@ div.blue-orange-gradient {
 div.teal-lightgreen-gradient {
   background: linear-gradient(45deg, #007481 15%, #9CCB3B 95%);
 }
+div.teal-lightteal-gradient {
+  background: linear-gradient(45deg, #007481 15%, #3EBDAC 95%);
+}
+div.green-lightgreen-gradient {
+  background: linear-gradient(45deg, #0D782F 15%, #9CCB3B 95%);
+}
 div.teal-purple-gradient {
   background: linear-gradient(45deg, #007481 15%, #643695 95%);
 }
@@ -691,6 +697,9 @@ div.dark-gray {
 }
 div.blue {
   background: var(--blue);
+}
+div.teal {
+  background: var(--teal);
 }
 div.dark-blue {
   background: var(--blueDark);
