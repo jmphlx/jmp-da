@@ -1292,6 +1292,28 @@ div.clm-80-20 {
     }
   }
 }
+.ds-logo-header {
+  .default-content-wrapper {
+    h1 {
+      &:before {
+        content: url('../../../icons/logo-ds.svg');
+        width: 240px;
+        height: auto;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 2.4rem;
+      }
+      @media (width <=600px) {
+        &:before {
+          content: url('../../../icons/logo-ds.svg');
+          width: 200px;
+          height: auto;
+          display: block;
+        }
+      }
+    }
+  }
+}
 /* Styling to control the spacing on the back button on the Event pages. */
 .text-link-back {
   &.section-padding-none, &.section-top-padding-small {
