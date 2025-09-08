@@ -42,6 +42,7 @@ export function getCookie(cname) {
 
 export const DA_CONSTANTS = {
   sourceUrl: 'https://admin.da.live/source',
+  versionUrl: 'https://admin.da.live/versionsource',
   editUrl: 'https://da.live/edit#',
   mainUrl: 'https://main--jmp-da--jmphlx.aem.live',
   previewUrl: 'https://main--jmp-da--jmphlx.aem.page',
@@ -87,6 +88,25 @@ export async function saveToDa(text, pathname, token) {
     return { daHref, daStatus: daResp.status, daResp, ok: daResp.ok };
   } catch {
     console.log(`Couldn't save ${pathname}`);
+    return null;
+  }
+}
+
+export async function createPageVersion(pathname, token) {
+  const daPath = `/${DA_CONSTANTS.org}/${DA_CONSTANTS.repo}${pathname}`;
+
+  const opts = {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+    try {
+    const daResp = await fetch(`${DA_CONSTANTS.versionUrl}${daPath}.html`, opts);
+    return { daHref, daStatus: daResp.status, daResp, ok: daResp.ok };
+  } catch {
+    console.log(`Couldn't create version of ${pathname}`);
     return null;
   }
 }
