@@ -2,7 +2,10 @@
 import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 // eslint-disable-next-line import/no-unresolved
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
-import { DA_CONSTANTS } from '../../scripts/helper.js';
+import {
+  createPageVersion,
+  DA_CONSTANTS,
+} from '../../scripts/helper.js';
 import {
   ActionResult,
   addNewRow,
@@ -278,6 +281,14 @@ function tryToPerformAction(queryObject) {
   return 'no option selected';
 }
 
+async function tryToCreatePageVersions() {
+ window.searchResults.forEach((result) => {
+  console.log(result.pagePath);
+  const versionStatus = createPageVersion(result.pagePath, token);
+  console.log(versionStatus.daStatus);
+ });
+}
+
 (async function init() {
   const sdk = await DA_SDK;
   actions = sdk.actions;
@@ -341,7 +352,8 @@ function tryToPerformAction(queryObject) {
       addActionEventListeners(queryObject);
 
       const advancedSubmitButton = document.querySelector('.advanced-submit');
-      advancedSubmitButton.addEventListener('click', () => {
+      advancedSubmitButton.addEventListener('click', async () => {
+        await tryToCreatePageVersions();
         const message = tryToPerformAction(queryObject);
         updateActionMessage(resultsContainer, message);
       });
