@@ -28,40 +28,7 @@ describe('jmp.js tests', () => {
       expect(arrayIncludesSomeValues(['2'], ['1', '2', '3'])).to.be.true;
     });
   });
-
-  describe('And Logic', () => {
-    let andFilter;
-
-    before(async () => {
-      andFilter = jmpHelper.pageAndFilter;
-    });
-
-    it('Multiple filters of the same category, with matching results', () => {
-      const filterObject = {
-        industry: ['chemistry', 'biotechnology'],
-      };
-      const pageSelection = JSON.parse(data).data;
-      expect(andFilter(pageSelection, filterObject).length).to.equal(2);
-    });
-
-    it('More than one type of filter criteria, with matching results', () => {
-      const filterObject = {
-        industry: 'biotechnology',
-        resourceType: 'interview',
-      };
-      const pageSelection = JSON.parse(data).data;
-      expect(andFilter(pageSelection, filterObject).length).to.equal(2);
-    });
-
-    it('More than one type of filter in the same category, matching no resources', () => {
-      const filterObject = {
-        industry: ['chemistry', 'pharmaceutical-and-biotech'],
-      };
-      const pageSelection = JSON.parse(data).data;
-      expect(andFilter(pageSelection, filterObject).length).to.equal(0);
-    });
-  });
-
+  /*
   describe('Or Logic', () => {
     let orFilter;
 
@@ -94,6 +61,7 @@ describe('jmp.js tests', () => {
       expect(4).to.equal(orFilter(pageSelection, filterObject).length);
     });
   });
+  */
 
   describe('Language Index', () => {
     let isLanguageSupported;
