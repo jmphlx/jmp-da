@@ -305,7 +305,13 @@ function getBlockConfig(block) {
         const col = cols[1];
         const name = cols[0].textContent;
         let value = '';
-        if (knownObjectCaseSensitiveProperties.includes(name.toLowerCase())) {
+        if (col.querySelector('ul')) {
+          const listItems = [...col.querySelectorAll('li')];
+          value = listItems.map((item) => item.textContent);
+        } else if (col.querySelector('ol')) {
+          const listItems = [...col.querySelectorAll('li')];
+          value = listItems.map((item) => item.textContent);
+        } else if (knownObjectCaseSensitiveProperties.includes(name.toLowerCase())) {
           const stringValue = col.textContent;
           value = convertStringToJSONObject(stringValue, true);
         } else if (knownObjectProperties.includes(name.toLowerCase())) {
@@ -332,12 +338,6 @@ function getBlockConfig(block) {
           } else {
             value = ps.map((p) => p.textContent);
           }
-        } else if (col.querySelector('ul')) {
-          const listItems = [...col.querySelectorAll('li')];
-          value = listItems.map((item) => item.textContent);
-        } else if (col.querySelector('ol')) {
-          const listItems = [...col.querySelectorAll('li')];
-          value = listItems.map((item) => item.textContent);
         } else value = row.children[1];
         config[name] = value;
       }
