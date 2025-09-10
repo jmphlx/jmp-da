@@ -3,7 +3,7 @@ import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 // eslint-disable-next-line import/no-unresolved
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
 import {
-  createPageVersion,
+  createVersion,
   DA_CONSTANTS,
 } from '../../scripts/helper.js';
 import {
@@ -282,11 +282,10 @@ function tryToPerformAction(queryObject) {
 }
 
 async function tryToCreatePageVersions() {
- window.searchResults.forEach((result) => {
-  console.log(result.pagePath);
-  const versionStatus = createPageVersion(result.pagePath, token);
-  console.log(versionStatus.daStatus);
- });
+  const uniqueDescription = `Search & Replace Version - ${crypto.randomUUID()}`;
+  for(let result of window.searchResults) {
+    await createVersion(result.pagePath, token, uniqueDescription);
+  }
 }
 
 (async function init() {
