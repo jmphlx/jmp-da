@@ -1753,13 +1753,15 @@ div > div > div:nth-child(1){
 }
 .section:has(.alert-fade), .section:has(.alert-simple) {
   padding: 0;
-  position: sticky;
-  top: 63px;
-  z-index: 100;
   div {
     max-width: 100%;
     margin: 0;
   }
+}
+.section:has(.alert-sticky) {
+  position: sticky;
+  top: 63px;
+  z-index: 100;
   @media (width <= 999px) {
     top: 77px;
   }
