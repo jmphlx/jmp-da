@@ -132,6 +132,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
         const matchingEntry = new SearchResult(item, filtered, classStyle, dom);
         matching.push(matchingEntry);
         if (replaceFlag) {
+          await createVersion(getPagePathFromFullUrl(item.path), token);
           doReplace(
             token,
             dom,
@@ -160,6 +161,8 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
       const matchingEntry = new SearchResult(item, elements, undefined, dom);
       matching.push(matchingEntry);
       if (replaceFlag) {
+
+        await createVersion(getPagePathFromFullUrl(item.path), token);
         doReplace(token, dom, elements, getPagePathFromFullUrl(item.path), queryObject, undefined);
       }
     }
