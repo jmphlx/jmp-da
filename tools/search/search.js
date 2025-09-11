@@ -161,7 +161,6 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
       const matchingEntry = new SearchResult(item, elements, undefined, dom);
       matching.push(matchingEntry);
       if (replaceFlag) {
-
         await createVersion(getPagePathFromFullUrl(item.path), token);
         doReplace(token, dom, elements, getPagePathFromFullUrl(item.path), queryObject, undefined);
       }
@@ -286,7 +285,9 @@ function tryToPerformAction(queryObject) {
 
 async function tryToCreatePageVersions() {
   const uniqueDescription = `Search & Replace Version - ${crypto.randomUUID()}`;
-  for(let result of window.searchResults) {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const result of window.searchResults) {
+    // eslint-disable-next-line no-await-in-loop
     await createVersion(result.pagePath, token, uniqueDescription);
   }
 }
