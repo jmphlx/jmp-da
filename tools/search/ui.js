@@ -144,7 +144,7 @@ async function populateDropdowns(searchInputField) {
 function addLoadingAction(resultsContainer, message) {
   resultsContainer.querySelector('.action-results')?.remove();
   const actionMessage = createTag('div', {
-    class: `action-results loading-state`,
+    class: 'action-results loading-state',
   }, message);
   resultsContainer.prepend(actionMessage);
 }
