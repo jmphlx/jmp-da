@@ -92,21 +92,39 @@ export async function saveToDa(text, pathname, token) {
   }
 }
 
-export async function createPageVersion(pathname, token) {
-  const daPath = `/${DA_CONSTANTS.org}/${DA_CONSTANTS.repo}${pathname}`;
+export async function createVersion(path, token, description = 'Search & Replace Version') {
+  const cleanPath = `${DA_CONSTANTS.org}/${DA_CONSTANTS.repo}${path}`;
+  const url = `${DA_CONSTANTS.versionUrl}/${cleanPath}.html`;
 
-  const opts = {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        label: description,
+      }),
+    });
 
-    try {
-    const daResp = await fetch(`${DA_CONSTANTS.versionUrl}${daPath}.html`, opts);
-    return { daHref, daStatus: daResp.status, daResp, ok: daResp.ok };
-  } catch {
-    console.log(`Couldn't create version of ${pathname}`);
-    return null;
+    if (response.ok) {
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        try {
+          const result = await response.json();
+          return result;
+        } catch (jsonError) {
+          return { success: true, status: response.status };
+        }
+      } else {
+        return { success: true, status: response.status };
+      }
+    } else {
+      const errorText = await response.text();
+      return { success: false, status: response.status, error: errorText };
+    }
+  } catch (e) {
+    return { success: false, status: null, error: e.getMessage() };
   }
 }
