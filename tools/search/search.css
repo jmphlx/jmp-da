@@ -492,3 +492,37 @@ button.icon-btn:focus-visible {
   height: 24px;
   margin: 0 6px;
 }
+
+/* Add these loading state styles */
+.loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  color: black;
+  font-style: italic;
+  border-radius: 4px;
+  min-height: 100px;
+  margin: 0;
+}
+
+.loading-state::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
+  border: 2px solid black;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

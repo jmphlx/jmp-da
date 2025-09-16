@@ -141,6 +141,14 @@ async function populateDropdowns(searchInputField) {
   });
 }
 
+function addLoadingAction(resultsContainer, message) {
+  resultsContainer.querySelector('.action-results')?.remove();
+  const actionMessage = createTag('div', {
+    class: 'action-results loading-state',
+  }, message);
+  resultsContainer.prepend(actionMessage);
+}
+
 function updateActionMessage(resultsContainer, result) {
   resultsContainer.querySelector('.action-results')?.remove();
   const actionMessage = createTag('span', {
@@ -222,6 +230,23 @@ async function copyToClipboard(button, clipboardTxt, copyTxt) {
     button.classList.add('copy-failure');
     button.classList.remove('copy-success');
   }
+}
+
+function clearResults() {
+  const resultsContainer = document.querySelector('.results-container');
+  resultsContainer.innerHTML = '';
+  const advancedActions = document.querySelector('#action-form');
+  advancedActions?.classList.add('hidden');
+  const advancedActionPrompt = document.getElementById('advanced-action-prompt');
+  advancedActionPrompt?.classList.add('hidden');
+}
+
+function addLoadingSearch(container, loadingText) {
+  container.innerHTML = '';
+  const loadingIcon = createTag('div', {
+    class: 'loading-state',
+  }, loadingText);
+  container.append(loadingIcon);
 }
 
 function writeOutResults(results, queryString, queryObject, duration, replaceFlag) {
@@ -395,6 +420,9 @@ function addActionEventListeners(queryObject) {
 
 export {
   addActionEventListeners,
+  addLoadingAction,
+  addLoadingSearch,
+  clearResults,
   closeAdvancedSections,
   constructPageViewer,
   populateDropdowns,

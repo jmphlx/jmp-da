@@ -17,6 +17,9 @@ import {
 } from './replace.js';
 import {
   addActionEventListeners,
+  addLoadingAction,
+  addLoadingSearch,
+  clearResults,
   constructPageViewer,
   populateDropdowns,
   updateActionMessage,
@@ -323,6 +326,11 @@ async function tryToCreatePageVersions() {
   const submitButton = document.querySelector('[name="submitSearch"]');
 
   submitButton.addEventListener('click', async () => {
+    window.searchResults = null;
+    clearResults();
+    const resultsContainer = document.querySelector('.results-container');
+    addLoadingSearch(resultsContainer, 'Searching');
+
     let replaceFlag = false;
 
     // check if replace is checked.
@@ -346,7 +354,6 @@ async function tryToCreatePageVersions() {
     const endTime = performance.now();
     const duration = (endTime - startTime) * 0.001;
 
-    const resultsContainer = document.querySelector('.results-container');
     const advancedActionPrompt = document.getElementById('advanced-action-prompt');
     advancedActionPrompt?.classList.remove('hidden');
     advancedActionPrompt.querySelector('sl-button').addEventListener('click', () => {
@@ -356,6 +363,7 @@ async function tryToCreatePageVersions() {
 
       const advancedSubmitButton = document.querySelector('.advanced-submit');
       advancedSubmitButton.addEventListener('click', async () => {
+        addLoadingAction(resultsContainer, 'Modifying Content');
         await tryToCreatePageVersions();
         const message = tryToPerformAction(queryObject);
         updateActionMessage(resultsContainer, message);
@@ -366,8 +374,11 @@ async function tryToCreatePageVersions() {
     undoButton.addEventListener('click', () => {
       let resetResult;
       try {
+        addLoadingAction(resultsContainer, 'Modifying Content');
         resetDocumentsToOriginalState(token);
         resetResult = new ActionResult('success', 'Successfully Undone');
+        window.searchResults = null;
+        clearResults();
       } catch (e) {
         resetResult = new ActionResult('error', e);
       }
