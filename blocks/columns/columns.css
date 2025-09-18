@@ -85,6 +85,12 @@
   &.padding-24 {
     padding: 24px;
   }
+  &.rounded-5 {
+    border-radius: 5px;
+  }
+  &.rounded-10 {
+    border-radius: 10px;
+  }
   &.rounded-20 {
     border-radius: 20px;
   }
@@ -112,6 +118,56 @@
   &.purple-callout {
     border-radius: 0 10px 10px 0;
     border-left: 4px solid var(--purple);
+  }
+  &.auto-balance-2 {
+    ul {
+      column-count: 2;
+    }
+    @media (width <= 900px) {
+      ul {
+        column-count: 2;
+      }
+    }
+    @media (width <= 600px) {
+      ul {
+        column-count: 1;
+      }
+    }
+  }
+  &.auto-balance-3 {
+    ul {
+      column-count: 3;
+    }
+    @media (width <= 900px) {
+      ul {
+        column-count: 2;
+      }
+    }
+    @media (width <= 600px) {
+      ul {
+        column-count: 1;
+      }
+    }
+  }
+  &.auto-balance-4 {
+    ul {
+      column-count: 4;
+    }
+    @media (width <= 1000px) {
+      ul {
+        column-count: 3;
+      }
+    }
+    @media (width <= 900px) {
+      ul {
+        column-count: 2;
+      }
+    }
+    @media (width <= 600px) {
+      ul {
+        column-count: 1;
+      }
+    }
   }
 }
 
