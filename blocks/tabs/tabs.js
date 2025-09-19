@@ -1,24 +1,12 @@
-import {
-  embedVidyard,
-  embedYoutube,
-} from '../embed/embed.js';
+// eslint-disable-next-line import/no-unresolved
+import { embedVidyard } from '../embed/embed.js';
 import { toClassName } from '../../scripts/aem.js';
 
-function decorateVidyardEmbed(elems) {
+function decorateEmbed(elems) {
   elems.forEach((elem) => {
     const embedHTML = embedVidyard(elem);
     const parentEl = elem.parentElement;
     parentEl.classList.add('embed', 'embed-ceros');
-    parentEl.innerHTML = embedHTML;
-    elem.remove();
-  });
-}
-
-function decorateYoutubeEmbed(elems) {
-  elems.forEach((elem) => {
-    const embedHTML = embedYoutube(elem);
-    const parentEl = elem.parentElement;
-    parentEl.classList.add('embed');
     parentEl.innerHTML = embedHTML;
     elem.remove();
   });
@@ -30,12 +18,9 @@ function hasWrapper(el) {
 
 export default async function decorate(block) {
   // embed
-  const vidyardUrls = block.querySelectorAll('a[href*="share.vidyard.com"]');
-  decorateVidyardEmbed(vidyardUrls);
+  const embedUrls = block.querySelectorAll('a[href*="share.vidyard.com"]');
 
-  const youtubeUrls = block.querySelectorAll('a[href*="youtube.com"]');
-  decorateYoutubeEmbed(youtubeUrls);
-
+  decorateEmbed(embedUrls);
   // build tablist
   const tablist = document.createElement('div');
   tablist.className = 'tabs-list';
