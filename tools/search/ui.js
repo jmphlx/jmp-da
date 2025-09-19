@@ -239,6 +239,8 @@ function clearResults() {
   advancedActions?.classList.add('hidden');
   const advancedActionPrompt = document.getElementById('advanced-action-prompt');
   advancedActionPrompt?.classList.add('hidden');
+  const createVersionPrompt = document.getElementById('create-version-prompt');
+  createVersionPrompt?.classList.add('hidden');
 }
 
 function addLoadingSearch(container, loadingText) {

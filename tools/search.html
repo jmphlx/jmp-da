@@ -77,12 +77,13 @@
     </form>
     <div class="advanced-actions">
       <div id="advanced-action-prompt" class="hidden">
-        <sl-button type="button">Perform Block Action Change?</sl-button>
+        <button id="create-version-button" class="version" type="button">Create Page Versions</button>
+        <button id="advanced-action-button" type="button">Perform Block Action Change?</button>
       </div>
       <form id="action-form" class="hidden">
         <div class="advanced-replacement-group">
           <div class="action-radio-buttons">
-            <input type="radio" id="addNewRow" name="advanced-replace" value="merge">
+            <input type="radio" id="addNewRow" name="advanced-replace" value="add">
             <label for="addNewRow">Add new row?</label>
             <input type="radio" id="deleteRow" name="advanced-replace" value="delete">
             <label for="deleteRow">Delete entire row?</label>

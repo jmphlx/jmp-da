@@ -216,7 +216,8 @@ function changeRowValue(rowEl, newTextValue, editAmount, editStringLocation, que
       prepend, append or replace. after iterating, change the textContent to
       array.join(',')
     */
-    const itemList = currentRowValue.split(',');
+    let itemList = currentRowValue.split(',');
+    itemList= itemList.map((str) => str.trim());
     itemList.forEach((item, index) => {
       itemList[index] = adjustStringValue(item, newTextValue, editStringLocation);
     });

@@ -54,8 +54,24 @@
   div.advanced-actions {
     padding-bottom: 1rem;
     #advanced-action-prompt {
-      sl-button {
-        margin-bottom: 1rem;
+      button {
+        margin: 0 8px 0 0;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 15px;
+        padding: 7px 14px;
+        background-color: #3b63fb;
+        color: #ffffff;
+        &:hover {
+          background-color: #274dea;
+        }
+      }
+      button.version {
+        background-color: #ff5000;
+        &:hover {
+          background-color: #d94500;
+        }
       }
     }
     form {
