@@ -72,6 +72,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
 
   let elements = [];
   let classStyle;
+  let emptyRegex = /\$empty/i;
 
   if (queryObject.scope.block) {
     const blockName = queryObject.scope.block;
@@ -124,6 +125,13 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
             filtered.push(el);
           }
         });
+      } else if (classStyle === 'property' && queryObject.keyword.match(emptyRegex)) {
+        elements.forEach((el) => {
+          const propVal = el.children[1];
+          if (propVal.textContent.toLowerCase().trim().length === 0) {
+            filtered.push(el);
+          }
+        });
       } else {
         elements.forEach((el) => {
           if (el.textContent.toLowerCase().includes(queryObject.keyword.toLowerCase())) {
@@ -135,7 +143,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
         const matchingEntry = new SearchResult(item, filtered, classStyle, dom);
         matching.push(matchingEntry);
         if (replaceFlag) {
-          await createVersion(getPagePathFromFullUrl(item.path), token);
+          //await createVersion(getPagePathFromFullUrl(item.path), token);
           doReplace(
             token,
             dom,
@@ -164,7 +172,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
       const matchingEntry = new SearchResult(item, elements, undefined, dom);
       matching.push(matchingEntry);
       if (replaceFlag) {
-        await createVersion(getPagePathFromFullUrl(item.path), token);
+        //await createVersion(getPagePathFromFullUrl(item.path), token);
         doReplace(token, dom, elements, getPagePathFromFullUrl(item.path), queryObject, undefined);
       }
     }
@@ -283,16 +291,17 @@ function tryToPerformAction(queryObject) {
     return addNewRow(token);
   }
 
-  return 'no option selected';
+  return {status: 'error', message: 'no option selected'};
 }
 
-async function tryToCreatePageVersions() {
+function tryToCreatePageVersions() {
   const uniqueDescription = `Search & Replace Version - ${crypto.randomUUID()}`;
   // eslint-disable-next-line no-restricted-syntax
   for (const result of window.searchResults) {
     // eslint-disable-next-line no-await-in-loop
-    await createVersion(result.pagePath, token, uniqueDescription);
+    createVersion(result.pagePath, token, uniqueDescription);
   }
+  return {status:  'success', message: 'versions created'};
 }
 
 (async function init() {
@@ -345,6 +354,7 @@ async function tryToCreatePageVersions() {
 
     // Get Search Terms.
     const queryObject = getQuery();
+    console.log(queryObject);
 
     const queryString = document.querySelector('[name="searchTerms"]').value;
 
@@ -356,7 +366,7 @@ async function tryToCreatePageVersions() {
 
     const advancedActionPrompt = document.getElementById('advanced-action-prompt');
     advancedActionPrompt?.classList.remove('hidden');
-    advancedActionPrompt.querySelector('sl-button').addEventListener('click', () => {
+    document.getElementById('advanced-action-button').addEventListener('click', () => {
       const advancedActions = document.querySelector('#action-form');
       advancedActions?.classList.remove('hidden');
       addActionEventListeners(queryObject);
@@ -364,10 +374,15 @@ async function tryToCreatePageVersions() {
       const advancedSubmitButton = document.querySelector('.advanced-submit');
       advancedSubmitButton.addEventListener('click', async () => {
         addLoadingAction(resultsContainer, 'Modifying Content');
-        await tryToCreatePageVersions();
         const message = tryToPerformAction(queryObject);
         updateActionMessage(resultsContainer, message);
       });
+    });
+
+    const createVersionButton = document.getElementById('create-version-button');
+    createVersionButton.addEventListener('click', () => {
+      const message = tryToCreatePageVersions();
+      updateActionMessage(resultsContainer, message);
     });
 
     const undoButton = document.querySelector('.undo');
