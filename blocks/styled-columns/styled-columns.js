@@ -1,9 +1,10 @@
-import { embedVidyard } from '../embed/embed.js';
+import {
+  embedVidyard,
+  embedYoutube,
+} from '../embed/embed.js';
 
-function decorateEmbed(elems) {
+function decorateVidyardEmbed(elems) {
   elems.forEach((elem) => {
-    console.log('this is');
-    console.log(elem);
     const embedHTML = embedVidyard(elem);
     const parentEl = elem.parentElement;
     parentEl.classList.add('embed', 'embed-ceros');
@@ -12,12 +13,23 @@ function decorateEmbed(elems) {
   });
 }
 
+function decorateYoutubeEmbed(elems) {
+  elems.forEach((elem) => {
+    const embedHTML = embedYoutube(elem);
+    const parentEl = elem.parentElement;
+    parentEl.classList.add('embed');
+    parentEl.innerHTML = embedHTML;
+    elem.remove();
+  });
+}
+
 export default function decorate(block) {
   // get all elements that are a vidyard share url & decorate them
-  const embedUrls = block.querySelectorAll('a[href*="share.vidyard.com"]');
-  console.log(embedUrls);
+  const vidyardUrls = block.querySelectorAll('a[href*="share.vidyard.com"]');
+  decorateVidyardEmbed(vidyardUrls);
 
-  decorateEmbed(embedUrls);
+  const youtubeUrls = block.querySelectorAll('a[href*="youtube.com/watch"]');
+  decorateYoutubeEmbed(youtubeUrls);
 
   const cols = [...block.firstElementChild.children];
   block.classList.add(`styled-columns-${cols.length}-cols`);

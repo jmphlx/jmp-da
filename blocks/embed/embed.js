@@ -23,7 +23,7 @@ const getDefaultEmbed = (
     </iframe>
   </div>`;
 
-const embedYoutube = (url, autoplay) => {
+export const embedYoutube = (url, autoplay) => {
   const usp = new URLSearchParams(url.search);
   const suffix = autoplay ? '&muted=1&autoplay=1' : '';
   let vid = usp.get('v') ? encodeURIComponent(usp.get('v')) : '';
