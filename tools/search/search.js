@@ -72,6 +72,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
 
   let elements = [];
   let classStyle;
+  let emptyRegex = /\$empty/i;
 
   if (queryObject.scope.block) {
     const blockName = queryObject.scope.block;
@@ -121,6 +122,13 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
       } else if (classStyle === 'tag') {
         elements.forEach((el) => {
           if (el.outerHTML.toLowerCase().includes(queryObject.keyword.toLowerCase())) {
+            filtered.push(el);
+          }
+        });
+      } else if (classStyle === 'property' && queryObject.keyword.match(emptyRegex)) {
+        elements.forEach((el) => {
+          const propVal = el.children[1];
+          if (propVal.textContent.toLowerCase().trim().length === 0) {
             filtered.push(el);
           }
         });
@@ -346,6 +354,7 @@ function tryToCreatePageVersions() {
 
     // Get Search Terms.
     const queryObject = getQuery();
+    console.log(queryObject);
 
     const queryString = document.querySelector('[name="searchTerms"]').value;
 
