@@ -33,7 +33,7 @@ export default async function decorate(block) {
   const vidyardUrls = block.querySelectorAll('a[href*="share.vidyard.com"]');
   decorateVidyardEmbed(vidyardUrls);
 
-  const youtubeUrls = block.querySelectorAll('a[href*="youtube.com"]');
+  const youtubeUrls = block.querySelectorAll('a[href*="youtube.com/watch"]');
   decorateYoutubeEmbed(youtubeUrls);
 
   // build tablist
