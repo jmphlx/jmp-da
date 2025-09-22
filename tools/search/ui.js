@@ -167,6 +167,20 @@ function createResultItem(item, highlightTerm) {
     class: 'page-path',
   }, `${item.path}`);
 
+  const publishStatus = item.publishStatus;
+  let publishColor;
+  if (publishStatus >= 200 && publishStatus < 300) {
+    publishColor = 'publish-status-green';
+  } else if (publishStatus >= 400 && publishStatus < 500) {
+    publishColor = 'publish-status-red';
+  } else {
+    publishColor = 'publish-status-yellow';
+  }
+
+  const publishIcon = createTag('div', {
+    class: `statusCircle ${publishColor}`,
+  });
+
   const link = createTag('a', {
     href: `${DA_CONSTANTS.editUrl}${item.path.replace('.html', '')}`,
     target: '_blank',
@@ -177,7 +191,7 @@ function createResultItem(item, highlightTerm) {
     class: 'open-page',
   });
   link.append(openPageIcon);
-  resultHeader.append(pagePath, link);
+  resultHeader.append(pagePath, publishIcon, link);
 
   resultItem.append(resultHeader);
 

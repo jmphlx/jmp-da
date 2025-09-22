@@ -44,6 +44,7 @@ export const DA_CONSTANTS = {
   sourceUrl: 'https://admin.da.live/source',
   versionUrl: 'https://admin.da.live/versionsource',
   editUrl: 'https://da.live/edit#',
+  aemUrl: 'https://admin.hlx.page/live',
   mainUrl: 'https://main--jmp-da--jmphlx.aem.live',
   previewUrl: 'https://main--jmp-da--jmphlx.aem.page',
   org: 'jmphlx',
@@ -89,6 +90,27 @@ export async function saveToDa(text, pathname, token) {
   } catch {
     console.log(`Couldn't save ${pathname}`);
     return null;
+  }
+}
+
+export async function getPublishStatus(path, token) {
+  const cleanPath = `${DA_CONSTANTS.org}/${DA_CONSTANTS.repo}/main/${path}`;
+  const url = `${DA_CONSTANTS.aemUrl}/${cleanPath}`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.ok) {
+      const result = await response.json();
+      return result.live.status;
+    }
+    return 500;
+  } catch (e) {
+    return 500;
   }
 }
 

@@ -3,6 +3,7 @@ import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 // eslint-disable-next-line import/no-unresolved
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
 import {
+  getPublishStatus,
   createVersion,
   DA_CONSTANTS,
 } from '../../scripts/helper.js';
@@ -33,7 +34,7 @@ let actions;
 let token;
 
 class SearchResult {
-  constructor(item, elements, classStyle, dom) {
+  constructor(item, elements, classStyle, dom, publishStatus) {
     this.path = item.path;
     // eslint-disable-next-line no-use-before-define
     this.pagePath = getPagePathFromFullUrl(item.path);
@@ -41,7 +42,34 @@ class SearchResult {
     this.dom = dom;
     this.original = dom.cloneNode(true);
     this.classStyle = classStyle;
+    this.publishStatus = publishStatus;
   }
+}
+
+function clearEventListeners() {
+  const actionButton = document.getElementById('advanced-action-button');
+  let newEl = actionButton.cloneNode(true);
+  actionButton.parentNode.replaceChild(newEl, actionButton);
+
+  const actionSubmitButton = document.getElementById('advanced-submit-button');
+  newEl = actionSubmitButton.cloneNode(true);
+  actionSubmitButton.parentNode.replaceChild(newEl, actionSubmitButton);
+
+  const createVersionButton = document.getElementById('create-version-button');
+  newEl = createVersionButton.cloneNode(true);
+  createVersionButton.parentNode.replaceChild(newEl, createVersionButton);
+
+  const undoButton = document.getElementById('undo-button');
+  newEl = undoButton.cloneNode(true);
+  undoButton.parentNode.replaceChild(newEl, undoButton);
+
+  const addNewRowButton = document.getElementById('addNewRow');
+  newEl = addNewRowButton.cloneNode(true);
+  addNewRowButton.parentNode.replaceChild(newEl, addNewRowButton);
+
+  const deleteRowButton = document.getElementById('deleteRow');
+  newEl = deleteRowButton.cloneNode(true);
+  deleteRowButton.parentNode.replaceChild(newEl, deleteRowButton);
 }
 
 function getPagePathFromFullUrl(itemPath) {
@@ -72,7 +100,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
 
   let elements = [];
   let classStyle;
-  let emptyRegex = /\$empty/i;
+  const emptyRegex = /\$empty/i;
 
   if (queryObject.scope.block) {
     const blockName = queryObject.scope.block;
@@ -140,10 +168,10 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
         });
       }
       if (filtered.length) {
-        const matchingEntry = new SearchResult(item, filtered, classStyle, dom);
+        const publishStatus = await getPublishStatus(getPagePathFromFullUrl(item.path), token);
+        const matchingEntry = new SearchResult(item, filtered, classStyle, dom, publishStatus);
         matching.push(matchingEntry);
         if (replaceFlag) {
-          //await createVersion(getPagePathFromFullUrl(item.path), token);
           doReplace(
             token,
             dom,
@@ -155,7 +183,8 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
         }
       }
     } else {
-      const matchingEntry = new SearchResult(item, elements, classStyle, dom);
+      const publishStatus = await getPublishStatus(getPagePathFromFullUrl(item.path), token);
+      const matchingEntry = new SearchResult(item, elements, classStyle, dom, publishStatus);
       matching.push(matchingEntry);
     }
   } else if (!queryObject.scope.block && !queryObject.scope.property && queryObject.keyword) {
@@ -169,10 +198,10 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
     });
 
     if (elements.length) {
-      const matchingEntry = new SearchResult(item, elements, undefined, dom);
+      const publishStatus = await getPublishStatus(getPagePathFromFullUrl(item.path), token);
+      const matchingEntry = new SearchResult(item, elements, undefined, dom, publishStatus);
       matching.push(matchingEntry);
       if (replaceFlag) {
-        //await createVersion(getPagePathFromFullUrl(item.path), token);
         doReplace(token, dom, elements, getPagePathFromFullUrl(item.path), queryObject, undefined);
       }
     }
@@ -291,7 +320,7 @@ function tryToPerformAction(queryObject) {
     return addNewRow(token);
   }
 
-  return {status: 'error', message: 'no option selected'};
+  return { status: 'error', message: 'no option selected' };
 }
 
 function tryToCreatePageVersions() {
@@ -301,7 +330,7 @@ function tryToCreatePageVersions() {
     // eslint-disable-next-line no-await-in-loop
     createVersion(result.pagePath, token, uniqueDescription);
   }
-  return {status:  'success', message: 'versions created'};
+  return { status: 'success', message: 'versions created' };
 }
 
 (async function init() {
@@ -337,6 +366,7 @@ function tryToCreatePageVersions() {
   submitButton.addEventListener('click', async () => {
     window.searchResults = null;
     clearResults();
+    clearEventListeners();
     const resultsContainer = document.querySelector('.results-container');
     addLoadingSearch(resultsContainer, 'Searching');
 
@@ -371,7 +401,7 @@ function tryToCreatePageVersions() {
       advancedActions?.classList.remove('hidden');
       addActionEventListeners(queryObject);
 
-      const advancedSubmitButton = document.querySelector('.advanced-submit');
+      const advancedSubmitButton = document.getElementById('advanced-submit-button');
       advancedSubmitButton.addEventListener('click', async () => {
         addLoadingAction(resultsContainer, 'Modifying Content');
         const message = tryToPerformAction(queryObject);
@@ -385,7 +415,7 @@ function tryToCreatePageVersions() {
       updateActionMessage(resultsContainer, message);
     });
 
-    const undoButton = document.querySelector('.undo');
+    const undoButton = document.getElementById('undo-button');
     undoButton.addEventListener('click', () => {
       let resetResult;
       try {

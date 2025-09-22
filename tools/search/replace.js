@@ -217,7 +217,7 @@ function changeRowValue(rowEl, newTextValue, editAmount, editStringLocation, que
       array.join(',')
     */
     let itemList = currentRowValue.split(',');
-    itemList= itemList.map((str) => str.trim());
+    itemList = itemList.map((str) => str.trim());
     itemList.forEach((item, index) => {
       itemList[index] = adjustStringValue(item, newTextValue, editStringLocation);
     });
