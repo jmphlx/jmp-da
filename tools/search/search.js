@@ -46,6 +46,32 @@ class SearchResult {
   }
 }
 
+function clearEventListeners() {
+  const actionButton = document.getElementById('advanced-action-button');
+  let newEl = actionButton.cloneNode(true);
+  actionButton.parentNode.replaceChild(newEl, actionButton);
+
+  const actionSubmitButton = document.getElementById('advanced-submit-button');
+  newEl = actionSubmitButton.cloneNode(true);
+  actionSubmitButton.parentNode.replaceChild(newEl, actionSubmitButton);
+
+  const createVersionButton = document.getElementById('create-version-button');
+  newEl = createVersionButton.cloneNode(true);
+  createVersionButton.parentNode.replaceChild(newEl, createVersionButton);
+
+  const undoButton = document.getElementById('undo-button');
+  newEl = undoButton.cloneNode(true);
+  undoButton.parentNode.replaceChild(newEl, undoButton);
+
+  const addNewRowButton = document.getElementById('addNewRow');
+  newEl = addNewRowButton.cloneNode(true);
+  addNewRowButton.parentNode.replaceChild(newEl, addNewRowButton);
+
+  const deleteRowButton = document.getElementById('deleteRow');
+  newEl = deleteRowButton.cloneNode(true);
+  deleteRowButton.parentNode.replaceChild(newEl, deleteRowButton);
+}
+
 function getPagePathFromFullUrl(itemPath) {
   const splitItemPath = itemPath.split('/');
   splitItemPath.splice(1, 2);
@@ -342,6 +368,7 @@ function tryToCreatePageVersions() {
   submitButton.addEventListener('click', async () => {
     window.searchResults = null;
     clearResults();
+    clearEventListeners();
     const resultsContainer = document.querySelector('.results-container');
     addLoadingSearch(resultsContainer, 'Searching');
 
@@ -376,7 +403,7 @@ function tryToCreatePageVersions() {
       advancedActions?.classList.remove('hidden');
       addActionEventListeners(queryObject);
 
-      const advancedSubmitButton = document.querySelector('.advanced-submit');
+      const advancedSubmitButton = document.getElementById('advanced-submit-button');
       advancedSubmitButton.addEventListener('click', async () => {
         addLoadingAction(resultsContainer, 'Modifying Content');
         const message = tryToPerformAction(queryObject);
@@ -390,7 +417,7 @@ function tryToCreatePageVersions() {
       updateActionMessage(resultsContainer, message);
     });
 
-    const undoButton = document.querySelector('.undo');
+    const undoButton = document.getElementById('undo-button');
     undoButton.addEventListener('click', () => {
       let resetResult;
       try {
