@@ -3,6 +3,7 @@ import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 // eslint-disable-next-line import/no-unresolved
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
 import {
+  getPublishStatus,
   createVersion,
   DA_CONSTANTS,
 } from '../../scripts/helper.js';
@@ -33,7 +34,7 @@ let actions;
 let token;
 
 class SearchResult {
-  constructor(item, elements, classStyle, dom) {
+  constructor(item, elements, classStyle, dom, publishStatus) {
     this.path = item.path;
     // eslint-disable-next-line no-use-before-define
     this.pagePath = getPagePathFromFullUrl(item.path);
@@ -41,6 +42,7 @@ class SearchResult {
     this.dom = dom;
     this.original = dom.cloneNode(true);
     this.classStyle = classStyle;
+    this.publishStatus = publishStatus;
   }
 }
 
@@ -140,7 +142,8 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
         });
       }
       if (filtered.length) {
-        const matchingEntry = new SearchResult(item, filtered, classStyle, dom);
+        const publishStatus = await getPublishStatus(getPagePathFromFullUrl(item.path), token);
+        const matchingEntry = new SearchResult(item, filtered, classStyle, dom, publishStatus);
         matching.push(matchingEntry);
         if (replaceFlag) {
           //await createVersion(getPagePathFromFullUrl(item.path), token);
@@ -155,7 +158,8 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
         }
       }
     } else {
-      const matchingEntry = new SearchResult(item, elements, classStyle, dom);
+      const publishStatus = await getPublishStatus(getPagePathFromFullUrl(item.path), token);
+      const matchingEntry = new SearchResult(item, elements, classStyle, dom, publishStatus);
       matching.push(matchingEntry);
     }
   } else if (!queryObject.scope.block && !queryObject.scope.property && queryObject.keyword) {
@@ -169,7 +173,8 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
     });
 
     if (elements.length) {
-      const matchingEntry = new SearchResult(item, elements, undefined, dom);
+      const publishStatus = await getPublishStatus(getPagePathFromFullUrl(item.path), token);
+      const matchingEntry = new SearchResult(item, elements, undefined, dom, publishStatus);
       matching.push(matchingEntry);
       if (replaceFlag) {
         //await createVersion(getPagePathFromFullUrl(item.path), token);
