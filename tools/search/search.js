@@ -100,7 +100,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
 
   let elements = [];
   let classStyle;
-  let emptyRegex = /\$empty/i;
+  const emptyRegex = /\$empty/i;
 
   if (queryObject.scope.block) {
     const blockName = queryObject.scope.block;
@@ -172,7 +172,6 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
         const matchingEntry = new SearchResult(item, filtered, classStyle, dom, publishStatus);
         matching.push(matchingEntry);
         if (replaceFlag) {
-          //await createVersion(getPagePathFromFullUrl(item.path), token);
           doReplace(
             token,
             dom,
@@ -203,7 +202,6 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
       const matchingEntry = new SearchResult(item, elements, undefined, dom, publishStatus);
       matching.push(matchingEntry);
       if (replaceFlag) {
-        //await createVersion(getPagePathFromFullUrl(item.path), token);
         doReplace(token, dom, elements, getPagePathFromFullUrl(item.path), queryObject, undefined);
       }
     }
@@ -322,7 +320,7 @@ function tryToPerformAction(queryObject) {
     return addNewRow(token);
   }
 
-  return {status: 'error', message: 'no option selected'};
+  return { status: 'error', message: 'no option selected' };
 }
 
 function tryToCreatePageVersions() {
@@ -332,7 +330,7 @@ function tryToCreatePageVersions() {
     // eslint-disable-next-line no-await-in-loop
     createVersion(result.pagePath, token, uniqueDescription);
   }
-  return {status:  'success', message: 'versions created'};
+  return { status: 'success', message: 'versions created' };
 }
 
 (async function init() {

@@ -105,11 +105,10 @@ export async function getPublishStatus(path, token) {
       },
     });
     if (response.ok) {
-        const result = await response.json();
-        return result.live.status;
-    } else {
-      return 500;
+      const result = await response.json();
+      return result.live.status;
     }
+    return 500;
   } catch (e) {
     return 500;
   }

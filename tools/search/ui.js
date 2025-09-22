@@ -178,7 +178,7 @@ function createResultItem(item, highlightTerm) {
   }
 
   const publishIcon = createTag('div', {
-    class: `statusCircle ${publishColor}`
+    class: `statusCircle ${publishColor}`,
   });
 
   const link = createTag('a', {
