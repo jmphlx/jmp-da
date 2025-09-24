@@ -18,6 +18,7 @@ import {
 } from './replace.js';
 import {
   addActionEventListeners,
+  addCheckboxEventListeners,
   addLoadingAction,
   addLoadingSearch,
   clearResults,
@@ -349,6 +350,7 @@ function tryToCreatePageVersions() {
 
   const searchInputField = document.querySelector('[name="searchTerms"]');
   populateDropdowns(searchInputField);
+  addCheckboxEventListeners(searchInputField);
 
   const replaceCheckbox = document.querySelector('#replaceAction');
   const replaceTextbox = document.querySelector('[name="replaceText"]');
