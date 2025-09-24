@@ -40,6 +40,22 @@ function updateSearchTerms(searchInputField, category, termValue) {
   }
 }
 
+function addCheckboxEventListeners(searchInputField) {
+  const emptyCheckbox = document.getElementById('emptyValue');
+  const emptyRegex = /(\s?\$empty)/g;
+  emptyCheckbox.addEventListener('change', () => {
+    const currentValue = searchInputField.value;
+    const emptyCheckboxVal = emptyCheckbox.checked;
+    if (emptyCheckboxVal && !currentValue) {
+      searchInputField.value = '$empty';
+    } else if (emptyCheckboxVal && currentValue) {
+      searchInputField.value += ' $empty';
+    } else if (!emptyCheckboxVal && currentValue.match(emptyRegex)) {
+      searchInputField.value = currentValue.replace(emptyRegex, '');
+    }
+  });
+}
+
 function buildParentDropdown(dropdown, jsonData, type) {
   jsonData.forEach((option) => {
     const optionValue = option[type].toLowerCase();
@@ -438,6 +454,7 @@ export {
   addActionEventListeners,
   addLoadingAction,
   addLoadingSearch,
+  addCheckboxEventListeners,
   clearResults,
   closeAdvancedSections,
   constructPageViewer,

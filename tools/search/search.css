@@ -26,15 +26,9 @@
         sl-select {
           width: 120px;
           border-radius: 5px;
-          /* #shadow-root {
-            div.sl-inputfield {
-              div.sl-inputfield-select-wrapper {
-                select {
-                  padding: 0 24px 0 12px !important;
-                }
-              }
-            }
-          } */
+        }
+        input[type=checkbox] {
+          margin-bottom: 0rem;
         }
       }
     }
