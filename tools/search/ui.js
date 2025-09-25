@@ -59,7 +59,7 @@ function addCheckboxEventListeners(searchInputField) {
 function buildParentDropdown(dropdown, jsonData, type) {
   const defaultElement = createTag('option', {
     value: '',
-    }, 'Select');
+  }, 'Select');
   dropdown.append(defaultElement);
   jsonData.forEach((option) => {
     const optionValue = option[type].toLowerCase();
@@ -92,7 +92,7 @@ function buildPropertiesDropdown(dropdown, nodeName) {
   const defaultElement = createTag('option', {
     value: '',
     class: 'prop-option',
-    }, 'Select');
+  }, 'Select');
   dropdown.append(defaultElement);
   propertyList?.forEach((prop) => {
     const optionValue = prop.trim();
@@ -123,7 +123,7 @@ function buildAttributeDropdown(dropdown, nodeName) {
   const defaultElement = createTag('option', {
     value: '',
     class: 'prop-option',
-    }, 'Select');
+  }, 'Select');
   dropdown.append(defaultElement);
   attributeList?.forEach((attr) => {
     const optionValue = attr.trim();
@@ -190,6 +190,27 @@ function updateActionMessage(resultsContainer, result) {
   resultsContainer.prepend(actionMessage);
 }
 
+function getPublishStatusClass(statusObj) {
+  const liveStatus = statusObj.live;
+  const previewStatus = statusObj.preview;
+
+  if (liveStatus >= 200 && liveStatus < 300) {
+    // Page is published.
+    return 'status-published';
+  }
+  if (previewStatus >= 200 && previewStatus < 300) {
+    // Page is not published but has been previewed.
+    return 'status-previewed';
+  }
+  if (liveStatus >= 400 && liveStatus < 500
+      && previewStatus >= 400 && previewStatus < 500) {
+    // Page is not previewed or published by returning valid 404s.
+    return 'status-unpublished';
+  }
+  // To catch unexpected errors in obtaining the status.
+  return 'status-error';
+}
+
 function createResultItem(item, highlightTerm) {
   const resultItem = createTag('div', { class: 'result-item' });
   const resultHeader = createTag('div', {
@@ -199,18 +220,10 @@ function createResultItem(item, highlightTerm) {
     class: 'page-path',
   }, `${item.path}`);
 
-  const publishStatus = item.publishStatus;
-  let publishColor;
-  if (publishStatus >= 200 && publishStatus < 300) {
-    publishColor = 'publish-status-green';
-  } else if (publishStatus >= 400 && publishStatus < 500) {
-    publishColor = 'publish-status-red';
-  } else {
-    publishColor = 'publish-status-yellow';
-  }
+  const publishStatus = getPublishStatusClass(item.publishStatus);
 
   const publishIcon = createTag('div', {
-    class: `statusCircle ${publishColor}`,
+    class: `statusCircle ${publishStatus}`,
   });
 
   const link = createTag('a', {

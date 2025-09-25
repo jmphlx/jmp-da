@@ -34,7 +34,11 @@ const defaultpath = '/jmphlx/jmp-da/en';
 const pathPrefix = `/${DA_CONSTANTS.org}/${DA_CONSTANTS.repo}`;
 let actions;
 let token;
-const rateLimit = createRateLimiter(10, 1000);
+
+/**
+ * https://admin.hlx.page/ only supports 10 requests per second, but need to space it out to 3 seconds.
+*/
+const rateLimit = createRateLimiter(10, 3000);
 
 class SearchResult {
   constructor(item, elements, classStyle, dom, publishStatus) {
@@ -49,10 +53,8 @@ class SearchResult {
   }
 }
 
-async function getPubStatus(path, token) {
-  return rateLimit(() => {
-    return getPublishStatus(path, token);
-  });
+async function getPublishStatusObj(path) {
+  return rateLimit(() => getPublishStatus(path, token));
 }
 
 function clearEventListeners() {
@@ -177,8 +179,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
         });
       }
       if (filtered.length) {
-        const publishStatus = await getPubStatus(getPagePathFromFullUrl(item.path), token);
-        console.log(publishStatus);
+        const publishStatus = await getPublishStatusObj(getPagePathFromFullUrl(item.path));
         const matchingEntry = new SearchResult(item, filtered, classStyle, dom, publishStatus);
         matching.push(matchingEntry);
         if (replaceFlag) {
@@ -193,8 +194,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
         }
       }
     } else {
-      const publishStatus = await getPubStatus(getPagePathFromFullUrl(item.path), token);
-      console.log(publishStatus);
+      const publishStatus = await getPublishStatusObj(getPagePathFromFullUrl(item.path));
       const matchingEntry = new SearchResult(item, elements, classStyle, dom, publishStatus);
       matching.push(matchingEntry);
     }
@@ -209,7 +209,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
     });
 
     if (elements.length) {
-      const publishStatus = await getPubStatus(getPagePathFromFullUrl(item.path), token);
+      const publishStatus = await getPublishStatusObj(getPagePathFromFullUrl(item.path));
       const matchingEntry = new SearchResult(item, elements, undefined, dom, publishStatus);
       matching.push(matchingEntry);
       if (replaceFlag) {
