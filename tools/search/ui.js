@@ -57,6 +57,10 @@ function addCheckboxEventListeners(searchInputField) {
 }
 
 function buildParentDropdown(dropdown, jsonData, type) {
+  const defaultElement = createTag('option', {
+    value: '',
+    }, 'Select');
+  dropdown.append(defaultElement);
   jsonData.forEach((option) => {
     const optionValue = option[type].toLowerCase();
     if (optionValue !== 'default') {
@@ -66,6 +70,7 @@ function buildParentDropdown(dropdown, jsonData, type) {
       dropdown.append(optionElement);
     }
   });
+  dropdown.value = '';
 }
 
 function buildPropertiesDropdown(dropdown, nodeName) {
@@ -73,9 +78,7 @@ function buildPropertiesDropdown(dropdown, nodeName) {
   const shadowRoot = dropdown.shadowRoot;
   const currOptions = shadowRoot.querySelectorAll('option');
   currOptions?.forEach((opt) => {
-    if (opt.value) {
-      opt.remove();
-    }
+    opt.remove();
   });
   let propertyList;
   window.blockProperties.forEach((block) => {
@@ -86,6 +89,11 @@ function buildPropertiesDropdown(dropdown, nodeName) {
   if (!propertyList || !propertyList[0].length) {
     propertyList = DEFAULT_PROP_LIST;
   }
+  const defaultElement = createTag('option', {
+    value: '',
+    class: 'prop-option',
+    }, 'Select');
+  dropdown.append(defaultElement);
   propertyList?.forEach((prop) => {
     const optionValue = prop.trim();
     const optionElement = createTag('option', {
@@ -101,9 +109,7 @@ function buildAttributeDropdown(dropdown, nodeName) {
   const shadowRoot = dropdown.shadowRoot;
   const currOptions = shadowRoot.querySelectorAll('option');
   currOptions?.forEach((opt) => {
-    if (opt.value) {
-      opt.remove();
-    }
+    opt.remove();
   });
   let attributeList;
   window.tagAttribute.forEach((tag) => {
@@ -114,6 +120,11 @@ function buildAttributeDropdown(dropdown, nodeName) {
   if (!attributeList || !attributeList[0].length) {
     attributeList = window.tagAttribute[0].attribute.split(',');
   }
+  const defaultElement = createTag('option', {
+    value: '',
+    class: 'prop-option',
+    }, 'Select');
+  dropdown.append(defaultElement);
   attributeList?.forEach((attr) => {
     const optionValue = attr.trim();
     const optionElement = createTag('option', {
@@ -124,7 +135,7 @@ function buildAttributeDropdown(dropdown, nodeName) {
   });
 }
 
-async function populateDropdowns(searchInputField) {
+function populateDropdowns(searchInputField) {
   // Do Block
   const blockDropdown = document.querySelector('[name="block_scope"]');
   buildParentDropdown(blockDropdown, window.blockProperties, 'name');
@@ -154,6 +165,11 @@ async function populateDropdowns(searchInputField) {
 
   attributeDropdown.addEventListener('change', () => {
     updateSearchTerms(searchInputField, 'attribute', attributeDropdown.value);
+  });
+
+  const statusDropdown = document.getElementById('publish_scope');
+  statusDropdown.addEventListener('change', () => {
+    updateSearchTerms(searchInputField, 'status', statusDropdown.value);
   });
 }
 

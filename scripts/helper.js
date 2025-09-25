@@ -93,6 +93,35 @@ export async function saveToDa(text, pathname, token) {
   }
 }
 
+export function createRateLimiter(limit, interval) {
+  const queue = [];
+  let lastTime = 0;
+  const spacing = interval / limit; // e.g. 1000/10 = 100ms
+
+  async function processQueue() {
+    if (queue.length === 0) return;
+
+    const now = Date.now();
+    const wait = Math.max(0, spacing - (now - lastTime));
+    lastTime = now + wait;
+
+    setTimeout(() => {
+      const { fn, resolve, reject } = queue.shift();
+      fn().then(resolve).catch(reject);
+      processQueue();
+    }, wait);
+  }
+
+  return function schedule(fn) {
+    return new Promise((resolve, reject) => {
+      queue.push({ fn, resolve, reject });
+      if (queue.length === 1) {
+        processQueue();
+      }
+    });
+  };
+}
+
 export async function getPublishStatus(path, token) {
   const cleanPath = `${DA_CONSTANTS.org}/${DA_CONSTANTS.repo}/main/${path}`;
   const url = `${DA_CONSTANTS.aemUrl}/${cleanPath}`;
