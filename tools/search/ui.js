@@ -323,6 +323,7 @@ function writeOutResults(results, queryString, queryObject, duration, replaceFla
   const resultsData = document.createElement('div');
 
   const urlList = [];
+  const publishedUrlList = [];
 
   const resultsList = document.createElement('div');
   resultsList.classList.add('results-list');
@@ -331,6 +332,9 @@ function writeOutResults(results, queryString, queryObject, duration, replaceFla
     const resultItem = createResultItem(item, highlightTerm);
     resultsList.append(resultItem);
     urlList.push(`${DA_CONSTANTS.previewUrl}${item.pagePath}`);
+    if (getPublishStatusClass(item.publishStatus) === 'status-published') {
+      publishedUrlList.push(`${DA_CONSTANTS.previewUrl}${item.pagePath}`);
+    }
   });
 
   const searchSummary = document.createElement('span');
@@ -345,14 +349,24 @@ function writeOutResults(results, queryString, queryObject, duration, replaceFla
     id: 'copy-to-clipboard',
   });
 
-  const copyButton = createTag('p', {
+  const copyAllButton = createTag('p', {
     class: 'button-container',
   });
-  copyButton.textContent = 'Copy Result URLs To Clipboard';
-  copyContainer.append(copyButton);
+  copyAllButton.textContent = 'Copy All Result URLs To Clipboard';
+  copyContainer.append(copyAllButton);
   copyContainer.addEventListener('click', () => {
-    copyToClipboard(copyButton, urlList.join('\n'), 'Copied');
+    copyToClipboard(copyAllButton, urlList.join('\n'), 'Copied');
   });
+
+  const copyPublishedButton = createTag('p', {
+    class: 'button-container',
+  });
+  copyPublishedButton.textContent = 'Copy Published Result URLs To Clipboard';
+  copyContainer.append(copyPublishedButton);
+  copyContainer.addEventListener('click', () => {
+    copyToClipboard(copyPublishedButton, publishedUrlList.join('\n'), 'Copied');
+  });
+  
 
   const bulkEditorButton = createTag('a', {
     class: 'button',
