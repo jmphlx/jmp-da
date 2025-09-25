@@ -5,6 +5,7 @@ import { crawl } from 'https://da.live/nx/public/utils/tree.js';
 import {
   getPublishStatus,
   createVersion,
+  createRateLimiter,
   DA_CONSTANTS,
 } from '../../scripts/helper.js';
 import {
@@ -33,6 +34,7 @@ const defaultpath = '/jmphlx/jmp-da/en';
 const pathPrefix = `/${DA_CONSTANTS.org}/${DA_CONSTANTS.repo}`;
 let actions;
 let token;
+const rateLimit = createRateLimiter(10, 1000);
 
 class SearchResult {
   constructor(item, elements, classStyle, dom, publishStatus) {
@@ -45,6 +47,12 @@ class SearchResult {
     this.classStyle = classStyle;
     this.publishStatus = publishStatus;
   }
+}
+
+async function getPubStatus(path, token) {
+  return rateLimit(() => {
+    return getPublishStatus(path, token);
+  });
 }
 
 function clearEventListeners() {
@@ -169,7 +177,8 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
         });
       }
       if (filtered.length) {
-        const publishStatus = await getPublishStatus(getPagePathFromFullUrl(item.path), token);
+        const publishStatus = await getPubStatus(getPagePathFromFullUrl(item.path), token);
+        console.log(publishStatus);
         const matchingEntry = new SearchResult(item, filtered, classStyle, dom, publishStatus);
         matching.push(matchingEntry);
         if (replaceFlag) {
@@ -184,7 +193,8 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
         }
       }
     } else {
-      const publishStatus = await getPublishStatus(getPagePathFromFullUrl(item.path), token);
+      const publishStatus = await getPubStatus(getPagePathFromFullUrl(item.path), token);
+      console.log(publishStatus);
       const matchingEntry = new SearchResult(item, elements, classStyle, dom, publishStatus);
       matching.push(matchingEntry);
     }
@@ -199,7 +209,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
     });
 
     if (elements.length) {
-      const publishStatus = await getPublishStatus(getPagePathFromFullUrl(item.path), token);
+      const publishStatus = await getPubStatus(getPagePathFromFullUrl(item.path), token);
       const matchingEntry = new SearchResult(item, elements, undefined, dom, publishStatus);
       matching.push(matchingEntry);
       if (replaceFlag) {
