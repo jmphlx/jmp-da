@@ -44,7 +44,7 @@ export const DA_CONSTANTS = {
   sourceUrl: 'https://admin.da.live/source',
   versionUrl: 'https://admin.da.live/versionsource',
   editUrl: 'https://da.live/edit#',
-  aemUrl: 'https://admin.hlx.page/live',
+  aemUrl: 'https://admin.hlx.page/status',
   mainUrl: 'https://main--jmp-da--jmphlx.aem.live',
   previewUrl: 'https://main--jmp-da--jmphlx.aem.page',
   org: 'jmphlx',
@@ -93,36 +93,47 @@ export async function saveToDa(text, pathname, token) {
   }
 }
 
+/**
+ * Requests to https://admin.hlx.page/ urls need to be limited to at most
+ * 10 requests per second.
+ */
 export function createRateLimiter(limit, interval) {
   const queue = [];
-  let lastTime = 0;
-  const spacing = interval / limit; // e.g. 1000/10 = 100ms
+  const timestamps = [];
 
-  async function processQueue() {
+  function processQueue() {
     if (queue.length === 0) return;
 
     const now = Date.now();
-    const wait = Math.max(0, spacing - (now - lastTime));
-    lastTime = now + wait;
 
-    setTimeout(() => {
+    // Remove old timestamps outside the window
+    while (timestamps.length > 0 && now - timestamps[0] >= interval) {
+      timestamps.shift();
+    }
+
+    if (timestamps.length < limit) {
+      // We can run immediately
       const { fn, resolve, reject } = queue.shift();
-      fn().then(resolve).catch(reject);
-      processQueue();
-    }, wait);
+      timestamps.push(now);
+      fn().then(resolve).catch(reject).finally(() => {
+        processQueue(); // process next right after this one finishes
+      });
+    } else {
+      // Need to wait until earliest timestamp falls out of the window
+      const wait = interval - (now - timestamps[0]);
+      setTimeout(processQueue, wait);
+    }
   }
 
   return function schedule(fn) {
     return new Promise((resolve, reject) => {
       queue.push({ fn, resolve, reject });
-      if (queue.length === 1) {
-        processQueue();
-      }
+      processQueue();
     });
   };
 }
 
-export async function getPublishStatus(path, token) {
+export async function getPageStatus(path, token) {
   const cleanPath = `${DA_CONSTANTS.org}/${DA_CONSTANTS.repo}/main/${path}`;
   const url = `${DA_CONSTANTS.aemUrl}/${cleanPath}`;
 
@@ -135,12 +146,42 @@ export async function getPublishStatus(path, token) {
     });
     if (response.ok) {
       const result = await response.json();
-      return result.live.status;
+      return {
+        live: result.live.status,
+        preview: result.preview.status,
+      };
     }
-    return 500;
+    return {
+      live: 500,
+      preview: 500,
+    };
   } catch (e) {
-    return 500;
+    return {
+      live: 500,
+      preview: 500,
+    };
   }
+}
+
+export function getPublishStatus(statusObj) {
+  const liveStatus = statusObj.live;
+  const previewStatus = statusObj.preview;
+
+  if (liveStatus >= 200 && liveStatus < 300) {
+    // Page is published.
+    return 'published';
+  }
+  if (previewStatus >= 200 && previewStatus < 300) {
+    // Page is not published but has been previewed.
+    return 'previewed';
+  }
+  if (liveStatus >= 400 && liveStatus < 500
+      && previewStatus >= 400 && previewStatus < 500) {
+    // Page is not previewed or published by returning valid 404s.
+    return 'unpublished';
+  }
+  // To catch unexpected errors in obtaining the status.
+  return 'error';
 }
 
 export async function createVersion(path, token, description = 'Search & Replace Version') {

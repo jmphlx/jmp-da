@@ -1,4 +1,8 @@
-import { createTag, DA_CONSTANTS } from '../../scripts/helper.js';
+import {
+  createTag,
+  DA_CONSTANTS,
+  getPublishStatus,
+} from '../../scripts/helper.js';
 import { escapeRegExp } from './replace.js';
 
 const DEFAULT_PROP_LIST = ['style', 'options'];
@@ -59,7 +63,7 @@ function addCheckboxEventListeners(searchInputField) {
 function buildParentDropdown(dropdown, jsonData, type) {
   const defaultElement = createTag('option', {
     value: '',
-    }, 'Select');
+  }, 'Select');
   dropdown.append(defaultElement);
   jsonData.forEach((option) => {
     const optionValue = option[type].toLowerCase();
@@ -92,7 +96,7 @@ function buildPropertiesDropdown(dropdown, nodeName) {
   const defaultElement = createTag('option', {
     value: '',
     class: 'prop-option',
-    }, 'Select');
+  }, 'Select');
   dropdown.append(defaultElement);
   propertyList?.forEach((prop) => {
     const optionValue = prop.trim();
@@ -123,7 +127,7 @@ function buildAttributeDropdown(dropdown, nodeName) {
   const defaultElement = createTag('option', {
     value: '',
     class: 'prop-option',
-    }, 'Select');
+  }, 'Select');
   dropdown.append(defaultElement);
   attributeList?.forEach((attr) => {
     const optionValue = attr.trim();
@@ -199,18 +203,9 @@ function createResultItem(item, highlightTerm) {
     class: 'page-path',
   }, `${item.path}`);
 
-  const publishStatus = item.publishStatus;
-  let publishColor;
-  if (publishStatus >= 200 && publishStatus < 300) {
-    publishColor = 'publish-status-green';
-  } else if (publishStatus >= 400 && publishStatus < 500) {
-    publishColor = 'publish-status-red';
-  } else {
-    publishColor = 'publish-status-yellow';
-  }
-
+  const publishStatus = getPublishStatus(item.publishStatus);
   const publishIcon = createTag('div', {
-    class: `statusCircle ${publishColor}`,
+    class: `statusCircle status-${publishStatus}`,
   });
 
   const link = createTag('a', {
@@ -310,14 +305,17 @@ function writeOutResults(results, queryString, queryObject, duration, replaceFla
   const resultsData = document.createElement('div');
 
   const urlList = [];
+  const publishedUrlList = [];
 
   const resultsList = document.createElement('div');
   resultsList.classList.add('results-list');
   results.forEach((item) => {
-    console.log(item.classStyle);
     const resultItem = createResultItem(item, highlightTerm);
     resultsList.append(resultItem);
     urlList.push(`${DA_CONSTANTS.previewUrl}${item.pagePath}`);
+    if (getPublishStatus(item.publishStatus) === 'published') {
+      publishedUrlList.push(`${DA_CONSTANTS.previewUrl}${item.pagePath}`);
+    }
   });
 
   const searchSummary = document.createElement('span');
@@ -332,14 +330,23 @@ function writeOutResults(results, queryString, queryObject, duration, replaceFla
     id: 'copy-to-clipboard',
   });
 
-  const copyButton = createTag('p', {
+  const copyAllButton = createTag('p', {
     class: 'button-container',
   });
-  copyButton.textContent = 'Copy Result URLs To Clipboard';
-  copyContainer.append(copyButton);
-  copyContainer.addEventListener('click', () => {
-    copyToClipboard(copyButton, urlList.join('\n'), 'Copied');
+  copyAllButton.textContent = 'Copy All Result URLs To Clipboard';
+  copyAllButton.addEventListener('click', () => {
+    copyToClipboard(copyAllButton, urlList.join('\n'), 'Copied');
   });
+  copyContainer.append(copyAllButton);
+
+  const copyPublishedButton = createTag('p', {
+    class: 'button-container',
+  });
+  copyPublishedButton.textContent = 'Copy Published Result URLs To Clipboard';
+  copyPublishedButton.addEventListener('click', () => {
+    copyToClipboard(copyPublishedButton, publishedUrlList.join('\n'), 'Copied');
+  });
+  copyContainer.append(copyPublishedButton);
 
   const bulkEditorButton = createTag('a', {
     class: 'button',
