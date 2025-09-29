@@ -2,7 +2,7 @@ import {
   createTag,
   DA_CONSTANTS,
   getPublishStatus,
- } from '../../scripts/helper.js';
+} from '../../scripts/helper.js';
 import { escapeRegExp } from './replace.js';
 
 const DEFAULT_PROP_LIST = ['style', 'options'];
@@ -347,7 +347,6 @@ function writeOutResults(results, queryString, queryObject, duration, replaceFla
   copyContainer.addEventListener('click', () => {
     copyToClipboard(copyPublishedButton, publishedUrlList.join('\n'), 'Copied');
   });
-  
 
   const bulkEditorButton = createTag('a', {
     class: 'button',
