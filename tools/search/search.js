@@ -3,6 +3,7 @@ import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 // eslint-disable-next-line import/no-unresolved
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
 import {
+  getPageStatus,
   getPublishStatus,
   createVersion,
   createRateLimiter,
@@ -54,7 +55,7 @@ class SearchResult {
 }
 
 async function getPublishStatusObj(path) {
-  return rateLimit(() => getPublishStatus(path, token));
+  return rateLimit(() => getPageStatus(path, token));
 }
 
 function clearEventListeners() {
@@ -112,24 +113,169 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
   let elements = [];
   let classStyle;
   const emptyRegex = /\$empty/i;
+  let keywordFilterApplied = false;
+  let scopeSearchAttempted = false;
+  console.log(queryObject.keyword);
 
   if (queryObject.scope.block) {
-    const blockName = queryObject.scope.block;
-    classStyle = 'block';
-    if (queryObject.scope.property) {
-      const propertyName = queryObject.scope.property;
-      classStyle = 'property';
-      const foundProperties = Array.from(dom.querySelectorAll(`div.${blockName} p`)).filter((field) => field.children.length === 0 && field.textContent.trim() === propertyName);
-      console.log(foundProperties);
-      foundProperties.forEach((prop) => {
-        elements.push(prop.parentElement.parentElement);
+    // If there is a block scope, try to find blocks & props.
+    findBlockPropertyElements();
+    scopeSearchAttempted = true;
+  } else if (queryObject.scope.tag) {
+    // If no block scope, then look for tag scope. If tag scope,
+    // then try to find tags/attributes.
+    findHTMLElements();
+    scopeSearchAttempted = true;
+  } else if (queryObject.keyword) {
+    // Search whole page for keyword if no block or tag scope.
+    keywordFilterApplied = true;
+    scopeSearchAttempted = true;
+    classStyle = 'keyword';
+    // If the block and tag scopes were null, then still try to do keyword search
+    const $newDom = $(dom);
+
+    $($newDom).find(`*:contains("${queryObject.keyword}")`).filter(function () {
+      return $(this).children((`*:contains("${queryObject.keyword}")`)).length === 0;
+    }).each(function () {
+      elements.push($(this).get(0));
+    });
+  }
+
+  const filtered = [];
+  // Now check if elements are found.
+  if (elements.length) {
+    /* found some matching elements.
+    Now try to apply filters. Check for
+    publish status filter. If it doesn't match, then
+    the page is not a match. If it doesn, then
+    check for keyword. */
+    const pageStatusObj = await getPublishStatusObj(getPagePathFromFullUrl(item.path));
+    const publishStatus = getPublishStatus(pageStatusObj);
+    if (queryObject.scope.status) {
+      if (publishStatus === queryObject.scope.status && queryObject.keyword) {
+        // look for keyword.
+        await filterForKeyword(pageStatusObj);
+      } else if (publishStatus === queryObject.scope.status) {
+        const matchingEntry = new SearchResult(item, elements, classStyle, dom, pageStatusObj);
+        matching.push(matchingEntry);
+        if (replaceFlag) {
+          doReplace(
+            token,
+            dom,
+            filtered,
+            getPagePathFromFullUrl(item.path),
+            queryObject,
+            classStyle
+          );
+        }
+      }
+    } else if (queryObject.keyword && !keywordFilterApplied) {
+      elements.forEach((el) => {
+        if (el.textContent.toLowerCase().includes(queryObject.keyword.toLowerCase())) {
+          filtered.push(el);
+        }
+      });
+      if (filtered.length) {
+        const matchingEntry = new SearchResult(item, filtered, classStyle, dom, pageStatusObj);
+        matching.push(matchingEntry);
+        if (replaceFlag) {
+          doReplace(
+            token,
+            dom,
+            filtered,
+            getPagePathFromFullUrl(item.path),
+            queryObject,
+            classStyle
+          );
+        }
+      }
+    } else {
+      // No other filters to apply, add page to results.
+      const matchingEntry = new SearchResult(item, elements, classStyle, dom, pageStatusObj);
+      matching.push(matchingEntry);
+      if (replaceFlag) {
+        doReplace(
+          token,
+          dom,
+          filtered,
+          getPagePathFromFullUrl(item.path),
+          queryObject,
+          classStyle
+        );
+      }
+    }
+  } else if (!scopeSearchAttempted && queryObject.scope.status) {
+    /* If no elements were found, see if publish filter is present. If it is,
+    check the page status to see if it matches, then include it.
+    */
+    const pageStatusObj = await getPublishStatusObj(getPagePathFromFullUrl(item.path));
+    const publishStatus = getPublishStatus(pageStatusObj);
+    classStyle = 'status';
+    if (publishStatus === queryObject.scope.status) {
+      const matchingEntry = new SearchResult(item, elements, classStyle, dom, pageStatusObj);
+      matching.push(matchingEntry);
+    }
+  }
+  /* If there are no elements and there is no publish filter, then this page is not a match. */
+
+  async function filterForKeyword(publishStatus) {
+    const filtered = [];
+    if (classStyle === 'attribute') {
+      elements.forEach((el) => {
+        filtered.push(el);
+      });
+    } else if (classStyle === 'tag') {
+      elements.forEach((el) => {
+        if (el.outerHTML.toLowerCase().includes(queryObject.keyword.toLowerCase())) {
+          filtered.push(el);
+        }
+      });
+    } else if (classStyle === 'property' && queryObject.keyword.match(emptyRegex)) {
+      elements.forEach((el) => {
+        const propVal = el.children[1];
+        if (propVal.textContent.toLowerCase().trim().length === 0) {
+          filtered.push(el);
+        }
       });
     } else {
-      elements = dom.querySelectorAll(`div.${blockName}`);
+      elements.forEach((el) => {
+        if (el.textContent.toLowerCase().includes(queryObject.keyword.toLowerCase())) {
+          filtered.push(el);
+        }
+      });
+    }
+    if (filtered.length) {
+      const matchingEntry = new SearchResult(item, filtered, classStyle, dom, publishStatus);
+      matching.push(matchingEntry);
+      if (replaceFlag) {
+        doReplace(
+          token,
+          dom,
+          filtered,
+          getPagePathFromFullUrl(item.path),
+          queryObject,
+          classStyle
+        );
+      }
     }
   }
 
-  if (elements.length === 0 && queryObject.scope.tag) {
+  function findGenericPropertyElements() {
+    const propertyName = queryObject.scope.property;
+    classStyle = 'property';
+    const foundProperties = Array.from(dom.querySelectorAll('p')).filter((ele) => ele.children.length === 0 && ele.textContent.trim() === propertyName);
+    foundProperties.forEach((prop) => {
+      elements.push(prop.parentElement.parentElement);
+    });
+  }
+
+  /**
+   * Assumption: If you are looking
+   * for an html element with an attribute,
+   * then the keyword must be present
+   * and only applies to the attribute.
+   */
+  function findHTMLElements() {
     const tagName = queryObject.scope.tag;
     let queryString = tagName;
     classStyle = 'tag';
@@ -142,79 +288,19 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
     elements = dom.querySelectorAll(`${queryString}`);
   }
 
-  if (elements.length === 0 && !queryObject.scope.block && queryObject.scope.property) {
-    const propertyName = queryObject.scope.property;
-    classStyle = 'property';
-    const foundProperties = Array.from(dom.querySelectorAll('p')).filter((ele) => ele.children.length === 0 && ele.textContent.trim() === propertyName);
-    foundProperties.forEach((prop) => {
-      elements.push(prop.parentElement.parentElement);
-    });
-  }
-
-  if (elements.length) {
-    if (queryObject.keyword) {
-      const filtered = [];
-      if (classStyle === 'attribute') {
-        elements.forEach((el) => {
-          filtered.push(el);
-        });
-      } else if (classStyle === 'tag') {
-        elements.forEach((el) => {
-          if (el.outerHTML.toLowerCase().includes(queryObject.keyword.toLowerCase())) {
-            filtered.push(el);
-          }
-        });
-      } else if (classStyle === 'property' && queryObject.keyword.match(emptyRegex)) {
-        elements.forEach((el) => {
-          const propVal = el.children[1];
-          if (propVal.textContent.toLowerCase().trim().length === 0) {
-            filtered.push(el);
-          }
-        });
-      } else {
-        elements.forEach((el) => {
-          if (el.textContent.toLowerCase().includes(queryObject.keyword.toLowerCase())) {
-            filtered.push(el);
-          }
-        });
-      }
-      if (filtered.length) {
-        const publishStatus = await getPublishStatusObj(getPagePathFromFullUrl(item.path));
-        const matchingEntry = new SearchResult(item, filtered, classStyle, dom, publishStatus);
-        matching.push(matchingEntry);
-        if (replaceFlag) {
-          doReplace(
-            token,
-            dom,
-            filtered,
-            getPagePathFromFullUrl(item.path),
-            queryObject,
-            classStyle,
-          );
-        }
-      }
+  function findBlockPropertyElements() {
+    const blockName = queryObject.scope.block;
+    classStyle = 'block';
+    if (queryObject.scope.property) {
+      const propertyName = queryObject.scope.property;
+      classStyle = 'property';
+      const foundProperties = Array.from(dom.querySelectorAll(`div.${blockName} p`)).filter((field) => field.children.length === 0 && field.textContent.trim() === propertyName);
+      console.log(foundProperties);
+      foundProperties.forEach((prop) => {
+        elements.push(prop.parentElement.parentElement);
+      });
     } else {
-      const publishStatus = await getPublishStatusObj(getPagePathFromFullUrl(item.path));
-      const matchingEntry = new SearchResult(item, elements, classStyle, dom, publishStatus);
-      matching.push(matchingEntry);
-    }
-  } else if (!queryObject.scope.block && !queryObject.scope.property && queryObject.keyword) {
-    // If the block and property scopes were null, then still try to do keyword search
-    const $newDom = $(dom);
-
-    $($newDom).find(`*:contains("${queryObject.keyword}")`).filter(function () {
-      return $(this).children((`*:contains("${queryObject.keyword}")`)).length === 0;
-    }).each(function () {
-      elements.push($(this).get(0));
-    });
-
-    if (elements.length) {
-      const publishStatus = await getPublishStatusObj(getPagePathFromFullUrl(item.path));
-      const matchingEntry = new SearchResult(item, elements, undefined, dom, publishStatus);
-      matching.push(matchingEntry);
-      if (replaceFlag) {
-        doReplace(token, dom, elements, getPagePathFromFullUrl(item.path), queryObject, undefined);
-      }
+      elements = dom.querySelectorAll(`div.${blockName}`);
     }
   }
 }
@@ -397,6 +483,8 @@ function tryToCreatePageVersions() {
     // Get Search Terms.
     const queryObject = getQuery();
     console.log(queryObject);
+
+    // Need to validate query here. and error early.
 
     const queryString = document.querySelector('[name="searchTerms"]').value;
 

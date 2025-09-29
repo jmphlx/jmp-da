@@ -133,7 +133,7 @@ export function createRateLimiter(limit, interval) {
   };
 }
 
-export async function getPublishStatus(path, token) {
+export async function getPageStatus(path, token) {
   const cleanPath = `${DA_CONSTANTS.org}/${DA_CONSTANTS.repo}/main/${path}`;
   const url = `${DA_CONSTANTS.aemUrl}/${cleanPath}`;
 
@@ -161,6 +161,27 @@ export async function getPublishStatus(path, token) {
       preview: 500,
     };
   }
+}
+
+export function getPublishStatus(statusObj) {
+  const liveStatus = statusObj.live;
+  const previewStatus = statusObj.preview;
+
+  if (liveStatus >= 200 && liveStatus < 300) {
+    // Page is published.
+    return 'published';
+  }
+  if (previewStatus >= 200 && previewStatus < 300) {
+    // Page is not published but has been previewed.
+    return 'previewed';
+  }
+  if (liveStatus >= 400 && liveStatus < 500
+      && previewStatus >= 400 && previewStatus < 500) {
+    // Page is not previewed or published by returning valid 404s.
+    return 'unpublished';
+  }
+  // To catch unexpected errors in obtaining the status.
+  return 'error';
 }
 
 export async function createVersion(path, token, description = 'Search & Replace Version') {

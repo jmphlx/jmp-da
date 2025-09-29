@@ -1,4 +1,8 @@
-import { createTag, DA_CONSTANTS } from '../../scripts/helper.js';
+import {
+  createTag,
+  DA_CONSTANTS,
+  getPublishStatus,
+ } from '../../scripts/helper.js';
 import { escapeRegExp } from './replace.js';
 
 const DEFAULT_PROP_LIST = ['style', 'options'];
@@ -190,27 +194,6 @@ function updateActionMessage(resultsContainer, result) {
   resultsContainer.prepend(actionMessage);
 }
 
-function getPublishStatusClass(statusObj) {
-  const liveStatus = statusObj.live;
-  const previewStatus = statusObj.preview;
-
-  if (liveStatus >= 200 && liveStatus < 300) {
-    // Page is published.
-    return 'status-published';
-  }
-  if (previewStatus >= 200 && previewStatus < 300) {
-    // Page is not published but has been previewed.
-    return 'status-previewed';
-  }
-  if (liveStatus >= 400 && liveStatus < 500
-      && previewStatus >= 400 && previewStatus < 500) {
-    // Page is not previewed or published by returning valid 404s.
-    return 'status-unpublished';
-  }
-  // To catch unexpected errors in obtaining the status.
-  return 'status-error';
-}
-
 function createResultItem(item, highlightTerm) {
   const resultItem = createTag('div', { class: 'result-item' });
   const resultHeader = createTag('div', {
@@ -220,10 +203,9 @@ function createResultItem(item, highlightTerm) {
     class: 'page-path',
   }, `${item.path}`);
 
-  const publishStatus = getPublishStatusClass(item.publishStatus);
-
+  const publishStatus = getPublishStatus(item.publishStatus);
   const publishIcon = createTag('div', {
-    class: `statusCircle ${publishStatus}`,
+    class: `statusCircle status-${publishStatus}`,
   });
 
   const link = createTag('a', {
@@ -328,11 +310,10 @@ function writeOutResults(results, queryString, queryObject, duration, replaceFla
   const resultsList = document.createElement('div');
   resultsList.classList.add('results-list');
   results.forEach((item) => {
-    console.log(item.classStyle);
     const resultItem = createResultItem(item, highlightTerm);
     resultsList.append(resultItem);
     urlList.push(`${DA_CONSTANTS.previewUrl}${item.pagePath}`);
-    if (getPublishStatusClass(item.publishStatus) === 'status-published') {
+    if (getPublishStatus(item.publishStatus) === 'published') {
       publishedUrlList.push(`${DA_CONSTANTS.previewUrl}${item.pagePath}`);
     }
   });
