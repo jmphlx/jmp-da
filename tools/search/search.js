@@ -8,6 +8,7 @@ import {
   createVersion,
   createRateLimiter,
   DA_CONSTANTS,
+  toLowerCaseObject,
 } from '../../scripts/helper.js';
 import {
   ActionResult,
@@ -35,6 +36,11 @@ const defaultpath = '/jmphlx/jmp-da/en';
 const pathPrefix = `/${DA_CONSTANTS.org}/${DA_CONSTANTS.repo}`;
 let actions;
 let token;
+
+/* Custom jquery selector for case insensitive search */
+$.expr[':'].icontains = function (elem, i, match) {
+  return $(elem).text().toLowerCase().includes(match[3].toLowerCase());
+};
 
 /**
  * https://admin.hlx.page/ only supports 10 requests per second, but need to space it out to 3 seconds.
@@ -124,7 +130,9 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
       });
     } else if (classStyle === 'tag') {
       elements.forEach((el) => {
-        if (el.outerHTML.toLowerCase().includes(queryObject.keyword.toLowerCase())) {
+        if (queryObject.caseSensitive && el.outerHTML.includes(queryObject.keyword)) {
+          filteredMatches.push(el);
+        } else if (el.outerHTML.toLowerCase().includes(queryObject.keyword.toLowerCase())) {
           filteredMatches.push(el);
         }
       });
@@ -137,7 +145,11 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
       });
     } else {
       elements.forEach((el) => {
-        if (el.textContent.toLowerCase().includes(queryObject.keyword.toLowerCase())) {
+        if (queryObject.caseSensitive) {
+          if (el.textContent.includes(queryObject.keyword)) {
+            filteredMatches.push(el);
+          }
+        } else if (el.textContent.toLowerCase().includes(queryObject.keyword)) {
           filteredMatches.push(el);
         }
       });
@@ -163,6 +175,11 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
    * for an html element with an attribute,
    * then the keyword must be present
    * and only applies to the attribute.
+   *
+   * Assumption: If case sensitivity is used,
+   * it may not work right for all types of html elements.
+   * For example, class values are always lowercased so case sensitive
+   * would fail with any capitals.
    */
   function findHTMLElements() {
     const tagName = queryObject.scope.tag;
@@ -171,19 +188,28 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
 
     if (queryObject.scope.attribute) {
       const attributeName = queryObject.scope.attribute;
-      queryString += `[${attributeName}*=${queryObject.keyword}]`;
+      queryString += `[${attributeName}*="${queryObject.keyword}"]`;
       classStyle = 'attribute';
+      keywordFilterApplied = true;
     }
     elements = dom.querySelectorAll(`${queryString}`);
   }
 
   function findBlockPropertyElements() {
+    // Block class names will always be lowercased so no case sensitivity needed.
+    // Properties do need case sensitive check.
     const blockName = queryObject.scope.block;
     classStyle = 'block';
     if (queryObject.scope.property) {
       const propertyName = queryObject.scope.property;
       classStyle = 'property';
-      const foundProperties = Array.from(dom.querySelectorAll(`div.${blockName} p`)).filter((field) => field.children.length === 0 && field.textContent.trim() === propertyName);
+      const foundProperties = Array.from(dom.querySelectorAll(`div.${blockName} p`)).filter((field) => {
+        if (queryObject.caseSensitive) {
+          return field.children.length === 0 && field.textContent.trim() === propertyName;
+        }
+        return field.children.length === 0
+          && field.textContent.trim().toLowerCase() === propertyName;
+      });
       console.log(foundProperties);
       foundProperties.forEach((prop) => {
         elements.push(prop.parentElement.parentElement);
@@ -211,11 +237,19 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
       // If the block and tag scopes were null, then still try to do keyword search
       const $newDom = $(dom);
 
-      $($newDom).find(`*:contains("${queryObject.keyword}")`).filter(function () {
-        return $(this).children((`*:contains("${queryObject.keyword}")`)).length === 0;
-      }).each(function () {
-        elements.push($(this).get(0));
-      });
+      if (queryObject.caseSensitive) {
+        $($newDom).find(`*:contains("${queryObject.keyword}")`).filter(function () {
+          return $(this).children((`*:contains("${queryObject.keyword}")`)).length === 0;
+        }).each(function () {
+          elements.push($(this).get(0));
+        });
+      } else {
+        $($newDom).find(`*:icontains("${queryObject.keyword}")`).filter(function () {
+          return $(this).children((`*:icontains("${queryObject.keyword}")`)).length === 0;
+        }).each(function () {
+          elements.push($(this).get(0));
+        });
+      }
     }
 
     const filtered = [];
@@ -224,7 +258,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
       /* found some matching elements.
       Now try to apply filters. Check for
       publish status filter. If it doesn't match, then
-      the page is not a match. If it doesn, then
+      the page is not a match. If it does, then
       check for keyword. */
       const pageStatusObj = await getPublishStatusObj(getPagePathFromFullUrl(item.path));
       const publishStatus = getPublishStatus(pageStatusObj);
@@ -248,7 +282,11 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
         }
       } else if (queryObject.keyword && !keywordFilterApplied) {
         elements.forEach((el) => {
-          if (el.textContent.toLowerCase().includes(queryObject.keyword.toLowerCase())) {
+          if (queryObject.caseSensitive) {
+            if (el.textContent.includes(queryObject.keyword)) {
+              filtered.push(el);
+            }
+          } else if (el.textContent.toLowerCase().includes(queryObject.keyword)) {
             filtered.push(el);
           }
         });
@@ -324,10 +362,10 @@ async function doSearch(queryObject, replaceFlag) {
   return matching;
 }
 
-function getQuery() {
+function getQuery(caseSensitiveFlag) {
   const queryString = document.querySelector('[name="searchTerms"]').value;
 
-  const scope = {};
+  let scope = {};
   let keyword = '';
 
   const scopeRegex = /(\w+):([^\s]+)/g;
@@ -346,7 +384,12 @@ function getQuery() {
   const pathField = document.querySelector('#page-path-input')?.value;
   scope.path = pathField;
 
-  return { scope, keyword: keyword.trim() };
+  if (!caseSensitiveFlag) {
+    keyword = keyword.toLowerCase();
+    scope = toLowerCaseObject(scope);
+  }
+
+  return { scope, keyword: keyword.trim(), caseSensitive: caseSensitiveFlag };
 }
 
 async function getConfigurations() {
@@ -462,6 +505,12 @@ function tryToCreatePageVersions() {
     const resultsContainer = document.querySelector('.results-container');
     addLoadingSearch(resultsContainer, 'Searching');
 
+    let caseSensitiveFlag = false;
+    const caseSensitiveCheckbox = document.querySelector('#caseSensitiveSearch');
+    if (caseSensitiveCheckbox.checked) {
+      caseSensitiveFlag = true;
+    }
+
     let replaceFlag = false;
 
     // check if replace is checked.
@@ -475,7 +524,7 @@ function tryToCreatePageVersions() {
     const startTime = performance.now();
 
     // Get Search Terms.
-    const queryObject = getQuery();
+    const queryObject = getQuery(caseSensitiveFlag);
     console.log(queryObject);
 
     // Need to validate query here. and error early.
