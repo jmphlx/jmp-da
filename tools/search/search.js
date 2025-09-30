@@ -433,6 +433,12 @@ window.addEventListener('message', (event) => {
   mydialog.close();
 });
 
+/**
+ * Advanced action changes are ALWAYS case insensitive. We shouldn't
+ * have more than one row with the same name.
+ * @param {*} queryObject 
+ * @returns status object
+ */
 function tryToPerformAction(queryObject) {
   const deleteRadio = document.querySelector('#deleteRow');
   if (deleteRadio.checked) {
