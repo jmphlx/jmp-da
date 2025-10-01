@@ -59,7 +59,7 @@ function resetDocumentsToOriginalState(token) {
 
 function findLine(parentEl, propertyName) {
   let line;
-  const foundProperties = Array.from(parentEl.querySelectorAll('p')).filter((ele) => ele.children.length === 0 && ele.textContent.trim() === propertyName);
+  const foundProperties = Array.from(parentEl.querySelectorAll('p')).filter((ele) => ele.children.length === 0 && ele.textContent.trim().toLowerCase() === propertyName);
   foundProperties.forEach((prop) => {
     line = prop.parentElement.parentElement;
   });
@@ -106,14 +106,14 @@ function deleteFromBlockElement(token, rowName) {
 
 function deleteRow(queryObject, token) {
   try {
-    const deleteRowName = document.getElementById('deleteRowName').value;
+    const deleteRowName = document.getElementById('deleteRowName').value.toLowerCase();
     const resultClassStyle = window.searchResults[0]?.classStyle;
     switch (resultClassStyle) {
       case 'property':
         if (!deleteRowName) {
           throw new Error('Row name cannot be blank');
         }
-        if (queryObject.scope.property === deleteRowName) {
+        if (queryObject.scope.property.toLowerCase() === deleteRowName) {
           deleteFromPropertyElement(token, undefined);
         } else {
           // try to find the element in the block.
@@ -287,7 +287,7 @@ function mergeRows(token) {
       if (objectType !== 'property') {
         throw new Error('need a single propery to merge');
       }
-      const secondRow = document.querySelector('#mergeName')?.value;
+      const secondRow = document.querySelector('#mergeName')?.value.toLowerCase();
       result.elements.forEach((el) => {
         if (!el.parentElement) {
           throw new Error('invalid parent element');

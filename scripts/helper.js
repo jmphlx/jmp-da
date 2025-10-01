@@ -220,3 +220,25 @@ export async function createVersion(path, token, description = 'Search & Replace
     return { success: false, status: null, error: e.getMessage() };
   }
 }
+
+export function toLowerCaseObject(obj) {
+  if (Array.isArray(obj)) {
+    // If it's an array, map over it
+    return obj.map(toLowerCaseObject);
+  }
+  if (obj !== null && typeof obj === 'object') {
+    // If it's an object, transform keys and recurse values
+    return Object.fromEntries(
+      Object.entries(obj).map(([key, value]) => [
+        key.toLowerCase(),
+        toLowerCaseObject(value),
+      ]),
+    );
+  }
+  if (typeof obj === 'string') {
+    // Lowercase strings
+    return obj.toLowerCase();
+  }
+  // Return other types unchanged
+  return obj;
+}
