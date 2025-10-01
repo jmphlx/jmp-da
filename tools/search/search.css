@@ -316,7 +316,7 @@ dialog {
       background-color: #FFC610;
     }
     &.status-unpublished {
-      background-color: gray;
+      background-color: #c1c1c1;
     }
     &.status-error {
       border: 2px solid red;
@@ -329,7 +329,7 @@ dialog {
     border: 1px solid #FFC610;
   }
   &:has(div.statusCircle.status-unpublished) {
-    border: 1px solid gray;
+    border: none;
   }
   &:has(div.statusCircle.status-error) {
     border: 1px solid red;
