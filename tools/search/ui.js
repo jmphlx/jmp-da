@@ -330,15 +330,6 @@ function writeOutResults(results, queryString, queryObject, duration, replaceFla
     id: 'copy-to-clipboard',
   });
 
-  const copyAllButton = createTag('p', {
-    class: 'button-container',
-  });
-  copyAllButton.textContent = 'Copy All Result URLs To Clipboard';
-  copyAllButton.addEventListener('click', () => {
-    copyToClipboard(copyAllButton, urlList.join('\n'), 'Copied');
-  });
-  copyContainer.append(copyAllButton);
-
   const copyPublishedButton = createTag('p', {
     class: 'button-container',
   });
@@ -347,6 +338,15 @@ function writeOutResults(results, queryString, queryObject, duration, replaceFla
     copyToClipboard(copyPublishedButton, publishedUrlList.join('\n'), 'Copied');
   });
   copyContainer.append(copyPublishedButton);
+
+  const copyAllButton = createTag('p', {
+    class: 'button-container',
+  });
+  copyAllButton.textContent = 'Copy All Results';
+  copyAllButton.addEventListener('click', () => {
+    copyToClipboard(copyAllButton, urlList.join('\n'), 'Copied');
+  });
+  copyContainer.append(copyAllButton);
 
   const bulkEditorButton = createTag('a', {
     class: 'button',
