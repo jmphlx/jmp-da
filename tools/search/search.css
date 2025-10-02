@@ -101,17 +101,22 @@
         border-radius: 50px;
         cursor: pointer;
         font-size: 15px;
+        font-weight: 400;
         padding: 7px 14px;
-        background-color: #3b63fb;
-        color: #ffffff;
+        background-color: transparent;
+        color: #000000;
+        border: 2px solid #292929;
         &:hover {
-          background-color: #274dea;
+          color: #707070;
         }
       }
       button.version {
-        background-color: #ff5000;
+        background-color: transparent;
+        color: #000000;
+        border: 2px solid #292929;
+        font-weight: 400;
         &:hover {
-          background-color: #d94500;
+          color: #707070;
         }
       }
     }
@@ -201,16 +206,38 @@
       #copy-to-clipboard {
         width: 100%;
         p.button-container:first-child {
-          background-color: #9D57A3;
+          background-color: #3b63fb;
+          padding: 5px 14px;
+          border-radius: 50px;
+          font-size: 15px;
+          font-weight: 700;
+          &:hover {
+            background-color: #274dea;
+          }
         }
         p.button-container:nth-child(2) {
-          background-color: #643695;
+          padding: 5px 14px;
+          background-color: transparent;
+          color: #000000;
+          border: 2px solid #292929;
+          font-weight: 400;
+          font-size: 15px;
+          border-radius: 50px;
+          &:hover {
+            color: #707070;
+          }
         }
         a {
-          border: 2px solid #643695;
-          color: #643695;
-          padding: 6px 10px;
+          padding: 5px 14px;
           background-color: transparent;
+          color: #000000;
+          border: 2px solid #292929;
+          font-weight: 400;
+          border-radius: 50px;
+          font-size: 15px;
+          &:hover {
+            color: #707070;
+          }
           /* &:after {
             content: '\021F1';
             transform: rotateY(180deg);
