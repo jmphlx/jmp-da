@@ -282,7 +282,12 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
         }
       } else if (queryObject.keyword && !keywordFilterApplied) {
         elements.forEach((el) => {
-          if (queryObject.caseSensitive) {
+          if (queryObject.keyword.match(emptyRegex) && classStyle === 'property') {
+            const propVal = el.children[1];
+            if (propVal.textContent.toLowerCase().trim().length === 0) {
+              filtered.push(el);
+            }
+          } else if (queryObject.caseSensitive) {
             if (el.textContent.includes(queryObject.keyword)) {
               filtered.push(el);
             }
