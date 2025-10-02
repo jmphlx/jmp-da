@@ -56,7 +56,7 @@ const embedHubspot = (config) => {
           document.querySelector("[type='submit']").addEventListener("click", function(event) {
             const checkboxes = document.querySelectorAll('.legal-consent-container .hs-dependent-field');
             let flag = false;
-            if (checkboxes?.length) {
+            if (checkboxes?.length > 1) {
               for(let i=0; i < checkboxes.length; i++) {
                 if (checkboxes[i].querySelector('input')?.checked) {
                   flag = true;
