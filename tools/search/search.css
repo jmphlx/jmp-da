@@ -343,7 +343,11 @@ dialog {
       background-color: #FFC610;
     }
     &.status-unpublished {
-      background-color: #c1c1c1;
+      background-color: transparent;
+      border: 4px solid #c1c1c1;
+      border-radius: 50%;
+      width: 6px;
+      height: 6px;
     }
     &.status-error {
       border: 2px solid red;
