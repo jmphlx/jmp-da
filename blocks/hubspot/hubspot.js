@@ -52,7 +52,27 @@ const embedHubspot = (config) => {
           const emailSFC = $form.find('input[name="salesforce_campaign_event_id"]');
           const newSFC = "${sfdcCampaignId}";
           emailSFC.val(newSFC).change();
-        }
+
+          document.querySelector("[type='submit']").addEventListener("click", function(event) {
+            const checkboxes = document.querySelectorAll('.legal-consent-container .hs-dependent-field');
+            let flag = false;
+            if (checkboxes?.length > 1) {
+              for(let i=0; i < checkboxes.length; i++) {
+                if (checkboxes[i].querySelector('input')?.checked) {
+                  flag = true;
+                  break;
+                }
+              }
+              const msg = $("div.hs-richtext:nth-last-child(2)");
+              if (!flag) {
+                event.preventDefault();
+                msg.show();
+              } else {
+                msg.hide();
+              }
+            }
+          });
+        },
       });`;
     hubspotBlock.append(scriptCreateHubspotForm);
   });

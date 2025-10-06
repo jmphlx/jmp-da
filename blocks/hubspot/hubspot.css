@@ -298,3 +298,11 @@
   50% {background-position: 100% 50%;}
   100% {background-position: 0% 50%;}
 }
+
+.legal-consent-container {
+  position: relative;
+  div.hs-richtext:nth-last-child(2) {
+    color: #e22e36;
+    display: none;
+  }
+}
