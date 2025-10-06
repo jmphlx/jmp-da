@@ -17,38 +17,44 @@
     <br>
     <form id="searchQuery">
       <div id="searchFilters">
-        <div class="filter-section">
-          <p class="filter-label">Block: </p>
-          <sl-select name="block_scope">
-          </sl-select>
+        <div>
+          <div class="filter-section">
+            <p class="filter-label">Block: </p>
+            <sl-select name="block_scope">
+            </sl-select>
+          </div>
+          <div class="filter-section">
+            <p class="filter-label">Property: </p>
+            <sl-select name="property_scope">
+            </sl-select>
+          </div>
+          <div class="filter-section">
+            <input type="checkbox" id="emptyValue" name="emptyValue" value="true"/>
+            <label class="filter-label" for="emptyValue">Empty Value?</label>
+          </div>
         </div>
-        <div class="filter-section">
-          <p class="filter-label">Property: </p>
-          <sl-select name="property_scope">
-          </sl-select>
+        <div>
+          <div class="filter-section">
+            <p class="filter-label">HTML: </p>
+            <sl-select name="tag_scope">
+            </sl-select>
+          </div>
+          <div class="filter-section">
+            <p class="filter-label">Attribute: </p>
+            <sl-select name="attribute_scope">
+            </sl-select>
+          </div>
         </div>
-        <div class="filter-section">
-          <input type="checkbox" id="emptyValue" name="emptyValue" value="true"/>
-          <label class="filter-label" for="emptyValue">Empty Value?</label>
-        </div>
-        <div class="filter-section">
-          <p class="filter-label">HTML: </p>
-          <sl-select name="tag_scope">
-          </sl-select>
-        </div>
-        <div class="filter-section">
-          <p class="filter-label">Attribute: </p>
-          <sl-select name="attribute_scope">
-          </sl-select>
-        </div>
-        <div class="filter-section">
-          <p class="filter-label">Publish Status: </p>
-          <sl-select id="publish_scope">
-            <option value="">Select</option>
-            <option value="published">Published</option>
-            <option value="previewed">Previewed</option>
-            <option value="unpublished">Unpublished</option>
-          </sl-select>
+        <div>
+          <div class="filter-section">
+            <p class="filter-label">Publish Status: </p>
+            <sl-select id="publish_scope">
+              <option value="">Select</option>
+              <option value="published">Published</option>
+              <option value="previewed">Previewed</option>
+              <option value="unpublished">Unpublished</option>
+            </sl-select>
+          </div>
         </div>
       </div>
       <div class="mySearchContainer">
