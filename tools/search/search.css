@@ -58,7 +58,8 @@
             width: max-content;
           }
           input[type=checkbox] {
-            margin-bottom: 3px;
+            margin-bottom: 4px;
+            margin-left: 0;
           }
         }
       }
@@ -87,7 +88,7 @@
         border-radius: 10px;
         margin-bottom: 10px;
         div:nth-child(1) {
-          margin-right: 4px;
+          margin-right: 0;
           margin-bottom: 0;
           p {
             width: max-content;
