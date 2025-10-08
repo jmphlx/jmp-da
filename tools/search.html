@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <!-- Import DA App SDK -->
     <script src="https://da.live/nx/utils/sdk.js" type="module"></script>
-    <script src="https://da.live/nx/public/sl/components.js" type="module"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <!-- Project App Logic -->
     <script src="/tools/search/search.js" type="module"></script>
@@ -20,13 +19,13 @@
         <div>
           <div class="filter-section">
             <p class="filter-label">Block: </p>
-            <sl-select name="block_scope">
-            </sl-select>
+            <select name="block_scope">
+            </select>
           </div>
           <div class="filter-section">
             <p class="filter-label">Property: </p>
-            <sl-select name="property_scope">
-            </sl-select>
+            <select name="property_scope">
+            </select>
           </div>
           <div class="filter-section">
             <input type="checkbox" id="emptyValue" name="emptyValue" value="true"/>
@@ -36,24 +35,24 @@
         <div>
           <div class="filter-section">
             <p class="filter-label">HTML: </p>
-            <sl-select name="tag_scope">
-            </sl-select>
+            <select name="tag_scope">
+            </select>
           </div>
           <div class="filter-section">
             <p class="filter-label">Attribute: </p>
-            <sl-select name="attribute_scope">
-            </sl-select>
+            <select name="attribute_scope">
+            </select>
           </div>
         </div>
         <div>
           <div class="filter-section">
             <p class="filter-label">Publish Status: </p>
-            <sl-select id="publish_scope">
+            <select id="publish_scope">
               <option value="">Select</option>
               <option value="published">Published</option>
               <option value="previewed">Previewed</option>
               <option value="unpublished">Unpublished</option>
-            </sl-select>
+            </select>
           </div>
         </div>
       </div>
@@ -89,8 +88,8 @@
       <label for="replaceAction">Replace Text?</label>
       <input type="checkbox" id="caseSensitiveSearch" name="caseSensitiveSearch" value="true"/>
       <label for="caseSensitiveSearch">Case Sensitive?</label>
-      <sl-input type="text" name="replaceText" class="hidden" placeholder="Replace with"></sl-input>
-      <sl-button name="submitSearch">Submit</sl-button>
+      <input type="text" name="replaceText" class="hidden" placeholder="Replace with"></input>
+      <button type="button" name="submitSearch">Submit</button>
     </form>
     <div class="advanced-actions">
       <div id="advanced-action-prompt" class="hidden">
@@ -129,23 +128,23 @@
                 <label for="rowValue">Change Row Value?</label>
               </div>
               <div class="sub-section">
-                <sl-select name="partialEdit" value="whole">
+                <select name="partialEdit" value="whole">
                   <option value="whole">Whole Value</option>
                   <option value="each">Each Item</option>
                   <option value="keyword">Keyword (if provided)</option>
-                </sl-select>
-                <sl-select name="editTextAction" value="prepend">
+                </select>
+                <select name="editTextAction" value="prepend">
                   <option value="prepend">Prepend</option>
                   <option value="append">Append</option>
                   <option value="replace">Replace</option>
-                </sl-select>
+                </select>
                 <input type="text" id="newText" placeholder="New text">
               </div>
             </div>
             <div id="merge-section" class="advanced-section">
               <label for="mergeRowName">Row To Merge With?</label>
-              <sl-input type="text" id="mergeName" name="mergeRowName" value="" placeholder="Row Name"></sl-input>
-              <input type="checkbox" id="createRowCheckbox" name="createRowCheckbox" value="true"></sl-input>
+              <input type="text" id="mergeName" name="mergeRowName" value="" placeholder="Row Name"></input>
+              <input type="checkbox" id="createRowCheckbox" name="createRowCheckbox" value="true"></input>
               <label for="createRowCheckbox">Create Row if it doesn't exist?</label>
             </div>
           <button type="button" id="advanced-submit-button" class="advanced-submit">Submit</button>
