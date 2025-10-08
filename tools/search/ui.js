@@ -79,8 +79,7 @@ function buildParentDropdown(dropdown, jsonData, type) {
 
 function buildPropertiesDropdown(dropdown, nodeName) {
   // Remove any existing items
-  const shadowRoot = dropdown.shadowRoot;
-  const currOptions = shadowRoot.querySelectorAll('option');
+  const currOptions = dropdown.querySelectorAll('option');
   currOptions?.forEach((opt) => {
     opt.remove();
   });
@@ -110,8 +109,7 @@ function buildPropertiesDropdown(dropdown, nodeName) {
 
 function buildAttributeDropdown(dropdown, nodeName) {
   // Remove any existing items
-  const shadowRoot = dropdown.shadowRoot;
-  const currOptions = shadowRoot.querySelectorAll('option');
+  const currOptions = dropdown.querySelectorAll('option');
   currOptions?.forEach((opt) => {
     opt.remove();
   });
