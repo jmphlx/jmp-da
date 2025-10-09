@@ -10,8 +10,15 @@ function decorateCard(hit) {
   const {
     title, description,
   } = hit;
-  const path = hit.path.split('.')[0];
-  const displayUrl = path.startsWith('/') ? `${window.location.origin}${path}` : path;
+  let path;
+  let displayUrl;
+  if (hit.redirectTarget?.length > 0) {
+    path = hit.redirectTarget;
+    displayUrl = hit.redirectTarget;
+  } else {
+    path = hit.path.split('.')[0];
+    displayUrl = path.startsWith('/') ? `${window.location.origin}${path}` : path;
+  }
   const titleLink = createTag('a', { class: 'title', href: path }, `${title}`);
   const desc = createTag('p', { class: 'description' }, `${description}`);
   const displayLink = createTag('a', { class: 'displayUrl', href: path }, `${displayUrl}`);

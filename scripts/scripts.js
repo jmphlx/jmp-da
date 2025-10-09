@@ -512,6 +512,13 @@ export function getDefaultMetaImage() {
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
+  // If there is a redirectTarget in the page metadata, immediately
+  // redirect to target.
+  const redirectTarget = getMetadata('redirecttarget');
+  if (redirectTarget.length > 0) {
+    window.location.href = redirectTarget;
+  }
+
   addTitleSuffix();
   setMetaImage();
   decorateTemplateAndTheme();
