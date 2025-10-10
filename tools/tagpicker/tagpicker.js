@@ -6,22 +6,34 @@ import {
   // getJsonFromLocalhostUrl,
 } from '../../scripts/jmp.js';
 
-//const tagURL = 'http://localhost:4502/services/tagsservlet';
-// const tagURL = 'https://edge-www-dev.jmp.com/services/tagsservlet';
 const tagURL = 'https://www.jmp.com/services/tagsservlet';
 
-
-const selectedTagDisplay = document.getElementById("selected-tag");
-const addedTagsList = document.getElementById("tags-list");
+const selectedTagDisplay = document.getElementById('selected-tag');
+const addedTagsList = document.getElementById('tags-list');
 
 let openTag = [];
-let savedTags = [];
+const savedTags = [];
+
+function closeDescendants(element) {
+  const openElements = element.querySelectorAll('.open');
+  openElements.forEach((el) => el.classList.remove('open'));
+}
+
+function updateBreadcrumb() {
+  if (openTag.length) {
+    selectedTagDisplay.textContent = openTag.join(':');
+    selectedTagDisplay.classList.add('tag-added');
+  } else {
+    selectedTagDisplay.textContent = '(none)';
+    selectedTagDisplay.classList.remove('tag-added');
+  }
+}
 
 function createMenu(items, path = []) {
   const ul = document.createElement('ul');
 
-  items.forEach(item => {
-    const tagValName = item['jcr:title'].toLowerCase().replaceAll(' ','-');
+  items.forEach((item) => {
+    const tagValName = item['jcr:title'].toLowerCase().replaceAll(' ', '-');
     const li = document.createElement('li');
     const span = document.createElement('span');
     span.textContent = item['jcr:title'];
@@ -66,21 +78,6 @@ function createMenu(items, path = []) {
   return ul;
 }
 
-function closeDescendants(element) {
-  const openElements = element.querySelectorAll('.open');
-  openElements.forEach(el => el.classList.remove('open'));
-}
-
-function updateBreadcrumb() {
-  if (openTag.length) {
-    selectedTagDisplay.textContent = openTag.join(':');
-    selectedTagDisplay.classList.add('tag-added');
-  } else {
-    selectedTagDisplay.textContent = '(none)';
-    selectedTagDisplay.classList.remove('tag-added');
-  }
-}
-
 function saveCurrentTag() {
   if (openTag.length === 0) return;
 
@@ -88,7 +85,7 @@ function saveCurrentTag() {
   const li = document.createElement('li');
   li.textContent = openTag.join(':');
   li.addEventListener('click', () => {
-    //if clicked remove.
+    // if clicked remove.
     li.remove();
   });
   addedTagsList.appendChild(li);
@@ -100,11 +97,11 @@ function resetSelection() {
 
   // Collapse all open menu items
   const openElements = document.querySelectorAll('.open');
-  openElements.forEach(el => el.classList.remove('open'));
+  openElements.forEach((el) => el.classList.remove('open'));
 }
 
 function convertSavedTagsToString() {
-  let tagArray = [];
+  const tagArray = [];
   const tagList = addedTagsList.children;
   for (let i = 0; i < tagList.length; i++) {
     tagArray.push(tagList[i].textContent);
