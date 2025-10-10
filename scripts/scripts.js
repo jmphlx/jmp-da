@@ -1,3 +1,6 @@
+/* eslint no-unused-vars: 0 */
+// Remove after experimentation is working.
+
 import {
   sampleRUM,
   buildBlock,
@@ -27,7 +30,7 @@ const experimentationConfig = {
     mobile: () => window.innerWidth < 600,
     desktop: () => window.innerWidth >= 600,
     // define your custom audiences here as needed
-  }
+  },
 };
 
 let runExperimentation;
@@ -38,9 +41,9 @@ if (isExperimentationEnabled) {
   ({
     loadEager: runExperimentation,
     loadLazy: showExperimentationOverlay,
+    // eslint-disable-next-line import/no-relative-packages
   } = await import('../plugins/experimentation/src/index.js'));
 }
-
 
 let isSKPPage = false;
 let includeGATracking = false;
@@ -521,7 +524,7 @@ async function loadEager(doc) {
   if (runExperimentation) {
     await runExperimentation(document, experimentationConfig);
   }
-  
+
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);
@@ -611,8 +614,6 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
-
-
 }
 
 /**
@@ -632,7 +633,6 @@ async function loadPage() {
     loadDelayed();
   }
 }
-
 
 loadPage();
 
@@ -659,4 +659,3 @@ async function loadSidekick() {
     import('https://da.live/nx/public/plugins/exp/exp.js');
   }
 }());
-
