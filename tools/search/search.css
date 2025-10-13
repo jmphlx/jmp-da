@@ -1,8 +1,80 @@
+:root {
+  /* colors */
+  --text-color: #333333;
+  --link-color: #0378cd;
+  --link-hover-color: #3aaafc;
+  --background-color: #ffffff;
+  --overlay-background-color: #eeeeee;
+  --highlight-background-color: #cccccc;
+  --blue: #0378cd;
+  --blue-hover: #00619d;
+  --blueDark: #002753; /* stat speaking only */
+  --orange: #ff5000;
+  --orange-hover: #d94500;
+  --blueLight: #61CAE5;
+  --purple: #643695;
+  --purpleLight: #9D57A3;
+  --purpleDark: #4d1e80;
+  --red: #B11A29;
+  --redLight: #F04B4B;
+  --redNeon: #fe0b0b;
+  --orangeDark: #854200;
+  --green: #0D782F;
+  --greenLight: #9CCB3B;
+  --yellow: #FFC610;
+  --yellowHover: #ffe48e;
+  --teal: #007481;
+  --tealLight: #3EBDAC;
+  /* JMP Brand neutral */
+  --white: #FFFFFF;
+  --grayDark: #172328;
+  --grayMedium: #44545D;
+  --grayLight: #8F989E;
+  --gray: #f4f4f4;
+  --black: #000000;
+  --gray3: #333333;
+  --gray5: #555555;
+  --gray6: #666666;
+  --gray7: #777777;
+  --gray9: #999999;
+  --gray10: #EFEFEF;
+  --grayRule: #D0D0D0;
+  /* Color variables */
+  --color-primary: var(--blue);
+  --color-secondary: var(--orange);
+  --textColor: var(--gray3);
+  --headlineColor: var(--gray);
+  --linkColor: var(--color-primary);
+  --error: var(--red);
+  /* fonts */
+  --font-primary: "anova-light", arial, helvetica, sans-serif;
+  --font-secondary: "anova-regular", arial, helvetica, sans-serif;
+  --font-bold: "anova-bold", arial, helvetica, sans-serif;
+}
+
 .advanced-search {
   margin: 24px;
   max-width: 1200px;
+  font-family: var(--font-secondary);
   h1 {
     font-size: clamp(1.6rem, 1.7vw + 1rem, 2.1rem);
+    font-family: var(--font-secondary);
+  }
+  button {
+    font-family: var(--font-secondary);
+    margin: 0 8px 8px 0;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 400;
+    padding: 5px 14px;
+    background-color: transparent;
+    color: #000000;
+    border: 2px solid #292929;
+    &:hover {
+      color: #707070;
+    }
   }
   form {
     div {
@@ -15,7 +87,15 @@
       margin-bottom: 1rem;
       div {
         margin: 0 16px 0 0;
+        border-radius: 5px;
       }
+    }
+    input[name="replaceText"] {
+      border: 1px solid #d1d1d1;
+      padding: 6px;
+      border-radius: 5px;
+      margin: 0 0 8px 8px;
+      width: 400px;
     }
     #searchFilters {
       div {
@@ -24,9 +104,14 @@
       div.filter-section {
         gap: 6px;
         font-size: 15px;
-        sl-select {
+        p {
+          margin: 4px 0;
+        }
+        sl-select, select {
           width: 120px;
-          border-radius: 10px;
+          font-size: 15px;
+          border-radius: 5px;
+          padding: 6px 0;
           border: 1px solid #d1d1d1;
         }
         input[type=checkbox] {
@@ -40,7 +125,7 @@
         display: flex;
         background-color: #f4f4f4;
         padding: 4px 6px;
-        border-radius: 10px;
+        border-radius: 5px;
         margin-right: 10px;
         margin-bottom: 10px;
         div:nth-child(1) {
@@ -67,7 +152,7 @@
         display: flex;
         background-color: #f4f4f4;
         padding: 4px 6px;
-        border-radius: 10px;
+        border-radius: 5px;
         margin-right: 10px;
         margin-bottom: 10px;
         div:nth-child(1) {
@@ -85,7 +170,7 @@
         background-color: #f4f4f4;
         padding: 4px 6px;
         margin-right: 0;
-        border-radius: 10px;
+        border-radius: 5px;
         margin-bottom: 10px;
         div:nth-child(1) {
           margin-right: 0;
@@ -99,18 +184,31 @@
     input[type=checkbox] {
       margin-bottom: 1rem;
     }
-    sl-input {
-      margin-bottom: 1rem;
+    sl-input, input {
+      margin-bottom: 0;
+      border-radius: 5px;
     }
     /* label {
       margin-bottom: 8px;
     } */
-    sl-button {
-      margin-bottom: 1rem;
+    sl-button, button:not(.icon) {
+      display: block;
+      margin-bottom: 0;
+      margin-left: 0;
+      padding: 7px 14px;
+      background-color: var(--blue);
+      border: none;
+      color: #ffffff;
+      font-family: var(--font-bold);
+      &:hover {
+        color: #ffffff;
+        background-color: var(--blue-hover);
+      }
     }
   }
   div.advanced-actions {
     padding-bottom: 1rem;
+    padding-top: 8px;
     #advanced-action-prompt {
       button {
         margin: 0 8px 8px 0;
@@ -139,11 +237,14 @@
     }
     form {
       div.action-radio-buttons {
+        padding-top: 1rem;
         div {
-          margin: 4px 0 1rem 0;
-          label {
+          margin: 8px 0 1rem 0;
+          border-radius: 5px;
+          border: 1px solid #d1d1d1;
+          /* label {
             margin-bottom: 8px;
-          }
+          } */
           #newText {
             padding-left: 8px;
           }
@@ -164,19 +265,20 @@
           color: #333333;
           border: none;
           border-radius: 50px;
-          background-color: #e9e9e9;
-          margin: 0 8px 0 0;
+          background-color: var(--blue);
+          margin: 0 8px;
           &:hover {
             background-color: #cacaca;
           }
           &.undo {
+            font-family: var(--font-secondary);
             margin: 4px 6px 8px 0;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             font-size: 15px;
             font-weight: 400;
-            padding: 7px 15px;
+            padding: 7px 14px;
             background-color: transparent;
             color: #000000;
             border: 2px solid #292929;
@@ -186,18 +288,18 @@
           }
         }
         button.advanced-submit {
-          margin: 0 4px 8px 0;
+          margin: 8px 4px 8px 0;
           border: none;
           border-radius: 50px;
           cursor: pointer;
-          font-size: 14px;
+          font-size: 15px;
           font-weight: 700;
-          padding: 8px 15px;
+          padding: 7px 14px;
           cursor: pointer;
-          background-color: #3b63fb;
+          background-color: var(--blue);
           color: #ffffff;
           &:hover {
-            background-color: #274dea;
+            background-color: var(--blue-hover);
           }
         }
         #edit-section {
@@ -205,7 +307,7 @@
             border: none;
           }
           div.sub-section {
-            sl-select {
+            sl-select, select {
               min-width: 100px;
             }
             input[type=text] {
@@ -215,7 +317,7 @@
         }
         #merge-section.open {
           display: block;
-          sl-input {
+          sl-input, input {
             margin: 8px 0;
           }
         }
@@ -224,9 +326,10 @@
   }
   div.results-container:has(div){
     padding: 1.2rem;
-    border-radius: 10px;
+    border-radius: 5px;
     background-color: rgb(250, 250, 250);
     h2 {
+      margin-top: 0;
       margin-bottom: 1rem;
     }
     div:has(span.summary) {
@@ -245,17 +348,17 @@
       #copy-to-clipboard {
         width: 100%;
         p.button-container:first-child {
-          background-color: #3b63fb;
-          padding: 5px 14px;
+          background-color: var(--blue);
+          padding: 7px 14px;
           border-radius: 50px;
           font-size: 15px;
           font-weight: 700;
           &:hover {
-            background-color: #274dea;
+            background-color: var(--blue-hover);
           }
         }
         p.button-container:nth-child(2) {
-          padding: 5px 14px;
+          padding: 7px 14px;
           background-color: transparent;
           color: #000000;
           border: 2px solid #292929;
@@ -267,7 +370,7 @@
           }
         }
         a {
-          padding: 5px 14px;
+          padding: 7px 14px;
           background-color: transparent;
           color: #000000;
           border: 2px solid #292929;
@@ -335,7 +438,7 @@ dialog {
   width: max-content;
   padding: 0 12px;
   border-radius: 8px;
-  border: 2px solid #dadada;
+  border: 1px solid #d1d1d1;
   box-sizing: border-box;
   outline-offset: 0;
 }
@@ -587,8 +690,17 @@ a.button {
   background: #fff;
   box-shadow: 0 2px 6px rgba(0,0,0,0.03);
   margin: 8px 0 1rem 0;
+  label {
+    margin: 8px 8px 8px 0;
+  }
   &#edit-section {
     flex-direction: column;
+    div {
+      border: none;
+      input[type=checkbox] {
+        margin-bottom: 0;
+      }
+    }
     #newRowName {
       display: none;
       &.open {
@@ -603,7 +715,7 @@ a.button {
         flex-direction: row;
         justify-content: space-between;
       }
-      sl-select, input {
+      sl-select, select, input {
         margin-right: 8px;
       }
       #newText {
@@ -646,7 +758,10 @@ button.icon-btn {
   background: none;
   border: none;
   padding: 4px;
+  margin: 0 !important;
+  background-color: transparent !important;
   cursor: pointer;
+  color: #000000 !important;
   display: flex;
   align-items: center;
   justify-content: center;
