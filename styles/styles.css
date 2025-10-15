@@ -656,6 +656,9 @@ div.purple-lightred-gradient {
 div.red-purple-gradient {
   background: linear-gradient(45deg, #B11A29 15%, #643695 95%);
 }
+div.red-lightred-gradient {
+  background: linear-gradient(45deg, #B11A29 15%, #F04B4B 95%);
+}
 div.lightred-purple-gradient {
   background: linear-gradient(45deg, #F04B4B 15%, #643695 95%);
 }
