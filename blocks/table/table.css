@@ -17,6 +17,43 @@
       }
     }
   }
+  &.text-center {
+    tbody tr td {
+      text-align: center;
+    }
+  }
+  &.table-fit-content {
+    table {
+      width: fit-content !important;
+      @media (width <=600px) {
+        width: 100% !important;
+      }
+    }
+  }
+  &.table-width-25 {
+    table {
+      width: 25% !important;
+      @media (width <=600px) {
+        width: 100% !important;
+      }
+    }
+  }
+  &.table-width-50 {
+    table {
+      width: 50% !important;
+      @media (width <=600px) {
+        width: 100% !important;
+      }
+    }
+  }
+  &.table-width-75 {
+    table {
+      width: 75% !important;
+      @media (width <=600px) {
+        width: 100% !important;
+      }
+    }
+  }
   &.data-only {
     table, tr:last-child{
       border: 1px solid #e7e7e7 !important;
@@ -167,37 +204,37 @@
 }
 /* Sets the width of the first column in a table */
 .table-first-col20{
-    td:first-child {
-      width: 20%;
-    }
+  td:first-child {
+    width: 20%;
+  }
 }
 .table-first-col25{
-    td:first-child {
-      width: 25%;
-    }
+  td:first-child {
+    width: 25%;
+  }
 }
 .table-first-col30{
-    td:first-child {
-      width: 30%;
-    }
+  td:first-child {
+    width: 30%;
+  }
 }
 .table-first-col35{
-    td:first-child {
-      width: 35%;
-    }
+  td:first-child {
+    width: 35%;
+  }
 }
 .table-first-col40{
-    td:first-child {
-      width: 40%;
-    }
+  td:first-child {
+    width: 40%;
+  }
 }
 .table-first-col45{
-    td:first-child {
-      width: 45%;
-    }
+  td:first-child {
+    width: 45%;
+  }
 }
 .table-first-col50{
-    td:first-child {
-      width: 50%;
-    }
+  td:first-child {
+    width: 50%;
+  }
 }
