@@ -2,6 +2,7 @@
 import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 // eslint-disable-next-line import/no-unresolved
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
+import addAppAccessControl from '../access-control/access-control.js';
 import {
   getPageStatus,
   getPublishStatus,
@@ -478,7 +479,7 @@ function tryToCreatePageVersions() {
   return { status: 'success', message: 'versions created' };
 }
 
-(async function init() {
+async function init() {
   const sdk = await DA_SDK;
   actions = sdk.actions;
   token = sdk.token;
@@ -587,4 +588,12 @@ function tryToCreatePageVersions() {
     // Output results.
     writeOutResults(results, queryString, queryObject, duration, replaceFlag);
   });
-}());
+}
+
+async function startApp() {
+  const hasAccess = await addAppAccessControl();
+  if (hasAccess) {
+    await init();
+  }
+}
+startApp();
