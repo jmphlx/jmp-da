@@ -3,6 +3,110 @@ import { setImsDetails } from 'https://da.live/nx/utils/daFetch.js';
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
 import { createTag } from '../../scripts/helper.js';
 
+
+const applicationTagMap = [
+  ['business and economics', 'business-and-economics'],
+  ['life sciences', 'life-sciences'],
+  ['physical sciences', 'physical-sciences'],
+  ['social sciences', 'social-sciences']
+];
+
+const courseTagMap = [
+  ['analytics & data science', 'analytics-and-data-science'],
+  ['analytics and data science', 'analytics-and-data-science'],
+  ['applied statistical methods', 'applied-statistical-methods'],
+  ['biostatistics & life sciences', 'biostatistics-and-life-sciences'],
+  ['biostatistics and life sciences', 'biostatistics-and-life-sciences'],
+  ['business & economics', 'business-and-economics'],
+  ['business and economics', 'business-and-economics'],
+  ['design of experiments', 'design-of-experiments'],
+  ['engineering statistics', 'engineering'],
+  ['general introductory', 'general-introductory'],
+  ['introductory engineering statistics', 'general-introductory'],
+  ['multivariate statistics', 'multivariate-statistics'],
+  ['regression & linear models', 'regression-and-linear-models'],
+  ['regression and linear models', 'regression-and-linear-models'],
+  ['reliability & survival', 'reliability-and-survival'],
+  ['research methods', 'research-methods'],
+  ['social & behavioral sciences', 'social-and-behavioral-sciences'],
+  ['social and behavioral sciences', 'social-and-behavioral-sciences'],
+  ['statistical quality control', 'statistical-quality-control'],
+  ['time series & forecasting', 'time-series-and-forecasting'],
+  ['time series and forecasting', 'time-series-and-forecasting']
+];
+
+const blogTopicsTagMap = [
+  ['consumer products', 'consumer-products'],
+  ['data prep', 'data-prep'],
+  ['design of experiments', 'design-of-experiments'],
+  ['health and life sciences', 'health-and-life-sciences'],
+  ['predictive modeling', 'predictive-modeling']
+];
+
+const bookTypeTagMap = [
+  ['jmp book', 'jmp-book'],
+  ['reference book', 'reference-book']
+];
+
+const capabilityTagMap = [
+  ['advanced statistical modeling', 'advanced-statistical-modeling'],
+  ['automation and scripting', 'automation-and-scripting'],
+  ['basic data analysis and modeling', 'basic-data-analysis-and-modeling'],
+  ['consumer and market research', 'consumer-and-market-research'],
+  ['content organization', 'content-organization'],
+  ['data access', 'data-access'],
+  ['data blending and cleanup', 'data-blending-and-cleanup'],
+  ['data exploration and visualization', 'data-exploration-and-visualization'],
+  ['design of experiments', 'design-of-experiments'],
+  ['mass customization', 'mass-customization'],
+  ['predictive modeling and machine learning', 'predictive-modeling-and-machine-learning'],
+  ['quality and process engineering', 'quality-and-process-engineering'],
+  ['reliability analysis', 'reliability-analysis'],
+  ['sharing and communicating results', 'sharing-and-communicating-results']
+];
+
+const countryTagMap = [
+  ['south africa', 'south-africa'],
+  ['united kingdom', 'united-kingdom'],
+  ['united states', 'united-states']
+];
+
+const eventSeriesTagMap = [
+  ['data insight', 'data-insight'],
+  ['statistically speaking', 'statistically-speaking'],
+  ['techincally speaking', 'techincally-speaking'],
+  ['time to innovate', 'time-to-innovate']
+];
+
+const eventTypeTagMap = [
+  ['in-person', 'in-person-event'],
+  ['live webinar', 'live-webinar']
+];
+
+const industryTagMap = [
+  ['clean energy and conservation', 'clean-energy-and-conservation'],
+  ['consumer products', 'consumer-products'],
+  ['high-tech manufacturing', 'high-tech-manufacturing'],
+  ['industrial manufacturing', 'industrial-manufacturing'],
+  ['medical devices', 'medical-devices'],
+  ['medical statistics', 'medical-statistics'],
+];
+
+const productTagMap = [
+  ['jmp pro', 'jmp-pro'],
+  ['jmp live', 'jmp-live'],
+  ['jmp clinical', 'jmp-clinical']
+];
+
+const resourceTypeTagMap = [
+  ['book chapter', 'book-chapter'],
+  ['case study', 'case-study'],
+  ['customer story', 'customer-story'],
+  ['on-demand webinar', 'on-demand-webinar'],
+  ['white paper', 'white-paper'],
+];
+
+
 function replaceHtml(text) {
   let inner = text;
   const fromOrigin = 'https://main--jmp-da--jmphlx.aem.live';
@@ -21,7 +125,6 @@ function replaceHtml(text) {
 
 
 async function saveToDa(text, pathname, token) {
-  console.log('in save To da');
   const body = replaceHtml(text);
 
   const blob = new Blob([body], { type: 'text/html' });
@@ -38,9 +141,9 @@ async function saveToDa(text, pathname, token) {
   const putURL = `https://admin.da.live/source'${pathname}`;
   try {
     const daResp = await fetch(`${putURL}`, opts);
-    return { daHref, daStatus: daResp.status, daResp, ok: daResp.ok };
-  } catch {
-    console.log(`Couldn't save ${pathname}`);
+    return { putURL, daStatus: daResp.status, daResp, ok: daResp.ok };
+  } catch (e) {
+    console.log(`Couldn't save ${pathname} - ${e}`);
     return null;
   }
 }
@@ -52,81 +155,23 @@ function replaceTagText(line, replacements) {
   return line;
 }
 
-function doApplicationTag() {
-  const tagMap = [
-    ['Business and Economics', 'business-and-economics'],
-    ['Life Sciences', 'life-sciences'],
-    ['Physical Sciences', 'physical-sciences'],
-    ['Social Sciences', 'social-sciences']
-  ];
-
-}
-
-function doIndustryTag(row) {
-  const tagMap = [
-    ['clean energy and conservation', 'clean-energy-and-conservation'],
-    ['consumer products', 'consumer-products'],
-    ['high-tech manufacturing', 'high-tech-manufacturing'],
-    ['industrial manufacturing', 'industrial-manufacturing'],
-    ['medical devices', 'medical-devices'],
-    ['medical statistics', 'medical-statistics'],
-  ];
+function convertToTagList(row, tagMap, prefix) {
   let updatedRowValue;
   const rowValue = row.children[1].textContent.trim().toLowerCase();
   if (rowValue.length > 0) {
     updatedRowValue = replaceTagText(rowValue, tagMap);
     let itemList = updatedRowValue.split(',');
-    itemList = itemList.map(item => `industry:${item.trim()}`);
+    itemList = itemList.map(item => `${prefix}:${item.trim()}`);
     updatedRowValue = itemList;
   }
   row.remove();
   return updatedRowValue;
-}
 
-function doProductTag(row) {
-    const tagMap = [
-    ['jmp pro', 'jmp-pro'],
-    ['jmp live', 'jmp-live'],
-    ['jmp clinical', 'jmp-clinical']
-  ];
-  let updatedRowValue;
-  const rowValue = row.children[1].textContent.trim().toLowerCase();
-  if (rowValue.length > 0) {
-    updatedRowValue = replaceTagText(rowValue, tagMap);
-    let itemList = updatedRowValue.split(',');
-    itemList = itemList.map(item => `product:${item.trim()}`);
-    updatedRowValue = itemList;
-  }
-  row.remove();
-  return updatedRowValue;
-}
-
-function doResourceTypeTag(row) {
-  const tagMap = [
-    ['book chapter', 'book-chapter'],
-    ['case study', 'case-study'],
-    ['customer story', 'customer-story'],
-    ['on-demand webinar', 'on-demand-webinar'],
-    ['white paper', 'white-paper'],
-  ];
-  let updatedRowValue;
-  const rowValue = row.children[1].textContent.trim().toLowerCase();
-  if (rowValue.length > 0) {
-    updatedRowValue = replaceTagText(rowValue, tagMap);
-    let itemList = updatedRowValue.split(',');
-    itemList = itemList.map(item => `resource-type:${item.trim()}`);
-    updatedRowValue = itemList;
-  }
-  row.remove();
-  return updatedRowValue;
 }
 
 function updateTagsRow(row, tagsList) {
-  console.log('in update');
   const rowValue = row.children[1]?.children[0];
-  console.log(rowValue);
   const currentValueText = rowValue.textContent;
-  console.log(currentValueText);
   const updatedValue = `${currentValueText}, ${tagsList.join(', ')}`;
   rowValue.textContent = updatedValue;
 }
@@ -141,7 +186,6 @@ function addTagsRow(block, rowName, rowContent) {
   rightCellDiv.append(rightCellContent);
   rowDiv.append(leftCellDiv, rightCellDiv);
   block.append(rowDiv);
-  console.log(block);
 }
 
 async function doSearch(item, authToken, matching) {
@@ -174,22 +218,94 @@ async function doSearch(item, authToken, matching) {
       const row = rows[i];
       const rowName = row.firstChild.textContent.toLowerCase();
       switch (rowName) {
+        case 'application':
+          const applicationRow = convertToTagList(row, applicationTagMap, 'academic:application');
+          if (applicationRow !== undefined) {
+            tagsRowValue.push(applicationRow);
+          }
+          break;
+        case 'blogtopics':
+          const blogTopicsRow = convertToTagList(row, blogTopicsTagMap, 'blog-topic');
+          if (blogTopicsRow !== undefined) {
+            tagsRowValue.push(blogTopicsRow);
+          }
+          break;
+        case 'booktype':
+          const bookTypeRow = convertToTagList(row, bookTypeTagMap, 'book-type');
+          if (bookTypeRow !== undefined) {
+            tagsRowValue.push(bookTypeRow);
+          }
+          break;
+        case 'capability':
+          const capabilityRow = convertToTagList(row, capabilityTagMap, 'capability');
+          if (capabilityRow !== undefined) {
+            tagsRowValue.push(capabilityRow);
+          }
+          break;
+        case 'country':
+          const countryRow = convertToTagList(row, countryTagMap, 'country');
+          if (countryRow !== undefined) {
+            tagsRowValue.push(countryRow);
+          }
+          break;
+        case 'course':
+          const courseRow = convertToTagList(row, courseTagMap, 'academic:course');
+          if (courseRow !== undefined) {
+            tagsRowValue.push(courseRow);
+          }
+          break;
+        case 'eventseries':
+          const eventSeriesRow = convertToTagList(row, eventSeriesTagMap, 'event-series');
+          if (eventSeriesRow !== undefined) {
+            tagsRowValue.push(eventSeriesRow);
+          }
+          break;
+        case 'eventtype':
+          const eventTypeRow = convertToTagList(row, eventTypeTagMap, 'event-type');
+          if (eventTypeRow !== undefined) {
+            tagsRowValue.push(eventTypeRow);
+          }
+          break;
+        case 'funnelstage':
+          const funnelStageRow = convertToTagList(row, [], 'funnel-stage');
+          if (funnelStageRow !== undefined) {
+            tagsRowValue.push(funnelStageRow);
+          }
+          break;
         case 'industry':
-          const industryRow = doIndustryTag(row);
+          const industryRow = convertToTagList(row, industryTagMap, 'industry');
           if (industryRow !== undefined) {
             tagsRowValue.push(industryRow);
           }
           break;
+        case 'partner':
+          const partnerRow = convertToTagList(row, [], 'partner-type');
+          if (partnerRow !== undefined) {
+            tagsRowValue.push(partnerRow);
+          }
+          break;
         case 'product':
-          const productRow = doProductTag(row);
+          const productRow = convertToTagList(row, productTagMap, 'product');
           if (productRow !== undefined) {
             tagsRowValue.push(productRow);
           }
           break;
         case 'resourcetype':
-          const resourceTypeRow = doResourceTypeTag(row);
+          const resourceTypeRow = convertToTagList(row, resourceTypeTagMap, 'resource-type');
           if (resourceTypeRow !== undefined) {
             tagsRowValue.push(resourceTypeRow);
+          }
+          break;
+        case 'resourceoptions':
+          const resourceOptionsRow = convertToTagList(row, [], 'resource-options');
+          if (resourceOptionsRow !== undefined) {
+            tagsRowValue.push(resourceOptionsRow);
+          }
+          break;
+        case 'userlevel':
+          const userLevelRow = convertToTagList(row, [], 'user-level');
+          if (userLevelRow !== undefined) {
+            tagsRowValue.push(userLevelRow);
           }
           break;
         case 'tags':
@@ -210,14 +326,12 @@ async function doSearch(item, authToken, matching) {
       matching.push(item.path);
 
       const html = dom.body.querySelector('main');
-      console.log('save to da');
       await saveToDa(html.innerHTML, item.path, authToken);
     } else {
-      //console.log('no modification');
+      // no modification.
     }
   } else {
     // done here.
-    //console.log('skip');
   }
 }
 
@@ -240,7 +354,6 @@ function addOutput(matching) {
 }
 
 async function handleFormSubmit(authToken, folderPath) {
-  console.log("Auth Token:", authToken);
   console.log("Folder Path:", folderPath);
 
   setImsDetails(authToken);
