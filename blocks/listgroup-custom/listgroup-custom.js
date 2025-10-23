@@ -354,7 +354,7 @@ function buildListItems(block, matching, tabDictionary, config) {
       && emptyResultsMessage !== undefined) {
     const emptyResultsDiv = document.createElement('div');
     emptyResultsDiv.classList = 'listOfItems no-results';
-    emptyResultsDiv.innerHTML = `<span>${emptyResultsMessage}</span>`;
+    emptyResultsDiv.innerHTML = `${emptyResultsMessage}`;
     block.append(emptyResultsDiv);
     return;
   }
@@ -452,6 +452,7 @@ export default async function decorate(block) {
   const tabsArray = config.tabs;
   useTabs = tabProperty && tabsArray;
   useFilter = filterBy;
+  console.log(config.emptyResultsMessage);
   config.emptyResultsMessage = await getEmptyResultsMessage(config.emptyResultsMessage);
 
   let matching = [];

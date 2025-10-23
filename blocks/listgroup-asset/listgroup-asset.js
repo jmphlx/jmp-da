@@ -35,7 +35,7 @@ function buildAssetItems(matching, config) {
       && emptyResultsMessage !== undefined) {
     const emptyResultsDiv = document.createElement('div');
     emptyResultsDiv.classList = 'no-results';
-    emptyResultsDiv.innerHTML = `<span>${emptyResultsMessage}</span>`;
+    emptyResultsDiv.innerHTML = `${emptyResultsMessage}`;
     return emptyResultsDiv;
   }
 

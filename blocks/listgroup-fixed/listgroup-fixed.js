@@ -140,7 +140,7 @@ export default async function decorate(block) {
   if (pageNotFound === pageUrls.length && emptyResultsMessage !== undefined) {
     const emptyResultsDiv = document.createElement('div');
     emptyResultsDiv.classList = 'no-results';
-    emptyResultsDiv.innerHTML = `<span>${emptyResultsMessage}</span>`;
+    emptyResultsDiv.innerHTML = `${emptyResultsMessage}`;
     wrapper.append(emptyResultsDiv);
   }
 
