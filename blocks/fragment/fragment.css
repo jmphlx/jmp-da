@@ -16,3 +16,23 @@
   background-color: #fafafa;
   border-bottom: 1px solid var(--grayLight);
 }
+
+.fragment-wrapper {
+  &:has(div.subnav-wrapper:is(.pillar-sub-nav)) {
+    /* @media (width >= 1200px) {
+      max-width: 235px;
+    } */
+    @media (width >= 901px) {
+      position: sticky;
+      top: 126px;
+    }
+  }
+}
+
+.fragment-wrapper:has(.pillar-sub-nav) {
+  @media (width >= 901px) {
+    position: sticky;
+    display: block;
+    top: 126px;
+  }
+}
