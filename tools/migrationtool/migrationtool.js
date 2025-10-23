@@ -57,6 +57,7 @@ const capabilityTagMap = [
   ['data access', 'data-access'],
   ['data blending and cleanup', 'data-blending-and-cleanup'],
   ['data exploration and visualization', 'data-exploration-and-visualization'],
+  ['data exploration', 'data-exploration-and-visualization'],
   ['design of experiments', 'design-of-experiments'],
   ['mass customization', 'mass-customization'],
   ['predictive modeling and machine learning', 'predictive-modeling-and-machine-learning'],
@@ -84,7 +85,9 @@ const eventTypeTagMap = [
 ];
 
 const industryTagMap = [
+  ['biotechnology', 'biotech'],
   ['clean energy and conservation', 'clean-energy-and-conservation'],
+  ['clean energy', 'clean-energy-and-conservation'],
   ['consumer products', 'consumer-products'],
   ['high-tech manufacturing', 'high-tech-manufacturing'],
   ['industrial manufacturing', 'industrial-manufacturing'],
@@ -169,6 +172,69 @@ function convertToTagList(row, tagMap, prefix) {
 
 }
 
+function convertToFilter(row) {
+  let updatedRowValue;
+  const rowValue = row.children[1].textContent.trim().toLowerCase();
+  // Only convert if there is an = sign. Don't touch lists filters.
+  if (rowValue.indexOf(',') == -1 && rowValue.indexOf('=') >= 0) {
+    const splitFilter = rowValue.split('=');
+    switch (splitFilter[0]) {
+      case 'application':
+        updatedRowValue = `tags=acaedmic:application:${replaceTagText(splitFilter[1], applicationTagMap)}`;
+        break;
+      case 'blogtopics':
+        updatedRowValue = `tags=blog-topic:${replaceTagText(splitFilter[1], blogTopicsTagMap)}`;
+        break;
+      case 'booktype':
+        updatedRowValue = `tags=book-type:${replaceTagText(splitFilter[1], bookTypeTagMap)}`;
+        break;
+      case 'capability':
+        updatedRowValue = `tags=capability:${replaceTagText(splitFilter[1], capabilityTagMap)}`;
+        break;
+      case 'country':
+        updatedRowValue = `tags=country:${replaceTagText(splitFilter[1], countryTagMap)}`;
+        break;
+      case 'course':
+        updatedRowValue = `tags=academic:course:${replaceTagText(splitFilter[1], courseTagMap)}`;
+        break;
+      case 'eventseries':
+        updatedRowValue = `tags=event-series:${replaceTagText(splitFilter[1], eventSeriesTagMap)}`;
+        break;
+      case 'eventtype':
+        updatedRowValue = `tags=event-type:${replaceTagText(splitFilter[1], eventTypeTagMap)}`;
+        break;
+      case 'funnelstage':
+        updatedRowValue = `tags=funnel-stage:${splitFilter[1]}`;
+        break;
+      case 'industry':
+        updatedRowValue = `tags=industry:${replaceTagText(splitFilter[1], industryTagMap)}`;
+        break;
+      case 'partnertype':
+        updatedRowValue = `tags=partner-type:${splitFilter[1]}`;
+        break;
+      case 'product':
+        updatedRowValue = `tags=product:${replaceTagText(splitFilter[1], productTagMap)}`;
+        break;
+      case 'resourceoptions':
+        updatedRowValue = `tags=resource-options:${splitFilter[1]}`;
+        break;
+      case 'resourcetype':
+        updatedRowValue = `tags=resource-type:${replaceTagText(splitFilter[1], resourceTypeTagMap)}`;
+        break;
+      case 'userlevel':
+        updatedRowValue = `tags=user-level:${splitFilter[1]}`;
+        break;
+      default:
+        break;
+    }
+  }
+  if (updatedRowValue !== undefined) {
+    const actualRowVal = row.children[1]?.children[0];
+    actualRowVal.textContent = updatedRowValue;
+  }
+  return updatedRowValue;
+}
+
 function updateTagsRow(row, tagsList) {
   const rowValue = row.children[1]?.children[0];
   const currentValueText = rowValue.textContent;
@@ -205,6 +271,7 @@ async function doSearch(item, authToken, matching) {
     console.log('Could not fetch item');
     return;
   }
+  let flag = false;
   const text = await resp.text();
   const dom = new DOMParser().parseFromString(text, 'text/html');
   const metadataBlock = dom.querySelector('div.metadata');
@@ -278,7 +345,7 @@ async function doSearch(item, authToken, matching) {
             tagsRowValue.push(industryRow);
           }
           break;
-        case 'partner':
+        case 'partnertype':
           const partnerRow = convertToTagList(row, [], 'partner-type');
           if (partnerRow !== undefined) {
             tagsRowValue.push(partnerRow);
@@ -324,6 +391,7 @@ async function doSearch(item, authToken, matching) {
         addTagsRow(metadataBlock, 'tags', tagsRowValue.join(', '));
       }
       matching.push(item.path);
+      flag =  true;
 
       const html = dom.body.querySelector('main');
       await saveToDa(html.innerHTML, item.path, authToken);
@@ -332,6 +400,26 @@ async function doSearch(item, authToken, matching) {
     }
   } else {
     // done here.
+  }
+
+  // Now update custom listgroups.
+  const foundProperties = Array.from(dom.querySelectorAll('div.listgroup-custom p')).filter((field) => {
+    return field.children.length === 0
+      && field.textContent.trim().toLowerCase() === 'filter';
+  });
+  let updated = false;
+  foundProperties.forEach((prop) => {
+    const updatedRow = convertToFilter(prop.parentElement.parentElement);
+    if (updatedRow !== undefined) {
+      updated = true;
+      if (!flag) {
+        matching.push(item.path);
+      }
+    }
+  });
+  if (updated) {
+    const html = dom.body.querySelector('main');
+    //await saveToDa(html.innerHTML, item.path, authToken);
   }
 }
 
