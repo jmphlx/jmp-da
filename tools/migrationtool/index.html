@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auth + Folder Form</title>
+</head>
+<body>
+  <h1>Tag Migration</h1>
+
+  <form id="dataForm">
+    <label for="authToken">User Auth Token:</label><br>
+    <input type="text" id="authToken" name="authToken" required><br><br>
+
+    <label for="folderPath">Folder Path:</label><br>
+    <input type="text" id="folderPath" name="folderPath" required><br><br>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script type="module" src="migrationtool.js"></script>
+</body>
+</html>
