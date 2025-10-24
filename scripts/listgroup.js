@@ -19,14 +19,18 @@ async function getEmptyResultsMessage(emptyResultString) {
     return undefined;
   }
 
+  if (typeof emptyResultString === 'object') {
+    return emptyResultString.outerHTML;
+  }
+
   if (emptyResultString.includes('.json')) {
     const pageLanguage = getLanguage();
     const data = await getJsonFromUrl(emptyResultString);
     const { data: translations } = data[pageLanguage];
-    return translations[0].emptyResultsMessage;
+    return `<span>${translations[0].emptyResultsMessage}</span>`;
   }
   // otherwise use the string as the empty results message. It won't translate.
-  return emptyResultString;
+  return `<span>${emptyResultString}</span>`;
 }
 
 function checkForTagProperties(displayProperties) {

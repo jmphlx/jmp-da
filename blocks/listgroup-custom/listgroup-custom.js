@@ -354,7 +354,7 @@ function buildListItems(block, matching, tabDictionary, config) {
       && emptyResultsMessage !== undefined) {
     const emptyResultsDiv = document.createElement('div');
     emptyResultsDiv.classList = 'listOfItems no-results';
-    emptyResultsDiv.innerHTML = `<span>${emptyResultsMessage}</span>`;
+    emptyResultsDiv.innerHTML = `${emptyResultsMessage}`;
     block.append(emptyResultsDiv);
     return;
   }

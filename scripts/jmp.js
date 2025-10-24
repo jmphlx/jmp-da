@@ -320,7 +320,7 @@ function getBlockConfig(block) {
         } else if (col.querySelector('a')) {
           const as = [...col.querySelectorAll('a')];
           if (as.length === 1) {
-            value = as[0].href;
+            value = col;
           } else {
             value = as.map((a) => a.href);
           }
