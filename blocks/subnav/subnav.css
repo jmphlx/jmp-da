@@ -708,7 +708,20 @@ div.subnav-compact {
         }
       }
       li:first-child {
-        margin-left: 16px;
+        margin-left: 12px;
+        a {
+          &:first-child {
+            &:before {
+              height: 0;
+              background-color: var(--purple);
+            }
+          }
+          &:hover {
+            &:before {
+              height: 100%;
+            }
+          }
+        }
       }
       li a {
         padding: 0;
@@ -718,9 +731,10 @@ div.subnav-compact {
           background-color: var(--redLight);
           width: 4px;
           position: absolute;
-          left: -14px;
-          top: 0;
-          height: 0;
+          left: -12px;
+          top: calc(50% - 3px);
+          height: 4px;
+          border-radius: 100px;
           transition: all .3s ease;
         }
         &:hover {
@@ -731,9 +745,10 @@ div.subnav-compact {
             background-color: var(--redLight);
             width: 4px;
             position: absolute;
-            left: -14px;
+            left: -12px;
             top: 0;
             height: 100%;
+            border-radius: 0 !important;
             transition: all .3s ease;
           }
         }
@@ -747,9 +762,10 @@ div.subnav-compact {
           background-color: var(--blueLight);
           width: 4px;
           position: absolute;
-          left: -14px;
+          left: -12px;
           top: 0;
-          height: 100%;
+          height: 100% !important;
+          border-radius: 0 !important;
           transition: all .3s ease;
         }
       }
