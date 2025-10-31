@@ -52,6 +52,33 @@
   --font-bold: "anova-bold", arial, helvetica, sans-serif;
 }
 
+body {
+  font-family: var(--font-primary);
+}
+
+/* Add these loading state styles */
+.loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  color: black;
+  font-style: italic;
+  border-radius: 4px;
+  min-height: 100px;
+  margin: 0;
+}
+
+.loading-state::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
+  border: 2px solid black;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
 
 .card-body {
   border: 1px black solid;
@@ -60,6 +87,11 @@
   display: flex;
   justify-content: space-between;
   align-content: center;
+  background-color: var(--background-color);
+
+  &.modified {
+    background-color: var(--greenLight);
+  }
 
   .title {
     color: var(--link-color);
@@ -87,6 +119,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  font-family: var(--font-secondary);
 }
 
 /* Two panel layout */
@@ -95,18 +128,54 @@
   gap: 16px;
 }
 
+#leftPanel::before {
+  display: block;
+  background-color: var(--blueLight);
+  text-align: center;
+  padding: 4px;
+  content: "Current";
+}
+
+#rightPanel::before {
+  display: block;
+  background-color: var(--orange);
+  text-align: center;
+  padding: 4px;
+  content: "Version";
+}
+
 .panel {
   flex: 1;
   border: 1px solid #ccc;
   border-radius: 6px;
-  padding: 12px;
+  margin: 12px;
   overflow-y: auto;
   max-height: 400px;
 
+  /* Header bar using the class name */
+  div[class]:not([class=""])::before {
+    content: attr(class);
+    display: table-caption;
+    caption-side:  top;
+    text-align: center;
+    background-color: var(--background-color);
+    padding: 8px 12px;
+    border: 1px solid black;
+    border-width: 1px 1px 0;
+    font-family: var(--font-primary);
+    align-self: center;
+  }
+
   div[class]:not([class=""]) {
-    border: 2px solid black; /* customize as needed */
-    p {
-      border: 2px solid black;
+    margin: 4px;
+    border-collapse: collapse;
+    display: table;
+    div {
+      display:table-row;
+      div {
+        display:table-cell;
+        border: 1px solid black;
+      }
     }
   }
 }
