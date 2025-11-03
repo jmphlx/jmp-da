@@ -2,6 +2,8 @@
 import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 import { formatVersions } from './formatter.js';
 import { createTag, saveToDa } from '../../scripts/helper.js';
+import { constructPageViewer } from '../search/ui.js';
+import { crawl } from 'https://da.live/nx/public/utils/tree.js';
 
 let context;
 let actions;
@@ -15,6 +17,15 @@ function addLoadingSearch(container, loadingText) {
   container.append(loadingIcon);
 }
 
+function createInvalidCard(pagePath) {
+  const body = createTag('div', { class: 'card-body invalid'});
+  const emptyMessage = createTag('span', {
+    class: 'invalid-msg',
+  }, `No Versions Exist for ${pagePath}`);
+  body.append(emptyMessage);
+  return body;
+}
+
 function createCard(pagePath, versionList) {
   const body = createTag('div', { class: 'card-body'});
 
@@ -24,13 +35,20 @@ function createCard(pagePath, versionList) {
     value: pagePath,
   });
 
+  checkbox.addEventListener('change', (e) => {
+    if (e.target.checked) {
+      body.classList.add('selected');
+    } else {
+      body.classList.remove('selected');
+    }
+  });
+
   const cardPath = createTag('span', { class: 'title'});
   cardPath.textContent = pagePath;
   body.append(checkbox, cardPath);
 
-  console.log(versionList);
   const versionContainer = createTag('div', { class: 'version-lists'});
-  if (versionList !== undefined) {
+  if (versionList !== undefined && versionList.data.length > 0) {
     const versionDropdown = createTag('select');
 
     versionList.data.forEach((version) => {
@@ -54,7 +72,6 @@ function createCard(pagePath, versionList) {
     });
 
     openPageIcon.addEventListener('click', async () => {
-      console.log(versionDropdown.value);
       document.getElementById('myModal').style.display = 'block';
 
       const leftPanel = document.getElementById('leftPanel');
@@ -63,10 +80,7 @@ function createCard(pagePath, versionList) {
       leftPanel.textContent = 'Loading...';
       rightPanel.textContent = 'Loading...';
 
-      const pageSourceUrl = `https://admin.da.live/source/${context.org}/${context.repo}${pagePath}.html`;
-      console.log(pageSourceUrl);
-      
-      // Fetch the doc & convert to DOM
+      const pageSourceUrl = `https://admin.da.live/source${pagePath}`;
       const resp = await actions.daFetch(pageSourceUrl);
       if (!resp.ok) {
         console.log('Could not fetch item');
@@ -87,7 +101,6 @@ function createCard(pagePath, versionList) {
 
 async function getVersionFromList(versionUrl) {
   const url = `https://admin.da.live${versionUrl}`;
-  console.log(url);
   try {
     const response = await fetch(url, {
       method: 'GET',
@@ -98,24 +111,19 @@ async function getVersionFromList(versionUrl) {
 
     if (response.ok) {
       const result = await response.text();
-      console.log(result);
       return result;
     } else {
       const errorText = await response.text();
       return { success: false, status: response.status, error: errorText };
     }
   } catch (e) {
-    console.log('generic error');
     console.log(e);
     return { success: false, status: null, error: e };
   }
 }
 
 async function getVersionList(path, token) {
-  const cleanPath = `${context.org}/${context.repo}${path}`;
-  const url = `https://admin.da.live/versionlist/${cleanPath}.html`;
-  console.log(url);
-
+  const url = `https://admin.da.live/versionlist${path}`;
   try {
     const response = await fetch(url, {
       method: 'GET',
@@ -144,7 +152,6 @@ async function getVersionList(path, token) {
       return { success: false, status: response.status, error: errorText };
     }
   } catch (e) {
-    console.log('generic error');
     console.log(e);
     return { success: false, status: null, error: e };
   }
@@ -152,7 +159,6 @@ async function getVersionList(path, token) {
 
 async function restoreVersion(pagePath, versionUrl) {
   const version = await getVersionFromList(versionUrl);
-  console.log(version);
   const dom = new DOMParser().parseFromString(version, 'text/html');
   const htmlToUse = dom.querySelector('main');
   await saveToDa(htmlToUse.innerHTML, pagePath, token);
@@ -171,6 +177,7 @@ function createResultHeader() {
       const allCheckboxes = document.querySelectorAll('div.card-body input')
       allCheckboxes.forEach((checkbox) => {
         checkbox.checked = true;
+        checkbox.dispatchEvent(new Event('change', { bubbles: true }));
       })
     });
 
@@ -183,6 +190,7 @@ function createResultHeader() {
       const allCheckboxes = document.querySelectorAll('div.card-body input')
       allCheckboxes.forEach((checkbox) => {
         checkbox.checked = false;
+        checkbox.dispatchEvent(new Event('change', { bubbles: true }));
       })
     });
 
@@ -193,13 +201,9 @@ function createResultHeader() {
     
     restorePagesButton.addEventListener('click', async function() {
       const selectedCards = document.querySelectorAll('div.card-body input[type="checkbox"]:checked');
-      console.log(selectedCards.length);
       for (var i = 0; i < selectedCards.length; i++) {
         const card = selectedCards[i].parentElement;
-        console.log(card);
-        console.log(selectedCards[i].value);
         const versionUrl = card.querySelector('div.version-lists select')?.value;
-
         await restoreVersion(selectedCards[i].value, versionUrl);
         card.classList.add('modified');
       }
@@ -210,20 +214,42 @@ function createResultHeader() {
     return resultHeader;
 }
 
+window.addEventListener('message', (event) => {
+  if (event.origin === 'http://localhost:3000'
+    || event.origin === 'https://www.jmp.com'
+    || event.origin === 'https://main--jmp-da--jmphlx.aem.live') {
+    const singleInput = document.getElementById('page-path-input');
+    if (event.data.length) {
+      singleInput.value = event.data;
+    }
+  }
+  if (event.origin === 'https://da.live') {
+    const iframe = document.querySelector('iframe');
+    iframe.contentWindow.postMessage(event.data);
+  }
+  const mydialog = document.querySelector('#modal');
+  mydialog.close();
+});
+
+const callback = async (item, pagePaths) => {
+  // Skip if not a document
+  if (!item.path.endsWith('.html')) return;
+  pagePaths.push(item.path);
+}
+
 async function init() {
   const sdk = await DA_SDK;
   context = sdk.context;
   actions = sdk.actions;
   token = sdk.token;
 
-  // constructPageViewer();
+  constructPageViewer();
 
-  // const mybutton = document.querySelector('#mybutton');
-  // mybutton.addEventListener('click', () => {
-  //   document.querySelector('#modal').showModal();
-  // });
+  const openExplorerBtn = document.getElementById('openPageExplorer')
+  openExplorerBtn.addEventListener('click', () => {
+    document.querySelector('#modal').showModal();
+  });
 
-  // await getConfigurations();
   const modal = document.getElementById('myModal');
 
   const closeBtn = document.getElementById('closeBtn');
@@ -243,15 +269,15 @@ async function init() {
     const resultContainer = document.querySelector('.results-container');
     addLoadingSearch(resultContainer, 'Loading');
 
-    let pagePaths = [
-      '/en/sandbox/laurel/listgroups/resources',
-      '/en/sandbox/laurel/listgroups/custom',
-      '/en/sandbox/laurel/listgroups/loadmore',
-      '/en/sandbox/laurel/listgroups/custom-dates',
-      '/en/sandbox/laurel/listgroups/aem-190',
-      '/en/sandbox/laurel/listgroups/fixed',
-      '/en/sandbox/laurel/listgroups/loadmore-filter',
-    ];
+    const pagePaths = [];
+    const inputValue = document.getElementById('page-path-input').value;
+    const path = `/${context.org}/${context.repo}${inputValue}`;
+    const { results } = crawl({
+      path,
+      callback: (item) => callback(item, pagePaths),
+      concurrent: 50,
+    });
+    await results;
 
     const resultHeader = createResultHeader();
 
@@ -259,7 +285,12 @@ async function init() {
     for (let i = 0; i < pagePaths.length; i++) {
       const pagePath = pagePaths[i];
       const result = await getVersionList(pagePath, token);
-      const pageCard = createCard(pagePath, result);
+      let pageCard;
+      if (result == undefined || result.data.length == 0) {
+        pageCard = createInvalidCard(pagePath);
+      } else {
+        pageCard = createCard(pagePath, result);
+      }
       resultsList.append(pageCard);
     }
     resultContainer.innerHTML = '';

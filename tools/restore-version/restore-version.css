@@ -56,6 +56,98 @@ body {
   font-family: var(--font-primary);
 }
 
+.page-path-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  border: 1px solid #d1d1d1;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+  margin: 0 10px;
+}
+.page-path-wrapper:focus-within {
+  outline: 2px solid #0378CD;
+}
+input {
+  flex: 1;
+  border: none;
+  padding: 0;
+  font-size: 1rem;
+  background: transparent;
+  outline: none;
+  min-width: 0;
+}
+button.icon-btn {
+  background: none;
+  border: none;
+  padding: 4px;
+  margin: 0 !important;
+  background-color: transparent !important;
+  cursor: pointer;
+  color: #000000 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+button.icon-btn:focus-visible {
+  outline: 2px solid #0378CD;
+  outline-offset: 2px;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+.separator {
+  width: 1px;
+  background: #e2e6ed;
+  height: 24px;
+  margin: 0 6px;
+}
+
+::backdrop {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+dialog {
+  width: fit-content;
+  height: 610px;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  iframe {
+    width: 500px;
+    height: 599px;
+    border: none;
+  }
+}
+
+#pageQuery {
+  button:not(.icon) {
+    display: block;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 400;
+    margin: 8px 0 0 8px;
+    padding: 7px 14px;
+    background-color: var(--blue);
+    border: none;
+    border-radius: 50px;
+    color: #ffffff;
+    font-family: var(--font-bold);
+    &:hover {
+      color: #ffffff;
+      background-color: var(--blue-hover);
+    }
+  }
+}
+
 /* Add these loading state styles */
 .loading-state {
   display: flex;
@@ -80,14 +172,33 @@ body {
   animation: spin 0.8s linear infinite;
 }
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .card-body {
   border: 1px black solid;
+  margin: 10px 0;
   padding: 8px;
   font-family: var(--font-secondary);
   display: flex;
-  justify-content: space-between;
-  align-content: center;
+  align-items: center;
   background-color: var(--background-color);
+
+  &.selected {
+    background-color: var(--highlight-background-color);
+  }
+
+  input {
+    margin: 0;
+    max-width: 50px;
+  }
 
   &.modified {
     background-color: var(--greenLight);
@@ -95,6 +206,14 @@ body {
 
   .title {
     color: var(--link-color);
+  }
+  div.version-lists {
+    margin-left: auto;
+  }
+
+  select {
+    position: relative;
+    top: -8px;
   }
 }
 
@@ -184,4 +303,37 @@ body {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+}
+
+div.results-container {
+  margin-left: 8px;
+  div.btn-container {
+    display: flex;
+
+    button {
+      margin: 0 8px 8px 0;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 400;
+      padding: 7px 14px;
+      background-color: transparent;
+      color: #000000;
+      border: 2px solid #292929;
+      &:hover {
+        color: #707070;
+      }
+
+      &.restore-btn {
+        background-color: var(--orange);
+        border: none;
+        border-radius: 50px;
+        color: #ffffff;
+        &:hover {
+          background-color: var(--orange-hover);
+        }
+      }
+    }
+  }
 }
