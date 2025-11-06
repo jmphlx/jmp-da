@@ -27,6 +27,7 @@ import {
   addLoadingSearch,
   clearResults,
   constructPageViewer,
+  exportToCSV,
   populateDropdowns,
   updateActionMessage,
   writeOutResults,
@@ -568,6 +569,13 @@ async function init() {
     createVersionButton.addEventListener('click', () => {
       const message = tryToCreatePageVersions();
       updateActionMessage(resultsContainer, message);
+    });
+
+    const exportCSVButton = document.getElementById('export-csv-button');
+    exportCSVButton.addEventListener('click', () => {
+      console.log('export');
+      console.log(window.searchResults);
+      exportToCSV();
     });
 
     const undoButton = document.getElementById('undo-button');

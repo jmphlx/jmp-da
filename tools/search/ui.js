@@ -471,6 +471,37 @@ function addActionEventListeners(queryObject) {
   });
 }
 
+function getStatus(publishStatus = {}) {
+  if (publishStatus.live === 200) return "Published";
+  if (publishStatus.preview === 200) return "Previewed";
+  return "Unpublished";
+}
+
+function convertResultsToCSV() {
+  const arr = window.searchResults;
+  const headers = ['path', 'status'];
+  console.log(headers);
+  const rows = arr.map(obj => [
+    JSON.stringify(obj.path ?? ""),
+    getStatus(obj.publishStatus),
+  ].join(","));
+  return [headers.join(","), ...rows].join("\n");
+}
+
+
+function exportToCSV() {
+  const csvContent = convertResultsToCSV();
+  console.log(csvContent);
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = 'searchData.csv';
+  link.style.display = "none";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
 export {
   addActionEventListeners,
   addLoadingAction,
@@ -479,6 +510,7 @@ export {
   clearResults,
   closeAdvancedSections,
   constructPageViewer,
+  exportToCSV,
   populateDropdowns,
   updateActionMessage,
   writeOutResults,
