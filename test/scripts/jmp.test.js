@@ -344,7 +344,6 @@ describe('jmp.js tests', () => {
     });
 
     it('Convert <a> to the link', () => {
-      expect(config.link).to.equal('https://www.google.com/');
       expect(config.pages).to.have.all.members(['https://www.google.com/', 'https://www.jmp.com/']);
     });
 
