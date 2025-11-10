@@ -12,7 +12,10 @@ const pages = [
   '/en/software/data-analysis-software',
   '/en/download-jmp-free-trial',
   '/en/resources/resource-listings/featured',
-  '/en/events/americas'
+  '/en/events/americas',
+  '/en/online-statistics-course',
+  '/en/statistics-knowledge-portal',
+  '/en/company/contact',
 ];
 
 describe('Visual Regression', () => {
