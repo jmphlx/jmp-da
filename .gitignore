@@ -9,3 +9,4 @@ helix-importer-ui
 .idea
 .code
 .vscodetest/screenshots/
+test/screenshots/*

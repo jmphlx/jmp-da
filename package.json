@@ -9,9 +9,9 @@
     "lint:css:fix": "stylelint blocks/**/*.css styles/*.css --fix",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:fix": "npm run lint:js && stylelint blocks/**/*.css styles/*.css --fix",
-    "unit": "wtr \"./test/**/*.test.js\" --node-resolve --port=2000 --coverage",
-    "visual": "GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD) node ./test/page/visual-regression.test.mjs",
-    "test": "npm run visual && npm run unit",
+    "unittest": "wtr \"./test/**/*.test.js\" --node-resolve --port=2000 --coverage",
+    "visual": "GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD) mocha ./test/page/visual-regression.test.mjs --timeout 60000",
+    "test": "npm run visual && npm run unittest",
     "test:watch": "npm test -- --watch"
   },
   "jest": {
