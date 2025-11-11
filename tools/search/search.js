@@ -318,7 +318,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
           doReplace(
             token,
             dom,
-            filtered,
+            elements,
             getPagePathFromFullUrl(item.path),
             queryObject,
             classStyle,
