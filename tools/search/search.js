@@ -374,7 +374,7 @@ function getQuery(caseSensitiveFlag) {
   let scope = {};
   let keyword = '';
 
-  const scopeRegex = /(\w+):([^\s]+)/g;
+  const scopeRegex = /\b(?!https?:|ftp:|mailto:)(\w+):([^\s]+)/g;
   let remaining = queryString;
   let match;
 
