@@ -411,6 +411,14 @@
   display: none;
 }
 
+#export-form {
+  padding: 1rem;
+}
+
+#export-form.hidden {
+  display: none;
+}
+
 ::backdrop {
   background: rgba(0, 0, 0, 0.4);
 }

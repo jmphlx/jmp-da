@@ -280,6 +280,8 @@ function clearResults() {
   advancedActionPrompt?.classList.add('hidden');
   const createVersionPrompt = document.getElementById('create-version-prompt');
   createVersionPrompt?.classList.add('hidden');
+  const exportForm = document.getElementById('export-form');
+  exportForm?.classList.add('hidden');
 }
 
 function addLoadingSearch(container, loadingText) {

@@ -555,6 +555,8 @@ async function init() {
     document.getElementById('advanced-action-button').addEventListener('click', () => {
       const advancedActions = document.querySelector('#action-form');
       advancedActions?.classList.remove('hidden');
+      const exportForm = document.getElementById('export-form');
+      exportForm?.classList.add('hidden');
       addActionEventListeners(queryObject);
 
       const advancedSubmitButton = document.getElementById('advanced-submit-button');
@@ -573,7 +575,13 @@ async function init() {
 
     const exportCSVButton = document.getElementById('export-csv-button');
     exportCSVButton.addEventListener('click', () => {
-      console.log('export');
+      const exportSection = document.getElementById('export-form');
+      exportSection?.classList.remove('hidden');
+      const advancedActions = document.getElementById('action-form');
+      advancedActions?.classList.add('hidden');
+    });
+    const exportSubmitButton = document.getElementById('export-submit-button');
+    exportSubmitButton.addEventListener('click', () => {
       console.log(window.searchResults);
       exportToCSV();
     });
