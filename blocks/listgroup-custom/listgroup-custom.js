@@ -249,11 +249,27 @@ function writeAsAZGroups(matching, groupBy, groupProperty, blockObj) {
 }
 
 function constructDictionary(matching, filterBy) {
+  let filterField = filterBy;
+  const includesTagProperty = checkForTagProperties([filterBy]);
+  if (includesTagProperty) {
+    filterField = 'tags';
+  }
   const dictionary = matching.reduce((filterGroups, page) => {
     const lcPage = lowercaseObj(page);
-    const filterValue = lcPage[filterBy.toLowerCase()];
+    const filterValue = lcPage[filterField.toLowerCase()];
     // is filterValue a list of values.
-    if (filterValue && filterValue.indexOf(',') > 0) {
+    if (Array.isArray(filterValue)) {
+     const reducedTags = filterValue.filter(item => item.includes(filterBy));
+     reducedTags.forEach((tag) => {
+      let tagVal = tag;
+      if (window.tagtranslations) {
+        tagVal = window.tagtranslations[tag] ? window.tagtranslations[tag] : tag;
+      } 
+      if (filterGroups[tagVal.trim()]) filterGroups[tagVal.trim()].push(page);
+      else filterGroups[tagVal.trim()] = [page];
+     });
+    // is filterValue a list of values.  
+    } else if (filterValue && filterValue.indexOf(',') > 0) {
       const filterValueArray = filterValue.split(',');
       filterValueArray.forEach((val) => {
         // either push to an existing entry or create one
@@ -429,8 +445,9 @@ export default async function decorate(block) {
     await loadScript('https://cdn.jsdelivr.net/npm/date-fns@4.1.0/cdn.min.js');
   }
 
-  const includesTagProperty = checkForTagProperties(config.displayProperties);
-  if (includesTagProperty) {
+  const includesDisplayTagProperty = checkForTagProperties(config.displayProperties);
+  const includesFilterTagProperty = checkForTagProperties([config.filterBy]);
+  if (includesDisplayTagProperty || includesFilterTagProperty) {
     await getTagTranslations();
   }
 
