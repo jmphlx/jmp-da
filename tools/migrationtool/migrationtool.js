@@ -160,9 +160,19 @@ function replaceTagText(line, replacements) {
 
 function convertToTagList(row, tagMap, prefix) {
   let updatedRowValue;
-  const rowValue = row.children[1].textContent.trim().toLowerCase();
+  let rowValue;
+
+  if (row.children[1].children.length > 1) {
+    rowValue = Array.from(row.children[1].children)
+      .map(el => el.textContent.trim().toLowerCase())
+      .join(', ');
+  } else {
+    rowValue = row.children[1].textContent.trim().toLowerCase();
+  }
+  console.log(rowValue);
   if (rowValue.length > 0) {
     updatedRowValue = replaceTagText(rowValue, tagMap);
+    console.log(updatedRowValue);
     let itemList = updatedRowValue.split(',');
     itemList = itemList.map(item => `${prefix}:${item.trim()}`);
     updatedRowValue = itemList;
@@ -419,7 +429,7 @@ async function doSearch(item, authToken, matching) {
   });
   if (updated) {
     const html = dom.body.querySelector('main');
-    //await saveToDa(html.innerHTML, item.path, authToken);
+    await saveToDa(html.innerHTML, item.path, authToken);
   }
 }
 
