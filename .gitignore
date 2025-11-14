@@ -8,4 +8,5 @@ helix-importer-ui
 *.bak
 .idea
 .code
-.vscode
+.vscodetest/screenshots/
+test/screenshots/*
