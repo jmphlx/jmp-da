@@ -311,6 +311,7 @@ async function constructDropdown(dictionary, filterBy, defaultFilterOption, tran
     if (includesTagProperty && window.tagtranslations) {
       filterValue = window.tagtranslations[filterValue];
     }
+    console.log(filterValue);
     if (filterValue.length > 0) {
       const dropdownItem = createTag('option', { value: `${filterValue}` });
       if (useTranslation) {
