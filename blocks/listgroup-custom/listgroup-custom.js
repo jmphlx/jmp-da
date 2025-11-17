@@ -262,9 +262,6 @@ function constructDictionary(matching, filterBy) {
      const reducedTags = filterValue.filter(item => item.includes(filterBy));
      reducedTags.forEach((tag) => {
       let tagVal = tag;
-      if (window.tagtranslations) {
-        tagVal = window.tagtranslations[tag] ? window.tagtranslations[tag] : tag;
-      } 
       if (filterGroups[tagVal.trim()]) filterGroups[tagVal.trim()].push(page);
       else filterGroups[tagVal.trim()] = [page];
      });
@@ -310,8 +307,13 @@ async function constructDropdown(dictionary, filterBy, defaultFilterOption, tran
   }
 
   sortedList.forEach((filterValue) => {
+    const originalFilter = filterValue;
+    const includesTagProperty = checkForTagProperties([filterBy]);
+    if (includesTagProperty && window.tagtranslations) {
+      filterValue = window.tagtranslations[filterValue] ? window.tagtranslations[filterValue] : filterValue;
+    }
     if (filterValue.length > 0) {
-      const dropdownItem = createTag('option', { value: `${filterValue}` });
+      const dropdownItem = createTag('option', { value: `${originalFilter}` });
       if (useTranslation) {
         if (useTranslation[filterValue]) {
           dropdownItem.innerText = useTranslation[filterValue];
