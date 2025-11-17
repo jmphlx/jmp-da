@@ -294,6 +294,7 @@ async function constructDropdown(dictionary, filterBy, defaultFilterOption, tran
   const allDropdownItem = createTag('option', { value: '' });
   allDropdownItem.textContent = defaultFilterOption || 'Select';
   filterDropdown.append(allDropdownItem);
+  const includesTagProperty = checkForTagProperties([filterBy]);
 
   let sortedList = Object.keys(dictionary).sort();
   let useTranslation;
@@ -306,9 +307,13 @@ async function constructDropdown(dictionary, filterBy, defaultFilterOption, tran
       .sort((a, b) => (useTranslation[a] < useTranslation[b] ? -1 : 1));
   }
 
+  if (includesTagProperty && window.tagtranslations) {
+    sortedList = Object.keys(dictionary)
+      .sort((a, b) => (window.tagtranslations[a] < window.tagtranslations[b] ? -1 : 1)); 
+  }
+
   sortedList.forEach((filterValue) => {
     const originalFilter = filterValue;
-    const includesTagProperty = checkForTagProperties([filterBy]);
     if (includesTagProperty && window.tagtranslations) {
       filterValue = window.tagtranslations[filterValue] ? window.tagtranslations[filterValue] : filterValue;
     }
