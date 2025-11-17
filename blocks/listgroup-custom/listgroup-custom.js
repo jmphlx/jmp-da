@@ -259,13 +259,13 @@ function constructDictionary(matching, filterBy) {
     const filterValue = lcPage[filterField.toLowerCase()];
     // is filterValue a list of values.
     if (Array.isArray(filterValue)) {
-     const reducedTags = filterValue.filter(item => item.includes(filterBy));
-     reducedTags.forEach((tag) => {
-      let tagVal = tag;
-      if (filterGroups[tagVal.trim()]) filterGroups[tagVal.trim()].push(page);
-      else filterGroups[tagVal.trim()] = [page];
-     });
-    // is filterValue a list of values.  
+      const reducedTags = filterValue.filter((item) => item.includes(filterBy));
+      reducedTags.forEach((tag) => {
+        const tagVal = tag;
+        if (filterGroups[tagVal.trim()]) filterGroups[tagVal.trim()].push(page);
+        else filterGroups[tagVal.trim()] = [page];
+      });
+    // is filterValue a list of values.
     } else if (filterValue && filterValue.indexOf(',') > 0) {
       const filterValueArray = filterValue.split(',');
       filterValueArray.forEach((val) => {
@@ -294,6 +294,7 @@ async function constructDropdown(dictionary, filterBy, defaultFilterOption, tran
   const allDropdownItem = createTag('option', { value: '' });
   allDropdownItem.textContent = defaultFilterOption || 'Select';
   filterDropdown.append(allDropdownItem);
+  const includesTagProperty = checkForTagProperties([filterBy]);
 
   let sortedList = Object.keys(dictionary).sort();
   let useTranslation;
@@ -306,22 +307,27 @@ async function constructDropdown(dictionary, filterBy, defaultFilterOption, tran
       .sort((a, b) => (useTranslation[a] < useTranslation[b] ? -1 : 1));
   }
 
+  if (includesTagProperty && window.tagtranslations) {
+    sortedList = Object.keys(dictionary)
+      .sort((a, b) => (window.tagtranslations[a] < window.tagtranslations[b] ? -1 : 1));
+  }
+
   sortedList.forEach((filterValue) => {
-    const originalFilter = filterValue;
-    const includesTagProperty = checkForTagProperties([filterBy]);
+    let useFilterValue = filterValue;
     if (includesTagProperty && window.tagtranslations) {
-      filterValue = window.tagtranslations[filterValue] ? window.tagtranslations[filterValue] : filterValue;
+      useFilterValue = window.tagtranslations[filterValue]
+        ? window.tagtranslations[filterValue] : filterValue;
     }
-    if (filterValue.length > 0) {
-      const dropdownItem = createTag('option', { value: `${originalFilter}` });
+    if (useFilterValue.length > 0) {
+      const dropdownItem = createTag('option', { value: `${filterValue}` });
       if (useTranslation) {
-        if (useTranslation[filterValue]) {
-          dropdownItem.innerText = useTranslation[filterValue];
+        if (useTranslation[useFilterValue]) {
+          dropdownItem.innerText = useTranslation[useFilterValue];
         } else {
-          dropdownItem.innerText = filterValue;
+          dropdownItem.innerText = useFilterValue;
         }
       } else {
-        dropdownItem.innerText = filterValue;
+        dropdownItem.innerText = useFilterValue;
       }
       filterDropdown.append(dropdownItem);
     }
