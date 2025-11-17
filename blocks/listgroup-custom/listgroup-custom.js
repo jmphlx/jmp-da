@@ -307,6 +307,7 @@ async function constructDropdown(dictionary, filterBy, defaultFilterOption, tran
   }
 
   sortedList.forEach((filterValue) => {
+    console.log(filterValue);
     const includesTagProperty = checkForTagProperties([filterBy]);
     if (includesTagProperty && window.tagtranslations) {
       filterValue = window.tagtranslations[filterValue] ? window.tagtranslations[filterValue] : filterValue;
