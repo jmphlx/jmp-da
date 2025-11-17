@@ -311,7 +311,7 @@ async function constructDropdown(dictionary, filterBy, defaultFilterOption, tran
     let filterString = filterValue;
     const includesTagProperty = checkForTagProperties([filterBy]);
     if (includesTagProperty && window.tagtranslations) {
-      filterString = window.tagtranslations[filterValue] ? window.tagtranslations[filterValue] : filterValue;
+      filterValue = window.tagtranslations[filterValue] ? window.tagtranslations[filterValue] : filterValue;
     }
     console.log(filterValue);
     if (filterValue.length > 0) {
