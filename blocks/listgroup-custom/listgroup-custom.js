@@ -308,13 +308,14 @@ async function constructDropdown(dictionary, filterBy, defaultFilterOption, tran
 
   sortedList.forEach((filterValue) => {
     console.log(filterValue);
+    let filterString = filterValue;
     const includesTagProperty = checkForTagProperties([filterBy]);
     if (includesTagProperty && window.tagtranslations) {
-      filterValue = window.tagtranslations[filterValue] ? window.tagtranslations[filterValue] : filterValue;
+      filterString = window.tagtranslations[filterValue] ? window.tagtranslations[filterValue] : filterValue;
     }
     console.log(filterValue);
     if (filterValue.length > 0) {
-      const dropdownItem = createTag('option', { value: `${filterValue}` });
+      const dropdownItem = createTag('option', { value: `${filterString}` });
       if (useTranslation) {
         if (useTranslation[filterValue]) {
           dropdownItem.innerText = useTranslation[filterValue];
