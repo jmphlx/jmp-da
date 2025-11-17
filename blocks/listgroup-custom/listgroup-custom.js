@@ -329,11 +329,16 @@ async function constructDropdown(dictionary, filterBy, defaultFilterOption, tran
 }
 
 function applyFilter(matching, filterBy, filterValue) {
+  let filterField = filterBy;
+  const includesTagProperty = checkForTagProperties([filterBy]);
+  if (includesTagProperty) {
+    filterField = 'tags';
+  }
   const filteredData = matching.filter((item) => {
     const lcPage = lowercaseObj(item);
     // Need to check if it is an array and contains
     const conditionObject = {
-      property: filterBy,
+      property: filterField,
       value: filterValue,
     };
     return containsOperator(lcPage, conditionObject);
