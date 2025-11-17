@@ -307,9 +307,9 @@ async function constructDropdown(dictionary, filterBy, defaultFilterOption, tran
       .sort((a, b) => (useTranslation[a] < useTranslation[b] ? -1 : 1));
   }
 
-  if (includesTagProperty) {
+  if (includesTagProperty && window.tagtranslations) {
     sortedList = Object.keys(dictionary)
-      .sort((a, b) => (window.tagtranslations[a] < window.tagstranslations[b] ? -1 : 1)); 
+      .sort((a, b) => (window.tagtranslations[a] < window.tagtranslations[b] ? -1 : 1)); 
   }
 
   sortedList.forEach((filterValue) => {
