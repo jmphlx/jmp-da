@@ -308,8 +308,13 @@ async function constructDropdown(dictionary, filterBy, defaultFilterOption, tran
   }
 
   if (includesTagProperty && window.tagtranslations) {
+    const pageLanguage = getLanguage();
     sortedList = Object.keys(dictionary)
-      .sort((a, b) => (window.tagtranslations[a] < window.tagtranslations[b] ? -1 : 1));
+      .sort((a, b) => window.tagtranslations[a].localeCompare(window.tagtranslations[b], pageLanguage, {
+        sensitivity: 'base',
+        numeric: true,
+        ignorePunctuation: true,
+      }));
   }
 
   sortedList.forEach((filterValue) => {
