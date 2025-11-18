@@ -310,7 +310,7 @@ async function constructDropdown(dictionary, filterBy, defaultFilterOption, tran
   if (includesTagProperty && window.tagtranslations) {
     const pageLanguage = getLanguage();
     sortedList = Object.keys(dictionary)
-      .sort((a, b) => useTranslation[a].localeCompare(useTranslation[b], pageLanguage, {
+      .sort((a, b) => window.tagtranslations[a].localeCompare(window.tagtranslations[b], pageLanguage, {
         sensitivity: 'base',
         numeric: true,
         ignorePunctuation: true,
