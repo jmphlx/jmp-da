@@ -89,7 +89,7 @@ function createCardHTML(prop, item) {
   let span;
   const dateProperty = isDateProperty(prop);
   if (isTagProperty(prop)) {
-    span = `<span class="${prop}">${writeOutTagProperties(prop, item)}</span>`;
+    span = `<span class="${prop}">${writeOutTagProperties(getTagPropertyConverted(prop), item)}</span>`;
   } else if (prop === 'image' || prop === 'displayImage') {
     span = writeImagePropertyInList(prop, item);
   } else if (dateProperty >= 0) {
