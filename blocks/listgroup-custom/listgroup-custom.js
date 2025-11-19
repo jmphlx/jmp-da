@@ -62,14 +62,20 @@ function processDate(dateProperty, prop, item) {
 }
 
 function writeOutTagProperties(prop, item) {
+  console.log('write out tag');
   const tagsProperty = item.tags;
+  console.log(tagsProperty);
+  console.log(window.tagtranslations);
   if (!tagsProperty || tagsProperty.length < 1 || !window.tagtranslations) {
+    console.log('here?')
     // No tags or no translations so default to old method.
     return item[prop];
   }
 
   const convertedProp = convertCamelToKebabCase(prop);
+  console.log(convertedProp);
   const tagsValue = Object.values(tagsProperty);
+  console.log(tagsValue);
   const tagsArray = [];
   tagsValue.forEach((tag) => {
     if (tag.startsWith(convertedProp)) {
