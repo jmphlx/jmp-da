@@ -62,6 +62,7 @@ function processDate(dateProperty, prop, item) {
 }
 
 function writeOutTagProperties(prop, item) {
+  console.log(prop);
   console.log('write out tag');
   const tagsProperty = item.tags;
   console.log(tagsProperty);
