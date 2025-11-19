@@ -507,6 +507,10 @@ function isTagProperty(propertyName) {
   return Object.keys(tagMap).includes(propertyName);
 }
 
+function getTagPropertyConverted(propertyName) {
+  return tagMap[propertyName];
+}
+
 function convertCamelToKebabCase(str) {
   return str.replace(/[A-Z]+(?![a-z])|[A-Z]/g, ($, ofs) => (ofs ? '-' : '') + $.toLowerCase());
 }
@@ -531,6 +535,7 @@ export {
   getLanguageFooter,
   getLanguageNav,
   getSKPLanguageIndex,
+  getTagPropertyConverted,
   isLanguageSupported,
   isTagProperty,
   parseBlockOptions,

@@ -8,6 +8,7 @@ import {
   getJsonFromUrl,
   getLanguageIndex,
   getLanguage,
+  getTagPropertyConverted,
   isTagProperty,
   sortPageList,
   filterOutRobotsNoIndexPages,
@@ -250,16 +251,18 @@ function writeAsAZGroups(matching, groupBy, groupProperty, blockObj) {
 
 function constructDictionary(matching, filterBy) {
   let filterField = filterBy;
+  let filterStringValue = filterBy;
   const includesTagProperty = checkForTagProperties([filterBy]);
   if (includesTagProperty) {
     filterField = 'tags';
+    filterStringValue = getTagPropertyConverted(filterBy);
   }
   const dictionary = matching.reduce((filterGroups, page) => {
     const lcPage = lowercaseObj(page);
     const filterValue = lcPage[filterField.toLowerCase()];
     // is filterValue a list of values.
     if (Array.isArray(filterValue)) {
-      const reducedTags = filterValue.filter((item) => item.includes(filterBy));
+      const reducedTags = filterValue.filter((item) => item.includes(filterStringValue));
       reducedTags.forEach((tag) => {
         const tagVal = tag;
         if (filterGroups[tagVal.trim()]) filterGroups[tagVal.trim()].push(page);
@@ -310,11 +313,12 @@ async function constructDropdown(dictionary, filterBy, defaultFilterOption, tran
   if (includesTagProperty && window.tagtranslations) {
     const pageLanguage = getLanguage();
     sortedList = Object.keys(dictionary)
-      .sort((a, b) => window.tagtranslations[a].localeCompare(window.tagtranslations[b], pageLanguage, {
-        sensitivity: 'base',
-        numeric: true,
-        ignorePunctuation: true,
-      }));
+      .sort((a, b) => window.tagtranslations[a]
+        .localeCompare(window.tagtranslations[b], pageLanguage, {
+          sensitivity: 'base',
+          numeric: true,
+          ignorePunctuation: true,
+        }));
   }
 
   sortedList.forEach((filterValue) => {
