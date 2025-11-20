@@ -31,32 +31,12 @@ indices:
         select: head > meta[name="displaydescription"]
         value: |
           attribute(el, "content")
-      resourceType:
-        select: head > meta[name="resourcetype"]
-        value: |
-          attribute(el, "content")
-      industry:
-        select: head > meta[name="industry"]
-        value: |
-          attribute(el, "content")
-      capability:
-        select: head > meta[name="capability"]
-        value: |
-          attribute(el, "content")
-      product:
-        select: head > meta[name="product"]
-        value: |
-          attribute(el, "content")
       releaseDate:
         select: head > meta[name="releasedate"]
         value: |
           attribute(el, "content")
       redirectTarget:
         select: head > meta[name="redirecttarget"]
-        value: |
-          attribute(el, "content")
-      resourceOptions:
-        select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
       offDateTime:
@@ -69,14 +49,6 @@ indices:
           attribute(el, "content")
       eventDisplayTime:
         select: head > meta[name="eventdisplaytime"]
-        value: |
-          attribute(el, "content")
-      eventType:
-        select: head > meta[name="eventtype"]
-        value: |
-          attribute(el, "content")
-      eventSeries:
-        select: head > meta[name="eventseries"]
         value: |
           attribute(el, "content")
       eventDisplayLabel:
@@ -95,40 +67,12 @@ indices:
         select: head > meta[name="bookauthor"]
         value: |
           attribute(el, "content")
-      bookType:
-        select: head > meta[name="booktype"]
-        value: |
-          attribute(el, "content")
-      course:
-        select: head > meta[name="course"]
-        value: |
-          attribute(el, "content")
-      userLevel:
-        select: head > meta[name="userlevel"]
-        value: |
-          attribute(el, "content")
-      partnerType:
-        select: head > meta[name="partnertype"]
-        value: |
-          attribute(el, "content")  
-      country:
-        select: head > meta[name="country"]
-        value: |
-          attribute(el, "content") 
-      application:
-        select: head > meta[name="application"]
-        value: |
-          attribute(el, "content")
       displayLabel:
         select: head > meta[name="displaylabel"]
         value: |
           attribute(el, "content")
       displayImage:
         select: head > meta[name="displayimage"]
-        value: |
-          attribute(el, "content")
-      blogTopics:
-        select: head > meta[name="blogtopics"]
         value: |
           attribute(el, "content")
       tags:
@@ -166,22 +110,6 @@ indices:
         select: head > meta[name="displaydescription"]
         value: |
           attribute(el, "content")
-      resourceType:
-        select: head > meta[name="resourcetype"]
-        value: |
-          attribute(el, "content")
-      industry:
-        select: head > meta[name="industry"]
-        value: |
-          attribute(el, "content")
-      capability:
-        select: head > meta[name="capability"]
-        value: |
-          attribute(el, "content")
-      product:
-        select: head > meta[name="product"]
-        value: |
-          attribute(el, "content")
       releaseDate:
         select: head > meta[name="releasedate"]
         value: |
@@ -189,11 +117,7 @@ indices:
       redirectTarget:
         select: head > meta[name="redirecttarget"]
         value: |
-          attribute(el, "content")
-      resourceOptions:
-        select: head > meta[name="resourceoptions"]
-        value: |
-          attribute(el, "content")
+          attribute(el, "content"
       offDateTime:
         select: head > meta[name="offdatetime"]
         value: |
@@ -204,14 +128,6 @@ indices:
           attribute(el, "content")
       eventDisplayTime:
         select: head > meta[name="eventdisplaytime"]
-        value: |
-          attribute(el, "content")
-      eventType:
-        select: head > meta[name="eventtype"]
-        value: |
-          attribute(el, "content")
-      eventSeries:
-        select: head > meta[name="eventseries"]
         value: |
           attribute(el, "content")
       eventDisplayLabel:
@@ -228,30 +144,6 @@ indices:
           attribute(el, "content")
       bookAuthor:
         select: head > meta[name="bookauthor"]
-        value: |
-          attribute(el, "content")
-      bookType:
-        select: head > meta[name="booktype"]
-        value: |
-          attribute(el, "content")
-      course:
-        select: head > meta[name="course"]
-        value: |
-          attribute(el, "content")
-      userLevel:
-        select: head > meta[name="userlevel"]
-        value: |
-          attribute(el, "content")
-      partnerType:
-        select: head > meta[name="partnertype"]
-        value: |
-          attribute(el, "content")  
-      country:
-        select: head > meta[name="country"]
-        value: |
-          attribute(el, "content")
-      application:
-        select: head > meta[name="application"]
         value: |
           attribute(el, "content")
       displayLabel:
@@ -297,32 +189,12 @@ indices:
         select: head > meta[name="displaydescription"]
         value: |
           attribute(el, "content")
-      resourceType:
-        select: head > meta[name="resourcetype"]
-        value: |
-          attribute(el, "content")
-      industry:
-        select: head > meta[name="industry"]
-        value: |
-          attribute(el, "content")
-      capability:
-        select: head > meta[name="capability"]
-        value: |
-          attribute(el, "content")
-      product:
-        select: head > meta[name="product"]
-        value: |
-          attribute(el, "content")
       releaseDate:
         select: head > meta[name="releasedate"]
         value: |
           attribute(el, "content")
       redirectTarget:
         select: head > meta[name="redirecttarget"]
-        value: |
-          attribute(el, "content")
-      resourceOptions:
-        select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
       offDateTime:
@@ -335,14 +207,6 @@ indices:
           attribute(el, "content")
       eventDisplayTime:
         select: head > meta[name="eventdisplaytime"]
-        value: |
-          attribute(el, "content")
-      eventType:
-        select: head > meta[name="eventtype"]
-        value: |
-          attribute(el, "content")
-      eventSeries:
-        select: head > meta[name="eventseries"]
         value: |
           attribute(el, "content")
       eventDisplayLabel:
@@ -359,30 +223,6 @@ indices:
           attribute(el, "content")
       bookAuthor:
         select: head > meta[name="bookauthor"]
-        value: |
-          attribute(el, "content")
-      bookType:
-        select: head > meta[name="booktype"]
-        value: |
-          attribute(el, "content")
-      course:
-        select: head > meta[name="course"]
-        value: |
-          attribute(el, "content")
-      userLevel:
-        select: head > meta[name="userlevel"]
-        value: |
-          attribute(el, "content")
-      partnerType:
-        select: head > meta[name="partnertype"]
-        value: |
-          attribute(el, "content")  
-      country:
-        select: head > meta[name="country"]
-        value: |
-          attribute(el, "content") 
-      application:
-        select: head > meta[name="application"]
         value: |
           attribute(el, "content")
       displayLabel:
@@ -428,32 +268,12 @@ indices:
         select: head > meta[name="displaydescription"]
         value: |
           attribute(el, "content")
-      resourceType:
-        select: head > meta[name="resourcetype"]
-        value: |
-          attribute(el, "content")
-      industry:
-        select: head > meta[name="industry"]
-        value: |
-          attribute(el, "content")
-      capability:
-        select: head > meta[name="capability"]
-        value: |
-          attribute(el, "content")
-      product:
-        select: head > meta[name="product"]
-        value: |
-          attribute(el, "content")
       releaseDate:
         select: head > meta[name="releasedate"]
         value: |
           attribute(el, "content")
       redirectTarget:
         select: head > meta[name="redirecttarget"]
-        value: |
-          attribute(el, "content")
-      resourceOptions:
-        select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
       offDateTime:
@@ -466,14 +286,6 @@ indices:
           attribute(el, "content")
       eventDisplayTime:
         select: head > meta[name="eventdisplaytime"]
-        value: |
-          attribute(el, "content")
-      eventType:
-        select: head > meta[name="eventtype"]
-        value: |
-          attribute(el, "content")
-      eventSeries:
-        select: head > meta[name="eventseries"]
         value: |
           attribute(el, "content")
       eventDisplayLabel:
@@ -490,30 +302,6 @@ indices:
           attribute(el, "content")
       bookAuthor:
         select: head > meta[name="bookauthor"]
-        value: |
-          attribute(el, "content")
-      bookType:
-        select: head > meta[name="booktype"]
-        value: |
-          attribute(el, "content")
-      course:
-        select: head > meta[name="course"]
-        value: |
-          attribute(el, "content")
-      userLevel:
-        select: head > meta[name="userlevel"]
-        value: |
-          attribute(el, "content")
-      partnerType:
-        select: head > meta[name="partnertype"]
-        value: |
-          attribute(el, "content")  
-      country:
-        select: head > meta[name="country"]
-        value: |
-          attribute(el, "content") 
-      application:
-        select: head > meta[name="application"]
         value: |
           attribute(el, "content")
       displayLabel:
@@ -559,32 +347,12 @@ indices:
         select: head > meta[name="displaydescription"]
         value: |
           attribute(el, "content")
-      resourceType:
-        select: head > meta[name="resourcetype"]
-        value: |
-          attribute(el, "content")
-      industry:
-        select: head > meta[name="industry"]
-        value: |
-          attribute(el, "content")
-      capability:
-        select: head > meta[name="capability"]
-        value: |
-          attribute(el, "content")
-      product:
-        select: head > meta[name="product"]
-        value: |
-          attribute(el, "content")
       releaseDate:
         select: head > meta[name="releasedate"]
         value: |
           attribute(el, "content")
       redirectTarget:
         select: head > meta[name="redirecttarget"]
-        value: |
-          attribute(el, "content")
-      resourceOptions:
-        select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
       offDateTime:
@@ -597,14 +365,6 @@ indices:
           attribute(el, "content")
       eventDisplayTime:
         select: head > meta[name="eventdisplaytime"]
-        value: |
-          attribute(el, "content")
-      eventType:
-        select: head > meta[name="eventtype"]
-        value: |
-          attribute(el, "content")
-      eventSeries:
-        select: head > meta[name="eventseries"]
         value: |
           attribute(el, "content")
       eventDisplayLabel:
@@ -621,30 +381,6 @@ indices:
           attribute(el, "content")
       bookAuthor:
         select: head > meta[name="bookauthor"]
-        value: |
-          attribute(el, "content")
-      bookType:
-        select: head > meta[name="booktype"]
-        value: |
-          attribute(el, "content")
-      course:
-        select: head > meta[name="course"]
-        value: |
-          attribute(el, "content")
-      userLevel:
-        select: head > meta[name="userlevel"]
-        value: |
-          attribute(el, "content")
-      partnerType:
-        select: head > meta[name="partnertype"]
-        value: |
-          attribute(el, "content")  
-      country:
-        select: head > meta[name="country"]
-        value: |
-          attribute(el, "content") 
-      application:
-        select: head > meta[name="application"]
         value: |
           attribute(el, "content")
       displayLabel:
@@ -690,32 +426,12 @@ indices:
         select: head > meta[name="displaydescription"]
         value: |
           attribute(el, "content")
-      resourceType:
-        select: head > meta[name="resourcetype"]
-        value: |
-          attribute(el, "content")
-      industry:
-        select: head > meta[name="industry"]
-        value: |
-          attribute(el, "content")
-      capability:
-        select: head > meta[name="capability"]
-        value: |
-          attribute(el, "content")
-      product:
-        select: head > meta[name="product"]
-        value: |
-          attribute(el, "content")
       releaseDate:
         select: head > meta[name="releasedate"]
         value: |
           attribute(el, "content")
       redirectTarget:
         select: head > meta[name="redirecttarget"]
-        value: |
-          attribute(el, "content")
-      resourceOptions:
-        select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
       offDateTime:
@@ -728,14 +444,6 @@ indices:
           attribute(el, "content")
       eventDisplayTime:
         select: head > meta[name="eventdisplaytime"]
-        value: |
-          attribute(el, "content")
-      eventType:
-        select: head > meta[name="eventtype"]
-        value: |
-          attribute(el, "content")
-      eventSeries:
-        select: head > meta[name="eventseries"]
         value: |
           attribute(el, "content")
       eventDisplayLabel:
@@ -752,30 +460,6 @@ indices:
           attribute(el, "content")
       bookAuthor:
         select: head > meta[name="bookauthor"]
-        value: |
-          attribute(el, "content")
-      bookType:
-        select: head > meta[name="booktype"]
-        value: |
-          attribute(el, "content")
-      course:
-        select: head > meta[name="course"]
-        value: |
-          attribute(el, "content")
-      userLevel:
-        select: head > meta[name="userlevel"]
-        value: |
-          attribute(el, "content")
-      partnerType:
-        select: head > meta[name="partnertype"]
-        value: |
-          attribute(el, "content")  
-      country:
-        select: head > meta[name="country"]
-        value: |
-          attribute(el, "content") 
-      application:
-        select: head > meta[name="application"]
         value: |
           attribute(el, "content")
       displayLabel:
@@ -821,32 +505,12 @@ indices:
         select: head > meta[name="displaydescription"]
         value: |
           attribute(el, "content")
-      resourceType:
-        select: head > meta[name="resourcetype"]
-        value: |
-          attribute(el, "content")
-      industry:
-        select: head > meta[name="industry"]
-        value: |
-          attribute(el, "content")
-      capability:
-        select: head > meta[name="capability"]
-        value: |
-          attribute(el, "content")
-      product:
-        select: head > meta[name="product"]
-        value: |
-          attribute(el, "content")
       releaseDate:
         select: head > meta[name="releasedate"]
         value: |
           attribute(el, "content")
       redirectTarget:
         select: head > meta[name="redirecttarget"]
-        value: |
-          attribute(el, "content")
-      resourceOptions:
-        select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
       offDateTime:
@@ -859,14 +523,6 @@ indices:
           attribute(el, "content")
       eventDisplayTime:
         select: head > meta[name="eventdisplaytime"]
-        value: |
-          attribute(el, "content")
-      eventType:
-        select: head > meta[name="eventtype"]
-        value: |
-          attribute(el, "content")
-      eventSeries:
-        select: head > meta[name="eventseries"]
         value: |
           attribute(el, "content")
       eventDisplayLabel:
@@ -883,30 +539,6 @@ indices:
           attribute(el, "content")
       bookAuthor:
         select: head > meta[name="bookauthor"]
-        value: |
-          attribute(el, "content")
-      bookType:
-        select: head > meta[name="booktype"]
-        value: |
-          attribute(el, "content")
-      course:
-        select: head > meta[name="course"]
-        value: |
-          attribute(el, "content")
-      userLevel:
-        select: head > meta[name="userlevel"]
-        value: |
-          attribute(el, "content")
-      partnerType:
-        select: head > meta[name="partnertype"]
-        value: |
-          attribute(el, "content")  
-      country:
-        select: head > meta[name="country"]
-        value: |
-          attribute(el, "content") 
-      application:
-        select: head > meta[name="application"]
         value: |
           attribute(el, "content")
       displayLabel:
@@ -952,32 +584,12 @@ indices:
         select: head > meta[name="displaydescription"]
         value: |
           attribute(el, "content")
-      resourceType:
-        select: head > meta[name="resourcetype"]
-        value: |
-          attribute(el, "content")
-      industry:
-        select: head > meta[name="industry"]
-        value: |
-          attribute(el, "content")
-      capability:
-        select: head > meta[name="capability"]
-        value: |
-          attribute(el, "content")
-      product:
-        select: head > meta[name="product"]
-        value: |
-          attribute(el, "content")
       releaseDate:
         select: head > meta[name="releasedate"]
         value: |
           attribute(el, "content")
       redirectTarget:
         select: head > meta[name="redirecttarget"]
-        value: |
-          attribute(el, "content")
-      resourceOptions:
-        select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
       offDateTime:
@@ -990,14 +602,6 @@ indices:
           attribute(el, "content")
       eventDisplayTime:
         select: head > meta[name="eventdisplaytime"]
-        value: |
-          attribute(el, "content")
-      eventType:
-        select: head > meta[name="eventtype"]
-        value: |
-          attribute(el, "content")
-      eventSeries:
-        select: head > meta[name="eventseries"]
         value: |
           attribute(el, "content")
       eventDisplayLabel:
@@ -1014,30 +618,6 @@ indices:
           attribute(el, "content")
       bookAuthor:
         select: head > meta[name="bookauthor"]
-        value: |
-          attribute(el, "content")
-      bookType:
-        select: head > meta[name="booktype"]
-        value: |
-          attribute(el, "content")
-      course:
-        select: head > meta[name="course"]
-        value: |
-          attribute(el, "content")
-      userLevel:
-        select: head > meta[name="userlevel"]
-        value: |
-          attribute(el, "content")
-      partnerType:
-        select: head > meta[name="partnertype"]
-        value: |
-          attribute(el, "content")  
-      country:
-        select: head > meta[name="country"]
-        value: |
-          attribute(el, "content") 
-      application:
-        select: head > meta[name="application"]
         value: |
           attribute(el, "content")
       displayLabel:
@@ -1083,32 +663,12 @@ indices:
         select: head > meta[name="displaydescription"]
         value: |
           attribute(el, "content")
-      resourceType:
-        select: head > meta[name="resourcetype"]
-        value: |
-          attribute(el, "content")
-      industry:
-        select: head > meta[name="industry"]
-        value: |
-          attribute(el, "content")
-      capability:
-        select: head > meta[name="capability"]
-        value: |
-          attribute(el, "content")
-      product:
-        select: head > meta[name="product"]
-        value: |
-          attribute(el, "content")
       releaseDate:
         select: head > meta[name="releasedate"]
         value: |
           attribute(el, "content")
       redirectTarget:
         select: head > meta[name="redirecttarget"]
-        value: |
-          attribute(el, "content")
-      resourceOptions:
-        select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
       offDateTime:
@@ -1121,14 +681,6 @@ indices:
           attribute(el, "content")
       eventDisplayTime:
         select: head > meta[name="eventdisplaytime"]
-        value: |
-          attribute(el, "content")
-      eventType:
-        select: head > meta[name="eventtype"]
-        value: |
-          attribute(el, "content")
-      eventSeries:
-        select: head > meta[name="eventseries"]
         value: |
           attribute(el, "content")
       eventDisplayLabel:
@@ -1145,30 +697,6 @@ indices:
           attribute(el, "content")
       bookAuthor:
         select: head > meta[name="bookauthor"]
-        value: |
-          attribute(el, "content")
-      bookType:
-        select: head > meta[name="booktype"]
-        value: |
-          attribute(el, "content")
-      course:
-        select: head > meta[name="course"]
-        value: |
-          attribute(el, "content")
-      userLevel:
-        select: head > meta[name="userlevel"]
-        value: |
-          attribute(el, "content")
-      partnerType:
-        select: head > meta[name="partnertype"]
-        value: |
-          attribute(el, "content")  
-      country:
-        select: head > meta[name="country"]
-        value: |
-          attribute(el, "content") 
-      application:
-        select: head > meta[name="application"]
         value: |
           attribute(el, "content")
       displayLabel:
@@ -1213,32 +741,12 @@ indices:
         select: head > meta[name="displaydescription"]
         value: |
           attribute(el, "content")
-      resourceType:
-        select: head > meta[name="resourcetype"]
-        value: |
-          attribute(el, "content")
-      industry:
-        select: head > meta[name="industry"]
-        value: |
-          attribute(el, "content")
-      capability:
-        select: head > meta[name="capability"]
-        value: |
-          attribute(el, "content")
-      product:
-        select: head > meta[name="product"]
-        value: |
-          attribute(el, "content")
       releaseDate:
         select: head > meta[name="releasedate"]
         value: |
           attribute(el, "content")
       redirectTarget:
         select: head > meta[name="redirecttarget"]
-        value: |
-          attribute(el, "content")
-      resourceOptions:
-        select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
       displayImage:
@@ -1276,32 +784,12 @@ indices:
         select: head > meta[name="displaydescription"]
         value: |
           attribute(el, "content")
-      resourceType:
-        select: head > meta[name="resourcetype"]
-        value: |
-          attribute(el, "content")
-      industry:
-        select: head > meta[name="industry"]
-        value: |
-          attribute(el, "content")
-      capability:
-        select: head > meta[name="capability"]
-        value: |
-          attribute(el, "content")
-      product:
-        select: head > meta[name="product"]
-        value: |
-          attribute(el, "content")
       releaseDate:
         select: head > meta[name="releasedate"]
         value: |
           attribute(el, "content")
       redirectTarget:
         select: head > meta[name="redirecttarget"]
-        value: |
-          attribute(el, "content")
-      resourceOptions:
-        select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
       displayImage:
@@ -1339,32 +827,12 @@ indices:
         select: head > meta[name="displaydescription"]
         value: |
           attribute(el, "content")
-      resourceType:
-        select: head > meta[name="resourcetype"]
-        value: |
-          attribute(el, "content")
-      industry:
-        select: head > meta[name="industry"]
-        value: |
-          attribute(el, "content")
-      capability:
-        select: head > meta[name="capability"]
-        value: |
-          attribute(el, "content")
-      product:
-        select: head > meta[name="product"]
-        value: |
-          attribute(el, "content")
       releaseDate:
         select: head > meta[name="releasedate"]
         value: |
           attribute(el, "content")
       redirectTarget:
         select: head > meta[name="redirecttarget"]
-        value: |
-          attribute(el, "content")
-      resourceOptions:
-        select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
       displayImage:
@@ -1402,32 +870,12 @@ indices:
         select: head > meta[name="displaydescription"]
         value: |
           attribute(el, "content")
-      resourceType:
-        select: head > meta[name="resourcetype"]
-        value: |
-          attribute(el, "content")
-      industry:
-        select: head > meta[name="industry"]
-        value: |
-          attribute(el, "content")
-      capability:
-        select: head > meta[name="capability"]
-        value: |
-          attribute(el, "content")
-      product:
-        select: head > meta[name="product"]
-        value: |
-          attribute(el, "content")
       releaseDate:
         select: head > meta[name="releasedate"]
         value: |
           attribute(el, "content")
       redirectTarget:
         select: head > meta[name="redirecttarget"]
-        value: |
-          attribute(el, "content")
-      resourceOptions:
-        select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
       displayImage:
@@ -1465,32 +913,12 @@ indices:
         select: head > meta[name="displaydescription"]
         value: |
           attribute(el, "content")
-      resourceType:
-        select: head > meta[name="resourcetype"]
-        value: |
-          attribute(el, "content")
-      industry:
-        select: head > meta[name="industry"]
-        value: |
-          attribute(el, "content")
-      capability:
-        select: head > meta[name="capability"]
-        value: |
-          attribute(el, "content")
-      product:
-        select: head > meta[name="product"]
-        value: |
-          attribute(el, "content")
       releaseDate:
         select: head > meta[name="releasedate"]
         value: |
           attribute(el, "content")
       redirectTarget:
         select: head > meta[name="redirecttarget"]
-        value: |
-          attribute(el, "content")
-      resourceOptions:
-        select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
       displayImage:
@@ -1528,32 +956,12 @@ indices:
         select: head > meta[name="displaydescription"]
         value: |
           attribute(el, "content")
-      resourceType:
-        select: head > meta[name="resourcetype"]
-        value: |
-          attribute(el, "content")
-      industry:
-        select: head > meta[name="industry"]
-        value: |
-          attribute(el, "content")
-      capability:
-        select: head > meta[name="capability"]
-        value: |
-          attribute(el, "content")
-      product:
-        select: head > meta[name="product"]
-        value: |
-          attribute(el, "content")
       releaseDate:
         select: head > meta[name="releasedate"]
         value: |
           attribute(el, "content")
       redirectTarget:
         select: head > meta[name="redirecttarget"]
-        value: |
-          attribute(el, "content")
-      resourceOptions:
-        select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
       displayImage:
@@ -1591,32 +999,12 @@ indices:
         select: head > meta[name="displaydescription"]
         value: |
           attribute(el, "content")
-      resourceType:
-        select: head > meta[name="resourcetype"]
-        value: |
-          attribute(el, "content")
-      industry:
-        select: head > meta[name="industry"]
-        value: |
-          attribute(el, "content")
-      capability:
-        select: head > meta[name="capability"]
-        value: |
-          attribute(el, "content")
-      product:
-        select: head > meta[name="product"]
-        value: |
-          attribute(el, "content")
       releaseDate:
         select: head > meta[name="releasedate"]
         value: |
           attribute(el, "content")
       redirectTarget:
         select: head > meta[name="redirecttarget"]
-        value: |
-          attribute(el, "content")
-      resourceOptions:
-        select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
       displayImage:
@@ -1654,32 +1042,12 @@ indices:
         select: head > meta[name="displaydescription"]
         value: |
           attribute(el, "content")
-      resourceType:
-        select: head > meta[name="resourcetype"]
-        value: |
-          attribute(el, "content")
-      industry:
-        select: head > meta[name="industry"]
-        value: |
-          attribute(el, "content")
-      capability:
-        select: head > meta[name="capability"]
-        value: |
-          attribute(el, "content")
-      product:
-        select: head > meta[name="product"]
-        value: |
-          attribute(el, "content")
       releaseDate:
         select: head > meta[name="releasedate"]
         value: |
           attribute(el, "content")
       redirectTarget:
         select: head > meta[name="redirecttarget"]
-        value: |
-          attribute(el, "content")
-      resourceOptions:
-        select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
       displayImage:
@@ -1717,32 +1085,12 @@ indices:
         select: head > meta[name="displaydescription"]
         value: |
           attribute(el, "content")
-      resourceType:
-        select: head > meta[name="resourcetype"]
-        value: |
-          attribute(el, "content")
-      industry:
-        select: head > meta[name="industry"]
-        value: |
-          attribute(el, "content")
-      capability:
-        select: head > meta[name="capability"]
-        value: |
-          attribute(el, "content")
-      product:
-        select: head > meta[name="product"]
-        value: |
-          attribute(el, "content")
       releaseDate:
         select: head > meta[name="releasedate"]
         value: |
           attribute(el, "content")
       redirectTarget:
         select: head > meta[name="redirecttarget"]
-        value: |
-          attribute(el, "content")
-      resourceOptions:
-        select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
       displayImage:
@@ -1786,32 +1134,12 @@ indices:
         select: head > meta[name="displaydescription"]
         value: |
           attribute(el, "content")
-      resourceType:
-        select: head > meta[name="resourcetype"]
-        value: |
-          attribute(el, "content")
-      industry:
-        select: head > meta[name="industry"]
-        value: |
-          attribute(el, "content")
-      capability:
-        select: head > meta[name="capability"]
-        value: |
-          attribute(el, "content")
-      product:
-        select: head > meta[name="product"]
-        value: |
-          attribute(el, "content")
       releaseDate:
         select: head > meta[name="releasedate"]
         value: |
           attribute(el, "content")
       redirectTarget:
         select: head > meta[name="redirecttarget"]
-        value: |
-          attribute(el, "content")
-      resourceOptions:
-        select: head > meta[name="resourceoptions"]
         value: |
           attribute(el, "content")
       offDateTime:
@@ -1824,14 +1152,6 @@ indices:
           attribute(el, "content")
       eventDisplayTime:
         select: head > meta[name="eventdisplaytime"]
-        value: |
-          attribute(el, "content")
-      eventType:
-        select: head > meta[name="eventtype"]
-        value: |
-          attribute(el, "content")
-      eventSeries:
-        select: head > meta[name="eventseries"]
         value: |
           attribute(el, "content")
       eventDisplayLabel:
@@ -1848,30 +1168,6 @@ indices:
           attribute(el, "content")
       bookAuthor:
         select: head > meta[name="bookauthor"]
-        value: |
-          attribute(el, "content")
-      bookType:
-        select: head > meta[name="booktype"]
-        value: |
-          attribute(el, "content")
-      course:
-        select: head > meta[name="course"]
-        value: |
-          attribute(el, "content")
-      userLevel:
-        select: head > meta[name="userlevel"]
-        value: |
-          attribute(el, "content")
-      partnerType:
-        select: head > meta[name="partnertype"]
-        value: |
-          attribute(el, "content")  
-      country:
-        select: head > meta[name="country"]
-        value: |
-          attribute(el, "content")
-      application:
-        select: head > meta[name="application"]
         value: |
           attribute(el, "content")
       displayLabel:
