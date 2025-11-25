@@ -712,13 +712,15 @@ div.subnav-compact {
         a {
           &:first-child {
             &:before {
-              height: 0;
+              height: 60%;
+              top: 20%;
               background-color: var(--purple);
             }
           }
           &:hover {
             &:before {
               height: 100%;
+              top: 0;
             }
           }
         }
