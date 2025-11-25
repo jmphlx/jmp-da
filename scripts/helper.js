@@ -149,6 +149,7 @@ export async function getPageStatus(path, token) {
       return {
         live: result.live.status,
         preview: result.preview.status,
+        lastPublished: result.live.lastModified,
       };
     }
     return {

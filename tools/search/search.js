@@ -583,7 +583,7 @@ async function init() {
     const exportSubmitButton = document.getElementById('export-submit-button');
     exportSubmitButton.addEventListener('click', () => {
       console.log(window.searchResults);
-      exportToCSV();
+      exportToCSV(token);
     });
 
     const undoButton = document.getElementById('undo-button');
