@@ -475,9 +475,9 @@ function addActionEventListeners(queryObject) {
 }
 
 function getStatus(publishStatus = {}) {
-  if (publishStatus.live === 200) return "Published";
-  if (publishStatus.preview === 200) return "Previewed";
-  return "Unpublished";
+  if (publishStatus.live === 200) return 'Published';
+  if (publishStatus.preview === 200) return 'Previewed';
+  return 'Unpublished';
 }
 
 async function getPageMetadata(path, token) {
@@ -496,26 +496,21 @@ async function getPageMetadata(path, token) {
       const metadataBlock = dom.querySelector('div.metadata');
       const metaObj = {};
 
-      [...metadataBlock.children].forEach(row => {
+      [...metadataBlock.children].forEach((row) => {
         const cells = row.querySelectorAll(':scope > div');
-
         const key = cells[0]?.textContent.trim().toLowerCase() || '';
         const value = cells[1]?.textContent.trim() || '';
-
         if (key) metaObj[key] = value;
       });
-      return { success: true, data: metaObj};
-
-    } else {
-      const errorText = await response.text();
-      return { success: false, status: response.status, error: errorText };
+      return { success: true, data: metaObj };
     }
+    const errorText = await response.text();
+    return { success: false, status: response.status, error: errorText };
   } catch (e) {
     console.log(e);
     return { success: false, status: null, error: e };
   }
 }
-
 
 async function getLatestVersion(path, token) {
   const url = `https://admin.da.live/versionlist${path}`;
@@ -567,44 +562,46 @@ async function enrichResults(arr, token) {
         console.error(`Error fetching for ${obj.path}:`, err);
       }
       return obj;
-    })
+    }),
   );
 
   return enriched;
 }
 
 const fieldResolvers = {
-  path: obj => obj.path ?? "",
-  title: obj => obj.title ?? "",
-  description: obj => obj.description ?? "",
-  tags: obj => Array.isArray(obj.tags) ? obj.tags.join(";") : obj.tags ?? "",
-  publishStatus: obj => getStatus(obj.publishStatus),
-  lastPublished: obj => obj.publishStatus?.lastPublished ?? "",
-  lastModified: obj => obj.lastModified ?? "",
-  lastModifiedBy: obj => obj.lastModifiedBy ?? "",
+  path: (obj) => obj.path ?? '',
+  title: (obj) => obj.title ?? '',
+  description: (obj) => obj.description ?? '',
+  tags: (obj) => {
+    if (Array.isArray(obj.tags)) {
+      return obj.tags.join(';');
+    }
+    return obj.tags ?? '';
+  },
+  publishStatus: (obj) => getStatus(obj.publishStatus),
+  lastPublished: (obj) => obj.publishStatus?.lastPublished ?? '',
+  lastModified: (obj) => obj.lastModified ?? '',
+  lastModifiedBy: (obj) => obj.lastModifiedBy ?? '',
 };
 
 async function convertResultsToCSV(token, headers) {
   const arr = window.searchResults;
   const detailedArray = await enrichResults(arr, token);
 
-  const rows = detailedArray.map(obj =>
-    headers.map(h => {
-      const value = fieldResolvers[h]?.(obj) ?? "";
-      return JSON.stringify(value); // protects commas, quotes, etc.
-    }).join(",")
-  );
+  const rows = detailedArray.map((obj) => headers.map((h) => {
+    const value = fieldResolvers[h]?.(obj) ?? '';
+    return JSON.stringify(value); // protects commas, quotes, etc.
+  }).join(','));
 
-  return [headers.join(","), ...rows].join("\n");
+  return [headers.join(','), ...rows].join('\n');
 }
 
 function getExportFields() {
   const checked = Array.from(
-      document.querySelectorAll('#export-form input[type="checkbox"]:checked')
-    ).map(cb => cb.name);
+    document.querySelectorAll('#export-form input[type="checkbox"]:checked'),
+  ).map((cb) => cb.name);
   return checked;
 }
-
 
 function addExportLoading(container, loadingText) {
   container.innerHTML = '';
@@ -624,11 +621,11 @@ async function exportToCSV(token) {
 
   const fields = getExportFields();
   const csvContent = await convertResultsToCSV(token, fields);
-  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-  const link = document.createElement("a");
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
   link.download = 'searchData.csv';
-  link.style.display = "none";
+  link.style.display = 'none';
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
