@@ -27,6 +27,7 @@ import {
   addLoadingSearch,
   clearResults,
   constructPageViewer,
+  exportToCSV,
   populateDropdowns,
   updateActionMessage,
   writeOutResults,
@@ -555,6 +556,8 @@ async function init() {
     document.getElementById('advanced-action-button').addEventListener('click', () => {
       const advancedActions = document.querySelector('#action-form');
       advancedActions?.classList.remove('hidden');
+      const exportForm = document.getElementById('export-form');
+      exportForm?.classList.add('hidden');
       addActionEventListeners(queryObject);
 
       const advancedSubmitButton = document.getElementById('advanced-submit-button');
@@ -569,6 +572,19 @@ async function init() {
     createVersionButton.addEventListener('click', () => {
       const message = tryToCreatePageVersions();
       updateActionMessage(resultsContainer, message);
+    });
+
+    const exportCSVButton = document.getElementById('export-csv-button');
+    exportCSVButton.addEventListener('click', () => {
+      const exportSection = document.getElementById('export-form');
+      exportSection?.classList.remove('hidden');
+      const advancedActions = document.getElementById('action-form');
+      advancedActions?.classList.add('hidden');
+    });
+    const exportSubmitButton = document.getElementById('export-submit-button');
+    exportSubmitButton.addEventListener('click', () => {
+      console.log(window.searchResults);
+      exportToCSV(token);
     });
 
     const undoButton = document.getElementById('undo-button');

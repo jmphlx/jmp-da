@@ -6,6 +6,7 @@ class VersionResult {
     this.path = item.path;
     this.time = item.time;
     this.timestamp = item.timestamp;
+    this.users = item.users;
   }
 }
 
@@ -39,4 +40,18 @@ export function formatVersions(json) {
     }
     return acc;
   }, []);
+}
+
+export function getCurrentVersion(json) {
+  // Sort by timestamp epoch
+  json.sort((a, b) => b.timestamp - a.timestamp);
+  const recentVersion = json[0];
+  const { date, time } = formatDate(recentVersion.timestamp);
+
+  return {
+    date,
+    time,
+    users: recentVersion.users,
+    path: recentVersion.path,
+  };
 }

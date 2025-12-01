@@ -4,6 +4,7 @@ import {
   getPublishStatus,
 } from '../../scripts/helper.js';
 import { escapeRegExp } from './replace.js';
+import { getCurrentVersion } from '../restore-version/formatter.js';
 
 const DEFAULT_PROP_LIST = ['style', 'options'];
 
@@ -280,6 +281,8 @@ function clearResults() {
   advancedActionPrompt?.classList.add('hidden');
   const createVersionPrompt = document.getElementById('create-version-prompt');
   createVersionPrompt?.classList.add('hidden');
+  const exportForm = document.getElementById('export-form');
+  exportForm?.classList.add('hidden');
 }
 
 function addLoadingSearch(container, loadingText) {
@@ -471,6 +474,165 @@ function addActionEventListeners(queryObject) {
   });
 }
 
+function getStatus(publishStatus = {}) {
+  if (publishStatus.live === 200) return 'Published';
+  if (publishStatus.preview === 200) return 'Previewed';
+  return 'Unpublished';
+}
+
+async function getPageMetadata(path, token) {
+  const url = `https://admin.da.live/source${path}`;
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    if (response.ok) {
+      const text = await response.text();
+      const dom = new DOMParser().parseFromString(text, 'text/html');
+      const metadataBlock = dom.querySelector('div.metadata');
+      const metaObj = {};
+
+      [...metadataBlock.children].forEach((row) => {
+        const cells = row.querySelectorAll(':scope > div');
+        const key = cells[0]?.textContent.trim().toLowerCase() || '';
+        const value = cells[1]?.textContent.trim() || '';
+        if (key) metaObj[key] = value;
+      });
+      return { success: true, data: metaObj };
+    }
+    const errorText = await response.text();
+    return { success: false, status: response.status, error: errorText };
+  } catch (e) {
+    console.log(e);
+    return { success: false, status: null, error: e };
+  }
+}
+
+async function getLatestVersion(path, token) {
+  const url = `https://admin.da.live/versionlist${path}`;
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        try {
+          const jsonResult = await response.json();
+          const formattedList = getCurrentVersion(jsonResult);
+          return { success: true, status: response.status, data: formattedList };
+        } catch (jsonError) {
+          return { success: false, status: response.status, error: jsonError };
+        }
+      } else {
+        return { success: true, status: response.status };
+      }
+    } else {
+      const errorText = await response.text();
+      return { success: false, status: response.status, error: errorText };
+    }
+  } catch (e) {
+    return { success: false, status: null, error: e };
+  }
+}
+
+async function enrichResults(arr, token) {
+  const enriched = await Promise.all(
+    arr.map(async (obj) => {
+      try {
+        const versionRes = await getLatestVersion(obj.path, token);
+        obj.lastModifiedBy = versionRes?.data?.users[0]?.email;
+        obj.lastModified = versionRes?.data?.date;
+
+        const pageRes = await getPageMetadata(obj.path, token);
+        const metadata = pageRes?.data;
+        obj.title = metadata?.title;
+        obj.description = metadata?.description;
+        obj.tags = metadata?.tags;
+      } catch (err) {
+        console.error(`Error fetching for ${obj.path}:`, err);
+      }
+      return obj;
+    }),
+  );
+
+  return enriched;
+}
+
+const fieldResolvers = {
+  path: (obj) => obj.path ?? '',
+  title: (obj) => obj.title ?? '',
+  description: (obj) => obj.description ?? '',
+  tags: (obj) => {
+    if (Array.isArray(obj.tags)) {
+      return obj.tags.join(';');
+    }
+    return obj.tags ?? '';
+  },
+  publishStatus: (obj) => getStatus(obj.publishStatus),
+  lastPublished: (obj) => obj.publishStatus?.lastPublished ?? '',
+  lastModified: (obj) => obj.lastModified ?? '',
+  lastModifiedBy: (obj) => obj.lastModifiedBy ?? '',
+};
+
+async function convertResultsToCSV(token, headers) {
+  const arr = window.searchResults;
+  const detailedArray = await enrichResults(arr, token);
+
+  const rows = detailedArray.map((obj) => headers.map((h) => {
+    const value = fieldResolvers[h]?.(obj) ?? '';
+    return JSON.stringify(value); // protects commas, quotes, etc.
+  }).join(','));
+
+  return [headers.join(','), ...rows].join('\n');
+}
+
+function getExportFields() {
+  const checked = Array.from(
+    document.querySelectorAll('#export-form input[type="checkbox"]:checked'),
+  ).map((cb) => cb.name);
+  return checked;
+}
+
+function addExportLoading(container, loadingText) {
+  container.innerHTML = '';
+  const loadingIcon = createTag('div', {
+    class: 'loading-state',
+  }, loadingText);
+  container.append(loadingIcon);
+}
+
+async function exportToCSV(token) {
+  const exportSection = document.querySelector('.export-options');
+  const exportLoading = createTag('div', { class: 'export-loader' });
+  exportSection.append(exportLoading);
+  addExportLoading(exportLoading, 'Exporting...');
+  const exportForm = document.getElementById('export-form');
+  exportForm.classList.add('hidden');
+
+  const fields = getExportFields();
+  const csvContent = await convertResultsToCSV(token, fields);
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'searchData.csv';
+  link.style.display = 'none';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  exportForm.classList.remove('hidden');
+  exportLoading.remove();
+}
+
 export {
   addActionEventListeners,
   addLoadingAction,
@@ -479,6 +641,7 @@ export {
   clearResults,
   closeAdvancedSections,
   constructPageViewer,
+  exportToCSV,
   populateDropdowns,
   updateActionMessage,
   writeOutResults,
