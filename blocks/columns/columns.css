@@ -1430,6 +1430,35 @@ div.clm-80-20 {
     }
   }
 }
+.di-emea-icon-blue {
+  .default-content-wrapper {
+    h3 {
+      position: relative;
+      padding-left: 88px;
+      &:before {
+        position: absolute;
+        content: url('../../../icons/di-emea-icon-blue.svg');
+        width: 80px;
+        height: 80px;
+        display: inline-block;
+        vertical-align: middle;
+        left: 0;
+        top: calc(50% - 40px);
+      }
+    }
+  }
+  @media (width <=600px) {
+    .default-content-wrapper {
+      h3 {
+        &:before {
+          content: url('../../../icons/di-emea-icon-blue.svg');
+          width: 80px;
+          height: 80px;
+        }
+      }
+    }
+  }
+}
 .di-japan-icon {
   .default-content-wrapper {
     h3 {
