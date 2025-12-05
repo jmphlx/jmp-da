@@ -375,22 +375,32 @@ function getQuery(caseSensitiveFlag) {
   let scope = {};
   let keyword = '';
 
+  // Ignore protocols: http, https, ftp, mailto
+  const excluded = ['http', 'https', 'ftp', 'mailto'];
   const scopeRegex = /(\w+):([^\s]+)/g;
+
   let remaining = queryString;
   let match;
 
-  // eslint-disable-next-line no-cond-assign
   while ((match = scopeRegex.exec(queryString)) !== null) {
-    scope[match[1]] = match[2];
+    const key = match[1];
+
+    // Skip if the key is a URL protocol
+    if (excluded.includes(key.toLowerCase())) continue;
+
+    scope[key] = match[2];
     remaining = remaining.replace(match[0], '').trim();
   }
 
+  // Remaining string is keyword (with phrases supported)
   const phraseMatch = remaining.match(/"([^"]+)"|(.+)/);
   keyword = phraseMatch ? (phraseMatch[1] || phraseMatch[2]) : '';
 
+  // Add path field as scope
   const pathField = document.querySelector('#page-path-input')?.value;
   scope.path = pathField;
 
+  // Case normalization
   if (!caseSensitiveFlag) {
     keyword = keyword.toLowerCase();
     scope = toLowerCaseObject(scope);
