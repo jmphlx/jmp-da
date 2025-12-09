@@ -28,6 +28,7 @@ import {
   clearResults,
   constructPageViewer,
   exportToCSV,
+  hideActionForms,
   populateDropdowns,
   updateActionMessage,
   writeOutResults,
@@ -90,6 +91,14 @@ function clearEventListeners() {
   const deleteRowButton = document.getElementById('deleteRow');
   newEl = deleteRowButton.cloneNode(true);
   deleteRowButton.parentNode.replaceChild(newEl, deleteRowButton);
+
+  const replaceSubmitbutton = document.getElementById('replace-submit-button');
+  newEl = replaceSubmitbutton.cloneNode(true);
+  replaceSubmitbutton.parentNode.replaceChild(newEl, replaceSubmitbutton);
+
+  const exportSubmitButton = document.getElementById('export-submit-button');
+  newEl = exportSubmitButton.cloneNode(true);
+  exportSubmitButton.parentNode.replaceChild(newEl, exportSubmitButton);
 }
 
 function getPagePathFromFullUrl(itemPath) {
@@ -103,7 +112,7 @@ function getPagePathFromFullUrl(itemPath) {
   return basicItemPath;
 }
 
-async function handleSearch(item, queryObject, matching, replaceFlag) {
+async function handleSearch(item, queryObject, matching) {
   // Die if not a document
   if (!item.path.endsWith('.html')) return;
 
@@ -159,16 +168,6 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
     if (filteredMatches.length) {
       const matchingEntry = new SearchResult(item, filteredMatches, classStyle, dom, publishStatus);
       matching.push(matchingEntry);
-      if (replaceFlag) {
-        doReplace(
-          token,
-          dom,
-          filteredMatches,
-          getPagePathFromFullUrl(item.path),
-          queryObject,
-          classStyle,
-        );
-      }
     }
   }
 
@@ -271,16 +270,6 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
         } else if (publishStatus === queryObject.scope.status) {
           const matchingEntry = new SearchResult(item, elements, classStyle, dom, pageStatusObj);
           matching.push(matchingEntry);
-          if (replaceFlag) {
-            doReplace(
-              token,
-              dom,
-              filtered,
-              getPagePathFromFullUrl(item.path),
-              queryObject,
-              classStyle,
-            );
-          }
         }
       } else if (queryObject.keyword && !keywordFilterApplied) {
         elements.forEach((el) => {
@@ -300,31 +289,11 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
         if (filtered.length) {
           const matchingEntry = new SearchResult(item, filtered, classStyle, dom, pageStatusObj);
           matching.push(matchingEntry);
-          if (replaceFlag) {
-            doReplace(
-              token,
-              dom,
-              filtered,
-              getPagePathFromFullUrl(item.path),
-              queryObject,
-              classStyle,
-            );
-          }
         }
       } else {
         // No other filters to apply, add page to results.
         const matchingEntry = new SearchResult(item, elements, classStyle, dom, pageStatusObj);
         matching.push(matchingEntry);
-        if (replaceFlag) {
-          doReplace(
-            token,
-            dom,
-            elements,
-            getPagePathFromFullUrl(item.path),
-            queryObject,
-            classStyle,
-          );
-        }
       }
     } else if (!scopeSearchAttempted && queryObject.scope.status) {
       /* If no elements were found, see if publish filter is present. If it is,
@@ -344,7 +313,7 @@ async function handleSearch(item, queryObject, matching, replaceFlag) {
   await runFilters();
 }
 
-async function doSearch(queryObject, replaceFlag) {
+async function doSearch(queryObject) {
   const matching = [];
 
   let path = defaultpath;
@@ -361,7 +330,7 @@ async function doSearch(queryObject, replaceFlag) {
   // Crawl the tree of content
   const { results } = await crawl({
     path,
-    callback: (item) => handleSearch(item, queryObject, matching, replaceFlag),
+    callback: (item) => handleSearch(item, queryObject, matching),
     concurrent: 50,
   });
   await results;
@@ -490,6 +459,22 @@ function tryToCreatePageVersions() {
   return { status: 'success', message: 'versions created' };
 }
 
+async function replaceStringInDocuments(queryObject, replacementText) {
+  const replacePromises = window.searchResults.map(result => {
+    return doReplace(
+      token,
+      result.dom,
+      result.elements,
+      result.pagePath,
+      queryObject,
+      result.classStyle,
+      replacementText
+    );
+  });
+  // Wait for ALL doReplace calls to finish
+  await Promise.all(replacePromises);
+}
+
 async function init() {
   const sdk = await DA_SDK;
   actions = sdk.actions;
@@ -509,17 +494,6 @@ async function init() {
   populateDropdowns(searchInputField);
   addCheckboxEventListeners(searchInputField);
 
-  const replaceCheckbox = document.querySelector('#replaceAction');
-  const replaceTextbox = document.querySelector('[name="replaceText"]');
-  replaceCheckbox.addEventListener('change', () => {
-    if (replaceCheckbox.checked) {
-      replaceTextbox.classList.remove('hidden');
-    } else {
-      replaceTextbox.classList.add('hidden');
-      replaceTextbox.value = '';
-    }
-  });
-
   const submitButton = document.querySelector('[name="submitSearch"]');
 
   submitButton.addEventListener('click', async () => {
@@ -535,16 +509,6 @@ async function init() {
       caseSensitiveFlag = true;
     }
 
-    let replaceFlag = false;
-
-    // check if replace is checked.
-    if (replaceCheckbox.checked) {
-      if (!window.confirm('Are you sure you want to replace? This action cannot be undone.')) {
-        console.log('action cancelled');
-        return;
-      }
-      replaceFlag = true;
-    }
     const startTime = performance.now();
 
     // Get Search Terms.
@@ -556,18 +520,50 @@ async function init() {
     const queryString = document.querySelector('[name="searchTerms"]').value;
 
     // Do Search.
-    const results = await doSearch(queryObject, replaceFlag);
+    const results = await doSearch(queryObject);
     window.searchResults = results;
     const endTime = performance.now();
     const duration = (endTime - startTime) * 0.001;
 
+    const replaceTextButton = document.getElementById('replace-text-button');
+    replaceTextButton.addEventListener('click', () => {
+      hideActionForms();
+      const replaceForm = document.getElementById('replace-text-form');
+      replaceForm?.classList.remove('hidden');
+    })
+
+    const replaceSubmitbutton = document.getElementById('replace-submit-button');
+    replaceSubmitbutton.addEventListener('click', async () => {
+      const replacementText = document.getElementById('replacement-text').value;
+      if (replacementText.trim().length <= 0) {
+        updateActionMessage(resultsContainer, new ActionResult('error', 'No replacement text.'));
+      } else {
+        addLoadingAction(resultsContainer, 'Modifying Content');
+        await replaceStringInDocuments(queryObject, replacementText);
+        updateActionMessage(resultsContainer, new ActionResult('success', 'Replaced string.'))
+      }
+    });
+    const undoReplaceButton = document.getElementById('undo-replace-button');
+    undoReplaceButton.addEventListener('click', () => {
+      let resetResult;
+      try {
+        addLoadingAction(resultsContainer, 'Modifying Content');
+        resetDocumentsToOriginalState(token);
+        resetResult = new ActionResult('success', 'Successfully Undone');
+        window.searchResults = null;
+        clearResults();
+      } catch (e) {
+        resetResult = new ActionResult('error', e);
+      }
+      updateActionMessage(resultsContainer, resetResult);
+    });
+
     const advancedActionPrompt = document.getElementById('advanced-action-prompt');
     advancedActionPrompt?.classList.remove('hidden');
     document.getElementById('advanced-action-button').addEventListener('click', () => {
+      hideActionForms();
       const advancedActions = document.querySelector('#action-form');
       advancedActions?.classList.remove('hidden');
-      const exportForm = document.getElementById('export-form');
-      exportForm?.classList.add('hidden');
       addActionEventListeners(queryObject);
 
       const advancedSubmitButton = document.getElementById('advanced-submit-button');
@@ -586,10 +582,9 @@ async function init() {
 
     const exportCSVButton = document.getElementById('export-csv-button');
     exportCSVButton.addEventListener('click', () => {
+      hideActionForms();
       const exportSection = document.getElementById('export-form');
       exportSection?.classList.remove('hidden');
-      const advancedActions = document.getElementById('action-form');
-      advancedActions?.classList.add('hidden');
     });
     const exportSubmitButton = document.getElementById('export-submit-button');
     exportSubmitButton.addEventListener('click', () => {
@@ -613,7 +608,7 @@ async function init() {
     });
 
     // Output results.
-    writeOutResults(results, queryString, queryObject, duration, replaceFlag);
+    writeOutResults(results, queryString, queryObject, duration);
   });
 }
 

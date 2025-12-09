@@ -84,19 +84,23 @@
         </div>
         <input class="searchTerms" type="text" name="searchTerms" placeholder="Enter search text"></input>
       </div>
-      <input type="checkbox" id="replaceAction" name="replaceAction" value="true"/>
-      <label for="replaceAction">Replace Text?</label>
       <input type="checkbox" id="caseSensitiveSearch" name="caseSensitiveSearch" value="true"/>
       <label for="caseSensitiveSearch">Case Sensitive?</label>
-      <input type="text" name="replaceText" class="hidden" placeholder="Replace with"></input>
       <button type="button" name="submitSearch">Submit</button>
     </form>
     <div class="advanced-actions">
       <div id="advanced-action-prompt" class="hidden">
         <button id="create-version-button" class="version" type="button">Create Page Versions</button>
+        <button id="replace-text-button" class="button" type="button">Replace Text?</button>
         <button id="advanced-action-button" type="button">Perform Block Action Change?</button>
         <button id="export-csv-button" type="button">Export Results to CSV</button>
       </div>
+      <form id="replace-text-form" class="hidden">
+        <label for="replaceText">Replace With</label>
+        <input type="text" id="replacement-text" name="replaceText" placeholder="New Text"></input>
+        <button type="button" id="replace-submit-button" class="advanced-submit">Submit</button>
+        <button type="button" id="undo-replace-button" class="undo">Undo</button>
+      </form>
       <form id="action-form" class="hidden">
         <div class="advanced-replacement-group">
           <div class="action-radio-buttons">

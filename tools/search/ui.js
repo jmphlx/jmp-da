@@ -20,11 +20,6 @@ function makeLookbehindRegex(keyword, flags = 'gi') {
   return new RegExp(`(?<=${esc}:)\\S+`, flags);
 }
 
-function highlightKeyword(text, keyword) {
-  const regex = new RegExp(`(${escapeRegExp(keyword)})`, 'gi');
-  return text.replaceAll(regex, '<mark>$1</mark>');
-}
-
 function updateSearchTerms(searchInputField, category, termValue) {
   const currentValue = searchInputField.value;
   const exp = makeLookbehindRegex(category);
@@ -193,7 +188,7 @@ function updateActionMessage(resultsContainer, result) {
   resultsContainer.prepend(actionMessage);
 }
 
-function createResultItem(item, highlightTerm) {
+function createResultItem(item) {
   const resultItem = createTag('div', { class: 'result-item' });
   const resultHeader = createTag('div', {
     class: 'result-header',
@@ -231,7 +226,6 @@ function createResultItem(item, highlightTerm) {
       class: `html-result ${item.classStyle}`,
     });
     const clone = el.cloneNode(true);
-    clone.innerHTML = highlightKeyword(clone.innerHTML, highlightTerm);
     li.append(clone);
     resultText.append(li);
   });
@@ -272,17 +266,23 @@ async function copyToClipboard(button, clipboardTxt, copyTxt) {
   }
 }
 
-function clearResults() {
-  const resultsContainer = document.querySelector('.results-container');
-  resultsContainer.innerHTML = '';
-  const advancedActions = document.querySelector('#action-form');
-  advancedActions?.classList.add('hidden');
-  const advancedActionPrompt = document.getElementById('advanced-action-prompt');
-  advancedActionPrompt?.classList.add('hidden');
-  const createVersionPrompt = document.getElementById('create-version-prompt');
-  createVersionPrompt?.classList.add('hidden');
+function hideActionForms() {
+  const replaceForm = document.getElementById('replace-text-form');
+  replaceForm?.classList.add('hidden');
+
   const exportForm = document.getElementById('export-form');
   exportForm?.classList.add('hidden');
+
+  const advancedActions = document.getElementById('action-form');
+  advancedActions?.classList.add('hidden');
+}
+
+function clearResults() {
+  const resultsContainer = document.querySelector('.results-container');
+  resultsContainer.innerHTML = ''
+  const advancedActionPrompt = document.getElementById('advanced-action-prompt');
+  advancedActionPrompt?.classList.add('hidden');
+  hideActionForms();
 }
 
 function addLoadingSearch(container, loadingText) {
@@ -293,10 +293,7 @@ function addLoadingSearch(container, loadingText) {
   container.append(loadingIcon);
 }
 
-function writeOutResults(results, queryString, queryObject, duration, replaceFlag) {
-  const highlightTerm = replaceFlag
-    ? document.querySelector('[name="replaceText"]').value : queryObject.keyword;
-
+function writeOutResults(results, queryString, queryObject, duration) {
   const resultsContainer = document.querySelector('.results-container');
   resultsContainer.innerHTML = '';
 
@@ -311,7 +308,7 @@ function writeOutResults(results, queryString, queryObject, duration, replaceFla
   const resultsList = document.createElement('div');
   resultsList.classList.add('results-list');
   results.forEach((item) => {
-    const resultItem = createResultItem(item, highlightTerm);
+    const resultItem = createResultItem(item);
     resultsList.append(resultItem);
     urlList.push(`${DA_CONSTANTS.previewUrl}${item.pagePath}`);
     if (getPublishStatus(item.publishStatus) === 'published') {
@@ -603,7 +600,7 @@ function getExportFields() {
   return checked;
 }
 
-function addExportLoading(container, loadingText) {
+function addActionLoading(container, loadingText) {
   container.innerHTML = '';
   const loadingIcon = createTag('div', {
     class: 'loading-state',
@@ -615,7 +612,7 @@ async function exportToCSV(token) {
   const exportSection = document.querySelector('.export-options');
   const exportLoading = createTag('div', { class: 'export-loader' });
   exportSection.append(exportLoading);
-  addExportLoading(exportLoading, 'Exporting...');
+  addActionLoading(exportLoading, 'Exporting...');
   const exportForm = document.getElementById('export-form');
   exportForm.classList.add('hidden');
 
@@ -642,6 +639,7 @@ export {
   closeAdvancedSections,
   constructPageViewer,
   exportToCSV,
+  hideActionForms,
   populateDropdowns,
   updateActionMessage,
   writeOutResults,

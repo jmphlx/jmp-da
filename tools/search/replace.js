@@ -16,9 +16,8 @@ function replaceKeyword(text, keyword, replacement) {
   return text.replaceAll(regex, replacement);
 }
 
-async function doReplace(token, dom, elements, pageSourceUrl, queryObject, classStyle) {
+async function doReplace(token, dom, elements, pageSourceUrl, queryObject, classStyle, replaceText) {
   const keyword = queryObject.keyword;
-  const replaceText = document.querySelector('[name="replaceText"]').value;
 
   if (classStyle === 'attribute') {
     // Replace only the attribute.
@@ -45,7 +44,6 @@ async function doReplace(token, dom, elements, pageSourceUrl, queryObject, class
       el.innerHTML = replaceKeyword(el.innerHTML, keyword, replaceText);
     });
   }
-
   const html = dom.body.querySelector('main');
   saveToDa(html.innerHTML, pageSourceUrl, token);
 }
