@@ -3,7 +3,6 @@ import {
   DA_CONSTANTS,
   getPublishStatus,
 } from '../../scripts/helper.js';
-import { escapeRegExp } from './replace.js';
 import { getCurrentVersion } from '../restore-version/formatter.js';
 
 const DEFAULT_PROP_LIST = ['style', 'options'];
@@ -279,7 +278,7 @@ function hideActionForms() {
 
 function clearResults() {
   const resultsContainer = document.querySelector('.results-container');
-  resultsContainer.innerHTML = ''
+  resultsContainer.innerHTML = '';
   const advancedActionPrompt = document.getElementById('advanced-action-prompt');
   advancedActionPrompt?.classList.add('hidden');
   hideActionForms();

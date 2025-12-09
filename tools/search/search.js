@@ -351,10 +351,12 @@ function getQuery(caseSensitiveFlag) {
   let remaining = queryString;
   let match;
 
+  // eslint-disable-next-line no-cond-assign
   while ((match = scopeRegex.exec(queryString)) !== null) {
     const key = match[1];
 
     // Skip if the key is a URL protocol
+    // eslint-disable-next-line no-continue
     if (excluded.includes(key.toLowerCase())) continue;
 
     scope[key] = match[2];
@@ -460,17 +462,15 @@ function tryToCreatePageVersions() {
 }
 
 async function replaceStringInDocuments(queryObject, replacementText) {
-  const replacePromises = window.searchResults.map(result => {
-    return doReplace(
-      token,
-      result.dom,
-      result.elements,
-      result.pagePath,
-      queryObject,
-      result.classStyle,
-      replacementText
-    );
-  });
+  const replacePromises = window.searchResults.map((result) => doReplace(
+    token,
+    result.dom,
+    result.elements,
+    result.pagePath,
+    queryObject,
+    result.classStyle,
+    replacementText,
+  ));
   // Wait for ALL doReplace calls to finish
   await Promise.all(replacePromises);
 }
@@ -530,7 +530,7 @@ async function init() {
       hideActionForms();
       const replaceForm = document.getElementById('replace-text-form');
       replaceForm?.classList.remove('hidden');
-    })
+    });
 
     const replaceSubmitbutton = document.getElementById('replace-submit-button');
     replaceSubmitbutton.addEventListener('click', async () => {
@@ -540,7 +540,7 @@ async function init() {
       } else {
         addLoadingAction(resultsContainer, 'Modifying Content');
         await replaceStringInDocuments(queryObject, replacementText);
-        updateActionMessage(resultsContainer, new ActionResult('success', 'Replaced string.'))
+        updateActionMessage(resultsContainer, new ActionResult('success', 'Replaced string.'));
       }
     });
     const undoReplaceButton = document.getElementById('undo-replace-button');

@@ -16,7 +16,15 @@ function replaceKeyword(text, keyword, replacement) {
   return text.replaceAll(regex, replacement);
 }
 
-async function doReplace(token, dom, elements, pageSourceUrl, queryObject, classStyle, replaceText) {
+async function doReplace(
+  token,
+  dom,
+  elements,
+  pageSourceUrl,
+  queryObject,
+  classStyle,
+  replaceText,
+) {
   const keyword = queryObject.keyword;
 
   if (classStyle === 'attribute') {
