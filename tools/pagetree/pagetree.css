@@ -67,6 +67,14 @@ body {
  
 }
 
+.page-preview-btn {
+  display: none;
+}
+.tree-item-content:hover .page-preview-btn {
+  display: inline-flex; /* or inline-block */
+}
+
+
 h2 {
   --font-secondary: "anova-regular", arial, helvetica, sans-serif;
   margin-top: 0;
