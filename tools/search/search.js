@@ -363,6 +363,7 @@ async function doSearch(queryObject, replaceFlag) {
     path,
     callback: (item) => handleSearch(item, queryObject, matching, replaceFlag),
     concurrent: 50,
+    throttle: 5,
   });
   await results;
 
