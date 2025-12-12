@@ -92,6 +92,138 @@
       }
     }
   }
+  &.background-image-right {
+    .background-img-wrapper {
+      .background-img {
+        picture {
+          img {
+            float: right;
+          }
+        }
+      }
+    }
+    @media (width <= 900px) {
+      .background-img-wrapper {
+        .background-img {
+          picture {
+            img {
+              float: right;
+            }
+          }
+        }
+      }
+    }
+  }
+  &.background-image-size-90 {
+    .background-img-wrapper {
+      .background-img {
+        picture {
+          img {
+            width: 90% !important;
+          }
+        }
+      }
+    }
+    @media (width <= 900px) {
+      .background-img-wrapper {
+        .background-img {
+          picture {
+            img {
+              width: 100% !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  &.background-image-size-80 {
+    .background-img-wrapper {
+      .background-img {
+        picture {
+          img {
+            width: 80% !important;
+          }
+        }
+      }
+    }
+    @media (width <= 900px) {
+      .background-img-wrapper {
+        .background-img {
+          picture {
+            img {
+              width: 100% !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  &.background-image-size-70 {
+    .background-img-wrapper {
+      .background-img {
+        picture {
+          img {
+            width: 70% !important;
+          }
+        }
+      }
+    }
+    @media (width <= 900px) {
+      .background-img-wrapper {
+        .background-img {
+          picture {
+            img {
+              width: 100% !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  &.background-image-size-60 {
+    .background-img-wrapper {
+      .background-img {
+        picture {
+          img {
+            width: 60% !important;
+          }
+        }
+      }
+    }
+    @media (width <= 900px) {
+      .background-img-wrapper {
+        .background-img {
+          picture {
+            img {
+              width: 100% !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  &.background-image-size-50 {
+    .background-img-wrapper {
+      .background-img {
+        picture {
+          img {
+            width: 50% !important;
+          }
+        }
+      }
+    }
+    @media (width <= 900px) {
+      .background-img-wrapper {
+        .background-img {
+          picture {
+            img {
+              width: 100% !important;
+            }
+          }
+        }
+      }
+    }
+  }
   /* 10% Opacity */
   &.opacity-10.background-img-container {
     & .background-img-wrapper {
