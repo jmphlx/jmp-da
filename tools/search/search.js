@@ -550,12 +550,12 @@ async function init() {
         addLoadingAction(resultsContainer, 'Modifying Content');
         resetDocumentsToOriginalState(token);
         resetResult = new ActionResult('success', 'Successfully Undone');
-        window.searchResults = null;
         clearResults();
       } catch (e) {
         resetResult = new ActionResult('error', e);
       }
       updateActionMessage(resultsContainer, resetResult);
+      window.searchResults = null;
     });
 
     const advancedActionPrompt = document.getElementById('advanced-action-prompt');
