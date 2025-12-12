@@ -19,9 +19,9 @@ import {
  * Apply where a property is not empty.
  */
 function pageAnyFilter(pageSelection, tabProperty) {
-  if (tabProperty.includes('tags:')) {
+  if (tabProperty.includes('tags|')) {
     return pageSelection.filter((item) => {
-      const tagsString = tabProperty.replace(/^tags:/, '');
+      const tagsString = tabProperty.replace(/^tags|/, '');
       const pageValue = item.tags;
       return pageValue !== undefined && pageValue.length > 0
         && pageValue.toString().includes(tagsString);
@@ -151,7 +151,7 @@ export default async function decorate(block) {
     if (tab.toLowerCase() === 'all') {
       // where the tabProperty has any value.
       pageSelection = pageAnyFilter(pageSelection, optionsObject.tabProperty);
-    } else if (optionsObject.tabProperty.includes('tags:')) {
+    } else if (optionsObject.tabProperty.includes('tags|')) {
       const filterCondition = {};
       filterCondition.Property = 'tags';
       filterCondition.Value = tab;

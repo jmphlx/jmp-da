@@ -6,7 +6,8 @@ import {
   // getJsonFromLocalhostUrl,
 } from '../../scripts/jmp.js';
 
-const tagURL = 'https://www.jmp.com/services/tagsservlet';
+//const tagURL = 'https://www.jmp.com/services/tagsservlet';
+const tagURL = 'https://edge-www-dev.jmp.com/services/tagsservlet';
 
 const selectedTagDisplay = document.getElementById('selected-tag');
 const addedTagsList = document.getElementById('tags-list');
@@ -21,7 +22,7 @@ function closeDescendants(element) {
 
 function updateBreadcrumb() {
   if (openTag.length) {
-    selectedTagDisplay.textContent = openTag.join(':');
+    selectedTagDisplay.textContent = openTag.join('|');
     selectedTagDisplay.classList.add('tag-added');
   } else {
     selectedTagDisplay.textContent = '(none)';
@@ -83,7 +84,7 @@ function saveCurrentTag() {
 
   savedTags.push([...openTag]);
   const li = document.createElement('li');
-  li.textContent = openTag.join(':');
+  li.textContent = openTag.join('|');
   li.addEventListener('click', () => {
     // if clicked remove.
     li.remove();
