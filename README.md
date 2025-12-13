@@ -1,5 +1,5 @@
 # JMP Edge Delivery Implementation
-This is the migration site for www.jmp.com on Edge Delivery running against Dark Alley.  
+This is the migration site for www.jmp.com on Edge Delivery running against Dark Alley.   
 
 ## Environments
 - Develop: https://develop--jmp-da--jmphlx.hlx.page/ (Design Development)
