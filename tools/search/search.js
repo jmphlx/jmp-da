@@ -332,6 +332,7 @@ async function doSearch(queryObject) {
     path,
     callback: (item) => handleSearch(item, queryObject, matching),
     concurrent: 50,
+    throttle: 5,
   });
   await results;
 

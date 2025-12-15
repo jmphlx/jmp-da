@@ -61,7 +61,6 @@ function handleFolderSelect(file) {
  * @param {string} name - Item name
  * @param {Object} node - Tree node data
  * @param {Function} onClick - Click handler for page items
- * @param {Object} context - SDK context (for URL generation)
  * @returns {HTMLElement} Tree item element
  */
 function createTreeItem(name, node, onClick) {
@@ -92,8 +91,7 @@ function createTreeItem(name, node, onClick) {
     previewIcon.className = 'page-preview-btn';
     previewIcon.setAttribute('aria-label', `Preview page "${displayName}"`);
     previewIcon.title = `Preview "${displayName}"`;
-    previewIcon.style.display = 'none'; // Hidden by default
-    // Use an eye icon (assume /icons/eye-icon.png exists)
+
     const eyeImg = document.createElement('img');
     eyeImg.src = '/icons/folder.png';
     eyeImg.alt = 'Preview';
@@ -115,20 +113,6 @@ function createTreeItem(name, node, onClick) {
       }
     });
 
-    // Show preview icon on hover
-    button.addEventListener('mouseenter', () => {
-      previewIcon.style.display = '';
-    });
-    button.addEventListener('mouseleave', () => {
-      previewIcon.style.display = 'none';
-    });
-    previewIcon.addEventListener('mouseenter', () => {
-      previewIcon.style.display = '';
-    });
-    previewIcon.addEventListener('mouseleave', () => {
-      previewIcon.style.display = 'none';
-    });
-
     button.appendChild(pageIcon);
     button.appendChild(textSpan);
     content.appendChild(button);
@@ -138,6 +122,8 @@ function createTreeItem(name, node, onClick) {
       onClick({ path: node.path });
       setSelectedClass(button);
     });
+
+    item.appendChild(content);
   } else {
     const folderButton = document.createElement('button');
     folderButton.className = 'folder-btn';
@@ -158,41 +144,54 @@ function createTreeItem(name, node, onClick) {
     folderButton.appendChild(folderIcon);
     folderButton.appendChild(label);
 
+    content.appendChild(folderButton);
+    item.appendChild(content);
+
+    const list = document.createElement('ul');
+    list.className = 'tree-list hidden';
+    item.appendChild(list);
+
+    const hasChildren = Object.keys(node.children).length > 0;
+    if (hasChildren) {
+      folderButton.dataset.loaded = 'false';
+    }
+
+    // Lazy rendering of folder children (Change #2)
+    const renderChildrenIfNeeded = () => {
+      if (!hasChildren) return;
+      if (folderButton.dataset.loaded === 'true') return;
+
+      const frag = document.createDocumentFragment();
+      Object.entries(node.children)
+        .sort(([a], [b]) => a.localeCompare(b))
+        .forEach(([childName, childNode]) => {
+          frag.appendChild(createTreeItem(childName, childNode, onClick));
+        });
+
+      list.appendChild(frag);
+      folderButton.dataset.loaded = 'true';
+    };
+
     const toggleFolder = () => {
       setSelectedClass(folderButton);
       handleFolderSelect(node);
 
       folderButton.classList.toggle('expanded');
-      folderButton.setAttribute('aria-expanded', folderButton.classList.contains('expanded'));
-      folderIcon.src = folderButton.classList.contains('expanded')
+      const isExpanded = folderButton.classList.contains('expanded');
+      folderButton.setAttribute('aria-expanded', isExpanded);
+      folderIcon.src = isExpanded
         ? '/icons/folder-open.png'
         : '/icons/folder.png';
-      const list = item.querySelector('.tree-list');
-      if (list) {
-        list.classList.toggle('hidden');
+
+      // Lazy-load children when first expanded
+      if (isExpanded) {
+        renderChildrenIfNeeded();
       }
+
+      list.classList.toggle('hidden');
     };
 
     folderButton.addEventListener('click', toggleFolder);
-    content.appendChild(folderButton);
-
-    if (Object.keys(node.children).length > 0) {
-      const list = document.createElement('ul');
-      list.className = 'tree-list hidden';
-
-      Object.entries(node.children)
-        .sort(([a], [b]) => a.localeCompare(b))
-        .forEach(([childName, childNode]) => {
-          list.appendChild(createTreeItem(childName, childNode, onClick));
-        });
-
-      item.appendChild(content);
-      item.appendChild(list);
-    }
-  }
-
-  if (!content.parentElement) {
-    item.appendChild(content);
   }
 
   return item;
@@ -235,6 +234,7 @@ async function init() {
   const folderList = document.querySelector('.folder-tree');
   const cancelBtn = document.querySelector('.pagetree-btn[type="reset"]');
   const submitBtn = document.querySelector('.pagetree-btn[type="submit"]');
+
   submitBtn.addEventListener('click', () => {
     if (window.pagePath) {
       window.parent.postMessage(window.pagePath);
@@ -242,9 +242,11 @@ async function init() {
       window.parent.postMessage('');
     }
   });
+
   cancelBtn.addEventListener('click', () => {
     window.parent.postMessage('');
   });
+
   const files = [];
 
   const path = `/${context.org}/${context.repo}${BASE}`;
@@ -259,15 +261,21 @@ async function init() {
   const { results } = crawl({
     path,
     callback: (item) => createTree(item, files),
-    throttle: 10,
+    concurrent: 50,
+    throttle: 3,
     ...opts,
   });
+
   await results;
+
   folderList.innerHTML = '';
 
   const tree = createFileTree(files, basePath);
 
   try {
+    // Batch insert root items with DocumentFragment (Change #1)
+    const frag = document.createDocumentFragment();
+
     Object.entries(tree)
       .sort(([a], [b]) => a.localeCompare(b))
       .forEach(([name, node]) => {
@@ -276,8 +284,10 @@ async function init() {
           node,
           (file) => handlePageSelect(file),
         );
-        folderList.appendChild(item);
+        frag.appendChild(item);
       });
+
+    folderList.appendChild(frag);
   } catch (error) {
     showMessage('Failed to load files', true);
     console.error(error);
@@ -288,9 +298,9 @@ async function init() {
 
 window.addEventListener('message', (event) => {
   if (event.origin === 'http://localhost:3000'
-  || event.origin === 'https://www.jmp.com'
-  || event.origin === 'https://main--jmp-da--jmphlx.aem.live'
-  || event.origin === 'https://aem-819-v2--jmp-da--jmphlx.aem.live') {
+    || event.origin === 'https://www.jmp.com'
+    || event.origin === 'https://main--jmp-da--jmphlx.aem.live'
+    || event.origin === 'https://aem-819-v2--jmp-da--jmphlx.aem.live') {
     console.log(event.origin);
   }
   token = event.data.token;
