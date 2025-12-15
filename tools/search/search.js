@@ -95,7 +95,7 @@ function clearEventListeners() {
   const replaceSubmitButton = document.getElementById('replace-submit-button');
   newEl = replaceSubmitButton.cloneNode(true);
   replaceSubmitButton.parentNode.replaceChild(newEl, replaceSubmitButton);
-  
+
   const replaceUndoButton = document.getElementById('undo-replace-button');
   newEl = replaceUndoButton.cloneNode(true);
   replaceUndoButton.parentNode.replaceChild(newEl, replaceUndoButton);
@@ -541,7 +541,7 @@ async function init() {
       const replacementText = document.getElementById('replacement-text').value;
       if (replacementText.trim().length <= 0) {
         updateActionMessage(resultsContainer, new ActionResult('error', 'No replacement text.'));
-      } else if(queryObject.keyword == null || queryObject.keyword.length <= 0) {
+      } else if (queryObject.keyword == null || queryObject.keyword.length <= 0) {
         updateActionMessage(resultsContainer, new ActionResult('error', 'No keyword text from original search.'));
       } else {
         addLoadingAction(resultsContainer, 'Modifying Content');

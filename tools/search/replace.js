@@ -59,8 +59,8 @@ async function doReplace(
 async function resetDocumentsToOriginalState(token) {
   const resetPromises = window.searchResults.map((result) => {
     const htmlToUse = result.original.querySelector('main');
-    saveToDa(htmlToUse.innerHTML, result.pagePath, token);
-  })
+    return saveToDa(htmlToUse.innerHTML, result.pagePath, token);
+  });
   await Promise.all(resetPromises);
 }
 
