@@ -55,8 +55,7 @@ export function replaceHtml(text) {
   let inner = text;
   const fromOrigin = `${DA_CONSTANTS.mainUrl}`;
   inner = text
-    .replaceAll('./media', `${fromOrigin}/media`)
-    .replaceAll('href="/', `href="${fromOrigin}/`);
+    .replaceAll('./media', `${fromOrigin}/media`);
 
   return `
     <body>
