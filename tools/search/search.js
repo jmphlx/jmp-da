@@ -537,6 +537,8 @@ async function init() {
       const replacementText = document.getElementById('replacement-text').value;
       if (replacementText.trim().length <= 0) {
         updateActionMessage(resultsContainer, new ActionResult('error', 'No replacement text.'));
+      } else if(queryObject.keyword == null || queryObject.keyword.length <= 0) {
+        updateActionMessage(resultsContainer, new ActionResult('error', 'No keyword text from original search.'));
       } else {
         addLoadingAction(resultsContainer, 'Modifying Content');
         await replaceStringInDocuments(queryObject, replacementText);
