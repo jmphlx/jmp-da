@@ -56,11 +56,12 @@ async function doReplace(
   saveToDa(html.innerHTML, pageSourceUrl, token);
 }
 
-function resetDocumentsToOriginalState(token) {
-  window.searchResults.forEach((result) => {
+async function resetDocumentsToOriginalState(token) {
+  const resetPromises = window.searchResults.map((result) => {
     const htmlToUse = result.original.querySelector('main');
-    saveToDa(htmlToUse.innerHTML, result.pagePath, token);
+    return saveToDa(htmlToUse.innerHTML, result.pagePath, token);
   });
+  await Promise.all(resetPromises);
 }
 
 function findLine(parentEl, propertyName) {

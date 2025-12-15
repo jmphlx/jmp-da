@@ -92,9 +92,13 @@ function clearEventListeners() {
   newEl = deleteRowButton.cloneNode(true);
   deleteRowButton.parentNode.replaceChild(newEl, deleteRowButton);
 
-  const replaceSubmitbutton = document.getElementById('replace-submit-button');
-  newEl = replaceSubmitbutton.cloneNode(true);
-  replaceSubmitbutton.parentNode.replaceChild(newEl, replaceSubmitbutton);
+  const replaceSubmitButton = document.getElementById('replace-submit-button');
+  newEl = replaceSubmitButton.cloneNode(true);
+  replaceSubmitButton.parentNode.replaceChild(newEl, replaceSubmitButton);
+
+  const replaceUndoButton = document.getElementById('undo-replace-button');
+  newEl = replaceUndoButton.cloneNode(true);
+  replaceUndoButton.parentNode.replaceChild(newEl, replaceUndoButton);
 
   const exportSubmitButton = document.getElementById('export-submit-button');
   newEl = exportSubmitButton.cloneNode(true);
@@ -538,6 +542,8 @@ async function init() {
       const replacementText = document.getElementById('replacement-text').value;
       if (replacementText.trim().length <= 0) {
         updateActionMessage(resultsContainer, new ActionResult('error', 'No replacement text.'));
+      } else if (queryObject.keyword == null || queryObject.keyword.length <= 0) {
+        updateActionMessage(resultsContainer, new ActionResult('error', 'No keyword text from original search.'));
       } else {
         addLoadingAction(resultsContainer, 'Modifying Content');
         await replaceStringInDocuments(queryObject, replacementText);
@@ -545,18 +551,18 @@ async function init() {
       }
     });
     const undoReplaceButton = document.getElementById('undo-replace-button');
-    undoReplaceButton.addEventListener('click', () => {
+    undoReplaceButton.addEventListener('click', async () => {
       let resetResult;
       try {
         addLoadingAction(resultsContainer, 'Modifying Content');
-        resetDocumentsToOriginalState(token);
+        await resetDocumentsToOriginalState(token);
         resetResult = new ActionResult('success', 'Successfully Undone');
         clearResults();
+        window.searchResults = null;
       } catch (e) {
         resetResult = new ActionResult('error', e);
       }
       updateActionMessage(resultsContainer, resetResult);
-      window.searchResults = null;
     });
 
     const advancedActionPrompt = document.getElementById('advanced-action-prompt');
@@ -594,11 +600,11 @@ async function init() {
     });
 
     const undoButton = document.getElementById('undo-button');
-    undoButton.addEventListener('click', () => {
+    undoButton.addEventListener('click', async () => {
       let resetResult;
       try {
         addLoadingAction(resultsContainer, 'Modifying Content');
-        resetDocumentsToOriginalState(token);
+        await resetDocumentsToOriginalState(token);
         resetResult = new ActionResult('success', 'Successfully Undone');
         window.searchResults = null;
         clearResults();
