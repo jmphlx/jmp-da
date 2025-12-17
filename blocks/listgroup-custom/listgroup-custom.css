@@ -872,6 +872,7 @@ div.listgroup-custom  {
           height: 100%;
           padding-right: 2rem;
           float: left;
+          aspect-ratio: 1;
           img {
             border-radius: 10px 0 0 10px;
             border: none;
