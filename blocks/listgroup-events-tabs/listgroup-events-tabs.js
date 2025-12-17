@@ -21,7 +21,7 @@ import {
 function pageAnyFilter(pageSelection, tabProperty) {
   if (tabProperty.includes('tags|')) {
     return pageSelection.filter((item) => {
-      const tagsString = tabProperty.replace(/^tags|/, '');
+      const tagsString = tabProperty.replace(/^tags\|/, '');
       const pageValue = item.tags;
       return pageValue !== undefined && pageValue.length > 0
         && pageValue.toString().includes(tagsString);
