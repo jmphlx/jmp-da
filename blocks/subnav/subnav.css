@@ -715,9 +715,20 @@ div.subnav-compact {
               height: 60%;
               top: 20%;
               background-color: var(--purple);
+              border-radius: 0;
             }
           }
           &:hover {
+            &:before {
+              height: 100%;
+              top: 0;
+            }
+          }
+        }
+      }
+      li:first-child.active {
+        a {
+          &:first-child {
             &:before {
               height: 100%;
               top: 0;
