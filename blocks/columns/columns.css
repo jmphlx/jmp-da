@@ -399,6 +399,15 @@
     }
   }
 }
+.h6-purple-bg {
+  h6 {
+    background-color: var(--purple);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    width: max-content;
+  }
+}
 /* resource center columns */
 /* success story hero */
 .section:has(div.success-story-hero) {
