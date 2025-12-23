@@ -467,10 +467,6 @@ function setMetaImage() {
 
 const localizedCheckCache = new Map();
 
-const SUPPORTED_LANGS = new Set([
-  'en', 'es', 'fr', 'de', 'it', 'ja', 'ko', 'zh-hans', 'zh-hant',
-]);
-
 function stripLeadingFragment(pathname) {
   // Only strip the first segment if it is a known language directory.
   // "/en/home" -> "/home"
@@ -483,9 +479,31 @@ function stripLeadingFragment(pathname) {
   return `/${parts.join('/')}`; // if empty -> "/"
 }
 
-function shouldUrlBeLocalized(url) {
-  if (url.searchParams.get('dnt') === 'true') return false;
+function stripDntParam(url) {
+  if (url.searchParams.get('dnt') === 'true') {
+    url.searchParams.delete('dnt');
+    return true; // indicates it was present
+  }
+  return false;
+}
 
+function buildTargetPathname(pathname, currLang) {
+  const parts = pathname.split('/').filter(Boolean);
+
+  // Special case: /modals/:lang  (or /modals/:lang/...)
+  if (parts[0] === 'modals' && parts[1] && isLanguageSupported(parts[1])) {
+    parts[1] = currLang;
+    return `/${parts.join('/')}`;
+  }
+
+  // General case: remove existing leading language (if present)
+  const basePath = stripLeadingFragment(pathname); // "/home" etc.
+
+  // Prefix current language
+  return basePath === '/' ? `/${currLang}` : `/${currLang}${basePath}`;
+}
+
+function shouldUrlBeLocalized(url) {
   const allowedHosts = new Set([
     'localhost:3000',
     'main--jmp-da--jmphlx.aem.live',
@@ -494,27 +512,21 @@ function shouldUrlBeLocalized(url) {
   if (!allowedHosts.has(url.host)) return false;
 
   const lang = getLanguage();
-  if (url.pathname === `/${lang}` || url.pathname.startsWith(`/${lang}/`)) {
-    return false;
-  }
 
-  if (url.pathname.startsWith('/modals/')) {
-    return false;
-  }
+  // Skip already-localized "normal" pages
+  if (url.pathname === `/${lang}` || url.pathname.startsWith(`/${lang}/`)) return false;
+
+  // Skip already-localized modal paths
+  if (url.pathname === `/modals/${lang}` || url.pathname.startsWith(`/modals/${lang}/`)) return false;
 
   return true;
 }
 
 async function getLocalizedLink(urlObj) {
   const lang = getLanguage();
-
-  // Normalize to a "language-less" base path first
-  const basePath = stripLeadingFragment(urlObj.pathname);
-
-  // Then build the target localized path
-  const targetPathname = `/${lang}${basePath === '/' ? '' : basePath}`;
-
+  const targetPathname = buildTargetPathname(urlObj.pathname, lang);
   const cacheKey = `${urlObj.host}|${lang}|${targetPathname}`;
+
   if (localizedCheckCache.has(cacheKey)) {
     return localizedCheckCache.get(cacheKey);
   }
@@ -526,7 +538,7 @@ async function getLocalizedLink(urlObj) {
     try {
       const res = await fetch(localized.href, { redirect: 'manual' });
       if (!res.ok) return null;
-      return localized.pathname;
+      return localized.pathname; // assign to url.pathname
     } catch {
       return null;
     }
@@ -542,6 +554,11 @@ async function localizeLinks(doc) {
   await Promise.all(
     links.map(async (link) => {
       const url = new URL(link.href);
+      if (url.searchParams.get('dnt') === 'true') {
+        stripDntParam(url);
+        link.href = url.toString();
+        return;
+      }
 
       if (!shouldUrlBeLocalized(url)) return;
 
