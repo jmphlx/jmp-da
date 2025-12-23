@@ -1,7 +1,6 @@
-import { getDefaultMetaImage } from './scripts.js';
-
 const knownObjectProperties = ['options', 'filters'];
 const knownObjectCaseSensitiveProperties = ['tabs'];
+const defaultMetaImage = `${window.location.origin}/icons/jmp-com-share.jpg`;
 
 const tagMap = {
   industry: 'industry',
@@ -48,6 +47,10 @@ document.documentElement.lang = lang;
  */
 function getLanguage() {
   return lang;
+}
+
+function getDefaultMetaImage() {
+  return defaultMetaImage;
 }
 
 /*
@@ -527,6 +530,7 @@ export {
   filterOutRobotsNoIndexPages,
   getBlockConfig,
   getBlockPropertiesList,
+  getDefaultMetaImage,
   getJsonFromLocalhostUrl,
   getJsonFromUrl,
   getLangMenuPageUrl,
