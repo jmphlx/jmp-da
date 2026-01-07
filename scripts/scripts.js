@@ -503,15 +503,16 @@ function buildTargetPathname(pathname, currLang) {
   return basePath === '/' ? `/${currLang}` : `/${currLang}${basePath}`;
 }
 
+function isAllowedHost(host) {
+  return (
+    host === 'localhost:3000' ||
+    /--jmp-da--jmphlx\.aem\.(page|live)$/.test(host)
+  );
+}
+
+
 function shouldUrlBeLocalized(url) {
-  const allowedHosts = new Set([
-    'localhost:3000',
-    'main--jmp-da--jmphlx.aem.live',
-    'main--jmp-da--jmphlx.aem.page',
-    'aem-910--jmp-da--jmphlx.aem.page',
-    'aem-910--jmp-da--jmphlx.aem.live',
-  ]);
-  if (!allowedHosts.has(url.host)) return false;
+  if (!isAllowedHost(url.host)) return false;
 
   const lang = getLanguage();
 
