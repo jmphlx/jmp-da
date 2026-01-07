@@ -512,6 +512,7 @@ export default async function decorate(block) {
   matching = filterOutRobotsNoIndexPages(matching);
 
   matching = sortPageList(matching, sortBy, sortOrder);
+  console.log(matching);
 
   const tabDictionary = useTabs ? constructDictionary(matching, tabProperty) : undefined;
   const filterDictionary = useFilter ? constructDictionary(matching, filterBy) : undefined;
