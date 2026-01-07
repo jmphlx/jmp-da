@@ -34,7 +34,11 @@ function createMenu(items, path = []) {
   const ul = document.createElement('ul');
 
   items.forEach((item) => {
-    const tagValName = item['jcr:title'].toLowerCase().replaceAll(' ', '-');
+    const tagValName = item['jcr:title']
+      .toLowerCase()
+      .replaceAll('&', 'and')
+      .replaceAll(' ', '-')
+      .replace('(intro-stats)-', '');
     const li = document.createElement('li');
     const span = document.createElement('span');
     span.textContent = item['jcr:title'];
