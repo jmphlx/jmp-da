@@ -250,6 +250,7 @@ function writeAsAZGroups(matching, groupBy, groupProperty, blockObj) {
 }
 
 function constructDictionary(matching, filterBy) {
+  console.log('construct');
   let filterField = filterBy;
   let filterStringValue = filterBy;
   const includesTagProperty = checkForTagProperties([filterBy]);
