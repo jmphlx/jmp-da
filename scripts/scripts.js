@@ -508,6 +508,8 @@ function shouldUrlBeLocalized(url) {
     'localhost:3000',
     'main--jmp-da--jmphlx.aem.live',
     'main--jmp-da--jmphlx.aem.page',
+    'aem-910--jmp-da--jmphlx.aem.page',
+    'aem-910--jmp-da--jmphlx.aem.live',
   ]);
   if (!allowedHosts.has(url.host)) return false;
 
