@@ -11,7 +11,6 @@ import {
 import { createTag } from '../../scripts/helper.js';
 
 const embedHubspot = (config) => {
-  console.log('embed Hubspot');
   // clean up hubspot url query paramaters
   const sfdcCampaignId = config.salesforceCampaignId;
 
@@ -83,11 +82,9 @@ const embedHubspot = (config) => {
 };
 
 const loadEmbed = (block, config) => {
-  console.log('load');
   if (block.classList.contains('form-is-loaded')) {
     return;
   }
-  console.log('here');
   embedHubspot(config);
   block.classList = 'block embed embed-hubspot';
   if (config.headline) {
@@ -101,7 +98,6 @@ const loadEmbed = (block, config) => {
 };
 
 export default function decorate(block) {
-  console.log('decorate');
   const config = getBlockConfig(block);
 
   block.textContent = '';
