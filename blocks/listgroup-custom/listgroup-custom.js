@@ -314,6 +314,9 @@ async function constructDropdown(dictionary, filterBy, defaultFilterOption, tran
     console.log(window.tagtranslations);
     const pageLanguage = getLanguage();
     console.log(pageLanguage);
+    console.log(dictionary);
+
+
     sortedList = Object.keys(dictionary)
       .sort((a, b) => window.tagtranslations[a]
         .localeCompare(window.tagtranslations[b], pageLanguage, {
