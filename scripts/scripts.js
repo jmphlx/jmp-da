@@ -506,6 +506,7 @@ function buildTargetPathname(pathname, currLang) {
 function isAllowedHost(host) {
   return (
     host === 'localhost:3000' ||
+    host === 'www.jmp.com' ||
     /--jmp-da--jmphlx\.aem\.(page|live)$/.test(host)
   );
 }
