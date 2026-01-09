@@ -238,7 +238,7 @@
     }
     form {
       div.action-radio-buttons {
-        padding-top: 1rem;
+        /* padding-top: 1rem; */
         div {
           margin: 8px 0 1rem 0;
           border-radius: 5px;
@@ -397,7 +397,8 @@
 }
 
 #advanced-action-prompt {
-  display: flex;
+  display: inline-block;
+  margin-bottom: 1rem;
 }
 
 #advanced-action-prompt.hidden {
