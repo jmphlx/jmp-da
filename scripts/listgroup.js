@@ -8,6 +8,7 @@ import {
 } from './jmp.js';
 
 const tagTranslationsBaseURL = 'https://www.jmp.com/services/tagsservlet';
+// const tagTranslationsBaseURL = 'https://edge-www-dev.jmp.com/services/tagsservlet';
 
 async function getTagTranslations() {
   const pageLanguage = getLanguage();
