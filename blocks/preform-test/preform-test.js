@@ -1,4 +1,5 @@
 import { decorateBlock, loadBlock } from '../../scripts/aem.js';
+import { getBlockConfig } from '../../scripts/jmp.js';
 import { createTag } from '../../scripts/helper.js';
 
 async function buildBlock(block) {
@@ -14,17 +15,29 @@ function buildBlockRow(name, value) {
   return rowDiv;
 }
 
-function buildHubspotForm(block, formData) {
+function buildHubspotForm(block, config, formData) {
   const parent = createTag('div');
   const hubspotWrapper = createTag('div', {
     class: 'hubspot block',
   });
+  let formID;
+  let formTitle = 'Sandbox';
+  if (formData.portalId === config.prodPortalID) {
+    formID = config.prodFormID;
+    formTitle = 'Production';
+  } else {
+    formID = block.sandboxFormID;
+  }
+  const formHeadline = `<h3>${formTitle} Form</h3>
+  <h4>Campaign ID: ${formData.salesforceCampaignId}</h4`;
+
+  const headline = buildBlockRow('headline', formHeadline);
   const region = buildBlockRow('region', 'na1');
   const portalId = buildBlockRow('portalId', formData.portalId);
-  const formId = buildBlockRow('formId', '8491072f-9bcf-46a2-9b94-c37d4bb0ff48');
+  const formId = buildBlockRow('formId', formID);
   const salesforceCampaignId = buildBlockRow('salesforceCampaignId', formData.salesforceCampaignId);
   const redirect = buildBlockRow('redirectTarget', '/en/sandbox/laurel/sprint-demos/thanks/thank-you-page');
-  hubspotWrapper.append(region, portalId, formId, salesforceCampaignId, redirect);
+  hubspotWrapper.append(headline, region, portalId, formId, salesforceCampaignId, redirect);
   parent.append(hubspotWrapper);
   const preformComp = document.querySelector('.preform-test-wrapper');
   const section = preformComp.parentElement;
@@ -32,40 +45,61 @@ function buildHubspotForm(block, formData) {
   buildBlock(hubspotWrapper);
 }
 
-function buildPreform(block) {
-   const preform = createTag('form');
+function buildPreform(block, config) {
+  const preform = createTag('form');
+  const environmentDiv = createTag('div', {
+    class: 'environment',
+  });
+  const prodDiv = createTag('div', {
+    class: 'prod-env',
+  });
   const prodEnv = createTag('input', {
-    'type': 'radio',
-    'id': 'prodId',
-    'name': 'portalId',
-    'value': '20721161'
+    type: 'radio',
+    id: 'prodId',
+    name: 'portalId',
+    value: '20721161',
+    class: 'radio-option',
   });
   const prodLabel = createTag('label', {
-    'for': 'prodId',
+    for: 'prodId',
   }, 'Production');
+  prodDiv.append(prodLabel, prodEnv);
 
-    const sandboxEnv = createTag('input', {
-    'type': 'radio',
-    'id': 'sandboxId',
-    'name': 'portalId',
-    'value': '20721161'
+  const sandboxDiv = createTag('div', {
+    class: 'sandbox-env',
+  });
+  const sandboxEnv = createTag('input', {
+    type: 'radio',
+    id: 'sandboxId',
+    name: 'portalId',
+    value: '20721161',
+    class: 'radio-option',
+    required: 'required',
   });
   const sandboxLabel = createTag('label', {
-    'for': 'sandboxId',
+    for: 'sandboxId',
   }, 'Sandbox');
+  sandboxDiv.append(sandboxLabel, sandboxEnv);
+
+  environmentDiv.append(prodDiv, sandboxDiv);
+
+  const salesforceDiv = createTag('div', {
+    class: 'salesforce-fields',
+  });
 
   const salesforceField = createTag('input', {
-    'id':'salesforceCampaignId',
-    'name':'salesforceCampaignId',
-    'value': '701Ki000000EazbIAC',
+    id: 'salesforceCampaignId',
+    name: 'salesforceCampaignId',
+    required: 'required',
   });
   const salesforceLabel = createTag('label', {
-    'for': 'salesforceCampaignId'
+    for: 'salesforceCampaignId',
   }, 'Salesforce Campaign ID');
+  salesforceDiv.append(salesforceLabel, salesforceField);
 
   const submitBtn = createTag('input', {
-    'type': 'submit',
-    'value': 'Submit',
+    type: 'submit',
+    value: 'Submit',
   });
 
   preform.addEventListener('submit', (event) => {
@@ -73,14 +107,15 @@ function buildPreform(block) {
     event.stopPropagation();
 
     const formData = new FormData(preform);
-    buildHubspotForm(block, Object.fromEntries(formData));
+    buildHubspotForm(block, config, Object.fromEntries(formData));
+    preform.parentElement.classList.add('hidden');
   });
-  preform.append(prodEnv, prodLabel, sandboxEnv, sandboxLabel, salesforceLabel, salesforceField, submitBtn);
+  preform.append(environmentDiv, salesforceDiv, submitBtn);
   block.append(preform);
 }
 
 export default function decorate(block) {
+  const config = getBlockConfig(block);
   block.textContent = '';
-  buildPreform(block);
-
+  buildPreform(block, config);
 }
