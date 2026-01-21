@@ -356,3 +356,20 @@
     margin-bottom: 4px !important;
   }
 }
+
+.preform-test-wrapper + .hubspot-wrapper {
+  div.headline {
+    div {
+      h3 {
+        font-size: var(--heading-font-size-s);
+        color: var(--text-color);
+        font-family: var(--font-primary);
+      }
+      h4 {
+        font-size: var(--heading-font-size-xs);
+        color: var(--blue);
+        font-family: var(--font-primary);
+      }
+    }
+  }
+}
