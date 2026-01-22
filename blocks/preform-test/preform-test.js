@@ -15,18 +15,19 @@ function buildBlockRow(name, value) {
   return rowDiv;
 }
 
-function buildHubspotForm(block, config, formData) {
+function buildHubspotForm(config, formData) {
   const parent = createTag('div');
   const hubspotWrapper = createTag('div', {
     class: 'hubspot block',
   });
   let formID;
-  let formTitle = 'Sandbox';
+  let formTitle;
   if (formData.portalId === config.prodPortalID) {
     formID = config.prodFormID;
     formTitle = 'Production';
   } else {
-    formID = block.sandboxFormID;
+    formID = config.sandboxFormID;
+    formTitle = 'Sandbox';
   }
   const formHeadline = `<h3>${formTitle} Form</h3>
   <h4>Campaign ID: ${formData.salesforceCampaignId}</h4`;
@@ -57,7 +58,7 @@ function buildPreform(block, config) {
     type: 'radio',
     id: 'prodId',
     name: 'portalId',
-    value: '20721161',
+    value: config.prodPortalID,
     class: 'radio-option',
   });
   const prodLabel = createTag('label', {
@@ -72,7 +73,7 @@ function buildPreform(block, config) {
     type: 'radio',
     id: 'sandboxId',
     name: 'portalId',
-    value: '20721161',
+    value: config.sandboxPortalID,
     class: 'radio-option',
     required: 'required',
   });
@@ -107,7 +108,7 @@ function buildPreform(block, config) {
     event.stopPropagation();
 
     const formData = new FormData(preform);
-    buildHubspotForm(block, config, Object.fromEntries(formData));
+    buildHubspotForm(config, Object.fromEntries(formData));
     preform.parentElement.classList.add('hidden');
   });
   preform.append(environmentDiv, salesforceDiv, submitBtn);
