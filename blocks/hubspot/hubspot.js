@@ -85,7 +85,6 @@ const loadEmbed = (block, config) => {
   if (block.classList.contains('form-is-loaded')) {
     return;
   }
-
   embedHubspot(config);
   block.classList = 'block embed embed-hubspot';
   if (config.headline) {
