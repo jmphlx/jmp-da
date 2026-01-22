@@ -11,6 +11,11 @@ import {
 import {
   loadSections,
 } from '../../scripts/aem.js';
+import {
+  shouldUrlBeLocalized,
+  getLocalizedLink,
+  localizeLinks,
+} from '../../scripts/link-localizer.js';
 
 /**
  * Loads a fragment.
@@ -43,10 +48,18 @@ export async function loadFragment(path) {
 
 export default async function decorate(block) {
   const link = block.querySelector('a');
-  const path = link ? link.getAttribute('href') : block.textContent.trim();
+
+  const url = link ? new URL(link.href) : new URL(block.textContent.trim());
+  console.log(url);
+  let path = url.href;
+  if (shouldUrlBeLocalized(url)) {
+    path = await getLocalizedLink(url);
+  }
+  console.log(path);
   const fragment = await loadFragment(path);
   const unwrapBlock = block.classList.contains('unwrap');
   if (fragment) {
+    localizeLinks(fragment);
     const fragmentSection = fragment.querySelector(':scope .section');
     if (fragmentSection) {
       block.closest('.section').classList.add(...fragmentSection.classList);
