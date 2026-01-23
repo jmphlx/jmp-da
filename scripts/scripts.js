@@ -29,6 +29,7 @@ import {
 import {
   shouldUrlBeLocalized,
   getLocalizedLink,
+  stripDntParam,
 } from './link-localizer.js';
 
 const experimentationConfig = {
@@ -482,7 +483,6 @@ async function localizeLinks(doc) {
       }
 
       if (link.closest('.fragment')) {
-        console.log('in a fragment');
         return;
       }
 
@@ -493,11 +493,6 @@ async function localizeLinks(doc) {
 
       url.pathname = localizedPath;
       link.href = url.toString();
-
-      if (link.closest('.fragment')) {
-        console.log('in a fragment');
-        //link.innerHTML = url.toString();
-      }
     }),
   );
 }
