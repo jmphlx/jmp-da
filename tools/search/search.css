@@ -193,9 +193,10 @@
     } */
     sl-button, button:not(.icon) {
       display: block;
-      margin-bottom: 0;
+      margin-bottom: 8px;
       margin-left: 0;
       padding: 7px 14px;
+      min-width: 80px;
       background-color: var(--blue);
       border: none;
       color: #ffffff;
@@ -207,7 +208,7 @@
     }
   }
   div.advanced-actions {
-    padding-bottom: 1rem;
+    padding-bottom: 8px;
     padding-top: 8px;
     #advanced-action-prompt {
       button {
@@ -237,7 +238,7 @@
     }
     form {
       div.action-radio-buttons {
-        padding-top: 1rem;
+        /* padding-top: 1rem; */
         div {
           margin: 8px 0 1rem 0;
           border-radius: 5px;
@@ -396,7 +397,8 @@
 }
 
 #advanced-action-prompt {
-  display: flex;
+  display: inline-block;
+  margin-bottom: 1rem;
 }
 
 #advanced-action-prompt.hidden {
@@ -412,7 +414,9 @@
 }
 
 #export-form {
-  padding: 1rem;
+  padding: 8px 8px 0 0;
+  div {
+    margin-bottom: 0;  }
 }
 
 #export-form.hidden {
@@ -677,6 +681,10 @@ a.button {
 .action-results.error {
   display: flex;
   background-color: red;
+  color: white;
+  padding: 4px;
+  margin-bottom: 1rem;
+  border-radius: 0;
 }
 
 .advanced-replacement-group {
@@ -774,6 +782,7 @@ button.icon-btn {
   align-items: center;
   justify-content: center;
   border-radius: 6px;
+  min-width: 0 !important;
 }
 button.icon-btn:focus-visible {
   outline: 2px solid #0378CD;

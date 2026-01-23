@@ -24,9 +24,6 @@ import {
   createTag,
 } from './helper.js';
 import {
-  getDefaultMetaImage,
-} from './jmp.js';
-import {
   shouldUrlBeLocalized,
   getLocalizedLink,
   stripDntParam,
@@ -57,6 +54,8 @@ let isSKPPage = false;
 let includeGATracking = false;
 let includeDelayedScript = true;
 
+const defaultMetaImage = `${window.location.origin}/icons/jmp-com-share.jpg`;
+
 /**
  * OUT OF THE BOX code that impacts our hero blocks.
  * To be removed if no other issues found.
@@ -86,6 +85,18 @@ async function loadFonts() {
   } catch (e) {
     // do nothing
   }
+}
+
+function autolinkModals(element) {
+  element.addEventListener('click', async (e) => {
+    const origin = e.target.closest('a');
+
+    if (origin && origin.href && origin.href.includes('/modals/')) {
+      e.preventDefault();
+      const { openModal } = await import(`${window.hlx.codeBasePath}/blocks/modal/modal.js`);
+      openModal(origin.href);
+    }
+  });
 }
 
 /**
@@ -546,6 +557,10 @@ function addTargetsToLinks(doc) {
   });
 }
 
+export function getDefaultMetaImage() {
+  return defaultMetaImage;
+}
+
 /**
  * Loads everything needed to get to LCP.
  * @param {Element} doc The container element
@@ -609,7 +624,6 @@ async function loadEager(doc) {
  */
 async function loadLazy(doc) {
   // This will transform all the links within the main content.
-  await localizeLinks(doc);
   addTargetsToLinks(doc);
   autolinkModals(doc);
 

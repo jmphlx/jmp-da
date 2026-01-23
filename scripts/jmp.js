@@ -1,6 +1,7 @@
+import { getDefaultMetaImage } from './scripts.js';
+
 const knownObjectProperties = ['options', 'filters'];
 const knownObjectCaseSensitiveProperties = ['tabs'];
-const defaultMetaImage = `${window.location.origin}/icons/jmp-com-share.jpg`;
 
 const tagMap = {
   industry: 'industry',
@@ -12,8 +13,8 @@ const tagMap = {
   resourceOptions: 'resource-options',
   blogTopics: 'blog-topic',
   academic: 'academic',
-  course: 'academic:course',
-  application: 'academic:application',
+  course: 'academic|course',
+  application: 'academic|application',
   userLevel: 'user-level',
   bookType: 'book-type',
   funnelStage: 'funnel-stage',
@@ -47,10 +48,6 @@ document.documentElement.lang = lang;
  */
 function getLanguage() {
   return lang;
-}
-
-function getDefaultMetaImage() {
-  return defaultMetaImage;
 }
 
 /*
@@ -530,7 +527,6 @@ export {
   filterOutRobotsNoIndexPages,
   getBlockConfig,
   getBlockPropertiesList,
-  getDefaultMetaImage,
   getJsonFromLocalhostUrl,
   getJsonFromUrl,
   getLangMenuPageUrl,

@@ -270,6 +270,35 @@
       }
     }
   }
+  div:has(+ div.hs_leadsource) {
+    padding: 10px 10px 0 10px;
+    background-color: #ebe2ed;
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 0;
+    div.hs-richtext {
+      margin-bottom: 0;
+      h4 {
+        margin-bottom: 0;
+      }
+    }
+  }
+  div:has(.hs-richtext) + div.hs_leadsource {
+    padding: 10px;
+    background-color: #ebe2ed;
+    border-radius: 0;
+    margin-bottom: 0;
+  }
+  div.hs_leadsource + div.hs_last_action_dropdown {
+    padding: 10px;
+    background-color: #ebe2ed;
+    border-radius: 0;
+    margin-bottom: 0;
+  }
+  div.hs_last_action_dropdown + div.hs_send_grid_dropdown {
+    padding: 10px 10px 16px 10px;
+    background-color: #ebe2ed;
+    border-radius: 0 0 10px 10px;
+  }
 }
 
 .hubspot-header-purple-red {
@@ -354,5 +383,22 @@
   }
   .field.hs-form-field {
     margin-bottom: 4px !important;
+  }
+}
+
+.preform-test-wrapper + .hubspot-wrapper {
+  div.headline {
+    div {
+      h3 {
+        font-size: var(--heading-font-size-s);
+        color: var(--text-color);
+        font-family: var(--font-primary);
+      }
+      h4 {
+        font-size: var(--heading-font-size-xs);
+        color: var(--blue);
+        font-family: var(--font-primary);
+      }
+    }
   }
 }
