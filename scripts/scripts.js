@@ -24,6 +24,7 @@ import {
   createTag,
 } from './helper.js';
 import {
+  getDefaultMetaImage,
   getLanguage,
   isLanguageSupported,
 } from './jmp.js';
@@ -52,8 +53,6 @@ if (isExperimentationEnabled) {
 let isSKPPage = false;
 let includeGATracking = false;
 let includeDelayedScript = true;
-
-const defaultMetaImage = `${window.location.origin}/icons/jmp-com-share.jpg`;
 
 /**
  * OUT OF THE BOX code that impacts our hero blocks.
@@ -626,10 +625,6 @@ function addTargetsToLinks(doc) {
       link.target = targetVal.substring(1);
     }
   });
-}
-
-export function getDefaultMetaImage() {
-  return defaultMetaImage;
 }
 
 /**

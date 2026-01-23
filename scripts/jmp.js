@@ -1,4 +1,8 @@
-import { getDefaultMetaImage } from './scripts.js';
+const defaultMetaImage = `${window.location.origin}/icons/jmp-com-share.jpg`;
+
+function getDefaultMetaImage() {
+  return defaultMetaImage;
+}
 
 const knownObjectProperties = ['options', 'filters'];
 const knownObjectCaseSensitiveProperties = ['tabs'];
@@ -527,6 +531,7 @@ export {
   filterOutRobotsNoIndexPages,
   getBlockConfig,
   getBlockPropertiesList,
+  getDefaultMetaImage,
   getJsonFromLocalhostUrl,
   getJsonFromUrl,
   getLangMenuPageUrl,
