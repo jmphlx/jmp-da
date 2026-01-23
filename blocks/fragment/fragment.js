@@ -6,15 +6,13 @@
 
 import {
   decorateMain,
+  shouldUrlBeLocalized,
+  getLocalizedLink,
 } from '../../scripts/scripts.js';
 
 import {
   loadSections,
 } from '../../scripts/aem.js';
-import {
-  shouldUrlBeLocalized,
-  getLocalizedLink,
-} from '../../scripts/link-localizer.js';
 
 /**
  * Loads a fragment.

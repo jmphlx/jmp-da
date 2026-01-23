@@ -24,10 +24,9 @@ import {
   createTag,
 } from './helper.js';
 import {
-  shouldUrlBeLocalized,
-  getLocalizedLink,
-  stripDntParam,
-} from './link-localizer.js';
+  getLanguage,
+  isLanguageSupported,
+} from './jmp.js';
 
 const experimentationConfig = {
   prodHost: 'www.my-site.com',
@@ -85,18 +84,6 @@ async function loadFonts() {
   } catch (e) {
     // do nothing
   }
-}
-
-function autolinkModals(element) {
-  element.addEventListener('click', async (e) => {
-    const origin = e.target.closest('a');
-
-    if (origin && origin.href && origin.href.includes('/modals/')) {
-      e.preventDefault();
-      const { openModal } = await import(`${window.hlx.codeBasePath}/blocks/modal/modal.js`);
-      openModal(origin.href);
-    }
-  });
 }
 
 /**
@@ -481,6 +468,90 @@ function setMetaImage() {
 
 const localizedCheckCache = new Map();
 
+function stripLeadingFragment(pathname) {
+  // Only strip the first segment if it is a known language directory.
+  // "/en/home" -> "/home"
+  // "/zh-hans/foo" -> "/foo"
+  // "/modals/foo" -> "/modals/foo" (unchanged)
+  const parts = pathname.split('/').filter(Boolean);
+  if (parts.length > 0 && isLanguageSupported(parts[0])) {
+    parts.shift();
+  }
+  return `/${parts.join('/')}`; // if empty -> "/"
+}
+
+function stripDntParam(url) {
+  if (url.searchParams.get('dnt') === 'true') {
+    url.searchParams.delete('dnt');
+    return true; // indicates it was present
+  }
+  return false;
+}
+
+function buildTargetPathname(pathname, currLang) {
+  const parts = pathname.split('/').filter(Boolean);
+
+  // Special case: /modals/:lang  (or /modals/:lang/...)
+  if (parts[0] === 'modals' && parts[1] && isLanguageSupported(parts[1])) {
+    parts[1] = currLang;
+    return `/${parts.join('/')}`;
+  }
+
+  // General case: remove existing leading language (if present)
+  const basePath = stripLeadingFragment(pathname); // "/home" etc.
+
+  // Prefix current language
+  return basePath === '/' ? `/${currLang}` : `/${currLang}${basePath}`;
+}
+
+function isAllowedHost(host) {
+  return (
+    host === 'localhost:3000'
+    || host === 'www.jmp.com'
+    || /--jmp-da--jmphlx\.aem\.(page|live)$/.test(host)
+  );
+}
+
+export function shouldUrlBeLocalized(url) {
+  if (!isAllowedHost(url.host)) return false;
+
+  const lang = getLanguage();
+
+  // Skip already-localized "normal" pages
+  if (url.pathname === `/${lang}` || url.pathname.startsWith(`/${lang}/`)) return false;
+
+  // Skip already-localized modal paths
+  if (url.pathname === `/modals/${lang}` || url.pathname.startsWith(`/modals/${lang}/`)) return false;
+
+  return true;
+}
+
+export async function getLocalizedLink(urlObj) {
+  const lang = getLanguage();
+  const targetPathname = buildTargetPathname(urlObj.pathname, lang);
+  const cacheKey = `${urlObj.host}|${lang}|${targetPathname}`;
+
+  if (localizedCheckCache.has(cacheKey)) {
+    return localizedCheckCache.get(cacheKey);
+  }
+
+  const promise = (async () => {
+    const localized = new URL(urlObj.href);
+    localized.pathname = targetPathname;
+
+    try {
+      const res = await fetch(localized.href, { redirect: 'manual' });
+      if (!res.ok) return null;
+      return localized.pathname; // assign to url.pathname
+    } catch {
+      return null;
+    }
+  })();
+
+  localizedCheckCache.set(cacheKey, promise);
+  return promise;
+}
+
 async function localizeLinks(doc) {
   const links = [...doc.querySelectorAll('a')];
 
@@ -508,7 +579,7 @@ async function localizeLinks(doc) {
   );
 }
 
-export function clearLocalizationCache() {
+function clearLocalizationCache() {
   localizedCheckCache.clear();
 }
 
@@ -624,6 +695,7 @@ async function loadEager(doc) {
  */
 async function loadLazy(doc) {
   // This will transform all the links within the main content.
+  await localizeLinks(doc);
   addTargetsToLinks(doc);
   autolinkModals(doc);
 
