@@ -6,6 +6,8 @@
 
 import {
   decorateMain,
+  shouldUrlBeLocalized,
+  getLocalizedLink,
 } from '../../scripts/scripts.js';
 
 import {
@@ -43,7 +45,14 @@ export async function loadFragment(path) {
 
 export default async function decorate(block) {
   const link = block.querySelector('a');
-  const path = link ? link.getAttribute('href') : block.textContent.trim();
+
+  const url = link ? new URL(link.href) : new URL(block.textContent.trim());
+  let path = url.pathname;
+  if (url.searchParams.get('dnt') !== 'true' && shouldUrlBeLocalized(url)) {
+    const localPath = await getLocalizedLink(url);
+    path = localPath ?? url.pathname;
+  }
+
   const fragment = await loadFragment(path);
   const unwrapBlock = block.classList.contains('unwrap');
   if (fragment) {
