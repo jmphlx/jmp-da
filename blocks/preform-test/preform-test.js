@@ -27,7 +27,7 @@ function buildHubspotForm(config, formData) {
     formTitle = 'Production';
   } else {
     formID = config.sandboxFormID;
-    formTitle = 'Main Staging';
+    formTitle = 'Main Sandbox';
   }
   const formHeadline = `<h3>${formTitle} Form</h3>
   <h4>Campaign ID: ${formData.salesforceCampaignId}</h4`;
@@ -79,7 +79,7 @@ function buildPreform(block, config) {
   });
   const sandboxLabel = createTag('label', {
     for: 'sandboxId',
-  }, 'Main Staging');
+  }, 'Main Sandbox');
   sandboxDiv.append(sandboxLabel, sandboxEnv);
 
   environmentDiv.append(prodDiv, sandboxDiv);
