@@ -1,3 +1,4 @@
+import { createTag } from './helper.js';
 import {
   getJsonFromUrl,
   getLanguage,
@@ -5,6 +6,7 @@ import {
   getSKPLanguageIndex,
   filterOutRobotsNoIndexPages,
 } from './jmp.js';
+import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.11/dist/purify.es.mjs';
 
 const searchSheetFolder = '/commons/search';
 
@@ -153,7 +155,30 @@ function getTopResults(searchTerms, topResultsKeywords) {
   return [];
 }
 
+function decorateCard(hit) {
+  const title = DOMPurify.sanitize(hit.title);
+  const description = DOMPurify.sanitize(hit.description);
+  let path;
+  let displayUrl;
+  if (hit.redirectTarget?.length > 0) {
+    const redirectTarget = DOMPurify.sanitize(hit.redirectTarget);
+    path = redirectTarget;
+    displayUrl = redirectTarget;
+  } else {
+    path = DOMPurify.sanitize(hit.path).split('.')[0];
+    displayUrl = path.startsWith('/') ? `${window.location.origin}${path}` : path;
+  }
+  const titleLink = createTag('a', { class: 'title', href: path }, `${title}`);
+  const desc = createTag('p', { class: 'description' }, `${description}`);
+  const displayLink = createTag('a', { class: 'displayUrl', href: path }, `${displayUrl}`);
+  const resultBody = createTag('div', { class: 'results-body' }, titleLink);
+  resultBody.append(desc);
+  resultBody.append(displayLink);
+  return createTag('div', { class: 'result-listing' }, resultBody);
+}
+
 export {
+  decorateCard,
   fetchIndex,
   getCommonsSheet,
   getSearchResults,
