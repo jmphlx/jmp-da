@@ -406,24 +406,27 @@ function addMathJax() {
   mathJaxConfig.innerText = `
     window.MathJax = {
       tex: {
-        inlineMath: [['$', '$']],
-        processEscapes: true
+        inlineMath: [['$','$']],
+        processEscapes: true,
+        autoload: {
+          color: [],
+          colorv2: ['color']
+        },
+        packages: {'[+]': ['noerrors']}
+      },
+      options: {
+        ignoreHtmlClass: 'tex2jax_ignore',
+        processHtmlClass: 'tex2jax_process'
       },
       loader: {
-        load: [
-          'input/tex',
-          'input/mml',
-          'input/asciimath',
-          'output/chtml'
-        ]
+        load: ['input/asciimath', '[tex]/noerrors']
       }
     };
   `;
   document.head.appendChild(mathJaxConfig);
 
   const mathJaxScript = createTag('script', {
-    src: 'https://cdn.jsdelivr.net/npm/mathjax@4/es5/startup.js',
-    async: true
+    src: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
   });
   document.head.appendChild(mathJaxScript);
 }
