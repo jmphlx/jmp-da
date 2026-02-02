@@ -1230,12 +1230,13 @@ div.clm-80-20 {
   }
 }
 /* Styling for G2 badges */
-.g2-badge-6, .g2-badge-4 {
+.g2-badge-6, .g2-badge-5, .g2-badge-4 {
   .columns-wrapper {
     position: relative;
     z-index: 1;
   }
 }
+
 .g2-badge-6 {
   .columns-wrapper {
     max-width: 960px;
@@ -1250,46 +1251,50 @@ div.clm-80-20 {
 }
 /* 4 columns style */
 .g2-badge-4 {
-  .columns-4-cols div {
-    display: flex;
-    flex-flow: wrap;
-    flex-direction: row;
-    width: 62%;
+    max-width: 600px;
     margin: 0 auto;
-    div > img {
-      display: flex;
-      flex-direction: column;
-      flex-basis: 100%;
-    }
-  }
+    text-align: center;
+      div {
+        display: flex;
+        flex-flow: wrap;
+        width: 100%;
+        margin: 0 auto;
+        }
   @media (width <=900px) {
-    .columns-4-cols div {
-      width: 96%;
-      div {
-        max-width: 20%;
-        text-align: center;
-        padding: 0 .2rem;
-        img {
-          /* width: 48%; */
-          margin: 0 ;
-        }
-      }
-    }
-  }
-  @media (width <=600px) {
-    .columns-4-cols div {
-      width: 72%;
-      div {
+    margin: 0 auto;
+    display: block;
+    max-width: 72%;
+        div > div {
         max-width: 40%;
-        text-align: center;
-        padding: 0 .2rem;
-        img {
-          /* width: 48%; */
-          margin: 0;
+        margin-bottom: 0;
+        img{
+          padding:8px 4px;
         }
-      }
-    }
+        }
   }
+}/* 5 columns style */
+.g2-badge-5{
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+      div {
+        display: flex;
+        flex-flow: wrap;
+        width: 100%;
+        margin: 0 auto;
+        }
+ @media (width <=900px) {
+    margin: 0 auto;
+    display: block;
+    max-width: 80%;
+        div > div {
+        max-width: 30%;
+        margin-bottom: 0;
+        img{
+          padding:8px 4px;
+        }
+        }
+    }
 }
 /* 6 columns style */
 .columns-6-cols {
@@ -1310,6 +1315,8 @@ div.clm-80-20 {
     }
   }
 }
+
+
 .product-type {
   .columns {
     div > h3 {
