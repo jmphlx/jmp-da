@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-unresolved, import/extensions
+import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.11/dist/purify.es.mjs';
 import { createTag } from './helper.js';
 import {
   getJsonFromUrl,
@@ -6,7 +8,6 @@ import {
   getSKPLanguageIndex,
   filterOutRobotsNoIndexPages,
 } from './jmp.js';
-import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.11/dist/purify.es.mjs';
 
 const searchSheetFolder = '/commons/search';
 
