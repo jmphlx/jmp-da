@@ -1263,9 +1263,9 @@ div.clm-80-20 {
   @media (width <=900px) {
     margin: 0 auto;
     display: block;
-    max-width: 72%;
+    max-width: 56%;
         div > div {
-        max-width: 40%;
+        max-width: 42%;
         margin-bottom: 0;
         img{
           padding:8px 4px;
