@@ -402,8 +402,6 @@ export function decorateMain(main) {
  * @author JMP
  */
 function addMathJax() {
-
-  // MathJax v4 configuration (must load BEFORE MathJax script)
   const mathJaxConfig = createTag('script');
   mathJaxConfig.innerHTML = `
     window.MathJax = {
@@ -428,30 +426,6 @@ function addMathJax() {
   });
   document.head.appendChild(mathJaxScript);
 }
-
-
-// function addMathJax() {
-//   const mathJaxConfig = createTag('script');
-//   mathJaxConfig.innerText = `
-//     window.MathJax = {
-//       tex: {
-//         inlineMath: [['$','$']],
-//         processEscapes: true,
-//         autoload: {
-//           color: [],
-//           colorv2: ['color']
-//         },
-//         packages: {'[+]': ['noerrors']}
-//       },
-//     };
-//   `;
-//   document.head.appendChild(mathJaxConfig);
-
-//   const mathJaxScript = createTag('script', {
-//     src: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
-//   });
-//   document.head.appendChild(mathJaxScript);
-// }
 
 function addGATracking() {
   const gaTracking = createTag('script', {
