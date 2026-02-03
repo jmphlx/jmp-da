@@ -1234,11 +1234,6 @@ div.clm-80-20 {
   .columns-wrapper {
     position: relative;
     z-index: 1;
-  }
-}
-
-.g2-badge-6 {
-  .columns-wrapper {
     max-width: 960px;
     margin: 0 auto;
     .columns > div {
@@ -1251,29 +1246,33 @@ div.clm-80-20 {
 }
 /* 4 columns style */
 .g2-badge-4 {
-    max-width: 600px;
-    margin: 0 auto;
-    text-align: center;
-      div {
-        display: flex;
-        flex-flow: wrap;
-        width: 100%;
-        margin: 0 auto;
+  .columns-4-cols{
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+    div {
+      display: flex;
+      flex-flow: wrap;
+      width: 100%;
+      margin: 0 auto;
         }
-  @media (width <=900px) {
-    margin: 0 auto;
-    display: block;
-    max-width: 56%;
-        div > div {
-        max-width: 42%;
-        margin-bottom: 0;
+@media (width <=900px) {
+  margin: 0 auto;
+  display: block;
+  max-width: 56%;
+    div > div {
+      max-width: 42%;
+      margin-bottom: 0;
         img{
           padding:8px 4px;
         }
-        }
+      }
+    }
   }
-}/* 5 columns style */
+}
+/* 5 columns style */
 .g2-badge-5{
+    .columns-5-cols{
     max-width: 800px;
     margin: 0 auto;
     text-align: center;
@@ -1283,38 +1282,53 @@ div.clm-80-20 {
         width: 100%;
         margin: 0 auto;
         }
- @media (width <=900px) {
-    margin: 0 auto;
-    display: block;
-    max-width: 80%;
-        div > div {
+@media (width <=900px) {
+  margin: 0 auto;
+  display: block;
+  max-width: 80%;
+    :nth-child(4){
+      margin-right: 8px;
+      }
+      :nth-child(5){
+       margin-left: 8px;
+      }
+      div > div {
         max-width: 30%;
         margin-bottom: 0;
-        img{
-          padding:8px 4px;
+          img{
+            padding:8px 4px;      
         }
-        }
+      }
     }
+  }
 }
 /* 6 columns style */
-.columns-6-cols {
-  div {
-    display: flex;
-    flex-flow: wrap;
-    /* flex-direction: row; */
-    width: 100%;
+.g2-badge-6{
+  .columns-6-cols{
+    max-width: 960px;
     margin: 0 auto;
-  }
-  @media (width <=900px) {
-    margin: 0 auto;
-    display: block;
-    max-width: 72%;
-    div > div {
-      max-width: 30%;
-      margin-bottom: 0;
+    text-align: center;
+      div {
+        display: flex;
+        flex-flow: wrap;
+        width: 100%;
+        margin: 0 auto;
+        }
+@media (width <=900px) {
+  margin: 0 auto;
+  display: block;
+  max-width: 80%;
+      div > div {
+        width: 31%;
+        margin-bottom: 0;
+          img{
+            padding:8px 4px;
+        }
+      }
     }
   }
 }
+
 
 
 .product-type {
