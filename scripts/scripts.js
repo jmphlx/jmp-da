@@ -421,7 +421,7 @@ function addMathJax() {
 
   const mathJaxScript = createTag('script', {
     src: 'https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js',
-    defer: true
+    defer: true,
   });
   document.head.appendChild(mathJaxScript);
 }
