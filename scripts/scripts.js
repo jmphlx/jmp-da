@@ -410,6 +410,7 @@ function addMathJax() {
         processEscapes: true,
       },
       chtml: {
+      scale: 1.2,
         displayOverflow: 'linebreak',
         linebreaks: {
           width: "container"
