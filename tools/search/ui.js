@@ -19,6 +19,11 @@ function makeLookbehindRegex(keyword, flags = 'gi') {
   return new RegExp(`(?<=${esc}:)\\S+`, flags);
 }
 
+function highlightKeyword(text, keyword) {
+  const regex = new RegExp(`(${escapeRegex(keyword)})`, 'gi');
+  return text.replaceAll(regex, '<mark>$1</mark>');
+}
+
 function updateSearchTerms(searchInputField, category, termValue) {
   const currentValue = searchInputField.value;
   const exp = makeLookbehindRegex(category);
@@ -187,7 +192,7 @@ function updateActionMessage(resultsContainer, result) {
   resultsContainer.prepend(actionMessage);
 }
 
-function createResultItem(item) {
+function createResultItem(item, highlightTerm) {
   const resultItem = createTag('div', { class: 'result-item' });
   const resultHeader = createTag('div', {
     class: 'result-header',
@@ -225,6 +230,7 @@ function createResultItem(item) {
       class: `html-result ${item.classStyle}`,
     });
     const clone = el.cloneNode(true);
+    clone.innerHTML = highlightKeyword(clone.innerHTML, highlightTerm);
     li.append(clone);
     resultText.append(li);
   });
@@ -307,7 +313,7 @@ function writeOutResults(results, queryString, queryObject, duration) {
   const resultsList = document.createElement('div');
   resultsList.classList.add('results-list');
   results.forEach((item) => {
-    const resultItem = createResultItem(item);
+    const resultItem = createResultItem(item, queryObject.keyword);
     resultsList.append(resultItem);
     urlList.push(`${DA_CONSTANTS.previewUrl}${item.pagePath}`);
     if (getPublishStatus(item.publishStatus) === 'published') {
