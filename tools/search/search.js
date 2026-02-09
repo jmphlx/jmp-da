@@ -215,7 +215,6 @@ async function handleSearch(item, queryObject, matching) {
         return field.children.length === 0
           && field.textContent.trim().toLowerCase() === propertyName;
       });
-      console.log(foundProperties);
       foundProperties.forEach((prop) => {
         elements.push(prop.parentElement.parentElement);
       });
@@ -418,7 +417,6 @@ window.addEventListener('message', (event) => {
     }
   }
   if (event.origin === 'https://da.live') {
-    console.log('got message from DA');
     const iframe = document.querySelector('iframe');
     iframe.contentWindow.postMessage(event.data);
   }
@@ -484,7 +482,6 @@ async function init() {
   const sdk = await DA_SDK;
   actions = sdk.actions;
   token = sdk.token;
-  console.log(token);
 
   constructPageViewer();
 
@@ -518,7 +515,6 @@ async function init() {
 
     // Get Search Terms.
     const queryObject = getQuery(caseSensitiveFlag);
-    console.log(queryObject);
 
     // Need to validate query here. and error early.
 
@@ -595,7 +591,6 @@ async function init() {
     });
     const exportSubmitButton = document.getElementById('export-submit-button');
     exportSubmitButton.addEventListener('click', () => {
-      console.log(window.searchResults);
       exportToCSV(token);
     });
 
