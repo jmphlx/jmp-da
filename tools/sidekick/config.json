@@ -1,26 +1,5 @@
 {
   "project": "JMP-DA",
   "editUrlLabel": "Document Authoring",
-  "editUrlPattern": "https://da.live/edit#/{{org}}/{{site}}{{pathname}}",
-  "plugins": [
-    {
-      "id": "datepicker",
-      "title": "Date Picker",
-      "environments": ["da-edit"],
-      "path": "/tools/datepicker.html"
-    },
-    {
-      "id": "experimentation",
-      "titleI18n": { "en": "Experimentation" },
-      "environments": [ "dev", "preview" ],
-      "event": "experimentation"
-    },
-    {
-      "id": "aemtags",
-      "title": "AEM Tags",
-      "environments":  ["da-edit"],
-      "experience": "dialog",
-      "path": "/tools/tagpicker.html"
-    }
-  ]
+  "editUrlPattern": "https://da.live/edit#/{{org}}/{{site}}{{pathname}}"
 }
