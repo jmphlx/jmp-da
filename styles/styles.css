@@ -2778,7 +2778,11 @@ div.interview-body {
     }
   }
 }
-
+/* MathJax scaling for table headers only */
+th mjx-container,
+thead mjx-container {
+  font-size: 80% !important;
+}
 /* hubspot */
 .hubspot-border-none {
   .hubspot-wrapper {

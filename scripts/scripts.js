@@ -402,14 +402,27 @@ export function decorateMain(main) {
  * @author JMP
  */
 function addMathJax() {
-  const mathJaxConfig = createTag('script', {
-    type: 'text/x-mathjax-config',
-  });
-  mathJaxConfig.innerText = "MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$']], processEscapes: true}});";
+  const mathJaxConfig = createTag('script');
+  mathJaxConfig.innerHTML = `
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$']],
+        processEscapes: true,
+      },
+      chtml: {
+      scale: 1.2,
+        displayOverflow: 'linebreak',
+        linebreaks: {
+          width: "container"
+        }
+      },
+    };
+  `;
   document.head.appendChild(mathJaxConfig);
 
   const mathJaxScript = createTag('script', {
-    src: 'https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML',
+    src: 'https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js',
+    defer: true,
   });
   document.head.appendChild(mathJaxScript);
 }
