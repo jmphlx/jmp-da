@@ -1,6 +1,6 @@
 const languagesAPAC = ['ko', 'ja', 'zh-hans', 'zh-hant'];
 const languagesAMER = ['en', 'es', 'fr', 'de', 'it'];
-const baseURL = 'https://main--jmp-da--jmphlx.hlx.live';
+const baseURL = 'https://main--jmp-da--jmphlx.aem.live';
 
 function getRegionalLanguageIndexes(includeFullURL, regionalIndexes) {
   const indexPaths = [];
@@ -19,6 +19,7 @@ async function getFilteredJSON(route) {
     const response = await fetch(route);
     if (!response.ok) return null;
     const json = await response.json();
+    console.log(json);
     const filteredPages = json.data.filter((item) => {
       if (item.offDateTime) {
         return new Date(item.offDateTime) <= new Date();
