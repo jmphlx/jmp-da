@@ -1,6 +1,6 @@
 const languagesAPAC = ['ko', 'ja', 'zh-hans', 'zh-hant'];
 const languagesAMER = ['en', 'es', 'fr', 'de', 'it'];
-const baseURL = 'https://main--jmp-da--jmphlx.hlx.live';
+const baseURL = 'https://main--jmp-da--jmphlx.aem.live';
 
 function getRegionalLanguageIndexes(includeFullURL, regionalIndexes) {
   const indexPaths = [];
