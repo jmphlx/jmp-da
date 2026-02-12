@@ -19,7 +19,6 @@ async function getFilteredJSON(route) {
     const response = await fetch(route);
     if (!response.ok) return null;
     const json = await response.json();
-    console.log(json);
     const filteredPages = json.data.filter((item) => {
       if (item.offDateTime) {
         return new Date(item.offDateTime) <= new Date();
