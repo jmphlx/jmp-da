@@ -14,12 +14,12 @@ function getWarningMessage() {
   const defaultContactEmail = 'info@jmp.com';
 
   const warningDiv = createTag('div', {
-    class: 'hbspt-load-error'
+    class: 'hbspt-load-error',
   });
-  warningDiv.innerHTML = `It appears that this form is being blocked due to your ` +
-    `browser's security settings. Please adjust your settings or contact ` +
-    `<a href='mailto:${defaultContactEmail}'>${defaultContactEmail}</a> ` +
-    `with any questions.`;
+  warningDiv.innerHTML = 'It appears that this form is being blocked due to your '
+    + 'browser\'s security settings. Please adjust your settings or contact '
+    + `<a href='mailto:${defaultContactEmail}'>${defaultContactEmail}</a> `
+    + 'with any questions.';
   return warningDiv;
 }
 
