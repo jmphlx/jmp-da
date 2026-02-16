@@ -45,7 +45,7 @@ const embedHubspot = (block, config) => {
   scriptHubspot.addEventListener('error', () => {
     if (config.errorMessage) {
       const errorMessageDiv = createTag('div', { class: 'hbspt-load-error' });
-      errorMessageDiv.innerHTML = config.errorMessage;
+      errorMessageDiv.append(config.errorMessage);
       block.append(errorMessageDiv);
     } else {
       block.append(getWarningMessage());
