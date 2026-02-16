@@ -11,7 +11,7 @@ import {
 import { createTag } from '../../scripts/helper.js';
 
 function getWarningMessage() {
-  const defaultContactEmail = 'info@jmp.com';
+  const defaultContactEmail = 'support@jmp.com';
 
   const warningDiv = createTag('div', {
     class: 'hbspt-load-error',
@@ -44,7 +44,9 @@ const embedHubspot = (block, config) => {
 
   scriptHubspot.addEventListener('error', () => {
     if (config.errorMessage) {
-      block.append(config.errorMessage);
+      const errorMessageDiv = createTag('div', { class: 'hbspt-load-error' });
+      errorMessageDiv.innerHTML = config.errorMessage;
+      block.append(errorMessageDiv);
     } else {
       block.append(getWarningMessage());
     }
