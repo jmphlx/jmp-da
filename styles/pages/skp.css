@@ -201,6 +201,7 @@ div.subnav.skpsubnav nav.main ul li.is-dropdown {
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding-top: 2px;
   ul.sub {
     display: none;
     position: relative;
@@ -238,7 +239,7 @@ div.subnav.skpsubnav nav.main ul li.is-dropdown.active {
         display: block;
         position: absolute;
         left: -6px;
-        top: 7px;
+        top: 9px;
         height: .5rem;
         width: .5rem;
         border-radius: 50% !important;
@@ -252,6 +253,9 @@ div.subnav.skpsubnav nav.main ul li.is-dropdown.active {
           }
         }
       }
+    }
+    li a:has(ul) + .active {
+      font-family: 'anova-bold';
     }
     li:has(ul) {
       &:after {
@@ -269,7 +273,7 @@ div.subnav.skpsubnav nav.main ul li.is-dropdown.active {
         margin-bottom: 4px;
         position: absolute;
         left: -20px;
-        top: 9px;
+        top: 11px;
       }
       @media (width >=900px) {
         &:hover {
@@ -283,10 +287,12 @@ div.subnav.skpsubnav nav.main ul li.is-dropdown.active {
     li.active {
       a {
         color: #194573;
+        font-family: var(--font-bold);
       }
       ul.sub {
         li {
           a {
+            font-family: var(--font-secondary);
             color: #194573;
           }
           a:before {
@@ -295,9 +301,12 @@ div.subnav.skpsubnav nav.main ul li.is-dropdown.active {
         }
         li.active a {
           color: #194573;
+          font-family: var(--font-bold);
         }
-        li.active:after {
-          background-color: #194573 !important;
+        @media (width >= 900px) {
+          li.active:after {
+            background-color: #194573 !important;
+          }
         }
       }
     }
@@ -358,7 +367,7 @@ div.subnav.skpsubnav nav.main ul {
       padding-left: 1.2rem !important; */
     }
     li, li.is-dropdown {
-      padding: 0 0 0 5px;
+      padding: 2px 0 0 5px;
       margin: 0;
       /* &:hover {
         border-left: 0;
@@ -378,6 +387,7 @@ div.subnav.skpsubnav nav.main ul {
     padding: 0 0 0 1.2rem;
     /* border-left: 8px solid #194573; */
     border-radius: 0;
+    font-family: 'anova-bold';
     &:before {
       content: "";
       display: block;
@@ -406,6 +416,8 @@ div.subnav.skpsubnav nav.main ul {
       }
     }
     li.is-dropdown.active {
+      padding-top: 2px;
+      font-family: 'anova-bold' !important;
       ul.sub {
         display: block;
         li {
@@ -420,7 +432,7 @@ div.subnav.skpsubnav nav.main ul {
         }
         li.active {
           border: 0;
-          padding: 0 0 0 5px;
+          padding: 2px 0 0 5px;
           a:before {
             height: .5rem;
             width: .5rem;
