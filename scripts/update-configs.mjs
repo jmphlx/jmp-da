@@ -1,11 +1,10 @@
+import fs from 'node:fs/promises';
 
 export default async function sendPostRequest(authToken, configPath, configType) {
   const url = `https://admin.hlx.page/config/jmphlx/sites/jmp-da/content/${configType}`;
 
   try {
-    const yamlResponse = await fetch(configPath);
-    const responseText= yamlResponse.text();
-    console.log(responseText);
+    const yamlText = await fs.readFile(configPath, 'utf8');
 
     const response = await fetch(url, {
       method: 'POST',
@@ -14,7 +13,7 @@ export default async function sendPostRequest(authToken, configPath, configType)
         'Accept': '*/*',
         'Content-Type': 'text/yaml',
       }, 
-      body: responseText,
+      body: yamlText,
     });
 
     if (!response.ok) return null;
@@ -28,3 +27,10 @@ export default async function sendPostRequest(authToken, configPath, configType)
   }
   return null;
 }
+
+const authToken = process.env.AUTH_TOKEN;
+const configPath = process.env.CONFIG_PATH;
+const configName = process.env.CONFIG_NAME;
+
+const result = await sendPostRequest(authToken, configPath, configName);
+console.log(result);
