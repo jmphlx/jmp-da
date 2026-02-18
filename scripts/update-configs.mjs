@@ -36,7 +36,7 @@ const configName = process.env.CONFIG_NAME;
 
 console.log('prePOST');
 
-const yamlText = await fs.readFile(configPath);
+const yamlText = await fs.readFile(configPath, 'utf-8');
 
 const result = await sendPostRequest(authToken, yamlText, configName);
 console.log('result here');
