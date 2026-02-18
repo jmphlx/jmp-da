@@ -20,7 +20,7 @@ jobs:
             const configPath = '${{ github.workspace}}/configurations/query.yaml';
             const { default: sendPostRequest } = await import('${{ github.workspace }}/scripts/update-configs.mjs')
 
-            const response = await sendPostRequest(process.env.AUTH_TOKEN, configPath, configType)
+            const response = await sendPostRequest(process.env.AUTH_TOKEN, configPath, 'query.yaml')
             console.log(response);
             return response
           result-encoding: string
