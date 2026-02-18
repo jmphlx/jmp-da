@@ -15,8 +15,6 @@ jobs:
         id: yaml_read
         with:
           config: ${{ github.workspace }}/configurations/query.yaml
-      - name: Use output later
-        run: echo "The value is ${{ steps.yaml_read.outputs }}"
       - name: Run Script
         id: update-script
         env:
@@ -24,7 +22,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const configPath = '${{ github.workspace}}/configurations/query.yaml';
+            console.log('${{ steps.yaml_read.outputs }}');
             const { default: sendPostRequest } = await import('${{ github.workspace }}/scripts/update-configs.mjs')
 
             const response = await sendPostRequest(process.env.AUTH_TOKEN, configPath, 'query.yaml')
