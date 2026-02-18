@@ -18,12 +18,14 @@ export default async function sendPostRequest(authToken, configPath, configType)
     });
 
     if (!response.ok) return null;
+    console.log('here');
     console.log(response);
     const json = await response.json();
     console.log(json);
     return json;
 
   } catch (error) {
+    console.log('found an error');
     console.error('post request: ', { error });
   }
   return null;
@@ -33,7 +35,6 @@ const authToken = process.env.AUTH_TOKEN;
 const configPath = process.env.CONFIG_PATH;
 const configName = process.env.CONFIG_NAME;
 
-console.log('here');
-
 const result = await sendPostRequest(authToken, configPath, configName);
+console.log('result here');
 console.log(result);
