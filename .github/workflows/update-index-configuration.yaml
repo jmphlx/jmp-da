@@ -11,12 +11,12 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
       - name: Read YAML file
-        uses: actions/yaml-read@v1
+        uses: pietrobolcato/action-read-yaml@1.0.0
         id: yaml_read
         with:
-          file: .github/configurations/query.yaml
+          config: ${{ github.workspace }}/configurations/query.yaml
       - name: Use output later
-        run: echo "The value is $${{ steps.yaml_read.outputs }}"
+        run: echo "The value is ${{ steps.yaml_read.outputs }}"
       - name: Run Script
         id: update-script
         env:
