@@ -1,0 +1,60 @@
+[
+  {
+    "title": "JMP 19.0.5 Security Update",
+    "date": "Feb 17, 2026",
+    "metadescription": "The Security Bulletin regarding a security update for JMP",
+    "description": "The JMP 19.0.5 security update contains updates to third-party libraries to address identified security vulnerabilities.",
+    "status": "Vulnerabilities addressed in the JMP 19.0.5 release",
+    "vulnerabilities": [
+      {
+        "id": "CVE-2025-10966",
+        "severity": "Medium",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-10966"
+      },
+      {
+        "id": "CVE-2025-11468",
+        "severity": "Medium",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-11468"
+      },
+      {
+        "id": "CVE-2026-0865",
+        "severity": "Medium",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-0865"
+      },
+      {
+        "id": "CVE-2025-15224",
+        "severity": "Low",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-15224"
+      }
+    ]
+  },
+  {
+    "title": "JMP Live 19.0.5 Security Update",
+    "date": "Feb 17, 2026",
+    "metadescription": "The Security Bulletin regarding a security update for JMP Live",
+    "description": "The JMP Live 19.0.5 security update contains updates to third-party libraries to address identified security vulnerabilities. This list includes JMP 19.0.5 vulnerabilities addressed as well.",
+    "status":"Vulnerabilities addressed in the JMP Live 19.0.5 release",
+    "vulnerabilities": [
+      {
+        "id": "CVE-2025-55130",
+        "severity": "Critical",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-55130"
+      },
+      {
+        "id": "CVE-2026-25547",
+        "severity": "Critical",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-25547"
+      },
+      {
+        "id": "CVE-2026-0865",
+        "severity": "Medium",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-0865"
+      },
+      {
+        "id": "CVE-2025-15224",
+        "severity": "Low",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-15224"
+      }
+    ]
+  }
+]
