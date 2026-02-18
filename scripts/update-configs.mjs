@@ -5,7 +5,6 @@ export default async function sendPostRequest(authToken, yamlText, configType) {
 
   console.log('pre posssttt');
   console.log(url);
-  console.log(yamlText);
   try {
     const response = await fetch(url, {
       method: 'POST',
