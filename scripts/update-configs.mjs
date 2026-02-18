@@ -1,14 +1,12 @@
-async function getConfig(configType) {
-  const importConfig = await import(`../configurations/${configType}`);
-  console.log(JSON.stringify(importConfig));
-  return JSON.stringify(importConfig);
-}
 
-
-export default async function sendPostRequest(authToken, configType) {
+export default async function sendPostRequest(authToken, configPath, configType) {
   const url = `https://admin.hlx.page/config/jmphlx/sites/jmp-da/content/${configType}`;
 
   try {
+    const yamlResponse = await fetch(configPath);
+    const responseText= yamlResponse.text();
+    console.log(responseText);
+
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -16,7 +14,7 @@ export default async function sendPostRequest(authToken, configType) {
         'Accept': '*/*',
         'Content-Type': 'text/yaml',
       }, 
-      body: getConfig(configType),
+      body: responseText,
     });
 
     if (!response.ok) return null;
