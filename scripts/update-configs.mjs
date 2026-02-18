@@ -4,6 +4,8 @@ export default async function sendPostRequest(authToken, yamlText, configType) {
   const url = `https://admin.hlx.page/config/jmphlx/sites/jmp-da/content/${configType}`;
 
   console.log('pre posssttt');
+  console.log(url);
+  console.log(yamlText);
   try {
     const response = await fetch(url, {
       method: 'POST',
@@ -26,7 +28,6 @@ export default async function sendPostRequest(authToken, yamlText, configType) {
     console.log('found an error');
     console.error('post request: ', { error });
   }
-  return null;
 }
 
 const authToken = process.env.AUTH_TOKEN;
