@@ -1638,6 +1638,16 @@ a:hover {
   h4 {
     background-color: rgba(0, 0, 0, .025);
     font-size: 1.6rem;
+    font-family: var(--font-bold);
+    width: 100%;
+    border-radius: 10px;
+    box-sizing: border-box;
+    line-height: unset !important;
+    padding: 15px 15px 15px 20px !important;
+  }
+  h4:is(a) {
+    background-color: rgba(0, 0, 0, .025);
+    font-size: 1.6rem;
     width: 100%;
     border-radius: 10px;
     box-sizing: border-box;
@@ -1646,8 +1656,8 @@ a:hover {
     a {
       width: max-content;
       font-size: 1.6rem;
-      font-family: "anova-regular", sans-serif;
       text-decoration: none;
+      font-family: var(--font-secondary);
       box-sizing: border-box;
       &:after {
         content: url('../../../icons/arrow-orange.svg');
@@ -1677,7 +1687,7 @@ a:hover {
     a {
       width: max-content;
       font-size: 1.6rem;
-      font-family: "anova-regular", sans-serif;
+      font-family: var(--font-secondary);
       text-decoration: none;
       box-sizing: border-box;
       /* padding: 15px 20px 5px 20px !important; */
