@@ -10,7 +10,20 @@ import {
 
 import { createTag } from '../../scripts/helper.js';
 
-const embedHubspot = (config) => {
+function getWarningMessage() {
+  const defaultContactEmail = 'support@jmp.com';
+
+  const warningDiv = createTag('div', {
+    class: 'hbspt-load-error',
+  });
+  warningDiv.innerHTML = 'It appears that this form is being blocked due to your '
+    + 'browser\'s security settings. Please adjust your settings or contact '
+    + `<a href='mailto:${defaultContactEmail}'>${defaultContactEmail}</a> `
+    + 'with any questions.';
+  return warningDiv;
+}
+
+const embedHubspot = (block, config) => {
   // clean up hubspot url query paramaters
   const sfdcCampaignId = config.salesforceCampaignId;
 
@@ -28,6 +41,16 @@ const embedHubspot = (config) => {
   if (redirect.match(regex)) {
     redirect = redirect.replace(regex, `/${getLanguage()}/`);
   }
+
+  scriptHubspot.addEventListener('error', () => {
+    if (config.errorMessage) {
+      const errorMessageDiv = createTag('div', { class: 'hbspt-load-error' });
+      errorMessageDiv.append(config.errorMessage);
+      block.append(errorMessageDiv);
+    } else {
+      block.append(getWarningMessage());
+    }
+  });
 
   // adds event listener to add embed code on load
   scriptHubspot.addEventListener('load', () => {
@@ -85,7 +108,7 @@ const loadEmbed = (block, config) => {
   if (block.classList.contains('form-is-loaded')) {
     return;
   }
-  embedHubspot(config);
+  embedHubspot(block, config);
   block.classList = 'block embed embed-hubspot';
   if (config.headline) {
     const headlineElement = typeof config.headline === 'string'
