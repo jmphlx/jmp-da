@@ -3,11 +3,11 @@ import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 // eslint-disable-next-line import/no-unresolved
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
 import addAppAccessControl from '../access-control/access-control.js';
+import { getPublishStatusObj, setToken } from './publish.js';
+
 import {
-  getPageStatus,
   getPublishStatus,
   createVersion,
-  createRateLimiter,
   DA_CONSTANTS,
   toLowerCaseObject,
 } from '../../scripts/helper.js';
@@ -45,11 +45,6 @@ $.expr[':'].icontains = function (elem, i, match) {
   return $(elem).text().toLowerCase().includes(match[3].toLowerCase());
 };
 
-/**
- * https://admin.hlx.page/ only supports 10 requests per second, but need to space it out to 3 seconds.
-*/
-const rateLimit = createRateLimiter(10, 3000);
-
 class SearchResult {
   constructor(item, elements, classStyle, dom, publishStatus) {
     this.path = item.path;
@@ -61,10 +56,6 @@ class SearchResult {
     this.classStyle = classStyle;
     this.publishStatus = publishStatus;
   }
-}
-
-async function getPublishStatusObj(path) {
-  return rateLimit(() => getPageStatus(path, token));
 }
 
 function clearEventListeners() {
@@ -264,9 +255,12 @@ async function handleSearch(item, queryObject, matching) {
       publish status filter. If it doesn't match, then
       the page is not a match. If it does, then
       check for keyword. */
-      const pageStatusObj = await getPublishStatusObj(getPagePathFromFullUrl(item.path));
-      const publishStatus = getPublishStatus(pageStatusObj);
+      let pageStatusObj = null;
+      let publishStatus = null;
+
       if (queryObject.scope.status) {
+        pageStatusObj = await getPublishStatusObj(getPagePathFromFullUrl(item.path), token);
+        publishStatus = getPublishStatus(pageStatusObj);
         if (publishStatus === queryObject.scope.status && queryObject.keyword) {
           // look for keyword.
           await filterForKeyword(pageStatusObj);
@@ -482,6 +476,7 @@ async function init() {
   const sdk = await DA_SDK;
   actions = sdk.actions;
   token = sdk.token;
+  setToken(token);
 
   constructPageViewer();
 
