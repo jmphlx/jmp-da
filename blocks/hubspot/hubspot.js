@@ -10,7 +10,29 @@ import {
 
 import { createTag } from '../../scripts/helper.js';
 
-const embedHubspot = (config) => {
+function getWarningMessage() {
+  const warningDiv = createTag('div', {
+    class: 'hbspt-load-error',
+  });
+
+  const warningMessage = 'It appears that your browser settings may be preventing '
+    + 'our form from displaying. You may be able to resolve this by making adjustments '
+    + 'to your browser settings. The links below provide information specific to the '
+    + 'browsers where this is likely to be an issue:';
+
+  const firefoxItem = createTag('li');
+  firefoxItem.innerHTML = '<a href="https://support.mozilla.org/en-US/kb/manage-enhanced-tracking-protection-exceptions?as=u&utm_source=inproduct">Firefox</a>';
+  const edgeItem = createTag('li');
+  edgeItem.innerHTML = '<a href="https://support.microsoft.com/en-us/microsoft-edge/learn-about-tracking-prevention-in-microsoft-edge-5ac125e8-9b90-8d59-fa2c-7f2e9a44d869">Microsoft Edge</a>';
+  const browserList = createTag('ul');
+  browserList.append(firefoxItem, edgeItem);
+
+  warningDiv.innerHTML = warningMessage;
+  warningDiv.append(browserList);
+  return warningDiv;
+}
+
+const embedHubspot = (block, config) => {
   // clean up hubspot url query paramaters
   const sfdcCampaignId = config.salesforceCampaignId;
 
@@ -28,6 +50,16 @@ const embedHubspot = (config) => {
   if (redirect.match(regex)) {
     redirect = redirect.replace(regex, `/${getLanguage()}/`);
   }
+
+  scriptHubspot.addEventListener('error', () => {
+    if (config.errorMessage) {
+      const errorMessageDiv = createTag('div', { class: 'hbspt-load-error' });
+      errorMessageDiv.append(config.errorMessage);
+      block.append(errorMessageDiv);
+    } else {
+      block.append(getWarningMessage());
+    }
+  });
 
   // adds event listener to add embed code on load
   scriptHubspot.addEventListener('load', () => {
@@ -85,7 +117,7 @@ const loadEmbed = (block, config) => {
   if (block.classList.contains('form-is-loaded')) {
     return;
   }
-  embedHubspot(config);
+  embedHubspot(block, config);
   block.classList = 'block embed embed-hubspot';
   if (config.headline) {
     const headlineElement = typeof config.headline === 'string'
