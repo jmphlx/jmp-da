@@ -816,10 +816,10 @@ div.subnav-wrapper:has(.pillar-sub-nav) {
   @media (width >= 1200px) {
     max-width: 235px;
   }
-  @media (width >= 901px) {
+  /* @media (width >= 901px) {
     position: sticky;
     top: 126px;
-  }
+  } */
 }
 
 
