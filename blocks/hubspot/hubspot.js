@@ -11,15 +11,25 @@ import {
 import { createTag } from '../../scripts/helper.js';
 
 function getWarningMessage() {
-  const defaultContactEmail = 'support@jmp.com';
-
   const warningDiv = createTag('div', {
     class: 'hbspt-load-error',
   });
-  warningDiv.innerHTML = 'It appears that this form is being blocked due to your '
-    + 'browser\'s security settings. Please adjust your settings or contact '
-    + `<a href='mailto:${defaultContactEmail}'>${defaultContactEmail}</a> `
-    + 'with any questions.';
+
+  const warningMessage = 'It appears that your browser settings may be preventing '
+    + 'our form from displaying. You may be able to resolve this by making adjustments '
+    + 'to your browser settings. The links below provide information specific to the '
+    + 'browsers where this is likely to be an issue:';
+  
+  const firefoxItem = createTag('li');
+  firefoxItem.innerHTML = '<a href="https://support.mozilla.org/en-US/kb/manage-enhanced-tracking-protection-exceptions?as=u&utm_source=inproduct">Firefox</a>';
+  const edgeItem = createTag('li');
+  edgeItem.innerHTML = '<a href="https://support.microsoft.com/en-us/microsoft-edge/learn-about-tracking-prevention-in-microsoft-edge-5ac125e8-9b90-8d59-fa2c-7f2e9a44d869">Microsoft Edge</a>';
+  const browserList = createTag('ul');
+  browserList.append(firefoxItem, edgeItem);
+
+
+  warningDiv.innerHTML = warningMessage;
+  warningDiv.append(browserList);
   return warningDiv;
 }
 
