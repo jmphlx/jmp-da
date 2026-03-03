@@ -164,6 +164,9 @@ export async function getPageStatus(path, token) {
 }
 
 export function getPublishStatus(statusObj) {
+  if (statusObj == null) {
+    return 'loading';
+  }
   const liveStatus = statusObj.live;
   const previewStatus = statusObj.preview;
 

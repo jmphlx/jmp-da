@@ -5,6 +5,10 @@ import {
 } from '../../scripts/helper.js';
 import { getCurrentVersion } from '../restore-version/formatter.js';
 
+import {
+  updatePublishStatus,
+} from './publish.js';
+
 const DEFAULT_PROP_LIST = ['style', 'options'];
 
 // escape regex metacharacters in the variable
@@ -308,7 +312,6 @@ function writeOutResults(results, queryString, queryObject, duration) {
   const resultsData = document.createElement('div');
 
   const urlList = [];
-  const publishedUrlList = [];
 
   const resultsList = document.createElement('div');
   resultsList.classList.add('results-list');
@@ -316,8 +319,8 @@ function writeOutResults(results, queryString, queryObject, duration) {
     const resultItem = createResultItem(item, queryObject.keyword);
     resultsList.append(resultItem);
     urlList.push(`${DA_CONSTANTS.previewUrl}${item.pagePath}`);
-    if (getPublishStatus(item.publishStatus) === 'published') {
-      publishedUrlList.push(`${DA_CONSTANTS.previewUrl}${item.pagePath}`);
+    if (getPublishStatus(item.publishStatus) === 'loading') {
+      updatePublishStatus(item, resultItem);
     }
   });
 
@@ -332,15 +335,6 @@ function writeOutResults(results, queryString, queryObject, duration) {
   const copyContainer = createTag('span', {
     id: 'copy-to-clipboard',
   });
-
-  const copyPublishedButton = createTag('p', {
-    class: 'button-container',
-  });
-  copyPublishedButton.textContent = 'Copy Published Result URLs To Clipboard';
-  copyPublishedButton.addEventListener('click', () => {
-    copyToClipboard(copyPublishedButton, publishedUrlList.join('\n'), 'Copied');
-  });
-  copyContainer.append(copyPublishedButton);
 
   const copyAllButton = createTag('p', {
     class: 'button-container',
