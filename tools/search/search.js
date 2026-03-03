@@ -276,10 +276,10 @@ async function handleSearch(item, queryObject, matching) {
               filtered.push(el);
             }
           } else if (queryObject.caseSensitive) {
-            if (el.textContent.includes(queryObject.keyword)) {
+            if (el.outerHTML.includes(queryObject.keyword)) {
               filtered.push(el);
             }
-          } else if (el.textContent.toLowerCase().includes(queryObject.keyword)) {
+          } else if (el.outerHTML.toLowerCase().includes(queryObject.keyword)) {
             filtered.push(el);
           }
         });
