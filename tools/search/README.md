@@ -57,6 +57,7 @@ Features may be expanded to include exporting a list of results to CSV.
 3. For each page, the tool fetches the HTML document and parses the content into a DOM structure.
 4. Based on the user defined parameters, pages are adding to result list.
 5. Results are provided in a detailed list, showing all matches on a given page, as well as the page's publish status.
+  a. If publish status is not included as a search parameter, then the publish status is collected asynchronously and added to results.
 6. From here, authors can fill out another form to define a modification action on the block or property.
   a. Modifications include replacing text, adding a property, deleting a property, or merging two properties.
 7. When action is submitted, the HTML is updated and saved back to Author. The list of pages changed is maintained in the results.
@@ -68,6 +69,7 @@ Features may be expanded to include exporting a list of results to CSV.
 search.html - Main app interface
 search/search.css - Styles
 search/search.js - Main App logic
+search/publish.js - Logic for getting publish status asynchronously
 search/ui.js - Creates search result elements and adds event listeners to forms 
 search/README.md - This documentation
 
