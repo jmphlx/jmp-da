@@ -237,6 +237,7 @@ div.listgroup-fixed, div.listgroup  {
         } */
         .title {
           font-size: 1.6rem;
+          max-width: 55%;
           padding-right: 1.6rem;
           color: var(--blue) !important;
           display: flex;
@@ -370,7 +371,7 @@ div.listgroup-fixed, div.listgroup  {
           }
           .title {
             padding: 1rem 1.6rem 0 1.6rem;
-            width: 90%;
+            max-width: 90% !important;
             margin: 0;
           }
           .abstract, .description, .displayDescription {
