@@ -96,19 +96,27 @@ async function doSearch(item, authToken, matching) {
     //check if row exists.
     console.log(metadataBlock)
     const rows = metadataBlock.children;
-    console.log(tagsRowValue);
-    if (tagsRowValue.length) {
-      //const html = dom.body.querySelector('main');
-      //await saveToDa(html.innerHTML, item.path, authToken);
-    } else {
-      // no modification.
+    let foundRowFlag = false;
+    for (let i = rows.length - 1; i >= 0; i--) {
+      const row = rows[i];
+      const rowName = row.firstChild.textContent.toLowerCase();
+      if (rowName === 'robots') {
+        foundRowFlag = true;
+      }
+    }
+
+    if (!foundRowFlag) {
+      addRowToBlock(metadataBlock, 'robots', 'noindex, nofollow');
+      matching.push(item.path);
+      const html = dom.body.querySelector('main');
+      await saveToDa(html.innerHTML, item.path, authToken);
     }
   } else {
     const mainDiv = dom.body.querySelector('main div');
     mainDiv.append(createBlock())
     matching.push(item.path);
-    //const html = dom.body.querySelector('main');
-    //await saveToDa(html.innerHTML, item.path, authToken);
+    const html = dom.body.querySelector('main');
+    await saveToDa(html.innerHTML, item.path, authToken);
   }
 }
 
