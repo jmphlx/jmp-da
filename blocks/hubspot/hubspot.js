@@ -19,7 +19,7 @@ function getWarningMessage() {
   });
 
   const warningMessage = createTag('p');
-  warningMessage.innerHTML = 'Your browser\’s settings may be preventing this form from loading. '
+  warningMessage.innerHTML = 'Your browser’s settings may be preventing this form from loading. '
     + 'To access the form, please adjust your browser settings or try a different browser.';
   const contactUs = createTag('p');
   contactUs.innerHTML = 'Still having issues? Contact us at <a href="mailto:info@jmp.com">info@jmp.com</a>.';
