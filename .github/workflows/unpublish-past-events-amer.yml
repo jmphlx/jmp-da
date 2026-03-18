@@ -32,7 +32,7 @@ jobs:
         uses: cinotify/github-action@main
         with:
           to: 'Laurel.Timko@jmp.com'
-          subject: "${{steps.unpublish-script.outputs.subject}}"
+          subject: "Nightly Job Run for AMER"
           body: "${{steps.unpublish-script.outputs.body}}"
           type: 'text/html'
       - name: Send Failure Email Notifications
