@@ -25,12 +25,14 @@ jobs:
             const response = await unpublishPastEvents(process.env.AUTH_TOKEN, "AMER")
             core.setOutput("subject", response.subject)
             core.setOutput("body", response.body)
+            core.setOutput("sendEmail", response.sendEmail)
             return response
           result-encoding: string
       - name: Send Email Notifications
+        if: ${{ steps.unpublish-script.outputs.sendEmail == 'true' }}
         uses: cinotify/github-action@main
         with:
-          to: 'laurel.timko@jmp.com'
+          to: 'Laurel.Timko@jmp.com, Aaron.Kennedy@jmp.com, Roger.Alford@jmp.com, Michael.Osinibi@jmp.com'
           subject: "${{steps.unpublish-script.outputs.subject}}"
           body: "${{steps.unpublish-script.outputs.body}}"
           type: 'text/html'

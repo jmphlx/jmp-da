@@ -175,5 +175,7 @@ export default async function unpublishPastEvents(authToken, region) {
   response.numSuccess = successPages.length;
   response.subject = buildEmailSubject(successPages, failedPages, region);
   response.body = buildEmailBody(successPages, failedPages, region);
+  //const failedWorkflow = failedPages.length > 0;
+  response.sendEmail = 'true';
   return response;
 }
