@@ -27,10 +27,18 @@ jobs:
             core.setOutput("body", response.body)
             return response
           result-encoding: string
-      - name: Send Email Notifications
+      - name: Send All Email Notification
         uses: cinotify/github-action@main
         with:
-          to: 'laurel.timko@jmp.com'
+          to: 'Laurel.Timko@jmp.com'
+          subject: "Nightly Job Run for APAC"
+          body: "${{steps.unpublish-script.outputs.body}}"
+          type: 'text/html'
+      - name: Send Failure Email Notifications
+        if: ${{ steps.unpublish-script.outputs.sendEmail == 'true' }}
+        uses: cinotify/github-action@main
+        with:
+          to: 'Laurel.Timko@jmp.com, Aaron.Kennedy@jmp.com, Roger.Alford@jmp.com, Michael.Osinibi@jmp.com'
           subject: "${{steps.unpublish-script.outputs.subject}}"
           body: "${{steps.unpublish-script.outputs.body}}"
           type: 'text/html'

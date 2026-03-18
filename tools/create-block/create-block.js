@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import { setImsDetails } from 'https://da.live/nx/utils/daFetch.js';
+// eslint-disable-next-line import/no-unresolved
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
 import { createTag } from '../../scripts/helper.js';
 
@@ -38,7 +39,12 @@ async function saveToDa(text, pathname, token) {
   const putURL = `https://admin.da.live/source'${pathname}`;
   try {
     const daResp = await fetch(`${putURL}`, opts);
-    return { putURL, daStatus: daResp.status, daResp, ok: daResp.ok };
+    return {
+      putURL,
+      daStatus: daResp.status,
+      daResp,
+      ok: daResp.ok,
+    };
   } catch (e) {
     console.log(`Couldn't save ${pathname} - ${e}`);
     return null;
@@ -46,7 +52,7 @@ async function saveToDa(text, pathname, token) {
 }
 
 function createBlock() {
-  const blockDiv = createTag('div', { class: `${BLOCKNAME}`});
+  const blockDiv = createTag('div', { class: `${BLOCKNAME}` });
   const rowDiv = createTag('div');
   const nameDiv = createTag('div');
   const valueDiv = createTag('div');
@@ -93,8 +99,7 @@ async function doSearch(item, authToken, matching) {
   const metadataBlock = dom.querySelector('div.metadata');
 
   if (metadataBlock) {
-    //check if row exists.
-    console.log(metadataBlock)
+    // check if row exists.
     const rows = metadataBlock.children;
     let foundRowFlag = false;
     for (let i = rows.length - 1; i >= 0; i--) {
@@ -113,7 +118,7 @@ async function doSearch(item, authToken, matching) {
     }
   } else {
     const mainDiv = dom.body.querySelector('main div');
-    mainDiv.append(createBlock())
+    mainDiv.append(createBlock());
     matching.push(item.path);
     const html = dom.body.querySelector('main');
     await saveToDa(html.innerHTML, item.path, authToken);
@@ -123,12 +128,13 @@ async function doSearch(item, authToken, matching) {
 function addOutput(matching) {
   const resultDiv = createTag('div');
   const resultHeader = createTag('p');
-  resultHeader.textContent = "Modified the following pages:";
+  resultHeader.textContent = 'Modified the following pages:';
   const resultList = createTag('ul');
-  for (let result of matching) {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const result of matching) {
     const resultItem = createTag('li');
     const anchor = createTag('a', {
-      href: `https://da.live/edit#${result}`
+      href: `https://da.live/edit#${result}`,
     });
     anchor.textContent = result;
     resultItem.append(anchor);
@@ -139,13 +145,13 @@ function addOutput(matching) {
 }
 
 async function handleFormSubmit(authToken, folderPath) {
-  console.log("Folder Path:", folderPath);
+  console.log('Folder Path:', folderPath);
 
   setImsDetails(authToken);
 
   const matching = [];
 
-  let path = folderPath;
+  const path = folderPath;
 
   // Crawl the tree of content
   const { results } = await crawl({
@@ -158,14 +164,14 @@ async function handleFormSubmit(authToken, folderPath) {
   addOutput(matching);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("dataForm");
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('dataForm');
 
-  form.addEventListener("submit", (event) => {
+  form.addEventListener('submit', (event) => {
     event.preventDefault(); // Prevents page reload
 
-    const authToken = document.getElementById("authToken").value.trim();
-    const folderPath = document.getElementById("folderPath").value.trim();
+    const authToken = document.getElementById('authToken').value.trim();
+    const folderPath = document.getElementById('folderPath').value.trim();
 
     // Call your external function
     handleFormSubmit(authToken, folderPath);
