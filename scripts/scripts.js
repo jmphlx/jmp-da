@@ -28,6 +28,50 @@ import {
   getLanguage,
   isLanguageSupported,
 } from './jmp.js';
+import {
+  BrowserAgent
+} from '@newrelic/browser-agent/loaders/browser-agent'
+
+const options = {
+  "info": {
+    "applicationID": 1120507259,
+    "beacon": "bam.nr-data.net",
+    "errorBeacon": "bam.nr-data.net",
+    "licenseKey": "NRJS-cba062c245ffeb0977e",
+    "sa": 1
+  },
+  "init": {
+    "ajax": {
+      "deny_list": [
+        "bam.nr-data.net"
+      ]
+    },
+    "browser_consent_mode": {
+      "enabled": false
+    },
+    "distributed_tracing": {
+      "enabled": true
+    },
+    "performance": {
+      "capture_detail": false,
+      "capture_marks": false,
+      "capture_measures": true
+    },
+    "privacy": {
+      "cookies_enabled": true
+    }
+  },
+  "loader_config": {
+    "accountID": 7817266,
+    "agentID": 1120507259,
+    "applicationID": 1120507259,
+    "licenseKey": "NRJS-cba062c245ffeb0977e",
+    "trustKey": 7817266
+  }
+}
+
+// The agent loader code executes immediately on instantiation.
+const nrba = new BrowserAgent(options)
 
 const experimentationConfig = {
   prodHost: 'www.my-site.com',
