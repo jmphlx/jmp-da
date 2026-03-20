@@ -23,7 +23,7 @@ html {
   --overlay-background-color: #eeeeee;
   --highlight-background-color: #cccccc;
   --blue: #0378cd;
-  --blue-hover: #023352;
+  --blue-hover: #00619d;
   --blueDark: #002753; /* stat speaking only */
   --darkTheme: #121835; /* dark theme color for BGs - 121835 - 0F1326 */
   --orange: #ff5000;
@@ -42,7 +42,6 @@ html {
   --yellowHover: #ffe48e;
   --teal: #007481;
   --tealLight: #3EBDAC;
-  
   /* JMP Brand neutral */
   --white: #FFFFFF;
   --grayDark: #172328;
