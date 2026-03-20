@@ -286,6 +286,14 @@
     background-color: var(--white);
   }
   &.text-light {
+    blockquote {
+      h3 {
+        color: var(--white);
+      }
+      :before, :after {
+      color: rgba(3, 120, 205, 0.3);
+    }
+    }
     h4 {
       a {
         color: var(--yellow) !important;
