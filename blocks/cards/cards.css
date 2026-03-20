@@ -56,6 +56,34 @@
     }
   }
 }
+.cards-light {
+  > ul {
+    > li {
+      background-color: transparent;
+      border: 1px solid var(--grayRule);
+      border-radius: 10px;
+      width: 100%;
+      /* display: flex; */
+      position: relative;
+    }
+  }
+}
+
+.cards-multi {
+  > ul {
+    > li {
+      background: linear-gradient(160deg, rgba(255, 80, 0, .2), rgba(100, 54, 149, .2), rgba(3, 120, 205, .2));
+      background-color: transparent !important;
+      border: none;
+      border-radius: 10px;
+      width: 100%;
+      /* display: flex; */
+      position: relative;
+    }
+  }
+}
+
+
 
 .cards-1 {
   ul {
@@ -104,6 +132,32 @@
       display: flex;
       position: relative;
       margin-bottom: 2%;
+    }
+  }
+}
+.cards-3-col-light {
+  > ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2%;
+    position: relative;
+    justify-content: space-between;
+    > li {
+      border: 1px solid var(--grayRule);
+      border-radius: 5px;
+      width: 31.75%;
+      min-height: auto;
+      display: flex;
+      position: relative;
+      margin-bottom: 2%;
+      div.cards-card-body {
+        h1, h2, h3, h4, h5, h6, p {
+          margin: 0 16px 8px 16px;
+        }
+      }
+      &:nth-last-child(1) {
+        margin-bottom: 2%;
+      }
     }
   }
 }
