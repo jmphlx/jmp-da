@@ -23,8 +23,9 @@ html {
   --overlay-background-color: #eeeeee;
   --highlight-background-color: #cccccc;
   --blue: #0378cd;
-  --blue-hover: #00619d;
+  --blue-hover: #023352;
   --blueDark: #002753; /* stat speaking only */
+  --darkTheme: #121835; /* dark theme color for BGs - 121835 - 0F1326 */
   --orange: #ff5000;
   --orange-hover: #d94500;
   --blueLight: #61CAE5;
@@ -41,6 +42,7 @@ html {
   --yellowHover: #ffe48e;
   --teal: #007481;
   --tealLight: #3EBDAC;
+  
   /* JMP Brand neutral */
   --white: #FFFFFF;
   --grayDark: #172328;
@@ -526,7 +528,7 @@ div.dark-gray-background {
 div.text-light {
   color: #ffffff !important;
   strong {
-    color: #ffffff !important;
+    color: #ffffff;
   }
   p, h4 {
     a {
@@ -549,7 +551,18 @@ div.text-light {
     }
   }
 }
-
+.h1-multi {
+  h1 {
+    background: linear-gradient(160deg, var(--orange), var(--purple), var(--blue)) !important;
+    background-clip: text !important;
+    color: transparent !important;
+  }
+  strong {
+    background: linear-gradient(160deg, var(--orange), var(--purple), var(--blue)) !important;
+    background-clip: text !important;
+    color: transparent !important;
+  }
+}
 /* section metadata */
 main .section.light, main .section.highlight {
   background-color: var(--light-color);
@@ -707,6 +720,9 @@ div.teal {
 div.dark-blue {
   background: var(--blueDark);
 }
+div.dark-theme {
+  background: var(--darkTheme);
+}
 /* ordered list */
 ol{
   padding: 0 0 0 18px; 
@@ -860,7 +876,6 @@ a:hover {
     }
   }
 }
-
 .button-right {
   p.button-container {
     width: 100%;
@@ -914,6 +929,39 @@ a:hover {
     color: #ffffff;
     background: rgba(0, 0, 0, 0.5) !important;
     border: 2px solid rgba(0, 0, 0, 0) !important;
+  }
+}
+.button-multi-outline {
+  p.button-container {
+    border: 3px solid transparent !important;
+    position: relative;
+    background-image: linear-gradient(transparent), linear-gradient(160deg, var(--orange), var(--purple), var(--blue));
+    background-origin: border-box;
+    border-radius: 8px;
+    a.button:any-link, a.button {
+      display: block;
+      position: static;
+      border: 5px solid var(--multi);
+      color: #ffffff !important;
+      background-color: var(--darkTheme) !important;
+      border-radius: 5px;
+      min-width: 150px;
+      transition-duration: 0.2s;
+      transition-timing-function: ease;
+      z-index: 1;
+    } 
+    a.button:hover {
+      background: rgba(0, 0, 0, 0.5) !important;
+    }
+  }
+  &.button-center {
+    div:has(p.button-container) {
+      width: fit-content;
+      p.button-container {
+        width: fit-content !important;
+        margin: 0 auto !important;
+      }
+    }
   }
 }
 .button-big {
