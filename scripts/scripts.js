@@ -30,7 +30,7 @@ import {
 } from './jmp.js';
 import {
   BrowserAgent
-} from './newrelic-browser-agent.js'
+} from '@newrelic/browser-agent/loaders/browser-agent'
 
 const options = {
   "info": {
