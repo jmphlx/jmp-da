@@ -1839,6 +1839,21 @@
       }
     }
   }
+  &.multi {
+    ul {
+      li {
+        background: linear-gradient(160deg, var(--orange)-25%, var(--purple) 45%, var(--blue) 100%) !important;
+        border: none;
+        .cards-card-body {
+          p.button-container {
+            a {
+              background-color: var(--orange);
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 .banner {
