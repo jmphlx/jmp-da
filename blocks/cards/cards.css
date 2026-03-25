@@ -68,7 +68,6 @@
     }
   }
 }
-
 .cards-multi {
   > ul {
     > li {
@@ -1433,6 +1432,92 @@
       > li {
         width: 48%;
         flex: 1 0 auto;
+      }
+    }
+    @media (width <=600px) {
+      > li {
+        width: 100%;
+        flex: 1 0 auto;
+      }
+    }
+  }
+}
+
+.text-shift-card {
+  > ul {
+    display: flex;
+    padding: 2rem 0;
+    > li {
+      min-height: auto;
+      transition: all 0.35s ease-in-out;
+      overflow: hidden;
+      .cards-card-body {
+        position: relative;
+        padding: 16px 16px 24px 16px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -20%);
+        margin: 0 !important;
+        width: calc(100% - 32px);
+        transition: all 0.35s ease-in-out;
+        h3, h4 , h5 , h6 {
+          transition: all 0.35s ease-in-out;
+  
+        }
+        p {
+          pointer-events: none;
+          opacity: 0;
+          transition: opacity 0.35s ease-in-out;
+        }
+      }
+      &:after, &:before {
+        content: "";
+        position: absolute;
+        background-color: white;
+        transition: transform 0.25s ease-in-out; 
+      }
+      &:after {
+        top: 16px;
+        right: 26px;
+        width: 4px;
+        height: 24px;
+        margin-left: -2px;
+      }
+      &:before {
+        top: 28px;
+        right: 16px;
+        width: 24px;
+        height: 4px;
+        margin-top: -2px;
+      }
+      &:hover {
+        div.cards-card-body  {
+          transform: translate(-50%, -50%);
+          h3, h4 , h5 , h6 {
+            opacity: 0.5;
+          }
+          p {
+            display: block;
+            pointer-events: pointer;
+            opacity: 1;
+          }
+        }
+        &:after {
+          transform: rotate(90deg);
+        }
+      }
+    }
+    @media (width <=900px) {
+      flex-wrap: wrap;
+      justify-content: center;
+      > li {
+        width: 48%;
+        flex: 1 0 auto;
+        div.cards-card-body  {
+          h3, h4 , h5 , h6, p {
+            font-size: var(--body-font-size-m) !important;
+          }
+        }
       }
     }
     @media (width <=600px) {
