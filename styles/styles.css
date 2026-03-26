@@ -552,12 +552,24 @@ div.text-light {
 }
 .h1-multi {
   h1 {
-    background: linear-gradient(160deg, var(--orange), var(--purple), var(--blue)) !important;
+    background: linear-gradient(160deg, var(--orange) -10%, var(--purple) 45%, var(--blue) 100%) !important;
     background-clip: text !important;
     color: transparent !important;
   }
   strong {
-    background: linear-gradient(160deg, var(--orange), var(--purple), var(--blue)) !important;
+    background: linear-gradient(160deg, var(--orange) -10%, var(--purple) 45%, var(--blue) 100%) !important;
+    background-clip: text !important;
+    color: transparent !important;
+  }
+}
+.h2-multi {
+  h2 {
+    background: linear-gradient(160deg, var(--orange) -10%, var(--purple) 45%, var(--blue) 100%) !important;
+    background-clip: text !important;
+    color: transparent !important;
+  }
+  strong {
+    background: linear-gradient(160deg, var(--orange) -10%, var(--purple) 45%, var(--blue) 100%) !important;
     background-clip: text !important;
     color: transparent !important;
   }

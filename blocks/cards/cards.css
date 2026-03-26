@@ -1478,15 +1478,15 @@
       }
       &:after {
         top: 16px;
-        right: 26px;
+        right: 24px;
         width: 4px;
-        height: 24px;
+        height: 20px;
         margin-left: -2px;
       }
       &:before {
-        top: 28px;
+        top: 26px;
         right: 16px;
-        width: 24px;
+        width: 20px;
         height: 4px;
         margin-top: -2px;
       }
@@ -1942,7 +1942,7 @@
   &.multi {
     ul {
       li {
-        background: linear-gradient(160deg, var(--orange)-25%, var(--purple) 45%, var(--blue) 100%) !important;
+        background: linear-gradient(160deg, var(--orange)-35%, var(--purple) 45%, var(--blue) 100%) !important;
         border: none;
         .cards-card-body {
           p.button-container {
