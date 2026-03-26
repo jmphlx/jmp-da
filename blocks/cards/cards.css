@@ -86,6 +86,8 @@
 
 .cards-1 {
   ul {
+    display: grid;
+    justify-content: unset;
     li {
       width: 100% !important;
     }
