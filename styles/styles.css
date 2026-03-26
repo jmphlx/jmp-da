@@ -721,6 +721,10 @@ div.dark-blue {
 }
 div.dark-theme {
   background: var(--darkTheme);
+  h2, h3, h4, h5, h6, p {
+    position: relative;
+    z-index: 10 !important;
+  }
 }
 /* ordered list */
 ol{
@@ -930,7 +934,7 @@ a:hover {
     border: 2px solid rgba(0, 0, 0, 0) !important;
   }
 }
-.button-multi-outline {
+.dark-theme.button-multi-outline {
   p.button-container {
     border: 3px solid transparent !important;
     position: relative;
@@ -956,10 +960,16 @@ a:hover {
   &.button-center {
     div:has(p.button-container) {
       width: fit-content;
-      p.button-container {
-        width: fit-content !important;
-        margin: 0 auto !important;
+      .button-container {
+        width: fit-content;
+        margin: 0 auto;
       }
+    }
+  }
+  @media (width <=900px) {
+    div:has(p.button-container) {
+      width: fit-content !important;
+      margin: 0 auto;
     }
   }
 }
@@ -2555,6 +2565,160 @@ div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-30-70, div.
     @media (width <= 600px) {
       width: 100%;
     }
+  }
+}
+/* Bar Viz Sections */
+.section-bar-viz-1 {
+  &:before {
+    background-color: var(--orange);
+    content: '';
+    position: absolute;
+    right: 4rem;
+    top: 23%;
+    width: 2.4rem;
+    height: 4rem;
+    opacity: .3;
+  }
+  &:after {
+    background-color: var(--purpleLight);
+    content: '';
+    position: absolute;
+    left: 4rem;
+    bottom: 25%;
+    width: 2.4rem;
+    height: 5rem;
+    opacity: .3;
+  }
+  .layout-wrapper {
+    &:before {
+      background-color: var(--blueLight);
+      content: '';
+      position: absolute;
+      right: 5rem;
+      bottom: 13%;
+      width: 2.4rem;
+      height: 3rem;
+      opacity: .3;
+    }
+    &:after {
+      background-color: var(--blueLight);
+      content: '';
+      position: absolute;
+      left: 8rem;
+      bottom: 10%;
+      width: 2.4rem;
+      height: 4rem;
+      opacity: .3;
+    }
+  }
+}
+.section-bar-viz-3, .section-bar-viz-5 {
+  position: relative;
+  &:before {
+    background-color: var(--orange);
+    content: '';
+    position: absolute;
+    right: 4rem;
+    top: 23%;
+    width: 2.4rem;
+    height: 4rem;
+    opacity: .3;
+  }
+  &:after {
+    background-color: var(--purpleLight);
+    content: '';
+    position: absolute;
+    left: 4rem;
+    bottom: 5%;
+    width: 2.4rem;
+    height: 5rem;
+    opacity: .3;
+  }
+  .layout-wrapper {
+    &:before {
+      background-color: var(--blueLight);
+      content: '';
+      position: absolute;
+      right: 5rem;
+      bottom: 13%;
+      width: 2.4rem;
+      height: 3rem;
+      opacity: .3;
+    }
+    &:after {
+      background-color: var(--blueLight);
+      content: '';
+      position: absolute;
+      left: 8rem;
+      bottom: 10%;
+      width: 2.4rem;
+      height: 4rem;
+      opacity: .3;
+    }
+  }
+}
+.section-bar-viz-2, .section-bar-viz-4, .section-bar-viz-6 {
+  position: relative;
+  &:before {
+    background-color: var(--blueLight);
+    content: '';
+    position: absolute;
+    right: 4rem;
+    top: 23%;
+    width: 2.4rem;
+    height: 4rem;
+    opacity: .3;
+  }
+  &:after {
+    background-color: var(--orange);
+    content: '';
+    position: absolute;
+    left: 4rem;
+    bottom: 5%;
+    width: 2.4rem;
+    height: 5rem;
+    opacity: .3;
+  }
+  .layout-wrapper {
+    &:before {
+      background-color: var(--blueLight);
+      content: '';
+      position: absolute;
+      right: 5rem;
+      bottom: 20%;
+      width: 2.4rem;
+      height: 3rem;
+      opacity: .3;
+    }
+    &:after {
+      background-color: var(--blueLight);
+      content: '';
+      position: absolute;
+      left: 8rem;
+      bottom: 10%;
+      width: 2.4rem;
+      height: 4rem;
+      opacity: .3;
+    }
+  }
+}
+/* Section Animations */
+.fade-up {
+  opacity: .75;
+  transform: translateY(40px) scale(0.975);
+  animation: fade-up 1.2s ease-in-out forwards;
+  animation-timeline: view();
+  animation-range: entry 0% cover 10%;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: .75;
+    transform: translateY(40px) scale(0.975);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 /* Resource Center Articles */
