@@ -1679,6 +1679,21 @@
       }
     }
   }
+  &.no-link {
+    > ul {
+      > li {
+        cursor: unset;
+        :after {
+          display: none;
+        }
+        &:hover {
+          img {
+            transform: scale(1);
+          }
+        }
+      }
+    }
+  }
 }
 
 .video-hover-card {
