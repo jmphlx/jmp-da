@@ -30,18 +30,7 @@ const embedHubspot = (config) => {
   }
 
   // adds event listener to add embed code on load
-  scriptHubspot.addEventListener('error', () => {
-    // eslint-disable-next-line no-console
-    console.error('Hubspot: failed to load embed script from', scriptHubspot.src);
-  });
-
   scriptHubspot.addEventListener('load', () => {
-    if (typeof hbspt === 'undefined') {
-      // eslint-disable-next-line no-console
-      console.error('Hubspot: hbspt is undefined after script load — form cannot be created.');
-      return;
-    }
-
     const hubspotBlock = document.querySelector('[data-block-name="hubspot"]');
     const scriptCreateHubspotForm = document.createElement('script');
     scriptCreateHubspotForm.textContent = `
