@@ -31,8 +31,12 @@ const embedHubspot = (config) => {
 
   // adds event listener to add embed code on load
   scriptHubspot.addEventListener('error', () => {
+    const errorMsg = `Hubspot: failed to load embed script from ${scriptHubspot.src}`;
     // eslint-disable-next-line no-console
-    console.error('Hubspot: failed to load embed script from', scriptHubspot.src);
+    console.error(errorMsg);
+    if (window.newrelic) {
+      window.newrelic.noticeError(new Error(errorMsg));
+    }
   });
 
   scriptHubspot.addEventListener('load', () => {
