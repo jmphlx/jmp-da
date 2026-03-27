@@ -733,10 +733,6 @@ div.dark-blue {
 }
 div.dark-theme {
   background: var(--darkTheme);
-  h2, h3, h4, h5, h6, p {
-    position: relative;
-    z-index: 10 !important;
-  }
 }
 /* ordered list */
 ol{
