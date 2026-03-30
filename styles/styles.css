@@ -552,24 +552,24 @@ div.text-light {
 }
 .h1-multi {
   h1 {
-    background: linear-gradient(160deg, var(--orange) -10%, var(--purple) 45%, var(--blue) 100%) !important;
+    background: linear-gradient(100deg, var(--redLight) 0%, var(--purple) 45%, var(--blue) 100%) !important;
     background-clip: text !important;
     color: transparent !important;
   }
   strong {
-    background: linear-gradient(160deg, var(--orange) -10%, var(--purple) 45%, var(--blue) 100%) !important;
+    background: linear-gradient(100deg, var(--redLight) 0%, var(--purple) 45%, var(--blue) 100%) !important;
     background-clip: text !important;
     color: transparent !important;
   }
 }
 .h2-multi {
   h2 {
-    background: linear-gradient(160deg, var(--orange) -10%, var(--purple) 45%, var(--blue) 100%) !important;
+    background: linear-gradient(100deg, var(--redLight) 0%, var(--purple) 45%, var(--blue) 100%) !important;
     background-clip: text !important;
     color: transparent !important;
   }
   strong {
-    background: linear-gradient(160deg, var(--orange) -10%, var(--purple) 45%, var(--blue) 100%) !important;
+    background: linear-gradient(100deg, var(--redLight) 0%, var(--purple) 45%, var(--blue) 100%) !important;
     background-clip: text !important;
     color: transparent !important;
   }
@@ -950,10 +950,10 @@ a:hover {
       border: 3px solid;
       border-image-slice: 1;
       border-radius: 5px;
-      border-image-source: linear-gradient(to bottom right, var(--orange) -35%, var(--purple) 50%, var(--blue) 125%);
+      border-image-source: linear-gradient(100deg, var(--redLight) -15%, var(--purple) 50%, var(--blue) 125%);
     } 
     a.button:hover {
-      background: rgba(255, 255, 255, .15);
+      background: rgba(255, 255, 255, .1);
     }
   }
 }
