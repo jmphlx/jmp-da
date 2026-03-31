@@ -519,6 +519,19 @@ function convertCamelToKebabCase(str) {
   return str.replace(/[A-Z]+(?![a-z])|[A-Z]/g, ($, ofs) => (ofs ? '-' : '') + $.toLowerCase());
 }
 
+function setTabFromHash(button, tabpanel) {
+  const tablist = button.parentElement;
+  const block = tablist.parentElement;
+  block.querySelectorAll('[role=tabpanel]').forEach((panel) => {
+    panel.setAttribute('aria-hidden', true);
+  });
+  tablist.querySelectorAll('button').forEach((btn) => {
+    btn.setAttribute('aria-selected', false);
+  });
+  tabpanel.setAttribute('aria-hidden', false);
+  button.setAttribute('aria-selected', true);
+}
+
 export {
   arrayIncludesAllValues,
   arrayIncludesSomeValues,
@@ -544,6 +557,7 @@ export {
   isLanguageSupported,
   isTagProperty,
   parseBlockOptions,
+  setTabFromHash,
   sortPageList,
   updateBodyClassOnWindowResize,
   writeImagePropertyInList,
