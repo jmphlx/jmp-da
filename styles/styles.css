@@ -950,7 +950,7 @@ a:hover {
       border: 3px solid;
       border-image-slice: 1;
       border-radius: 5px;
-      border-image-source: linear-gradient(100deg, var(--redLight) -15%, var(--purple) 50%, var(--blue) 125%);
+      border-image-source: linear-gradient(100deg, var(--redLight) 0%, var(--purple) 50%, var(--blue) 125%);
     } 
     a.button:hover {
       background: rgba(255, 255, 255, .1);
