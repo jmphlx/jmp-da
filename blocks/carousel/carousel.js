@@ -31,6 +31,7 @@ function updateActiveSlide(slide) {
 
 function showSlide(block, slideIndex = 0) {
   const slides = block.querySelectorAll('.carousel-slide');
+  if (!slides.length) return;
   let realSlideIndex = slideIndex < 0 ? slides.length - 1 : slideIndex;
   if (slideIndex >= slides.length) realSlideIndex = 0;
   const activeSlide = slides[realSlideIndex];
@@ -74,7 +75,7 @@ function startAutoScroll(block) {
     intervalTime = 12000; // 12 seconds
   }
   const autoScrollInterval = setInterval(() => {
-    const activeSlideIndex = parseInt(block.dataset.activeSlide, 10);
+    const activeSlideIndex = parseInt(block.dataset.activeSlide, 10) || 0;
     showSlide(block, activeSlideIndex + 1); // Move to next slide
   }, intervalTime); // Set interval time (3000 ms = 3 seconds)
 
