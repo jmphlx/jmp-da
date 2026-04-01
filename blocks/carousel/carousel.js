@@ -2,6 +2,7 @@ import { fetchPlaceholders } from '../../scripts/aem.js';
 import { parseBlockOptions } from '../../scripts/jmp.js';
 
 function updateActiveSlide(slide) {
+  if (slide.dataset.clone) return;
   const block = slide.closest('.carousel');
   const slideIndex = parseInt(slide.dataset.slideIndex, 10);
   block.dataset.activeSlide = slideIndex;
@@ -30,14 +31,33 @@ function updateActiveSlide(slide) {
 }
 
 function showSlide(block, slideIndex = 0) {
-  const slides = block.querySelectorAll('.carousel-slide');
+  const slides = block.querySelectorAll('.carousel-slide:not([data-clone])');
   if (!slides.length) return;
-  let realSlideIndex = slideIndex < 0 ? slides.length - 1 : slideIndex;
-  if (slideIndex >= slides.length) realSlideIndex = 0;
-  const activeSlide = slides[realSlideIndex];
+  const slidesEl = block.querySelector('.carousel-slides');
 
+  if (slideIndex >= slides.length) {
+    // Scroll forward into the clone of slide[0], then instantly snap back
+    const clone = block.querySelector('.carousel-slide[data-clone]');
+    if (clone) {
+      clone.querySelectorAll('a').forEach((link) => link.removeAttribute('tabindex'));
+      slidesEl.scrollTo({ top: 0, left: clone.offsetLeft, behavior: 'smooth' });
+      slidesEl.addEventListener('scrollend', () => {
+        slidesEl.style.scrollBehavior = 'auto';
+        slidesEl.scrollLeft = slides[0].offsetLeft;
+        block.dataset.activeSlide = 0;
+        // eslint-disable-next-line no-param-reassign
+        slidesEl.style.scrollBehavior = '';
+      }, { once: true });
+      return;
+    }
+    slidesEl.scrollTo({ top: 0, left: slides[0].offsetLeft, behavior: 'smooth' });
+    return;
+  }
+
+  const realSlideIndex = slideIndex < 0 ? slides.length - 1 : slideIndex;
+  const activeSlide = slides[realSlideIndex];
   activeSlide.querySelectorAll('a').forEach((link) => link.removeAttribute('tabindex'));
-  block.querySelector('.carousel-slides').scrollTo({
+  slidesEl.scrollTo({
     top: 0,
     left: activeSlide.offsetLeft,
     behavior: 'smooth',
@@ -109,7 +129,7 @@ function bindEvents(block) {
       if (entry.isIntersecting) updateActiveSlide(entry.target);
     });
   }, { threshold: 0.5 });
-  block.querySelectorAll('.carousel-slide').forEach((slide) => {
+  block.querySelectorAll('.carousel-slide:not([data-clone])').forEach((slide) => {
     slideObserver.observe(slide);
   });
 
@@ -205,6 +225,16 @@ export default async function decorate(block) {
     }
     row.remove();
   });
+
+  if (!isSingleSlide) {
+    const firstSlide = slidesWrapper.querySelector('.carousel-slide');
+    if (firstSlide) {
+      const clone = firstSlide.cloneNode(true);
+      clone.setAttribute('data-clone', 'true');
+      clone.removeAttribute('id');
+      slidesWrapper.append(clone);
+    }
+  }
 
   container.append(slidesWrapper);
   block.prepend(container);
