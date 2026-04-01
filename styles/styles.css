@@ -944,16 +944,28 @@ a:hover {
 }
 .dark-theme.button-multi-outline {
   p.button-container {
-    border-radius: 5px;
     a.button:any-link, a.button {
+      position: relative;
       background-color: transparent;
-      border: 3px solid;
-      border-image-slice: 1;
-      border-radius: 5px;
-      border-image-source: linear-gradient(100deg, var(--redLight) 0%, var(--purple) 50%, var(--blue) 125%);
-    } 
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: calc(100% - 6px);
+        height: calc(100% - 6px);
+        border: 3px solid;
+        border-image-slice: 1;
+        border-radius: 5px;
+        border-image-source: linear-gradient(100deg, var(--redLight) 0%, var(--purple) 50%, var(--blue) 125%);
+      }
+    }
     a.button:hover {
       background: rgba(255, 255, 255, .1);
+    }
+    @media (width <=900px) {
+      padding-bottom: 24px;
     }
   }
 }
@@ -2595,6 +2607,7 @@ div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-30-70, div.
       opacity: .3;
     }
   }
+  
 }
 .section-bar-viz-3, .section-bar-viz-5 {
   position: relative;
