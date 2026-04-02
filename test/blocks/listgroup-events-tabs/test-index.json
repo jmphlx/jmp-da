@@ -1,0 +1,95 @@
+{
+  "columns": [
+    "path",
+    "title",
+    "eventDisplayLabel",
+    "eventDisplayTime",
+    "eventDateTime",
+    "offDateTime",
+    "robots",
+    "redirectTarget",
+    "tags"
+  ],
+  "data": [
+    {
+      "path": "/events/conference-one",
+      "title": "In-Person Event One",
+      "eventDisplayLabel": "In-Person Event",
+      "eventDisplayTime": "April 5, 2099 9:00 AM",
+      "eventDateTime": "2099-04-05T09:00:00",
+      "offDateTime": "2099-04-06T00:00:00",
+      "robots": "",
+      "redirectTarget": "",
+      "tags": [
+        "event-type|in-person-event"
+      ]
+    },
+    {
+      "path": "/events/webinar-one",
+      "title": "Live Webinar One",
+      "eventDisplayLabel": "Live Webinar",
+      "eventDisplayTime": "April 15, 2099 2:00 PM",
+      "eventDateTime": "2099-04-15T14:00:00",
+      "offDateTime": "2099-04-16T00:00:00",
+      "robots": "",
+      "redirectTarget": "",
+      "tags": [
+        "event-type|live-webinar"
+      ]
+    },
+    {
+      "path": "/events/webinar-two",
+      "title": "Live Webinar Two",
+      "eventDisplayLabel": "Live Webinar",
+      "eventDisplayTime": "April 20, 2099 3:00 PM",
+      "eventDateTime": "2099-04-20T15:00:00",
+      "offDateTime": "2099-04-21T00:00:00",
+      "robots": "",
+      "redirectTarget": "https://external.com/webinar-two",
+      "tags": [
+        "event-type|live-webinar"
+      ]
+    },
+    {
+      "path": "/events/past-webinar",
+      "title": "Past Live Webinar",
+      "eventDisplayLabel": "Live Webinar",
+      "eventDisplayTime": "January 1, 2020 10:00 AM",
+      "eventDateTime": "2020-01-01T10:00:00",
+      "offDateTime": "2020-01-02T00:00:00",
+      "robots": "",
+      "redirectTarget": "",
+      "tags": [
+        "event-type|live-webinar"
+      ]
+    },
+    {
+      "path": "/events/noindex-conference",
+      "title": "Noindex In-Person Event",
+      "eventDisplayLabel": "In-Person Event",
+      "eventDisplayTime": "April 10, 2099 11:00 AM",
+      "eventDateTime": "2099-04-10T11:00:00",
+      "offDateTime": "2099-04-11T00:00:00",
+      "robots": "noindex",
+      "redirectTarget": "",
+      "tags": [
+        "event-type|in-person-event"
+      ]
+    },
+    {
+      "path": "/events/no-type",
+      "title": "No Type Event",
+      "eventDisplayLabel": "",
+      "eventDisplayTime": "April 12, 2099 12:00 PM",
+      "eventDateTime": "2099-04-12T12:00:00",
+      "offDateTime": "2099-04-13T00:00:00",
+      "robots": "",
+      "redirectTarget": "",
+      "tags": ""
+    }
+  ],
+  "offset": 0,
+  "limit": 6,
+  "total": 6,
+  ":type": "sheet"
+}
