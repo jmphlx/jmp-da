@@ -21,6 +21,10 @@
   }
 }
 
+.tabs-tab {
+  overflow-anchor: none;
+}
+
 .listgroup-events-tabs .tabs-list button {
   cursor: pointer;
   flex: 0 0 max-content;

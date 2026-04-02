@@ -27,6 +27,7 @@ import {
   getDefaultMetaImage,
   getLanguage,
   isLanguageSupported,
+  setTabFromHash,
 } from './jmp.js';
 
 const experimentationConfig = {
@@ -712,7 +713,10 @@ async function loadLazy(doc) {
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
-  if (hash && element) element.scrollIntoView();
+  if (hash.indexOf('tab-') > -1) {
+    const tabpanel = document.getElementById(`${hash.substring(1).replace('tab', 'tabpanel')}`);
+    setTabFromHash(element, tabpanel);
+  } else if (hash && element) element.scrollIntoView();
 
   const headerValue = getMetadata('nav');
   const footerValue = getMetadata('footer');

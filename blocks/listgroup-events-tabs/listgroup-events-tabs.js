@@ -136,10 +136,11 @@ export default async function decorate(block) {
   Object.keys(tabs).forEach((tab, i) => {
     // create and decorate tabpanel
     const tabpanel = document.createElement('div');
+    const tabID = tabs[tab].toLowerCase().replaceAll(' ', '-');
     tabpanel.className = 'tabs-panel';
-    tabpanel.id = `tabpanel-${i}`;
+    tabpanel.id = `tabpanel-${tabID}`;
     tabpanel.setAttribute('aria-hidden', !!i);
-    tabpanel.setAttribute('aria-labelledby', `tab-${i}`);
+    tabpanel.setAttribute('aria-labelledby', `tab-${tabID}`);
     tabpanel.setAttribute('role', 'tabpanel');
 
     // Add filtered data to tabpanel (reset for each tab)
@@ -198,7 +199,7 @@ export default async function decorate(block) {
     // build tab button
     const button = document.createElement('button');
     button.className = 'tabs-tab';
-    button.id = `tab-${i}`;
+    button.id = `tab-${tabID}`;
     button.innerHTML = tabs[tab];
     button.setAttribute('aria-controls', `tabpanel-${i}`);
     button.setAttribute('aria-selected', !i);
@@ -213,6 +214,7 @@ export default async function decorate(block) {
       });
       tabpanel.setAttribute('aria-hidden', false);
       button.setAttribute('aria-selected', true);
+      window.history.pushState(null, null, `#${button.id}`);
     });
     tablist.append(button);
   });
