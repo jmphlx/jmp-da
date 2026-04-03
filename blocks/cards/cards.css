@@ -71,7 +71,7 @@
 .cards-multi {
   > ul {
     > li {
-      background: linear-gradient(160deg, rgba(255, 80, 0, .2), rgba(100, 54, 149, .2), rgba(3, 120, 205, .2));
+      background: linear-gradient(160deg, rgba(255, 80, 0, .3) -25%, rgba(100, 54, 149, .3), rgba(3, 120, 205, .3));
       background-color: transparent !important;
       border: none;
       border-radius: 10px;

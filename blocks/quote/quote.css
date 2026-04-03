@@ -81,13 +81,15 @@ div.quote-small .quote-quotation {
   margin: 3.2rem 0;
 }
 
-.quote{
+.quote {
   &.text-light{
     p, h1, h2, h3, h4, h5 {
     color: #ffffff !important;
+    z-index: 2;
     }
     :first-child:before, :first-child:after {
-      color: rgba(220, 220, 220, .5) !important;
+      color: rgba(220, 220, 220, .2) !important;
+      z-index: 1 !important;
     }
   }
 }
