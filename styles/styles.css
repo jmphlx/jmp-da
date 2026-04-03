@@ -2565,6 +2565,7 @@ div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-30-70, div.
 }
 /* Bar Viz Sections */
 .section-bar-viz-1 {
+  position: relative;
   &:before {
     background-color: var(--blueLight);
     content: '';
@@ -2583,7 +2584,7 @@ div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-30-70, div.
     content: '';
     position: absolute;
     left: 16px;
-    bottom: 50%;
+    bottom: 20%;
     width: 2.4rem;
     height: 5rem;
     opacity: .3;
