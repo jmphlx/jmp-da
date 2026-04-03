@@ -2566,91 +2566,114 @@ div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-30-70, div.
 /* Bar Viz Sections */
 .section-bar-viz-1 {
   &:before {
-    background-color: var(--orange);
+    background-color: var(--blueLight);
     content: '';
     position: absolute;
-    right: 4rem;
+    right: 16px;
     top: 23%;
     width: 2.4rem;
     height: 4rem;
     opacity: .3;
+    @media (width <=900px) {
+      display: none;
+    }
   }
   &:after {
     background-color: var(--purpleLight);
     content: '';
     position: absolute;
-    left: 4rem;
-    bottom: 25%;
+    left: 16px;
+    bottom: 50%;
     width: 2.4rem;
     height: 5rem;
     opacity: .3;
+    @media (width <=900px) {
+      display: none;
+    }
   }
   .layout-wrapper {
     &:before {
       background-color: var(--blueLight);
       content: '';
       position: absolute;
-      right: 5rem;
+      right: 16px;
       bottom: 13%;
       width: 2.4rem;
       height: 3rem;
       opacity: .3;
+      @media (width <=900px) {
+        display: none;
+      }
     }
     &:after {
       background-color: var(--blueLight);
       content: '';
       position: absolute;
-      left: 8rem;
-      bottom: 10%;
+      left: 24px;
+      bottom: 50%;
       width: 2.4rem;
       height: 4rem;
       opacity: .3;
+      @media (width <=900px) {
+        display: none;
+      }
     }
   }
-  
 }
 .section-bar-viz-3, .section-bar-viz-5 {
   position: relative;
   &:before {
-    background-color: var(--orange);
+    background-color: var(--blueLight);
     content: '';
     position: absolute;
-    right: 4rem;
+    right: 16px;
     top: 23%;
     width: 2.4rem;
     height: 4rem;
     opacity: .3;
+    @media (width <=900px) {
+      display: none;
+    }
   }
   &:after {
     background-color: var(--purpleLight);
     content: '';
     position: absolute;
-    left: 4rem;
-    bottom: 5%;
+    left: 16px;
+    bottom: 50%;
     width: 2.4rem;
     height: 5rem;
     opacity: .3;
+    @media (width <=900px) {
+      display: none;
+    }
   }
   .layout-wrapper {
     &:before {
       background-color: var(--blueLight);
       content: '';
       position: absolute;
-      right: 5rem;
+      right: 16px;
       bottom: 13%;
       width: 2.4rem;
       height: 3rem;
       opacity: .3;
+      @media (width <=900px) {
+        display: none;
+      }
     }
     &:after {
       background-color: var(--blueLight);
       content: '';
       position: absolute;
-      left: 8rem;
-      bottom: 10%;
+      left: 24px;
+      bottom: 20%;
       width: 2.4rem;
       height: 4rem;
       opacity: .3;
+      @media (width <=900px) {
+        display: none;
+      }
     }
   }
 }
@@ -2660,42 +2683,54 @@ div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-30-70, div.
     background-color: var(--blueLight);
     content: '';
     position: absolute;
-    right: 4rem;
-    top: 23%;
+    right: 16px;
+    top: 30%;
     width: 2.4rem;
     height: 4rem;
     opacity: .3;
+    @media (width <=900px) {
+      display: none;
+    }
   }
   &:after {
-    background-color: var(--orange);
+    background-color: var(--blueLight);
     content: '';
     position: absolute;
-    left: 4rem;
-    bottom: 5%;
+    left: 16px;
+    bottom: 35%;
     width: 2.4rem;
     height: 5rem;
     opacity: .3;
+    @media (width <=900px) {
+      display: none;
+    }
   }
   .layout-wrapper {
     &:before {
       background-color: var(--blueLight);
       content: '';
       position: absolute;
-      right: 5rem;
+      right: 24px;
       bottom: 20%;
       width: 2.4rem;
       height: 3rem;
       opacity: .3;
+      @media (width <=900px) {
+        display: none;
+      }
     }
     &:after {
-      background-color: var(--blueLight);
+      background-color: var(--purpleLight);
       content: '';
       position: absolute;
-      left: 8rem;
+      left: 16px;
       bottom: 10%;
       width: 2.4rem;
       height: 4rem;
       opacity: .3;
+      @media (width <=900px) {
+        display: none;
+      }
     }
   }
 }

@@ -1328,9 +1328,6 @@ div.clm-80-20 {
     }
   }
 }
-
-
-
 .product-type {
   .columns {
     div > h3 {
@@ -1339,21 +1336,36 @@ div.clm-80-20 {
   }
 }
 .icon-bullet {
-  > div > div {
-    position: relative;
-    margin-bottom: 1rem;
-    .icon {
-      height: 64px;
-      width: 64px;
-      position: absolute;
-      left: 0;
+  div {
+    div {
+      position: relative;
+      margin-bottom: 1rem;
+      min-height: 84px;
+      .icon {
+        height: 64px;
+        width: 64px;
+        position: absolute;
+        left: 0;
+      }
+      h3, h4, h5, p {
+        text-align: left !important;
+        margin-left: 84px;
+      }
+      h5 {
+        padding: 0;
+        margin: 1.5rem 0 .5em 84px;
+      }
+      h5:has(p) {
+        padding: unset;
+      }
+      p:has(span.icon) {
+        margin-bottom: 0;
+      }
     }
-    h3, h4, h5, p {
-      text-align: left !important;
-      margin-left: 84px;
-    }
-    p:has(span.icon) {
-      margin-bottom: 0;
+  }
+  div:has(h5 + p) {
+    h5 {
+      margin-top: 0;
     }
   }
 }
