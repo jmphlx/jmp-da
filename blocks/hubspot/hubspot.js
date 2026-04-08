@@ -57,7 +57,22 @@ const embedHubspot = (block, config) => {
   });
 
   // adds event listener to add embed code on load
+  scriptHubspot.addEventListener('error', () => {
+    const errorMsg = `Hubspot: failed to load embed script from ${scriptHubspot.src}`;
+    // eslint-disable-next-line no-console
+    console.error(errorMsg);
+    if (window.newrelic) {
+      window.newrelic.noticeError(new Error(errorMsg));
+    }
+  });
+
   scriptHubspot.addEventListener('load', () => {
+    if (typeof hbspt === 'undefined') {
+      // eslint-disable-next-line no-console
+      console.error('Hubspot: hbspt is undefined after script load — form cannot be created.');
+      return;
+    }
+
     const hubspotBlock = document.querySelector('[data-block-name="hubspot"]');
     const scriptCreateHubspotForm = document.createElement('script');
     scriptCreateHubspotForm.textContent = `
