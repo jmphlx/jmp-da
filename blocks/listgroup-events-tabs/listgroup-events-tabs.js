@@ -141,7 +141,7 @@ export default async function decorate(block) {
       const tabSubstring = tab.substring(tab.indexOf('|') + 1);
       tabID = tabSubstring.toLowerCase();
     } else {
-      tabID = tabs[tab].toLowerCase().replaceAll(' ', '-');
+      tabID = tab.toLowerCase().replaceAll(' ', '-');
     }
     tabpanel.className = 'tabs-panel';
     tabpanel.id = `tabpanel-${tabID}`;
