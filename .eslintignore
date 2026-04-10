@@ -2,3 +2,4 @@ helix-importer-ui
 hbspot
 /test/**
 /plugins/experimentation/**
+/scripts/newrelic.js

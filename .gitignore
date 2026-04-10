@@ -10,3 +10,4 @@ helix-importer-ui
 .code
 .vscodetest/screenshots/
 test/screenshots/*
+.claude/settings.local.json
