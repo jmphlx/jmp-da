@@ -136,7 +136,13 @@ export default async function decorate(block) {
   Object.keys(tabs).forEach((tab, i) => {
     // create and decorate tabpanel
     const tabpanel = document.createElement('div');
-    const tabID = tabs[tab].toLowerCase().replaceAll(' ', '-');
+    let tabID;
+    if (tab.indexOf('|') > -1) {
+      const tabSubstring = tab.substring(tab.indexOf('|') + 1);
+      tabID = tabSubstring.toLowerCase();
+    } else {
+      tabID = tab.toLowerCase().replaceAll(' ', '-');
+    }
     tabpanel.className = 'tabs-panel';
     tabpanel.id = `tabpanel-${tabID}`;
     tabpanel.setAttribute('aria-hidden', !!i);

@@ -38,20 +38,20 @@ describe('Listgroup Events Tabs', () => {
 
     it('renders tab buttons with correct IDs and text', () => {
       const tabs = document.querySelectorAll('button.tabs-tab');
-      expect(tabs[0].id).to.equal('tab-all-events');
+      expect(tabs[0].id).to.equal('tab-all');
       expect(tabs[0].textContent).to.equal('All Events');
-      expect(tabs[1].id).to.equal('tab-live-webinars');
+      expect(tabs[1].id).to.equal('tab-live-webinar');
       expect(tabs[1].textContent).to.equal('Live Webinars');
-      expect(tabs[2].id).to.equal('tab-in-person-events');
+      expect(tabs[2].id).to.equal('tab-in-person-event');
       expect(tabs[2].textContent).to.equal('In-Person Events');
     });
 
     it('renders tab panels with correct IDs', () => {
       const panels = document.querySelectorAll('.tabs-panel');
       expect(panels.length).to.equal(3);
-      expect(panels[0].id).to.equal('tabpanel-all-events');
-      expect(panels[1].id).to.equal('tabpanel-live-webinars');
-      expect(panels[2].id).to.equal('tabpanel-in-person-events');
+      expect(panels[0].id).to.equal('tabpanel-all');
+      expect(panels[1].id).to.equal('tabpanel-live-webinar');
+      expect(panels[2].id).to.equal('tabpanel-in-person-event');
     });
 
     it('has tablist and tabpanel ARIA roles', () => {
@@ -95,7 +95,7 @@ describe('Listgroup Events Tabs', () => {
     });
 
     it('All tab shows only events with a non-empty event-type tag', () => {
-      const allPanel = document.querySelector('#tabpanel-all-events');
+      const allPanel = document.querySelector('#tabpanel-all');
       const items = allPanel.querySelectorAll('li');
       // past-webinar filtered by offDateTime, noindex-conference filtered by robots,
       // no-type filtered by empty tags — 3 events remain
@@ -103,19 +103,19 @@ describe('Listgroup Events Tabs', () => {
     });
 
     it('All tab excludes past events', () => {
-      const allPanel = document.querySelector('#tabpanel-all-events');
+      const allPanel = document.querySelector('#tabpanel-all');
       const titles = [...allPanel.querySelectorAll('.title')].map((el) => el.textContent);
       expect(titles).to.not.include('Past Live Webinar');
     });
 
     it('All tab excludes noindex pages', () => {
-      const allPanel = document.querySelector('#tabpanel-all-events');
+      const allPanel = document.querySelector('#tabpanel-all');
       const titles = [...allPanel.querySelectorAll('.title')].map((el) => el.textContent);
       expect(titles).to.not.include('Noindex In-Person Event');
     });
 
     it('All tab excludes events with no event-type tag', () => {
-      const allPanel = document.querySelector('#tabpanel-all-events');
+      const allPanel = document.querySelector('#tabpanel-all');
       const titles = [...allPanel.querySelectorAll('.title')].map((el) => el.textContent);
       expect(titles).to.not.include('No Type Event');
     });
@@ -130,7 +130,7 @@ describe('Listgroup Events Tabs', () => {
     });
 
     it('events in All tab are sorted by eventDateTime ascending', () => {
-      const allPanel = document.querySelector('#tabpanel-all-events');
+      const allPanel = document.querySelector('#tabpanel-all');
       const titles = [...allPanel.querySelectorAll('.title')].map((el) => el.textContent);
       expect(titles[0]).to.equal('In-Person Event One');
       expect(titles[1]).to.equal('Live Webinar One');
@@ -147,7 +147,7 @@ describe('Listgroup Events Tabs', () => {
     });
 
     it('Live Webinars tab shows only live-webinar events', () => {
-      const liveWebinarPanel = document.querySelector('#tabpanel-live-webinars');
+      const liveWebinarPanel = document.querySelector('#tabpanel-live-webinar');
       const items = liveWebinarPanel.querySelectorAll('li');
       expect(items.length).to.equal(2);
       const titles = [...items].map((li) => li.querySelector('.title').textContent);
@@ -156,7 +156,7 @@ describe('Listgroup Events Tabs', () => {
     });
 
     it('In-Person Events tab shows only in-person events', () => {
-      const inPersonPanel = document.querySelector('#tabpanel-in-person-events');
+      const inPersonPanel = document.querySelector('#tabpanel-in-person-event');
       const items = inPersonPanel.querySelectorAll('li');
       expect(items.length).to.equal(1);
       expect(items[0].querySelector('.title').textContent).to.equal('In-Person Event One');
@@ -172,7 +172,7 @@ describe('Listgroup Events Tabs', () => {
     });
 
     it('card links use item path when no redirectTarget', () => {
-      const allPanel = document.querySelector('#tabpanel-all-events');
+      const allPanel = document.querySelector('#tabpanel-all');
       const links = allPanel.querySelectorAll('a');
       const conferenceLink = [...links].find((a) => a.querySelector('.title')?.textContent === 'In-Person Event One');
       expect(conferenceLink.href).to.include('/events/conference-one');
@@ -180,7 +180,7 @@ describe('Listgroup Events Tabs', () => {
     });
 
     it('card links use redirectTarget and open in new tab when redirectTarget is set', () => {
-      const allPanel = document.querySelector('#tabpanel-all-events');
+      const allPanel = document.querySelector('#tabpanel-all');
       const links = allPanel.querySelectorAll('a');
       const redirectLink = [...links].find((a) => a.querySelector('.title')?.textContent === 'Live Webinar Two');
       expect(redirectLink.href).to.equal('https://external.com/webinar-two');
@@ -188,7 +188,7 @@ describe('Listgroup Events Tabs', () => {
     });
 
     it('cards render title, category label, and time', () => {
-      const allPanel = document.querySelector('#tabpanel-all-events');
+      const allPanel = document.querySelector('#tabpanel-all');
       const firstItem = allPanel.querySelector('li');
       expect(firstItem.querySelector('.title')).to.not.be.null;
       expect(firstItem.querySelector('.tag-category')).to.not.be.null;
@@ -196,7 +196,7 @@ describe('Listgroup Events Tabs', () => {
     });
 
     it('cards display the correct eventDisplayLabel and eventDisplayTime', () => {
-      const allPanel = document.querySelector('#tabpanel-all-events');
+      const allPanel = document.querySelector('#tabpanel-all');
       const links = allPanel.querySelectorAll('a');
       const conferenceCard = [...links].find((a) => a.querySelector('.title')?.textContent === 'In-Person Event One');
       expect(conferenceCard.querySelector('.tag-category').textContent).to.equal('In-Person Event');
@@ -204,7 +204,7 @@ describe('Listgroup Events Tabs', () => {
     });
 
     it('list uses the list-tile class', () => {
-      const allPanel = document.querySelector('#tabpanel-all-events');
+      const allPanel = document.querySelector('#tabpanel-all');
       const list = allPanel.querySelector('ul');
       expect(list.classList.contains('listOfItems')).to.be.true;
       expect(list.classList.contains('list-tile')).to.be.true;
@@ -220,22 +220,22 @@ describe('Listgroup Events Tabs', () => {
     });
 
     it('clicking a tab makes its panel visible', () => {
-      document.querySelector('#tab-live-webinars').click();
-      const liveWebinarPanel = document.querySelector('#tabpanel-live-webinars');
+      document.querySelector('#tab-live-webinar').click();
+      const liveWebinarPanel = document.querySelector('#tabpanel-live-webinar');
       expect(liveWebinarPanel.getAttribute('aria-hidden')).to.equal('false');
     });
 
     it('clicking a tab hides the previously active panel', () => {
-      document.querySelector('#tab-live-webinars').click();
-      const allPanel = document.querySelector('#tabpanel-all-events');
+      document.querySelector('#tab-live-webinar').click();
+      const allPanel = document.querySelector('#tabpanel-all');
       expect(allPanel.getAttribute('aria-hidden')).to.equal('true');
     });
 
     it('clicking a tab sets aria-selected on the clicked tab', () => {
-      document.querySelector('#tab-in-person-events').click();
-      expect(document.querySelector('#tab-in-person-events').getAttribute('aria-selected')).to.equal('true');
-      expect(document.querySelector('#tab-live-webinars').getAttribute('aria-selected')).to.equal('false');
-      expect(document.querySelector('#tab-all-events').getAttribute('aria-selected')).to.equal('false');
+      document.querySelector('#tab-in-person-event').click();
+      expect(document.querySelector('#tab-in-person-event').getAttribute('aria-selected')).to.equal('true');
+      expect(document.querySelector('#tab-live-webinar').getAttribute('aria-selected')).to.equal('false');
+      expect(document.querySelector('#tab-all').getAttribute('aria-selected')).to.equal('false');
     });
 
     after(() => { stub.reset(); });
@@ -253,7 +253,7 @@ describe('Listgroup Events Tabs', () => {
     });
 
     it('All tab shows all filtered events sorted by date', () => {
-      const allPanel = document.querySelector('#tabpanel-all-events');
+      const allPanel = document.querySelector('#tabpanel-all');
       const titles = [...allPanel.querySelectorAll('.title')].map((el) => el.textContent);
       expect(titles.length).to.equal(3);
       expect(titles[0]).to.equal('In-Person Event One');
