@@ -1,0 +1,141 @@
+.auto-nav.skp nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  transition: all 0.3s ease;
+}
+
+.auto-nav.skp nav a {
+  font-size: 1.8rem;
+  color: #194573;
+  font-family: "anova-regular", Arial, Helvetica, sans-serif;
+  text-decoration: none;
+  line-height: 1.25em;
+  text-wrap: wrap;
+  transition: all 0.3s ease;
+}
+
+/* Top-level list items */
+.auto-nav.skp nav > ul > li {
+  position: relative;
+  padding: 0 0 0 1.2rem;
+  margin: 0 0 4px 0;
+  transition: all 0.3s ease;
+}
+
+/* Accent bar */
+.auto-nav.skp nav > ul > li::before {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 100%;
+  position: absolute;
+  left: -5px;
+  top: 0;
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+@media (width >= 900px) {
+  .auto-nav.skp nav > ul > li:hover::before {
+    background-color: #7c9db6;
+  }
+}
+
+/* Active ancestor or current page — show accent bar */
+.auto-nav.skp nav > ul > li:has(details[open])::before,
+.auto-nav.skp nav > ul > li:has(a[aria-current="page"])::before {
+  background-color: #7c9db6;
+}
+
+/* Active top-level link — bold */
+.auto-nav.skp nav > ul > li:has(details[open]) > details > summary > a,
+.auto-nav.skp nav > ul > li > a[aria-current="page"] {
+  font-family: "anova-bold", Arial, Helvetica, sans-serif;
+}
+
+/* ---- Details / Summary ---- */
+.auto-nav.skp nav details {
+  display: flex;
+  flex-direction: column;
+}
+
+.auto-nav.skp nav summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.auto-nav.skp nav summary::-webkit-details-marker {
+  display: none;
+}
+
+/* ---- Nested list ---- */
+.auto-nav.skp nav ul ul {
+  display: none;
+  padding-left: 8px;
+}
+
+.auto-nav.skp nav details[open] > ul {
+  display: flex;
+}
+
+/* Nested list items */
+.auto-nav.skp nav ul ul li {
+  position: relative;
+  padding: 2px 0 0 5px;
+  margin: 0;
+}
+
+.auto-nav.skp nav ul ul li a {
+  font-size: 1.6rem;
+  color: #194573;
+}
+
+/* Bullet dot for leaf nested items */
+.auto-nav.skp nav ul ul li::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: -6px;
+  top: 9px;
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 50%;
+  background-color: #7c9db6;
+}
+
+@media (width >= 900px) {
+  .auto-nav.skp nav ul ul li:hover::after {
+    background-color: #194573;
+  }
+}
+
+/* Chevron arrow for nested items that have children (details) */
+.auto-nav.skp nav ul ul li:has(details)::after {
+  background-color: transparent;
+  border: solid #7c9db6;
+  border-width: 0 2px 2px 0;
+  border-radius: 0;
+  transform: rotate(45deg) translateY(-100%);
+  left: -20px;
+  top: 11px;
+}
+
+@media (width >= 900px) {
+  .auto-nav.skp nav ul ul li:has(details):hover::after {
+    border-color: #194573;
+  }
+}
+
+/* Current page link — bold */
+.auto-nav.skp nav a[aria-current="page"] {
+  font-family: "anova-bold", Arial, Helvetica, sans-serif;
+  color: #194573;
+}
+
+/* Current nested item bullet — darker */
+.auto-nav.skp nav ul ul li:has(a[aria-current="page"])::after {
+  background-color: #194573;
+}
