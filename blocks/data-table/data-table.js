@@ -121,8 +121,8 @@ export default async function decorate(block) {
   const totalPages = size ? Math.ceil(matching.length / size) : 1;
 
   const pagination = size && matching.length > size ? createTag('div', { class: 'dt-pagination' }) : null;
-  const prevBtn = pagination ? createTag('button', { class: 'dt-pagination-prev' }, '‹') : null;
-  const nextBtn = pagination ? createTag('button', { class: 'dt-pagination-next' }, '›') : null;
+  const prevBtn = pagination ? createTag('button', { class: 'dt-pagination-prev' }, '') : null;
+  const nextBtn = pagination ? createTag('button', { class: 'dt-pagination-next' }, '') : null;
   const pageButtons = pagination ? createTag('div', { class: 'dt-pagination-pages' }) : null;
   let tableElement;
 
