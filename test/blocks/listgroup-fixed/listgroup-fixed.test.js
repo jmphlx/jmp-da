@@ -20,6 +20,9 @@ function jsonOk(body) {
 describe('Fixed Listgroup', () => {
   describe('Generic', () => {
     before(async () => {
+      // resourceType is a tag property — pre-seed tagtranslations so getTagTranslations()
+      // short-circuits without consuming a fetch stub slot.
+      window.tagtranslations = {};
       stub.onCall(0).returns(jsonOk(customerAPage));
       stub.onCall(1).returns(jsonOk(seminarBPage));
       document.body.innerHTML = await readFile({ path: './fixedList.html' });
@@ -39,7 +42,7 @@ describe('Fixed Listgroup', () => {
       expect(listItems.length).to.equal(2);
       expect(listItems[0].children.length).to.equal(3);
       expect(listItems[0].querySelector('span.title')?.textContent).to.equal('Customer A');
-      expect(listItems[0].querySelector('img')?.src).to.equal('http://localhost:3000/icons/jmp-com-share.jpg');
+      expect(listItems[0].querySelector('img')?.src).to.equal(`${window.location.origin}/icons/jmp-com-share.jpg`);
       expect(listItems[0].querySelector('span.resourceType')?.textContent).to.equal('Customer Story');
 
       expect(listItems[1].querySelector('span.title')?.textContent).to.equal('Seminar B');
@@ -47,6 +50,7 @@ describe('Fixed Listgroup', () => {
 
     
     after(async () => {
+      delete window.tagtranslations;
       stub.reset();
     });
   });

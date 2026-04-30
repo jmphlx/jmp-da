@@ -437,7 +437,9 @@ function sortPageList(pageList, sortBy, sortOrder) {
           ? -1 : 1);
       });
       break;
+    case undefined:
     case '':
+    case 'releasedate':
       sortedList.sort((a, b) => {
         if (sortOrder !== undefined && sortOrder === 'descending') {
           return ((new Date(a.releaseDate) - new Date(b.releaseDate)) < 0

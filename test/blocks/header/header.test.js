@@ -17,6 +17,9 @@ describe('Navigation Module', () => {
       removeEventListener: () => {},
     });
 
+    // Use the current page path so the sections aria-current logic matches.
+    const currentPath = window.location.pathname;
+
     // Mock fetch to return basic nav HTML
     window.fetch = async () => ({
       text: async () => `
@@ -26,6 +29,7 @@ describe('Navigation Module', () => {
             <li>
               <a href="#">English</a>
               <ul>
+                <li><a href="/en/">English</a></li>
                 <li><a href="/fr/">Français</a></li>
               </ul>
             </li>
@@ -37,8 +41,8 @@ describe('Navigation Module', () => {
         <div class="sections">
           <ul>
             <li>
-              <a href="/en/foo">Foo</a>
-              <ul><li><a href="/en/foo/bar">Bar</a></li></ul>
+              <a href="${currentPath}">Foo</a>
+              <ul><li><a href="${currentPath}/bar">Bar</a></li></ul>
             </li>
           </ul>
         </div>

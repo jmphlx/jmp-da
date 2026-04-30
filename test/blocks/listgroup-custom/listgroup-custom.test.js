@@ -111,6 +111,12 @@ describe('Custom Listgroup', () => {
   
   describe('Filter By Dropdown', () => {
     before(async () => {
+      // industry is a tag property — pre-seed tagtranslations so getTagTranslations()
+      // short-circuits without consuming a fetch stub slot.
+      window.tagtranslations = {
+        'industry|chemistry': 'Chemistry',
+        'industry|industrial-manufacturing': 'Industrial Manufacturing',
+      };
       stub.onCall(0).returns(jsonOk(JSON.parse(pagedata)));
       stub.onCall(1).returns(jsonOk(JSON.parse(multipageQueryData)));
       document.body.innerHTML = await readFile({ path: './filterListgroup.html' });
@@ -138,7 +144,7 @@ describe('Custom Listgroup', () => {
       const dropdownItems = dropdown.querySelectorAll('option');
       expect(dropdownItems.length).to.equal(3);
 
-      dropdown.value = 'chemistry';
+      dropdown.value = 'industry|chemistry';
       dropdown.dispatchEvent(new Event('change'));
 
       listofitems = document.querySelector('ul.listOfItems');
@@ -146,6 +152,7 @@ describe('Custom Listgroup', () => {
     });
 
     after(async () => {
+      delete window.tagtranslations;
       stub.reset();
     });
   });

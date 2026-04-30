@@ -1,57 +1,27 @@
 import { fixture, html, expect } from '@open-wc/testing';
-import { onSearchInput } from '../../../blocks/header/search.js'; // Adjust if needed
+import { onSearchInput } from '../../../blocks/header/search.js';
 
 describe('Search Module (with manual mocks)', () => {
-  const originalFns = {};
-
   beforeEach(() => {
-    // Mock global helper.createTag
-    originalFns.createTag = window.createTag;
-    window.createTag = (tag, attrs = {}, content = '') => {
-      const el = document.createElement(tag);
-      Object.entries(attrs).forEach(([key, val]) => el.setAttribute(key, val));
-      if (typeof content === 'string') {
-        el.textContent = content;
-      } else if (content instanceof HTMLElement) {
-        el.appendChild(content);
-      } else if (Array.isArray(content)) {
-        content.forEach((child) => el.appendChild(child));
-      }
-      return el;
-    };
-
-    // Mock global search functions
-    originalFns.fetchIndex = window.fetchIndex;
-    originalFns.getCommonsSheet = window.getCommonsSheet;
-    originalFns.getTranslationStringEnum = window.getTranslationStringEnum;
-    originalFns.getTopResults = window.getTopResults;
-    originalFns.getSearchResults = window.getSearchResults;
-
-    window.fetchIndex = async () => {};
-    window.getCommonsSheet = async () => {};
-    window.getTranslationStringEnum = () => ({
-      NO_RESULTS_FOUND: 'No results found',
-    });
-
+    // Pre-seed commonsSheet so getCommonsSheet() short-circuits without fetching.
     window.commonsSheet = {
-      keywords: [],
-      translations: {
-        'no results found': 'No results found',
-      },
+      keywords: {},
+      translations: { 'no results found': 'No results found' },
+      complete: true,
+    };
+    // Pre-seed searchIndex so fetchIndex() short-circuits without fetching.
+    window.searchIndex = {
+      data: [],
+      complete: true,
     };
   });
 
   afterEach(() => {
-    Object.entries(originalFns).forEach(([key, fn]) => {
-      window[key] = fn;
-    });
     delete window.commonsSheet;
+    delete window.searchIndex;
   });
 
   it('shows no results message when no hits are found', async () => {
-    window.getTopResults = () => [];
-    window.getSearchResults = () => [];
-
     const container = await fixture(html`<div></div>`);
     await onSearchInput('nosuchterm', container);
 
@@ -61,17 +31,14 @@ describe('Search Module (with manual mocks)', () => {
   });
 
   it('renders top + search results', async () => {
-    const fakeHit = {
+    window.searchIndex.data = [{
       title: 'Found Title',
       description: 'Some description',
-      path: '/test/page.html',
-    };
-
-    window.getTopResults = () => [fakeHit];
-    window.getSearchResults = () => [fakeHit];
+      path: '/test/page',
+    }];
 
     const container = await fixture(html`<div></div>`);
-    await onSearchInput('something', container);
+    await onSearchInput('found', container);
 
     const results = container.querySelectorAll('.result-listing');
     expect(results.length).to.be.greaterThan(0);
@@ -80,29 +47,22 @@ describe('Search Module (with manual mocks)', () => {
   });
 
   it('renders nothing for empty/whitespace input', async () => {
-    let fetchCalled = false;
-    window.fetchIndex = async () => { fetchCalled = true; };
-
     const container = await fixture(html`<div></div>`);
     await onSearchInput('   ', container);
 
-    expect(fetchCalled).to.equal(false);
     expect(container.innerHTML.trim()).to.equal('');
   });
 
   it('deduplicates results and limits to 25', async () => {
-    const fakeHit = {
-      title: 'Repeated Title',
-      description: 'Repeated Desc',
-      path: '/duplicate/path.html',
-    };
-
-    const duplicates = Array(40).fill(fakeHit);
-    window.getTopResults = () => duplicates.slice(0, 10);
-    window.getSearchResults = () => duplicates.slice(0, 30);
+    // 40 unique objects all matching "repeated" — real getSearchResults caps at 25.
+    window.searchIndex.data = Array.from({ length: 40 }, (_, i) => ({
+      title: `Repeated Title ${i}`,
+      description: 'Repeated description',
+      path: `/duplicate/path-${i}`,
+    }));
 
     const container = await fixture(html`<div></div>`);
-    await onSearchInput('repeat', container);
+    await onSearchInput('repeated', container);
 
     const cards = container.querySelectorAll('.result-listing');
     expect(cards.length).to.equal(25);

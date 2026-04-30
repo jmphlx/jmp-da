@@ -15,7 +15,8 @@
     "redirectTarget",
     "resourceOptions",
     "eventType",
-    "eventSeries"
+    "eventSeries",
+    "tags"
   ],
   "data": [
     {
@@ -35,7 +36,8 @@
       "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
-      "eventSeries": ""
+      "eventSeries": "",
+      "tags": []
     },
     {
       "path": "/en/software/why-jmp",
@@ -54,7 +56,8 @@
       "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
-      "eventSeries": ""
+      "eventSeries": "",
+      "tags": []
     },
     {
       "author": "",
@@ -72,7 +75,8 @@
       "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
-      "eventSeries": ""
+      "eventSeries": "",
+      "tags": ["industry|chemistry"]
     },
     {
       "path": "/en/software/data-analysis-software",
@@ -91,7 +95,8 @@
       "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
-      "eventSeries": ""
+      "eventSeries": "",
+      "tags": []
     },
     {
       "path": "/en/customer-stories/interviews/dan-fortune",
@@ -110,7 +115,8 @@
       "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
-      "eventSeries": ""
+      "eventSeries": "",
+      "tags": ["industry|chemistry", "industry|industrial-manufacturing"]
     },
     {
       "author": "",
@@ -128,7 +134,8 @@
       "redirectTarget": "",
       "resourceOptions": "",
       "eventType": "",
-      "eventSeries": ""
+      "eventSeries": "",
+      "tags": []
     }
   ],
   "offset": 0,
