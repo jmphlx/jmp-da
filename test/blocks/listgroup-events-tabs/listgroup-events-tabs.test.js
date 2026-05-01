@@ -263,4 +263,60 @@ describe('Listgroup Events Tabs', () => {
 
     after(() => { stub.reset(); });
   });
+
+  describe('Non-tags tabProperty (OR filter)', () => {
+    before(async () => {
+      stub.onCall(0).returns(jsonOk(JSON.parse(pagedata)));
+      await setupBlock('./nonTagsEvents.html');
+    });
+
+    it('All tab includes only pages with a non-empty tabProperty value', () => {
+      const allPanel = document.querySelector('#tabpanel-all');
+      const items = allPanel.querySelectorAll('li');
+      expect(items.length).to.equal(2);
+      const titles = [...items].map((li) => li.querySelector('.title').textContent);
+      expect(titles).to.include('Conference Alpha');
+      expect(titles).to.include('Conference Webinar Beta');
+    });
+
+    it('specific tab OR-filters by exact match on tabProperty field', () => {
+      const confPanel = document.querySelector('#tabpanel-conference');
+      const items = confPanel.querySelectorAll('li');
+      expect(items.length).to.equal(2);
+      const titles = [...items].map((li) => li.querySelector('.title').textContent);
+      expect(titles).to.include('Conference Alpha');
+      expect(titles).to.include('Conference Webinar Beta');
+    });
+
+    it('tab with no matching pages shows the empty results message', () => {
+      const seminarPanel = document.querySelector('#tabpanel-seminar');
+      const noResults = seminarPanel.querySelector('.no-results');
+      expect(noResults).to.exist;
+      expect(noResults.textContent).to.include('No events found.');
+    });
+
+    after(() => { stub.reset(); });
+  });
+
+  describe('Limit option', () => {
+    before(async () => {
+      stub.onCall(0).returns(jsonOk(JSON.parse(pagedata)));
+      await setupBlock('./limitEventsTabsBlock.html');
+    });
+
+    it('All tab is truncated to the configured limit', () => {
+      const allPanel = document.querySelector('#tabpanel-all');
+      const items = allPanel.querySelectorAll('li');
+      expect(items.length).to.equal(2);
+    });
+
+    it('truncated All tab shows the earliest events', () => {
+      const allPanel = document.querySelector('#tabpanel-all');
+      const titles = [...allPanel.querySelectorAll('.title')].map((el) => el.textContent);
+      expect(titles[0]).to.equal('In-Person Event One');
+      expect(titles[1]).to.equal('Live Webinar One');
+    });
+
+    after(() => { stub.reset(); });
+  });
 });
