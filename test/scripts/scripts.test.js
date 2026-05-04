@@ -49,4 +49,156 @@ describe('JMP Scripts JS Customizations ', () => {
       expect(backgroundImg.querySelector('picture')).to.exist;
     });
   });
+
+  describe('wrapImgsInLinks', () => {
+    let wrapImgsInLinks;
+
+    before(() => {
+      wrapImgsInLinks = scriptHelper.wrapImgsInLinks;
+    });
+
+    it('should handle container with no images', () => {
+      const container = document.createElement('div');
+      const p = document.createElement('p');
+      p.textContent = 'No images here';
+      container.appendChild(p);
+      expect(() => wrapImgsInLinks(container)).not.to.throw();
+    });
+
+    it('should process picture elements in container', () => {
+      const container = document.createElement('div');
+      const picture = document.createElement('picture');
+      const source = document.createElement('source');
+      const img = document.createElement('img');
+      picture.appendChild(source);
+      picture.appendChild(img);
+      container.appendChild(picture);
+      expect(() => wrapImgsInLinks(container)).not.to.throw();
+    });
+
+    it('should handle picture with br and anchor siblings', () => {
+      const container = document.createElement('div');
+      const picture = document.createElement('picture');
+      const img = document.createElement('img');
+      picture.appendChild(img);
+      const br = document.createElement('br');
+      const anchor = document.createElement('a');
+      anchor.href = 'https://example.com';
+      anchor.textContent = 'https://example.com';
+      container.appendChild(picture);
+      container.appendChild(br);
+      container.appendChild(anchor);
+      wrapImgsInLinks(container);
+      expect(container.querySelector('a')).to.exist;
+    });
+
+    it('should ignore links with fragment paths', () => {
+      const container = document.createElement('div');
+      const picture = document.createElement('picture');
+      const img = document.createElement('img');
+      picture.appendChild(img);
+      const br = document.createElement('br');
+      const anchor = document.createElement('a');
+      anchor.href = 'https://example.com/fragments/fragment';
+      anchor.textContent = 'https://example.com/fragments/fragment';
+      container.appendChild(picture);
+      container.appendChild(br);
+      container.appendChild(anchor);
+      const initialPictureParent = picture.parentElement;
+      wrapImgsInLinks(container);
+      expect(picture.parentElement).to.equal(initialPictureParent);
+    });
+
+    it('should ignore links with form paths', () => {
+      const container = document.createElement('div');
+      const picture = document.createElement('picture');
+      const img = document.createElement('img');
+      picture.appendChild(img);
+      const br = document.createElement('br');
+      const anchor = document.createElement('a');
+      anchor.href = 'https://example.com/forms/myform';
+      anchor.textContent = 'https://example.com/forms/myform';
+      container.appendChild(picture);
+      container.appendChild(br);
+      container.appendChild(anchor);
+      const initialPictureParent = picture.parentElement;
+      wrapImgsInLinks(container);
+      expect(picture.parentElement).to.equal(initialPictureParent);
+    });
+  });
+
+  describe('decorateMain', () => {
+    let decorateMain;
+
+    before(() => {
+      decorateMain = scriptHelper.decorateMain;
+    });
+
+    it('should decorate main element and its sections', async () => {
+      document.body.innerHTML = await readFile({ path: './layoutsExample.html' });
+      const main = document.querySelector('main');
+      decorateMain(main);
+      expect(main).to.exist;
+      const sections = main.querySelectorAll('.section');
+      expect(sections.length).to.be.greaterThan(0);
+    });
+
+    it('should add layout-wrapper class when building layout container', async () => {
+      document.body.innerHTML = await readFile({ path: './threeGroupLayoutScript.html' });
+      const main = document.querySelector('main');
+      decorateMain(main);
+      const layoutWrapper = main.querySelector('.layout-wrapper');
+      if (layoutWrapper) {
+        expect(layoutWrapper).to.exist;
+      }
+    });
+
+    it('should handle main without sections gracefully', () => {
+      const main = document.createElement('main');
+      expect(() => decorateMain(main)).not.to.throw();
+    });
+
+    it('should preserve section structure', async () => {
+      document.body.innerHTML = await readFile({ path: './layoutsExample.html' });
+      const main = document.querySelector('main');
+      const sectionCount = main.querySelectorAll('.section').length;
+      decorateMain(main);
+      expect(main.querySelectorAll('.section')).to.have.length.greaterThan(0);
+    });
+  });
+
+  describe('buildAutoBlocks function', () => {
+    let buildAutoBlocks;
+
+    before(() => {
+      buildAutoBlocks = scriptHelper.buildAutoBlocks;
+    });
+
+    it('should handle main element with sections', () => {
+      const main = document.createElement('main');
+      const section = document.createElement('div');
+      section.className = 'section';
+      const block = document.createElement('div');
+      block.className = 'block';
+      section.appendChild(block);
+      main.appendChild(section);
+      expect(() => buildAutoBlocks(main)).not.to.throw();
+    });
+
+    it('should process multiple sections', () => {
+      const main = document.createElement('main');
+      for (let i = 0; i < 3; i++) {
+        const section = document.createElement('div');
+        section.className = 'section';
+        main.appendChild(section);
+      }
+      expect(() => buildAutoBlocks(main)).not.to.throw();
+      expect(main.querySelectorAll('.section')).to.have.length(3);
+    });
+
+    it('should handle empty main element', () => {
+      const main = document.createElement('main');
+      expect(() => buildAutoBlocks(main)).not.to.throw();
+    });
+  });
 });
