@@ -1,6 +1,7 @@
 /* global before describe it */
 import { readFile } from '@web/test-runner-commands';
 import { expect } from '@esm-bundle/chai';
+import sinon from 'sinon';
 
 const scriptHelper = await import('../../scripts/scripts.js');
 
@@ -201,4 +202,131 @@ describe('JMP Scripts JS Customizations ', () => {
       expect(() => buildAutoBlocks(main)).not.to.throw();
     });
   });
+
+  describe('shouldUrlBeLocalized', () => {
+    let shouldUrlBeLocalized;
+
+    before(() => {
+      shouldUrlBeLocalized = scriptHelper.shouldUrlBeLocalized;
+    });
+
+    it('should return boolean for any URL', () => {
+      const result = shouldUrlBeLocalized('/test');
+      expect(typeof result).to.equal('boolean');
+    });
+
+    it('should return false for /en/ prefix', () => {
+      const result = shouldUrlBeLocalized('/en/page');
+      expect(result).to.be.false;
+    });
+
+    it('should handle absolute URLs', () => {
+      const result = shouldUrlBeLocalized('https://example.com/test');
+      expect(typeof result).to.equal('boolean');
+    });
+
+    it('should handle relative URLs', () => {
+      const result = shouldUrlBeLocalized('../path/to/page');
+      expect(typeof result).to.equal('boolean');
+    });
+
+    it('should handle URLs with query parameters', () => {
+      const result = shouldUrlBeLocalized('/test?param=value&other=test');
+      expect(typeof result).to.equal('boolean');
+    });
+
+    it('should handle URLs with hash fragments', () => {
+      const result = shouldUrlBeLocalized('/test#section');
+      expect(typeof result).to.equal('boolean');
+    });
+
+    it('should handle empty string', () => {
+      const result = shouldUrlBeLocalized('');
+      expect(typeof result).to.equal('boolean');
+    });
+
+    it('should handle URLs with only domain', () => {
+      const result = shouldUrlBeLocalized('https://example.com/');
+      expect(typeof result).to.equal('boolean');
+    });
+  });
+
+  describe('Complex Layout Integration', () => {
+    let decorateMain;
+    let buildAutoBlocks;
+
+    before(() => {
+      decorateMain = scriptHelper.decorateMain;
+      buildAutoBlocks = scriptHelper.buildAutoBlocks;
+    });
+
+    it('should decorate and process complex multi-section layout', async () => {
+      document.body.innerHTML = await readFile({ path: './complexLayout.html' });
+      const main = document.querySelector('main');
+      expect(main.querySelectorAll('.section')).to.have.length.greaterThan(0);
+      decorateMain(main);
+      expect(main).to.exist;
+    });
+
+    it('should handle layout with background images', async () => {
+      document.body.innerHTML = await readFile({ path: './complexLayout.html' });
+      const main = document.querySelector('main');
+      buildAutoBlocks(main);
+      const sections = main.querySelectorAll('.section');
+      expect(sections.length).to.be.greaterThan(0);
+    });
+  });
+
+  describe('Picture Element Handling', () => {
+    let wrapImgsInLinks;
+
+    before(() => {
+      wrapImgsInLinks = scriptHelper.wrapImgsInLinks;
+    });
+
+    it('should process multiple picture elements in container', () => {
+      const container = document.createElement('div');
+      for (let i = 0; i < 3; i++) {
+        const picture = document.createElement('picture');
+        const source = document.createElement('source');
+        source.srcset = `image${i}.webp`;
+        const img = document.createElement('img');
+        img.src = `image${i}.jpg`;
+        picture.appendChild(source);
+        picture.appendChild(img);
+        container.appendChild(picture);
+      }
+      expect(() => wrapImgsInLinks(container)).not.to.throw();
+      expect(container.querySelectorAll('picture')).to.have.length(3);
+    });
+
+    it('should preserve picture source elements', () => {
+      const container = document.createElement('div');
+      const picture = document.createElement('picture');
+      const source = document.createElement('source');
+      source.srcset = 'image.webp';
+      source.type = 'image/webp';
+      const img = document.createElement('img');
+      img.src = 'image.jpg';
+      picture.appendChild(source);
+      picture.appendChild(img);
+      container.appendChild(picture);
+      wrapImgsInLinks(container);
+      expect(container.querySelector('source')).to.exist;
+      expect(container.querySelector('source').type).to.equal('image/webp');
+    });
+
+    it('should handle nested picture elements in divs', () => {
+      const container = document.createElement('div');
+      const wrapper = document.createElement('div');
+      const picture = document.createElement('picture');
+      const img = document.createElement('img');
+      picture.appendChild(img);
+      wrapper.appendChild(picture);
+      container.appendChild(wrapper);
+      expect(() => wrapImgsInLinks(container)).not.to.throw();
+    });
+  });
+
+
 });
