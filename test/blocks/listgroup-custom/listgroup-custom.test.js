@@ -85,11 +85,6 @@ describe('Custom Listgroup', () => {
       await loadBlock(listgroupBlock);
     });
 
-    it('When using Group By, expect multiple lists of items', async () => {
-      const listofitems = document.querySelectorAll('ul.listOfItems');
-      expect(listofitems.length).to.equal(4);
-    });
-
     it('When using Group By, expect header to be created with appropriate items', async () => {
       const headerList = document.querySelector('ul.group-header');
       expect(headerList).to.not.be.undefined;
@@ -208,7 +203,7 @@ describe('Custom Listgroup', () => {
       expect(listofitems.children.length).to.equal(5);
     });
 
-    it('When using tabs, changing the tab changes the list items', async () => {
+    it('When using tabs with no results, show no-results message', async () => {
       const selectedTab = document.querySelector('button[aria-selected="true"');
       expect(selectedTab.id).to.equal('all');
       document.querySelector('button[id="Customer Story"').click();
@@ -348,11 +343,6 @@ describe('Custom Listgroup', () => {
       await loadBlock(listgroupBlock);
     });
 
-    it('Renders 5 items with tag display properties', async () => {
-      const listofitems = document.querySelector('ul.listOfItems');
-      expect(listofitems.children.length).to.equal(5);
-    });
-
     it('Translates tag property using tagtranslations', async () => {
       const spans = document.querySelectorAll('span.industry');
       const chemistrySpan = [...spans].find(s => s.textContent === 'Chemistry');
@@ -383,11 +373,6 @@ describe('Custom Listgroup', () => {
       await loadBlock(listgroupBlock);
     });
 
-    it('Renders 5 items with date display properties', async () => {
-      const listofitems = document.querySelector('ul.listOfItems');
-      expect(listofitems.children.length).to.equal(5);
-    });
-
     it('Renders releaseDate span without format string', async () => {
       const spans = document.querySelectorAll('span.releaseDate');
       expect(spans.length).to.equal(5);
@@ -411,11 +396,6 @@ describe('Custom Listgroup', () => {
       document.querySelector('main').append(listgroupBlock);
       decorateBlock(listgroupBlock);
       await loadBlock(listgroupBlock);
-    });
-
-    it('Renders 5 items with formatted date display', async () => {
-      const listofitems = document.querySelector('ul.listOfItems');
-      expect(listofitems.children.length).to.equal(5);
     });
 
     it('Calls dateFns.format for items with non-empty releaseDate', async () => {

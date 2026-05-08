@@ -42,5 +42,5 @@ async function populateSearchResults(searchTerms, resultsContainer) {
 }
 
 export function onSearchInput(value, resultsContainer) {
-  populateSearchResults(value, resultsContainer);
+  return populateSearchResults(value, resultsContainer);
 }
