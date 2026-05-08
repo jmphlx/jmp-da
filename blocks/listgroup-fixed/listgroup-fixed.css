@@ -1,32 +1,173 @@
 /* @import url("/styles/listgroup.css"); */
 
 ul.list-tile {
-    display: flex;
-    flex-flow: row wrap;
-    margin: 0 -1.25%;
-    padding: 0;
+  display: flex;
+  flex-flow: row wrap;
+  margin: 0 -1.25%;
+  padding: 0;
 }
   
 div.listgroup-fixed, div.listgroup  {
-    padding-top: 0;
+  padding-top: 0;
+  &.listgroup-landscape {
+    ul.col-size-2 li {
+      width: 47.5%;
+      justify-content: space-between;
+      box-sizing: border-box;
+      border-radius: 5px;
+      max-width: 47.5%;
+      margin: 0 1.25% 1.5rem 1.25%;
+      a {
+        display: grid;
+        column-gap: 2.4rem;
+        border: 1px solid var(--gray);
+        grid-template-areas: 
+            "img navigation-title"
+            "img title"
+            "img abstract";
+        grid-template-rows: .5fr .5fr 3fr;
+        grid-template-columns: 40% auto;
+        flex-flow: wrap;
+        flex-direction: row;
+        margin: 0;
+        transition: all 0.5s ease;
+        span.image {
+          grid-area: img;
+          float: left;
+          width: 100%;
+          height: 100%;
+          img {
+            border-radius: 5px 0 0 5px;
+            border: none;
+          }
+        }
+        .navigation-title, .resourceType, .displayLabel {
+          grid-area: navigation-title;
+          font-size: 1.3rem;
+          color: var(--gray7);
+          display: block;
+          width: 100%;
+          padding: 2rem 0 0 0;
+          &:after {
+            display: none;
+          }
+        }
+        .title {
+          font-size: 1.6rem;
+          color: var(--blue) !important;
+          grid-area: title;
+          display: block;
+          margin: 0;
+        }
+        .abstract, .description, .displayDescription {
+          grid-area: abstract;
+          display: block;
+          width: 90%;
+          padding: 0;
+          margin-bottom: 2rem;
+        }
+        &:after {
+          content:'';
+          display: block;
+          width: 1.6rem;
+          height: 1.6rem;
+          border: solid var(--blue);
+          border-width: 0 3px 3px 0;
+          position: absolute;
+          top: 48%;
+          left: auto;
+          transform: rotate(-45deg) translateY(-50%);
+          right: 2rem;
+          opacity: 0;
+          background: none;
+          transition: all 0.5s ease;
+          z-index: 1;
+          border-radius: 0 !important;
+        }
+      }
+      :after {
+        display: none;
+      }
+      &:hover {
+        transform: none;
+        a {
+          border: 1px solid var(--blue);
+          &:hover {
+            &:after {
+              background: none;
+              right: 1rem;
+              opacity: 1;
+            }
+          }
+        }
+        .navigation-title, .resourceType, .displayLabel {
+          color: var(--link-hover-color) !important;
+          text-decoration: none;
+        }
+        .title {
+          color: var(--link-hover-color) !important;
+          text-decoration: none;
+        }
+        /* :after {
+          display: none;
+        } */
+      }
+      @media (width <=900px) {
+        width: 100%;
+        min-height: 225px;
+      }
+      @media (width <=600px) {
+        width: 100%;
+        min-height: 225px;
+        a {
+          display: grid;
+          column-gap: 1.6rem;
+          box-sizing: border-box;
+          border: 1px solid var(--gray);
+          grid-template-areas: 
+              "img"
+              "navigation-title"
+              "title"
+              "abstract";
+          grid-template-rows: auto;
+          grid-template-columns: auto;
+          .title {
+            padding: 0 1.6rem 0 1.6rem;
+          }
+          .navigation-title, .resourceType, .displayLabel {
+            padding: 2rem 1.6rem 0 1.6rem;
+          }
+          .abstract, .description, .displayDescription {
+            padding: 0 1.6rem 0 1.6rem;
+          }
+        }
+      }
+    }
+    @media (width <=900px) {
+      ul.col-size-2 li {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+    }
+  }
 }
 
 .listgroup ul li, .listgroup-fixed ul li {
-    clear: both;
-    list-style-type: none;
-    padding: 0;
-    float: left;
-    a {
-        text-align: left;
-    }
+  clear: both;
+  list-style-type: none;
+  padding: 0;
+  float: left;
+  a {
+      text-align: left;
+  }
 }
 .listgroup ul.col-size-2 li, .listgroup-fixed ul.col-size-2 li {
-    width: 47.5%;
-    max-width: 320px;
-    margin: 0 1.25% 1.5rem 1.25%;
-    @media (width <= 600px) {
-        width: 47.5%;
-    }
+  width: 47.5%;
+  max-width: 320px;
+  margin: 0 1.25% 1.5rem 1.25%;
+  @media (width <= 600px) {
+      width: 47.5%;
+  }
 }
 
 .listgroup ul.col-size-3 li, .listgroup-fixed ul.col-size-3 li {
