@@ -1,5 +1,4 @@
 .styled-columns {
-  --blue: #0033ab;
   --light-blue: #00bbee;
   --yellow: #fcbd30;
   --white: #ffffff;
@@ -960,5 +959,45 @@ div.clm-75-25 {
   }
   div > div:nth-child(2) {
     min-width: 25%;
+  }
+}
+
+.arrow-path {
+  div.left-arrow-path {
+    position: relative;
+    &:after {
+      position: absolute;
+      content: url('../../../icons/left-path-arrow.svg');
+      width: 40px;
+      top: -100px;
+      right: 0;
+      z-index: -1;
+    }
+  }
+  div.right-arrow-path {
+    position: relative;
+    &:after {
+      position: absolute;
+      content: url('../../../icons/right-path-arrow.svg');
+      width: 40px;
+      top: -100px;
+      left: 0;
+      z-index: -1;
+    }
+    @media (width <= 900px) {
+      &:after {
+        left: -16px;
+      }
+      &:before {
+        content: '';
+        position: absolute;
+        left: -16px;
+        top: -360px;
+        background-color: var(--blue);
+        width: 3.5px;
+        height: 320px;
+        z-index: -1;
+      }
+    }
   }
 }
