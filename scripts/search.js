@@ -157,6 +157,7 @@ function getTopResults(searchTerms, topResultsKeywords) {
 }
 
 function decorateCard(hit) {
+  console.log('test');
   const title = DOMPurify.sanitize(hit.title);
   const description = DOMPurify.sanitize(hit.description);
   let path;
