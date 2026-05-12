@@ -8,7 +8,8 @@
     "offDateTime",
     "robots",
     "redirectTarget",
-    "tags"
+    "tags",
+    "eventType"
   ],
   "data": [
     {
@@ -85,11 +86,36 @@
       "offDateTime": "2099-04-13T00:00:00",
       "robots": "",
       "redirectTarget": "",
-      "tags": ""
+      "tags": "",
+      "eventType": ""
+    },
+    {
+      "path": "/events/conference-alpha",
+      "title": "Conference Alpha",
+      "eventDisplayLabel": "Conference",
+      "eventDisplayTime": "March 10, 2099 9:00 AM",
+      "eventDateTime": "2099-03-10T09:00:00",
+      "offDateTime": "2099-03-11T00:00:00",
+      "robots": "",
+      "redirectTarget": "",
+      "tags": "",
+      "eventType": "conference"
+    },
+    {
+      "path": "/events/conference-webinar-beta",
+      "title": "Conference Webinar Beta",
+      "eventDisplayLabel": "Hybrid",
+      "eventDisplayTime": "March 20, 2099 10:00 AM",
+      "eventDateTime": "2099-03-20T10:00:00",
+      "offDateTime": "2099-03-21T00:00:00",
+      "robots": "",
+      "redirectTarget": "",
+      "tags": "",
+      "eventType": "conference, webinar"
     }
   ],
   "offset": 0,
-  "limit": 6,
-  "total": 6,
+  "limit": 8,
+  "total": 8,
   ":type": "sheet"
 }

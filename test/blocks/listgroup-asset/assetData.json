@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Zebra Asset",
+    "description": "Asset starting with Z",
+    "path": "/assets/zebra"
+  },
+  {
+    "title": "Apple Asset",
+    "description": "Asset starting with A",
+    "path": "/assets/apple"
+  },
+  {
+    "title": "Mango Asset",
+    "description": "Asset starting with M",
+    "path": "/assets/mango"
+  },
+  {
+    "title": "Banana Asset",
+    "description": "Asset starting with B",
+    "path": "/assets/banana"
+  },
+  {
+    "title": "Orange Asset",
+    "description": "Asset starting with O",
+    "path": "/assets/orange"
+  },
+  {
+    "title": "Cherry Asset",
+    "description": "Asset starting with C",
+    "path": "/assets/cherry"
+  }
+]

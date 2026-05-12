@@ -20,10 +20,10 @@ describe('Tabs Block', () => {
   });
 
   it('Should embed Vidyard iframe and remove original link', () => {
-    const iframe = document.querySelector('iframe');
-    expect(iframe).to.exist;
+    const player = document.querySelector('img.vidyard-player-embed');
+    expect(player).to.exist;
 
-    const embedWrapper = iframe.closest('.embed.embed-ceros');
+    const embedWrapper = player.closest('.embed.embed-ceros');
     expect(embedWrapper).to.exist;
 
     const originalLink = document.querySelector('a[href*="vidyard"]');
@@ -60,17 +60,20 @@ describe('Tabs Block', () => {
     const originalGetComputedStyle = window.getComputedStyle;
     window.getComputedStyle = () => ({ display: 'block' });
 
-    const block = document.querySelector('#tabs-block');
-    const newWrapper = document.createElement('div');
-    const blockChild = document.createElement('div');
-    blockChild.textContent = 'Block content';
-    newWrapper.append(blockChild);
-    block.append(newWrapper);
+    // Use a fresh single-tab block so re-decorating an already-processed
+    // block does not destroy existing panels.
+    document.body.innerHTML = `
+      <div id="block-display-test">
+        <div>
+          <div>Tab Label</div>
+          <div><div>Block level content</div></div>
+        </div>
+      </div>`;
+    const freshBlock = document.querySelector('#block-display-test');
+    await decorate(freshBlock);
 
-    await decorate(block, helpers);
-
-    const newPanel = block.querySelectorAll('[role="tabpanel"]')[2];
-    expect(newPanel.lastElementChild.innerHTML.trim()).to.not.match(/^<p>.*<\/p>$/);
+    const panel = freshBlock.querySelector('[role="tabpanel"]');
+    expect(panel.lastElementChild.innerHTML.trim()).to.not.match(/^<p>.*<\/p>$/);
 
     window.getComputedStyle = originalGetComputedStyle;
   });

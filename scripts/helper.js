@@ -220,7 +220,7 @@ export async function createVersion(path, token, description = 'Search & Replace
       return { success: false, status: response.status, error: errorText };
     }
   } catch (e) {
-    return { success: false, status: null, error: e.getMessage() };
+    return { success: false, status: null, error: e.message };
   }
 }
 

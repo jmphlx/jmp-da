@@ -1,0 +1,68 @@
+{
+  "columns": [
+    "path",
+    "title",
+    "eventDisplayLabel",
+    "eventDisplayTime",
+    "eventDateTime",
+    "offDateTime",
+    "robots",
+    "redirectTarget"
+  ],
+  "data": [
+    {
+      "path": "/en/events/conference-a",
+      "title": "Conference A",
+      "eventDisplayLabel": "Conference",
+      "eventDisplayTime": "April 5, 2099 | 9:00 AM ET",
+      "eventDateTime": "2099-04-05T09:00:00",
+      "offDateTime": "2099-04-05T18:00:00",
+      "robots": "",
+      "redirectTarget": ""
+    },
+    {
+      "path": "/en/events/webinar-b",
+      "title": "Webinar B",
+      "eventDisplayLabel": "Webinar",
+      "eventDisplayTime": "April 15, 2099 | 2:00 PM ET",
+      "eventDateTime": "2099-04-15T14:00:00",
+      "offDateTime": "2099-04-15T20:00:00",
+      "robots": "",
+      "redirectTarget": ""
+    },
+    {
+      "path": "/en/events/redirect-event",
+      "title": "Redirect Event",
+      "eventDisplayLabel": "Virtual",
+      "eventDisplayTime": "April 20, 2099 | 11:00 AM ET",
+      "eventDateTime": "2099-04-20T11:00:00",
+      "offDateTime": "2099-04-20T15:00:00",
+      "robots": "",
+      "redirectTarget": "https://external-event.example.com"
+    },
+    {
+      "path": "/en/events/past-event",
+      "title": "Past Event",
+      "eventDisplayLabel": "Seminar",
+      "eventDisplayTime": "Jan 1, 2020 | 10:00 AM ET",
+      "eventDateTime": "2020-01-01T10:00:00",
+      "offDateTime": "2020-01-01T12:00:00",
+      "robots": "",
+      "redirectTarget": ""
+    },
+    {
+      "path": "/en/events/noindex-event",
+      "title": "NoIndex Event",
+      "eventDisplayLabel": "Conference",
+      "eventDisplayTime": "May 1, 2099 | 1:00 PM ET",
+      "eventDateTime": "2099-05-01T13:00:00",
+      "offDateTime": "2099-05-01T17:00:00",
+      "robots": "noindex",
+      "redirectTarget": ""
+    }
+  ],
+  "offset": 0,
+  "limit": 5,
+  "total": 5,
+  ":type": "sheet"
+}

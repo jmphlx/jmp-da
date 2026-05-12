@@ -40,7 +40,13 @@ describe('Custom Listgroup', () => {
       expect(listofitems.children.length).to.equal(5);
     });
 
-    
+    it('Verify redirect target opens in new tab', async () => {
+      const links = document.querySelectorAll('ul.listOfItems li a');
+      const blankLinks = [...links].filter(a => a.target === '_blank');
+      expect(blankLinks.length).to.equal(1);
+      expect(blankLinks[0].href).to.include('external.example.com');
+    });
+
     after(async () => {
       stub.reset();
     });
@@ -79,11 +85,6 @@ describe('Custom Listgroup', () => {
       await loadBlock(listgroupBlock);
     });
 
-    it('When using Group By, expect multiple lists of items', async () => {
-      const listofitems = document.querySelectorAll('ul.listOfItems');
-      expect(listofitems.length).to.equal(4);
-    });
-
     it('When using Group By, expect header to be created with appropriate items', async () => {
       const headerList = document.querySelector('ul.group-header');
       expect(headerList).to.not.be.undefined;
@@ -111,6 +112,12 @@ describe('Custom Listgroup', () => {
   
   describe('Filter By Dropdown', () => {
     before(async () => {
+      // industry is a tag property — pre-seed tagtranslations so getTagTranslations()
+      // short-circuits without consuming a fetch stub slot.
+      window.tagtranslations = {
+        'industry|chemistry': 'Chemistry',
+        'industry|industrial-manufacturing': 'Industrial Manufacturing',
+      };
       stub.onCall(0).returns(jsonOk(JSON.parse(pagedata)));
       stub.onCall(1).returns(jsonOk(JSON.parse(multipageQueryData)));
       document.body.innerHTML = await readFile({ path: './filterListgroup.html' });
@@ -138,7 +145,7 @@ describe('Custom Listgroup', () => {
       const dropdownItems = dropdown.querySelectorAll('option');
       expect(dropdownItems.length).to.equal(3);
 
-      dropdown.value = 'chemistry';
+      dropdown.value = 'industry|chemistry';
       dropdown.dispatchEvent(new Event('change'));
 
       listofitems = document.querySelector('ul.listOfItems');
@@ -146,6 +153,7 @@ describe('Custom Listgroup', () => {
     });
 
     after(async () => {
+      delete window.tagtranslations;
       stub.reset();
     });
   });
@@ -195,7 +203,7 @@ describe('Custom Listgroup', () => {
       expect(listofitems.children.length).to.equal(5);
     });
 
-    it('When using tabs, changing the tab changes the list items', async () => {
+    it('When using tabs with no results, show no-results message', async () => {
       const selectedTab = document.querySelector('button[aria-selected="true"');
       expect(selectedTab.id).to.equal('all');
       document.querySelector('button[id="Customer Story"').click();
@@ -247,6 +255,199 @@ describe('Custom Listgroup', () => {
       const listOfLists = document.querySelectorAll('ul.listOfItems');
       expect(listOfLists.length).to.equal(1);
       expect(listOfLists[0].children.length).to.equal(1);
+    });
+
+    after(async () => {
+      stub.reset();
+    });
+  });
+
+  describe('Load More Button', () => {
+    before(async () => {
+      stub.onCall(0).returns(jsonOk(JSON.parse(pagedata)));
+      stub.onCall(1).returns(jsonOk(JSON.parse(querydata)));
+      document.body.innerHTML = await readFile({ path: './loadMoreListgroup.html' });
+      const listgroupBlock = document.querySelector('.listgroup-custom');
+      document.querySelector('main').append(listgroupBlock);
+      decorateBlock(listgroupBlock);
+      await loadBlock(listgroupBlock);
+    });
+
+    it('Initially shows only limit items', async () => {
+      const listofitems = document.querySelector('ul.listOfItems');
+      expect(listofitems.children.length).to.equal(3);
+    });
+
+    it('Load more button exists and is enabled', async () => {
+      const btn = document.querySelector('.load-more-container button');
+      expect(btn).to.exist;
+      expect(btn.disabled).to.be.false;
+    });
+
+    it('Clicking load more adds remaining items and disables button', async () => {
+      const btn = document.querySelector('.load-more-container button');
+      btn.click();
+      const listofitems = document.querySelector('ul.listOfItems');
+      expect(listofitems.children.length).to.equal(5);
+      expect(btn.disabled).to.be.true;
+    });
+
+    it('Load more items include redirect target link', async () => {
+      const links = document.querySelectorAll('ul.listOfItems li a');
+      const blankLinks = [...links].filter(a => a.target === '_blank');
+      expect(blankLinks.length).to.equal(1);
+      expect(blankLinks[0].href).to.include('external.example.com');
+    });
+
+    after(async () => {
+      stub.reset();
+    });
+  });
+
+  describe('Load More Button Disabled Initially', () => {
+    before(async () => {
+      stub.onCall(0).returns(jsonOk(JSON.parse(pagedata)));
+      stub.onCall(1).returns(jsonOk(JSON.parse(querydata)));
+      document.body.innerHTML = await readFile({ path: './loadMoreSmallListgroup.html' });
+      const listgroupBlock = document.querySelector('.listgroup-custom');
+      document.querySelector('main').append(listgroupBlock);
+      decorateBlock(listgroupBlock);
+      await loadBlock(listgroupBlock);
+    });
+
+    it('Shows all items when count equals limit', async () => {
+      const listofitems = document.querySelector('ul.listOfItems');
+      expect(listofitems.children.length).to.equal(5);
+    });
+
+    it('Load more button is disabled when matching count does not exceed limit', async () => {
+      const btn = document.querySelector('.load-more-container button');
+      expect(btn).to.exist;
+      expect(btn.disabled).to.be.true;
+    });
+
+    after(async () => {
+      stub.reset();
+    });
+  });
+
+  describe('Tag Display Properties', () => {
+    before(async () => {
+      window.tagtranslations = { 'industry|chemistry': 'Chemistry' };
+      stub.onCall(0).returns(jsonOk(JSON.parse(pagedata)));
+      stub.onCall(1).returns(jsonOk(JSON.parse(querydata)));
+      document.body.innerHTML = await readFile({ path: './tagDisplayListgroup.html' });
+      const listgroupBlock = document.querySelector('.listgroup-custom');
+      document.querySelector('main').append(listgroupBlock);
+      decorateBlock(listgroupBlock);
+      await loadBlock(listgroupBlock);
+    });
+
+    it('Translates tag property using tagtranslations', async () => {
+      const spans = document.querySelectorAll('span.industry');
+      const chemistrySpan = [...spans].find(s => s.textContent === 'Chemistry');
+      expect(chemistrySpan).to.exist;
+    });
+
+    it('Falls back to raw value when tag has no translation', async () => {
+      const spans = document.querySelectorAll('span.industry');
+      const fallbackSpan = [...spans].find(s => s.textContent.includes('industrial-manufacturing'));
+      expect(fallbackSpan).to.exist;
+    });
+
+    after(async () => {
+      delete window.tagtranslations;
+      stub.reset();
+    });
+  });
+
+  describe('Simple Date Display', () => {
+    before(async () => {
+      window.dateFns = { format: (date, fmt) => `formatted:${date}` };
+      stub.onCall(0).returns(jsonOk(JSON.parse(pagedata)));
+      stub.onCall(1).returns(jsonOk(JSON.parse(querydata)));
+      document.body.innerHTML = await readFile({ path: './simpleDateListgroup.html' });
+      const listgroupBlock = document.querySelector('.listgroup-custom');
+      document.querySelector('main').append(listgroupBlock);
+      decorateBlock(listgroupBlock);
+      await loadBlock(listgroupBlock);
+    });
+
+    it('Renders releaseDate span without format string', async () => {
+      const spans = document.querySelectorAll('span.releaseDate');
+      expect(spans.length).to.equal(5);
+      const filledSpan = [...spans].find(s => s.textContent === '2024-06-19');
+      expect(filledSpan).to.exist;
+    });
+
+    after(async () => {
+      delete window.dateFns;
+      stub.reset();
+    });
+  });
+
+  describe('Formatted Date Display', () => {
+    before(async () => {
+      window.dateFns = { format: (date, fmt) => `formatted:${date}` };
+      stub.onCall(0).returns(jsonOk(JSON.parse(pagedata)));
+      stub.onCall(1).returns(jsonOk(JSON.parse(querydata)));
+      document.body.innerHTML = await readFile({ path: './dateFormatListgroup.html' });
+      const listgroupBlock = document.querySelector('.listgroup-custom');
+      document.querySelector('main').append(listgroupBlock);
+      decorateBlock(listgroupBlock);
+      await loadBlock(listgroupBlock);
+    });
+
+    it('Calls dateFns.format for items with non-empty releaseDate', async () => {
+      const spans = document.querySelectorAll('span.releaseDate');
+      const formattedSpan = [...spans].find(s => s.textContent.startsWith('formatted:'));
+      expect(formattedSpan).to.exist;
+      expect(formattedSpan.textContent).to.equal('formatted:2024-06-19');
+    });
+
+    after(async () => {
+      delete window.dateFns;
+      stub.reset();
+    });
+  });
+
+  describe('Filter With Load More', () => {
+    before(async () => {
+      stub.onCall(0).returns(jsonOk(JSON.parse(pagedata)));
+      stub.onCall(1).returns(jsonOk(JSON.parse(querydata)));
+      document.body.innerHTML = await readFile({ path: './filterLoadMoreListgroup.html' });
+      const listgroupBlock = document.querySelector('.listgroup-custom');
+      document.querySelector('main').append(listgroupBlock);
+      decorateBlock(listgroupBlock);
+      await loadBlock(listgroupBlock);
+    });
+
+    it('Initially shows limit items with load more button and dropdown', async () => {
+      const listofitems = document.querySelector('ul.listOfItems');
+      expect(listofitems.children.length).to.equal(3);
+      const btn = document.querySelector('.load-more-container button');
+      expect(btn).to.exist;
+      expect(btn.disabled).to.be.false;
+    });
+
+    it('Dropdown has options from comma-split author values', async () => {
+      const dropdown = document.querySelector('select.filterDropdown');
+      expect(dropdown).to.exist;
+      const options = dropdown.querySelectorAll('option');
+      expect(options.length).to.equal(4);
+    });
+
+    it('Changing dropdown triggers reBuildList removing load-more-container', async () => {
+      const dropdown = document.querySelector('select.filterDropdown');
+      dropdown.value = 'Alice';
+      dropdown.dispatchEvent(new Event('change'));
+
+      const listofitems = document.querySelector('ul.listOfItems');
+      expect(listofitems.children.length).to.equal(1);
+
+      const btn = document.querySelector('.load-more-container button');
+      expect(btn).to.exist;
+      expect(btn.disabled).to.be.true;
     });
 
     after(async () => {

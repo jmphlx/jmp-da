@@ -299,3 +299,14 @@ async function startApp() {
   await init();
 }
 startApp();
+
+// Export functions for testing
+export {
+  getVersionFromList,
+  addLoadingSearch,
+  createInvalidCard,
+  createCard,
+  getVersionList,
+  restoreVersion,
+  createResultHeader,
+};
