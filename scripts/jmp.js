@@ -1,4 +1,5 @@
 const defaultMetaImage = `${window.location.origin}/icons/jmp-com-share.jpg`;
+const jsonCache = {};
 
 function getDefaultMetaImage() {
   return defaultMetaImage;
@@ -76,10 +77,15 @@ function arrayIncludesSomeValues(filterValues, pageValues) {
  * @returns {Object} the json data object
 */
 async function getJsonFromUrl(route) {
+  if (jsonCache[route]) {
+    return jsonCache[route];
+  }
+
   try {
     const response = await window.fetch(route);
     if (!response.ok) return null;
     const json = await response.json();
+    jsonCache[route] = json;
     return json;
   } catch (error) {
     // eslint-disable-next-line no-console
@@ -534,9 +540,16 @@ function setTabFromHash(button, tabpanel) {
   button.setAttribute('aria-selected', true);
 }
 
+function clearJsonCache() {
+  Object.keys(jsonCache).forEach((key) => {
+    delete jsonCache[key];
+  });
+}
+
 export {
   arrayIncludesAllValues,
   arrayIncludesSomeValues,
+  clearJsonCache,
   containsOperator,
   convertCamelToKebabCase,
   debounce,
