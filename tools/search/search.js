@@ -503,7 +503,7 @@ function resetInactivityTimeout() {
   clearTimeout(inactivityTimeout);
   inactivityTimeout = setTimeout(() => {
     showRefreshPrompt();
-  }, 2 * 60 * 1000); // 15 minutes in milliseconds
+  }, 15 * 60 * 1000); // 15 minutes in milliseconds
 }
 
 function setupInactivityTracking() {
