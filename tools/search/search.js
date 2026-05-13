@@ -39,6 +39,7 @@ const defaultpath = '/jmphlx/jmp-da/en';
 const pathPrefix = `/${DA_CONSTANTS.org}/${DA_CONSTANTS.repo}`;
 let actions;
 let token;
+let inactivityTimeout;
 
 /* Custom jquery selector for case insensitive search */
 $.expr[':'].icontains = function (elem, i, match) {
@@ -472,6 +473,47 @@ async function replaceStringInDocuments(queryObject, replacementText) {
   await Promise.all(replacePromises);
 }
 
+function showRefreshPrompt() {
+  const dialog = document.createElement('dialog');
+  dialog.id = 'refresh-prompt-dialog';
+  dialog.innerHTML = `
+    <div style="padding: 16px 20px; font-family: Arial, sans-serif;">
+      <h2 style="margin: 0 0 6px 0; font-size: 18px;">Session Timeout</h2>
+      <p style="margin: 0 0 10px 0; font-size: 14px; line-height: 1.4;">Your session has been inactive for 15 minutes.
+      To prevent working on out of sync information, please refresh the page to continue.</p>
+      <div style="display: flex; gap: 8px; justify-content: flex-end;">
+        <button id="dismiss-button" style="padding: 8px 16px; cursor: pointer;">Dismiss</button>
+        <button id="refresh-button" style="padding: 8px 16px; cursor: pointer;">Refresh Page</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(dialog);
+  dialog.showModal();
+
+  document.getElementById('refresh-button').addEventListener('click', () => {
+    window.location.reload();
+  });
+
+  document.getElementById('dismiss-button').addEventListener('click', () => {
+    dialog.close();
+  });
+}
+
+function resetInactivityTimeout() {
+  clearTimeout(inactivityTimeout);
+  inactivityTimeout = setTimeout(() => {
+    showRefreshPrompt();
+  }, 2 * 60 * 1000); // 15 minutes in milliseconds
+}
+
+function setupInactivityTracking() {
+  const events = ['mousedown', 'keydown', 'scroll', 'touchstart', 'click'];
+  events.forEach((event) => {
+    document.addEventListener(event, resetInactivityTimeout);
+  });
+  resetInactivityTimeout();
+}
+
 async function init() {
   const sdk = await DA_SDK;
   actions = sdk.actions;
@@ -499,6 +541,7 @@ async function init() {
     clearEventListeners();
     const resultsContainer = document.querySelector('.results-container');
     addLoadingSearch(resultsContainer, 'Searching');
+    setupInactivityTracking();
 
     let caseSensitiveFlag = false;
     const caseSensitiveCheckbox = document.querySelector('#caseSensitiveSearch');

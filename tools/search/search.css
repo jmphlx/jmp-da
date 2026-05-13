@@ -441,6 +441,10 @@ dialog {
   }
 }
 
+dialog#refresh-prompt-dialog {
+  height: fit-content;
+}
+
 .mySearchContainer {
   display: flex;
   flex-direction: row;
