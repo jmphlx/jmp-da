@@ -3,6 +3,7 @@ import { expect } from '@esm-bundle/chai';
 import sinon from 'sinon';
 
 const searchHelper = await import('../../scripts/search.js');
+const { clearJsonCache } = await import('../../scripts/jmp.js');
 
 const cardTemplate = (title, description, href, displayUrl) => `<div class="results-body"><a class="title" href="${href}">${title}</a>` +
 `<p class="description">${description}</p><a class="displayUrl" href="${href}">${displayUrl}</a></div>`;
@@ -163,6 +164,7 @@ describe('Search Script ', () => {
     let fetchStub;
 
     beforeEach(() => {
+      clearJsonCache();
       window.commonsSheet = undefined;
       fetchStub = sinon.stub(window, 'fetch');
     });

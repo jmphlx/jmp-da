@@ -4,6 +4,7 @@ import { readFile } from '@web/test-runner-commands';
 import sinon from 'sinon';
 
 const { decorateBlock, loadBlock } = await import('../../../scripts/aem.js');
+const { clearJsonCache } = await import('../../../scripts/jmp.js');
 
 const pagedata = await readFile({ path: './test-index.json' });
 const querydata = await readFile({ path: './custom-query.json' });
@@ -48,6 +49,7 @@ describe('Custom Listgroup', () => {
     });
 
     after(async () => {
+      clearJsonCache();
       stub.reset();
     });
   });
@@ -70,6 +72,7 @@ describe('Custom Listgroup', () => {
     });
 
     after(async () => {
+      clearJsonCache();
       stub.reset();
     });
   });
@@ -106,6 +109,7 @@ describe('Custom Listgroup', () => {
     });
 
     after(async () => {
+      clearJsonCache();
       stub.reset();
     });
   });
@@ -159,14 +163,22 @@ describe('Custom Listgroup', () => {
   });
 
   describe('Tabs', () => {
+    let tabsHtml;
+
     before(async () => {
+      tabsHtml = await readFile({ path: './tabsListgroup.html' });
+    });
+
+    beforeEach(async () => {
+      clearJsonCache();
       stub.onCall(0).returns(jsonOk(JSON.parse(pagedata)));
       stub.onCall(1).returns(jsonOk(JSON.parse(multipageQueryData)));
-      document.body.innerHTML = await readFile({ path: './tabsListgroup.html' });
+      document.body.innerHTML = tabsHtml;
       const listgroupBlock = document.querySelector('.listgroup-custom');
       document.querySelector('main').append(listgroupBlock);
       decorateBlock(listgroupBlock);
       await loadBlock(listgroupBlock);
+      stub.resetHistory();
     });
 
     it('When using tabs, tab list is created using Tabs property', async () => {
@@ -216,6 +228,7 @@ describe('Custom Listgroup', () => {
 
 
     after(async () => {
+      clearJsonCache();
       stub.reset();
     });
   });
@@ -237,6 +250,7 @@ describe('Custom Listgroup', () => {
     });
 
     after(async () => {
+      clearJsonCache();
       stub.reset();
     });
   });
@@ -258,6 +272,7 @@ describe('Custom Listgroup', () => {
     });
 
     after(async () => {
+      clearJsonCache();
       stub.reset();
     });
   });
@@ -300,6 +315,7 @@ describe('Custom Listgroup', () => {
     });
 
     after(async () => {
+      clearJsonCache();
       stub.reset();
     });
   });
@@ -327,6 +343,7 @@ describe('Custom Listgroup', () => {
     });
 
     after(async () => {
+      clearJsonCache();
       stub.reset();
     });
   });
@@ -451,6 +468,7 @@ describe('Custom Listgroup', () => {
     });
 
     after(async () => {
+      clearJsonCache();
       stub.reset();
     });
   });
