@@ -31,6 +31,7 @@ import {
   hideActionForms,
   populateDropdowns,
   updateActionMessage,
+  validateQuery,
   writeOutResults,
 } from './ui.js';
 
@@ -540,7 +541,6 @@ async function init() {
     clearResults();
     clearEventListeners();
     const resultsContainer = document.querySelector('.results-container');
-    addLoadingSearch(resultsContainer, 'Searching');
     setupInactivityTracking();
 
     let caseSensitiveFlag = false;
@@ -549,12 +549,19 @@ async function init() {
       caseSensitiveFlag = true;
     }
 
-    const startTime = performance.now();
-
     // Get Search Terms.
     const queryObject = getQuery(caseSensitiveFlag);
 
-    // Need to validate query here. and error early.
+    // Validate query and error early.
+    try {
+      validateQuery(queryObject);
+    } catch (error) {
+      updateActionMessage(resultsContainer, new ActionResult('error', error.message));
+      return;
+    }
+
+    addLoadingSearch(resultsContainer, 'Searching');
+    const startTime = performance.now();
 
     const queryString = document.querySelector('[name="searchTerms"]').value;
 

@@ -1,6 +1,7 @@
 /* global describe it beforeEach afterEach */
 import { expect } from '@esm-bundle/chai';
 import sinon from 'sinon';
+import { validateQuery } from '../../../tools/search/ui.js';
 
 // Note: search.js uses external SDK imports that cannot be directly imported in tests
 // We'll test the exported functions and utility functions through mocking
@@ -88,6 +89,143 @@ describe('Search Tool Module', () => {
       container.appendChild(duration);
 
       expect(duration.textContent).to.include('Search completed');
+    });
+  });
+
+  describe('Query validation', () => {
+    it('should allow block scope alone', () => {
+      const queryObject = {
+        scope: { block: 'hero' },
+        keyword: 'test',
+        caseSensitive: false,
+      };
+      expect(() => validateQuery(queryObject)).to.not.throw();
+    });
+
+    it('should allow property scope alone', () => {
+      const queryObject = {
+        scope: { property: 'title' },
+        keyword: 'test',
+        caseSensitive: false,
+      };
+      expect(() => validateQuery(queryObject)).to.not.throw();
+    });
+
+    it('should allow tag scope alone', () => {
+      const queryObject = {
+        scope: { tag: 'div' },
+        keyword: 'test',
+        caseSensitive: false,
+      };
+      expect(() => validateQuery(queryObject)).to.not.throw();
+    });
+
+    it('should allow attribute scope alone', () => {
+      const queryObject = {
+        scope: { attribute: 'class' },
+        keyword: 'test',
+        caseSensitive: false,
+      };
+      expect(() => validateQuery(queryObject)).to.not.throw();
+    });
+
+    it('should throw error when block is combined with tag', () => {
+      const queryObject = {
+        scope: { block: 'hero', tag: 'div' },
+        keyword: 'test',
+        caseSensitive: false,
+      };
+      expect(() => validateQuery(queryObject)).to.throw('Cannot combine block, property, or empty value search with HTML or attribute tags');
+    });
+
+    it('should throw error when block is combined with attribute', () => {
+      const queryObject = {
+        scope: { block: 'hero', attribute: 'class' },
+        keyword: 'test',
+        caseSensitive: false,
+      };
+      expect(() => validateQuery(queryObject)).to.throw('Cannot combine block, property, or empty value search with HTML or attribute tags');
+    });
+
+    it('should throw error when property is combined with tag', () => {
+      const queryObject = {
+        scope: { property: 'title', tag: 'div' },
+        keyword: 'test',
+        caseSensitive: false,
+      };
+      expect(() => validateQuery(queryObject)).to.throw('Cannot combine block, property, or empty value search with HTML or attribute tags');
+    });
+
+    it('should throw error when property is combined with attribute', () => {
+      const queryObject = {
+        scope: { property: 'title', attribute: 'id' },
+        keyword: 'test',
+        caseSensitive: false,
+      };
+      expect(() => validateQuery(queryObject)).to.throw('Cannot combine block, property, or empty value search with HTML or attribute tags');
+    });
+
+    it('should throw error when $empty keyword is combined with tag', () => {
+      const queryObject = {
+        scope: { tag: 'p' },
+        keyword: '$empty',
+        caseSensitive: false,
+      };
+      expect(() => validateQuery(queryObject)).to.throw('Cannot combine block, property, or empty value search with HTML or attribute tags');
+    });
+
+    it('should throw error when $empty keyword is combined with attribute', () => {
+      const queryObject = {
+        scope: { attribute: 'data-value' },
+        keyword: '$empty',
+        caseSensitive: false,
+      };
+      expect(() => validateQuery(queryObject)).to.throw('Cannot combine block, property, or empty value search with HTML or attribute tags');
+    });
+
+    it('should handle case-insensitive $empty matching', () => {
+      const queryObject = {
+        scope: { tag: 'span' },
+        keyword: '$EMPTY',
+        caseSensitive: false,
+      };
+      expect(() => validateQuery(queryObject)).to.throw('Cannot combine block, property, or empty value search with HTML or attribute tags');
+    });
+
+    it('should allow tag and attribute combined without block/property', () => {
+      const queryObject = {
+        scope: { tag: 'div', attribute: 'class' },
+        keyword: 'test',
+        caseSensitive: false,
+      };
+      expect(() => validateQuery(queryObject)).to.not.throw();
+    });
+
+    it('should allow empty scope object', () => {
+      const queryObject = {
+        scope: {},
+        keyword: 'test',
+        caseSensitive: false,
+      };
+      expect(() => validateQuery(queryObject)).to.not.throw();
+    });
+
+    it('should allow status scope with other scopes', () => {
+      const queryObject = {
+        scope: { block: 'hero', status: 'published' },
+        keyword: 'test',
+        caseSensitive: false,
+      };
+      expect(() => validateQuery(queryObject)).to.not.throw();
+    });
+
+    it('should throw error when block, tag, and attribute are all present', () => {
+      const queryObject = {
+        scope: { block: 'hero', tag: 'div', attribute: 'class' },
+        keyword: 'test',
+        caseSensitive: false,
+      };
+      expect(() => validateQuery(queryObject)).to.throw('Cannot combine block, property, or empty value search with HTML or attribute tags');
     });
   });
 });
