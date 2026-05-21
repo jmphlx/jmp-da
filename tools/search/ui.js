@@ -629,6 +629,20 @@ async function exportToCSV(token) {
   exportLoading.remove();
 }
 
+function validateQuery(queryObject) {
+  const { scope, keyword } = queryObject;
+  const hasBlock = scope.block;
+  const hasProperty = scope.property;
+  const hasTag = scope.tag;
+  const hasAttribute = scope.attribute;
+  const isEmptySearch = keyword.match(/\$empty/i);
+
+  // Check if block/property/empty is combined with html/attribute tags
+  if ((hasBlock || hasProperty || isEmptySearch) && (hasTag || hasAttribute)) {
+    throw new Error('Cannot combine block, property, or empty value search with HTML or attribute tags');
+  }
+}
+
 export {
   addActionEventListeners,
   addLoadingAction,
@@ -641,5 +655,6 @@ export {
   hideActionForms,
   populateDropdowns,
   updateActionMessage,
+  validateQuery,
   writeOutResults,
 };
