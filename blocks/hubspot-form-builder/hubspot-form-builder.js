@@ -1,0 +1,70 @@
+/*
+ * Hubspot embed Block
+ * Shows hubspot forms on a page
+ */
+
+import {
+  getBlockConfig,
+  getLanguage,
+} from '../../scripts/jmp.js';
+
+import { createTag } from '../../scripts/helper.js';
+
+/**
+ * Display an appropriate message if the hubspot script is blocked.
+ */
+function getWarningMessage() {
+  const warningDiv = createTag('div', {
+    class: 'hbspt-load-error',
+  });
+
+  const warningMessage = createTag('p');
+  warningMessage.innerHTML = 'Your browser’s settings may be preventing this form from loading. '
+    + 'To access the form, please adjust your browser settings or try a different browser.';
+  const contactUs = createTag('p');
+  contactUs.innerHTML = 'Still having issues? Contact us at <a href="mailto:info@jmp.com">info@jmp.com</a>.';
+  warningDiv.append(warningMessage, contactUs);
+  return warningDiv;
+}
+
+const embedHubspot = (block, config) => {
+  // clean up hubspot url query paramaters
+  const sfdcCampaignId = config.salesforceCampaignId;
+
+  const head = document.querySelector('head');
+  const script = document.createElement('script');
+  script.src = 'https://js.hsforms.net/forms/embed/developer/20721161.js';
+  script.defer = true;
+  head.append(script);
+
+  const hubspotDiv = createTag('div',
+    {
+      class: 'hs-form-html',
+      'data-region': 'na1',
+      'data-form-id': `${config.formId}`,
+      'data-portal-id': `${config.portalId}`,
+    }
+  );
+
+  block.append(hubspotDiv);
+
+  return null;
+};
+
+const loadEmbed = (block, config) => {
+  embedHubspot(block, config);
+  block.classList = 'block embed embed-hubspot';
+  if (config.headline) {
+    const headlineElement = typeof config.headline === 'string'
+      ? createTag('p', { }, config.headline) : config.headline;
+    const wrapDiv = createTag('div', { class: 'headline' }, headlineElement);
+    block.prepend(wrapDiv);
+  }
+};
+
+export default function decorate(block) {
+  const config = getBlockConfig(block);
+
+  block.textContent = '';
+  loadEmbed(block, config);
+}
