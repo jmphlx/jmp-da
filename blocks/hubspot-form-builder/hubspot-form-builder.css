@@ -1,6 +1,5 @@
-.hsfc-FieldLabel {
+[data-hsfc-id="Renderer"] .hsfc-FieldLabel {
   font-family: "anova-regular", sans-serif !important;
   font-size: 14px !important;
   color: blue !important;
-  /* etc. */
 }

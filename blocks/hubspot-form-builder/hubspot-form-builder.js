@@ -37,6 +37,21 @@ const embedHubspot = (block, config) => {
   script.defer = true;
   head.append(script);
 
+  // Watch for HubSpot's style injection, then load our CSS after it
+  const observer = new MutationObserver(() => {
+    const hsStyle = document.querySelector('style[data-hsfc-id="BaseStyle"]');
+    if (hsStyle) {
+      observer.disconnect();
+      // Load the CSS file after HubSpot's styles are injected
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = '/blocks/hubspot-form-builder/hubspot-form-builder.css?v=' + Date.now();
+      document.head.appendChild(link);
+    }
+  });
+
+  observer.observe(document.head, { childList: true });
+
   const hubspotDiv = createTag('div',
     {
       class: 'hs-form-html',
@@ -53,7 +68,7 @@ const embedHubspot = (block, config) => {
 
 const loadEmbed = (block, config) => {
   embedHubspot(block, config);
-  block.classList = 'block embed embed-hubspot';
+  block.classList = 'block embed embed-hubspot hubspot-form-builder';
   if (config.headline) {
     const headlineElement = typeof config.headline === 'string'
       ? createTag('p', { }, config.headline) : config.headline;
