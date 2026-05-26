@@ -550,7 +550,7 @@ div.text-light {
     }
   }
 }
-.h1-multi {
+/* .h1-multi {
   h1 {
     background: linear-gradient(100deg, var(--redLight) 0%, var(--purple) 45%, var(--blue) 100%) !important;
     background-clip: text !important;
@@ -573,7 +573,7 @@ div.text-light {
     background-clip: text !important;
     color: transparent !important;
   }
-}
+} */
 /* section metadata */
 main .section.light, main .section.highlight {
   background-color: var(--light-color);
