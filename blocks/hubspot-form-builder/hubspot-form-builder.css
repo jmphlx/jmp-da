@@ -1,5 +1,93 @@
-[data-hsfc-id="Renderer"] .hsfc-FieldLabel {
-  font-family: "anova-regular", sans-serif !important;
-  font-size: 14px !important;
-  color: blue !important;
+[data-hsfc-id="Renderer"] {
+  --hsf-global__font-family: "anova-regular", sans-serif !important;
+  --hsf-global__font-size: 14px !important;
+  --hsf-default-field-label__font-family: "anova-regular", sans-serif;
+  --hsf-default-field-label__font-size: 14px;
+  --hsf-default-field-label__color: #222222 !important;
+  --hsf-default-field-input__font-family: "anova-regular", sans-serif;
+  --hsf-default-field-input__font-size: 14px;
+  --hsf-default-field-input__color: #222222;
+  --hsf-default-field-input__background-color: #ffffff;
+  --hsf-default-field-input__border-color: #cccccc;
+  --hsf-default-field-input__border-radius: 0px;
+  --hsf-default-field-textarea__font-family: "anova-regular", sans-serif;
+  --hsf-default-field-textarea__font-size: 13px;
+  --hsf-default-field-textarea__color: #222222;
+  --hsf-default-field-textarea__background-color: #ffffff;
+  --hsf-default-field-textarea__border-color: #cccccc;
+  --hsf-default-field-textarea__border-radius: 0px;
+  --hsf-default-erroralert__color: #e5151f;
+  --hsf-default-erroralert__font-family: "anova-regular", sans-serif;
+  --hsf-default-erroralert__font-size: 12px;
+  --hsf-default-button__font-family: "anova-regular", sans-serif;
+  --hsf-default-button__background-color: #425b76;
+  --hsf-default-button__color: #ffffff;
+  --hsf-default-button__border-radius: 0px;
+  --hsf-default-field-checkbox__background-color: #ffffff;
+  --hsf-default-field-checkbox__border-color: #cccccc;
+  --hsf-default-field-checkbox__color: #222222;
+  --hsf-erroralert__font-family: "anova-light", sans-serif !important;
+  --hsf-field-label__font-family: "anova-light", sans-serif !important;
+}
+
+[data-hsfc-id="Renderer"] .hsfc-TextInput:invalid,
+[data-hsfc-id="Renderer"] .hsfc-TextareaInput:invalid {
+  border-color: #e5151f !important;
+}
+
+[data-hsfc-id="Renderer"] .hsfc-DropdownOptions {
+  background-color: #555555 !important;
+  border-color: #555555 !important;
+}
+
+[data-hsfc-id="Renderer"] .hsfc-DropdownOptions__List__ListItem {
+  color: #ffffff !important;
+  background-color: #555555 !important;
+}
+
+[data-hsfc-id="Renderer"] .hsfc-DropdownOptions__List__ListItem:hover,
+[data-hsfc-id="Renderer"] .hsfc-DropdownOptions__List__ListItem:focus {
+  background-color: #4a4a4a !important;
+}
+
+[data-hsfc-id="Renderer"] .hsfc-CheckboxField label {
+  gap: 8px !important;
+}
+
+[data-hsfc-id="Renderer"] .hsfc-CheckboxInput {
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px !important;
+  flex-shrink: 0 !important;
+}
+
+[data-hsfc-id="Renderer"] .hsfc-CheckboxInput:checked {
+  background-color: #425b76 !important;
+  border-color: #425b76 !important;
+}
+
+[data-hsfc-id="Renderer"] .hsfc-TextInput,
+[data-hsfc-id="Renderer"] .hsfc-TextareaInput {
+  background-color: #fafafa !important;
+  border-radius: 5px !important;
+  padding: 0 1.6rem !important;
+  border: 1px solid var(--grayRule);
+}
+
+[data-hsfc-id="Renderer"] .hsfc-TextInput:invalid, [data-hsfc-id="Renderer"] .hsfc-TextareaInput:invalid {
+  border: 1px solid #e22e36 !important;
+}
+
+
+select {
+    font-family: var(--font-primary);
+    width: 100%;
+    min-height: 4rem !important;
+    height: 4rem;
+    padding: 0  1.2rem;
+    background-color: #fafafa;
+    margin: .5rem 0 0 0;
+    border: 1px solid #E5E5E5;
+    border-top: 2px solid #d0d0d0;
+    border-radius: 3px;
 }
