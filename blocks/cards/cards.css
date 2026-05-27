@@ -56,6 +56,14 @@
     }
   }
 }
+.cards-gray10 {
+  > ul {
+    > li {
+      background-color: var(--gray10);
+      border: 1px solid var(--grayRule);
+    }
+  }
+}
 .cards-light {
   > ul {
     > li {
