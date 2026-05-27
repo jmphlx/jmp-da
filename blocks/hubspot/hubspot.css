@@ -420,8 +420,3 @@
     border: 1px solid var(--grayRule);
   }
 }
-.header-lines-2 {
-  div.headline {
-    display: grid !important;
-  }
-}
