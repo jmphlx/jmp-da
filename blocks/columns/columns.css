@@ -1363,6 +1363,12 @@ div.clm-80-20 {
       }
     }
   }
+  &.icon-s {
+    .icon {
+      height: 32px !important;
+      width: 32px !important;
+    }
+  }
   div:has(h5 + p) {
     h5 {
       margin-top: 0;
@@ -1683,6 +1689,30 @@ div.bullet-arrow {
       width: 7px;
       display: inline-block;
       font-size: 80%;
+    }
+  }
+}
+div.bullet-check-blue {
+  &.columns ul {
+    padding: 0 0 0 40px;
+    li {
+      position: relative;
+      text-indent: 0;
+      margin-bottom: 4px;
+      display: block;
+    }
+    li::marker {
+      content: '';
+      display: none;
+    }
+    li:before {
+      position: absolute;
+      content: url('../../../icons/blue-check.svg');
+      top: 3px;
+      left: -34px;
+      width: 20px;
+      height: 20px;
+      display: inline-block;
     }
   }
 }
@@ -2048,3 +2078,67 @@ div > div > div:nth-child(1){
     }
   }
 }
+
+.scroll-list-continuous {
+  overflow: hidden;         /* Hide the text that scrolls out of bounds */
+  width: 100%;             /* Span the full width of its parent */
+  background: none;     /* Optional background wrapper color */
+  padding: 10px 0;         /* Vertical breathing room */
+  box-sizing: border-box;
+  ul {
+    display: flex;           /* Align the list items side-by-side */
+    width: max-content;      /* Let the track grow as wide as the text content */
+    list-style: none;        /* Remove standard bullet points */
+    margin: 0;
+    padding: 0;
+    li {
+      padding: 6px 12px;         /* Adds horizontal gaps between your links */
+      white-space: nowrap;     /* Prevents individual text links from wrapping to a new line */
+      a {
+        padding: 7px 14px;  
+        text-decoration: none;
+        background-color: var(--gray10);
+        border-radius: 5px;
+        color: var(--blue);          /* Adjust link color to match your theme */
+        transition: all .3s;
+        &:hover {
+          color: var(--white) !important;
+          background-color: var(--blue);
+        }
+      }
+    }
+  }
+  &.time-10s {
+    ul {
+      animation: ticker-scroll 10s linear infinite;
+    }
+  }
+  &.time-15s {
+    ul {
+      animation: ticker-scroll 15s linear infinite;
+    }
+  }
+  &.time-20s {
+    ul {
+      animation: ticker-scroll 20s linear infinite;
+    }
+  }
+  &.time-25s {
+    ul {
+      animation: ticker-scroll 20s linear infinite;
+    }
+  }
+}
+.scroll-list-continuous:hover ul {
+  animation-play-state: paused;
+}
+@keyframes ticker-scroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    /* Moves the track left exactly by half its length */
+    transform: translate3d(-50%, 0, 0); 
+  }
+}
+

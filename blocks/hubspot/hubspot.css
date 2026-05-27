@@ -412,3 +412,16 @@
     padding: 1rem 1.6rem;
   }
 }
+.form-white {
+  .hubspot-wrapper {
+    position: relative;
+    z-index: 10;
+    background-color: #ffffff !important;
+    border: 1px solid var(--grayRule);
+  }
+}
+.header-lines-2 {
+  div.headline {
+    display: grid !important;
+  }
+}
