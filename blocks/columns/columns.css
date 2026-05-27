@@ -1363,12 +1363,6 @@ div.clm-80-20 {
       }
     }
   }
-  &.icon-s {
-    .icon {
-      height: 32px !important;
-      width: 32px !important;
-    }
-  }
   div:has(h5 + p) {
     h5 {
       margin-top: 0;
