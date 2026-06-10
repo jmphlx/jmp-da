@@ -1056,7 +1056,6 @@ div.clm-80-20 {
         flex: 1;
         position: relative;
         border: 1px solid var(--grayRule);
-        position: relative;
         h4 + p {
           display: flex;
           flex-grow: 1;
