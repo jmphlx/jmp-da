@@ -55,6 +55,7 @@ html {
   --gray7: #777777;
   --gray9: #999999;
   --gray10: #EFEFEF;
+  --grayRule-light: #dbdbdb;
   --grayRule: #D0D0D0;
   /* Color variables */
   --color-primary: var(--blue);
