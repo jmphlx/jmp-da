@@ -34,3 +34,50 @@
   window.VWO.init = window.VWO.init || function(state) { window.VWO.consentState = state; }
   window.VWO.init(initValue);
 </script>
+<!-- Start New Relic browser consent mode (TrustArc integration) -->
+<script type="text/javascript">
+  (function () {
+    // True when the user has accepted TrustArc functional cookies (categories 1,2).
+    // Uses the same cookie the VWO consent block above relies on.
+    function hasFunctionalConsent() {
+      const decodedCookie = decodeURIComponent(document.cookie || '');
+      const functionalCookieRegex = /cmapi_cookie_privacy=permit 1,2(.*)/;
+      return !!decodedCookie.match(functionalCookieRegex);
+    }
+
+    // Grant or deny consent for the New Relic browser agent.
+    // The agent buffers data until this is called, so retry until its API is ready.
+    function applyNewRelicConsent(accept) {
+      if (window.newrelic && typeof window.newrelic.consent === 'function') {
+        window.newrelic.consent(accept);
+      } else {
+        setTimeout(function () { applyNewRelicConsent(accept); }, 100);
+      }
+    }
+
+    function evaluateConsent() {
+      applyNewRelicConsent(hasFunctionalConsent());
+    }
+
+    // 1) Apply the current decision on initial load (covers returning/already-decided users).
+    evaluateConsent();
+
+    // 2) Re-evaluate when TrustArc reports a new or updated consent decision.
+    window.addEventListener('message', function (event) {
+      try {
+        const payload = JSON.parse(event.data);
+        if (
+          payload &&
+          payload.PrivacyManagerAPI &&
+          (payload.PrivacyManagerAPI.action === 'submit' ||
+            payload.PrivacyManagerAPI.action === 'getConsentDecision')
+        ) {
+          evaluateConsent();
+        }
+      } catch (e) {
+        // Ignore non-JSON / unrelated postMessage events.
+      }
+    });
+  })();
+</script>
+<!-- End New Relic browser consent mode (TrustArc integration) -->
