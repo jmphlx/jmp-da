@@ -5,6 +5,7 @@
  */
 import {
   getBlockConfig,
+  getLanguage,
 } from '../../scripts/jmp.js';
 
 import { createTag } from '../../scripts/helper.js';
@@ -27,6 +28,12 @@ function getWarningMessage() {
 }
 
 const embedHubspot = (block, config) => {
+  window.addEventListener('hs-form-event:on-ready', (event) => {
+    HubSpotFormsV4.getFormFromEvent(event).setFieldValue('0-1/last_action__c', config.lastAction);
+    HubSpotFormsV4.getFormFromEvent(event).setFieldValue('0-1/leadsource', config.leadSource);
+    HubSpotFormsV4.getFormFromEvent(event).setFieldValue('0-1/salesforce_campaign_event_id_event_registration_only', config.salesforceCampaignId);
+  });
+
   const head = document.querySelector('head');
   const script = document.createElement('script');
   script.src = 'https://js.hsforms.net/forms/embed/developer/20721161.js';
@@ -64,13 +71,16 @@ const embedHubspot = (block, config) => {
     'data-portal-id': `${config.portalId}`,
   });
 
-  block.append(hubspotDiv);
-
-  window.addEventListener('hs-form-event:on-ready', (event) => {
-    HubSpotFormsV4.getFormFromEvent(event).setFieldValue('0-1/last_action__c', config.lastAction);
-    HubSpotFormsV4.getFormFromEvent(event).setFieldValue('0-1/leadsource', config.leadSource);
-    HubSpotFormsV4.getFormFromEvent(event).setFieldValue('0-1/salesforce_campaign_event_id_event_registration_only', config.salesforceCampaignId);
+  window.addEventListener('hs-form-event:on-submission:success', () => {
+    let redirect = config.redirectTarget;
+    const regex = /^(\/)*\.\//i;
+    if (redirect.match(regex)) {
+      redirect = redirect.replace(regex, `/${getLanguage()}/`);
+    }
+    window.location.assign(redirect);
   });
+
+  block.append(hubspotDiv);
 
   return null;
 };
