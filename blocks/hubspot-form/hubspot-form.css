@@ -76,7 +76,7 @@
 
 [data-hsfc-id="Renderer"] .hsfc-DropdownOptions__List__ListItem:hover,
 [data-hsfc-id="Renderer"] .hsfc-DropdownOptions__List__ListItem:focus {
-  background-color: #4a4a4a !important;
+  background-color: var(--blue) !important;
 }
 
 [data-hsfc-id="Renderer"] .hsfc-CheckboxField label {
