@@ -717,6 +717,17 @@ div.light-purple-gradient {
 div.blue-lightblue-gradient {
   background: linear-gradient(45deg, #0378CD 15%, #61CAE5 95%);
 }
+div.gradient-feather {
+  .background-img {
+    mask-image: linear-gradient(to left, black 20%, transparent 80%);
+  }
+  &.blue-left-gradient {
+    background: linear-gradient(45deg, #0378CD 50%, #61CAE5 95%);
+  }
+  &.purple-left-gradient {
+    background: linear-gradient(45deg, #643695 15%, #9D57A3 95%);
+  }
+}
 div.gray {
   background: var(--gray);
 }
