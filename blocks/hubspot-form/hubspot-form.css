@@ -11,7 +11,7 @@
   --hsf-default-field-label__font-family: "anova-regular", sans-serif;
   --hsf-default-field-label__font-size: 14px;
   --hsf-default-field-label__color: #333333 !important;
-  --hsf-default-field-input__font-family: "anova-regular", sans-serif;
+  --hsf-default-field-input__font-family: "anova-light", sans-serif;
   --hsf-default-field-input__font-size: 14px;
   --hsf-default-field-input__color: #222222;
   --hsf-default-field-input__background-color: #ffffff;
@@ -39,7 +39,6 @@
   --hsf-default-navigationrow-buttons-single__justify-content: start !important;
   --hsf-default-row__vertical-spacing: 16px !important;
   --hsf-default-field-input__placeholder-color: var(--text-color) !important;
-  --hsf-default-field-input__font-family: "anova-light", sans-serif !important;
 }
 
 [data-hsfc-id="Step"] {
@@ -54,15 +53,6 @@
 
 [data-hsfc-id="Renderer"] .hsfc-TextInput:active, .hsfc-TextInput:focus  {
   box-shadow: none !important;
-}
-
-/* [data-hsfc-id="Renderer"] .hsfc-TextInput:invalid,
-[data-hsfc-id="Renderer"] .hsfc-TextareaInput:invalid {
-  border-color: #e5151f !important;
-} */
- [data-hsfc-id="Renderer"] .hsfc-TextInput:invalid,
-[data-hsfc-id="Renderer"] .hsfc-TextareaInput:invalid {
-  border-color: var(--grayRule) !important;
 }
 
 [data-hsfc-id="Renderer"] .hsfc-DropdownOptions {
