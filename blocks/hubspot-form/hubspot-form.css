@@ -1,9 +1,16 @@
+.hubspot-form-builder {
+  padding: 3.2rem;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  border: 1px solid #d0d0d0;
+}
+
 [data-hsfc-id="Renderer"] {
   --hsf-global__font-family: "anova-regular", sans-serif !important;
   --hsf-global__font-size: 14px !important;
   --hsf-default-field-label__font-family: "anova-regular", sans-serif;
   --hsf-default-field-label__font-size: 14px;
-  --hsf-default-field-label__color: #222222 !important;
+  --hsf-default-field-label__color: #333333 !important;
   --hsf-default-field-input__font-family: "anova-regular", sans-serif;
   --hsf-default-field-input__font-size: 14px;
   --hsf-default-field-input__color: #222222;
@@ -20,19 +27,42 @@
   --hsf-default-erroralert__font-family: "anova-regular", sans-serif;
   --hsf-default-erroralert__font-size: 12px;
   --hsf-default-button__font-family: "anova-regular", sans-serif;
-  --hsf-default-button__background-color: #425b76;
+  --hsf-default-button__background-color: var(--orange) !important;
   --hsf-default-button__color: #ffffff;
   --hsf-default-button__border-radius: 0px;
   --hsf-default-field-checkbox__background-color: #ffffff;
   --hsf-default-field-checkbox__border-color: #cccccc;
   --hsf-default-field-checkbox__color: #222222;
   --hsf-erroralert__font-family: "anova-light", sans-serif !important;
-  --hsf-field-label__font-family: "anova-light", sans-serif !important;
+  --hsf-field-label__font-family: "anova-regular", sans-serif !important;
+  --hsf-default-background__padding: 0 !important;
+  --hsf-default-navigationrow-buttons-single__justify-content: start !important;
+  --hsf-default-row__vertical-spacing: 16px !important;
+  --hsf-default-field-input__placeholder-color: var(--text-color) !important;
+  --hsf-default-field-input__font-family: "anova-light", sans-serif !important;
 }
 
-[data-hsfc-id="Renderer"] .hsfc-TextInput:invalid,
+[data-hsfc-id="Step"] {
+  --hsf-default-background__padding: 0 !important;
+  --hsf-background__padding: 0 !important;
+}
+
+[data-hsfc-id="Step"] .hsfc-Step .hsfc-Step__Content {
+  --hsf-default-background__padding: 0 !important;
+  --hsf-background__padding: 0 !important;
+}
+
+[data-hsfc-id=Renderer] .hsfc-TextInput:active, .hsfc-TextInput:focus  {
+  box-shadow: none !important;
+}
+
+/* [data-hsfc-id="Renderer"] .hsfc-TextInput:invalid,
 [data-hsfc-id="Renderer"] .hsfc-TextareaInput:invalid {
   border-color: #e5151f !important;
+} */
+ [data-hsfc-id="Renderer"] .hsfc-TextInput:invalid,
+[data-hsfc-id="Renderer"] .hsfc-TextareaInput:invalid {
+  border-color: var(--grayRule) !important;
 }
 
 [data-hsfc-id="Renderer"] .hsfc-DropdownOptions {
@@ -70,24 +100,123 @@
 [data-hsfc-id="Renderer"] .hsfc-TextareaInput {
   background-color: #fafafa !important;
   border-radius: 5px !important;
-  padding: 0 1.6rem !important;
-  border: 1px solid var(--grayRule);
+  padding: 5px 16px !important;
+  border: 1px solid var(--grayRule) !important;
+  margin-bottom: 8px !important;
+}
+
+[data-hsfc-id=Renderer] .hsfc-TextInput:focus  {
+  border: 1px solid var(--blue) !important;
 }
 
 [data-hsfc-id="Renderer"] .hsfc-TextInput:invalid, [data-hsfc-id="Renderer"] .hsfc-TextareaInput:invalid {
-  border: 1px solid #e22e36 !important;
+  border: 1px solid var(--grayRule);
+  &:has(+ [data-hsfc-id="ErrorAlert"]) {
+    border: 1px solid #e22e36 !important;
+  }
 }
 
+[data-hsfc-id="Step"] .hsfc-Step__Content {
+  padding: 0 !important;
+}
 
 select {
-    font-family: var(--font-primary);
-    width: 100%;
-    min-height: 4rem !important;
-    height: 4rem;
-    padding: 0  1.2rem;
-    background-color: #fafafa;
-    margin: .5rem 0 0 0;
-    border: 1px solid #E5E5E5;
-    border-top: 2px solid #d0d0d0;
-    border-radius: 3px;
+  font-family: var(--font-primary);
+  width: 100%;
+  min-height: 4rem !important;
+  height: 4rem;
+  padding: 0  1.2rem;
+  background-color: #fafafa;
+  margin: .5rem 0 0 0;
+  border: 1px solid #E5E5E5;
+  border-top: 2px solid #d0d0d0;
+  border-radius: 3px;
+}
+
+[data-hsfc-id=Renderer] .hsfc-DropdownInput__Caret {
+  position: absolute;
+  top: -8px !important;
+  bottom: 0;
+  right: 0;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: all;
+}
+
+[data-hsfc-id=Renderer] .hsfc-DropdownInput__Caret>span {
+  width: 5px !important;
+  height: 5px !important;
+  border: 3px solid #333333 !important;
+  border-radius: 0 1px 0 0 !important;
+  border-width: 3px 3px 0 0 !important;
+  transform: rotate(135deg);
+}
+
+[data-hsfc-id="Renderer"] .hsfc-DropdownOptions {
+  background-color: rgba(0, 0, 0, .05) !important;
+  border-color: rgba(0, 0, 0, .05) !important;
+  border-radius: 8px;
+  border: none !important;
+  backdrop-filter: blur(16px);
+}
+
+[data-hsfc-id="Renderer"] .hsfc-DropdownOptions__List__ListItem {
+  color: var(--text-color) !important;
+  background-color: rgba(0, 0, 0, 0) !important;
+  padding: 8px 18px;
+  &:hover {
+    color: white !important;
+    background-color: var(--blue) !important;
+  }
+}
+
+[data-hsfc-id=Renderer] .hsfc-DropdownField>*:not(:last-child) {
+  margin-bottom: 6px !important;
+}
+
+[data-hsfc-id=Renderer] .hsfc-PhoneInput:not(.hsfc-PhoneInput--rtl) .hsfc-PhoneInput__FlagAndCaret {
+  /* border-right: 1px solid var(--hsf-field-input__border-color, var(--hsf-default-field-input__border-color)); */
+  border: 1px solid var(--grayRule) !important;
+  padding: 0 8px !important;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  height: 40px !important;
+  background-color: #fafafa !important;
+  margin-right: 10px;
+}
+
+[data-hsfc-id=Renderer] .hsfc-PhoneInput__FlagAndCaret__Caret {
+  width: 5px !important;
+  height: 5px !important;
+  border: 3px solid #333333 !important;
+  border-radius: 0 1px 0 0 !important;
+  border-width: 3px 3px 0 0 !important;
+  transform: rotate(135deg);
+  margin: 4px 4px 8px;
+}
+
+[data-hsfc-id=Renderer] .hsfc-CheckboxField label {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 12px;
+}
+
+[data-hsfc-id="Renderer"] .hsfc-CheckboxInput:checked {
+  background-color: var(--blue) !important;
+  border-color: var(--blue) !important;
+}
+
+[data-hsfc-id="Renderer"] .hsfc-CheckboxInput {
+  background-color: #fafafa !important;
+  border-color: var(--grayRule) !important;
+  box-shadow: none !important;
+}
+
+[data-hsfc-id="RichText"]:nth-last-child(1){
+  border-top: 1px solid var(--grayRule) !important;
+  padding-top: 16px;
 }
