@@ -37,8 +37,9 @@
   --hsf-field-label__font-family: "anova-regular", sans-serif !important;
   --hsf-default-background__padding: 0 !important;
   --hsf-default-navigationrow-buttons-single__justify-content: start !important;
-  --hsf-default-row__vertical-spacing: 16px !important;
+  --hsf-default-row__vertical-spacing: 12px !important;
   --hsf-default-field-input__placeholder-color: var(--text-color) !important;
+  --hsf-default-module__vertical-spacing: 8px !important;
 }
 
 [data-hsfc-id="Step"] {
@@ -56,13 +57,21 @@
 }
 
 [data-hsfc-id="Renderer"] .hsfc-DropdownOptions {
-  background-color: #555555 !important;
-  border-color: #555555 !important;
+  background-color: rgba(0, 0, 0, .05) !important;
+  border-color: rgba(0, 0, 0, .05) !important;
+  border-radius: 8px;
+  border: none !important;
+  backdrop-filter: blur(16px);
 }
 
 [data-hsfc-id="Renderer"] .hsfc-DropdownOptions__List__ListItem {
-  color: #ffffff !important;
-  background-color: #555555 !important;
+  color: var(--text-color) !important;
+  background-color: rgba(0, 0, 0, 0) !important;
+  padding: 8px 18px;
+  &:hover {
+    color: white !important;
+    background-color: var(--blue) !important;
+  }
 }
 
 [data-hsfc-id="Renderer"] .hsfc-DropdownOptions__List__ListItem:hover,
@@ -71,7 +80,10 @@
 }
 
 [data-hsfc-id="Renderer"] .hsfc-CheckboxField label {
-  gap: 8px !important;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
 }
 
 [data-hsfc-id="Renderer"] .hsfc-CheckboxInput {
@@ -79,11 +91,14 @@
   height: 16px !important;
   min-width: 16px !important;
   flex-shrink: 0 !important;
+  background-color: #fafafa !important;
+  border-color: var(--grayRule) !important;
+  box-shadow: none !important;
 }
 
 [data-hsfc-id="Renderer"] .hsfc-CheckboxInput:checked {
-  background-color: #425b76 !important;
-  border-color: #425b76 !important;
+  background-color: var(--blue) !important;
+  border-color: var(--blue) !important;
 }
 
 [data-hsfc-id="Renderer"] .hsfc-TextInput,
@@ -145,24 +160,6 @@ select {
   transform: rotate(135deg);
 }
 
-[data-hsfc-id="Renderer"] .hsfc-DropdownOptions {
-  background-color: rgba(0, 0, 0, .05) !important;
-  border-color: rgba(0, 0, 0, .05) !important;
-  border-radius: 8px;
-  border: none !important;
-  backdrop-filter: blur(16px);
-}
-
-[data-hsfc-id="Renderer"] .hsfc-DropdownOptions__List__ListItem {
-  color: var(--text-color) !important;
-  background-color: rgba(0, 0, 0, 0) !important;
-  padding: 8px 18px;
-  &:hover {
-    color: white !important;
-    background-color: var(--blue) !important;
-  }
-}
-
 [data-hsfc-id="Renderer"] .hsfc-DropdownField>*:not(:last-child) {
   margin-bottom: 6px !important;
 }
@@ -186,24 +183,6 @@ select {
   border-width: 3px 3px 0 0 !important;
   transform: rotate(135deg);
   margin: 4px 4px 8px;
-}
-
-[data-hsfc-id="Renderer"] .hsfc-CheckboxField label {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 12px;
-}
-
-[data-hsfc-id="Renderer"] .hsfc-CheckboxInput:checked {
-  background-color: var(--blue) !important;
-  border-color: var(--blue) !important;
-}
-
-[data-hsfc-id="Renderer"] .hsfc-CheckboxInput {
-  background-color: #fafafa !important;
-  border-color: var(--grayRule) !important;
-  box-shadow: none !important;
 }
 
 [data-hsfc-id="RichText"]:nth-last-child(1){
