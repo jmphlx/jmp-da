@@ -52,7 +52,7 @@
   --hsf-background__padding: 0 !important;
 }
 
-[data-hsfc-id=Renderer] .hsfc-TextInput:active, .hsfc-TextInput:focus  {
+[data-hsfc-id="Renderer"] .hsfc-TextInput:active, .hsfc-TextInput:focus  {
   box-shadow: none !important;
 }
 
@@ -105,7 +105,7 @@
   margin-bottom: 8px !important;
 }
 
-[data-hsfc-id=Renderer] .hsfc-TextInput:focus  {
+[data-hsfc-id="Renderer"] .hsfc-TextInput:focus  {
   border: 1px solid var(--blue) !important;
 }
 
@@ -133,7 +133,7 @@ select {
   border-radius: 3px;
 }
 
-[data-hsfc-id=Renderer] .hsfc-DropdownInput__Caret {
+[data-hsfc-id="Renderer"] .hsfc-DropdownInput__Caret {
   position: absolute;
   top: -8px !important;
   bottom: 0;
@@ -146,7 +146,7 @@ select {
   pointer-events: all;
 }
 
-[data-hsfc-id=Renderer] .hsfc-DropdownInput__Caret>span {
+[data-hsfc-id="Renderer"] .hsfc-DropdownInput__Caret>span {
   width: 5px !important;
   height: 5px !important;
   border: 3px solid #333333 !important;
@@ -173,11 +173,11 @@ select {
   }
 }
 
-[data-hsfc-id=Renderer] .hsfc-DropdownField>*:not(:last-child) {
+[data-hsfc-id="Renderer"] .hsfc-DropdownField>*:not(:last-child) {
   margin-bottom: 6px !important;
 }
 
-[data-hsfc-id=Renderer] .hsfc-PhoneInput:not(.hsfc-PhoneInput--rtl) .hsfc-PhoneInput__FlagAndCaret {
+[data-hsfc-id="Renderer"] .hsfc-PhoneInput:not(.hsfc-PhoneInput--rtl) .hsfc-PhoneInput__FlagAndCaret {
   /* border-right: 1px solid var(--hsf-field-input__border-color, var(--hsf-default-field-input__border-color)); */
   border: 1px solid var(--grayRule) !important;
   padding: 0 8px !important;
@@ -188,7 +188,7 @@ select {
   margin-right: 10px;
 }
 
-[data-hsfc-id=Renderer] .hsfc-PhoneInput__FlagAndCaret__Caret {
+[data-hsfc-id="Renderer"] .hsfc-PhoneInput__FlagAndCaret__Caret {
   width: 5px !important;
   height: 5px !important;
   border: 3px solid #333333 !important;
@@ -198,7 +198,7 @@ select {
   margin: 4px 4px 8px;
 }
 
-[data-hsfc-id=Renderer] .hsfc-CheckboxField label {
+[data-hsfc-id="Renderer"] .hsfc-CheckboxField label {
   display: flex;
   align-items: flex-start;
   justify-content: center;
