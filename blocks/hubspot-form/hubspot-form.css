@@ -28,6 +28,7 @@
   --hsf-default-erroralert__font-size: 12px;
   --hsf-default-button__font-family: "anova-regular", sans-serif;
   --hsf-default-button__background-color: var(--orange) !important;
+  --hsf-default-button--hover__background-color: var(--orange-hover) !important;
   --hsf-default-button__color: #ffffff;
   --hsf-default-button__border-radius: 0px;
   --hsf-default-field-checkbox__background-color: #ffffff;
@@ -154,9 +155,9 @@ select {
 [data-hsfc-id="Renderer"] .hsfc-DropdownInput__Caret>span {
   width: 5px !important;
   height: 5px !important;
-  border: 3px solid #333333 !important;
+  border: 2px solid #333333 !important;
   border-radius: 0 1px 0 0 !important;
-  border-width: 3px 3px 0 0 !important;
+  border-width: 2px 2px 0 0 !important;
   transform: rotate(135deg);
 }
 
@@ -178,9 +179,9 @@ select {
 [data-hsfc-id="Renderer"] .hsfc-PhoneInput__FlagAndCaret__Caret {
   width: 5px !important;
   height: 5px !important;
-  border: 3px solid #333333 !important;
+  border: 2 solid #333333 !important;
   border-radius: 0 1px 0 0 !important;
-  border-width: 3px 3px 0 0 !important;
+  border-width: 2px 2px 0 0 !important;
   transform: rotate(135deg);
   margin: 4px 4px 8px;
 }
