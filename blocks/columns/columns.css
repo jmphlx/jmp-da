@@ -2142,11 +2142,13 @@ div > div > div:nth-child(1){
     display: flex;
     div {
       width: auto;
+      /* margin: 0 auto; */
+      /* max-width: 45%; */
       display: block;
       margin-bottom: 24px;
       text-align: left;
       border-radius: 5px;
-      padding: 24px 36px 24px 24px;
+      padding: 24px 48px 24px 24px;
       background-color: white;
       position: relative;
       flex-direction: column;
@@ -2202,19 +2204,32 @@ div > div > div:nth-child(1){
       }
     }
     @media (width <=900px) {
-      flex-wrap: wrap;
-      justify-content: stretch;
-      li {
-        width: 48%;
-        flex: 1 0 auto;
+      /* div {
+        max-width: 100%;
+        width: 100%;
+      } */
+      div {
+        p:nth-child(1) {
+          float: none !important;
+          padding-bottom: 16px;
+          width: 36px;
+        }
       }
     }
-    @media (width <=600px) {
-      flex-wrap: wrap;
-      justify-content: stretch;
-      li {
-        width: 100%;
-        flex: 1 0 auto;
+  }
+  &.column-width-50 {
+    div {
+      div {
+        max-width: 45%;
+        margin: 0 auto;
+      }
+    }
+    @media (width <=900px) {
+      div {
+        div {
+          max-width: 100%;
+          margin: 0;
+        }
       }
     }
   }

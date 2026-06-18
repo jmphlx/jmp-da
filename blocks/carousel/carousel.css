@@ -527,3 +527,11 @@
   border-bottom: 1px solid var(--grayRule);
   margin: 3.2rem 0;
 }
+
+.quotations-purple {
+  :first-child:before, :first-child:after {
+    color: var(--purple) !important;
+    opacity: .1;
+    z-index: -1 !important;
+  }
+}
