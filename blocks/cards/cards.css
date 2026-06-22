@@ -1453,7 +1453,7 @@
   }
 }
 
-.text-shift-card {
+.text-shift-card, .text-shift-card-light {
   > ul {
     display: flex;
     padding: 2rem 0;
@@ -1534,6 +1534,29 @@
       > li {
         width: 100%;
         flex: 1 0 auto;
+      }
+    }
+  }
+}
+.text-shift-card-light {
+  > ul {
+    > li {
+      background-color: rgba(255, 255, 255, 0.75);
+      border: 2px solid var(--gray);
+      .cards-card-body {
+        h3, h4 , h5 , h6 {
+          color: var(--blue) !important;
+        }
+      }
+      &:after, &:before {
+        background-color: var(--blue);
+      }
+      &:hover {
+        div.cards-card-body  {
+          h3, h4 , h5 , h6 {
+            opacity: 0.75;
+          }
+        }
       }
     }
   }
