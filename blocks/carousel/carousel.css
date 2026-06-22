@@ -527,3 +527,19 @@
   border-bottom: 1px solid var(--grayRule);
   margin: 3.2rem 0;
 }
+
+.quotations-purple {
+  :first-child:is(p, h1, h2, h3, h4, h5, h6):before, :first-child:is(p, h1, h2, h3, h4, h5, h6):after {
+    color: var(--purple) !important;
+    opacity: .1;
+    z-index: 2 !important;
+  }
+}
+
+.navigation-blue {
+  .carousel-navigation-buttons button:after, .carousel-navigation-buttons button:before {
+    border: 2px var(--blue) solid;
+    border-bottom: 0;
+  border-left: 0;
+  }
+}
