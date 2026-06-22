@@ -1,4 +1,4 @@
-;window.NREUM||(NREUM={});NREUM.init={browser_consent_mode:{enabled:false},privacy:{cookies_enabled:true},performance:{capture_measures:true},ajax:{deny_list:["bam.nr-data.net", "www.jmp.com/nr/data/*", "nr-data.net", "www.jmp.com/nr/data"],capture_payloads:'none'},api:{register:{enabled:true,duplicate_data_to_container:false}},proxy:{assets:'www.jmp.com/nr/agent',beacon:'www.jmp.com/nr/data'}};
+;window.NREUM||(NREUM={});NREUM.init={browser_consent_mode:{enabled:true},privacy:{cookies_enabled:true},performance:{capture_measures:true},ajax:{deny_list:["bam.nr-data.net", "www.jmp.com/nr/data/*", "nr-data.net", "www.jmp.com/nr/data"],capture_payloads:'none'},api:{register:{enabled:true,duplicate_data_to_container:false}},proxy:{assets:'www.jmp.com/nr/agent',beacon:'www.jmp.com/nr/data'}};
 
 ;NREUM.loader_config={accountID:"6435355",trustKey:"6435355",agentID:"1120512822",licenseKey:"NRJS-51ad64b01d072c9e31c",applicationID:"1120512822"};
 ;NREUM.info={beacon:"www.jmp.com/nr/data",errorBeacon:"www.jmp.com/nr/data",licenseKey:"NRJS-51ad64b01d072c9e31c",applicationID:"1120512822",sa:1};
