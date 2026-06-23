@@ -757,6 +757,14 @@ ul {
     color: var(--blue);
   }
 }
+.bullet-light {
+  ul {
+    padding: 0 0 0 18px; 
+    li::marker {
+      color: var(--white);
+    }
+  }
+}
 .bullet-arrow {
   .default-content-wrapper  {
     ul {
