@@ -6,9 +6,9 @@ function getRegionalLanguageIndexes(includeFullURL, regionalIndexes) {
   const indexPaths = [];
   regionalIndexes.forEach((currLang) => {
     if (includeFullURL) {
-      indexPaths.push(`${baseURL}/jmp-${currLang}.json`);
+      indexPaths.push(`${baseURL}/${currLang}/query-index.json`);
     } else {
-      indexPaths.push(`/jmp-${currLang}.json`);
+      indexPaths.push(`/${currLang}/query-index.json`);
     }
   });
   return indexPaths;
@@ -51,10 +51,6 @@ async function getPastEventsPages(languageIndexes) {
 }
 
 async function sendDeleteRequest(authToken, page, deindex) {
-  //'https://admin.hlx.page/index/jmphlx/jmp-da/main/en/online-statistics-course/request-access-to-teaching-materials/download-teaching-materials' 
-
-  console.log(authToken);
-  console.log(page);
   let url;
   if (deindex) {
     url = `https://admin.hlx.page/index/jmphlx/jmp-da/main${page}`;
