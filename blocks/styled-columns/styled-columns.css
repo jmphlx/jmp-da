@@ -5,11 +5,18 @@
   --gray: #eeeeee;
   --light-gray: #767676;
 }
-  
-.styled-columns > div {
-  display: flex;
-  flex-direction: column;
-  gap: 2.4rem;
+
+.styled-columns {
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+  }
+  &.gap-32 {
+    > div {
+      gap: 3.2rem;
+    }
+  }
 }
 
 .styled-columns > div > div {
@@ -1034,14 +1041,14 @@ div.clm-80-20 {
 }
 
 /* Product Selector - Buy JMP page */
-.product-selector {
+div.product-selector {
   div {
     div {
       /* min-height: 500px; */
       background-color: white;
       padding: 24px;
       border-radius: 10px;
-      border: 2px solid var(--grayRule);
+      border: 1px solid var(--grayRule);
       span.icon {
         margin-bottom: 12px;
         height: 42px;
