@@ -1,12 +1,4 @@
 .styled-columns {
-  --light-blue: #00bbee;
-  --yellow: #fcbd30;
-  --white: #ffffff;
-  --gray: #eeeeee;
-  --light-gray: #767676;
-}
-
-.styled-columns {
   > div {
     display: flex;
     flex-direction: column;
