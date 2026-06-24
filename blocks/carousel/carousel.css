@@ -306,8 +306,10 @@
   }
 }
 .carousel-arrows-off {
-  .carousel .carousel-navigation-buttons {
-    display: none;
+  div.carousel-navigation-buttons {
+    button.slide-next:after, button.slide-prev:after{
+      display: none !important;
+    }
   }
 }
 
