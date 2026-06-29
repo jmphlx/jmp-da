@@ -1376,6 +1376,13 @@ div.clm-80-20 {
     }
   }
 }
+.bullet-blue {
+  ul, ol {
+    li::marker {
+      color: var(--blue);
+    }
+  }
+}
 .text-grid {
   div {
     div {
