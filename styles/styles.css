@@ -1861,7 +1861,7 @@ a:hover {
       }
     }
   }
-  h4:has(+ ul) {
+  h4:has(+ ul), h4:has(+ p) {
     grid-column: 1;
     background-color: rgba(0, 0, 0, .025);
     width: 100%;
@@ -1909,7 +1909,7 @@ a:hover {
       margin-bottom: 2em !important;
     }
   }
-  ul {
+  ul, p {
     grid-column: 2;
     background: rgba(0, 0, 0, .025);
     column-count: 2;
@@ -1922,10 +1922,33 @@ a:hover {
       margin: 0 4px 4px 0;
     }
     @media (width <=900px) {
-      column-count: 2 !important;
+      column-count: 1 !important;
     }
     @media (width <=600px) {
       column-count: 1 !important;
+    }
+  }
+  h4:has(+ p + p), h4:has(+ p + ul){
+    grid-row: span 2;
+  }
+  p {
+    break-inside: avoid-column;
+    column-count: 1;
+    padding-left: 0;
+  }
+  p:has(+ p), p:has(+ ul) {
+    margin-bottom: 0;
+    padding-bottom: 0 !important;
+    border-radius: 0 10px 0 0;
+  }
+  p + p {
+    padding-top: 12px !important;
+  }
+  ul {
+    > li p {
+      background: none !important;
+      padding: 0;
+      margin-bottom: 0;
     }
   }
 }

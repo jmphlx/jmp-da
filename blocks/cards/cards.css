@@ -1665,7 +1665,7 @@
           transition: all 0.35s ease-in-out;
   
         }
-        p {
+        p, ul, ol {
           pointer-events: none;
           opacity: 0;
           transition: opacity 0.35s ease-in-out;
@@ -1697,7 +1697,7 @@
           h3, h4 , h5 , h6 {
             opacity: 0.5;
           }
-          p {
+          p, ul, ol {
             display: block;
             pointer-events: pointer;
             opacity: 1;
