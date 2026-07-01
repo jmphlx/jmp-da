@@ -48,9 +48,6 @@
       console.log('found functional cookie consent NR');
       const script = document.createElement('script');
       script.src = '/scripts/newrelic.js';
-      // newrelic.js runs with browser_consent_mode enabled, so the agent withholds
-      // all data until consent is explicitly granted. We only reach here when the
-      // functional consent cookie is present, so propagate that consent to the agent.
       script.addEventListener('load', function () {
         try {
           if (window.newrelic && typeof window.newrelic.consent === 'function') {
