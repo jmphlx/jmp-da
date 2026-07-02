@@ -48,6 +48,15 @@
       console.log('found functional cookie consent NR');
       const script = document.createElement('script');
       script.src = '/scripts/newrelic.js';
+      script.addEventListener('load', function () {
+        try {
+          if (window.newrelic && typeof window.newrelic.consent === 'function') {
+            window.newrelic.consent(true);
+          }
+        } catch (e) {
+          // no-op: never block page load on consent propagation
+        }
+      });
       document.head.appendChild(script);
     }
     if (nrHasConsent()) {
