@@ -295,6 +295,7 @@ customElements.define('da-preflight', DaPreflight);
 
 async function mount() {
   const { context, token } = await DA_SDK;
+  console.log(context.repo);
   const path = context.path.startsWith('/') ? context.path : `/${context.path}`;
 
   const cmp = document.createElement('da-preflight');
