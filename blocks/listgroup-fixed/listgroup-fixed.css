@@ -66,7 +66,7 @@ div.listgroup-fixed, div.listgroup  {
           padding: 0;
           margin-bottom: 2rem;
         }
-        &:after {
+        /* &:after {
           content:'';
           display: block;
           width: 1.6rem;
@@ -83,7 +83,7 @@ div.listgroup-fixed, div.listgroup  {
           transition: all 0.5s ease;
           z-index: 1;
           border-radius: 0 !important;
-        }
+        } */
       }
       :after {
         display: none;
@@ -225,7 +225,8 @@ div.listgroup-fixed, div.listgroup  {
       transition: all 0.5s ease-in-out;
       a {
           background: #FAFAFA;
-          border: 1px solid #D7D7D7;
+          border: 1px solid var(--gray);
+          transition: all 0.35s ease-in-out;
           border-radius: 5px;
           /* padding: 8% 8% 9% 8%; */
           box-sizing: border-box;
@@ -292,7 +293,7 @@ div.listgroup-fixed, div.listgroup  {
               /* text-decoration: underline solid var(--blueLight); */
           }
       }
-      :after {
+      /* :after {
           content: '';
           position: absolute;
           left: 50%;
@@ -303,14 +304,16 @@ div.listgroup-fixed, div.listgroup  {
           height: 5px;
           width: 95%;
           bottom: -5px;
-      }
+      } */
   }
   > li:hover {
-      transform: translateY(-5px);
       transition: all 0.3s ease-in-out;
-      :after {
-          background-color: var(--purple);
+      a {
+        border: 1px solid var(--blue);
       }
+      /* :after {
+          background-color: var(--purple);
+      } */
   }
 }
 
