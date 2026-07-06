@@ -1285,14 +1285,12 @@ div.listgroup-custom  {
         transition: all 0.5s ease;
         span.image {
           width: auto;
-          height: auto;
           grid-row: 1 / span 4;
           height: calc(100% + 1px);
           padding-right: 24px;
           float: left;
           aspect-ratio: 7 / 9;
           img {
-            border-radius: 0;
             border: none;
             border-radius: 5px 0 0 5px;
           }
