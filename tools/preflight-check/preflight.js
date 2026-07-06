@@ -4,15 +4,6 @@ import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 import { LitElement, html, nothing } from 'https://esm.sh/lit@3.2.1';
 
 /* ------------------------------------------------------------------ *
- * Config — set your target here
- * ------------------------------------------------------------------ */
-const CONFIG = {
-  org: 'jmphlx',
-  site: 'jmp-da',
-  path: '/en/home',   // DA source path, no .html extension
-};
-
-/* ------------------------------------------------------------------ *
  * Styles (merged from preflight.css + label.css, S2 vars replaced)
  * ------------------------------------------------------------------ */
 const CSS = `
@@ -303,20 +294,22 @@ class DaPreflight extends LitElement {
 customElements.define('da-preflight', DaPreflight);
 
 async function mount() {
-  const sdk = await DA_SDK;
-  CONFIG.token = sdk.token;
+  const { context, token } = await DA_SDK;
+  const path = context.path.startsWith('/') ? context.path : `/${context.path}`;
+
   const cmp = document.createElement('da-preflight');
-  console.log(cmp);
-  
-  cmp.details = CONFIG;
+  cmp.details = {
+    org: context.org,
+    site: context.repo,
+    path,
+    token,
+  };
   // Mounts into <div id="preflight"></div> if present, otherwise appends to body
   (document.getElementById('preflight') ?? document.body).append(cmp);
 }
 
-mount();
-
-// if (document.readyState === 'loading') {
-//   document.addEventListener('DOMContentLoaded', mount);
-// } else {
-//   mount();
-// }
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', mount);
+} else {
+  mount();
+}
