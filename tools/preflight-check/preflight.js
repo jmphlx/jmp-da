@@ -301,7 +301,7 @@ async function mount() {
   const cmp = document.createElement('da-preflight');
   cmp.details = {
     org: context.org,
-    site: context.repo,
+    site: context.repo === undefined ? 'jmp-da' : context.repo,
     path,
     token,
   };
