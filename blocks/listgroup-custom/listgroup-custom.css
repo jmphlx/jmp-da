@@ -1407,6 +1407,9 @@ div.listgroup-custom  {
             display: block;
             width: auto;
           }
+          &:after {
+            display: none;
+          }
         }
       }
     }
