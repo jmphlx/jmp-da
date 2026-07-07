@@ -1274,9 +1274,9 @@ div.listgroup-custom  {
       /* min-height: 400px; */
       a {
         display: grid;
-        grid-template-columns: 1fr 3fr;
-        grid-template-rows: 1fr .75fr 1fr 1fr;
-        gap: 0;
+        grid-template-columns: 2fr 3fr;
+        grid-template-rows: 1fr .75fr 1.5fr 1fr;
+        column-gap: 24px;
         align-items: center;
         border-radius: 5px;
         border: 1px solid var(--gray);
@@ -1287,9 +1287,8 @@ div.listgroup-custom  {
           width: auto;
           grid-row: 1 / span 4;
           height: calc(100% + 1px);
-          padding-right: 24px;
           float: left;
-          aspect-ratio: 7 / 9;
+          aspect-ratio: 7 / 9 !important;
           img {
             border: none;
             border-radius: 5px 0 0 5px;
@@ -1301,23 +1300,22 @@ div.listgroup-custom  {
           padding-right: 1.6rem;
           color: var(--purple) !important;
           display: flex;         
-          margin: 2rem 0 0 0 !important;
+          margin: 0 0 10px 0 !important;
           font-size: var(--heading-font-size-s);
           padding-bottom: 0;
           width: 90%;
+          align-self: flex-end;
         }
-        .abstract, .description, .displayDescription {
+        .displayDescription {
           grid-column: 2;
           grid-row: 3;
-          padding: 0 0 2rem 0;
-          margin: 0 1.6rem 2rem 0;
+          padding: 0;
+          margin: 0 0 12px 0;
           color: #333333 !important;
-          padding-bottom: 1rem;
-          font-size: 1.5rem;
+          font-size: 1.4rem;
           margin-bottom: 0;
+          align-self: flex-start;
           width: 90%;
-          height: auto;
-          max-height: max-content;
         }
         &:after {
           content:'';
@@ -1352,10 +1350,6 @@ div.listgroup-custom  {
               opacity: 1;
             }
           }
-        }
-        .navigation-title, .resourceType, .displayLabel {
-          color: var(--white) !important;
-          text-decoration: none;
         }
         .title {
           color: var(--purpleLight) !important;
@@ -1406,10 +1400,13 @@ div.listgroup-custom  {
             width: auto;
           }
           .displayDescription {
-            padding: 12px 24px 24px 24px;
+            padding: 0 24px 24px 24px;
             margin: 0;
             display: block;
             width: auto;
+          }
+          &:after {
+            display: none;
           }
         }
       }

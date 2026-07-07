@@ -155,6 +155,18 @@ h1 {
     background-clip: text;
     color: transparent;
   }
+  &.built-with-data {
+    h1 {
+      background: linear-gradient(60deg, #4d1e80 10%, #B11A29 70%);
+      background-clip: text;
+      color: transparent;
+    }
+    h6 {
+      background: linear-gradient(40deg, #4d1e80 30%, #B11A29 50%);
+      background-clip: text;
+      color: transparent;
+    }
+  }
 }
 h2 {
   font-size: var(--heading-font-size-xl);
