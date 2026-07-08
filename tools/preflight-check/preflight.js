@@ -69,6 +69,7 @@ const REASONS = {
   'description.info.para': { badge: 'info', reason: 'Description found as first paragraph.' },
   'description.warn': { badge: 'warn', reason: 'Description not found in metadata or first paragraph.' },
   'alt.info': { badge: 'info', reason: 'All images have alt text.' },
+  'tags.warn.missing': { badge: 'warn', reason: 'No tags found in metadata.' },
 };
 
 /* ------------------------------------------------------------------ *
@@ -162,6 +163,54 @@ const altTextCheck = async ({ doc }) => {
   }));
 };
 
+const tagsCheck = async ({ doc }) => {
+  try {
+    const resp = await fetch('https://www.jmp.com/services/tagsservlet.en');
+    if (!resp.ok) {
+      return [{ badge: 'error', reason: `Could not fetch acceptable tags (${resp.status})` }];
+    }
+    const tagsData = await resp.json();
+    const acceptableTags = Object.keys(tagsData);
+
+    const metadata = getMetadata(doc.querySelector('.metadata'));
+    const tagsMetadata = metadata.tags;
+
+    if (!tagsMetadata) {
+      return [REASONS['tags.warn.missing']];
+    }
+
+    const tagContent = tagsMetadata.content;
+    let tagValues = [];
+
+    const children = tagContent.querySelectorAll('*');
+    if (children.length > 0) {
+      tagValues = [...children].map((el) => el.textContent.trim()).filter((t) => t);
+    }
+
+    if (tagValues.length === 0) {
+      const text = tagContent.textContent.trim();
+      if (text) {
+        tagValues = text.split(/[,;\n]/).map((t) => t.trim()).filter((t) => t);
+      }
+    }
+
+    if (!tagValues.length) {
+      return [REASONS['tags.warn.missing']];
+    }
+
+    const results = tagValues.map((tagValue) => {
+      if (acceptableTags.includes(tagValue)) {
+        return { badge: 'success', reason: `Valid tag: ${tagValue}` };
+      }
+      return { badge: 'error', reason: `Invalid tag: ${tagValue}` };
+    });
+
+    return results;
+  } catch (error) {
+    return [{ badge: 'error', reason: `Could not validate tags: ${error.message}` }];
+  }
+};
+
 /* ------------------------------------------------------------------ *
  * Registry
  * ------------------------------------------------------------------ */
@@ -178,6 +227,7 @@ const CATEGORIES = {
     { title: 'Title', fn: titleCheck },
     { title: 'Description', fn: descCheck },
     { title: 'Image alt text', fn: altTextCheck },
+    { title: 'Tags', fn: tagsCheck },
   ],
 };
 
