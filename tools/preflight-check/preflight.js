@@ -179,20 +179,12 @@ const tagsCheck = async ({ doc }) => {
       return [REASONS['tags.warn.missing']];
     }
 
-    const tagContent = tagsMetadata.content;
-    let tagValues = [];
-
-    const children = tagContent.querySelectorAll('*');
-    if (children.length > 0) {
-      tagValues = [...children].map((el) => el.textContent.trim()).filter((t) => t);
+    const text = tagsMetadata.content.textContent.trim();
+    if (!text) {
+      return [REASONS['tags.warn.missing']];
     }
 
-    if (tagValues.length === 0) {
-      const text = tagContent.textContent.trim();
-      if (text) {
-        tagValues = text.split(/[,;\n]/).map((t) => t.trim()).filter((t) => t);
-      }
-    }
+    const tagValues = text.split(',').map((t) => t.trim()).filter((t) => t);
 
     if (!tagValues.length) {
       return [REASONS['tags.warn.missing']];
