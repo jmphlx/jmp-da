@@ -27,6 +27,9 @@
 }
 div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
   padding-bottom: 3.2rem;
+  &.image-feather-right {
+    padding-bottom: 0 !important;
+  }
 }
 .logo-size-small {
   img {
@@ -109,23 +112,23 @@ div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
   }
   &.image-cover {
     div.columns-img-col {
+      padding-bottom: 0;
       img {
         height: 100%;
         border: none;
       }
     }
-    &.columns-2-cols {
-      div {
-        padding-bottom: 0 !important;
-        div {
-          padding-bottom: 0 !important;
-        }
-      }
-    }
   }
   &.image-feather-right {
     div.columns-img-col {
+      -webkit-mask-image: linear-gradient(to right, black 60%, transparent 100%);
       mask-image: linear-gradient(to right, black 60%, transparent 100%);
+    }
+    @media (width <= 900px) {
+      div.columns-img-col {
+        -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+        mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+      }
     }
   }
   &.pillar-header {
