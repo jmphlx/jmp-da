@@ -25,6 +25,9 @@
 .columns > div > .columns-img-col {
   order: 0;
 }
+div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
+  padding-bottom: 3.2rem;
+}
 .logo-size-small {
   img {
     max-width: 80px !important;
@@ -82,6 +85,11 @@
 }
 
 .columns {
+  &.text-padding-24 {
+    div div:has(p) {
+      padding: 24px;
+    }
+  }
   &.padding-24 {
     padding: 24px;
   }
@@ -93,6 +101,32 @@
   }
   &.rounded-20 {
     border-radius: 20px;
+  }
+  &.text-light {
+    strong, blockquote {
+      color: #ffffff !important;
+    }
+  }
+  &.image-cover {
+    div.columns-img-col {
+      img {
+        height: 100%;
+        border: none;
+      }
+    }
+    &.columns-2-cols {
+      div {
+        padding-bottom: 0 !important;
+        div {
+          padding-bottom: 0 !important;
+        }
+      }
+    }
+  }
+  &.image-feather-right {
+    div.columns-img-col {
+      mask-image: linear-gradient(to right, black 60%, transparent 100%);
+    }
   }
   &.pillar-header {
     h4 {
@@ -170,7 +204,63 @@
     }
   }
 }
-
+.quote-light {
+  blockquote {
+    :first-child:is(p, h1, h2, h3, h4, h5, h6) {
+      line-height: 1.6em;
+      color: white;
+      font-size: var(--heading-font-size-s);
+    }
+    :first-child:before, :first-child:after {
+      content: "";
+      font-family: "Georgia", cursive;
+      line-height: 0;
+      font-size: 17.0rem;
+      width: 0;
+      height: 0;
+      position: absolute;
+      color: #f2f2f2;
+      opacity: .1;
+      z-index: 0;
+    }
+    :first-child:is(p, h1, h2, h3, h4, h5, h6):before {
+      content: '\201C';
+      width: 1em;
+      margin: 60px 0 0 -35px;
+    }
+    :first-child:is(p, h1, h2, h3, h4, h5, h6):after {
+      content: '\201D';
+      width: 1em;
+      margin: 72px 0 0 -32px;
+    }
+    .quote-attribution {
+      :first-child:before, :first-child:after {
+        display: none;
+      }
+    }
+    p:has(picture):before, p:has(picture):after {
+      display: none !important;
+    }
+  }
+  &.quote-small {
+    blockquote {
+      margin: 0;
+      :first-child:is(p, h1, h2, h3, h4, h5, h6) {
+        font-size: 16px;
+      }
+      :first-child:is(p, h1, h2, h3, h4, h5, h6):before {
+        content: '\201C';
+        font-size: 10rem;
+        margin: 34px 0 0 -35px;
+      }
+      :first-child:is(p, h1, h2, h3, h4, h5, h6):after {
+        content: '\201D';
+        font-size: 10rem;
+        margin: 50px 0 0 -32px;
+      }
+    }
+  }
+}
 .columns-wrapper {
   .button-container {
     display: inline-block;
@@ -1879,9 +1969,6 @@ div.bullet-check-blue {
   p.button-container {
     margin-bottom: 0;
   }
-}
-div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
-  padding-bottom: 3.2rem;
 }
 
 /* @media (width <=900px) {
