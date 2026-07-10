@@ -69,7 +69,7 @@ const CSS = `
     font-size: 12px; font-weight: 700;
   }
 
-  svg.icon {
+  .filled-icon {
     height: 24 px;
     width: 24 px;
     color: blue;
