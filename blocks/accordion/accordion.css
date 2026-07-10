@@ -6,7 +6,7 @@
     details {
       height: auto;
       line-height: 1;
-      margin: 0 !important;
+      margin: 0;
       summary {
         font-size: 24px;
       }
@@ -173,5 +173,52 @@
   }
   :is(p):has(+ :is(h3)) {
     margin-bottom: 1.2rem !important;
+  }
+}
+
+.accordion-container-simple {
+  border: 1px solid var(--grayRule);
+  border-radius: 10px;
+  details {
+    margin: 0 24px !important;
+    summary {
+      width: 100% !important;
+      padding: 0 !important;
+      h6 {
+        font-size: var(--heading-font-size-xs);
+        margin-bottom: 0;
+      }
+      &:before {display: none;}
+      &:after {
+        content: '';
+        background-image: url('../../../icons/arrow-icon-blue.svg');
+        background-color: transparent;
+        background-size: 30%;
+        background-repeat: no-repeat;
+        background-position: 54%;
+        width: 2.4rem;
+        height: 2.4rem;
+        position: absolute;
+        border-radius: 50%;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%) rotate(90deg);
+        transition: transform 0.5s ease, color 0.5s ease;
+      }
+    }
+  }
+  details[open] summary:after {
+    transform: translateY(-50%) rotate(-90deg);
+  }
+  .accordion-item {
+    &:nth-child(1) {
+      border-top: none;
+    }
+    .accordion-item-body {
+      padding-left: 0;
+    }
+  }
+  .accordion-item:last-child {
+    border-bottom: none !important;
   }
 }

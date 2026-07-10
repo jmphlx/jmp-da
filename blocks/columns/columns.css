@@ -150,6 +150,24 @@ div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
       color: var(--purple);
     }
   }
+  &.number-bullet-cards {
+    ol {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      list-style-position: inside;
+      padding: 0;
+      li {
+        background-color: rgba(3, 120, 205, .1);
+        padding: 12px;
+        border-radius: 5px;
+      }
+      li::marker {
+        color: var(--blue) !important;
+        font-family: var(--font-bold);
+      }
+    }
+  }
   &.purple-callout {
     border-radius: 0 10px 10px 0;
     border-left: 4px solid var(--purple);
