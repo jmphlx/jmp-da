@@ -49,7 +49,7 @@
         padding: 0 2rem 0 4.8rem;
         cursor: pointer;
         list-style: none;
-        overflow: auto;
+        overflow: clip;
         transition: background-color 0.2s;
         &.accordion-item-label {
           :is(p) {
@@ -184,6 +184,7 @@
     summary {
       width: 100% !important;
       padding: 0 !important;
+      overflow: clip !important;
       h6 {
         font-size: var(--heading-font-size-xs);
         margin-bottom: 0;
