@@ -8,6 +8,12 @@
   font-family: system-ui, sans-serif;
 }
 
+.filled-icon {
+  height: 24px;
+  width: 24px;
+  color: blue;
+}
+
 p { margin: 0; line-height: 1.3; }
 button { background: transparent; font-family: inherit; border: none; padding: 0; cursor: pointer; }
 ul { margin: 0; padding: 0; list-style: none; }
