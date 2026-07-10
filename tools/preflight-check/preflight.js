@@ -301,7 +301,12 @@ class DaPreflight extends LitElement {
   }
 
   renderBadge(badge, text) {
-    return html`<span class="badge badge-${badge}">${text ?? badge}</span>`;
+    return html`
+      <span class="item-header-expand badge-${badge}">
+        <span class="filled-icon">${ICONS[badge] ?? ICONS.info}</span>
+        ${text != null ? html`<span class="more">${text}</span>` : nothing}
+        <span class="hide-visually">${badge}</span>
+      </span>`;
   }
 
   renderLabels(checks, expand) {
