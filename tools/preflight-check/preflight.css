@@ -32,7 +32,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .result-item:hover { background: #ececec; }
 .result-item div { overflow-wrap: anywhere; }
 
-.badge {
+svg.icon {
   display: inline-flex; align-items: center; justify-content: center;
   min-width: 40px; height: 24px; padding: 0 8px; border-radius: 8px;
   font-size: 12px; font-weight: 700;
