@@ -33,7 +33,6 @@ const CSS = `
   :host {
     --inline-spacing: 24px;
     display: block;
-    width: 400px;
     height: 400px;
     padding: 0 0 24px;
     overflow-y: auto;
