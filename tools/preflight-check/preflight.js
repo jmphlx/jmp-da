@@ -33,6 +33,7 @@ const CSS = `
   :host {
     --inline-spacing: 24px;
     display: block;
+    width: 400px;
     height: 400px;
     padding: 0 0 24px;
     overflow-y: auto;
@@ -67,7 +68,7 @@ const CSS = `
     min-width: 40px; height: 24px; padding: 0 8px; border-radius: 8px;
     font-size: 12px; font-weight: 700;
   }
-
+    
   .badge-success { background: #c9f0d0; color: #0a5c22; }
   .badge-info    { background: #d6e7ff; color: #0a4c9e; }
   .badge-warn    { background: #ffe1c2; color: #8f4700; }
