@@ -291,7 +291,7 @@ class DaPreflight extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    //this.shadowRoot.adoptedStyleSheets = [sheet];
+    this.shadowRoot.adoptedStyleSheets = [sheet];
     this.loadResults();
   }
 
