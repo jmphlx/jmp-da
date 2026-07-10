@@ -27,6 +27,56 @@ const ICONS = {
 };
 
 /* ------------------------------------------------------------------ *
+ * Styles (merged from preflight.css + label.css, S2 vars replaced)
+ * ------------------------------------------------------------------ */
+const CSS = `
+  :host {
+    --inline-spacing: 24px;
+    display: block;
+    width: 600px;
+    height: 400px;
+    padding: 0 0 24px;
+    overflow-y: auto;
+    font-family: system-ui, sans-serif;
+  }
+  p { margin: 0; line-height: 1.3; }
+  button { background: transparent; font-family: inherit; border: none; padding: 0; cursor: pointer; }
+  ul { margin: 0; padding: 0; list-style: none; }
+
+  .category { position: relative; margin: -1px 0; }
+  .category-header {
+    position: relative; display: flex; justify-content: space-between;
+    padding: 0 var(--inline-spacing); border-top: 1px solid #d1d1d1; border-bottom: 1px solid #d1d1d1;
+  }
+  .category-header:hover { color: #167af3; background: #e4f0ff; }
+  .category-title { display: block; flex: 0 1 100%; min-height: 48px; text-align: start; font-weight: 700; font-size: 16px; }
+  .category-labels { display: flex; align-items: center; gap: 8px; }
+  .category-details { display: none; padding-bottom: 12px; margin: 12px 12px 0; }
+  .category.is-open .category-details { display: block; }
+  .category.is-open .category-header { background: #f5f5f5; }
+  .check-label { font-weight: 700; font-size: 12px; text-transform: uppercase; margin: 16px 12px 6px; }
+
+  .result-item {
+    display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center;
+    min-height: 44px; border-radius: 12px; padding: 6px 12px; font-size: 14px;
+  }
+  .result-item:hover { background: #ececec; }
+  .result-item div { overflow-wrap: anywhere; }
+
+  .badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 40px; height: 24px; padding: 0 8px; border-radius: 8px;
+    font-size: 12px; font-weight: 700;
+  }
+  .badge-success { background: #c9f0d0; color: #0a5c22; }
+  .badge-info    { background: #d6e7ff; color: #0a4c9e; }
+  .badge-warn    { background: #ffe1c2; color: #8f4700; }
+  .badge-error   { background: #ffd6d6; color: #93000a; }
+`;
+const sheet = new CSSStyleSheet();
+sheet.replace(CSS);
+
+/* ------------------------------------------------------------------ *
  * Reasons — add entries for your custom checks here
  * ------------------------------------------------------------------ */
 const REASONS = {
@@ -251,12 +301,7 @@ class DaPreflight extends LitElement {
   }
 
   renderBadge(badge, text) {
-    return html`
-      <span class="item-header-expand badge-${badge}">
-        <span class="filled-icon">${ICONS[badge] ?? ICONS.info}</span>
-        ${text != null ? html`<span class="more">${text}</span>` : nothing}
-        <span class="hide-visually">${badge}</span>
-      </span>`;
+    return html`<span class="badge badge-${badge}">${text ?? badge}</span>`;
   }
 
   renderLabels(checks, expand) {
