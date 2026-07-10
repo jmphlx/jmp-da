@@ -68,6 +68,11 @@ const CSS = `
     min-width: 40px; height: 24px; padding: 0 8px; border-radius: 8px;
     font-size: 12px; font-weight: 700;
   }
+
+  svg {
+  height: 24 px;
+  width: 24 px;
+  }
   .badge-success { background: #c9f0d0; color: #0a5c22; }
   .badge-info    { background: #d6e7ff; color: #0a4c9e; }
   .badge-warn    { background: #ffe1c2; color: #8f4700; }
