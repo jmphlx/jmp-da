@@ -1,4 +1,5 @@
-// eslint-disable-next-line import/no-unresolved
+/* eslint-disable import/no-unresolved, import/extensions, indent, class-methods-use-this */
+
 import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 /* preflight.js — standalone, no da-live dependencies */
 import { LitElement, html, nothing } from 'https://esm.sh/lit@3.2.1';
@@ -264,7 +265,13 @@ function loadResults(details, doc, requestUpdate) {
    details: { org, site, path, token? } — path like '/en/my-page'.
    Or pass details.sourceUrl to fetch any HTML endpoint directly. */
 async function loadDoc(details) {
-  const { org, site, path, token, sourceUrl } = details;
+  const {
+    org,
+    site,
+    path,
+    token,
+    sourceUrl,
+  } = details;
   const url = sourceUrl ?? `https://admin.da.live/source/${org}/${site}${path}.html`;
   const opts = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
   const resp = await fetch(url, opts);

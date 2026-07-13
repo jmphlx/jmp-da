@@ -28,6 +28,7 @@ module.exports = {
     'import/prefer-default-export': ['off', {
       target: 'single',
     }],
+    'no-underscore-dangle': 'off',
   },
   overrides: [
     {
