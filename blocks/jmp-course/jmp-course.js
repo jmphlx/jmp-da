@@ -69,28 +69,10 @@ function loadModule(block, src) {
   block.textContent = '';
 
   if (isInDividedSection(block)) {
-    // Shares a section with a divider layout: no expand control, fill container.
     block.classList.add('jmp-course-default');
-    block.append(frame);
-  } else {
-    const controls = document.createElement('div');
-    controls.className = 'jmp-course-controls';
-
-    const toggle = document.createElement('button');
-    toggle.type = 'button';
-    toggle.className = 'jmp-course-toggle';
-    toggle.setAttribute('aria-pressed', 'false');
-    toggle.textContent = 'Expand to full width';
-    toggle.addEventListener('click', () => {
-      const expanded = block.classList.toggle('jmp-course-expanded');
-      toggle.setAttribute('aria-pressed', String(expanded));
-      toggle.textContent = expanded ? 'Collapse' : 'Expand to full width';
-    });
-    controls.append(toggle);
-
-    block.append(controls, frame);
   }
 
+  block.append(frame);
   block.classList.add('jmp-course-is-loaded');
 }
 

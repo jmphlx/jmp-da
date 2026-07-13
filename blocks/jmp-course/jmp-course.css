@@ -1,45 +1,13 @@
 .jmp-course {
-  /*
-   * Default (compact) max width. Kept narrow enough that the course cover fits
-   * without an internal side scrollbar. The expand button removes this cap.
-   */
-  --jmp-course-max-width: 640px;
+  /* Max width of the course frame. */
+  --jmp-course-max-width: 100%;
 
-  /* Fixed height of the course frame (compact state). */
+  /* Fixed height of the course frame. */
   --jmp-course-height: 730px;
 
   width: 100%;
   max-width: var(--jmp-course-max-width);
   margin: 0 auto 32px;
-}
-
-/* Full-width state, toggled by the expand button. */
-.jmp-course.jmp-course-expanded {
-  --jmp-course-height: 900px;
-
-  max-width: none;
-}
-
-.jmp-course .jmp-course-controls {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 8px;
-}
-
-.jmp-course .jmp-course-toggle {
-  cursor: pointer;
-  border: 1px solid currentcolor;
-  border-radius: 4px;
-  background: transparent;
-  padding: 6px 14px;
-  font: inherit;
-  font-size: 0.875rem;
-  line-height: 1.2;
-}
-
-.jmp-course .jmp-course-toggle:hover,
-.jmp-course .jmp-course-toggle:focus-visible {
-  background: rgb(0 0 0 / 0.05);
 }
 
 .jmp-course .jmp-course-frame {
