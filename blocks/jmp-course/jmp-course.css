@@ -1,12 +1,6 @@
 .jmp-course {
-  /* Max width of the course frame. */
-  --jmp-course-max-width: 100%;
-
-  /* Fixed height of the course frame. */
   --jmp-course-height: 800px;
-
   width: 100%;
-  max-width: var(--jmp-course-max-width);
   margin: 0 auto 32px;
 }
 
