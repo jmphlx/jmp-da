@@ -523,6 +523,12 @@ export default async function decorate(block) {
 
     // When value changes, clear out results and add matching values.
     filterDropdown.addEventListener('change', () => {
+      const includesTagProperty = checkForTagProperties([filterBy]);
+      let hashValue = filterDropdown.value;
+      if (includesTagProperty && window.tagtranslations && window.tagtranslations[hashValue]) {
+        hashValue = window.tagtranslations[hashValue];
+      }
+      window.location.hash = encodeURIComponent(hashValue);
       reBuildList(matching, block, tabDictionary, config);
     });
 
@@ -532,8 +538,16 @@ export default async function decorate(block) {
     if (hash) {
       const hashValue = decodeURIComponent(hash.substring(1)); // Remove the # character and decode
       const filterKeys = Object.keys(filterDictionary);
-      if (filterKeys.includes(hashValue)) {
-        filterDropdown.value = hashValue;
+      const includesTagProperty = checkForTagProperties([filterBy]);
+
+      let matchingKey = filterKeys.find(key => key === hashValue);
+
+      if (!matchingKey && includesTagProperty && window.tagtranslations) {
+        matchingKey = filterKeys.find(key => window.tagtranslations[key] === hashValue);
+      }
+
+      if (matchingKey) {
+        filterDropdown.value = matchingKey;
       }
     }
   }
