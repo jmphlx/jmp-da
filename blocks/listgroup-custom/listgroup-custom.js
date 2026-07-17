@@ -527,6 +527,15 @@ export default async function decorate(block) {
     });
 
     block.append(filterDropdown);
+
+    const { hash } = window.location;
+    if (hash) {
+      const hashValue = decodeURIComponent(hash.substring(1)); // Remove the # character and decode
+      const filterKeys = Object.keys(filterDictionary);
+      if (filterKeys.includes(hashValue)) {
+        filterDropdown.value = hashValue;
+      }
+    }
   }
 
   //  Create tab group
