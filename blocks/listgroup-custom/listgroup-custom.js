@@ -528,7 +528,8 @@ export default async function decorate(block) {
       if (includesTagProperty && window.tagtranslations && window.tagtranslations[hashValue]) {
         hashValue = window.tagtranslations[hashValue];
       }
-      window.location.hash = encodeURIComponent(hashValue);
+      const normalizedHash = hashValue.toLowerCase().replace(/\s+/g, '-');
+      window.location.hash = encodeURIComponent(normalizedHash);
       reBuildList(matching, block, tabDictionary, config);
     });
 
@@ -537,13 +538,18 @@ export default async function decorate(block) {
     const { hash } = window.location;
     if (hash) {
       const hashValue = decodeURIComponent(hash.substring(1)); // Remove the # character and decode
+      const normalizedHashValue = hashValue.toLowerCase().replace(/\s+/g, '-');
       const filterKeys = Object.keys(filterDictionary);
       const includesTagProperty = checkForTagProperties([filterBy]);
 
-      let matchingKey = filterKeys.find(key => key === hashValue);
+      let matchingKey = filterKeys.find((key) => key === hashValue);
 
       if (!matchingKey && includesTagProperty && window.tagtranslations) {
-        matchingKey = filterKeys.find(key => window.tagtranslations[key] === hashValue);
+        matchingKey = filterKeys.find((key) => {
+          const translatedValue = window.tagtranslations[key];
+          const normalizedTranslation = translatedValue.toLowerCase().replace(/\s+/g, '-');
+          return normalizedTranslation === normalizedHashValue;
+        });
       }
 
       if (matchingKey) {
