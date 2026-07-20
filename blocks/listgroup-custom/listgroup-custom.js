@@ -523,10 +523,39 @@ export default async function decorate(block) {
 
     // When value changes, clear out results and add matching values.
     filterDropdown.addEventListener('change', () => {
+      const includesTagProperty = checkForTagProperties([filterBy]);
+      let hashValue = filterDropdown.value;
+      if (includesTagProperty && window.tagtranslations && window.tagtranslations[hashValue]) {
+        hashValue = window.tagtranslations[hashValue];
+      }
+      const normalizedHash = hashValue.toLowerCase().replace(/\s+/g, '-');
+      window.location.hash = encodeURIComponent(normalizedHash);
       reBuildList(matching, block, tabDictionary, config);
     });
 
     block.append(filterDropdown);
+
+    const { hash } = window.location;
+    if (hash) {
+      const hashValue = decodeURIComponent(hash.substring(1)); // Remove the # character and decode
+      const normalizedHashValue = hashValue.toLowerCase().replace(/\s+/g, '-');
+      const filterKeys = Object.keys(filterDictionary);
+      const includesTagProperty = checkForTagProperties([filterBy]);
+
+      let matchingKey = filterKeys.find((key) => key === hashValue);
+
+      if (!matchingKey && includesTagProperty && window.tagtranslations) {
+        matchingKey = filterKeys.find((key) => {
+          const translatedValue = window.tagtranslations[key];
+          const normalizedTranslation = translatedValue.toLowerCase().replace(/\s+/g, '-');
+          return normalizedTranslation === normalizedHashValue;
+        });
+      }
+
+      if (matchingKey) {
+        filterDropdown.value = matchingKey;
+      }
+    }
   }
 
   //  Create tab group

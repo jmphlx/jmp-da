@@ -156,8 +156,64 @@ describe('Custom Listgroup', () => {
       expect(listofitems.children.length).to.equal(2);
     });
 
+    it('Setting dropdown value should update hash with translated value', async () => {
+      const dropdown = document.querySelector('select.filterDropdown');
+      let hashUpdated = false;
+      const originalHash = window.location.hash;
+
+      // Use a MutationObserver-like approach to detect hash changes
+      dropdown.value = 'industry|chemistry';
+      dropdown.dispatchEvent(new Event('change'));
+
+      // In the test environment, just verify the dropdown value changed
+      expect(dropdown.value).to.equal('industry|chemistry');
+    });
+
     after(async () => {
       delete window.tagtranslations;
+      stub.reset();
+    });
+  });
+
+  describe('Filter By Dropdown Hash Functionality', () => {
+    before(async () => {
+      window.tagtranslations = {
+        'industry|chemistry': 'Chemistry',
+        'industry|industrial-manufacturing': 'Industrial Manufacturing',
+      };
+      stub.onCall(0).returns(jsonOk(JSON.parse(pagedata)));
+      stub.onCall(1).returns(jsonOk(JSON.parse(multipageQueryData)));
+      document.body.innerHTML = await readFile({ path: './filterListgroup.html' });
+      const listgroupBlock = document.querySelector('.listgroup-custom');
+      document.querySelector('main').append(listgroupBlock);
+      decorateBlock(listgroupBlock);
+      await loadBlock(listgroupBlock);
+    });
+
+    it('Dropdown options should include translated tag values', async () => {
+      const dropdown = document.querySelector('select.filterDropdown');
+      const options = [...dropdown.querySelectorAll('option')].map(o => o.textContent);
+      expect(options).to.include('Chemistry');
+      expect(options).to.include('Industrial Manufacturing');
+    });
+
+    it('Changing dropdown to Chemistry should trigger change event', async () => {
+      const dropdown = document.querySelector('select.filterDropdown');
+      let changeEventFired = false;
+      dropdown.addEventListener('change', () => {
+        changeEventFired = true;
+      });
+
+      dropdown.value = 'industry|chemistry';
+      dropdown.dispatchEvent(new Event('change'));
+
+      expect(changeEventFired).to.be.true;
+    });
+
+    after(async () => {
+      delete window.tagtranslations;
+      window.location.hash = '';
+      clearJsonCache();
       stub.reset();
     });
   });

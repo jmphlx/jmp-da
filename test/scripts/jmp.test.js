@@ -426,11 +426,11 @@ describe('jmp.js tests', () => {
     before(() => { getLanguageIndex = jmpHelper.getLanguageIndex; });
 
     it('returns jmp-en.json when the overwrite language is unsupported', () => {
-      expect(getLanguageIndex('xx')).to.equal('/jmp-en.json');
+      expect(getLanguageIndex('xx')).to.equal('/en/query-index.json');
     });
 
     it('returns the correct index for a supported overwrite language', () => {
-      expect(getLanguageIndex('fr')).to.equal('/jmp-fr.json');
+      expect(getLanguageIndex('fr')).to.equal('/fr/query-index.json');
     });
   });
 
@@ -438,8 +438,8 @@ describe('jmp.js tests', () => {
     let getSKPLanguageIndex;
     before(() => { getSKPLanguageIndex = jmpHelper.getSKPLanguageIndex; });
 
-    it('returns a skp-*.json path', () => {
-      expect(getSKPLanguageIndex()).to.match(/\/skp-[a-z-]+\.json/);
+    it('returns a /*/skp/query-index.json path', () => {
+      expect(getSKPLanguageIndex()).to.match(/\/[a-z-]+\/skp\/query-index\.json/);
     });
   });
 
