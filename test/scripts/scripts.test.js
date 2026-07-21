@@ -328,5 +328,59 @@ describe('JMP Scripts JS Customizations ', () => {
     });
   });
 
+  describe('removeInternalMetadata', () => {
+    let removeInternalMetadata;
+
+    before(() => {
+      removeInternalMetadata = scriptHelper.removeInternalMetadata;
+    });
+
+    afterEach(() => {
+      document.head.querySelectorAll('meta').forEach((meta) => {
+        if (['contentsource', 'contentSource', 'description'].includes(meta.getAttribute('name'))) {
+          meta.remove();
+        }
+      });
+    });
+
+    it('should remove the contentsource meta tag from the head', () => {
+      const meta = document.createElement('meta');
+      meta.setAttribute('name', 'contentsource');
+      meta.setAttribute('content', 'jane.doe@jmp.com');
+      document.head.appendChild(meta);
+
+      removeInternalMetadata();
+
+      expect(document.querySelector('meta[name="contentsource" i]')).to.be.null;
+    });
+
+    it('should remove the tag regardless of the authored casing', () => {
+      const meta = document.createElement('meta');
+      meta.setAttribute('name', 'contentSource');
+      meta.setAttribute('content', 'Marketing Team');
+      document.head.appendChild(meta);
+
+      removeInternalMetadata();
+
+      expect(document.querySelector('meta[name="contentsource" i]')).to.be.null;
+    });
+
+    it('should leave unrelated meta tags untouched', () => {
+      const description = document.createElement('meta');
+      description.setAttribute('name', 'description');
+      description.setAttribute('content', 'A public description.');
+      document.head.appendChild(description);
+
+      removeInternalMetadata();
+
+      const remaining = document.querySelector('meta[name="description"]');
+      expect(remaining).to.exist;
+      expect(remaining.getAttribute('content')).to.equal('A public description.');
+    });
+
+    it('should not throw when no contentsource tag is present', () => {
+      expect(() => removeInternalMetadata()).not.to.throw();
+    });
+  });
 
 });
