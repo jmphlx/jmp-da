@@ -155,7 +155,6 @@ div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      list-style-position: inside;
       padding: 0;
       list-style: none;
       counter-reset: my-custom-counter;
@@ -180,7 +179,7 @@ div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
         color: var(--blue) !important;
         font-family: var(--font-bold);
       }
-      li::before {
+      li:before {
         /* Increment and display the counter */
         counter-increment: my-custom-counter;
         content: counter(my-custom-counter);
