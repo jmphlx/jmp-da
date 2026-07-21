@@ -157,14 +157,48 @@ div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
       gap: 12px;
       list-style-position: inside;
       padding: 0;
+      list-style: none;
+      counter-reset: my-custom-counter;
+      padding-left: 0;
       li {
         background-color: rgba(3, 120, 205, .1);
         padding: 12px;
         border-radius: 5px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        padding-left: 42px;
+        margin-bottom: 0;
+        width: calc(50% - 64px);
+        min-height: 42px;
+        @media (width <= 600px) {
+          width: 100%;
+        }
       }
       li::marker {
         color: var(--blue) !important;
         font-family: var(--font-bold);
+      }
+      li::before {
+        /* Increment and display the counter */
+        counter-increment: my-custom-counter;
+        content: counter(my-custom-counter);
+        /* Apply the background color and shape */
+        background-color: var(--blue);
+        color: white;
+        border-radius: 50%; /* Makes it a circle */
+        /* Size and alignment */
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 2.4rem;
+        height: 2.4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
       }
     }
   }
