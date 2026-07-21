@@ -642,17 +642,31 @@ function addTargetsToLinks(doc) {
 }
 
 /**
+* If there is a redirectTarget, determine redirect logic.
+* If there is a offDateTime along with redirectTarget, wait until
+* after off time has passed to redirect.
+* If there is no offDateTime, redirect to redirect target immediately.
+*/
+function handleRedirect() {
+  const redirectTarget = getMetadata('redirecttarget');
+  if (redirectTarget.length > 0) {
+    const offDateTime = getMetadata('offdatetime');
+    if (offDateTime.length > 0) {
+      if (new Date(offDateTime) <= new Date()) {
+        window.location.href = redirectTarget;
+      }
+    } else {
+      window.location.href = redirectTarget;
+    }
+  }
+}
+
+/**
  * Loads everything needed to get to LCP.
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
-  // If there is a redirectTarget in the page metadata, immediately
-  // redirect to target.
-  const redirectTarget = getMetadata('redirecttarget');
-  if (redirectTarget.length > 0) {
-    window.location.href = redirectTarget;
-  }
-
+  handleRedirect();
   addTitleSuffix();
   setMetaImage();
   decorateTemplateAndTheme();
