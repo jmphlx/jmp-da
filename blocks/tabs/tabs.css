@@ -150,7 +150,8 @@ div.tabs-wrapper div.tabs.block div.tabs-list .tabs-tab {
 }
 
 .vertical {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
   gap: 10px;
   .tabs-list button {
     border-radius: 5px;
@@ -180,29 +181,32 @@ div.tabs-wrapper div.tabs.block div.tabs-list .tabs-tab {
   }
   .tabs-list {
     line-height: 1.2;
-    padding-top: 1.6rem;
-    padding-bottom: 1.5em;
+    padding-top: 0;
+    padding-bottom: 0;
     padding-left: 0;
     margin-left: 0;
     border-bottom: none;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    width: 25%;
+    /* width: 25%; */
   }
   .tabs-panel {
-    width: 85%;
+    /* width: 85%; */
     margin: 0;
     box-sizing: border-box;
-    border-radius: 8px;
+    border: 1px solid var(--grayRule);
+    border-radius: 5px;
     position: relative;
-    box-shadow: 0 4px 34px -14px rgba(82, 118, 139, 0.55);
+    /* box-shadow: 0 4px 34px -14px rgba(82, 118, 139, 0.55); */
     display: flex;
     align-items: center;
     padding: 24px;
   }
-  @media (width <= 800px) {
+  @media (width <= 900px) {
+    display: flex;
     flex-direction: column;
+    gap: 0;
     .tabs-list button {
       cursor: pointer;
       flex: 0 0 max-content;
@@ -224,13 +228,11 @@ div.tabs-wrapper div.tabs.block div.tabs-list .tabs-tab {
     }
     .tabs-list button[aria-selected='true'] {
       height: 100%;
-      border: none;
-      line-height: 1rem;
       align-items: center;
       padding: 1.6rem;
       border-bottom: none;
       background-color: var(--white);
-      color: white;
+      color: var(--blue);
       :after {
         display: none;
       }
@@ -240,7 +242,7 @@ div.tabs-wrapper div.tabs.block div.tabs-list .tabs-tab {
       max-width: 100%;
       padding-top: 1.6rem;
       padding-bottom: 0;
-      margin-bottom: 1.6rem;
+      margin-bottom: 0;
       padding-left: 0;
       margin-left: 0;
       justify-content: flex-start;
@@ -253,53 +255,44 @@ div.tabs-wrapper div.tabs.block div.tabs-list .tabs-tab {
     }
     .tabs-panel {
       width: 100%;
+      border: 1px solid var(--grayRule);
+      border-radius: 0 0 5px 5px;
+      padding: 16px;
       margin-top: -1px;
       display: flex;
       flex-direction: row;
-      padding: 0;
-      border: none;
       overflow: auto;
       background: #ffffff;
       align-items: unset;
-      .column-1,  .column-2{
-        width: auto;
-        padding: 1.6rem;
-      }
-      .column-1 {
-        background-color: #fafafa;
-      }
-      @media (width <=800px) {
-        flex-direction: column;
-      }
     }
   }
 }
 
 .tabs-wrap {
-    .tabs-list {
-      flex-wrap: wrap;
-      border-bottom: none;
-      button {
-        flex: 0 0 max-content;
-        margin: 0;
-        min-height: 60px;
-        border: 1px solid var(--grayRule);
-        border-radius: 5px 5px 0 0;
-        padding: 8px 16px;
-        background-color: #fafafa;
-        color: var(--blue);
-        font-family: var(--font-secondary);
-        font-size: 1.5rem;
-        line-height: unset;
-        text-align: initial;
-        text-overflow: unset;
-        overflow: unset;
-        white-space: unset;
-        transition: background-color 0.2s;
-        border-bottom: 1px solid var(--grayRule);
-      }
-      button[aria-selected='true'] {
-        border-bottom: 1px solid var(--blue);
-      }
+  .tabs-list {
+    flex-wrap: wrap;
+    border-bottom: none;
+    button {
+      flex: 0 0 max-content;
+      margin: 0;
+      min-height: 60px;
+      border: 1px solid var(--grayRule);
+      border-radius: 5px 5px 0 0;
+      padding: 8px 16px;
+      background-color: #fafafa;
+      color: var(--blue);
+      font-family: var(--font-secondary);
+      font-size: 1.5rem;
+      line-height: unset;
+      text-align: initial;
+      text-overflow: unset;
+      overflow: unset;
+      white-space: unset;
+      transition: background-color 0.2s;
+      border-bottom: 1px solid var(--grayRule);
+    }
+    button[aria-selected='true'] {
+      border-bottom: 1px solid var(--blue);
     }
   }
+}
