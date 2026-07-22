@@ -134,12 +134,32 @@ function setup() {
 }
 
 /**
+ * JMP customization.
+ * Remove internal-only metadata from the head so it is not exposed on the
+ * published page. `contentSource` is attribution data for internal reference
+ * within DA only. The pipeline emits it server-side as <meta name="contentsource">
+ * (metadata keys are lowercased), so we strip it as early as possible on the
+ * client, from init() at module load. Selector is case-insensitive to cover any
+ * authored casing.
+ * NOTE: this only removes the tag from the live DOM; the server-delivered HTML
+ * (view-source/curl) still contains it. True removal from source is not possible
+ * client-side.
+ * @param {Document} doc Document to strip. Defaults to the window's document.
+ */
+function removeInternalMetadata(doc = document) {
+  doc.head
+    .querySelectorAll('meta[name="contentsource" i]')
+    .forEach((meta) => meta.remove());
+}
+
+/**
  * Auto initializiation.
  */
 
 function init() {
   setup();
   sampleRUM();
+  removeInternalMetadata();
 }
 
 /**
@@ -709,6 +729,7 @@ export {
   loadSection,
   loadSections,
   readBlockConfig,
+  removeInternalMetadata,
   sampleRUM,
   setup,
   toCamelCase,

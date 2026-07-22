@@ -331,8 +331,10 @@ describe('JMP Scripts JS Customizations ', () => {
   describe('removeInternalMetadata', () => {
     let removeInternalMetadata;
 
-    before(() => {
-      removeInternalMetadata = scriptHelper.removeInternalMetadata;
+    before(async () => {
+      // Defined and wired into init() in aem.js; imported here to unit test it.
+      const aemHelper = await import('../../scripts/aem.js');
+      removeInternalMetadata = aemHelper.removeInternalMetadata;
     });
 
     afterEach(() => {

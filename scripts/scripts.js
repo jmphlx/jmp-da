@@ -469,19 +469,6 @@ function addTitleSuffix() {
 }
 
 /**
- * Remove internal-only metadata from the head so it is not exposed on the
- * published page. `contentSource` is attribution data for internal reference
- * within DA only. EDS emits it server-side as <meta name="contentsource">
- * (metadata keys are lowercased), so we strip it as early as possible on the
- * client. Selector is case-insensitive to cover any authored casing.
- */
-export function removeInternalMetadata() {
-  document.head
-    .querySelectorAll('meta[name="contentsource" i]')
-    .forEach((meta) => meta.remove());
-}
-
-/**
  * If the metaproperty Image is not present, use the default value
  * Default metaimage is located in /icons/jmp-com-share.jpg.
  */
@@ -659,10 +646,6 @@ function addTargetsToLinks(doc) {
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
-  // Strip internal-only metadata (e.g. contentSource) before anything else so
-  // it is not left in the live DOM of the published page.
-  removeInternalMetadata();
-
   // If there is a redirectTarget in the page metadata, immediately
   // redirect to target.
   const redirectTarget = getMetadata('redirecttarget');
