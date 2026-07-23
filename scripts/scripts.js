@@ -479,6 +479,39 @@ function setMetaImage() {
   }
 }
 
+/**
+ * Reads the `robots` metadata key (which accepts `noindex` and/or `nofollow`)
+ * and, when both directives are present, splits the single combined
+ * `<meta name="robots" content="noindex, nofollow">` tag into two separate
+ * `<meta name="robots">` tags — one with `content="noindex"` and one with
+ * `content="nofollow"`. A single directive is emitted as a single tag.
+ * @author JMP
+ */
+export function decorateRobotsMeta() {
+  const robots = getMetadata('robots');
+  if (!robots) return;
+
+  // Accept comma and/or whitespace separated values, normalize to lowercase.
+  const directives = [...new Set(
+    robots
+      .split(/[,\s]+/)
+      .map((value) => value.trim().toLowerCase())
+      .filter(Boolean),
+  )];
+  if (directives.length === 0) return;
+
+  // Remove any existing robots meta tag(s) emitted by the pipeline.
+  document.head.querySelectorAll('meta[name="robots"]').forEach((meta) => meta.remove());
+
+  // Emit one meta tag per directive.
+  directives.forEach((directive) => {
+    const meta = document.createElement('meta');
+    meta.setAttribute('name', 'robots');
+    meta.setAttribute('content', directive);
+    document.head.append(meta);
+  });
+}
+
 const localizedCheckCache = new Map();
 
 function stripLeadingFragment(pathname) {
@@ -655,6 +688,7 @@ async function loadEager(doc) {
 
   addTitleSuffix();
   setMetaImage();
+  decorateRobotsMeta();
   decorateTemplateAndTheme();
   decoratePageStyles();
   addThirdPartyScripts();
