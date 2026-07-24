@@ -213,8 +213,18 @@ strong {
     color: var(--purple);
   }
 }
+.h3-purple {
+  h3 {
+    color: var(--purple);
+  }
+}
 .heading-blue {
   h1, h2, h3 {
+    color: var(--blue);
+  }
+}
+.h3-blue {
+  h3 {
     color: var(--blue);
   }
 }
