@@ -9,6 +9,57 @@
       gap: 3.2rem;
     }
   }
+  &:has(.icon-bullet-col-1) {
+    div {
+      gap: 16px;
+      div:nth-child(odd) {
+        position: relative;
+        margin-bottom: 1rem;
+        min-height: 84px;
+        .icon {
+          height: 48px;
+          width: 48px;
+          position: absolute;
+          left: 0;
+        }
+        h3, h4, h5, p {
+          text-align: left !important;
+          margin-left: 84px;
+        }
+        h5 {
+          padding: 0;
+          margin: 0 0 .5em 64px;
+        }
+        h5:has(p) {
+          padding: unset;
+        }
+        p:has(span.icon) {
+          margin-bottom: 0;
+        }
+        @media (width <= 900px) {
+          margin-bottom: 0 !important;
+          min-height: auto;
+          .icon {
+            position: relative;
+          }
+          h5, p {
+            margin-left: 0 !important;
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+    div:has(h5 + p) {
+      h5 {
+        margin-top: 0;
+      }
+    }
+    @media (width <= 900px) {
+      div {
+        gap: 0;
+      }
+    }
+  }
 }
 
 .styled-columns > div > div {
@@ -899,6 +950,41 @@
         width: 100%;
         margin-left: 0;
       }
+    }
+  }
+}
+
+.icon-bullet {
+  div {
+    div {
+      position: relative;
+      margin-bottom: 1rem;
+      min-height: 84px;
+      .icon {
+        height: 64px;
+        width: 64px;
+        position: absolute;
+        left: 0;
+      }
+      h3, h4, h5, p {
+        text-align: left !important;
+        margin-left: 84px;
+      }
+      h5 {
+        padding: 0;
+        margin: 1.5rem 0 .5em 84px;
+      }
+      h5:has(p) {
+        padding: unset;
+      }
+      p:has(span.icon) {
+        margin-bottom: 0;
+      }
+    }
+  }
+  div:has(h5 + p) {
+    h5 {
+      margin-top: 0;
     }
   }
 }
