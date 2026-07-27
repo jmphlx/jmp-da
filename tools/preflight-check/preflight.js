@@ -272,7 +272,7 @@ async function loadDoc(details) {
     token,
     sourceUrl,
   } = details;
-  const url = sourceUrl ?? `https://admin.da.live/source/${org}/${site}${path}.html`;
+  const url = sourceUrl ?? `https://admin.da.live/source/${org}/${site}${path}.html?nocache=${Date.now()}`;
   const opts = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
   const resp = await fetch(url, opts);
   if (!resp.ok) return { error: `Could not fetch document. Status: ${resp.status}` };
