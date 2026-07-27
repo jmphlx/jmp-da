@@ -20,6 +20,7 @@
   &:has(.icon-bullet-col-1) {
     div {
       gap: 16px;
+      padding-bottom: 8px;
       div:nth-child(odd) {
         position: relative;
         margin-bottom: 1rem;
