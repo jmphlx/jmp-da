@@ -9,6 +9,14 @@
       gap: 3.2rem;
     }
   }
+  &:has(.icon-s) {
+    div {
+      .icon {
+        height: auto;
+        width: 32px !important;
+      }
+    }
+  }
   &:has(.icon-bullet-col-1) {
     div {
       gap: 16px;
