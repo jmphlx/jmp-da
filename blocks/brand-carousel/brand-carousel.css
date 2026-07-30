@@ -1,0 +1,85 @@
+/* ---------------------------------------------------------------------------
+   brand-carousel — continuously gliding logo marquee (~6 small logos visible)
+   --------------------------------------------------------------------------- */
+
+.brand-carousel {
+  position: relative;
+  overflow: hidden;
+  padding: 32px 0;
+}
+
+.brand-carousel-viewport {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Fade the logos out at both edges, like the live site. Done with gradient
+   overlays rather than `mask-image`: a mask over the composited (animated
+   transform) track renders INVISIBLE under Chromium's GPU compositor — Firefox
+   and software-rendered headless Chromium are unaffected, which is why this only
+   broke in real Chromium browsers. */
+.brand-carousel-viewport:before,
+.brand-carousel-viewport:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  width: clamp(40px, 8%, 120px);
+  pointer-events: none;
+}
+
+.brand-carousel-viewport:before {
+  left: 0;
+  background: linear-gradient(to right, #ffffff, rgb(255 255 255 / 0));
+}
+
+.brand-carousel-viewport:after {
+  right: 0;
+  background: linear-gradient(to left, #ffffff, rgb(255 255 255 / 0));
+}
+
+.brand-carousel-track {
+  display: flex;
+  width: max-content;
+}
+
+.brand-carousel-slide {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  box-sizing: border-box;
+
+  /* width is set per-slide in JS (viewport / slides-per-view). */
+}
+
+.brand-carousel-slide a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.brand-carousel-slide picture,
+.brand-carousel-slide img {
+  display: block;
+  max-width: 100%;
+  width: auto;
+  max-height: 52px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Site base CSS applies `transition: all` to links/images; neutralize it inside
+   the marquee so slide-width/logo changes don't animate and fire transitionend
+   events that bubble to the track. Only the track itself transitions (in JS). */
+.brand-carousel-track,
+.brand-carousel-slide,
+.brand-carousel-slide a,
+.brand-carousel-slide picture,
+.brand-carousel-slide img {
+  transition: none;
+}
