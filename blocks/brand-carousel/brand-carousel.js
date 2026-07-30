@@ -66,6 +66,7 @@ export default function decorate(block) {
   let index = 0;
   let started = false;
   let lastWidth = 0;
+  let glideTimeout = null;
 
   // Size every slide to viewport / slides-per-view. Returns false until the
   // block actually has a layout width.
@@ -75,7 +76,6 @@ export default function decorate(block) {
     lastWidth = width;
     slideWidth = width / perView(width);
     allSlides.forEach((slide) => { slide.style.width = `${slideWidth}px`; });
-    
     if (!isContinuousScroll) {
       track.style.transition = 'none';
       track.style.transform = `translateX(${-index * slideWidth}px)`;
@@ -100,7 +100,6 @@ export default function decorate(block) {
       track.style.transition = 'none';
       track.style.transform = 'translateX(0)';
       track.getBoundingClientRect();
-      
       // Loop continuously
       requestAnimationFrame(() => {
         track.style.transition = `transform ${totalWidth * 20}ms linear`;
@@ -163,19 +162,18 @@ export default function decorate(block) {
   const ro = new ResizeObserver(() => {
     const width = viewport.clientWidth;
     if (!width || width === lastWidth) return;
-    
     // Clear any pending transition timeout to avoid overlapping triggers
     if (glideTimeout) clearTimeout(glideTimeout);
 
     // Recalculate widths and update position immediately without animation
     if (sizeSlides()) {
-      if (!isInfiniteScroll) {
+      if (!isContinuousScroll) {
         track.style.transition = 'none';
         track.style.transform = `translateX(${-index * slideWidth}px)`;
         // Resume the next step after the hold delay
         glideTimeout = window.setTimeout(glide, HOLD_MS);
       } else {
-        startInfiniteScroll();
+        startContinuousScroll();
       }
     }
   });
