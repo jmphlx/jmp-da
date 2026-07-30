@@ -12,6 +12,7 @@ const EASING = 'cubic-bezier(0.37, 0, 0.63, 1)'; // gentle ease-in-out
 
 function perView(width) {
   if (width <= 600) return 2;
+  if (width <= 750) return 3;
   if (width <= 900) return 4;
   return 6;
 }
@@ -19,6 +20,8 @@ function perView(width) {
 export default function decorate(block) {
   const rows = [...block.children];
   if (!rows.length) return;
+
+  const isContinuousScroll = block.classList.contains('continuous-scroll');
 
   const track = document.createElement('div');
   track.className = 'brand-carousel-track';
@@ -72,11 +75,40 @@ export default function decorate(block) {
     lastWidth = width;
     slideWidth = width / perView(width);
     allSlides.forEach((slide) => { slide.style.width = `${slideWidth}px`; });
-    track.style.transition = 'none';
-    track.style.transform = `translateX(${-index * slideWidth}px)`;
+    
+    if (!isContinuousScroll) {
+      track.style.transition = 'none';
+      track.style.transform = `translateX(${-index * slideWidth}px)`;
+    }
     return true;
   };
 
+  // --- continuous SCROLL / CONTINUOUS VARIANT ---
+  const startContinuousScroll = () => {
+    // Total width of one full set of slides
+    const totalWidth = count * slideWidth;
+    track.style.transition = 'none';
+    track.style.transform = 'translateX(0)';
+    track.getBoundingClientRect(); // force reflow
+
+    // Apply a continuous linear animation via CSS or step loop
+    // Using a dynamic CSS transition or keyframes works well here:
+    track.style.transition = `transform ${totalWidth * 20}ms linear`; // adjust speed multiplier as needed
+    track.style.transform = `translateX(${-totalWidth}px)`;
+
+    track.addEventListener('transitionend', () => {
+      track.style.transition = 'none';
+      track.style.transform = 'translateX(0)';
+      track.getBoundingClientRect();
+      
+      // Loop continuously
+      requestAnimationFrame(() => {
+        track.style.transition = `transform ${totalWidth * 20}ms linear`;
+        track.style.transform = `translateX(${-totalWidth}px)`;
+      });
+    }, { once: false });
+  };
+  // --- STANDARD STEP-BY-STEP VARIANT ---
   const glide = () => {
     index += 1;
     track.style.transition = `transform ${GLIDE_MS}ms ${EASING}`;
@@ -88,6 +120,7 @@ export default function decorate(block) {
     // `transition: all` on links/images/slides, whose transitionend events
     // bubble here — without this guard they'd trigger spurious extra glides and
     // the track would run off-screen.
+    if (isContinuousScroll) return; // Handled separately
     if (e.target !== track || e.propertyName !== 'transform') return;
     if (index >= count) {
       // Snap from the cloned frame back to the original — no transition.
@@ -102,7 +135,11 @@ export default function decorate(block) {
   const startGlide = () => {
     if (started) return;
     started = true;
-    window.setTimeout(glide, HOLD_MS);
+    if (isContinuousScroll) {
+      startContinuousScroll();
+    } else {
+      window.setTimeout(glide, HOLD_MS);
+    }
   };
 
   // EDS frequently decorates this block while its section is still display:none
@@ -126,7 +163,21 @@ export default function decorate(block) {
   const ro = new ResizeObserver(() => {
     const width = viewport.clientWidth;
     if (!width || width === lastWidth) return;
-    if (sizeSlides()) startGlide();
+    
+    // Clear any pending transition timeout to avoid overlapping triggers
+    if (glideTimeout) clearTimeout(glideTimeout);
+
+    // Recalculate widths and update position immediately without animation
+    if (sizeSlides()) {
+      if (!isInfiniteScroll) {
+        track.style.transition = 'none';
+        track.style.transform = `translateX(${-index * slideWidth}px)`;
+        // Resume the next step after the hold delay
+        glideTimeout = window.setTimeout(glide, HOLD_MS);
+      } else {
+        startInfiniteScroll();
+      }
+    }
   });
   ro.observe(viewport);
 }
