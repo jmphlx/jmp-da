@@ -68,7 +68,7 @@ async function updatePastEventPage(authToken, page) {
     const response = await fetch(url, {
       method: 'GET', 
       headers: {
-        'Authorization': `token ${authToken}` ,
+        'Authorization': `Bearer ${authToken}` ,
         'Accept': '*/*'
       }
     });
