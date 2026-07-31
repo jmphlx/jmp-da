@@ -208,6 +208,13 @@ strong {
     font-size: var(--heading-font-size-xs);
   }
 }
+.figure {
+  p {
+    color: #194573;
+    font-size: 1.4rem;
+    margin-bottom: 2.4rem;
+  }
+}
 .heading-purple {
   h1, h2, h3 {
     color: var(--purple);
