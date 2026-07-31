@@ -17,7 +17,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const { default: unpublishPastEvents } = await import('${{ github.workspace }}/scripts/post-event-processing.mjs')
+            const { default: processPastEvents } = await import('${{ github.workspace }}/scripts/post-event-processing.mjs')
 
             const response = await processPastEvents(process.env.AUTH_TOKEN, "AMER")
             core.setOutput("subject", response.subject)
