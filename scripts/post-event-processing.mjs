@@ -189,6 +189,7 @@ export default async function processPastEvents(authToken, region) {
     //After every 5 requests, pause for 2 seconds, to avoid going over the rate limit.
     //Rate is 10 requests per second. Each page needs 2 requests.
     const page = pagesToProcess[i];
+    console.log(page);
     updatePastEventPage(authToken, page.path);
     // const publishResponse = 
     // const deindexResponse = await sendDeleteRequest(authToken, page.path, true); // Deindex.
