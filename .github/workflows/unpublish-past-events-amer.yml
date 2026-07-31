@@ -17,9 +17,9 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const { default: unpublishPastEvents } = await import('${{ github.workspace }}/scripts/unpublish-pages.mjs')
+            const { default: unpublishPastEvents } = await import('${{ github.workspace }}/scripts/post-event-processing.mjs')
 
-            const response = await unpublishPastEvents(process.env.AUTH_TOKEN, "AMER")
+            const response = await processPastEvents(process.env.AUTH_TOKEN, "AMER")
             core.setOutput("subject", response.subject)
             core.setOutput("body", response.body)
             core.setOutput("sendEmail", response.sendEmail)
@@ -32,11 +32,11 @@ jobs:
           subject: "Nightly Job Run for AMER"
           body: "${{steps.unpublish-script.outputs.body}}"
           type: 'text/html'
-      - name: Send Failure Email Notifications
-        if: ${{ steps.unpublish-script.outputs.sendEmail == 'true' }}
-        uses: cinotify/github-action@main
-        with:
-          to: 'Laurel.Timko@jmp.com, Aaron.Kennedy@jmp.com, Roger.Alford@jmp.com, Michael.Osinibi@jmp.com'
-          subject: "${{steps.unpublish-script.outputs.subject}}"
-          body: "${{steps.unpublish-script.outputs.body}}"
-          type: 'text/html'
+      # - name: Send Failure Email Notifications
+      #   if: ${{ steps.unpublish-script.outputs.sendEmail == 'true' }}
+      #   uses: cinotify/github-action@main
+      #   with:
+      #     to: 'Laurel.Timko@jmp.com, Aaron.Kennedy@jmp.com, Roger.Alford@jmp.com, Michael.Osinibi@jmp.com'
+      #     subject: "${{steps.unpublish-script.outputs.subject}}"
+      #     body: "${{steps.unpublish-script.outputs.body}}"
+      #     type: 'text/html'

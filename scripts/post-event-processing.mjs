@@ -14,6 +14,16 @@ function getRegionalLanguageIndexes(includeFullURL, regionalIndexes) {
   return indexPaths;
 }
 
+/**
+ * Check if a page has an offDateTime AND if the offDateTime has passed.
+ * Don't need to check if the page is published because we are using query-index.json
+ * Don't need to check query index for "missing" robots property because if it is in
+ * the index, then it doesn't have it. 
+ * Don't need to include redirectTarget in check, because if it's in the index, then it needs updating anyways.
+ * 
+ * @param {*} route 
+ * @returns list of filtered pages
+ */
 async function getFilteredJSON(route) {
   try {
     const response = await fetch(route);
@@ -37,19 +47,45 @@ async function getFilteredJSON(route) {
  * Given a list of pages, filter down to event pages where the date has passed
  * the current date time.
  * @param {array} pageSelection array of pages that may match the filter
- * @returns array of pages with events on or before the current date time.
+ * @returns array of pages with events on or before the current date time and need additional processing
  */
 async function getPastEventsPages(languageIndexes) {
-  let pagesToUnpublish = [];
+  let pagesToProcess = [];
   for(let i = 0; i < languageIndexes.length; i++) {
     const index = languageIndexes[i];
     const foundPages = await getFilteredJSON(index);
-    pagesToUnpublish = pagesToUnpublish.concat(foundPages);
+    pagesToProcess = pagesToProcess.concat(foundPages);
   }
-  console.log(pagesToUnpublish);
-  return pagesToUnpublish;
+  console.log(pagesToProcess);
+  return pagesToProcess;
 }
 
+async function updatePastEventPage() {
+  //Get source content
+  const url = `https://admin.da.live/source/jmphlx/jmp-da${page}`;
+  console.log(url);
+  try {
+    const response = await fetch(url, {
+      method: 'GET', 
+      headers: {
+        'Authorization': `Bearer ${authToken}` ,
+        'Accept': '*/*'
+      }
+    });
+    console.log(response);
+    if (!response.ok) return null;
+  } catch (error) {
+    console.log('could not get source content');
+  }
+
+  //Then look for redirectTarget
+
+  //Then look for robots
+
+  //Then saveToDa
+}
+
+//TODO change this to publish request and add content update
 async function sendDeleteRequest(authToken, page, deindex) {
   let url;
   if (deindex) {
@@ -90,22 +126,22 @@ function buildEmailSubject(successPages, failedPages, region) {
   const failedWorkflow = failedPages.length > 0;
   const successfulUnpublishing = successPages.length > 0;
   if (failedWorkflow) {
-    subjectLine = `${region} EVENTS WORKFLOW ERROR: Failed to Unpublish Pages`;
+    subjectLine = `${region} EVENTS WORKFLOW ERROR: Failed to Update Past Event Pages`;
   } else if (successfulUnpublishing) {
-    subjectLine = `${region} events workflow: Successfully Unpublished Past Events`;
+    subjectLine = `${region} events workflow: Successfully Updated Past Events`;
   } else {
-    subjectLine = `No events to unpublish for ${region}`;
+    subjectLine = `No past events to update for ${region}`;
   }
   return subjectLine;
 }
 
 function buildEmailBody(successPages, failedPages, region) {
   const failedWorkflow = failedPages.length > 0;
-  let emailHeader = `<h2>${region} Results of Unpublish Page Workflow</h2>`;
+  let emailHeader = `<h2>${region} Results of Post Event Processing Workflow</h2>`;
   let emailBody = '';
   if (failedWorkflow) {
     emailBody += '<div>';
-    emailBody += '<div style="color:red;">These pages were not unpublished: </div>';
+    emailBody += '<div style="color:red;">These pages were unable to be updated: </div>';
     emailBody += '<ul>';
     failedPages.forEach((page) => {
       emailBody += `<li><a href="https://da.live/edit#/jmphlx/jmp-da${page}">${page}</a></li>`;
@@ -114,7 +150,7 @@ function buildEmailBody(successPages, failedPages, region) {
 
     if (successPages.length > 0) {
       emailBody += '<div>';
-      emailBody += '<div style="color:green;">These pages were successfully unpublished: </div>';
+      emailBody += '<div style="color:green;">These pages were successfully updated: </div>';
       emailBody += '<ul>';
       successPages.forEach((page) => {
         emailBody += `<li><a href="https://da.live/edit#/jmphlx/jmp-da${page}">${page}</a></li>`;
@@ -123,7 +159,7 @@ function buildEmailBody(successPages, failedPages, region) {
     }
   } else if (successPages.length > 0) {
     emailBody += '<div>';
-    emailBody += '<div style="color:green;">These pages were successfully unpublished: </div>';
+    emailBody += '<div style="color:green;">These pages were successfully updated: </div>';
     emailBody += '<ul>';
     successPages.forEach((page) => {
       emailBody += `<li><a href="https://da.live/edit#/jmphlx/jmp-da${page}">${page}</a></li>`;
@@ -135,7 +171,7 @@ function buildEmailBody(successPages, failedPages, region) {
   return `<div>${emailHeader}${emailBody}</div>`;
 }
 
-export default async function unpublishPastEvents(authToken, region) {
+export default async function processPastEvents(authToken, region) {
   console.log(authToken);
   let languageIndexes;
 
@@ -145,22 +181,24 @@ export default async function unpublishPastEvents(authToken, region) {
     languageIndexes = getRegionalLanguageIndexes(true, languagesAMER);
   }
 
-  let pagesToUnpublish = await getPastEventsPages(languageIndexes);
+  let pagesToProcess = await getPastEventsPages(languageIndexes);
   let successPages = [];
   let failedPages = [];
 
-  for(let i=0; i < pagesToUnpublish.length; i++) {
+  for(let i=0; i < pagesToProcess.length; i++) {
     //After every 5 requests, pause for 2 seconds, to avoid going over the rate limit.
     //Rate is 10 requests per second. Each page needs 2 requests.
-    const page = pagesToUnpublish[i];
-    const deindexResponse = await sendDeleteRequest(authToken, page.path, true); // Deindex.
-    const unpublishResponse = await sendDeleteRequest(authToken, page.path, false); // Unpublish.
-    if (deindexResponse === null || unpublishResponse === null) {
-      failedPages.push(page.path);
-    } else {
-      successPages.push(page.path);
-    }
-    console.log(`Unpublished : ${page.path}`);
+    const page = pagesToProcess[i];
+    updatePastEventPage(authToken, page.path);
+    // const publishResponse = 
+    // const deindexResponse = await sendDeleteRequest(authToken, page.path, true); // Deindex.
+    // const unpublishResponse = await sendDeleteRequest(authToken, page.path, false); // Unpublish.
+    // if (deindexResponse === null || unpublishResponse === null) {
+    //   failedPages.push(page.path);
+    // } else {
+    //   successPages.push(page.path);
+    // }
+    console.log(`Handled : ${page.path}`);
     if (i % 5 === 0) {
       sleep(2000);
     }
