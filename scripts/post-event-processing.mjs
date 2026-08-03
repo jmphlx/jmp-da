@@ -108,6 +108,26 @@ async function updatePastEventPage(authToken, page) {
       console.log('Robots row already exists');
     }
 
+    // Check if redirectTarget row exists
+    let hasRedirectTarget = false;
+    for (let i = 0; i < rows.length; i++) {
+      const cell = rows[i].textContent.toLowerCase().trim();
+      if (cell === 'redirecttarget') {
+        hasRedirectTarget = true;
+        break;
+      }
+    }
+
+    // Add redirectTarget row if it doesn't exist
+    if (!hasRedirectTarget) {
+      const redirectRowDiv = dom.createElement('div');
+      redirectRowDiv.innerHTML = '<div><p>redirectTarget</p></div><div><p>/events</p></div>';
+      metadataBlock.append(redirectRowDiv);
+      console.log('Added redirectTarget row to metadata');
+    } else {
+      console.log('RedirectTarget row already exists');
+    }
+
     console.log('After');
     console.log(metadataBlock.innerHTML);
 
