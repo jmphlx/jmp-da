@@ -1,3 +1,10 @@
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+
+// Create a virtual window and extract DOMParser
+const { window } = new JSDOM("");
+const parser = new window.DOMParser();
+
 const languagesAPAC = ['ko', 'ja', 'zh-hans', 'zh-hant'];
 const languagesAMER = ['en', 'es', 'fr', 'de', 'it'];
 const baseURL = 'https://main--jmp-da--jmphlx.aem.live';
@@ -75,7 +82,7 @@ async function updatePastEventPage(authToken, page) {
     if (!response.ok) return null;
     const text = await response.text();
     console.log(text);
-    const dom = new DOMParser().parseFromString(text, 'text/html');
+    const dom = parser.parseFromString(text, 'text/html');
     console.log(dom);
     const metadatablockRows = Array.from(dom.querySelectorAll(`div.metadata p`));
     console.log(metadatablockRows);
