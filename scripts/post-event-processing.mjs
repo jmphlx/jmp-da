@@ -73,6 +73,11 @@ async function updatePastEventPage(authToken, page) {
     });
     console.log(response);
     if (!response.ok) return null;
+    const text = await response.text();
+    const dom = new DOMParser().parseFromString(text, 'text/html');
+    console.log(dom);
+    const metadatablockRows = Array.from(dom.querySelectorAll(`div.metadata p`));
+    console.log(metadatablockRows);
   } catch (error) {
     console.log('could not get source content');
   }
