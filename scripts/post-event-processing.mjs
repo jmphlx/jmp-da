@@ -84,9 +84,33 @@ async function updatePastEventPage(authToken, page) {
     console.log(`First 500 chars: ${text.substring(0, 500)}`);
     const dom = parser.parseFromString(text, 'text/html');
     const metadataBlock = dom.querySelector('div.metadata');
-    console.log(metadataBlock);
-    console.log(metadataBlock.textContent);
+    console.log('Before');
     console.log(metadataBlock.innerHTML);
+
+    // Check if robots row exists
+    const rows = Array.from(metadataBlock.querySelectorAll('p'));
+    let hasRobots = false;
+    for (let i = 0; i < rows.length; i++) {
+      const cell = rows[i].textContent.toLowerCase().trim();
+      if (cell === 'robots') {
+        hasRobots = true;
+        break;
+      }
+    }
+
+    // Add robots row if it doesn't exist
+    if (!hasRobots) {
+      const robotsRowDiv = dom.createElement('div');
+      robotsRowDiv.innerHTML = '<div><p>robots</p></div><div><p>noindex, nofollow</p></div>';
+      metadataBlock.append(robotsRowDiv);
+      console.log('Added robots row to metadata');
+    } else {
+      console.log('Robots row already exists');
+    }
+
+    console.log('After');
+    console.log(metadataBlock.innerHTML);
+
   } catch (error) {
     console.log('could not get source content');
     console.log(error);
