@@ -80,7 +80,8 @@ async function updatePastEventPage(authToken, page) {
     console.log(response);
     if (!response.ok) return null;
     const text = await response.text();
-    console.log(text);
+    console.log(`Response text length: ${text.length}`);
+    console.log(`First 500 chars: ${text.substring(0, 500)}`);
     const dom = parser.parseFromString(text, 'text/html');
     const metadataBlock = dom.querySelectorAll(`div.metadata`);
     console.log(metadataBlock);
