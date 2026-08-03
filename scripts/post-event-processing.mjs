@@ -83,9 +83,11 @@ async function updatePastEventPage(authToken, page) {
     console.log(`Response text length: ${text.length}`);
     console.log(`First 500 chars: ${text.substring(0, 500)}`);
     const dom = parser.parseFromString(text, 'text/html');
-    const metadataBlock = dom.querySelectorAll(`div.metadata`);
+    const metadataBlock = dom.querySelector('div.metadata');
     console.log(metadataBlock);
-    console.log(metadataBlock.innerHTML);
+    console.log(metadataBlock.textContent);
+    const sectionMetadata = dom.querySelectorAll('div.section-metadata');
+    console.log(sectionMetadata);
   } catch (error) {
     console.log('could not get source content');
     console.log(error);
