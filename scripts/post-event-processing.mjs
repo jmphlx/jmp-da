@@ -1,5 +1,4 @@
-const jsdom = require("jsdom");
-const { JSDOM } = jsdom;
+import { JSDOM } from "jsdom";
 
 // Create a virtual window and extract DOMParser
 const { window } = new JSDOM("");
