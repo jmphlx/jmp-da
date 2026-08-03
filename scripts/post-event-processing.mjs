@@ -62,7 +62,7 @@ async function getPastEventsPages(languageIndexes) {
 
 async function updatePastEventPage(authToken, page) {
   //Get source content
-  const url = `https://admin.da.live/source/jmphlx/jmp-da${page}`;
+  const url = `https://admin.da.live/source/jmphlx/jmp-da${page}.html`;
   console.log(url);
   try {
     const response = await fetch(url, {
