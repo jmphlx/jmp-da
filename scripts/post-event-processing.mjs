@@ -83,8 +83,8 @@ async function updatePastEventPage(authToken, page) {
     console.log(text);
     const dom = parser.parseFromString(text, 'text/html');
     console.log(dom);
-    const metadatablockRows = Array.from(dom.querySelectorAll(`div.metadata p`));
-    console.log(metadatablockRows);
+    const metadataBlock = dom.querySelectorAll(`div.metadata`);
+    console.log(metadataBlock.innerHTML);
   } catch (error) {
     console.log('could not get source content');
     console.log(error);
