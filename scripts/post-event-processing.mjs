@@ -86,8 +86,7 @@ async function updatePastEventPage(authToken, page) {
     const metadataBlock = dom.querySelector('div.metadata');
     console.log(metadataBlock);
     console.log(metadataBlock.textContent);
-    const sectionMetadata = dom.querySelectorAll('div.section-metadata');
-    console.log(sectionMetadata);
+    console.log(metadataBlock.innerHTML);
   } catch (error) {
     console.log('could not get source content');
     console.log(error);
