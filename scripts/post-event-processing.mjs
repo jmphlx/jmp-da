@@ -68,8 +68,7 @@ async function updatePastEventPage(authToken, page) {
     const response = await fetch(url, {
       method: 'GET', 
       headers: {
-        'Authorization': `Bearer ${authToken}` ,
-        'Accept': '*/*'
+        'Authorization': `Bearer ${authToken}`
       }
     });
     console.log(response);
@@ -190,7 +189,7 @@ export default async function processPastEvents(authToken, region) {
     //Rate is 10 requests per second. Each page needs 2 requests.
     const page = pagesToProcess[i];
     console.log(page);
-    updatePastEventPage(authToken, page.path);
+    await updatePastEventPage(authToken, page.path);
     // const publishResponse = 
     // const deindexResponse = await sendDeleteRequest(authToken, page.path, true); // Deindex.
     // const unpublishResponse = await sendDeleteRequest(authToken, page.path, false); // Unpublish.
