@@ -19,7 +19,7 @@ jobs:
           script: |
             const { default: processPastEvents } = await import('${{ github.workspace }}/scripts/post-event-processing.mjs')
 
-            const response = await processPastEvents(process.env.AUTH_TOKEN, "AMER")
+            const response = await processPastEvents(process.env.API_AUTH_TOKEN, "AMER")
             core.setOutput("subject", response.subject)
             core.setOutput("body", response.body)
             core.setOutput("sendEmail", response.sendEmail)
