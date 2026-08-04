@@ -1,0 +1,51 @@
+name: AMER/EU Process Past Events
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '10 22 * * *' #  run at 5:10PM for Americas and Europe
+  workflow_dispatch:
+
+jobs:
+  post-event-processing:
+    environment:
+      name: main
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm install
+      - name: Run Script
+        id: postprocessing-script
+        env:
+          AUTH_TOKEN: ${{ secrets.API_AUTH_TOKEN }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { default: processPastEvents } = await import('${{ github.workspace }}/scripts/post-event-processing.mjs')
+
+            const response = await processPastEvents(process.env.AUTH_TOKEN, "AMER")
+            core.setOutput("subject", response.subject)
+            core.setOutput("body", response.body)
+            core.setOutput("sendEmail", response.sendEmail)
+            return response
+          result-encoding: string
+      - name: Send All Email Notification
+        uses: cinotify/github-action@main
+        with:
+          to: 'Laurel.Timko@jmp.com'
+          subject: "Nightly Job Run for AMER"
+          body: "${{steps.postprocessing-script.outputs.body}}"
+          type: 'text/html'
+      # - name: Send Failure Email Notifications
+      #   if: ${{ steps.postprocessing-script.outputs.sendEmail == 'true' }}
+      #   uses: cinotify/github-action@main
+      #   with:
+      #     to: 'Laurel.Timko@jmp.com, Aaron.Kennedy@jmp.com, Roger.Alford@jmp.com, Michael.Osinibi@jmp.com'
+      #     subject: "${{steps.postprocessing-script.outputs.subject}}"
+      #     body: "${{steps.postprocessing-script.outputs.body}}"
+      #     type: 'text/html'
