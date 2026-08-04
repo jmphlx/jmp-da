@@ -150,13 +150,13 @@ async function updatePastEventPage(authToken, page) {
 
 async function sendPublishRequest(authToken, page) {
   const url = `https://admin.hlx.page/live/jmphlx/jmp-da/main${page}`;
-
+  console.log(url);
   try {
     const response = await fetch(url, {
       method: 'POST', 
       headers: {
         'Authorization': `Bearer ${authToken}` ,
-        'x-content-source-authorization': `Bearer ${authToken}`
+        'X-Content-Source-Authorization': `Bearer ${authToken}`
       }
     });
     console.log(response);
