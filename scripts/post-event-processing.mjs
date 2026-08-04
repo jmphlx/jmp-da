@@ -1,4 +1,5 @@
 import { JSDOM } from "jsdom";
+import { saveToDa } from "./helper";
 
 // Create a virtual window and extract DOMParser
 const { window } = new JSDOM("");
@@ -86,6 +87,7 @@ async function updatePastEventPage(authToken, page) {
     const metadataBlock = dom.querySelector('div.metadata');
     console.log('Before');
     console.log(metadataBlock.innerHTML);
+    let flag = false;
 
     // Check if robots row exists
     const rows = Array.from(metadataBlock.querySelectorAll('p'));
@@ -103,6 +105,7 @@ async function updatePastEventPage(authToken, page) {
       const robotsRowDiv = dom.createElement('div');
       robotsRowDiv.innerHTML = '<div><p>robots</p></div><div><p>noindex, nofollow</p></div>';
       metadataBlock.append(robotsRowDiv);
+      flag = true;
       console.log('Added robots row to metadata');
     } else {
       console.log('Robots row already exists');
@@ -123,6 +126,7 @@ async function updatePastEventPage(authToken, page) {
       const redirectRowDiv = dom.createElement('div');
       redirectRowDiv.innerHTML = '<div><p>redirectTarget</p></div><div><p>/events</p></div>';
       metadataBlock.append(redirectRowDiv);
+      flag = true;
       console.log('Added redirectTarget row to metadata');
     } else {
       console.log('RedirectTarget row already exists');
@@ -131,16 +135,15 @@ async function updatePastEventPage(authToken, page) {
     console.log('After');
     console.log(metadataBlock.innerHTML);
 
+    //Then saveToDa
+    if (flag) {
+    const htmlToUse = dom.querySelector('main');
+    await saveToDa(htmlToUse.innerHTML, page, authToken);
+    }
   } catch (error) {
     console.log('could not get source content');
     console.log(error);
   }
-
-  //Then look for redirectTarget
-
-  //Then look for robots
-
-  //Then saveToDa
 }
 
 //TODO change this to publish request and add content update
