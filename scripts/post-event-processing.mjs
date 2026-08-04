@@ -146,20 +146,15 @@ async function updatePastEventPage(authToken, page) {
   }
 }
 
-//TODO change this to publish request and add content update
-async function sendDeleteRequest(authToken, page, deindex) {
-  let url;
-  if (deindex) {
-    url = `https://admin.hlx.page/index/jmphlx/jmp-da/main${page}`;
-  } else {
-    url = `https://admin.hlx.page/live/jmphlx/jmp-da/main${page}`;
-  }
+async function sendPublishRequest(authToken, page) {
+  const url = `https://admin.hlx.page/live/jmphlx/jmp-da/main${page}`;
 
   try {
     const response = await fetch(url, {
-      method: 'DELETE', 
+      method: 'POST', 
       headers: {
-        'Authorization': `token ${authToken}` ,
+        'Authorization': `Bearer ${authToken}` ,
+        'x-content-source-authorization': `Bearer ${authToken}`,
         'Accept': '*/*'
       }
     });
@@ -170,7 +165,7 @@ async function sendDeleteRequest(authToken, page, deindex) {
     return json;
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('sendDeleteRequest:', { error });
+    console.error('sendPublishRequest:', { error });
     if (error instanceof SyntaxError) {
       return "still worked as expected";
     }
@@ -252,14 +247,12 @@ export default async function processPastEvents(authToken, region) {
     const page = pagesToProcess[i];
     console.log(page);
     await updatePastEventPage(authToken, page.path);
-    // const publishResponse = 
-    // const deindexResponse = await sendDeleteRequest(authToken, page.path, true); // Deindex.
-    // const unpublishResponse = await sendDeleteRequest(authToken, page.path, false); // Unpublish.
-    // if (deindexResponse === null || unpublishResponse === null) {
-    //   failedPages.push(page.path);
-    // } else {
-    //   successPages.push(page.path);
-    // }
+    const publishResponse = await sendPublishRequest(authToken, page.path);
+    if (publishResponse === null) {
+      failedPages.push(page.path);
+    } else {
+      successPages.push(page.path);
+    }
     console.log(`Handled : ${page.path}`);
     if (i % 5 === 0) {
       sleep(2000);
