@@ -1,5 +1,5 @@
 import { JSDOM } from "jsdom";
-import { saveToDa } from "./helper";
+import { saveToDa } from "./helper.js";
 
 // Create a virtual window and extract DOMParser
 const { window } = new JSDOM("");
