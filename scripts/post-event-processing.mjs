@@ -137,9 +137,11 @@ async function updatePastEventPage(authToken, page) {
 
     //Then saveToDa
     if (flag) {
-    const htmlToUse = dom.querySelector('main');
-    await saveToDa(htmlToUse.innerHTML, page, authToken);
+      const htmlToUse = dom.querySelector('main');
+      await saveToDa(htmlToUse.innerHTML, page, authToken);
+      console.log('done saving');
     }
+    return flag;
   } catch (error) {
     console.log('could not get source content');
     console.log(error);
@@ -154,8 +156,7 @@ async function sendPublishRequest(authToken, page) {
       method: 'POST', 
       headers: {
         'Authorization': `Bearer ${authToken}` ,
-        'x-content-source-authorization': `Bearer ${authToken}`,
-        'Accept': '*/*'
+        'x-content-source-authorization': `Bearer ${authToken}`
       }
     });
     console.log(response);
@@ -246,7 +247,8 @@ export default async function processPastEvents(authToken, region) {
     //Rate is 10 requests per second. Each page needs 2 requests.
     const page = pagesToProcess[i];
     console.log(page);
-    await updatePastEventPage(authToken, page.path);
+    const flag = await updatePastEventPage(authToken, page.path);
+    console.log(flag);
     const publishResponse = await sendPublishRequest(authToken, page.path);
     if (publishResponse === null) {
       failedPages.push(page.path);
