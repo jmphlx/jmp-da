@@ -258,7 +258,7 @@ function buildEmailBody(successPages, failedPages, region) {
 }
 
 export default async function processPastEvents(clientID, clientSecret, region) {
-  const authToken = getAccessToken(clientID, clientSecret);
+  const authToken = await getAccessToken(clientID, clientSecret);
 
   console.log(authToken);
   let languageIndexes;
