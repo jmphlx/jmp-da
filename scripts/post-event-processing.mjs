@@ -69,8 +69,7 @@ async function getAccessToken(clientID, clientSecret) {
     const json = await response.json();
     return json.access_token;
   } catch(error) {
-    console.log('could not get access token');
-    console.log(error);
+    console.log('could not get access token', error);
   }
   return null;
 }
@@ -106,12 +105,8 @@ async function updatePastEventPage(authToken, page) {
     console.log(response);
     if (!response.ok) return null;
     const text = await response.text();
-    console.log(`Response text length: ${text.length}`);
-    console.log(`First 500 chars: ${text.substring(0, 500)}`);
     const dom = parser.parseFromString(text, 'text/html');
     const metadataBlock = dom.querySelector('div.metadata');
-    console.log('Before');
-    console.log(metadataBlock.innerHTML);
     let flag = false;
 
     // Check if robots row exists
@@ -157,19 +152,13 @@ async function updatePastEventPage(authToken, page) {
       console.log('RedirectTarget row already exists');
     }
 
-    console.log('After');
-    console.log(metadataBlock.innerHTML);
-
     //Then saveToDa
     if (flag) {
       const htmlToUse = dom.querySelector('main');
       await saveToDa(htmlToUse.innerHTML, page, authToken);
-      console.log('done saving');
     }
-    return flag;
   } catch (error) {
-    console.log('could not get source content');
-    console.log(error);
+    console.log('could not get source content', error);
   }
 }
 
@@ -180,7 +169,6 @@ async function sendPublishRequest(authToken, page, live) {
   } else {
     url = `https://admin.hlx.page/preview/jmphlx/jmp-da/main${page}`;
   }
-  console.log(url);
   try {
     const response = await fetch(url, {
       method: 'POST', 
@@ -189,7 +177,6 @@ async function sendPublishRequest(authToken, page, live) {
         'X-Content-Source-Authorization': `Bearer ${authToken}`
       }
     });
-    console.log(response);
     if (!response.ok) return null;
     const json = await response.json();
     console.log(json);
@@ -260,8 +247,6 @@ function buildEmailBody(successPages, failedPages, region) {
 
 export default async function processPastEvents(clientID, clientSecret, region) {
   const authToken = await getAccessToken(clientID, clientSecret);
-
-  console.log(authToken);
   let languageIndexes;
 
   if (region === "APAC") {
@@ -278,12 +263,10 @@ export default async function processPastEvents(clientID, clientSecret, region) 
     //After every 5 requests, pause for 2 seconds, to avoid going over the rate limit.
     //Rate is 10 requests per second. Each page needs 2 requests.
     const page = pagesToProcess[i];
-    console.log(page);
-    const flag = await updatePastEventPage(authToken, page.path);
-    console.log(flag);
+    await updatePastEventPage(authToken, page.path);
     const previewResponse = await sendPublishRequest(authToken, page.path, false);
     const publishResponse = await sendPublishRequest(authToken, page.path, true);
-    if (publishResponse === null) {
+    if (previewResponse === null || publishResponse === null) {
       failedPages.push(page.path);
     } else {
       successPages.push(page.path);
