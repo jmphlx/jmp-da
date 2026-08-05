@@ -66,7 +66,8 @@ async function getAccessToken(clientID, clientSecret) {
       }).toString()
     });
     if (!response.ok) return null;
-    return await response.text();
+    const json = await response.json();
+    return json.access_token;
   } catch(error) {
     console.log('could not get access token');
     console.log(error);
