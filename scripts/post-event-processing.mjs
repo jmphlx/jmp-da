@@ -148,8 +148,13 @@ async function updatePastEventPage(authToken, page) {
   }
 }
 
-async function sendPublishRequest(authToken, page) {
-  const url = `https://admin.hlx.page/live/jmphlx/jmp-da/main${page}`;
+async function sendPublishRequest(authToken, page, live) {
+  let url;
+  if (live) {
+    url = `https://admin.hlx.page/live/jmphlx/jmp-da/main${page}`;
+  } else {
+    url = `https://admin.hlx.page/preview/jmphlx/jmp-da/main${page}`;
+  }
   console.log(url);
   try {
     const response = await fetch(url, {
@@ -249,7 +254,8 @@ export default async function processPastEvents(authToken, region) {
     console.log(page);
     const flag = await updatePastEventPage(authToken, page.path);
     console.log(flag);
-    const publishResponse = await sendPublishRequest(authToken, page.path);
+    const previewResponse = await sendPublishRequest(authToken, page.path, false);
+    const publishResponse = await sendPublishRequest(authToken, page.path, true);
     if (publishResponse === null) {
       failedPages.push(page.path);
     } else {
