@@ -50,6 +50,30 @@ async function getFilteredJSON(route) {
   return null;
 }
 
+async function getAccessToken(clientID, clientSecret) {
+  //Get Auth Token
+  try {
+    const response = await fetch('https://ims-na1.adobelogin.com/ims/token/v3', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        grant_type: 'client_credentials',
+        client_id: clientID,
+        client_secret: clientSecret,
+        scope: 'openid,AdobeID,additional_info.projectedProductContext,aem.frontend.all,read_organizations'
+      }).toString()
+    });
+    if (!response.ok) return null;
+    return await response.text();
+  } catch(error) {
+    console.log('could not get access token');
+    console.log(error);
+  }
+  return null;
+}
+
 /**
  * Given a list of pages, filter down to event pages where the date has passed
  * the current date time.
@@ -233,7 +257,9 @@ function buildEmailBody(successPages, failedPages, region) {
   return `<div>${emailHeader}${emailBody}</div>`;
 }
 
-export default async function processPastEvents(authToken, region) {
+export default async function processPastEvents(clientID, clientSecret, region) {
+  const authToken = getAccessToken(clientID, clientSecret);
+
   console.log(authToken);
   let languageIndexes;
 

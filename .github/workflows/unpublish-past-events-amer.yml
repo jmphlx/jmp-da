@@ -22,13 +22,14 @@ jobs:
       - name: Run Script
         id: postprocessing-script
         env:
-          AUTH_TOKEN: ${{ secrets.API_AUTH_TOKEN }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
         uses: actions/github-script@v7
         with:
           script: |
             const { default: processPastEvents } = await import('${{ github.workspace }}/scripts/post-event-processing.mjs')
 
-            const response = await processPastEvents(process.env.AUTH_TOKEN, "AMER")
+            const response = await processPastEvents(process.env.CLIENT_ID, process.env.CLIENT_SECRET, "AMER")
             core.setOutput("subject", response.subject)
             core.setOutput("body", response.body)
             core.setOutput("sendEmail", response.sendEmail)
