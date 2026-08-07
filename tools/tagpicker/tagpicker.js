@@ -15,6 +15,42 @@ const addedTagsList = document.getElementById('tags-list');
 let openTag = [];
 const savedTags = [];
 
+function getMetadata(metadataEl) {
+  if (!metadataEl) return {};
+  return [...metadataEl.childNodes].reduce((rdx, row) => {
+    if (row.children) {
+      const key = row.children[0]?.textContent?.trim().toLowerCase();
+      const content = row.children[1];
+      if (key && content) rdx[key] = content.textContent.trim();
+    }
+    return rdx;
+  }, {});
+}
+
+function loadExistingTags(metadata) {
+  const tagKeys = Object.keys(metadata).filter((key) => {
+    return key.startsWith('tags') || key.includes('tag') || key.includes('categor');
+  });
+
+  tagKeys.forEach((key) => {
+    const tagString = metadata[key];
+    if (tagString && tagString.trim().length > 0) {
+      const tags = tagString.split(',').map((t) => t.trim());
+      tags.forEach((tag) => {
+        if (tag) {
+          savedTags.push([tag]);
+          const li = document.createElement('li');
+          li.textContent = tag;
+          li.addEventListener('click', () => {
+            li.remove();
+          });
+          addedTagsList.appendChild(li);
+        }
+      });
+    }
+  });
+}
+
 function closeDescendants(element) {
   const openElements = element.querySelectorAll('.open');
   openElements.forEach((el) => el.classList.remove('open'));
@@ -122,11 +158,24 @@ function submitTags(e, actions) {
 }
 
 async function init() {
-  const { actions } = await DA_SDK;
+  const { actions, context } = await DA_SDK;
 
   const tagData = await getJsonFromUrl(tagURL);
-
   const menu = createMenu(tagData);
+
+  // Fetch and load existing tags from source document
+  try {
+    const pageSourceUrl = `https://admin.da.live/source${context.path}`;
+    const resp = await actions.daFetch(pageSourceUrl);
+    if (resp.ok) {
+      const text = await resp.text();
+      const dom = new DOMParser().parseFromString(text, 'text/html');
+      const metadata = getMetadata(dom.querySelector('.metadata'));
+      loadExistingTags(metadata);
+    }
+  } catch (error) {
+    console.error('Failed to load existing tags:', error);
+  }
 
   const buttonContainer = document.getElementById('button-container');
   const saveCurr = document.createElement('button');
