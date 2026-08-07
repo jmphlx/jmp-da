@@ -6,6 +6,8 @@ import {
   // getJsonFromLocalhostUrl,
 } from '../../scripts/jmp.js';
 
+import { saveToDa } from '../../scripts/helper.js';
+
 const tagURL = 'https://www.jmp.com/services/tagsservlet';
 // const tagURL = 'https://edge-www-dev.jmp.com/services/tagsservlet';
 
@@ -29,7 +31,7 @@ function getMetadata(metadataEl) {
 
 function loadExistingTags(metadata) {
   const tagKeys = Object.keys(metadata).filter((key) => {
-    return key.startsWith('tags') || key.includes('tag') || key.includes('categor');
+    return key.startsWith('tags');
   });
 
   tagKeys.forEach((key) => {
@@ -151,14 +153,54 @@ function convertSavedTagsToString() {
   return tagArray.join(',\n');
 }
 
-function submitTags(e, actions) {
+async function submitTags(e, actions, context, token) {
   e.stopPropagation();
-  actions.sendText(convertSavedTagsToString());
+
+  try {
+    // Fetch the source document
+    const pageSourceUrl = `https://admin.da.live/source/${context.org}/${context.repo}${context.path}.html?nocache=${Date.now()}`;
+    const resp = await actions.daFetch(pageSourceUrl);
+    if (!resp.ok) {
+      console.error('Failed to fetch source document');
+      actions.closeLibrary();
+      return;
+    }
+
+    const text = await resp.text();
+    const dom = new DOMParser().parseFromString(text, 'text/html');
+    const metadataEl = dom.querySelector('.metadata');
+
+    if (metadataEl) {
+      // Find the tags row and update it
+      let tagsRow = null;
+      [...metadataEl.childNodes].forEach((row) => {
+        if (row.children) {
+          const key = row.children[0]?.textContent?.trim().toLowerCase();
+          if (key && key.startsWith('tags')) {
+            tagsRow = row;
+          }
+        }
+      });
+
+      if (tagsRow && tagsRow.children[1]) {
+        tagsRow.children[1].textContent = convertSavedTagsToString();
+      }
+    }
+
+    // Get the main content and save back to document
+    const main = dom.querySelector('main');
+    if (main) {
+      await saveToDa(main.innerHTML, context.path, token);
+    }
+  } catch (error) {
+    console.error('Failed to update tags:', error);
+  }
+
   actions.closeLibrary();
 }
 
 async function init() {
-  const { actions, context } = await DA_SDK;
+  const { actions, context, token } = await DA_SDK;
 
   const tagData = await getJsonFromUrl(tagURL);
   const menu = createMenu(tagData);
@@ -189,7 +231,7 @@ async function init() {
 
   const saveTagsButton = document.getElementById('saveTags');
   saveTagsButton.addEventListener('click', (e) => {
-    submitTags(e, actions);
+    submitTags(e, actions, context, token);
   });
 }
 
