@@ -165,7 +165,7 @@ async function init() {
 
   // Fetch and load existing tags from source document
   try {
-    const pageSourceUrl = `https://admin.da.live/source/${context.org}/${context.site}${context.path}.html?nocache=${Date.now()}`;
+    const pageSourceUrl = `https://admin.da.live/source/${context.org}/${context.repo}${context.path}.html?nocache=${Date.now()}`;
     const resp = await actions.daFetch(pageSourceUrl);
     if (resp.ok) {
       const text = await resp.text();
