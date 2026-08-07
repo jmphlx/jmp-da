@@ -156,6 +156,7 @@ function convertSavedTagsToString() {
 async function submitTags(e, actions, context, token) {
   e.stopPropagation();
 
+  console.log('try submit');
   try {
     // Fetch the source document
     const pageSourceUrl = `https://admin.da.live/source/${context.org}/${context.repo}${context.path}.html?nocache=${Date.now()}`;
