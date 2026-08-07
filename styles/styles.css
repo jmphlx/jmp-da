@@ -771,8 +771,26 @@ div.gradient-feather {
   &.blue-left-gradient {
     background: linear-gradient(45deg, #0378CD 70%, #61CAE5 95%);
   }
+  &.blue-right-gradient {
+    background: linear-gradient(45deg, #0378CD 70%, #61CAE5 95%);
+    .background-img {
+      mask-image: linear-gradient(to right, black 0%, transparent 100%);
+    }
+  }
   &.purple-left-gradient {
     background: linear-gradient(45deg, #643695 15%, #9D57A3 95%);
+  }
+  &.purple-right-gradient {
+    background: linear-gradient(45deg, #643695 15%, #9D57A3 95%);
+    .background-img {
+      mask-image: linear-gradient(to right, black 0%, transparent 100%);
+    }
+  }
+  &.blue-purple-right-gradient {
+    background: linear-gradient(45deg, #0378cd 15%, #643695 95%);
+    .background-img {
+      mask-image: linear-gradient(to right, black 0%, transparent 100%);
+    }
   }
 }
 div.gray {
