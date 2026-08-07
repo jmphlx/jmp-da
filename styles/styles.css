@@ -2430,7 +2430,7 @@ main img {
 }
 .icon-l {
   .icon {
-    height: auto;
+    height: 96px;
     width: 96px;
   }
 }
