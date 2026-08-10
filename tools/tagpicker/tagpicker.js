@@ -174,6 +174,7 @@ function createTagsRow() {
   row.appendChild(keyCell);
   row.appendChild(valueCell);
 
+  console.log(row);
   return row;
 }
 
