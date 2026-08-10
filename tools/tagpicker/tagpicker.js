@@ -153,6 +153,30 @@ function convertSavedTagsToString() {
   return tagArray.join(',\n');
 }
 
+function createMetadataBlock() {
+  const metadataDiv = document.createElement('div');
+  metadataDiv.className = 'metadata';
+  return metadataDiv;
+}
+
+function createTagsRow() {
+  const row = document.createElement('div');
+  const keyCell = document.createElement('div');
+  const valueCell = document.createElement('div');
+
+  const keyP = document.createElement('p');
+  keyP.textContent = 'Tags';
+  keyCell.appendChild(keyP);
+
+  const valueP = document.createElement('p');
+  valueCell.appendChild(valueP);
+
+  row.appendChild(keyCell);
+  row.appendChild(valueCell);
+
+  return row;
+}
+
 async function submitTags(e, actions, context, token) {
   e.stopPropagation();
 
@@ -168,23 +192,42 @@ async function submitTags(e, actions, context, token) {
 
     const text = await resp.text();
     const dom = new DOMParser().parseFromString(text, 'text/html');
-    const metadataEl = dom.querySelector('.metadata');
+    let metadataEl = dom.querySelector('.metadata');
 
-    if (metadataEl) {
-      // Find the tags row and update it
-      let tagsRow = null;
-      [...metadataEl.childNodes].forEach((row) => {
-        if (row.children) {
-          const key = row.children[0]?.textContent?.trim().toLowerCase();
-          if (key && key.startsWith('tags')) {
-            tagsRow = row;
-          }
-        }
-      });
-
-      if (tagsRow && tagsRow.children[1]) {
-        tagsRow.children[1].textContent = convertSavedTagsToString();
+    // Create metadata block if it doesn't exist
+    if (!metadataEl) {
+      metadataEl = createMetadataBlock();
+      const main = dom.querySelector('main');
+      if (main) {
+        main.appendChild(metadataEl);
       }
+    }
+
+    // Find or create the tags row
+    let tagsRow = null;
+    [...metadataEl.childNodes].forEach((row) => {
+      if (row.children) {
+        const key = row.children[0]?.textContent?.trim().toLowerCase();
+        if (key && key.startsWith('tags')) {
+          tagsRow = row;
+        }
+      }
+    });
+
+    if (!tagsRow) {
+      tagsRow = createTagsRow();
+      metadataEl.appendChild(tagsRow);
+    }
+
+    // Update the tags value
+    if (tagsRow && tagsRow.children[1]) {
+      const valueCell = tagsRow.children[1];
+      const pElement = valueCell.querySelector('p') || (() => {
+        const p = document.createElement('p');
+        valueCell.appendChild(p);
+        return p;
+      })();
+      pElement.textContent = convertSavedTagsToString();
     }
 
     // Get the main content and save back to document
