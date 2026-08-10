@@ -161,18 +161,7 @@ function createMetadataBlock() {
 
 function createTagsRow() {
   const row = document.createElement('div');
-  const keyCell = document.createElement('div');
-  const valueCell = document.createElement('div');
-
-  const keyP = document.createElement('p');
-  keyP.textContent = 'Tags';
-  keyCell.appendChild(keyP);
-
-  const valueP = document.createElement('p');
-  valueCell.appendChild(valueP);
-
-  row.appendChild(keyCell);
-  row.appendChild(valueCell);
+  row.innerHTML = '<div><p>Tags</p></div><div><p></p></div>';
 
   console.log(row);
   return row;
