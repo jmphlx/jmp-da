@@ -164,8 +164,7 @@ function createTagsRow() {
 function createMetadataBlock() {
   const metadataDiv = document.createElement('div');
   metadataDiv.classList.add('metadata');
-  const tagsRow = createTagsRow();
-  metadataDiv.appendChild(tagsRow);
+  metadataDiv.innerHTML = '<div><p>Tags</p></div><div><p>test</p></div>';
   return metadataDiv;
 }
 
