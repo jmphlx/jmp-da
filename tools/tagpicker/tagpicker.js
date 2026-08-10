@@ -190,11 +190,13 @@ async function submitTags(e, actions, context, token) {
     // Create metadata block if it doesn't exist
     if (!metadataEl) {
       metadataEl = createMetadataBlock();
+      console.log(metadataEl);
       const main = dom.querySelector('main');
       if (main) {
         main.appendChild(metadataEl);
       }
     }
+    console.log(metadataEl);
 
     // Find or create the tags row
     let tagsRow = null;
