@@ -128,6 +128,7 @@ div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
   &.stat-speaking-speakers div {
     div {
       border-radius: 5px;
+      margin-bottom: 5%;
       h6 {
         padding: 8px;
         color: var(--purple);
@@ -150,6 +151,11 @@ div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
         img {
           border-radius: 5px 5px 0 0;
         }
+      }
+    }
+    @media (width <= 900px) {
+      div {
+        margin-bottom: 24px;
       }
     }
   }
