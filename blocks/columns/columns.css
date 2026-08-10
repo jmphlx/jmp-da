@@ -119,6 +119,40 @@ div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
       }
     }
   }
+  &.column-border div{
+    div {
+      border: 1px solid var(--grayRule);
+    }
+
+  }
+  &.stat-speaking-speakers div {
+    div {
+      border-radius: 5px;
+      h6 {
+        padding: 8px;
+        color: var(--purple);
+        font-family: var(--font-secondary);
+        font-size: 14px !important;
+        display: block;
+        width: max-content;
+        background-color: var(--gray10);
+        border-radius: 5px;
+        margin: 0 16px 8px 16px;
+      }
+      h4 {
+        padding: 0 16px;
+      }
+      p {
+        padding: 0 16px;
+      }
+      p:has(img) {
+        padding: 0;
+        img {
+          border-radius: 5px 5px 0 0;
+        }
+      }
+    }
+  }
   &.image-feather-right {
     div.columns-img-col {
       mask-image: linear-gradient(to right, black 60%, transparent 100%);
