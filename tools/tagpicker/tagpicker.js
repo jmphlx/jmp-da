@@ -193,6 +193,7 @@ async function submitTags(e, actions, context, token) {
     const text = await resp.text();
     const dom = new DOMParser().parseFromString(text, 'text/html');
     let metadataEl = dom.querySelector('.metadata');
+    console.log(metadataEl);
 
     // Create metadata block if it doesn't exist
     if (!metadataEl) {
@@ -216,6 +217,7 @@ async function submitTags(e, actions, context, token) {
 
     if (!tagsRow) {
       tagsRow = createTagsRow();
+      console.log(tagsRow)
       metadataEl.appendChild(tagsRow);
       console.log(metadataEl);
     }
