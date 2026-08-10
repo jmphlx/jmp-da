@@ -155,7 +155,9 @@ function convertSavedTagsToString() {
 
 function createMetadataBlock() {
   const metadataDiv = document.createElement('div');
-  metadataDiv.className = 'metadata';
+  metadataDiv.setAttribute('data-block-name', 'metadata');
+  metadataDiv.classList.add('block');
+  metadataDiv.classList.add('metadata');
   return metadataDiv;
 }
 
