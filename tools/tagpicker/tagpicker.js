@@ -155,8 +155,6 @@ function convertSavedTagsToString() {
 
 function createMetadataBlock() {
   const metadataDiv = document.createElement('div');
-  metadataDiv.setAttribute('data-block-name', 'metadata');
-  metadataDiv.classList.add('block');
   metadataDiv.classList.add('metadata');
   return metadataDiv;
 }
@@ -219,6 +217,7 @@ async function submitTags(e, actions, context, token) {
     if (!tagsRow) {
       tagsRow = createTagsRow();
       metadataEl.appendChild(tagsRow);
+      console.log(metadataEl);
     }
 
     // Update the tags value
