@@ -2,11 +2,6 @@
 import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 
 import {
-  buildBlock, 
-} from '../../scripts/aem.js';
-
-
-import {
   getJsonFromUrl,
   // getJsonFromLocalhostUrl,
 } from '../../scripts/jmp.js';
@@ -158,18 +153,20 @@ function convertSavedTagsToString() {
   return tagArray.join(',\n');
 }
 
-function createMetadataBlock() {
-  const metadataDiv = document.createElement('div');
-  metadataDiv.classList.add('metadata');
-  return metadataDiv;
-}
-
 function createTagsRow() {
   const row = document.createElement('div');
   row.innerHTML = '<div><p>Tags</p></div><div><p>test</p></div>';
 
   console.log(row);
   return row;
+}
+
+function createMetadataBlock() {
+  const metadataDiv = document.createElement('div');
+  metadataDiv.classList.add('metadata');
+  const tagsRow = createTagsRow();
+  metadataDiv.appendChild(tagsRow);
+  return metadataDiv;
 }
 
 async function submitTags(e, actions, context, token) {
@@ -197,7 +194,6 @@ async function submitTags(e, actions, context, token) {
       if (main) {
         main.appendChild(metadataEl);
       }
-      buildBlock('metadata', '', metadataEl);
     }
 
     // Find or create the tags row
