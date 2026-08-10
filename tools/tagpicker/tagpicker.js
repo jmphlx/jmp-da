@@ -2,6 +2,11 @@
 import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 
 import {
+  buildBlock, 
+} from '../../scripts/aem.js';
+
+
+import {
   getJsonFromUrl,
   // getJsonFromLocalhostUrl,
 } from '../../scripts/jmp.js';
@@ -192,6 +197,7 @@ async function submitTags(e, actions, context, token) {
       if (main) {
         main.appendChild(metadataEl);
       }
+      buildBlock('metadata', '', metadataEl);
     }
 
     // Find or create the tags row
