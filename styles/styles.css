@@ -770,6 +770,11 @@ div.gradient-feather {
   }
   &.blue-left-gradient {
     background: linear-gradient(45deg, #0378CD 70%, #61CAE5 95%);
+    &.feather-80 {
+      .background-img {
+        mask-image: linear-gradient(to left, black 0%, transparent 80%);
+      }
+    }
   }
   &.blue-right-gradient {
     background: linear-gradient(45deg, #0378CD 70%, #61CAE5 95%);
