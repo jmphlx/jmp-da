@@ -30,9 +30,7 @@ function getMetadata(metadataEl) {
 }
 
 function loadExistingTags(metadata) {
-  const tagKeys = Object.keys(metadata).filter((key) => {
-    return key.startsWith('tags');
-  });
+  const tagKeys = Object.keys(metadata).filter((key) => key.startsWith('tags'));
 
   tagKeys.forEach((key) => {
     const tagString = metadata[key];
@@ -173,7 +171,7 @@ async function submitTags(e, actions, context, token) {
 
     const text = await resp.text();
     const dom = new DOMParser().parseFromString(text, 'text/html');
-    let metadataEl = dom.querySelector('.metadata');
+    const metadataEl = dom.querySelector('.metadata');
 
     // Throw error if metadata block doesn't exist
     if (!metadataEl) {
