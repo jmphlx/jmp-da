@@ -149,25 +149,13 @@ function convertSavedTagsToString() {
   for (let i = 0; i < tagList.length; i++) {
     tagArray.push(tagList[i].textContent);
   }
-  console.log(tagArray);
   return tagArray.join(',\n');
 }
 
 function createTagsRow() {
   const row = document.createElement('div');
-  row.innerHTML = '<div><p>Tags</p></div><div><p>test</p></div>';
-
-  console.log(row);
+  row.innerHTML = '<div><p>tags</p></div><div><p></p></div>';
   return row;
-}
-
-function createMetadataBlock() {
-  const metadataDiv = document.createElement('div');
-  metadataDiv.classList.add('metadata');
-  //metadataDiv.innerHTML = '<div><p>Tags</p></div><div><p>test</p></div>';
-  metadataDiv.innerHTML = '<div><p>Tags</p></div>';
-  console.log(metadataDiv);
-  return metadataDiv;
 }
 
 async function submitTags(e, actions, context, token) {
@@ -186,18 +174,12 @@ async function submitTags(e, actions, context, token) {
     const text = await resp.text();
     const dom = new DOMParser().parseFromString(text, 'text/html');
     let metadataEl = dom.querySelector('.metadata');
-    console.log(metadataEl);
 
-    // Create metadata block if it doesn't exist
+    // Throw error if metadata block doesn't exist
     if (!metadataEl) {
-      metadataEl = createMetadataBlock();
-      console.log(metadataEl);
-      const main = dom.querySelector('main');
-      if (main) {
-        main.appendChild(metadataEl);
-      }
+      console.error('Metadata block not found on page. Please add a metadata block before using the tag picker.');
+      return;
     }
-    console.log(metadataEl);
 
     // Find or create the tags row
     let tagsRow = null;
@@ -212,9 +194,7 @@ async function submitTags(e, actions, context, token) {
 
     if (!tagsRow) {
       tagsRow = createTagsRow();
-      console.log(tagsRow)
       metadataEl.appendChild(tagsRow);
-      console.log(metadataEl);
     }
 
     // Update the tags value
