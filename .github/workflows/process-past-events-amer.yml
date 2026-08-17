@@ -1,4 +1,4 @@
-name: AMER/EU Unpublish Past Events
+name: AMER/EU Process Past Events
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
@@ -42,11 +42,11 @@ jobs:
           subject: "Nightly Job Run for AMER"
           body: "${{steps.postprocessing-script.outputs.body}}"
           type: 'text/html'
-      # - name: Send Failure Email Notifications
-      #   if: ${{ steps.postprocessing-script.outputs.sendEmail == 'true' }}
-      #   uses: cinotify/github-action@main
-      #   with:
-      #     to: 'Laurel.Timko@jmp.com, Aaron.Kennedy@jmp.com, Roger.Alford@jmp.com, Michael.Osinibi@jmp.com'
-      #     subject: "${{steps.postprocessing-script.outputs.subject}}"
-      #     body: "${{steps.postprocessing-script.outputs.body}}"
-      #     type: 'text/html'
+      - name: Send Failure Email Notifications
+        if: ${{ steps.postprocessing-script.outputs.sendEmail == 'true' }}
+        uses: cinotify/github-action@main
+        with:
+          to: 'Laurel.Timko@jmp.com, Aaron.Kennedy@jmp.com, Roger.Alford@jmp.com, Michael.Osinibi@jmp.com'
+          subject: "${{steps.postprocessing-script.outputs.subject}}"
+          body: "${{steps.postprocessing-script.outputs.body}}"
+          type: 'text/html'
