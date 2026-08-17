@@ -1,0 +1,291 @@
+import { JSDOM } from "jsdom";
+import { saveToDa } from "./helper.js";
+
+// Create a virtual window and extract DOMParser
+const { window } = new JSDOM("");
+const parser = new window.DOMParser();
+
+const languagesAPAC = ['ko', 'ja', 'zh-hans', 'zh-hant'];
+const languagesAMER = ['en', 'es', 'fr', 'de', 'it'];
+const baseURL = 'https://main--jmp-da--jmphlx.aem.live';
+
+function getRegionalLanguageIndexes(includeFullURL, regionalIndexes) {
+  const indexPaths = [];
+  regionalIndexes.forEach((currLang) => {
+    if (includeFullURL) {
+      indexPaths.push(`${baseURL}/${currLang}/query-index.json`);
+    } else {
+      indexPaths.push(`/${currLang}/query-index.json`);
+    }
+  });
+  return indexPaths;
+}
+
+/**
+ * Check if a page has an offDateTime AND if the offDateTime has passed.
+ * Don't need to check if the page is published because we are using query-index.json
+ * Don't need to check query index for "missing" robots property because if it is in
+ * the index, then it doesn't have it. 
+ * Don't need to include redirectTarget in check, because if it's in the index, then it needs updating anyways.
+ * 
+ * @param {*} route 
+ * @returns list of filtered pages
+ */
+async function getFilteredJSON(route) {
+  try {
+    const response = await fetch(route);
+    if (!response.ok) return null;
+    const json = await response.json();
+    const filteredPages = json.data.filter((item) => {
+      if (item.offDateTime) {
+        return new Date(item.offDateTime) <= new Date();
+      }
+      return false;
+    });
+    return filteredPages;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('getJsonFromUrl:', { error });
+  }
+  return null;
+}
+
+async function getAccessToken(clientID, clientSecret) {
+  //Get Auth Token
+  try {
+    const response = await fetch('https://ims-na1.adobelogin.com/ims/token/v3', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        grant_type: 'client_credentials',
+        client_id: clientID,
+        client_secret: clientSecret,
+        scope: 'openid,AdobeID,additional_info.projectedProductContext,aem.frontend.all,read_organizations'
+      }).toString()
+    });
+    if (!response.ok) return null;
+    const json = await response.json();
+    return json.access_token;
+  } catch(error) {
+    console.log('could not get access token', error);
+  }
+  return null;
+}
+
+/**
+ * Given a list of pages, filter down to event pages where the date has passed
+ * the current date time.
+ * @param {array} pageSelection array of pages that may match the filter
+ * @returns array of pages with events on or before the current date time and need additional processing
+ */
+async function getPastEventsPages(languageIndexes) {
+  let pagesToProcess = [];
+  for(let i = 0; i < languageIndexes.length; i++) {
+    const index = languageIndexes[i];
+    const foundPages = await getFilteredJSON(index);
+    pagesToProcess = pagesToProcess.concat(foundPages);
+  }
+  console.log(pagesToProcess);
+  return pagesToProcess;
+}
+
+async function updatePastEventPage(authToken, page) {
+  //Get source content
+  const url = `https://admin.da.live/source/jmphlx/jmp-da${page}.html`;
+  console.log(url);
+  try {
+    const response = await fetch(url, {
+      method: 'GET', 
+      headers: {
+        'Authorization': `Bearer ${authToken}`
+      }
+    });
+    console.log(response);
+    if (!response.ok) return null;
+    const text = await response.text();
+    const dom = parser.parseFromString(text, 'text/html');
+    const metadataBlock = dom.querySelector('div.metadata');
+    let flag = false;
+
+    // Check if robots row exists
+    const rows = Array.from(metadataBlock.querySelectorAll('p'));
+    let hasRobots = false;
+    for (let i = 0; i < rows.length; i++) {
+      const cell = rows[i].textContent.toLowerCase().trim();
+      if (cell === 'robots') {
+        hasRobots = true;
+        break;
+      }
+    }
+
+    // Add robots row if it doesn't exist
+    if (!hasRobots) {
+      const robotsRowDiv = dom.createElement('div');
+      robotsRowDiv.innerHTML = '<div><p>robots</p></div><div><p>noindex, nofollow</p></div>';
+      metadataBlock.append(robotsRowDiv);
+      flag = true;
+      console.log('Added robots row to metadata');
+    } else {
+      console.log('Robots row already exists');
+    }
+
+    // Check if redirectTarget row exists
+    let hasRedirectTarget = false;
+    for (let i = 0; i < rows.length; i++) {
+      const cell = rows[i].textContent.toLowerCase().trim();
+      if (cell === 'redirecttarget') {
+        hasRedirectTarget = true;
+        break;
+      }
+    }
+
+    // Add redirectTarget row if it doesn't exist
+    if (!hasRedirectTarget) {
+      const redirectRowDiv = dom.createElement('div');
+      redirectRowDiv.innerHTML = '<div><p>redirectTarget</p></div><div><p>/events</p></div>';
+      metadataBlock.append(redirectRowDiv);
+      flag = true;
+      console.log('Added redirectTarget row to metadata');
+    } else {
+      console.log('RedirectTarget row already exists');
+    }
+
+    //Then saveToDa
+    if (flag) {
+      const htmlToUse = dom.querySelector('main');
+      await saveToDa(htmlToUse.innerHTML, page, authToken);
+    }
+  } catch (error) {
+    console.log('could not get source content', error);
+  }
+}
+
+async function sendPublishRequest(authToken, page, live) {
+  let url;
+  if (live) {
+    url = `https://admin.hlx.page/live/jmphlx/jmp-da/main${page}`;
+  } else {
+    url = `https://admin.hlx.page/preview/jmphlx/jmp-da/main${page}`;
+  }
+  try {
+    const response = await fetch(url, {
+      method: 'POST', 
+      headers: {
+        'Authorization': `Bearer ${authToken}` ,
+        'X-Content-Source-Authorization': `Bearer ${authToken}`
+      }
+    });
+    if (!response.ok) return null;
+    const json = await response.json();
+    console.log(json);
+    return json;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('sendPublishRequest:', { error });
+    if (error instanceof SyntaxError) {
+      return "still worked as expected";
+    }
+  }
+  return null;
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function buildEmailSubject(successPages, failedPages, region) {
+  let subjectLine = '';
+  const failedWorkflow = failedPages.length > 0;
+  const successfulUnpublishing = successPages.length > 0;
+  if (failedWorkflow) {
+    subjectLine = `${region} EVENTS WORKFLOW ERROR: Failed to Update Past Event Pages`;
+  } else if (successfulUnpublishing) {
+    subjectLine = `${region} events workflow: Successfully Updated Past Events`;
+  } else {
+    subjectLine = `No past events to update for ${region}`;
+  }
+  return subjectLine;
+}
+
+function buildEmailBody(successPages, failedPages, region) {
+  const failedWorkflow = failedPages.length > 0;
+  let emailHeader = `<h2>${region} Results of Post Event Processing Workflow</h2>`;
+  let emailBody = '';
+  if (failedWorkflow) {
+    emailBody += '<div>';
+    emailBody += '<div style="color:red;">These pages were unable to be updated: </div>';
+    emailBody += '<ul>';
+    failedPages.forEach((page) => {
+      emailBody += `<li><a href="https://da.live/edit#/jmphlx/jmp-da${page}">${page}</a></li>`;
+    });
+    emailBody += '</ul></div>';
+
+    if (successPages.length > 0) {
+      emailBody += '<div>';
+      emailBody += '<div style="color:green;">These pages were successfully updated: </div>';
+      emailBody += '<ul>';
+      successPages.forEach((page) => {
+        emailBody += `<li><a href="https://da.live/edit#/jmphlx/jmp-da${page}">${page}</a></li>`;
+      });
+      emailBody += '</ul></div>';
+    }
+  } else if (successPages.length > 0) {
+    emailBody += '<div>';
+    emailBody += '<div style="color:green;">These pages were successfully updated: </div>';
+    emailBody += '<ul>';
+    successPages.forEach((page) => {
+      emailBody += `<li><a href="https://da.live/edit#/jmphlx/jmp-da${page}">${page}</a></li>`;
+    });
+    emailBody += '</ul></div>';
+  } else {
+    emailBody += '<div>No pages to unpublish at this time for the given region.</div>';
+  }
+  return `<div>${emailHeader}${emailBody}</div>`;
+}
+
+export default async function processPastEvents(clientID, clientSecret, region) {
+  const authToken = await getAccessToken(clientID, clientSecret);
+  let languageIndexes;
+
+  if (region === "APAC") {
+    languageIndexes = getRegionalLanguageIndexes(true, languagesAPAC);
+  } else {
+    languageIndexes = getRegionalLanguageIndexes(true, languagesAMER);
+  }
+
+  let pagesToProcess = await getPastEventsPages(languageIndexes);
+  let successPages = [];
+  let failedPages = [];
+
+  for(let i=0; i < pagesToProcess.length; i++) {
+    //After every 5 requests, pause for 2 seconds, to avoid going over the rate limit.
+    //Rate is 10 requests per second. Each page needs 2 requests.
+    const page = pagesToProcess[i];
+    await updatePastEventPage(authToken, page.path);
+    const previewResponse = await sendPublishRequest(authToken, page.path, false);
+    const publishResponse = await sendPublishRequest(authToken, page.path, true);
+    if (previewResponse === null || publishResponse === null) {
+      failedPages.push(page.path);
+    } else {
+      successPages.push(page.path);
+    }
+    console.log(`Handled : ${page.path}`);
+    if (i % 5 === 0) {
+      sleep(2000);
+    }
+  }
+
+  const response = {};
+  response.numFailed = failedPages.length;
+  response.numSuccess = successPages.length;
+  response.subject = buildEmailSubject(successPages, failedPages, region);
+  response.body = buildEmailBody(successPages, failedPages, region);
+  if (failedPages.length > 0) {
+    response.sendEmail = 'true';
+  } else {
+    response.sendEmail = 'false';
+  }
+  return response;
+}
