@@ -6,6 +6,8 @@ import {
   // getJsonFromLocalhostUrl,
 } from '../../scripts/jmp.js';
 
+import { saveToDa } from '../../scripts/helper.js';
+
 const tagURL = 'https://www.jmp.com/services/tagsservlet';
 // const tagURL = 'https://edge-www-dev.jmp.com/services/tagsservlet';
 
@@ -14,6 +16,40 @@ const addedTagsList = document.getElementById('tags-list');
 
 let openTag = [];
 const savedTags = [];
+
+function getMetadata(metadataEl) {
+  if (!metadataEl) return {};
+  return [...metadataEl.childNodes].reduce((rdx, row) => {
+    if (row.children) {
+      const key = row.children[0]?.textContent?.trim().toLowerCase();
+      const content = row.children[1];
+      if (key && content) rdx[key] = content.textContent.trim();
+    }
+    return rdx;
+  }, {});
+}
+
+function loadExistingTags(metadata) {
+  const tagKeys = Object.keys(metadata).filter((key) => key.startsWith('tags'));
+
+  tagKeys.forEach((key) => {
+    const tagString = metadata[key];
+    if (tagString && tagString.trim().length > 0) {
+      const tags = tagString.split(',').map((t) => t.trim());
+      tags.forEach((tag) => {
+        if (tag) {
+          savedTags.push([tag]);
+          const li = document.createElement('li');
+          li.textContent = tag;
+          li.addEventListener('click', () => {
+            li.remove();
+          });
+          addedTagsList.appendChild(li);
+        }
+      });
+    }
+  });
+}
 
 function closeDescendants(element) {
   const openElements = element.querySelectorAll('.open');
@@ -111,22 +147,96 @@ function convertSavedTagsToString() {
   for (let i = 0; i < tagList.length; i++) {
     tagArray.push(tagList[i].textContent);
   }
-  console.log(tagArray);
   return tagArray.join(',\n');
 }
 
-function submitTags(e, actions) {
+function createTagsRow() {
+  const row = document.createElement('div');
+  row.innerHTML = '<div><p>tags</p></div><div><p></p></div>';
+  return row;
+}
+
+async function submitTags(e, actions, context, token) {
   e.stopPropagation();
-  actions.sendText(convertSavedTagsToString());
+
+  try {
+    // Fetch the source document
+    const pageSourceUrl = `https://admin.da.live/source/${context.org}/${context.repo}${context.path}.html?nocache=${Date.now()}`;
+    const resp = await actions.daFetch(pageSourceUrl);
+    if (!resp.ok) {
+      console.error('Failed to fetch source document');
+      actions.closeLibrary();
+      return;
+    }
+
+    const text = await resp.text();
+    const dom = new DOMParser().parseFromString(text, 'text/html');
+    const metadataEl = dom.querySelector('.metadata');
+
+    // Throw error if metadata block doesn't exist
+    if (!metadataEl) {
+      console.error('Metadata block not found on page. Please add a metadata block before using the tag picker.');
+      return;
+    }
+
+    // Find or create the tags row
+    let tagsRow = null;
+    [...metadataEl.childNodes].forEach((row) => {
+      if (row.children) {
+        const key = row.children[0]?.textContent?.trim().toLowerCase();
+        if (key && key.startsWith('tags')) {
+          tagsRow = row;
+        }
+      }
+    });
+
+    if (!tagsRow) {
+      tagsRow = createTagsRow();
+      metadataEl.appendChild(tagsRow);
+    }
+
+    // Update the tags value
+    if (tagsRow && tagsRow.children[1]) {
+      const valueCell = tagsRow.children[1];
+      const pElement = valueCell.querySelector('p') || (() => {
+        const p = document.createElement('p');
+        valueCell.appendChild(p);
+        return p;
+      })();
+      pElement.textContent = convertSavedTagsToString();
+    }
+
+    // Get the main content and save back to document
+    const main = dom.querySelector('main');
+    if (main) {
+      await saveToDa(main.innerHTML, context.path, token);
+    }
+  } catch (error) {
+    console.error('Failed to update tags:', error);
+  }
+
   actions.closeLibrary();
 }
 
 async function init() {
-  const { actions } = await DA_SDK;
+  const { actions, context, token } = await DA_SDK;
 
   const tagData = await getJsonFromUrl(tagURL);
-
   const menu = createMenu(tagData);
+
+  // Fetch and load existing tags from source document
+  try {
+    const pageSourceUrl = `https://admin.da.live/source/${context.org}/${context.repo}${context.path}.html?nocache=${Date.now()}`;
+    const resp = await actions.daFetch(pageSourceUrl);
+    if (resp.ok) {
+      const text = await resp.text();
+      const dom = new DOMParser().parseFromString(text, 'text/html');
+      const metadata = getMetadata(dom.querySelector('.metadata'));
+      loadExistingTags(metadata);
+    }
+  } catch (error) {
+    console.error('Failed to load existing tags:', error);
+  }
 
   const buttonContainer = document.getElementById('button-container');
   const saveCurr = document.createElement('button');
@@ -140,7 +250,7 @@ async function init() {
 
   const saveTagsButton = document.getElementById('saveTags');
   saveTagsButton.addEventListener('click', (e) => {
-    submitTags(e, actions);
+    submitTags(e, actions, context, token);
   });
 }
 
