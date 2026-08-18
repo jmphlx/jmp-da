@@ -725,10 +725,10 @@ async function loadLazy(doc) {
   const main = doc.querySelector('main');
   await loadSections(main);
 
-  const { hash } = window.location;
-  const element = hash ? doc.getElementById(hash.substring(1)) : false;
+  const hash = window.location.hash.split('?')[0].slice(1);
+  const element = hash ? doc.getElementById(hash) : false;
   if (hash.indexOf('tab-') > -1) {
-    const tabpanel = document.getElementById(`${hash.substring(1).replace('tab', 'tabpanel')}`);
+    const tabpanel = document.getElementById(`${hash.replace('tab', 'tabpanel')}`);
     setTabFromHash(element, tabpanel);
   } else if (hash && element) element.scrollIntoView();
 
