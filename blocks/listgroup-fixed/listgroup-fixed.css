@@ -267,7 +267,7 @@ div.listgroup-fixed, div.listgroup  {
               font-family: "anova-regular", "Arial", "Helvetica", sans-serif;
               font-weight: normal;
               font-size: 1.6 rem;
-              margin: 0 8% .25em 8%;
+              margin: 14px 8% .25em 8%;
               transition: color 0.5s ease;
               color: var(--blue) !important;
           }
