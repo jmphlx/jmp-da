@@ -182,7 +182,6 @@ async function submitTags(e, actions, context, token) {
 
   const invalidTags = addedTagsList.querySelectorAll('.invalid-tag');
   if (invalidTags.length > 0) {
-    console.error(`Cannot save tags. Please remove ${invalidTags.length} invalid tag(s).`);
     alert(`Cannot save tags. Please remove ${invalidTags.length} invalid tag(s).`);
     return;
   }
