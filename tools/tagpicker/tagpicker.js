@@ -180,6 +180,12 @@ function createTagsRow() {
 async function submitTags(e, actions, context, token) {
   e.stopPropagation();
 
+  const invalidTags = addedTagsList.querySelectorAll('.invalid-tag');
+  if (invalidTags.length > 0) {
+    alert(`Cannot save tags. Please remove ${invalidTags.length} invalid tag(s).`);
+    return;
+  }
+
   try {
     // Fetch the source document
     const pageSourceUrl = `https://admin.da.live/source/${context.org}/${context.repo}${context.path}.html?nocache=${Date.now()}`;
