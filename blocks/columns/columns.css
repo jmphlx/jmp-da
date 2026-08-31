@@ -584,6 +584,7 @@ div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
         height: auto;
         width: auto;
         display: flex;
+        justify-content: center;
         img {
           display: block;
           border: none;
