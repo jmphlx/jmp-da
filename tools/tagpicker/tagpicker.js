@@ -29,7 +29,24 @@ function getMetadata(metadataEl) {
   }, {});
 }
 
-function loadExistingTags(metadata) {
+function getValidTags(items, path = []) {
+  const validTags = [];
+  items.forEach((item) => {
+    const tagValName = item['jcr:title']
+      .toLowerCase()
+      .replaceAll('&', 'and')
+      .replaceAll(' ', '-')
+      .replace('(intro-stats)-', '');
+    const currentTag = [...path, tagValName];
+    validTags.push(currentTag.join('|'));
+    if (item.children && item.children.length > 0) {
+      validTags.push(...getValidTags(item.children, currentTag));
+    }
+  });
+  return validTags;
+}
+
+function loadExistingTags(metadata, validTags = []) {
   const tagKeys = Object.keys(metadata).filter((key) => key.startsWith('tags'));
 
   tagKeys.forEach((key) => {
@@ -41,6 +58,10 @@ function loadExistingTags(metadata) {
           savedTags.push([tag]);
           const li = document.createElement('li');
           li.textContent = tag;
+          const isValid = validTags.includes(tag);
+          if (!isValid) {
+            li.classList.add('invalid-tag');
+          }
           li.addEventListener('click', () => {
             li.remove();
           });
@@ -159,6 +180,12 @@ function createTagsRow() {
 async function submitTags(e, actions, context, token) {
   e.stopPropagation();
 
+  const invalidTags = addedTagsList.querySelectorAll('.invalid-tag');
+  if (invalidTags.length > 0) {
+    alert(`Cannot save tags. Please remove ${invalidTags.length} invalid tag(s).`);
+    return;
+  }
+
   try {
     // Fetch the source document
     const pageSourceUrl = `https://admin.da.live/source/${context.org}/${context.repo}${context.path}.html?nocache=${Date.now()}`;
@@ -226,13 +253,14 @@ async function init() {
 
   // Fetch and load existing tags from source document
   try {
+    const validTags = getValidTags(tagData);
     const pageSourceUrl = `https://admin.da.live/source/${context.org}/${context.repo}${context.path}.html?nocache=${Date.now()}`;
     const resp = await actions.daFetch(pageSourceUrl);
     if (resp.ok) {
       const text = await resp.text();
       const dom = new DOMParser().parseFromString(text, 'text/html');
       const metadata = getMetadata(dom.querySelector('.metadata'));
-      loadExistingTags(metadata);
+      loadExistingTags(metadata, validTags);
     }
   } catch (error) {
     console.error('Failed to load existing tags:', error);
