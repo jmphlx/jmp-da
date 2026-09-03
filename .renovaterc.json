@@ -1,3 +1,157 @@
 {
-  "extends": ["config:recommended"]
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticCommitsDisabled"
+  ],
+  "timezone": "America/New_York",
+  "schedule": ["before 6am on monday"],
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
+  "rebaseWhen": "conflicted",
+  "configMigration": true,
+  "minimumReleaseAge": "3 days",
+  "labels": ["dependencies", "renovate"],
+  "dependencyDashboard": true,
+  "dependencyDashboardApproval": true,
+  "dependencyDashboardTitle": "Renovate Dependency Dashboard",
+  "dependencyDashboardHeader": "This issue tracks every dependency Renovate knows about in `jmp-da`, plus any update it is holding back.\n\n**Automatically managed** (built-in Renovate managers)\n- `package.json` + `package-lock.json` - npm manager\n- `.github/workflows/*.y*ml` - `github-actions` manager (action refs and `node-version` on `actions/setup-node`)\n\n**Custom managed** (regex custom managers - see `customManagers` in `.renovaterc.json`)\n- `https://cdn.jsdelivr.net/npm/<pkg>@<version>/...` in block and script source\n- `https://esm.sh/<pkg>@<version>` in DA tool source\n- `https://ajax.googleapis.com/ajax/libs/jquery/<version>/...` in DA tool HTML\n\n**Deliberately not managed**\n- `plugins/**` - vendored copy of `adobe/aem-experimentation`; update by re-vendoring upstream\n- `scripts/aem.js` - vendored from `adobe/aem-boilerplate`; no version marker to match on\n- `https://da.live/nx/utils/sdk.js` - always-latest DA SDK, no version to pin\n- `cinotify/github-action@main` - pinned to a branch rather than a tag; pin to a release tag to make it updatable\n- Unversioned third-party embeds (VWO, New Relic, HubSpot, GTM, Vidyard, YouTube, Vimeo)\n\nUpdates are opt-in: everything is listed below and waits for a checkbox tick before Renovate opens a PR. Security fixes are the one exception and come through on their own.\n\nFull inventory and rationale: `docs/renovate.md`",
+  "ignorePaths": [
+    "plugins/**",
+    "coverage/**",
+    "node_modules/**",
+    "**/node_modules/**"
+  ],
+  "lockFileMaintenance": {
+    "description": "Refresh transitive pins in package-lock.json once a month.",
+    "enabled": true,
+    "schedule": ["before 6am on the first day of the month"],
+    "commitMessageAction": "Refresh"
+  },
+  "vulnerabilityAlerts": {
+    "description": "Security fixes bypass the weekly schedule, the release-age hold, and the repo-wide dashboard gate.",
+    "enabled": true,
+    "labels": ["dependencies", "renovate", "security"],
+    "schedule": ["at any time"],
+    "minimumReleaseAge": null,
+    "dependencyDashboardApproval": false
+  },
+  "osvVulnerabilityAlerts": true,
+  "packageRules": [
+    {
+      "description": "Major updates are opt-in. Renovate lists them on the dependency dashboard and only opens a PR once someone ticks the box.",
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true,
+      "labels": ["dependencies", "renovate", "major-update"]
+    },
+    {
+      "description": "npm - linting and formatting toolchain. Low blast radius; the Build workflow runs npm run lint on every push, which gates these PRs.",
+      "matchManagers": ["npm"],
+      "matchPackageNames": [
+        "eslint",
+        "eslint-*",
+        "@babel/core",
+        "@babel/eslint-parser",
+        "stylelint",
+        "stylelint-*",
+        "prettier",
+        "prettier-*"
+      ],
+      "groupName": "lint tooling",
+      "labels": ["dependencies", "renovate", "tooling"]
+    },
+    {
+      "description": "npm - unit test toolchain behind npm run unittest (@web/test-runner).",
+      "matchManagers": ["npm"],
+      "matchPackageNames": [
+        "@web/*",
+        "@open-wc/testing",
+        "@esm-bundle/chai",
+        "chai",
+        "sinon",
+        "mocha"
+      ],
+      "groupName": "unit test tooling",
+      "labels": ["dependencies", "renovate", "tooling"]
+    },
+    {
+      "description": "npm - visual regression toolchain behind npm run visual. Browser-engine bumps shift rendering, so expect to re-baseline test/screenshots when one of these merges.",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["playwright", "puppeteer", "pixelmatch", "pngjs"],
+      "groupName": "visual regression tooling",
+      "labels": ["dependencies", "renovate", "tooling", "needs-screenshot-rebaseline"]
+    },
+    {
+      "description": "npm - runtime dependencies of the scheduled event-processing workflows (scripts/post-event-processing.mjs).",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["jsdom", "esm"],
+      "groupName": "node script dependencies",
+      "labels": ["dependencies", "renovate", "runtime"]
+    },
+    {
+      "description": "GitHub Actions used by the Build, cleanup, index-config and post-event workflows.",
+      "matchManagers": ["github-actions"],
+      "groupName": "GitHub Actions",
+      "labels": ["dependencies", "renovate", "github-actions"]
+    },
+    {
+      "description": "Node.js version on actions/setup-node. A runtime change, so it is opt-in from the dashboard and the team picks the LTS line deliberately.",
+      "matchDatasources": ["node-version"],
+      "groupName": "Node.js runtime",
+      "dependencyDashboardApproval": true,
+      "labels": ["dependencies", "renovate", "runtime"]
+    },
+    {
+      "description": "Everything found by the regex custom managers: version-pinned libraries loaded from a CDN at runtime. These are not in package-lock.json, so CI cannot catch a break - verify the affected page or tool renders before merging.",
+      "matchManagers": ["custom.regex"],
+      "groupName": "CDN dependencies",
+      "labels": ["dependencies", "renovate", "cdn", "needs-manual-verification"]
+    },
+    {
+      "description": "mathjax is pinned to a major-only range (@4) so jsDelivr keeps serving the latest v4 build. Replace strategy means Renovate stays quiet until v5 ships.",
+      "matchManagers": ["custom.regex"],
+      "matchPackageNames": ["mathjax"],
+      "rangeStrategy": "replace"
+    },
+    {
+      "description": "lit appears twice - as an npm devDependency and as the esm.sh import in tools/preflight-check. Group them so both versions move together and the drift stays visible.",
+      "matchPackageNames": ["lit"],
+      "groupName": "lit",
+      "labels": ["dependencies", "renovate", "cdn", "needs-manual-verification"]
+    }
+  ],
+  "customManagers": [
+    {
+      "description": "jsDelivr npm CDN pins - date-fns in blocks/listgroup-custom, mathjax in scripts/scripts.js, dompurify in scripts/search.js.",
+      "customType": "regex",
+      "managerFilePatterns": ["/\\.(js|mjs|html)$/"],
+      "matchStrings": [
+        "https://cdn\\.jsdelivr\\.net/npm/(?<depName>@[^/@\\s\"'`]+/[^/@\\s\"'`]+|[^/@\\s\"'`]+)@(?<currentValue>[^/\\s\"'`]+)"
+      ],
+      "datasourceTemplate": "npm",
+      "versioningTemplate": "npm"
+    },
+    {
+      "description": "esm.sh CDN pins - lit in tools/preflight-check/preflight.js.",
+      "customType": "regex",
+      "managerFilePatterns": ["/\\.(js|mjs|html)$/"],
+      "matchStrings": [
+        "https://esm\\.sh/(?<depName>@[^/@\\s\"'`]+/[^/@\\s\"'`?]+|[^/@\\s\"'`?]+)@(?<currentValue>[^/\\s\"'`?]+)"
+      ],
+      "datasourceTemplate": "npm",
+      "versioningTemplate": "npm"
+    },
+    {
+      "description": "Google Hosted Libraries - jQuery in tools/search.html and tools/restore-version.html. Library path names on this CDN do not reliably match npm package names, so each one is mapped explicitly; add a manager here when a new library is introduced.",
+      "customType": "regex",
+      "managerFilePatterns": ["/\\.(js|mjs|html)$/"],
+      "matchStrings": [
+        "https://ajax\\.googleapis\\.com/ajax/libs/jquery/(?<currentValue>\\d[^/\\s\"'`]*)/"
+      ],
+      "depNameTemplate": "jquery",
+      "datasourceTemplate": "npm",
+      "versioningTemplate": "npm"
+    }
+  ]
 }
