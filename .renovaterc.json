@@ -13,6 +13,8 @@
   "configMigration": true,
   "minimumReleaseAge": "3 days",
   "labels": ["dependencies", "renovate"],
+  "branchPrefix": "renovate-",
+  "prFooter": "---\n🔎 [Branch preview](https://{{{branchName}}}--jmp-da--jmphlx.aem.page/)\n📝 [DA drafts](https://da.live/canvas#/jmphlx/jmp-da/en/drafts/noah/renovate-test)",
   "dependencyDashboard": true,
   "dependencyDashboardApproval": true,
   "dependencyDashboardTitle": "Renovate Dependency Dashboard",
