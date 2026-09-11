@@ -534,8 +534,14 @@ async function loadBrandEager(header) {
       const brandWrapper = document.createElement('div');
       brandWrapper.classList.add('nav-brand');
       brandWrapper.style.position = 'absolute';
-      brandWrapper.style.top = '36px';
-      brandWrapper.style.left = '0';
+      // Fix weird gap
+      if (window.innerWidth < 600) {
+        brandWrapper.style.top = '12px';
+        brandWrapper.style.left = '0px';
+      } else {
+        brandWrapper.style.top = '36px';
+        brandWrapper.style.left = '0';
+      }
       brandWrapper.style.zIndex = '10';
       brandWrapper.append(brandElement.cloneNode(true));
       header.append(brandWrapper);
