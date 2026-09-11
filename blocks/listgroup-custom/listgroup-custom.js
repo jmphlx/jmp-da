@@ -123,6 +123,7 @@ function writeItems(matching, config, listElement) {
       cardLink.href = item.path;
       cardLink.target = '_self';
     }
+    cardLink.title = item.title;
 
     const htmlOutput = [];
 
@@ -195,6 +196,7 @@ function writeAsOneGroup(matching, config) {
       cardLink.href = item.path;
       cardLink.target = '_self';
     }
+    cardLink.title = item.title;
 
     const htmlOutput = [];
 

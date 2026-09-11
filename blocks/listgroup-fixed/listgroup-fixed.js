@@ -99,6 +99,7 @@ export default async function decorate(block) {
     } else {
       const html = await resp.text();
       const doc = new DOMParser().parseFromString(html, 'text/html');
+      const title = getMetaValue('title', doc);
 
       const listItem = document.createElement('li');
       listItem.classList = `${getMetadata('resourceOptions', doc)}`;
@@ -111,6 +112,7 @@ export default async function decorate(block) {
         cardLink.href = item;
         cardLink.target = '_self';
       }
+      cardLink.title = title;
 
       const htmlOutput = [];
 
@@ -123,6 +125,7 @@ export default async function decorate(block) {
           const imageItem = {
             image: getMetaValue('image', doc),
             displayImage: getMetaValue('displayImage', doc),
+            title: title,
           };
           span = writeImagePropertyInList(prop, imageItem);
         } else {
