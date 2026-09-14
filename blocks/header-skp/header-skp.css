@@ -1,13 +1,17 @@
+header {
+  min-height: 64px;
+}
+
 .header-skp-wrapper {
   position: relative;
   /* display: flex; */
-  height: auto;
 }
 
 header .nav-wrapper {
   /* background-color: #ffffff; */
   width: 100%;
   z-index: 1000;
+  min-height: 64px;
   p {
     margin: 0;
     line-height: 1;
@@ -16,8 +20,7 @@ header .nav-wrapper {
     color: currentcolor;
   }
   nav {
-    min-height: 0; 
-    overflow: visible; 
+    overflow: visible;
     display: grid;
     padding: 0; 
     grid-template: 
@@ -148,10 +151,9 @@ header .nav-wrapper {
       visibility: hidden;
     }
   }
-  @media (width <= 900px) { 
-    nav { 
+  @media (width <= 900px) {
+    nav {
       display: grid !important;
-      min-height: 0; 
       overflow: visible; 
       padding: 0;
       /* width: 100%; */
