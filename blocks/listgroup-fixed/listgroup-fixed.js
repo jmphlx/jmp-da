@@ -125,7 +125,7 @@ export default async function decorate(block) {
           const imageItem = {
             image: getMetaValue('image', doc),
             displayImage: getMetaValue('displayImage', doc),
-            title: title,
+            title,
           };
           span = writeImagePropertyInList(prop, imageItem);
         } else {
