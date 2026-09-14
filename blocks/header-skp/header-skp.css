@@ -1,5 +1,13 @@
-header {
-  min-height: 64px;
+@media (width > 900px) {
+  header {
+    min-height: 144.5px;
+  }
+}
+
+@media (width <= 900px) {
+  header {
+    min-height: 191.5px;
+  }
 }
 
 .header-skp-wrapper {
