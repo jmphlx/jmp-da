@@ -512,7 +512,7 @@ function writeImagePropertyInList(propertyName, item) {
   } else {
     imageSrc = getDefaultMetaImage();
   }
-  return `<span class="${propertyName}"><img src="${imageSrc}"/></span>`;
+  return `<span class="${propertyName}"><img src="${imageSrc}" alt="${item.title}"/></span>`;
 }
 
 function isTagProperty(propertyName) {
