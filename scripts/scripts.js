@@ -527,20 +527,22 @@ async function loadBrandEager(header) {
         img.loading = 'eager';
         img.fetchPriority = 'high';
         img.style.height = '48px';
-        // img.style.width = 'auto';
-        img.style.maxWidth = '200px';
+        img.style.width = '160px';
+        img.style.overflow = 'hidden';
       });
 
       const brandWrapper = document.createElement('div');
       brandWrapper.classList.add('nav-brand');
       brandWrapper.style.position = 'absolute';
-      // Fix weird gap
-      if (window.innerWidth < 600) {
+      if (window.innerWidth < 1000) {
         brandWrapper.style.top = '12px';
         brandWrapper.style.left = '0px';
+        brandWrapper.style.paddingLeft = '2rem';
       } else {
         brandWrapper.style.top = '36px';
         brandWrapper.style.left = '0';
+        brandWrapper.style.borderTop = '7px solid rgba(0, 0, 0, 0)';
+        brandWrapper.style.paddingLeft = '2rem';
       }
       brandWrapper.style.zIndex = '10';
       brandWrapper.append(brandElement.cloneNode(true));
