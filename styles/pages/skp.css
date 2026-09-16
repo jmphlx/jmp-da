@@ -119,9 +119,15 @@ span.mjx-chtml {
   font-size: 2.4rem;
 }
 
-@media (width > 900px) {
+@media (width >= 900px) {
   header {
     min-height: 144.5px;
+  }
+}
+
+@media (width < 900px) {
+  header {
+    min-height: 191.5px;
   }
 }
 
