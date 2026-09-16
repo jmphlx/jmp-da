@@ -69,6 +69,7 @@ export default async function decorate(block) {
       cardLink.href = item.path;
       cardLink.target = '_self';
     }
+    cardLink.title = item.title;
     const htmlOutput = `
     <span class="tag-category">${item.eventDisplayLabel}</span>
     <span class="title">${item.title}</span>
