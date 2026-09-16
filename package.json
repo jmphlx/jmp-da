@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/adobe/aem-boilerplate#readme",
   "devDependencies": {
-    "@babel/core": "7.24.4",
+    "@babel/core": "7.29.6",
     "@babel/eslint-parser": "7.24.1",
     "@esm-bundle/chai": "^4.3.4-fix.0",
     "@open-wc/testing": "4.0.0",
