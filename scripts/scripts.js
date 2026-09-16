@@ -26,6 +26,7 @@ import {
 import {
   getDefaultMetaImage,
   getLanguage,
+  getLanguageNav,
   isLanguageSupported,
   setTabFromHash,
 } from './jmp.js';
@@ -479,6 +480,79 @@ function setMetaImage() {
   }
 }
 
+let navHTMLCache;
+
+/**
+ * Fetch navigation HTML once and cache for reuse.
+ */
+async function fetchNavHTML() {
+  if (navHTMLCache) return navHTMLCache;
+
+  try {
+    const navMeta = getMetadata('nav');
+    const navPath = navMeta ? new URL(navMeta, window.location).pathname : getLanguageNav();
+    const response = await fetch(`${navPath}.plain.html`);
+    navHTMLCache = await response.text();
+    return navHTMLCache;
+  } catch (e) {
+    return null;
+  }
+}
+
+/**
+ * Load just the brand section of the header for faster initial paint.
+ * Extracts only the first element (brand/logo) from the navigation HTML.
+ * @param {Element} header The header element
+ */
+async function loadBrandEager(header) {
+  const brandImageUrl = '/en/media_168e2405cf6619366a5f6030a7895b612fb323fff.svg';
+
+  const preloadLink = document.createElement('link');
+  preloadLink.rel = 'preload';
+  preloadLink.as = 'image';
+  preloadLink.href = brandImageUrl;
+  preloadLink.fetchPriority = 'high';
+  document.head.append(preloadLink);
+
+  const navHTML = await fetchNavHTML();
+  if (!navHTML) return;
+
+  try {
+    const tempNav = document.createElement('nav');
+    tempNav.innerHTML = navHTML;
+    const brandElement = tempNav.firstElementChild;
+
+    if (brandElement) {
+      brandElement.querySelectorAll('img').forEach((img) => {
+        img.loading = 'eager';
+        img.fetchPriority = 'high';
+        img.style.height = '48px';
+        img.style.width = '160px';
+        img.style.overflow = 'hidden';
+      });
+
+      const brandWrapper = document.createElement('div');
+      brandWrapper.classList.add('nav-brand');
+      brandWrapper.style.position = 'absolute';
+      if (window.innerWidth < 1000) {
+        brandWrapper.style.top = '12px';
+        brandWrapper.style.left = '0px';
+        brandWrapper.style.paddingLeft = '2rem';
+      } else {
+        brandWrapper.style.top = '36px';
+        brandWrapper.style.left = '0';
+        brandWrapper.style.borderTop = '7px solid rgba(0, 0, 0, 0)';
+        brandWrapper.style.paddingLeft = '2rem';
+      }
+      brandWrapper.style.zIndex = '10';
+      brandWrapper.append(brandElement.cloneNode(true));
+      header.append(brandWrapper);
+    }
+  } catch (e) {
+    // silently fail if brand can't load
+  }
+}
+
 const localizedCheckCache = new Map();
 
 function stripLeadingFragment(pathname) {
@@ -673,6 +747,9 @@ async function loadEager(doc) {
   decoratePageStyles();
   addThirdPartyScripts();
 
+  // Kick off nav HTML fetch early without blocking
+  fetchNavHTML();
+
   if (runExperimentation) {
     await runExperimentation(document, experimentationConfig);
   }
@@ -697,6 +774,12 @@ async function loadEager(doc) {
     } else {
       document.body.classList.add('basic-mobile');
     }
+
+    if (!noHeader && !isSKPPage && headerValue.toLowerCase() !== 'simpleheader') {
+      console.log('Loading brand header');
+      await loadBrandEager(doc.querySelector('header'));
+    }
+
     await loadSection(main.querySelector('.section'), waitForFirstImage);
   }
 
@@ -753,11 +836,20 @@ async function loadLazy(doc) {
       decorateBlock(headerBlock);
       headerLoaded = loadBlock(headerBlock);
     } else {
-      headerLoaded = loadHeader(doc.querySelector('header'));
+      // Brand was loaded in loadEager for faster paint.
+      // Load full header; it will coexist with the eager brand.
+      const header = doc.querySelector('header');
+      headerLoaded = loadHeader(header);
     }
     headerLoaded.then((result) => {
       // After loading header, transform links with hashes
       addTargetsToLinks(result);
+      // Remove the eager-loaded brand since full header is now loaded
+      doc.querySelectorAll('.nav-brand').forEach((el) => {
+        if (el.style.position === 'absolute') {
+          el.remove();
+        }
+      });
     });
   }
 
