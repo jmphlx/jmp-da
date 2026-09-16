@@ -844,7 +844,7 @@ header nav .nav-mobile-menu {
 
 @media (max-width: 999px) {
   header.header-wrapper {
-    height: 78px;
+    height: 75px !important;
   }
   header nav[aria-expanded="true"] .nav-mobile-menu {
     transform: translateX(0);
