@@ -36,7 +36,7 @@ const CSS = `
     display: block;
     height: 400px;
     padding: 0 0 24px;
-    overflow-y: auto;
+    overflow-y: unset;
     font-family: system-ui, sans-serif;
   }
   p { margin: 0; line-height: 1.3; }
@@ -65,14 +65,14 @@ const CSS = `
 
   .badge {
     display: inline-flex; align-items: center; justify-content: center;
-    min-width: 40px; height: 24px; padding: 0 8px; border-radius: 8px;
+    min-width: 24px; height: 24px; padding: 2px 6px; border-radius: 4px;
     font-size: 12px; font-weight: 700;
   }
     
-  .badge-success { background: #c9f0d0; color: #0a5c22; }
-  .badge-info    { background: #d6e7ff; color: #0a4c9e; }
-  .badge-warn    { background: #ffe1c2; color: #8f4700; }
-  .badge-error   { background: #ffd6d6; color: #93000a; }
+  .badge-success { background: #c9f0d0; color: #0a5c22; min-width: 48px; }
+  .badge-info    { background: #d6e7ff; color: #0a4c9e; min-width: 48px; }
+  .badge-warn    { background: #ffe1c2; color: #8f4700; min-width: 48px; }
+  .badge-error   { background: #ffd6d6; color: #93000a; min-width: 48px; }
 `;
 const sheet = new CSSStyleSheet();
 sheet.replace(CSS);
