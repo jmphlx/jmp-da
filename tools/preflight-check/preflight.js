@@ -65,7 +65,7 @@ const CSS = `
 
   .badge {
     display: inline-flex; align-items: center; justify-content: center;
-    min-width: 24px; height: 24px; padding: 2px 6px; border-radius: 4px;
+    min-width: 24px; height: 24px; padding: 3px 3px 1px 3px; border-radius: 4px;
     font-size: 12px; font-weight: 700;
   }
     
