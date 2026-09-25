@@ -761,6 +761,9 @@ div.light-purple-gradient {
 div.blue-lightblue-gradient {
   background: linear-gradient(45deg, #0378CD 15%, #61CAE5 95%);
 }
+div.dark-blue-gradient-theme {
+  background: linear-gradient(90deg, #121835 10%, #0378CD 95%);
+}
 div.gradient-feather {
   .background-img {
     mask-image: linear-gradient(to left, black 0%, transparent 60%);
@@ -1018,6 +1021,24 @@ a:hover {
   a.button {
     background: rgba(0, 0, 0, 0.125) !important;
     border: 2px solid #ffffff !important;
+    border-radius: 8px;
+    min-width: 150px;
+    box-sizing: content-box;
+    transition-duration: 0.2s;
+    transition-timing-function: ease;
+    position: relative;
+    z-index: 1;
+  }
+  a.button:hover {
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.5) !important;
+    border: 2px solid rgba(0, 0, 0, 0) !important;
+  }
+}
+.button-light-blue-outline {
+  a.button {
+    background: rgba(0, 0, 0, 0.125) !important;
+    border: 2px solid var(--blueLight) !important;
     border-radius: 8px;
     min-width: 150px;
     box-sizing: content-box;
@@ -2635,6 +2656,11 @@ div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-30-70, div.
       column-gap: 32px !important;
     }
   }
+  &.gap-64 {
+    .layout-wrapper {
+      column-gap: 64px !important;
+    }
+  }
   @media (width <=900px) {
     .layout-wrapper {
       column-gap: 32px !important;
@@ -2653,6 +2679,11 @@ div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-30-70, div.
   &.column-gap-32 {
     .layout-wrapper{
       column-gap: 32px !important;
+    }
+  }
+  &.column-gap-64 {
+    .layout-wrapper{
+      column-gap: 64px !important;
     }
   }
   &.section-group-reverse {
