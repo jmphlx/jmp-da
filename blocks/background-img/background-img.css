@@ -69,6 +69,34 @@
       }
     }
   }
+  &.background-image-left {
+    .background-img-wrapper {
+      overflow: hidden;
+      z-index: -1;
+      position: absolute;
+      top: 0;
+      left: 0 !important;
+      .background-img {
+        picture {
+          img {
+            left: 0;
+            position: absolute;
+          }
+        }
+      }
+    }
+    @media (width <= 900px) {
+      .background-img-wrapper {
+        .background-img {
+          picture {
+            img {
+              opacity: .2;
+            }
+          }
+        }
+      }
+    }
+  }
   /* vertical align middle */
   &.background-image-middle {
     .background-img-wrapper {
@@ -136,6 +164,18 @@
       }
     }
   }
+  &.background-image-size-height-90 {
+    .background-img-wrapper {
+      .background-img {
+        picture {
+          img {
+            height: 90% !important;
+            width: auto !important;
+          }
+        }
+      }
+    }
+  }
   &.background-image-size-80 {
     .background-img-wrapper {
       .background-img {
@@ -153,6 +193,18 @@
             img {
               width: 100% !important;
             }
+          }
+        }
+      }
+    }
+  }
+  &.background-image-size-height-80 {
+    .background-img-wrapper {
+      .background-img {
+        picture {
+          img {
+            height: 80% !important;
+            width: auto !important;
           }
         }
       }
@@ -180,6 +232,18 @@
       }
     }
   }
+  &.background-image-size-height-70 {
+    .background-img-wrapper {
+      .background-img {
+        picture {
+          img {
+            height: 70% !important;
+            width: auto !important;
+          }
+        }
+      }
+    }
+  }
   &.background-image-size-60 {
     .background-img-wrapper {
       .background-img {
@@ -202,6 +266,18 @@
       }
     }
   }
+  &.background-image-size-height-60 {
+    .background-img-wrapper {
+      .background-img {
+        picture {
+          img {
+            height: 60% !important;
+            width: auto !important;
+          }
+        }
+      }
+    }
+  }
   &.background-image-size-50 {
     .background-img-wrapper {
       .background-img {
@@ -219,6 +295,18 @@
             img {
               width: 100% !important;
             }
+          }
+        }
+      }
+    }
+  }
+  &.background-image-size-height-50 {
+    .background-img-wrapper {
+      .background-img {
+        picture {
+          img {
+            height: 50% !important;
+            width: auto !important;
           }
         }
       }
