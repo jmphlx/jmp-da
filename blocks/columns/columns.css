@@ -581,13 +581,16 @@ div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
       position: relative;
       picture {
         vertical-align: middle;
-        height: auto;
+        height: 100%;
         width: auto;
         display: flex;
         justify-content: center;
         img {
           display: block;
+          height: 100%;
+          width: auto;
           border: none;
+          aspect-ratio: auto;
         }
       }
       a {
