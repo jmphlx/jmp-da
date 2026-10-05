@@ -503,8 +503,9 @@ async function fetchNavHTML() {
  * Load just the brand section of the header for faster initial paint.
  * Extracts only the first element (brand/logo) from the navigation HTML.
  * @param {Element} header The header element
+ * @param {boolean} isSKPPage Whether the current page is an SKP page
  */
-async function loadBrandEager(header) {
+async function loadBrandEager(header, isSKPPage) {
   const brandImageUrl = '/en/media_168e2405cf6619366a5f6030a7895b612fb323fff.svg';
 
   const preloadLink = document.createElement('link');
@@ -526,7 +527,14 @@ async function loadBrandEager(header) {
       brandElement.querySelectorAll('img').forEach((img) => {
         img.loading = 'eager';
         img.fetchPriority = 'high';
-        img.style.height = '48px';
+        if (isSKPPage) {
+          img.style.height = '62px';
+          img.style.width = '148px';
+          img.style.marginTop = '3px';
+          img.style.paddingLeft = '33px';
+        } else {
+          img.style.height = '48px';
+        }
         img.style.width = '160px';
         img.style.overflow = 'hidden';
       });
@@ -535,14 +543,17 @@ async function loadBrandEager(header) {
       brandWrapper.classList.add('nav-brand');
       brandWrapper.style.position = 'absolute';
       if (window.innerWidth < 1000) {
-        brandWrapper.style.top = '12px';
-        brandWrapper.style.left = '0px';
-        brandWrapper.style.paddingLeft = '2rem';
+        if (!isSKPPage) {
+          brandWrapper.style.top = '12px';
+          brandWrapper.style.left = '0px';
+          brandWrapper.style.paddingLeft = '2rem';
+        }
       } else {
-        brandWrapper.style.top = '36px';
-        brandWrapper.style.left = '0';
-        brandWrapper.style.borderTop = '7px solid rgba(0, 0, 0, 0)';
-        brandWrapper.style.paddingLeft = '2rem';
+        if (!isSKPPage) {
+          brandWrapper.style.top = '36px';
+          brandWrapper.style.left = '0px';
+          brandWrapper.style.paddingLeft = '2rem';
+        }
       }
       brandWrapper.style.zIndex = '10';
       brandWrapper.append(brandElement.cloneNode(true));
@@ -775,9 +786,9 @@ async function loadEager(doc) {
       document.body.classList.add('basic-mobile');
     }
 
-    if (!noHeader && !isSKPPage && headerValue.toLowerCase() !== 'simpleheader') {
+    if (!noHeader && headerValue.toLowerCase() !== 'simpleheader') {
       console.log('Loading brand header');
-      await loadBrandEager(doc.querySelector('header'));
+      await loadBrandEager(doc.querySelector('header'), isSKPPage);
     }
 
     await loadSection(main.querySelector('.section'), waitForFirstImage);
