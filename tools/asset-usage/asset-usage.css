@@ -1,0 +1,157 @@
+body {
+  margin: 0;
+  padding: 24px;
+  font-family: "adobe-clean", -apple-system, system-ui, sans-serif;
+  color: #2c2c2c;
+  background: #ffffff;
+}
+
+h2 {
+  margin: 0 0 8px;
+}
+
+.intro {
+  max-width: 70ch;
+  margin: 0 0 20px;
+  color: #6e6e6e;
+  line-height: 1.5;
+}
+
+.controls {
+  display: grid;
+  gap: 8px;
+  max-width: 640px;
+  margin-bottom: 20px;
+}
+
+.controls label {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.controls input[type="text"],
+.controls input[type="password"] {
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #d3d3d3;
+  border-radius: 4px;
+}
+
+.controls .checkbox {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 8px;
+  font-weight: 400;
+  align-items: start;
+}
+
+.controls .checkbox .hint {
+  grid-column: 2;
+}
+
+.hint {
+  font-weight: 400;
+  color: #6e6e6e;
+  font-size: 12px;
+}
+
+button {
+  padding: 8px 16px;
+  font-size: 14px;
+  color: #ffffff;
+  cursor: pointer;
+  background: #1473e6;
+  border: none;
+  border-radius: 16px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  background: #b3b3b3;
+}
+
+.controls button {
+  justify-self: start;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.status-message {
+  min-height: 20px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.status-message.error {
+  font-weight: 700;
+  color: #d7373f;
+}
+
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.pill {
+  padding: 4px 12px;
+  font-size: 13px;
+  border-radius: 12px;
+  background: #f4f4f4;
+}
+
+.pill.used-published { background: #e3f3e4; }
+.pill.used-unpublished { background: #fdf3d9; }
+.pill.unused { background: #fbe4e4; }
+.pill.warn {
+  font-weight: 700;
+  background: #fdf3d9;
+}
+
+.results {
+  width: 100%;
+  font-size: 13px;
+  border-collapse: collapse;
+}
+
+.results th,
+.results td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #e6e6e6;
+  vertical-align: top;
+}
+
+.results th {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6e6e6e;
+}
+
+.results .path {
+  font-family: monospace;
+  word-break: break-all;
+}
+
+.results .count,
+.results .changed {
+  text-align: center;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 12px;
+  white-space: nowrap;
+  border-radius: 10px;
+}
+
+.badge.used-published { background: #e3f3e4; }
+.badge.used-unpublished { background: #fdf3d9; }
+.badge.unused { background: #fbe4e4; }

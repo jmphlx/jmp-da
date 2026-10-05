@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>DAM Asset Usage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- Import DA App SDK -->
+    <script src="https://da.live/nx/utils/sdk.js" type="module"></script>
+    <!-- Project App Logic -->
+    <script src="/tools/asset-usage/asset-usage.js" type="module"></script>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" type="text/css" href="/tools/asset-usage/asset-usage.css">
+  </head>
+  <body>
+    <div class="app-container">
+      <h2>DAM Asset Usage</h2>
+      <p class="intro">
+        Compares assets in AEM Assets against the assets referenced by pages in Document
+        Authoring, then writes a usage indicator back onto each asset. Review the results
+        before applying &mdash; nothing is written to the DAM until you choose to apply.
+      </p>
+
+      <div class="controls">
+        <label for="damFolder">DAM folder</label>
+        <input id="damFolder" type="text" spellcheck="false"
+               aria-label="DAM folder to scan">
+
+        <label for="aemToken">AEM token <span class="hint">(optional override)</span></label>
+        <input id="aemToken" type="password" autocomplete="off" spellcheck="false"
+               placeholder="Leave blank to use your Document Authoring session"
+               aria-label="AEM token override">
+
+        <label class="checkbox">
+          <input id="verifyPublish" type="checkbox">
+          Verify publish status via the status API
+          <span class="hint">
+            Slower &mdash; rate limited to 10 requests per 3 seconds. When off, pages under
+            /drafts/ and /sandbox/ are treated as unpublished, matching query.yaml.
+          </span>
+        </label>
+
+        <button id="scanButton" type="button">Scan</button>
+      </div>
+
+      <div class="status-message" role="status" aria-live="polite"></div>
+      <div class="summary"></div>
+
+      <div class="actions">
+        <button id="applyButton" type="button" disabled>Nothing to apply</button>
+        <button id="exportButton" type="button" disabled>Export CSV</button>
+      </div>
+
+      <table class="results">
+        <thead>
+          <tr>
+            <th>Asset</th>
+            <th>Usage</th>
+            <th>Pages</th>
+            <th>Referencing pages</th>
+            <th>Current value in DAM</th>
+            <th>Changed</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </body>
+</html>
