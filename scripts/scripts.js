@@ -529,7 +529,7 @@ async function loadBrandEager(header) {
         if (isSKPPage) {
           img.style.height = '62px';
           img.style.width = '150px !important';
-          img.style.marginTop = '1px';
+          img.style.paddingTop = '1px';
           if (window.innerWidth <= 900) {
             img.style.paddingLeft = '16px';
           } else {
@@ -538,6 +538,9 @@ async function loadBrandEager(header) {
         } else {
           img.style.height = '48px';
           img.style.width = '160px';
+          img.style.paddingTop = '3px';
+          img.style.marginTop = '0';
+          img.style.borderTop = '0';
         }
         img.style.overflow = 'hidden';
       });
@@ -557,6 +560,7 @@ async function loadBrandEager(header) {
         brandWrapper.style.paddingLeft = '2rem';
       }
       brandWrapper.style.zIndex = '10';
+      brandWrapper.style.borderTop = 'none';
       brandWrapper.append(brandElement.cloneNode(true));
       header.append(brandWrapper);
     }
