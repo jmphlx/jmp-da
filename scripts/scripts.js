@@ -537,8 +537,8 @@ async function loadBrandEager(header) {
           }
         } else {
           img.style.height = '48px';
+          img.style.width = '160px';
         }
-        img.style.width = '150px';
         img.style.overflow = 'hidden';
       });
 
@@ -552,10 +552,7 @@ async function loadBrandEager(header) {
           brandWrapper.style.paddingLeft = '2rem';
         }
       } else if (!isSKPPage) {
-        brandWrapper.style.position = 'relative !important';
-        brandWrapper.style.display = 'block';
-        brandWrapper.style.height = '145px';
-        brandWrapper.style.top = '36px';
+        brandWrapper.style.top = '40px';
         brandWrapper.style.left = '0px';
         brandWrapper.style.paddingLeft = '2rem';
       }
