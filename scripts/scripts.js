@@ -503,9 +503,8 @@ async function fetchNavHTML() {
  * Load just the brand section of the header for faster initial paint.
  * Extracts only the first element (brand/logo) from the navigation HTML.
  * @param {Element} header The header element
- * @param {boolean} isSKPPage Whether the current page is an SKP page
  */
-async function loadBrandEager(header, isSKPPage) {
+async function loadBrandEager(header) {
   const brandImageUrl = '/en/media_168e2405cf6619366a5f6030a7895b612fb323fff.svg';
 
   const preloadLink = document.createElement('link');
@@ -533,8 +532,7 @@ async function loadBrandEager(header, isSKPPage) {
           img.style.marginTop = '1px';
           if (window.innerWidth <= 900) {
             img.style.paddingLeft = '16px';
-          }
-          else {
+          } else {
             img.style.paddingLeft = '32px';
           }
         } else {
@@ -553,15 +551,13 @@ async function loadBrandEager(header, isSKPPage) {
           brandWrapper.style.left = '0px';
           brandWrapper.style.paddingLeft = '2rem';
         }
-      } else {
-        if (!isSKPPage) {
-          brandWrapper.style.position = 'relative !important';
-          brandWrapper.style.display = 'block';
-          brandWrapper.style.height = '145px';
-          brandWrapper.style.top = '36px';
-          brandWrapper.style.left = '0px';
-          brandWrapper.style.paddingLeft = '2rem';
-        }
+      } else if (!isSKPPage) {
+        brandWrapper.style.position = 'relative !important';
+        brandWrapper.style.display = 'block';
+        brandWrapper.style.height = '145px';
+        brandWrapper.style.top = '36px';
+        brandWrapper.style.left = '0px';
+        brandWrapper.style.paddingLeft = '2rem';
       }
       brandWrapper.style.zIndex = '10';
       brandWrapper.append(brandElement.cloneNode(true));
@@ -796,7 +792,7 @@ async function loadEager(doc) {
 
     if (!noHeader && headerValue.toLowerCase() !== 'simpleheader') {
       console.log('Loading brand header');
-      await loadBrandEager(doc.querySelector('header'), isSKPPage);
+      await loadBrandEager(doc.querySelector('header'));
     }
 
     await loadSection(main.querySelector('.section'), waitForFirstImage);
