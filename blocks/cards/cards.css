@@ -1151,7 +1151,6 @@
         min-height: 120px;
         h3 {
           font-size: 16px;
-          font-family: var();
           grid-column: 2;
           color: var(--purple);
           font-family: var(--font-secondary);
