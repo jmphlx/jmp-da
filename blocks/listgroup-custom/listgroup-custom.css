@@ -299,7 +299,7 @@ div.listgroup-custom  {
             "img navigation-title"
             "img title"
             "img abstract";
-        grid-template-rows: .25fr .125fr auto;
+        grid-template-rows: .5fr .5fr 1.5fr;
         grid-template-columns: 40% auto;
         flex-flow: wrap;
         flex-direction: row;
