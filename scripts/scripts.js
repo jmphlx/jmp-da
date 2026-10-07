@@ -528,7 +528,7 @@ async function loadBrandEager(header) {
         img.fetchPriority = 'high';
         if (isSKPPage) {
           img.style.height = '62px';
-          img.style.width = '150px'
+          img.style.width = '150px';
           img.style.paddingTop = '1px';
           if (window.innerWidth <= 900) {
             img.style.paddingLeft = '16px';
@@ -561,6 +561,7 @@ async function loadBrandEager(header) {
       }
       brandWrapper.style.zIndex = '10';
       brandWrapper.style.borderTop = 'none';
+      brandWrapper.style.borderBottom = 'none';
       brandWrapper.append(brandElement.cloneNode(true));
       header.append(brandWrapper);
     }
