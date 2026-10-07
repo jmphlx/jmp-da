@@ -1116,6 +1116,7 @@
       position: relative;
       height: 120px;
       min-height: 120px !important;
+      width: 100%;
       margin: 0 !important;
       border: none;
       border-radius: 10px;
@@ -1185,6 +1186,8 @@
       }
     }
   }
+  @media (width <=900px) {
+    margin-bottom: 0 !important;
 }
 .hover-card-2 {
   position: relative;
