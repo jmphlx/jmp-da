@@ -526,25 +526,42 @@ async function loadBrandEager(header) {
       brandElement.querySelectorAll('img').forEach((img) => {
         img.loading = 'eager';
         img.fetchPriority = 'high';
-        img.style.height = '48px';
-        img.style.width = '160px';
+        if (isSKPPage) {
+          img.style.height = '62px';
+          img.style.width = '150px';
+          img.style.paddingTop = '1px';
+          if (window.innerWidth <= 900) {
+            img.style.paddingLeft = '16px';
+          } else {
+            img.style.paddingLeft = '32px';
+          }
+        } else {
+          img.style.height = '48px';
+          img.style.width = '160px';
+          img.style.paddingTop = '3px';
+          img.style.marginTop = '0';
+          img.style.borderTop = '0';
+        }
         img.style.overflow = 'hidden';
       });
 
       const brandWrapper = document.createElement('div');
       brandWrapper.classList.add('nav-brand');
       brandWrapper.style.position = 'absolute';
-      if (window.innerWidth < 1000) {
-        brandWrapper.style.top = '12px';
+      if (window.innerWidth <= 900) {
+        if (!isSKPPage) {
+          brandWrapper.style.top = '12px';
+          brandWrapper.style.left = '0px';
+          brandWrapper.style.paddingLeft = '2rem';
+        }
+      } else if (!isSKPPage) {
+        brandWrapper.style.top = '40px';
         brandWrapper.style.left = '0px';
-        brandWrapper.style.paddingLeft = '2rem';
-      } else {
-        brandWrapper.style.top = '36px';
-        brandWrapper.style.left = '0';
-        brandWrapper.style.borderTop = '7px solid rgba(0, 0, 0, 0)';
         brandWrapper.style.paddingLeft = '2rem';
       }
       brandWrapper.style.zIndex = '10';
+      brandWrapper.style.borderTop = 'none';
+      brandWrapper.style.borderBottom = 'none';
       brandWrapper.append(brandElement.cloneNode(true));
       header.append(brandWrapper);
     }
@@ -775,7 +792,7 @@ async function loadEager(doc) {
       document.body.classList.add('basic-mobile');
     }
 
-    if (!noHeader && !isSKPPage && headerValue.toLowerCase() !== 'simpleheader') {
+    if (!noHeader && headerValue.toLowerCase() !== 'simpleheader') {
       console.log('Loading brand header');
       await loadBrandEager(doc.querySelector('header'));
     }
