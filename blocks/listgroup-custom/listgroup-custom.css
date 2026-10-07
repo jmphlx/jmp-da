@@ -1236,6 +1236,9 @@ div.listgroup-custom  {
           border-radius: 5px;
           background-color: var(--gray10);
         }
+        &:hover {
+        border: none !important;
+      }
       }
       :after {
         display: none;
