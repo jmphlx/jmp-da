@@ -162,6 +162,42 @@ async function updatePastEventPage(authToken, page) {
   }
 }
 
+/**
+ * Write unpublish schedule entries to DA sheet.
+ * Usage in git action: call with org, site, token, and entries array.
+ * @param {string} org - DA organization (e.g., 'aemgdc')
+ * @param {string} site - DA site repo (e.g., 'aemdev')
+ * @param {string} token - DA Bearer token for admin.da.live
+ * @param {Array<{path: string, date: string}>} entries - Pages to unpublish
+ */
+async function addToUnpublishSchedule(org, site, token, entries) {
+  const DA_SOURCE = 'https://admin.da.live/source';
+  const sheetPath = '/unpublish-schedule';
+  
+  const sourceUrl = `${DA_SOURCE}/${org}/${site}${sheetPath}.json`;
+  
+  // Build minimal sheet payload: array of {path, date} rows
+  const payload = {
+    data: entries.map(entry => ({
+      path: entry.path,
+      date: entry.date, // ISO date string: '2026-10-15'
+    })),
+  };
+  
+  const body = new FormData();
+  body.append('data', new Blob([JSON.stringify(payload)], { type: 'application/json' }));
+  
+  const resp = await fetch(sourceUrl, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}` },
+    body,
+  });
+  
+  if (!resp.ok) {
+    throw new Error(`Could not save unpublish schedule (${resp.status}).`);
+  }
+}
+
 async function sendPublishRequest(authToken, page, live) {
   let url;
   if (live) {
@@ -266,6 +302,7 @@ export default async function processPastEvents(clientID, clientSecret, region) 
     await updatePastEventPage(authToken, page.path);
     const previewResponse = await sendPublishRequest(authToken, page.path, false);
     const publishResponse = await sendPublishRequest(authToken, page.path, true);
+    addToUnpublishSchedule('jmphlx', 'jmp-da', authToken, [{ path: page.path, date: new Date().toISOString() }]);
     if (previewResponse === null || publishResponse === null) {
       failedPages.push(page.path);
     } else {
