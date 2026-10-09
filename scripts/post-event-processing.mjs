@@ -347,7 +347,7 @@ export default async function processPastEvents(clientID, clientSecret, region) 
 
   const futureDate = new Date();
   futureDate.setDate(futureDate.getDate() + 365); // Set a year in the future
-  const unpublishData = successPages.map((page) => { return { Path: page, Date: futureDate.toISOString() }; });
+  const unpublishData = successPages.map((page) => { return { path: page, date: futureDate.toISOString() }; });
   await saveUnpublishSchedule('jmphlx', 'jmp-da', authToken, unpublishData);
 
   const response = {};
