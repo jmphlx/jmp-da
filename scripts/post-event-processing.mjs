@@ -163,26 +163,56 @@ async function updatePastEventPage(authToken, page) {
 }
 
 /**
- * Write unpublish schedule entries to DA sheet.
- * Usage in git action: call with org, site, token, and entries array.
+ * Fetch existing unpublish schedule entries from DA sheet.
+ */
+async function fetchUnpublishSchedule(org, site, token) {
+  const DA_SOURCE = 'https://admin.da.live/source';
+  const sheetPath = '/unpublish-schedule';
+  const sourceUrl = `${DA_SOURCE}/${org}/${site}${sheetPath}.json`;
+  
+  const resp = await fetch(sourceUrl, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  
+  if (resp.status === 404) return [];
+  if (!resp.ok) throw new Error(`Could not read unpublish schedule (${resp.status}).`);
+  
+  const json = await resp.json();
+  return Array.isArray(json?.data) ? json.data : [];
+}
+
+function buildUnpublishPayload(entries) {
+  return {
+    total: entries.length,
+    limit: entries.length,
+    offset: 0,
+    data: entries.map(entry => ({
+      Path: entry.path,
+      Date: entry.date,
+    })),
+    ':colWidths': [50, 50],
+    ':sheetname': 'data',
+    ':type': 'sheet',
+  };
+}
+
+/**
+ * Write unpublish schedule entries to DA sheet (appends to existing entries).
  * @param {string} org - DA organization (e.g., 'aemgdc')
  * @param {string} site - DA site repo (e.g., 'aemdev')
  * @param {string} token - DA Bearer token for admin.da.live
  * @param {Array<{path: string, date: string}>} entries - Pages to unpublish
  */
-async function addToUnpublishSchedule(org, site, token, entries) {
+async function saveUnpublishSchedule(org, site, token, entries) {
   const DA_SOURCE = 'https://admin.da.live/source';
   const sheetPath = '/unpublish-schedule';
   
-  const sourceUrl = `${DA_SOURCE}/${org}/${site}${sheetPath}.json`;
+  // Fetch existing and append new entries
+  const existing = await fetchUnpublishSchedule(org, site, token);
+  const combined = [...existing, ...entries];
   
-  // Build minimal sheet payload: array of {path, date} rows
-  const payload = {
-    data: entries.map(entry => ({
-      path: entry.path,
-      date: entry.date, // ISO date string: '2026-10-15'
-    })),
-  };
+  const payload = buildUnpublishPayload(combined);
+  const sourceUrl = `${DA_SOURCE}/${org}/${site}${sheetPath}.json`;
   
   const body = new FormData();
   body.append('data', new Blob([JSON.stringify(payload)], { type: 'application/json' }));
@@ -193,9 +223,7 @@ async function addToUnpublishSchedule(org, site, token, entries) {
     body,
   });
   
-  if (!resp.ok) {
-    throw new Error(`Could not save unpublish schedule (${resp.status}).`);
-  }
+  if (!resp.ok) throw new Error(`Could not save unpublish schedule (${resp.status}).`);
 }
 
 async function sendPublishRequest(authToken, page, live) {
@@ -302,7 +330,6 @@ export default async function processPastEvents(clientID, clientSecret, region) 
     await updatePastEventPage(authToken, page.path);
     const previewResponse = await sendPublishRequest(authToken, page.path, false);
     const publishResponse = await sendPublishRequest(authToken, page.path, true);
-    addToUnpublishSchedule('jmphlx', 'jmp-da', authToken, [{ path: page.path, date: new Date().toISOString() }]);
     if (previewResponse === null || publishResponse === null) {
       failedPages.push(page.path);
     } else {
@@ -313,6 +340,11 @@ export default async function processPastEvents(clientID, clientSecret, region) 
       sleep(2000);
     }
   }
+
+  const futureDate = new Date();
+  futureDate.setDate(futureDate.getDate() + 365); // Set a year in the future
+  const unpublishData = successPages.map((page) => { return { path: page, date: futureDate.toISOString() }; });
+  await saveUnpublishSchedule('jmphlx', 'jmp-da', authToken, unpublishData);
 
   const response = {};
   response.numFailed = failedPages.length;
