@@ -178,6 +178,7 @@ async function fetchUnpublishSchedule(org, site, token) {
   if (!resp.ok) throw new Error(`Could not read unpublish schedule (${resp.status}).`);
   
   const json = await resp.json();
+  console.log(json);
   return Array.isArray(json?.data) ? json.data : [];
 }
 
@@ -207,6 +208,7 @@ async function saveUnpublishSchedule(org, site, token, entries) {
   const DA_SOURCE = 'https://admin.da.live/source';
   const sheetPath = '/unpublish-schedule';
   
+  console.log('set unpublish schedule');
   // Fetch existing and append new entries
   const existing = await fetchUnpublishSchedule(org, site, token);
   console.log(existing);
