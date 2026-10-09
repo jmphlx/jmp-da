@@ -209,7 +209,9 @@ async function saveUnpublishSchedule(org, site, token, entries) {
   
   // Fetch existing and append new entries
   const existing = await fetchUnpublishSchedule(org, site, token);
+  console.log(existing);
   const combined = [...existing, ...entries];
+  console.log(combined);
   
   const payload = buildUnpublishPayload(combined);
   const sourceUrl = `${DA_SOURCE}/${org}/${site}${sheetPath}.json`;
