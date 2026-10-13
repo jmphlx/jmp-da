@@ -163,37 +163,42 @@ async function updatePastEventPage(authToken, page) {
 }
 
 /**
- * Fetch existing unpublish schedule entries from DA sheet.
+ * Fetch existing unpublish schedule entries and metadata from DA sheet.
  */
 async function fetchUnpublishSchedule(org, site, token) {
   const DA_SOURCE = 'https://admin.da.live/source';
   const sheetPath = '/unpublish-schedule';
   const sourceUrl = `${DA_SOURCE}/${org}/${site}${sheetPath}.json`;
-  
+
   const resp = await fetch(sourceUrl, {
     headers: { Authorization: `Bearer ${token}` }
   });
-  
-  if (resp.status === 404) return [];
+
+  if (resp.status === 404) return { entries: [], metadata: {} };
   if (!resp.ok) throw new Error(`Could not read unpublish schedule (${resp.status}).`);
-  
+
   const json = await resp.json();
   console.log(json);
-  return Array.isArray(json?.data) ? json.data : [];
+
+  const entries = Array.isArray(json?.data) ? json.data : [];
+  const metadata = {
+    ':colWidths': json?.[':colWidths'],
+    ':sheetname': json?.[':sheetname'],
+    ':type': json?.[':type'],
+  };
+
+  return { entries, metadata };
 }
 
-function buildUnpublishPayload(entries) {
+function buildUnpublishPayload(entries, metadata) {
   return {
     total: entries.length,
     limit: entries.length,
     offset: 0,
-    data: entries.map(entry => ({
-      Path: entry.path,
-      Date: entry.date,
-    })),
-    ':colWidths': [50, 50],
-    ':sheetname': 'data',
-    ':type': 'sheet',
+    data: entries,
+    ...(metadata?.[':colWidths'] && { ':colWidths': metadata[':colWidths'] }),
+    ...(metadata?.[':sheetname'] && { ':sheetname': metadata[':sheetname'] }),
+    ...(metadata?.[':type'] && { ':type': metadata[':type'] }),
   };
 }
 
@@ -207,26 +212,26 @@ function buildUnpublishPayload(entries) {
 async function saveUnpublishSchedule(org, site, token, entries) {
   const DA_SOURCE = 'https://admin.da.live/source';
   const sheetPath = '/unpublish-schedule';
-  
+
   console.log('set unpublish schedule');
-  // Fetch existing and append new entries
-  const existing = await fetchUnpublishSchedule(org, site, token);
+  // Fetch existing entries and metadata, then append new entries
+  const { entries: existing, metadata } = await fetchUnpublishSchedule(org, site, token);
   console.log(existing);
   const combined = [...existing, ...entries];
   console.log(combined);
-  
-  const payload = buildUnpublishPayload(combined);
+
+  const payload = buildUnpublishPayload(combined, metadata);
   const sourceUrl = `${DA_SOURCE}/${org}/${site}${sheetPath}.json`;
-  
+
   const body = new FormData();
   body.append('data', new Blob([JSON.stringify(payload)], { type: 'application/json' }));
-  
+
   const resp = await fetch(sourceUrl, {
     method: 'POST',
     headers: { Authorization: `Bearer ${token}` },
     body,
   });
-  
+
   if (!resp.ok) throw new Error(`Could not save unpublish schedule (${resp.status}).`);
 }
 
