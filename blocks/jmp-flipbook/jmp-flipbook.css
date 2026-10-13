@@ -19,6 +19,12 @@
   max-height: none;
 }
 
+.jmp-flipbook .jmp-flipbook-frame {
+  /* Keep the flipbook's heavy canvas repaints from invalidating the page. */
+  contain: strict;
+  isolation: isolate;
+}
+
 .jmp-flipbook .jmp-flipbook-frame iframe {
   display: block;
   width: 100%;
