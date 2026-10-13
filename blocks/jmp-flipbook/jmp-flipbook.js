@@ -31,12 +31,28 @@ function getAllowedUrl(value) {
   return `${url.origin}${url.pathname}${url.search}`;
 }
 
+/**
+ * Warm up connections to the flipbook host and Heyzine's CDN so the iframe
+ * loads faster once the block scrolls into view.
+ * @param {string} src the validated flipbook URL
+ */
+function preconnect(src) {
+  [new URL(src).origin, 'https://cdnm.heyzine.com'].forEach((href) => {
+    if (document.head.querySelector(`link[rel="preconnect"][href="${href}"]`)) return;
+    const link = document.createElement('link');
+    link.rel = 'preconnect';
+    link.href = href;
+    link.crossOrigin = '';
+    document.head.append(link);
+  });
+}
+
 function buildIframe(src, title) {
   const iframe = document.createElement('iframe');
   iframe.src = src;
   iframe.title = title;
   iframe.loading = 'lazy';
-  iframe.allow = 'fullscreen; clipboard-write';
+  iframe.allow = 'fullscreen';
   iframe.allowFullscreen = true;
   iframe.setAttribute('scrolling', 'no');
   return iframe;
@@ -69,11 +85,14 @@ export default function decorate(block) {
     return;
   }
 
+  preconnect(src);
+
+  // Start loading slightly before the block is visible to hide load latency.
   const observer = new IntersectionObserver((entries) => {
     if (entries.some((e) => e.isIntersecting)) {
       observer.disconnect();
       loadFlipbook(block, src, title);
     }
-  });
+  }, { rootMargin: '200px 0px' });
   observer.observe(block);
 }
