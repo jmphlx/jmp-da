@@ -313,6 +313,7 @@ function getBlockConfig(block) {
       const cols = [...row.children];
       if (cols[1]) {
         const col = cols[1];
+        console.log(col);
         const name = cols[0].textContent;
         let value = '';
         if (col.querySelector('ul')) {
@@ -327,6 +328,8 @@ function getBlockConfig(block) {
         } else if (knownObjectProperties.includes(name.toLowerCase())) {
           const stringValue = col.textContent;
           value = convertStringToJSONObject(stringValue);
+        } else if (col.querySelector('a') && col.querySelector('p')) {
+          value = col.innerHTML;
         } else if (col.querySelector('a')) {
           const as = [...col.querySelectorAll('a')];
           if (as.length === 1) {
