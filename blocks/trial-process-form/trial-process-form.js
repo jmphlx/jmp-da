@@ -21,7 +21,6 @@ function buildHubspotForm(config) {
     class: 'hubspot block',
   });
   const region = buildBlockRow('region', 'na1');
-  console.log(config.portalId)
   const portalId = buildBlockRow('portalId', config.portalId);
   const formId = buildBlockRow('formId', config.formId);
   const salesforceCampaignId = buildBlockRow('salesforceCampaignId', config.salesforceCampaignId);

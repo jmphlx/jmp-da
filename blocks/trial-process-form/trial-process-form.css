@@ -22,17 +22,20 @@
       outline: none;
     }
   }
-  div.salesforce-fields {
+  div.role-field {
     display: block;
     flex-direction: row;
-    input {
+    margin-bottom: 1.6rem;
+    select {
       font-family: var(--font-primary);
-      width: calc(100% - 32px);
+      width: 100%;
+      min-height: 4rem !important;
       height: 4rem;
-      padding: 0 1.6rem;
+      padding: 0 1.2rem;
       background-color: #fafafa;
-      border: 1px solid var(--grayRule);
-      border-radius: 5px;
+      border: 1px solid #E5E5E5;
+      border-top: 2px solid #d0d0d0;
+      border-radius: 3px;
       margin: .5rem 0 0 0;
       &:focus {
         background-color: #ffffff;
@@ -40,6 +43,7 @@
       }
     }
   }
+
   input[type="submit"] {
     cursor: pointer;
     margin-top: 2.4rem;
