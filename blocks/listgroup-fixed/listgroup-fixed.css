@@ -482,7 +482,6 @@ div.listgroup-fixed, div.listgroup  {
             }
             .title {
               font-size: 1.6rem;
-              margin-left: 0;
               max-width: 55%;
               margin: 0 2rem 0 3rem;
             }
@@ -492,7 +491,6 @@ div.listgroup-fixed, div.listgroup  {
             }
             .abstract, .description, .displayDescription {
               font-size: 1.6rem;
-              margin: 0 1.6rem 0 0;
               max-width: 55% !important;
               margin: 0 2rem 0 3rem;
             }
