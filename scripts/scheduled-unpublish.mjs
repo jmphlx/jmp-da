@@ -1,20 +1,3 @@
-const languagesAPAC = ['ko', 'ja', 'zh-hans', 'zh-hant'];
-const languagesAMER = ['en', 'es', 'fr', 'de', 'it'];
-const baseURL = 'https://main--jmp-da--jmphlx.aem.live';
-
-function getRegionalLanguageIndexes(includeFullURL, regionalIndexes) {
-  const indexPaths = [];
-  regionalIndexes.forEach((currLang) => {
-    if (includeFullURL) {
-      indexPaths.push(`${baseURL}/jmp-${currLang}.json`);
-    } else {
-      indexPaths.push(`/jmp-${currLang}.json`);
-    }
-  });
-  return indexPaths;
-}
-
-
 /**
  * Given a list of pages, filter down to event pages where the date has passed
  * the current date time.
