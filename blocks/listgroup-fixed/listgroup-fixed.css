@@ -389,7 +389,7 @@ div.listgroup-fixed, div.listgroup  {
         }
         .abstract, .description, .displayDescription {
           display: flex;
-          max-width: 55%;
+          max-width: 51%;
           padding: 0;
           margin: 0 2rem 1rem 2rem;
           flex: none;
@@ -421,11 +421,16 @@ div.listgroup-fixed, div.listgroup  {
         a {
           /* grid-template-columns: 49.25% auto; */
           /* column-gap: 3.2rem; */
+          span.image {
+            width: 50%;
+          }
           .title {
-            font-size: 3.6rem;
+            font-size: 3rem;
+            max-width: 45% !important;
           }
           .abstract, .description, .displayDescription {
             font-size: 1.9rem;
+            max-width: 45% !important;
           }
           &:after {
             width: 3rem;
@@ -471,10 +476,14 @@ div.listgroup-fixed, div.listgroup  {
           min-height: 225px;
           a {
             grid-template-columns: 40% auto;
-            column-gap: 1.6rem;
+            column-gap: .5rem !important;
+            span.image {
+              width: 40%;
+            }
             .title {
               font-size: 1.6rem;
-              margin-left: 0;
+              max-width: 55%;
+              margin: 0 2rem 0 3rem;
             }
             .navigation-title, .resourceType, .displayLabel {
               margin-top: 0;
@@ -482,7 +491,8 @@ div.listgroup-fixed, div.listgroup  {
             }
             .abstract, .description, .displayDescription {
               font-size: 1.6rem;
-              margin: 0 1.6rem 0 0;
+              max-width: 55% !important;
+              margin: 0 2rem 0 3rem;
             }
             &:after {
               width: 1.6rem;
@@ -508,7 +518,7 @@ div.listgroup-fixed, div.listgroup  {
           grid-template-rows: auto;
           grid-template-columns: auto;
           span.image {
-            width: 100%;
+            width: 100% !important;
             img {
               border-radius: 5px 5px 0 0;
             }
@@ -533,6 +543,7 @@ div.listgroup-fixed, div.listgroup  {
             column-gap: 1.6rem;
             .title {
               font-size: 1.6rem;
+              margin-left: 0;
             }
             .navigation-title, .resourceType, .displayLabel {
               margin-top: 0;
@@ -542,6 +553,7 @@ div.listgroup-fixed, div.listgroup  {
               font-size: 1.6rem;
               margin: 0 1.6rem 0 0;
               padding-bottom: 2rem;
+              max-width: 100% !important;
             }
             &:after {
               width: 1.6rem;
