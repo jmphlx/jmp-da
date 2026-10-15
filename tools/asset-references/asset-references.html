@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>DAM Asset References</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- Import DA App SDK -->
+    <script src="https://da.live/nx/utils/sdk.js" type="module"></script>
+    <!-- Project App Logic -->
+    <script src="/tools/asset-references/asset-references.js" type="module"></script>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" type="text/css" href="/tools/asset-references/asset-references.css">
+  </head>
+  <body>
+    <div class="app-container">
+      <h2>DAM Asset References</h2>
+      <p class="intro">
+        Lists every asset in the DAM that Document Authoring content links to, how many
+        documents link it, and which ones. Read only &mdash; nothing is written to DA or to AEM.
+      </p>
+
+      <div class="controls">
+        <button id="scanButton" class="primary" type="button">Scan repository</button>
+        <button id="csvButton" type="button" disabled>Export CSV</button>
+        <button id="xlsxButton" type="button" disabled>Export Excel</button>
+        <input id="filter" type="search" placeholder="Filter by asset path" aria-label="Filter by asset path" spellcheck="false">
+      </div>
+
+      <div class="status-message" role="status" aria-live="polite"></div>
+      <div class="summary"></div>
+
+      <p class="note">
+        An asset missing from this list is unreferenced <em>by DA</em>. That is not the same as
+        unused: links from email campaigns, the JMP Community and the JMP application are
+        invisible to this scan, so confirm elsewhere before deleting anything.
+      </p>
+
+      <div class="result-count"></div>
+
+      <table class="results">
+        <thead>
+          <tr>
+            <th>Asset</th>
+            <th class="num">Documents</th>
+            <th class="num">Published</th>
+            <th>Locations</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </body>
+</html>
