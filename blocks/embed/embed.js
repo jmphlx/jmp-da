@@ -15,6 +15,30 @@ const loadScript = (url, callback, type) => {
   return script;
 };
 
+const VIDYARD_ORIGIN = 'https://play.vidyard.com';
+const VIDYARD_PLAYER_URL = `${VIDYARD_ORIGIN}/embed/v4.js`;
+
+const addPreconnect = (origin) => {
+  if (document.querySelector(`link[rel="preconnect"][href="${origin}"]`)) {
+    return;
+  }
+  const link = document.createElement('link');
+  link.rel = 'preconnect';
+  link.href = origin;
+  link.crossOrigin = 'anonymous';
+  document.head.append(link);
+};
+
+export const preconnectVidyard = () => addPreconnect(VIDYARD_ORIGIN);
+
+const whenPageLoaded = (callback) => {
+  if (document.readyState === 'complete') {
+    callback();
+  } else {
+    window.addEventListener('load', callback, { once: true });
+  }
+};
+
 const getDefaultEmbed = (
   url,
 ) => `<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
@@ -57,7 +81,7 @@ const embedTwitter = (url) => {
 };
 
 // vidyard videos
-export const embedVidyard = (url) => {
+export const embedVidyard = (url, userStarted = false, eager = false) => {
   const video = url.pathname.split('/').pop(); // breaks out UUID of vidyard URL
   let lang = ''; // initialize empty string for cc
 
@@ -68,11 +92,10 @@ export const embedVidyard = (url) => {
     lang = url.search.substring(caption + 3, caption + 5);
   }
 
-  loadScript('https://play.vidyard.com/embed/v4.js');
-
   const inModalCheck = document.getElementsByClassName('modal block').length > 0;
   let autoplay = 0;
   if (inModalCheck) {
+    loadScript(VIDYARD_PLAYER_URL);
     autoplay += 1;
     // Include vidyard player without thumbnail when the video is opened in a modal.
     window.onVidyardAPI = (vidyardEmbed) => {
@@ -91,17 +114,25 @@ export const embedVidyard = (url) => {
   // Needed for vidyard links in a column block.
   const embedHTML = `<div> 
       <img class="vidyard-player-embed"
-      src="https://play.vidyard.com/${video}.jpg"
+      src="${VIDYARD_ORIGIN}/${video}.jpg"
+      width="1280" height="720" ${eager ? 'fetchpriority="high"' : ''}
       data-uuid="${video}"
       data-v="4"
-      data-autoplay=${autoplay}
+      data-autoplay="${autoplay}"
       data-type="inline"
       data-cc="${lang}"/>
     </div>`;
+  // The player script only swaps the poster for the player, so it waits until the page has loaded.
+  // A click on the placeholder needs the player now.
+  if (userStarted) {
+    loadScript(VIDYARD_PLAYER_URL);
+  } else {
+    whenPageLoaded(() => loadScript(VIDYARD_PLAYER_URL));
+  }
   return embedHTML;
 };
 
-const loadEmbed = (block, link, autoplay) => {
+const loadEmbed = (block, link, autoplay, eager = false) => {
   if (block.classList.contains('embed-is-loaded')) {
     return;
   }
@@ -128,7 +159,7 @@ const loadEmbed = (block, link, autoplay) => {
   const config = EMBEDS_CONFIG.find((e) => e.match.some((match) => link.includes(match)));
   const url = new URL(link);
   if (config) {
-    block.innerHTML = config.embed(url, autoplay);
+    block.innerHTML = config.embed(url, autoplay, eager);
     block.classList.add(`embed-${config.match[0]}`);
   } else {
     block.innerHTML = getDefaultEmbed(url);
@@ -139,9 +170,18 @@ const loadEmbed = (block, link, autoplay) => {
 export default function decorate(block) {
   const placeholder = block.querySelector('picture');
   const link = block.querySelector('a').href;
+  const aboveFold = block.getBoundingClientRect().top < window.innerHeight;
+  if (link.includes('vidyard')) {
+    preconnectVidyard();
+  }
   block.textContent = '';
 
   if (placeholder) {
+    const img = placeholder.querySelector('img');
+    if (aboveFold && img) {
+      img.loading = 'eager';
+      img.setAttribute('fetchpriority', 'high');
+    }
     const wrapper = document.createElement('div');
     wrapper.className = 'embed-placeholder';
     wrapper.innerHTML = '<div class="embed-placeholder-play"><button type="button" title="Play"></button></div>';
@@ -154,7 +194,7 @@ export default function decorate(block) {
     const observer = new IntersectionObserver((entries) => {
       if (entries.some((e) => e.isIntersecting)) {
         observer.disconnect();
-        loadEmbed(block, link);
+        loadEmbed(block, link, false, aboveFold);
       }
     });
     observer.observe(block);
