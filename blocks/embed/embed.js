@@ -115,6 +115,7 @@ export const embedVidyard = (url, userStarted = false, eager = false) => {
   const embedHTML = `<div> 
       <img class="vidyard-player-embed"
       src="${VIDYARD_ORIGIN}/${video}.jpg"
+      fetchpriority="high"
       width="1280" height="720" ${eager ? 'fetchpriority="high"' : ''}
       data-uuid="${video}"
       data-v="4"
