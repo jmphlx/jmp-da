@@ -570,6 +570,15 @@ async function loadBrandEager(header) {
   }
 }
 
+function loadSKPBackgroundEager() {
+  const preloadLink = document.createElement('link');
+  preloadLink.rel = 'preload';
+  preloadLink.as = 'image';
+  preloadLink.href = '/icons/skp-background-with-gradient.png';
+  preloadLink.fetchPriority = 'high';
+  document.head.append(preloadLink);
+}
+
 const localizedCheckCache = new Map();
 
 function stripLeadingFragment(pathname) {
@@ -763,6 +772,10 @@ async function loadEager(doc) {
   decorateTemplateAndTheme();
   decoratePageStyles();
   addThirdPartyScripts();
+
+  if (isSKPPage) {
+    loadSKPBackgroundEager();
+  }
 
   // Kick off nav HTML fetch early without blocking
   fetchNavHTML();
