@@ -171,11 +171,11 @@ export default async function unpublishScheduledPages(clientID, clientSecret) {
     const deindexResponse = await sendDeleteRequest(authToken, page, true); // Deindex.
     const unpublishResponse = await sendDeleteRequest(authToken, page, false); // Unpublish.
     if (deindexResponse === null || unpublishResponse === null) {
-      failedPages.push(page.path);
+      failedPages.push(page);
     } else {
-      successPages.push(page.path);
+      successPages.push(page);
     }
-    console.log(`Unpublished : ${page.path}`);
+    console.log(`Unpublished : ${page}`);
     if (i % 5 === 0) {
       sleep(2000);
     }
