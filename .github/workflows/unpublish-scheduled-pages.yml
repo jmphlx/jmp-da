@@ -22,7 +22,7 @@ jobs:
       - name: Run Script
         id: unpublish-script
         env:
-          AUTH_TOKEN: ${{ secrets.API_AUTH_TOKEN }}
+          AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
         uses: actions/github-script@v7
         with:
           script: |
