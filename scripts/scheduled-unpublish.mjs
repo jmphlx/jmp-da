@@ -21,7 +21,10 @@ async function getPagesToUnpublish(authToken) {
     pagesToUnpublish = json.data;
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('here:', { error });
+    console.error('Error in getting pages:', { error });
+    if (error instanceof SyntaxError) {
+      console.log('still worked as expected');
+    }
   }
   console.log(pagesToUnpublish);
   const pageList = [];
@@ -66,6 +69,7 @@ async function sendDeleteRequest(authToken, page, deindex) {
     // eslint-disable-next-line no-console
     console.error('sendDeleteRequest:', { error });
     if (error instanceof SyntaxError) {
+      console.log('still worked as expected');
       return "still worked as expected";
     }
   }
