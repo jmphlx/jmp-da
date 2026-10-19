@@ -53,7 +53,7 @@ async function sendDeleteRequest(authToken, page, deindex) {
     const response = await fetch(url, {
       method: 'DELETE', 
       headers: {
-        'Authorization': `token ${authToken}` ,
+        'Authorization': `Bearer ${authToken}` ,
         'Accept': '*/*'
       }
     });
@@ -76,23 +76,23 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function buildEmailSubject(successPages, failedPages, region) {
+function buildEmailSubject(successPages, failedPages) {
   let subjectLine = '';
   const failedWorkflow = failedPages.length > 0;
   const successfulUnpublishing = successPages.length > 0;
   if (failedWorkflow) {
-    subjectLine = `${region} EVENTS WORKFLOW ERROR: Failed to Unpublish Pages`;
+    subjectLine = `UNPUBLISH WORKFLOW ERROR: Failed to Unpublish Pages`;
   } else if (successfulUnpublishing) {
-    subjectLine = `${region} events workflow: Successfully Unpublished Past Events`;
+    subjectLine = `Unpublish workflow: Successfully Unpublished Past Events`;
   } else {
-    subjectLine = `No events to unpublish for ${region}`;
+    subjectLine = `No events to unpublish`;
   }
   return subjectLine;
 }
 
-function buildEmailBody(successPages, failedPages, region) {
+function buildEmailBody(successPages, failedPages) {
   const failedWorkflow = failedPages.length > 0;
-  let emailHeader = `<h2>${region} Results of Unpublish Page Workflow</h2>`;
+  let emailHeader = `<h2>Results of Unpublish Page Workflow</h2>`;
   let emailBody = '';
   if (failedWorkflow) {
     emailBody += '<div>';
@@ -121,13 +121,38 @@ function buildEmailBody(successPages, failedPages, region) {
     });
     emailBody += '</ul></div>';
   } else {
-    emailBody += '<div>No pages to unpublish at this time for the given region.</div>';
+    emailBody += '<div>No pages to unpublish at this time.</div>';
   }
   return `<div>${emailHeader}${emailBody}</div>`;
 }
 
-export default async function unpublishScheduledPages(authToken, region) {
-  console.log(authToken);
+
+async function getAccessToken(clientID, clientSecret) {
+  //Get Auth Token
+  try {
+    const response = await fetch('https://ims-na1.adobelogin.com/ims/token/v3', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        grant_type: 'client_credentials',
+        client_id: clientID,
+        client_secret: clientSecret,
+        scope: 'openid,AdobeID,additional_info.projectedProductContext,aem.frontend.all,read_organizations'
+      }).toString()
+    });
+    if (!response.ok) return null;
+    const json = await response.json();
+    return json.access_token;
+  } catch(error) {
+    console.log('could not get access token', error);
+  }
+  return null;
+}
+
+export default async function unpublishScheduledPages(clientID, clientSecret) {
+  const authToken = await getAccessToken(clientID, clientSecret);
   let pagesToUnpublish = await getPagesToUnpublish(authToken);
   let successPages = [];
   let failedPages = [];
@@ -152,8 +177,8 @@ export default async function unpublishScheduledPages(authToken, region) {
   const response = {};
   response.numFailed = failedPages.length;
   response.numSuccess = successPages.length;
-  response.subject = buildEmailSubject(successPages, failedPages, region);
-  response.body = buildEmailBody(successPages, failedPages, region);
+  response.subject = buildEmailSubject(successPages, failedPages);
+  response.body = buildEmailBody(successPages, failedPages);
   if (failedPages.length > 0) {
     response.sendEmail = 'true';
   } else {

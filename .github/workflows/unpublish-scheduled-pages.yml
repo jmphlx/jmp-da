@@ -22,13 +22,14 @@ jobs:
       - name: Run Script
         id: unpublish-script
         env:
-          AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
         uses: actions/github-script@v7
         with:
           script: |
             const { default: unpublishScheduledPages } = await import('${{ github.workspace }}/scripts/scheduled-unpublish.mjs')
 
-            const response = await unpublishScheduledPages(process.env.AUTH_TOKEN, "AMER")
+            const response = await unpublishScheduledPages(process.env.CLIENT_ID, process.env.CLIENT_SECRET)
             core.setOutput("subject", response.subject)
             core.setOutput("body", response.body)
             core.setOutput("sendEmail", response.sendEmail)
