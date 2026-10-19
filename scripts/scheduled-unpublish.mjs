@@ -167,8 +167,9 @@ export default async function unpublishScheduledPages(clientID, clientSecret) {
     //After every 5 requests, pause for 2 seconds, to avoid going over the rate limit.
     //Rate is 10 requests per second. Each page needs 2 requests.
     const page = pagesToUnpublish[i];
-    const deindexResponse = await sendDeleteRequest(authToken, page.path, true); // Deindex.
-    const unpublishResponse = await sendDeleteRequest(authToken, page.path, false); // Unpublish.
+    console.log(page);
+    const deindexResponse = await sendDeleteRequest(authToken, page, true); // Deindex.
+    const unpublishResponse = await sendDeleteRequest(authToken, page, false); // Unpublish.
     if (deindexResponse === null || unpublishResponse === null) {
       failedPages.push(page.path);
     } else {
