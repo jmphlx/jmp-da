@@ -158,6 +158,8 @@ async function getAccessToken(clientID, clientSecret) {
 export default async function unpublishScheduledPages(clientID, clientSecret) {
   const authToken = await getAccessToken(clientID, clientSecret);
   let pagesToUnpublish = await getPagesToUnpublish(authToken);
+  console.log(`PagesToUnpublish: ${pagesToUnpublish.length}`);
+  console.log(pagesToUnpublish);
   let successPages = [];
   let failedPages = [];
 
