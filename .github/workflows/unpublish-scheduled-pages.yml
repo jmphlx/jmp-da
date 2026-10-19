@@ -26,7 +26,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const { default: unpublishScheduledPages } = await import('${{ github.workspace }}/scripts/unpublish-scheduled-pages.mjs')
+            const { default: unpublishScheduledPages } = await import('${{ github.workspace }}/scripts/scheduled-unpublish.mjs')
 
             const response = await unpublishScheduledPages(process.env.AUTH_TOKEN, "AMER")
             core.setOutput("subject", response.subject)
