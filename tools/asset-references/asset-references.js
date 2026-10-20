@@ -12,14 +12,16 @@ import { buildUsageMap, toRows } from './scan.js';
 import {
   downloadCsv, downloadXlsx, editUrl, liveUrl,
 } from './export.js';
-import { buildFolderTree, renderFolderTree } from './asset-tree.js';
+import { buildFolderTree, refreshMarks, renderFolderTree } from './asset-tree.js';
 
 let actions;
 let rows = [];
 let stats = null;
 let filtered = [];
-/** Selected DAM folders. Empty means everything. */
+/** Selected DAM folders applied to the list. Empty means everything. */
 let folders = [];
+/** The picker's working selection, committed to `folders` only on apply. */
+let draft = [];
 
 function el(selector) {
   return document.querySelector(selector);
@@ -149,7 +151,7 @@ function renderSortMarker() {
  */
 /* eslint-disable no-use-before-define */
 
-/** One removable chip per selected folder. Clicking a chip drops that folder. */
+/** One removable chip per applied folder. Clicking a chip drops that folder. */
 function renderChips() {
   const host = el('#folderChips');
   host.innerHTML = '';
@@ -174,7 +176,10 @@ function renderChips() {
     cross.textContent = '\u00d7';
     cross.setAttribute('aria-hidden', 'true');
     chip.append(label, cross);
-    chip.addEventListener('click', () => toggleFolder(path));
+    chip.addEventListener('click', () => {
+      folders = folders.filter((f) => f !== path);
+      applyFilters();
+    });
     host.append(chip);
   });
 
@@ -183,7 +188,10 @@ function renderChips() {
     clear.type = 'button';
     clear.className = 'link-button';
     clear.textContent = `Clear all ${folders.length}`;
-    clear.addEventListener('click', clearFolders);
+    clear.addEventListener('click', () => {
+      folders = [];
+      applyFilters();
+    });
     host.append(clear);
   }
 }
@@ -211,34 +219,52 @@ function exportSelection() {
   return { rows: filtered, scope, folders };
 }
 
-/** Repaints the tree so selection marks stay current while the dialog is open. */
-function refreshPicker() {
-  if (!el('#folderModal').open) return;
-  renderFolderTree(el('#folderTree'), buildFolderTree(rows), {
-    selected: folders,
-    onToggle: toggleFolder,
-    onClear: clearFolders,
-  });
+/** Summarises the working selection beside the apply button. */
+function renderDraftCount() {
+  const count = draft.length;
+  let text = 'No folders ticked - apply to show everything';
+  if (count === 1) text = '1 folder ticked';
+  else if (count > 1) text = `${count} folders ticked`;
+  el('#folderDraftCount').textContent = text;
 }
 
-function toggleFolder(path) {
-  folders = folders.includes(path)
-    ? folders.filter((f) => f !== path)
-    // A selected parent already covers its children, so drop those rather than list them.
-    : [...folders.filter((f) => !f.startsWith(`${path}/`)), path];
-  applyFilters();
-  refreshPicker();
+/**
+ * Ticks or unticks a folder in the working selection.
+ *
+ * The list is not re-filtered here and the tree is not re-rendered: only the marks are
+ * repainted, so folders the user opened stay open and the expensive re-filter happens once,
+ * on apply.
+ */
+function toggleDraft(path) {
+  draft = draft.includes(path)
+    ? draft.filter((f) => f !== path)
+    // A ticked parent already covers its children, so drop those rather than list them.
+    : [...draft.filter((f) => !f.startsWith(`${path}/`)), path];
+  refreshMarks(el('#folderTree'), draft);
+  renderDraftCount();
 }
 
-function clearFolders() {
-  folders = [];
+function clearDraft() {
+  draft = [];
+  refreshMarks(el('#folderTree'), draft);
+  renderDraftCount();
+}
+
+function applyDraft() {
+  folders = [...draft];
+  el('#folderModal').close();
   applyFilters();
-  refreshPicker();
 }
 
 function openFolderPicker() {
+  draft = [...folders];
   el('#folderModal').showModal();
-  refreshPicker();
+  renderFolderTree(el('#folderTree'), buildFolderTree(rows), {
+    selected: () => draft,
+    onToggle: toggleDraft,
+    onClear: clearDraft,
+  });
+  renderDraftCount();
 }
 
 /* eslint-enable no-use-before-define */
@@ -252,6 +278,7 @@ async function scan() {
   rows = [];
   filtered = [];
   folders = [];
+  draft = [];
   stats = null;
   el('#folderButton').disabled = true;
   renderChips();
@@ -309,6 +336,8 @@ async function exportXlsx() {
   el('#scanButton').addEventListener('click', scan);
   el('#folderButton').addEventListener('click', openFolderPicker);
   el('#sortOrder').addEventListener('change', applyFilters);
+  el('#folderApply').addEventListener('click', applyDraft);
+  el('#folderCancel').addEventListener('click', () => el('#folderModal').close());
   el('#csvButton').addEventListener('click', () => {
     const selection = exportSelection();
     const names = downloadCsv(selection.rows, selection.folders);
