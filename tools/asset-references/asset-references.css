@@ -278,7 +278,7 @@ input[type="search"] {
 
 .tree-choose {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 8px;
   flex: 1;
   min-width: 0;
@@ -353,10 +353,22 @@ input[type="search"] {
 }
 
 .tree-mark {
-  width: 12px;
-  flex: 0 0 12px;
-  font-size: 11px;
-  color: #1473e6;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  border: 1px solid #a9a9a9;
+  border-radius: 3px;
+  background: #ffffff;
+  font-size: 10px;
+  line-height: 1;
+  color: transparent;
+}
+
+.tree-choose:hover .tree-mark {
+  border-color: #1473e6;
 }
 
 .tree-choose.is-self {
@@ -365,12 +377,20 @@ input[type="search"] {
   font-weight: 700;
 }
 
+.tree-choose.is-self .tree-mark {
+  border-color: #1473e6;
+  background: #1473e6;
+  color: #ffffff;
+}
+
 .tree-choose.is-ancestor {
   color: #6e6e6e;
 }
 
 .tree-choose.is-ancestor .tree-mark {
-  color: #9b9b9b;
+  border-color: #c6c6c6;
+  background: #e6e6e6;
+  color: #6e6e6e;
 }
 
 .tree-empty {

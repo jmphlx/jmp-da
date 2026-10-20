@@ -125,9 +125,11 @@ function renderChildren(container, node, options) {
       choose.title = 'Already covered by a selected parent folder';
     }
 
+    // The glyph is always present; the stylesheet hides it until the row is selected,
+    // so an unselected row still shows an empty box and reads as something you can tick.
     const mark = document.createElement('span');
     mark.className = 'tree-mark';
-    mark.textContent = state ? '✓' : '';
+    mark.textContent = '✓';
     mark.setAttribute('aria-hidden', 'true');
 
     const label = document.createElement('span');
@@ -180,7 +182,7 @@ export function renderFolderTree(container, root, options) {
   all.setAttribute('aria-pressed', String(selected.length === 0));
   const allMark = document.createElement('span');
   allMark.className = 'tree-mark';
-  allMark.textContent = selected.length ? '' : '✓';
+  allMark.textContent = '✓';
   allMark.setAttribute('aria-hidden', 'true');
   const allLabel = document.createElement('span');
   allLabel.className = 'tree-name';
