@@ -52,9 +52,17 @@ DA source, which is what this tool does.
   results contain. Each folder shows the assets at or below it and the references they account
   for, so its weight is visible before you open it. A folder containing no referenced assets has
   no node at all, for the same reason — the tree is derived from the results.
-- **Sort** — most referenced, fewest references, or path A–Z. Fewest-first surfaces the
-  single-use tail, which is where cleanup candidates cluster.
-- **Export scope** — the exports cover the selected folder by default, or everything.
+- **Sort** — most referenced, fewest references, or path A–Z, with the ordered column marked
+  in the table header. Path order is numeric, so `jmp-9` precedes `jmp-10`. Note that fewest-
+  first and A–Z look alike near the top of the list: most assets are referenced once and that
+  sort tie-breaks on path, so both begin with the same alphabetical run.
+- **Multi-select** — pick any number of folders; the list shows their union. Selecting a parent
+  drops its already-selected children, since they change nothing. Each selected folder appears
+  as a chip above the table, and clicking a chip removes that folder.
+- **Export scope** — the exports cover the selected folders by default, or everything.
+  Filenames carry the date and the folders captured, for example
+  `da-assets-2026-10-20-events+screenshots.csv`, and omit the folder part when the export
+  covers everything.
 - **CSV export** — two files: the asset list, and the long-form asset/document pairs.
 - **Excel export** — one workbook: Summary, Referenced assets, References.
 

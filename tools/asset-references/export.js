@@ -46,6 +46,46 @@ export function toCsv(headers, rows) {
   return [headers, ...rows].map((row) => row.map(csvCell).join(',')).join('\n');
 }
 
+/** Longest folder token allowed in a filename, before it stops being a filename. */
+const MAX_TOKEN = 44;
+
+/**
+ * A short, recognisable token naming the folders an export covers.
+ *
+ * The last path segment is used rather than the whole path: a full path per folder makes the
+ * filename unusable, and the leaf is what people recognise. Beyond three folders the rest
+ * collapse into a count, for the same reason.
+ * @param {string[]} folders selected DAM folder paths
+ * @returns {string} token, or '' when the export covers everything
+ */
+export function folderToken(folders) {
+  if (!Array.isArray(folders) || folders.length === 0) return '';
+  const leaf = (folder) => String(folder).split('/').filter(Boolean).pop() ?? '';
+  const slug = (name) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  const parts = folders.map((f) => slug(leaf(f))).filter(Boolean);
+  if (parts.length === 0) return '';
+
+  const token = parts.length <= 3
+    ? parts.join('+')
+    : `${parts.slice(0, 2).join('+')}+${parts.length - 2}more`;
+  return token.length > MAX_TOKEN ? `${token.slice(0, MAX_TOKEN).replace(/[+-]+$/, '')}+more` : token;
+}
+
+/**
+ * Export filename: what it is, when it was taken, and which folders it covers.
+ * The folder part is omitted entirely when the export covers everything.
+ * @param {string} kind 'assets', 'references' or 'workbook'
+ * @param {string} extension file extension without the dot
+ * @param {string[]} folders selected DAM folder paths
+ * @param {Date} [now] clock, injectable for tests
+ * @returns {string} filename
+ */
+export function exportFileName(kind, extension, folders, now = new Date()) {
+  const date = now.toISOString().slice(0, 10);
+  const token = folderToken(folders);
+  return `da-${kind}-${date}${token ? `-${token}` : ''}.${extension}`;
+}
+
 export const ASSET_HEADERS = ['Asset path', 'Folder', 'Type', 'Documents referencing it', 'Published documents'];
 export const REFERENCE_HEADERS = ['Asset path', 'Referencing document', 'Edit in DA', 'Live URL'];
 
@@ -128,18 +168,23 @@ function triggerDownload(blob, filename) {
 /**
  * Saves the asset list and the long-form reference list as two CSV files.
  * @param {Object[]} rows rows from toRows
- * @param {Object} stats crawl stats
+ * @param {string[]} folders folders the export covers, for the filename
+ * @returns {string[]} the filenames offered
  */
-export function downloadCsv(rows, stats) {
+export function downloadCsv(rows, folders) {
+  const names = [
+    exportFileName('assets', 'csv', folders),
+    exportFileName('references', 'csv', folders),
+  ];
   triggerDownload(
     new Blob([toCsv(ASSET_HEADERS, assetRows(rows))], { type: 'text/csv;charset=utf-8;' }),
-    'da-referenced-assets.csv',
+    names[0],
   );
   triggerDownload(
     new Blob([toCsv(REFERENCE_HEADERS, referenceRows(rows))], { type: 'text/csv;charset=utf-8;' }),
-    'da-asset-references.csv',
+    names[1],
   );
-  return stats;
+  return names;
 }
 
 let sheetJsPromise = null;
@@ -167,9 +212,10 @@ export function loadSheetJs() {
  * @param {Object[]} rows rows from toRows
  * @param {Object} stats crawl stats
  * @param {string} [scope] what the export covers, recorded on the Summary sheet
+ * @param {string[]} [folders] folders the export covers, for the filename
  * @returns {Promise<void>} resolves once the download has been offered
  */
-export async function downloadXlsx(rows, stats, scope) {
+export async function downloadXlsx(rows, stats, scope, folders) {
   const XLSX = await loadSheetJs();
   const book = XLSX.utils.book_new();
 
@@ -191,6 +237,6 @@ export async function downloadXlsx(rows, stats, scope) {
   const data = XLSX.write(book, { bookType: 'xlsx', type: 'array' });
   triggerDownload(
     new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }),
-    'da-asset-references.xlsx',
+    exportFileName('workbook', 'xlsx', folders),
   );
 }

@@ -18,8 +18,8 @@ let actions;
 let rows = [];
 let stats = null;
 let filtered = [];
-/** Selected DAM folder, or null for everything. */
-let folder = null;
+/** Selected DAM folders. Empty means everything. */
+let folders = [];
 
 function el(selector) {
   return document.querySelector(selector);
@@ -95,9 +95,11 @@ function renderRows() {
       </tr>
       <tr class="pages-row" hidden><td colspan="4"></td></tr>`).join('');
 
-  el('.result-count').textContent = `${fmt(filtered.length)} assets${
-    folder ? ` in ${folder}` : ''
-  }${filtered.length === rows.length ? '.' : ` of ${fmt(rows.length)}.`}`;
+  let where = '';
+  if (folders.length === 1) where = ` in ${folders[0]}`;
+  else if (folders.length > 1) where = ` across ${folders.length} folders`;
+  const outOf = filtered.length === rows.length ? '.' : ` of ${fmt(rows.length)}.`;
+  el('.result-count').textContent = `${fmt(filtered.length)} assets${where}${outOf}`;
 
   body.querySelectorAll('.link-button').forEach((button) => {
     button.addEventListener('click', () => {
@@ -112,21 +114,86 @@ function renderRows() {
   });
 }
 
-/** Orders the visible rows. Fewest-first surfaces the single-use tail. */
+/** Numeric so jmp-9 precedes jmp-10, which is what a human reads as A to Z. */
+const PATH_COLLATOR = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+
+/**
+ * Orders the visible rows.
+ *
+ * "Fewest references" and "path A to Z" look alike for the first several hundred rows: most
+ * assets are referenced once, and that sort tie-breaks on path, so the head of both lists is
+ * the same alphabetical run. The header marker exists so the active order stays legible even
+ * when the rows barely move.
+ */
 function sortRows(list) {
   const order = el('#sortOrder').value;
-  const byPath = (a, b) => a.damPath.localeCompare(b.damPath);
+  const byPath = (a, b) => PATH_COLLATOR.compare(a.damPath, b.damPath);
   if (order === 'path') return [...list].sort(byPath);
   if (order === 'least') return [...list].sort((a, b) => a.count - b.count || byPath(a, b));
   return [...list].sort((a, b) => b.count - a.count || byPath(a, b));
 }
 
-/** Reflects the chosen folder in the controls and narrows the list to it. */
-function applyFolder() {
-  el('#folderCurrent').textContent = folder ?? 'All folders';
-  el('#folderClear').hidden = !folder;
-  const scoped = folder
-    ? rows.filter((row) => row.damPath.startsWith(`${folder}/`))
+/** Marks the column the list is ordered by, so switching sorts is visible. */
+function renderSortMarker() {
+  const order = el('#sortOrder').value;
+  el('#thAsset').textContent = order === 'path' ? 'Asset  A\u2192Z' : 'Asset';
+  if (order === 'least') el('#thDocs').textContent = 'Documents \u2191';
+  else if (order === 'refs') el('#thDocs').textContent = 'Documents \u2193';
+  else el('#thDocs').textContent = 'Documents';
+}
+
+/*
+ * The folder controls are mutually recursive by nature: a chip toggles the selection, which
+ * re-renders the chips and the tree. Function declarations hoist, so the order below is safe;
+ * the rule is relaxed rather than the cycle contrived away.
+ */
+/* eslint-disable no-use-before-define */
+
+/** One removable chip per selected folder. Clicking a chip drops that folder. */
+function renderChips() {
+  const host = el('#folderChips');
+  host.innerHTML = '';
+  if (folders.length === 0) {
+    const none = document.createElement('span');
+    none.className = 'folder-current';
+    none.textContent = 'All folders';
+    host.append(none);
+    return;
+  }
+
+  folders.forEach((path) => {
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'chip';
+    chip.title = `${path} - click to remove`;
+    chip.setAttribute('aria-label', `Remove folder ${path} from the filter`);
+    const label = document.createElement('span');
+    label.textContent = path.replace('/content/dam/', '');
+    const cross = document.createElement('span');
+    cross.className = 'chip-x';
+    cross.textContent = '\u00d7';
+    cross.setAttribute('aria-hidden', 'true');
+    chip.append(label, cross);
+    chip.addEventListener('click', () => toggleFolder(path));
+    host.append(chip);
+  });
+
+  if (folders.length > 1) {
+    const clear = document.createElement('button');
+    clear.type = 'button';
+    clear.className = 'link-button';
+    clear.textContent = `Clear all ${folders.length}`;
+    clear.addEventListener('click', clearFolders);
+    host.append(clear);
+  }
+}
+
+/** Narrows the list to the union of the selected folders. */
+function applyFilters() {
+  renderChips();
+  renderSortMarker();
+  const scoped = folders.length
+    ? rows.filter((row) => folders.some((f) => row.damPath.startsWith(`${f}/`)))
     : rows;
   filtered = sortRows(scoped);
   renderRows();
@@ -135,24 +202,46 @@ function applyFolder() {
 /** Rows the exports cover, and the label recorded in the workbook's Summary sheet. */
 function exportSelection() {
   const everything = el('#exportScope').value === 'all';
-  if (everything || !folder) {
-    return { rows, scope: 'Every referenced asset' };
+  if (everything || folders.length === 0) {
+    return { rows, scope: 'Every referenced asset', folders: [] };
   }
-  return { rows: filtered, scope: `Folder ${folder}` };
+  const scope = folders.length === 1
+    ? `Folder ${folders[0]}`
+    : `${folders.length} folders: ${folders.join(', ')}`;
+  return { rows: filtered, scope, folders };
 }
 
-function selectFolder(path) {
-  folder = path;
-  const modal = el('#folderModal');
-  // Clear is reachable with the dialog shut, and close() on a shut dialog throws in older engines.
-  if (modal.open) modal.close();
-  applyFolder();
+/** Repaints the tree so selection marks stay current while the dialog is open. */
+function refreshPicker() {
+  if (!el('#folderModal').open) return;
+  renderFolderTree(el('#folderTree'), buildFolderTree(rows), {
+    selected: folders,
+    onToggle: toggleFolder,
+    onClear: clearFolders,
+  });
+}
+
+function toggleFolder(path) {
+  folders = folders.includes(path)
+    ? folders.filter((f) => f !== path)
+    // A selected parent already covers its children, so drop those rather than list them.
+    : [...folders.filter((f) => !f.startsWith(`${path}/`)), path];
+  applyFilters();
+  refreshPicker();
+}
+
+function clearFolders() {
+  folders = [];
+  applyFilters();
+  refreshPicker();
 }
 
 function openFolderPicker() {
-  renderFolderTree(el('#folderTree'), buildFolderTree(rows), selectFolder);
   el('#folderModal').showModal();
+  refreshPicker();
 }
+
+/* eslint-enable no-use-before-define */
 
 async function scan() {
   setBusy(true);
@@ -162,11 +251,10 @@ async function scan() {
   // rows behind, so the picker still offered folders from a run the status line said had failed.
   rows = [];
   filtered = [];
-  folder = null;
+  folders = [];
   stats = null;
   el('#folderButton').disabled = true;
-  el('#folderClear').hidden = true;
-  el('#folderCurrent').textContent = 'All folders';
+  renderChips();
   el('.results tbody').innerHTML = '';
   el('.summary').innerHTML = '';
   el('.result-count').textContent = '';
@@ -182,10 +270,10 @@ async function scan() {
     });
     stats = result.stats;
     rows = toRows(result.usage);
-    folder = null;
+    folders = [];
 
     renderSummary();
-    applyFolder();
+    applyFilters();
     el('#folderButton').disabled = rows.length === 0;
     enableExports(rows.length > 0);
     setStatus(stats.documentsFailed
@@ -206,7 +294,7 @@ async function exportXlsx() {
   button.textContent = 'Building…';
   try {
     const selection = exportSelection();
-    await downloadXlsx(selection.rows, stats, selection.scope);
+    await downloadXlsx(selection.rows, stats, selection.scope, selection.folders);
     setStatus(`Excel workbook downloaded - ${selection.scope.toLowerCase()}.`);
   } catch (error) {
     setStatus(`Excel export failed: ${error.message}`, true);
@@ -220,13 +308,11 @@ async function exportXlsx() {
   ({ actions } = await DA_SDK);
   el('#scanButton').addEventListener('click', scan);
   el('#folderButton').addEventListener('click', openFolderPicker);
-  el('#folderClear').addEventListener('click', () => selectFolder(null));
-  el('#sortOrder').addEventListener('change', applyFolder);
+  el('#sortOrder').addEventListener('change', applyFilters);
   el('#csvButton').addEventListener('click', () => {
     const selection = exportSelection();
-    downloadCsv(selection.rows, stats);
-    setStatus(`Two CSV files downloaded - ${selection.scope.toLowerCase()}: `
-      + 'the asset list and the reference list.');
+    const names = downloadCsv(selection.rows, selection.folders);
+    setStatus(`Downloaded ${names.join(' and ')}.`);
   });
   el('#xlsxButton').addEventListener('click', exportXlsx);
   enableExports(false);

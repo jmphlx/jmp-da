@@ -6,7 +6,9 @@ const {
   assetRows,
   csvCell,
   editUrl,
+  exportFileName,
   folderOf,
+  folderToken,
   liveUrl,
   referenceRows,
   summaryRows,
@@ -115,5 +117,48 @@ describe('summaryRows', () => {
   it('states that the evidence is DA only', () => {
     const text = summaryRows({ documentsScanned: 0 }, []).map((r) => r[1]).join(' ');
     expect(text).to.contain('Document Authoring only');
+  });
+});
+
+describe('folderToken', () => {
+  it('is empty when the export covers everything', () => {
+    expect(folderToken([])).to.equal('');
+    expect(folderToken(null)).to.equal('');
+  });
+
+  it('uses the leaf segment, not the whole path', () => {
+    expect(folderToken(['/content/dam/jmp/images/screenshots/gallery'])).to.equal('gallery');
+  });
+
+  it('joins up to three folders and slugs awkward names', () => {
+    expect(folderToken([
+      '/content/dam/jmp/images/why-jmp',
+      '/content/dam/jmp/zh_CN/images',
+      '/content/dam/jmp/images/About JMP',
+    ])).to.equal('why-jmp+images+about-jmp');
+  });
+
+  it('collapses the tail past three folders so the name stays short', () => {
+    const token = folderToken(['/a/one', '/a/two', '/a/three', '/a/four', '/a/five']);
+    expect(token).to.equal('one+two+3more');
+  });
+
+  it('never returns an unusable length', () => {
+    const long = ['/a/' + 'x'.repeat(60), '/a/' + 'y'.repeat(60), '/a/' + 'z'.repeat(60)];
+    expect(folderToken(long).length).to.be.at.most(50);
+  });
+});
+
+describe('exportFileName', () => {
+  const day = new Date('2026-10-20T09:00:00Z');
+
+  it('carries the date and omits the folder part when covering everything', () => {
+    expect(exportFileName('assets', 'csv', [], day)).to.equal('da-assets-2026-10-20.csv');
+    expect(exportFileName('workbook', 'xlsx', [], day)).to.equal('da-workbook-2026-10-20.xlsx');
+  });
+
+  it('names the folders it captures', () => {
+    expect(exportFileName('references', 'csv', ['/content/dam/jmp/images/events'], day))
+      .to.equal('da-references-2026-10-20-events.csv');
   });
 });

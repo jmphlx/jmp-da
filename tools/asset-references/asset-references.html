@@ -36,18 +36,15 @@
         </select>
       </div>
 
-      <div class="controls-secondary">
-        <span id="folderCurrent" class="folder-current">All folders</span>
-        <button id="folderClear" type="button" class="link-button" hidden>Clear folder</button>
-      </div>
+      <div class="controls-secondary" id="folderChips"></div>
 
       <dialog id="folderModal" class="folder-modal">
         <form method="dialog" class="folder-modal-head">
           <div>
             <h3>Filter by DAM folder</h3>
-            <p>Folders that contain referenced assets. A folder missing here holds nothing this scan found &mdash; it may still exist in the DAM.</p>
+            <p>Pick as many folders as you like. Only folders containing referenced assets appear &mdash; one missing here holds nothing this scan found, though it may still exist in the DAM.</p>
           </div>
-          <button type="submit" class="link-button" aria-label="Close">Close</button>
+          <button type="submit" class="link-button" aria-label="Close">Done</button>
         </form>
         <div class="folder-tree" id="folderTree"></div>
       </dialog>
@@ -60,8 +57,8 @@
       <table class="results">
         <thead>
           <tr>
-            <th>Asset</th>
-            <th class="num">Documents</th>
+            <th id="thAsset">Asset</th>
+            <th class="num" id="thDocs">Documents</th>
             <th class="num">Published</th>
             <th>Locations</th>
           </tr>

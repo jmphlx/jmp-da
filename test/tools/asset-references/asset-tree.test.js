@@ -1,7 +1,7 @@
 /* global describe it */
 import { expect } from '@esm-bundle/chai';
 
-const { buildFolderTree, sortedChildren } = await import('../../../tools/asset-references/asset-tree.js');
+const { buildFolderTree, coverage, sortedChildren } = await import('../../../tools/asset-references/asset-tree.js');
 
 const PATHS = [
   { damPath: '/content/dam/jmp/images/why-jmp/hero.png', count: 5 },
@@ -69,5 +69,24 @@ describe('sortedChildren', () => {
       { damPath: '/content/dam/jmp/a/one.png', count: 1 },
     ]);
     expect(sortedChildren(child(root, 'jmp')).map((n) => n.name)).to.deep.equal(['a', 'b']);
+  });
+});
+
+describe('coverage', () => {
+  it('reports an exact selection', () => {
+    expect(coverage('/content/dam/jmp/images', ['/content/dam/jmp/images'])).to.equal('self');
+  });
+
+  it('reports a folder already covered by a selected parent', () => {
+    expect(coverage('/content/dam/jmp/images/events', ['/content/dam/jmp/images'])).to.equal('ancestor');
+  });
+
+  it('does not treat a name prefix as an ancestor', () => {
+    expect(coverage('/content/dam/jmp/images-archive', ['/content/dam/jmp/images'])).to.equal('');
+  });
+
+  it('is empty with no selection', () => {
+    expect(coverage('/content/dam/jmp/images', [])).to.equal('');
+    expect(coverage('/content/dam/jmp/images', null)).to.equal('');
   });
 });
