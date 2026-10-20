@@ -22,17 +22,23 @@
         <button id="scanButton" class="primary" type="button">Scan repository</button>
         <button id="csvButton" type="button" disabled>Export CSV</button>
         <button id="xlsxButton" type="button" disabled>Export Excel</button>
-        <input id="filter" type="search" placeholder="Filter by asset path" aria-label="Filter by asset path" spellcheck="false">
+        <button id="folderButton" type="button" disabled aria-haspopup="dialog">
+          Browse folders
+        </button>
+        <span id="folderCurrent" class="folder-current">All folders</span>
+        <button id="folderClear" type="button" class="link-button" hidden>Clear</button>
       </div>
+
+      <dialog id="folderModal" class="folder-modal">
+        <form method="dialog" class="folder-modal-head">
+          <h3>Filter by DAM folder</h3>
+          <button type="submit" class="link-button" aria-label="Close">Close</button>
+        </form>
+        <div class="folder-tree" id="folderTree"></div>
+      </dialog>
 
       <div class="status-message" role="status" aria-live="polite"></div>
       <div class="summary"></div>
-
-      <p class="note">
-        An asset missing from this list is unreferenced <em>by DA</em>. That is not the same as
-        unused: links from email campaigns, the JMP Community and the JMP application are
-        invisible to this scan, so confirm elsewhere before deleting anything.
-      </p>
 
       <div class="result-count"></div>
 

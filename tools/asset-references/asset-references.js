@@ -12,6 +12,7 @@ import { buildUsageMap, toRows } from './scan.js';
 import {
   downloadCsv, downloadXlsx, editUrl, liveUrl,
 } from './export.js';
+import { buildFolderTree, renderFolderTree } from './asset-tree.js';
 
 /** Rows rendered before the list is truncated. Exports always carry the full set. */
 const RENDER_LIMIT = 250;
@@ -20,6 +21,8 @@ let actions;
 let rows = [];
 let stats = null;
 let filtered = [];
+/** Selected DAM folder, or null for everything. */
+let folder = null;
 
 function el(selector) {
   return document.querySelector(selector);
@@ -106,12 +109,27 @@ function renderRows() {
   });
 }
 
-function applyFilter() {
-  const query = el('#filter').value.trim().toLowerCase();
-  filtered = query
-    ? rows.filter((row) => row.damPath.toLowerCase().includes(query))
+/** Reflects the chosen folder in the controls and narrows the list to it. */
+function applyFolder() {
+  el('#folderCurrent').textContent = folder ?? 'All folders';
+  el('#folderClear').hidden = !folder;
+  filtered = folder
+    ? rows.filter((row) => row.damPath.startsWith(`${folder}/`))
     : rows;
   renderRows();
+}
+
+function selectFolder(path) {
+  folder = path;
+  const modal = el('#folderModal');
+  // Clear is reachable with the dialog shut, and close() on a shut dialog throws in older engines.
+  if (modal.open) modal.close();
+  applyFolder();
+}
+
+function openFolderPicker() {
+  renderFolderTree(el('#folderTree'), buildFolderTree(rows.map((r) => r.damPath)), selectFolder);
+  el('#folderModal').showModal();
 }
 
 async function scan() {
@@ -133,10 +151,11 @@ async function scan() {
     });
     stats = result.stats;
     rows = toRows(result.usage);
-    filtered = rows;
+    folder = null;
 
     renderSummary();
-    renderRows();
+    applyFolder();
+    el('#folderButton').disabled = rows.length === 0;
     enableExports(rows.length > 0);
     setStatus(stats.documentsFailed
       ? `Done, but ${fmt(stats.documentsFailed)} documents could not be read. `
@@ -168,7 +187,8 @@ async function exportXlsx() {
 (async function init() {
   ({ actions } = await DA_SDK);
   el('#scanButton').addEventListener('click', scan);
-  el('#filter').addEventListener('input', applyFilter);
+  el('#folderButton').addEventListener('click', openFolderPicker);
+  el('#folderClear').addEventListener('click', () => selectFolder(null));
   el('#csvButton').addEventListener('click', () => {
     downloadCsv(rows, stats);
     setStatus('Two CSV files downloaded: the asset list and the reference list.');

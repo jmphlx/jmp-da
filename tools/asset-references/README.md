@@ -46,7 +46,10 @@ DA source, which is what this tool does.
   (`/drafts/`, `/sandbox/`), mirroring the exclusions in `configurations/query.yaml`.
 - **Locations** — expand any asset to see each referencing document, with links to edit it in
   DA and to view it live.
-- **Filter** — narrow the list by path substring.
+- **Folder picker** — browse the DAM folder tree and narrow the list to a folder. The tree is
+  built from the scan results rather than from AEM, which keeps the tool credential-free and is
+  the right source anyway: the picker filters the results, so it should only offer folders the
+  results contain. Each folder shows how many assets sit at or below it.
 - **CSV export** — two files: the asset list, and the long-form asset/document pairs.
 - **Excel export** — one workbook: Summary, Referenced assets, References.
 
@@ -96,11 +99,12 @@ on first use rather than on page load, because it is ~880KB and most runs never 
 | --- | --- |
 | `asset-references.html` | App interface |
 | `asset-references.js` | UI and orchestration |
+| `asset-tree.js` | DAM folder tree for the folder picker |
 | `scan.js` | Repository crawl and the usage map |
 | `dam-refs.js` | Reference extraction and path canonicalization |
 | `export.js` | CSV and Excel builders |
 | `asset-references.css` | Styles |
 
-Unit tests for `dam-refs.js` and `export.js` are in `test/tools/asset-references/`. `scan.js`
+Unit tests for `dam-refs.js`, `export.js` and `asset-tree.js` are in `test/tools/asset-references/`. `scan.js`
 is not unit tested because it imports `crawl` from `da.live` at runtime, following the same
 convention as `tools/search/search.js`.
