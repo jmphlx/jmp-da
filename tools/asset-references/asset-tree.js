@@ -161,7 +161,7 @@ export function renderFolderTree(container, root, onSelect) {
   if (root.children.size === 0) {
     const empty = document.createElement('p');
     empty.className = 'tree-empty';
-    empty.textContent = 'Run a scan to populate the folder tree.';
+    empty.textContent = 'No referenced assets to browse.';
     container.append(empty);
     return;
   }

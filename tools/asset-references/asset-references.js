@@ -158,6 +158,15 @@ async function scan() {
   setBusy(true);
   enableExports(false);
   setStatus('Crawling the repository. This reads every page and sheet, so it takes a few minutes.');
+  // Drop the previous result outright. A failed scan used to leave the folder tree and the
+  // rows behind, so the picker still offered folders from a run the status line said had failed.
+  rows = [];
+  filtered = [];
+  folder = null;
+  stats = null;
+  el('#folderButton').disabled = true;
+  el('#folderClear').hidden = true;
+  el('#folderCurrent').textContent = 'All folders';
   el('.results tbody').innerHTML = '';
   el('.summary').innerHTML = '';
   el('.result-count').textContent = '';

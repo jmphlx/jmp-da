@@ -221,7 +221,7 @@ input[type="search"] {
 
 .folder-modal-head {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
   padding: 12px 14px;
@@ -234,6 +234,13 @@ input[type="search"] {
 .folder-modal-head h3 {
   margin: 0;
   font-size: 14px;
+}
+
+.folder-modal-head p {
+  margin: 3px 0 0;
+  font-size: 12px;
+  color: #6e6e6e;
+  max-width: 46ch;
 }
 
 .folder-tree {

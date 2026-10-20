@@ -43,7 +43,10 @@
 
       <dialog id="folderModal" class="folder-modal">
         <form method="dialog" class="folder-modal-head">
-          <h3>Filter by DAM folder</h3>
+          <div>
+            <h3>Filter by DAM folder</h3>
+            <p>Folders that contain referenced assets. A folder missing here holds nothing this scan found &mdash; it may still exist in the DAM.</p>
+          </div>
           <button type="submit" class="link-button" aria-label="Close">Close</button>
         </form>
         <div class="folder-tree" id="folderTree"></div>
