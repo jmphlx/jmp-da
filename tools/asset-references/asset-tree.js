@@ -79,34 +79,6 @@ export function coverage(path, selected) {
   return selected.some((s) => path.startsWith(`${s}/`)) ? 'ancestor' : '';
 }
 
-/**
- * Repaints selection marks on rows that are already rendered.
- *
- * Selecting a folder used to re-render the tree, which collapsed every folder the user had
- * opened. Rows carry their path, so the marks can be recomputed in place instead.
- * @param {HTMLElement} container element holding the rendered rows
- * @param {string[]} selected selected folder paths
- */
-export function refreshMarks(container, selected) {
-  const chosen = Array.isArray(selected) ? selected : [];
-
-  const all = container.closest('.folder-tree')?.querySelector('.tree-all')
-    ?? container.querySelector('.tree-all');
-  if (all) {
-    all.classList.toggle('is-self', chosen.length === 0);
-    all.setAttribute('aria-pressed', String(chosen.length === 0));
-  }
-
-  container.querySelectorAll('.tree-choose[data-path]').forEach((row) => {
-    const state = coverage(row.dataset.path, chosen);
-    row.classList.toggle('is-self', state === 'self');
-    row.classList.toggle('is-ancestor', state === 'ancestor');
-    row.setAttribute('aria-pressed', String(state === 'self'));
-    if (state === 'ancestor') row.title = 'Already covered by a selected parent folder';
-    else row.removeAttribute('title');
-  });
-}
-
 function countsFor(node) {
   const assets = document.createElement('span');
   assets.className = 'tree-count';
@@ -121,10 +93,10 @@ function countsFor(node) {
  * Renders a node's children as a collapsible, multi-select list.
  * @param {HTMLElement} container element to render into
  * @param {Object} node tree node
- * @param {Object} options { selected: () => string[], onToggle: Function }
+ * @param {Object} options selection state and callback
  */
 function renderChildren(container, node, options) {
-  const { onToggle } = options;
+  const { selected, onToggle } = options;
   const list = document.createElement('ul');
   list.className = 'tree-children';
 
@@ -144,10 +116,14 @@ function renderChildren(container, node, options) {
     twisty.setAttribute('aria-expanded', 'false');
     twisty.setAttribute('aria-label', hasChildren ? `Expand ${child.name}` : child.name);
 
+    const state = coverage(child.path, selected);
     const choose = document.createElement('button');
     choose.type = 'button';
-    choose.className = 'tree-choose';
-    choose.dataset.path = child.path;
+    choose.className = `tree-choose${state ? ` is-${state}` : ''}`;
+    choose.setAttribute('aria-pressed', String(state === 'self'));
+    if (state === 'ancestor') {
+      choose.title = 'Already covered by a selected parent folder';
+    }
 
     // The glyph is always present; the stylesheet hides it until the row is selected,
     // so an unselected row still shows an empty box and reads as something you can tick.
@@ -173,11 +149,10 @@ function renderChildren(container, node, options) {
       item.append(sub);
       twisty.addEventListener('click', () => {
         const open = !sub.hidden;
-        // Rendered once and kept, so expanding a folder survives every later selection.
-        if (!open && !sub.dataset.filled) {
+        if (!open) {
+          // Rebuilt on every open so selection marks stay current.
+          sub.innerHTML = '';
           renderChildren(sub, child, options);
-          sub.dataset.filled = 'true';
-          refreshMarks(sub, options.selected());
         }
         sub.hidden = open;
         twisty.textContent = open ? '▸' : '▾';
@@ -195,15 +170,16 @@ function renderChildren(container, node, options) {
  * Renders the whole tree, with a row for the DAM root that clears the selection.
  * @param {HTMLElement} container element to render into
  * @param {Object} root root node from buildFolderTree
- * @param {Object} options { selected: () => string[], onToggle: Function, onClear: Function }
+ * @param {Object} options { selected: string[], onToggle: Function, onClear: Function }
  */
 export function renderFolderTree(container, root, options) {
-  const { onToggle, onClear } = options;
+  const { selected = [], onToggle, onClear } = options;
   container.innerHTML = '';
 
   const all = document.createElement('button');
   all.type = 'button';
-  all.className = 'tree-choose tree-all';
+  all.className = `tree-choose tree-all${selected.length ? '' : ' is-self'}`;
+  all.setAttribute('aria-pressed', String(selected.length === 0));
   const allMark = document.createElement('span');
   allMark.className = 'tree-mark';
   allMark.textContent = '✓';
@@ -223,6 +199,5 @@ export function renderFolderTree(container, root, options) {
     return;
   }
 
-  renderChildren(container, root, { onToggle, selected: options.selected });
-  refreshMarks(container, options.selected());
+  renderChildren(container, root, { selected, onToggle });
 }

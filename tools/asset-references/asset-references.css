@@ -210,8 +210,6 @@ input[type="search"] {
   width: min(560px, 92vw);
   max-height: 80vh;
   padding: 0;
-  display: flex;
-  flex-direction: column;
   border: 1px solid #c6c6c6;
   border-radius: 6px;
   box-shadow: 0 2px 8px rgb(0 0 0 / 0.3);
@@ -228,8 +226,9 @@ input[type="search"] {
   gap: 12px;
   padding: 12px 14px;
   border-bottom: 1px solid #e6e6e6;
+  position: sticky;
+  top: 0;
   background: #ffffff;
-  flex: 0 0 auto;
 }
 
 .folder-modal-head h3 {
@@ -247,26 +246,7 @@ input[type="search"] {
 .folder-tree {
   padding: 10px 14px 16px;
   overflow-y: auto;
-  flex: 1 1 auto;
-  min-height: 0;
-}
-
-.folder-modal-foot {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 11px 14px;
-  border-top: 1px solid #e6e6e6;
-  background: #fafafa;
-}
-
-.folder-modal-foot .fnote {
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-.folder-modal-foot .primary {
-  padding: 7px 14px;
+  max-height: calc(80vh - 52px);
 }
 
 .tree-children {

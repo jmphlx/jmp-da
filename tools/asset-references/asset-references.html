@@ -39,18 +39,14 @@
       <div class="controls-secondary" id="folderChips"></div>
 
       <dialog id="folderModal" class="folder-modal">
-        <div class="folder-modal-head">
+        <form method="dialog" class="folder-modal-head">
           <div>
             <h3>Filter by DAM folder</h3>
-            <p>Tick as many folders as you like, then apply. Only folders containing referenced assets appear &mdash; one missing here holds nothing this scan found, though it may still exist in the DAM.</p>
+            <p>Pick as many folders as you like. Only folders containing referenced assets appear &mdash; one missing here holds nothing this scan found, though it may still exist in the DAM.</p>
           </div>
-        </div>
+          <button type="submit" class="link-button" aria-label="Close">Done</button>
+        </form>
         <div class="folder-tree" id="folderTree"></div>
-        <div class="folder-modal-foot">
-          <span class="fnote" id="folderDraftCount"></span>
-          <button type="button" class="link-button" id="folderCancel">Cancel</button>
-          <button type="button" class="primary" id="folderApply">Apply filter</button>
-        </div>
       </dialog>
 
       <div class="status-message" role="status" aria-live="polite"></div>
