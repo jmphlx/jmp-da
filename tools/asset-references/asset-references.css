@@ -17,6 +17,24 @@ h2 {
   line-height: 1.5;
 }
 
+.controls-secondary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: baseline;
+  margin-bottom: 12px;
+}
+
+select {
+  font: inherit;
+  font-size: 14px;
+  padding: 8px 8px;
+  border: 1px solid #c6c6c6;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #2c2c2c;
+}
+
 .controls {
   display: flex;
   flex-wrap: wrap;
@@ -290,6 +308,16 @@ input[type="search"] {
   font-size: 11px;
   font-variant-numeric: tabular-nums;
   color: #6e6e6e;
+  white-space: nowrap;
+}
+
+.tree-refs {
+  min-width: 72px;
+  text-align: right;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: #9b9b9b;
+  white-space: nowrap;
 }
 
 .tree-empty {

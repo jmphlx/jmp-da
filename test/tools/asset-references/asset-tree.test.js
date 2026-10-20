@@ -4,11 +4,11 @@ import { expect } from '@esm-bundle/chai';
 const { buildFolderTree, sortedChildren } = await import('../../../tools/asset-references/asset-tree.js');
 
 const PATHS = [
-  '/content/dam/jmp/images/why-jmp/hero.png',
-  '/content/dam/jmp/images/why-jmp/second.png',
-  '/content/dam/jmp/images/events/one.png',
-  '/content/dam/jmp/documents/en/guide.pdf',
-  '/content/dam/SAS/logo.png',
+  { damPath: '/content/dam/jmp/images/why-jmp/hero.png', count: 5 },
+  { damPath: '/content/dam/jmp/images/why-jmp/second.png', count: 1 },
+  { damPath: '/content/dam/jmp/images/events/one.png', count: 2 },
+  { damPath: '/content/dam/jmp/documents/en/guide.pdf', count: 3 },
+  { damPath: '/content/dam/SAS/logo.png', count: 1 },
 ];
 
 function child(node, name) {
@@ -29,6 +29,19 @@ describe('buildFolderTree', () => {
     expect(child(root, 'jmp').total).to.equal(4);
     expect(child(child(root, 'jmp'), 'images').total).to.equal(3);
     expect(child(child(child(root, 'jmp'), 'images'), 'why-jmp').total).to.equal(2);
+  });
+
+  it('totals the references those assets account for', () => {
+    const root = buildFolderTree(PATHS);
+    expect(root.refs).to.equal(12);
+    expect(child(root, 'jmp').refs).to.equal(11);
+    expect(child(child(child(root, 'jmp'), 'images'), 'why-jmp').refs).to.equal(6);
+  });
+
+  it('still accepts bare path strings, counting no references', () => {
+    const root = buildFolderTree(['/content/dam/SAS/logo.png']);
+    expect(root.total).to.equal(1);
+    expect(root.refs).to.equal(0);
   });
 
   it('does not turn the file name into a folder', () => {
@@ -52,8 +65,8 @@ describe('sortedChildren', () => {
 
   it('breaks ties by name', () => {
     const root = buildFolderTree([
-      '/content/dam/jmp/b/one.png',
-      '/content/dam/jmp/a/one.png',
+      { damPath: '/content/dam/jmp/b/one.png', count: 1 },
+      { damPath: '/content/dam/jmp/a/one.png', count: 1 },
     ]);
     expect(sortedChildren(child(root, 'jmp')).map((n) => n.name)).to.deep.equal(['a', 'b']);
   });

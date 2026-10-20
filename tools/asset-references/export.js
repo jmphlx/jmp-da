@@ -93,11 +93,12 @@ export function referenceRows(rows) {
  * @param {Object[]} rows rows from toRows
  * @returns {Array[]} label/value pairs
  */
-export function summaryRows(stats, rows) {
+export function summaryRows(stats, rows, scope = 'Every referenced asset') {
   const references = rows.reduce((total, r) => total + r.count, 0);
   return [
     ['Scanned', new Date().toISOString().slice(0, 10)],
     ['Repository', `${DA_CONSTANTS.org}/${DA_CONSTANTS.repo}`],
+    ['This export covers', scope],
     ['Documents scanned', stats.documentsScanned],
     ['Documents that failed to load', stats.documentsFailed],
     ['Documents referencing at least one asset', stats.documentsWithRefs],
@@ -165,13 +166,14 @@ export function loadSheetJs() {
  * Saves a three sheet workbook: what the run was, the assets, and the references.
  * @param {Object[]} rows rows from toRows
  * @param {Object} stats crawl stats
+ * @param {string} [scope] what the export covers, recorded on the Summary sheet
  * @returns {Promise<void>} resolves once the download has been offered
  */
-export async function downloadXlsx(rows, stats) {
+export async function downloadXlsx(rows, stats, scope) {
   const XLSX = await loadSheetJs();
   const book = XLSX.utils.book_new();
 
-  const summary = XLSX.utils.aoa_to_sheet(summaryRows(stats, rows));
+  const summary = XLSX.utils.aoa_to_sheet(summaryRows(stats, rows, scope));
   summary['!cols'] = [{ wch: 42 }, { wch: 96 }];
   XLSX.utils.book_append_sheet(book, summary, 'Summary');
 

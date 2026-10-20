@@ -14,9 +14,6 @@ import {
 } from './export.js';
 import { buildFolderTree, renderFolderTree } from './asset-tree.js';
 
-/** Rows rendered before the list is truncated. Exports always carry the full set. */
-const RENDER_LIMIT = 250;
-
 let actions;
 let rows = [];
 let stats = null;
@@ -72,36 +69,42 @@ function renderSummary() {
   `;
 }
 
+/** Builds one asset's document list. Deferred until expanded: 14,000 links up front is what
+ *  made rendering the whole list slow, not the rows themselves. */
+function fillPages(cell, row) {
+  const list = document.createElement('ul');
+  list.className = 'pages';
+  list.innerHTML = row.pages.map((page) => `
+    <li>
+      <span class="page-path">${escapeHtml(page)}</span>
+      <a href="${escapeHtml(editUrl(page))}" target="_blank" rel="noopener">edit</a>
+      <a href="${escapeHtml(liveUrl(page))}" target="_blank" rel="noopener">live</a>
+    </li>`).join('');
+  cell.append(list);
+}
+
 function renderRows() {
   const body = el('.results tbody');
-  const shown = filtered.slice(0, RENDER_LIMIT);
 
-  body.innerHTML = shown.map((row) => {
-    const pages = row.pages.map((page) => `
-      <li>
-        <span class="page-path">${escapeHtml(page)}</span>
-        <a href="${escapeHtml(editUrl(page))}" target="_blank" rel="noopener">edit</a>
-        <a href="${escapeHtml(liveUrl(page))}" target="_blank" rel="noopener">live</a>
-      </li>`).join('');
-
-    return `
+  body.innerHTML = filtered.map((row, index) => `
       <tr class="asset-row">
         <td class="asset-path">${escapeHtml(row.damPath)}</td>
         <td class="num">${fmt(row.count)}</td>
         <td class="num">${fmt(row.publishedCount)}</td>
-        <td><button type="button" class="link-button" aria-expanded="false">Show documents</button></td>
+        <td><button type="button" class="link-button" data-i="${index}" aria-expanded="false">Show documents</button></td>
       </tr>
-      <tr class="pages-row" hidden><td colspan="4"><ul class="pages">${pages}</ul></td></tr>`;
-  }).join('');
+      <tr class="pages-row" hidden><td colspan="4"></td></tr>`).join('');
 
-  el('.result-count').textContent = filtered.length > RENDER_LIMIT
-    ? `Showing ${fmt(RENDER_LIMIT)} of ${fmt(filtered.length)} assets. Export to see them all.`
-    : `${fmt(filtered.length)} assets.`;
+  el('.result-count').textContent = `${fmt(filtered.length)} assets${
+    folder ? ` in ${folder}` : ''
+  }${filtered.length === rows.length ? '.' : ` of ${fmt(rows.length)}.`}`;
 
   body.querySelectorAll('.link-button').forEach((button) => {
     button.addEventListener('click', () => {
       const pagesRow = button.closest('tr').nextElementSibling;
+      const cell = pagesRow.firstElementChild;
       const open = !pagesRow.hidden;
+      if (!open && !cell.hasChildNodes()) fillPages(cell, filtered[Number(button.dataset.i)]);
       pagesRow.hidden = open;
       button.setAttribute('aria-expanded', String(!open));
       button.textContent = open ? 'Show documents' : 'Hide documents';
@@ -109,14 +112,33 @@ function renderRows() {
   });
 }
 
+/** Orders the visible rows. Fewest-first surfaces the single-use tail. */
+function sortRows(list) {
+  const order = el('#sortOrder').value;
+  const byPath = (a, b) => a.damPath.localeCompare(b.damPath);
+  if (order === 'path') return [...list].sort(byPath);
+  if (order === 'least') return [...list].sort((a, b) => a.count - b.count || byPath(a, b));
+  return [...list].sort((a, b) => b.count - a.count || byPath(a, b));
+}
+
 /** Reflects the chosen folder in the controls and narrows the list to it. */
 function applyFolder() {
   el('#folderCurrent').textContent = folder ?? 'All folders';
   el('#folderClear').hidden = !folder;
-  filtered = folder
+  const scoped = folder
     ? rows.filter((row) => row.damPath.startsWith(`${folder}/`))
     : rows;
+  filtered = sortRows(scoped);
   renderRows();
+}
+
+/** Rows the exports cover, and the label recorded in the workbook's Summary sheet. */
+function exportSelection() {
+  const everything = el('#exportScope').value === 'all';
+  if (everything || !folder) {
+    return { rows, scope: 'Every referenced asset' };
+  }
+  return { rows: filtered, scope: `Folder ${folder}` };
 }
 
 function selectFolder(path) {
@@ -128,7 +150,7 @@ function selectFolder(path) {
 }
 
 function openFolderPicker() {
-  renderFolderTree(el('#folderTree'), buildFolderTree(rows.map((r) => r.damPath)), selectFolder);
+  renderFolderTree(el('#folderTree'), buildFolderTree(rows), selectFolder);
   el('#folderModal').showModal();
 }
 
@@ -174,8 +196,9 @@ async function exportXlsx() {
   const original = button.textContent;
   button.textContent = 'Building…';
   try {
-    await downloadXlsx(rows, stats);
-    setStatus('Excel workbook downloaded.');
+    const selection = exportSelection();
+    await downloadXlsx(selection.rows, stats, selection.scope);
+    setStatus(`Excel workbook downloaded - ${selection.scope.toLowerCase()}.`);
   } catch (error) {
     setStatus(`Excel export failed: ${error.message}`, true);
   } finally {
@@ -189,9 +212,12 @@ async function exportXlsx() {
   el('#scanButton').addEventListener('click', scan);
   el('#folderButton').addEventListener('click', openFolderPicker);
   el('#folderClear').addEventListener('click', () => selectFolder(null));
+  el('#sortOrder').addEventListener('change', applyFolder);
   el('#csvButton').addEventListener('click', () => {
-    downloadCsv(rows, stats);
-    setStatus('Two CSV files downloaded: the asset list and the reference list.');
+    const selection = exportSelection();
+    downloadCsv(selection.rows, stats);
+    setStatus(`Two CSV files downloaded - ${selection.scope.toLowerCase()}: `
+      + 'the asset list and the reference list.');
   });
   el('#xlsxButton').addEventListener('click', exportXlsx);
   enableExports(false);

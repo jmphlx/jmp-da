@@ -20,13 +20,25 @@
 
       <div class="controls">
         <button id="scanButton" class="primary" type="button">Scan repository</button>
-        <button id="csvButton" type="button" disabled>Export CSV</button>
-        <button id="xlsxButton" type="button" disabled>Export Excel</button>
         <button id="folderButton" type="button" disabled aria-haspopup="dialog">
           Browse folders
         </button>
+        <select id="sortOrder" aria-label="Sort order">
+          <option value="refs">Most referenced</option>
+          <option value="least">Fewest references</option>
+          <option value="path">Path A&ndash;Z</option>
+        </select>
+        <button id="csvButton" type="button" disabled>Export CSV</button>
+        <button id="xlsxButton" type="button" disabled>Export Excel</button>
+        <select id="exportScope" aria-label="What the exports cover">
+          <option value="folder">Export current folder</option>
+          <option value="all">Export everything</option>
+        </select>
+      </div>
+
+      <div class="controls-secondary">
         <span id="folderCurrent" class="folder-current">All folders</span>
-        <button id="folderClear" type="button" class="link-button" hidden>Clear</button>
+        <button id="folderClear" type="button" class="link-button" hidden>Clear folder</button>
       </div>
 
       <dialog id="folderModal" class="folder-modal">

@@ -12,25 +12,33 @@
 export const DAM_ROOT = '/content/dam';
 
 /**
- * Groups asset paths into a nested folder tree.
+ * Groups scan rows into a nested folder tree.
  *
- * Each node carries `total`, the number of assets at or below it, which is what makes the
- * tree worth browsing - a folder's weight is visible before you open it.
- * @param {string[]} damPaths canonical /content/dam/... asset paths
+ * Each node carries `total`, the assets at or below it, and `refs`, how many document
+ * references those assets account for. Both are what make the tree worth browsing: a
+ * folder's weight is visible before you open it.
+ *
+ * Note that a folder containing no referenced assets has no node at all, because the tree is
+ * derived from the results. Showing such folders would require the DAM's own folder list,
+ * which means AEM credentials this tool deliberately does not need.
+ * @param {Object[]} entries rows from toRows, or bare /content/dam/... path strings
  * @returns {Object} root node
  */
-export function buildFolderTree(damPaths) {
+export function buildFolderTree(entries) {
   const root = {
-    name: DAM_ROOT, path: DAM_ROOT, total: 0, children: new Map(),
+    name: DAM_ROOT, path: DAM_ROOT, total: 0, refs: 0, children: new Map(),
   };
-  if (!Array.isArray(damPaths)) return root;
+  if (!Array.isArray(entries)) return root;
 
-  damPaths.forEach((damPath) => {
+  entries.forEach((entry) => {
+    const damPath = typeof entry === 'string' ? entry : entry?.damPath;
+    const refs = typeof entry === 'string' ? 0 : (entry?.count ?? 0);
     if (typeof damPath !== 'string' || !damPath.startsWith(`${DAM_ROOT}/`)) return;
     // The last segment is the file itself, so it never becomes a folder node.
     const segments = damPath.slice(DAM_ROOT.length + 1).split('/').slice(0, -1);
 
     root.total += 1;
+    root.refs += refs;
     let node = root;
     segments.forEach((segment) => {
       if (!node.children.has(segment)) {
@@ -38,11 +46,13 @@ export function buildFolderTree(damPaths) {
           name: segment,
           path: `${node.path}/${segment}`,
           total: 0,
+          refs: 0,
           children: new Map(),
         });
       }
       node = node.children.get(segment);
       node.total += 1;
+      node.refs += refs;
     });
   });
 
@@ -90,8 +100,11 @@ function renderChildren(container, node, onSelect) {
     label.textContent = child.name;
     const count = document.createElement('span');
     count.className = 'tree-count';
-    count.textContent = child.total.toLocaleString();
-    choose.append(label, count);
+    count.textContent = `${child.total.toLocaleString()} assets`;
+    const refs = document.createElement('span');
+    refs.className = 'tree-refs';
+    refs.textContent = `${child.refs.toLocaleString()} refs`;
+    choose.append(label, count, refs);
     choose.addEventListener('click', () => onSelect(child.path));
 
     row.append(twisty, choose);
@@ -137,8 +150,11 @@ export function renderFolderTree(container, root, onSelect) {
   allLabel.textContent = 'All folders';
   const allCount = document.createElement('span');
   allCount.className = 'tree-count';
-  allCount.textContent = root.total.toLocaleString();
-  all.append(allLabel, allCount);
+  allCount.textContent = `${root.total.toLocaleString()} assets`;
+  const allRefs = document.createElement('span');
+  allRefs.className = 'tree-refs';
+  allRefs.textContent = `${root.refs.toLocaleString()} refs`;
+  all.append(allLabel, allCount, allRefs);
   all.addEventListener('click', () => onSelect(null));
   container.append(all);
 
