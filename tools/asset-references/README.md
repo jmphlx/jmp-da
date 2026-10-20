@@ -49,7 +49,12 @@ DA source, which is what this tool does.
 - **Folder picker** — browse the DAM folder tree and narrow the list to a folder. The tree is
   built from the scan results rather than from AEM, which keeps the tool credential-free and is
   the right source anyway: the picker filters the results, so it should only offer folders the
-  results contain. Each folder shows how many assets sit at or below it.
+  results contain. Each folder shows the assets at or below it and the references they account
+  for, so its weight is visible before you open it. A folder containing no referenced assets has
+  no node at all, for the same reason — the tree is derived from the results.
+- **Sort** — most referenced, fewest references, or path A–Z. Fewest-first surfaces the
+  single-use tail, which is where cleanup candidates cluster.
+- **Export scope** — the exports cover the selected folder by default, or everything.
 - **CSV export** — two files: the asset list, and the long-form asset/document pairs.
 - **Excel export** — one workbook: Summary, Referenced assets, References.
 
@@ -85,8 +90,11 @@ confirm against CDN request logs before deleting anything.
 | `da-asset-references.csv` | One row per asset/document pair, with edit and live URLs |
 | `da-asset-references.xlsx` | Summary, Referenced assets, References |
 
-The Summary sheet records the crawl stats and states the DA-only limitation, so an exported file
-explains itself to whoever opens it next.
+The Summary sheet records the crawl stats, the export scope and the DA-only limitation, so an
+exported file explains itself to whoever opens it next and cannot be mistaken for the full set.
+
+The whole result list is rendered; each asset's document list is built only when expanded,
+because 14,000 links up front is what made rendering the full list slow, not the rows themselves.
 
 Asset paths can contain commas, so CSV fields are quoted. Excel export loads SheetJS from cdnjs
 on first use rather than on page load, because it is ~880KB and most runs never export.
