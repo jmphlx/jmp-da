@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>DAM Asset References</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- Import DA App SDK -->
+    <script src="https://da.live/nx/utils/sdk.js" type="module"></script>
+    <!-- Project App Logic -->
+    <script src="/tools/asset-references/asset-references.js" type="module"></script>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" type="text/css" href="/tools/asset-references/asset-references.css">
+  </head>
+  <body>
+    <div class="app-container">
+      <h2>DAM Asset References</h2>
+      <p class="intro">
+        Lists every asset in the DAM that Document Authoring content links to, how many
+        documents link it, and which ones. Read only &mdash; nothing is written to DA or to AEM.
+      </p>
+
+      <div class="controls">
+        <button id="scanButton" class="primary" type="button">Scan repository</button>
+        <button id="folderButton" type="button" disabled aria-haspopup="dialog">
+          Filter by path
+        </button>
+        <select id="sortOrder" aria-label="Sort order">
+          <option value="refs">Most referenced</option>
+          <option value="least">Fewest references</option>
+          <option value="path">Path A&ndash;Z</option>
+        </select>
+        <button id="csvButton" type="button" disabled>Export CSV</button>
+        <button id="xlsxButton" type="button" disabled>Export Excel</button>
+        <select id="exportScope" aria-label="What the exports cover">
+          <option value="folder">Export currently selected folders</option>
+          <option value="all">Export everything</option>
+        </select>
+      </div>
+
+      <div class="controls-secondary" id="folderChips"></div>
+
+      <dialog id="folderModal" class="folder-modal">
+        <div class="folder-modal-head">
+          <div>
+            <h3>Filter by DAM folder</h3>
+            <p>Tick as many folders as you like, then apply. Only folders containing referenced assets appear &mdash; one missing here holds nothing this scan found, though it may still exist in the DAM.</p>
+          </div>
+        </div>
+        <div class="folder-tree" id="folderTree"></div>
+        <div class="folder-modal-foot">
+          <span class="fnote" id="folderDraftCount"></span>
+          <button type="button" class="link-button" id="folderCancel">Cancel</button>
+          <button type="button" class="primary" id="folderApply">Apply filter</button>
+        </div>
+      </dialog>
+
+      <div class="status-message" role="status" aria-live="polite"></div>
+      <div class="summary"></div>
+
+      <div class="result-count"></div>
+
+      <table class="results">
+        <thead>
+          <tr>
+            <th id="thAsset">Asset</th>
+            <th class="num" id="thDocs">Documents</th>
+            <th class="num">Published</th>
+            <th>Locations</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </body>
+</html>
