@@ -1,3 +1,9 @@
+/* hidden must always win. A display value set on a class would otherwise override it, which
+   is the same trap the dialog fell into with [open]. */
+[hidden] {
+  display: none !important;
+}
+
 body {
   margin: 0;
   padding: 24px;
@@ -215,6 +221,17 @@ input[type="search"] {
   box-shadow: 0 2px 8px rgb(0 0 0 / 0.3);
 }
 
+/*
+ * The column layout applies only while open. A closed dialog is hidden solely by the browser's
+ * own dialog:not([open]) { display: none }, and any display set here would override it - which
+ * is exactly how an unscoped display: flex left the dialog painted over the page before a scan,
+ * with no way to close it.
+ */
+.folder-modal[open] {
+  display: flex;
+  flex-direction: column;
+}
+
 .folder-modal::backdrop {
   background: rgb(0 0 0 / 0.35);
 }
@@ -226,9 +243,8 @@ input[type="search"] {
   gap: 12px;
   padding: 12px 14px;
   border-bottom: 1px solid #e6e6e6;
-  position: sticky;
-  top: 0;
   background: #ffffff;
+  flex: 0 0 auto;
 }
 
 .folder-modal-head h3 {
@@ -246,7 +262,26 @@ input[type="search"] {
 .folder-tree {
   padding: 10px 14px 16px;
   overflow-y: auto;
-  max-height: calc(80vh - 52px);
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.folder-modal-foot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border-top: 1px solid #e6e6e6;
+  background: #fafafa;
+}
+
+.folder-modal-foot .fnote {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.folder-modal-foot .primary {
+  padding: 7px 14px;
 }
 
 .tree-children {

@@ -46,7 +46,7 @@ DA source, which is what this tool does.
   (`/drafts/`, `/sandbox/`), mirroring the exclusions in `configurations/query.yaml`.
 - **Locations** — expand any asset to see each referencing document, with links to edit it in
   DA and to view it live.
-- **Folder picker** — browse the DAM folder tree and narrow the list to a folder. The tree is
+- **Filter by path** — browse the DAM folder tree and narrow the list to a folder. The tree is
   built from the scan results rather than from AEM, which keeps the tool credential-free and is
   the right source anyway: the picker filters the results, so it should only offer folders the
   results contain. Each folder shows the assets at or below it and the references they account
@@ -56,10 +56,12 @@ DA source, which is what this tool does.
   in the table header. Path order is numeric, so `jmp-9` precedes `jmp-10`. Note that fewest-
   first and A–Z look alike near the top of the list: most assets are referenced once and that
   sort tie-breaks on path, so both begin with the same alphabetical run.
-- **Multi-select** — pick any number of folders; the list shows their union. Selecting a parent
-  drops its already-selected children, since they change nothing. Each selected folder appears
+- **Multi-select** — tick any number of folders, then press apply; the list shows their union.
+  Ticking does not re-filter and does not re-render the tree, so folders you opened stay open
+  and the re-filter happens once. Cancel discards the working selection. Ticking a parent
+  drops its already-ticked children, since they change nothing. Each applied folder appears
   as a chip above the table, and clicking a chip removes that folder.
-- **Export scope** — the exports cover the selected folders by default, or everything.
+- **Export scope** — "Export currently selected folders" by default, or "Export everything".
   Filenames carry the date and the folders captured, for example
   `da-assets-2026-10-20-events+screenshots.csv`, and omit the folder part when the export
   covers everything.
