@@ -93,8 +93,19 @@ div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
       padding: 24px;
     }
   }
+  &.heading-blue {
+    h1, h2, h3, h4 {
+      color: var(--blue);
+    }
+  }
+  &.column-gray {
+    background-color: var(--gray);
+  }
   &.padding-24 {
     padding: 24px;
+  }
+  &.column-margin-24 {
+    margin-bottom: 24px;
   }
   &.rounded-5 {
     border-radius: 5px;
@@ -108,6 +119,19 @@ div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
   &.text-light {
     strong, blockquote {
       color: #ffffff !important;
+    }
+  }
+  &.h6-blue-block-tag {
+    position: relative;
+    h4 {
+      padding-top: 48px;
+    }
+    h6 {
+      position: absolute;
+      padding: 8px 16px 8px 24px;
+      left: 0;
+      background-color: var(--blue);
+      color: var(--white);
     }
   }
   &.image-cover {
@@ -204,7 +228,7 @@ div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
         padding: 12px;
         border-radius: 5px;
         position: relative;
-        display: flex;
+        display: block;
         align-items: center;
         justify-content: left;
         padding-left: 42px;
@@ -217,6 +241,7 @@ div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
       }
       li::marker {
         color: var(--blue) !important;
+        font-size: var(--heading-font-size-s) !important;
         font-family: var(--font-bold);
       }
       li:before {
@@ -238,6 +263,60 @@ div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
         align-items: center;
         justify-content: center;
         font-size: 1.2rem;
+      }
+    }
+  }
+  &.number-bullet-cards-large {
+    ol {
+      display: block;
+      flex-wrap: wrap;
+      gap: 12px;
+      width: auto;
+      padding: 0;
+      list-style: none;
+      counter-reset: my-custom-counter;
+      padding-left: 0;
+      li {
+        background-color: rgba(3, 120, 205, .1);
+        padding: 12px;
+        border-radius: 5px;
+        font-size: 18px;
+        position: relative;
+        display: block;
+        align-items: center;
+        justify-content: left;
+        padding-left: 64px;
+        margin-bottom: 12px;
+        width: auto;
+        min-height: 42px;
+        @media (width <= 600px) {
+          width: auto;
+        }
+      }
+      li::marker {
+        color: var(--blue) !important;
+        font-size: 24px !important;
+        font-family: var(--font-bold);
+      }
+      li:before {
+        /* Increment and display the counter */
+        counter-increment: my-custom-counter;
+        content: counter(my-custom-counter);
+        /* Apply the background color and shape */
+        background-color: var(--blue);
+        color: white;
+        border-radius: 50%; /* Makes it a circle */
+        /* Size and alignment */
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 4rem;
+        height: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.4rem;
       }
     }
   }
