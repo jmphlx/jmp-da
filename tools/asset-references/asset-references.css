@@ -1,0 +1,440 @@
+/* hidden must always win. A display value set on a class would otherwise override it, which
+   is the same trap the dialog fell into with [open]. */
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  padding: 24px;
+  font-family: "adobe-clean", -apple-system, system-ui, sans-serif;
+  color: #2c2c2c;
+  background: #ffffff;
+}
+
+h2 {
+  margin: 0 0 8px;
+}
+
+.intro {
+  max-width: 76ch;
+  margin: 0 0 18px;
+  color: #6e6e6e;
+  line-height: 1.5;
+}
+
+.controls-secondary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: baseline;
+  margin-bottom: 12px;
+}
+
+select {
+  font: inherit;
+  font-size: 14px;
+  padding: 8px 8px;
+  border: 1px solid #c6c6c6;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #2c2c2c;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+button {
+  font: inherit;
+  font-size: 14px;
+  padding: 8px 14px;
+  border: 1px solid #c6c6c6;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #2c2c2c;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  border-color: #1473e6;
+  color: #1473e6;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.primary {
+  background: #1473e6;
+  border-color: #1473e6;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.primary:hover:not(:disabled) {
+  background: #0d66d0;
+  color: #ffffff;
+}
+
+input[type="search"] {
+  font: inherit;
+  font-size: 14px;
+  padding: 8px 10px;
+  border: 1px solid #c6c6c6;
+  border-radius: 4px;
+  min-width: 240px;
+  flex: 1 1 240px;
+}
+
+.status-message {
+  min-height: 20px;
+  font-size: 13px;
+  color: #6e6e6e;
+  margin-bottom: 10px;
+}
+
+.status-message.error {
+  color: #d7373f;
+  font-weight: 700;
+}
+
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.pill {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 12px;
+  background: #f0f4fb;
+  color: #1473e6;
+}
+
+.pill.warn {
+  background: #fdf0e6;
+  color: #c4511b;
+}
+
+.result-count {
+  font-size: 13px;
+  color: #6e6e6e;
+  margin-bottom: 8px;
+}
+
+.results {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.results th,
+.results td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid #e6e6e6;
+  vertical-align: top;
+}
+
+.results thead th {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6e6e6e;
+  background: #fafafa;
+  white-space: nowrap;
+}
+
+.results .num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.asset-path {
+  font-family: ui-monospace, "SF Mono", "Menlo", "Consolas", monospace;
+  font-size: 12px;
+  word-break: break-all;
+}
+
+.link-button {
+  padding: 2px 6px;
+  font-size: 12px;
+  border-color: transparent;
+  color: #1473e6;
+  background: none;
+  white-space: nowrap;
+}
+
+.pages {
+  margin: 0;
+  padding: 4px 0 4px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pages li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  align-items: baseline;
+}
+
+.page-path {
+  font-family: ui-monospace, "SF Mono", "Menlo", "Consolas", monospace;
+  font-size: 12px;
+  word-break: break-all;
+}
+
+.pages a {
+  font-size: 11px;
+  color: #1473e6;
+}
+
+.folder-current {
+  font-family: ui-monospace, "SF Mono", "Menlo", "Consolas", monospace;
+  font-size: 12px;
+  color: #4b4b4b;
+  flex: 1 1 200px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.folder-modal {
+  width: min(560px, 92vw);
+  max-height: 80vh;
+  padding: 0;
+  border: 1px solid #c6c6c6;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.3);
+}
+
+/*
+ * The column layout applies only while open. A closed dialog is hidden solely by the browser's
+ * own dialog:not([open]) { display: none }, and any display set here would override it - which
+ * is exactly how an unscoped display: flex left the dialog painted over the page before a scan,
+ * with no way to close it.
+ */
+.folder-modal[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.folder-modal::backdrop {
+  background: rgb(0 0 0 / 0.35);
+}
+
+.folder-modal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #e6e6e6;
+  background: #ffffff;
+  flex: 0 0 auto;
+}
+
+.folder-modal-head h3 {
+  margin: 0;
+  font-size: 14px;
+}
+
+.folder-modal-head p {
+  margin: 3px 0 0;
+  font-size: 12px;
+  color: #6e6e6e;
+  max-width: 46ch;
+}
+
+.folder-tree {
+  padding: 10px 14px 16px;
+  overflow-y: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.folder-modal-foot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border-top: 1px solid #e6e6e6;
+  background: #fafafa;
+}
+
+.folder-modal-foot .fnote {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.folder-modal-foot .primary {
+  padding: 7px 14px;
+}
+
+.tree-children {
+  list-style: none;
+  margin: 0;
+  padding-left: 14px;
+}
+
+.tree-row {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.tree-twisty {
+  width: 20px;
+  padding: 2px;
+  border: 0;
+  background: none;
+  color: #6e6e6e;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.tree-twisty:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+.tree-choose {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  padding: 4px 6px;
+  border: 0;
+  background: none;
+  text-align: left;
+  border-radius: 3px;
+}
+
+.tree-choose:hover {
+  background: #f0f4fb;
+  color: inherit;
+}
+
+.tree-all {
+  width: 100%;
+  font-weight: 700;
+  border-bottom: 1px solid #e6e6e6;
+  border-radius: 0;
+  margin-bottom: 6px;
+}
+
+.tree-name {
+  font-family: ui-monospace, "SF Mono", "Menlo", "Consolas", monospace;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tree-count {
+  margin-left: auto;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: #6e6e6e;
+  white-space: nowrap;
+}
+
+.tree-refs {
+  min-width: 72px;
+  text-align: right;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: #9b9b9b;
+  white-space: nowrap;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 4px 8px;
+  font-family: ui-monospace, "SF Mono", "Menlo", "Consolas", monospace;
+  font-size: 11.5px;
+  border: 1px solid #b6cdf0;
+  border-radius: 12px;
+  background: #f0f4fb;
+  color: #1473e6;
+  cursor: pointer;
+}
+
+.chip:hover {
+  border-color: #d7373f;
+  background: #fdeeef;
+  color: #d7373f;
+}
+
+.chip-x {
+  font-size: 13px;
+  line-height: 1;
+}
+
+.tree-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  border: 1px solid #a9a9a9;
+  border-radius: 3px;
+  background: #ffffff;
+  font-size: 10px;
+  line-height: 1;
+  color: transparent;
+}
+
+.tree-choose:hover .tree-mark {
+  border-color: #1473e6;
+}
+
+.tree-choose.is-self {
+  background: #f0f4fb;
+  color: #1473e6;
+  font-weight: 700;
+}
+
+.tree-choose.is-self .tree-mark {
+  border-color: #1473e6;
+  background: #1473e6;
+  color: #ffffff;
+}
+
+.tree-choose.is-ancestor {
+  color: #6e6e6e;
+}
+
+.tree-choose.is-ancestor .tree-mark {
+  border-color: #c6c6c6;
+  background: #e6e6e6;
+  color: #6e6e6e;
+}
+
+.tree-empty {
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: #6e6e6e;
+}
+
+@media (max-width: 600px) {
+  body { padding: 16px; }
+  input[type="search"] { min-width: 0; }
+}
