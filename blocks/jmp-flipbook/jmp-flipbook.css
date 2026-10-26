@@ -1,0 +1,45 @@
+.jmp-flipbook {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto 32px;
+}
+
+/* Reserve space before the iframe loads to avoid layout shift. */
+.jmp-flipbook .jmp-flipbook-frame,
+.jmp-flipbook:not(.jmp-flipbook-is-loaded) {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  min-height: 420px;
+  max-height: 85vh;
+}
+
+.jmp-flipbook.jmp-flipbook-is-loaded {
+  aspect-ratio: auto;
+  min-height: 0;
+  max-height: none;
+}
+
+.jmp-flipbook .jmp-flipbook-frame {
+  /* Keep the flipbook's heavy canvas repaints from invalidating the page. */
+  contain: strict;
+  isolation: isolate;
+}
+
+.jmp-flipbook .jmp-flipbook-frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+@media (width >= 900px) {
+  .jmp-flipbook .jmp-flipbook-frame,
+  .jmp-flipbook:not(.jmp-flipbook-is-loaded) {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+/* Do not render a frame for a missing or disallowed source. */
+.jmp-flipbook.jmp-flipbook-invalid {
+  display: none;
+}
