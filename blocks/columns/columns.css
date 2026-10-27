@@ -88,6 +88,11 @@ div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
 }
 
 .columns {
+  &.image-reverse-mobile {
+    .columns-img-col {
+      order: 1;
+    }
+  }
   &.text-padding-24 {
     div div:has(p) {
       padding: 24px;
