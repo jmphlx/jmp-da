@@ -78,20 +78,20 @@ function buildPreform(block, config, t) {
   }, t['Select a role']);
   roleSelect.append(defaultOption);
 
-  const studentOption = createTag('option', {
-    value: 'Student',
-  }, t.Student);
-  roleSelect.append(studentOption);
+  const professionalOption = createTag('option', {
+    value: 'Professional',
+  }, t.Professional);
+  roleSelect.append(professionalOption);
 
   const academicOption = createTag('option', {
     value: 'Academic Educator or Researcher',
   }, t['Academic Educator or Researcher']);
   roleSelect.append(academicOption);
 
-  const professionalOption = createTag('option', {
-    value: 'Professional',
-  }, t.Professional);
-  roleSelect.append(professionalOption);
+  const studentOption = createTag('option', {
+    value: 'Student',
+  }, t.Student);
+  roleSelect.append(studentOption);
 
   roleDiv.append(roleLabel, roleSelect);
 
