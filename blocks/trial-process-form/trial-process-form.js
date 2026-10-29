@@ -4,6 +4,9 @@ import { createTag } from '../../scripts/helper.js';
 
 const translationsUrl = '/commons/trial-translations.json';
 
+// Internal name of the hidden role field on the HubSpot form
+const hubspotRoleFieldName = 'role';
+
 const englishStrings = Object.freeze({
   Role: 'Role',
   'Select a role': 'Select a role',
@@ -38,10 +41,10 @@ function buildBlockRow(name, value) {
   return rowDiv;
 }
 
-function buildHubspotForm(config) {
+function buildHubspotForm(config, role) {
   const parent = createTag('div');
   const hubspotWrapper = createTag('div', {
-    class: 'hubspot block',
+    class: 'hubspot-form block',
   });
   const region = buildBlockRow('region', 'na1');
   const portalId = buildBlockRow('portalId', config.portalId);
@@ -49,6 +52,8 @@ function buildHubspotForm(config) {
   const salesforceCampaignId = buildBlockRow('salesforceCampaignId', config.salesforceCampaignId);
   const redirect = buildBlockRow('redirectTarget', '/en/sandbox/laurel/sprint-demos/thanks/thank-you-page');
   hubspotWrapper.append(region, portalId, formId, salesforceCampaignId, redirect);
+  hubspotWrapper.dataset.roleField = hubspotRoleFieldName;
+  hubspotWrapper.dataset.role = role;
   parent.append(hubspotWrapper);
   const preformComp = document.querySelector('.trial-process-form-wrapper');
   const section = preformComp.parentElement;
@@ -126,7 +131,7 @@ function buildPreform(block, config, t) {
       preform.parentElement.appendChild(messageDiv);
       preform.classList.add('hidden');
     } else if (selectedRole === 'Academic Educator or Researcher' || selectedRole === 'Professional') {
-      buildHubspotForm(config, Object.fromEntries(formData));
+      buildHubspotForm(config, selectedRole);
       preform.parentElement.classList.add('hidden');
     }
   });
