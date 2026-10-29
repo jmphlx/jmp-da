@@ -1,6 +1,29 @@
 import { decorateBlock, loadBlock } from '../../scripts/aem.js';
-import { getBlockConfig } from '../../scripts/jmp.js';
+import { getBlockConfig, getJsonFromUrl, getLanguage } from '../../scripts/jmp.js';
 import { createTag } from '../../scripts/helper.js';
+
+const translationsUrl = '/commons/trial-translations.json';
+
+const englishStrings = Object.freeze({
+  Role: 'Role',
+  'Select a role': 'Select a role',
+  Student: 'Student',
+  Professional: 'Professional',
+  'Academic Educator or Researcher': 'Academic Educator or Researcher',
+  Next: 'Next',
+});
+
+/**
+ * Fetches the translated strings for the current page language.
+ * Falls back to English for any string that is missing.
+ * @returns {object} translated strings keyed by English source text
+ */
+async function getTranslations() {
+  console.log(getLanguage());
+  const json = await getJsonFromUrl(translationsUrl);
+  const langStrings = json?.[getLanguage()]?.data?.[0];
+  return { ...englishStrings, ...langStrings };
+}
 
 async function buildBlock(block) {
   decorateBlock(block);
@@ -33,7 +56,7 @@ function buildHubspotForm(config) {
   buildBlock(hubspotWrapper);
 }
 
-function buildPreform(block, config) {
+function buildPreform(block, config, t) {
   const preform = createTag('form');
 
   const roleDiv = createTag('div', {
@@ -42,7 +65,7 @@ function buildPreform(block, config) {
 
   const roleLabel = createTag('label', {
     for: 'role',
-  }, 'Role');
+  }, t.Role);
 
   const roleSelect = createTag('select', {
     id: 'role',
@@ -52,22 +75,22 @@ function buildPreform(block, config) {
 
   const defaultOption = createTag('option', {
     value: '',
-  }, 'Select a role');
+  }, t['Select a role']);
   roleSelect.append(defaultOption);
 
   const studentOption = createTag('option', {
     value: 'Student',
-  }, 'Student');
+  }, t.Student);
   roleSelect.append(studentOption);
 
   const academicOption = createTag('option', {
     value: 'Academic Educator or Researcher',
-  }, 'Academic Educator or Researcher');
+  }, t['Academic Educator or Researcher']);
   roleSelect.append(academicOption);
 
   const professionalOption = createTag('option', {
     value: 'Professional',
-  }, 'Professional');
+  }, t.Professional);
   roleSelect.append(professionalOption);
 
   roleDiv.append(roleLabel, roleSelect);
@@ -84,7 +107,7 @@ function buildPreform(block, config) {
 
   const submitBtn = createTag('input', {
     type: 'submit',
-    value: 'Next',
+    value: t.Next,
   });
 
   preform.addEventListener('submit', (event) => {
@@ -111,8 +134,9 @@ function buildPreform(block, config) {
   block.append(preform);
 }
 
-export default function decorate(block) {
+export default async function decorate(block) {
   const config = getBlockConfig(block);
+  const translations = await getTranslations();
   block.textContent = '';
-  buildPreform(block, config);
+  buildPreform(block, config, translations);
 }
