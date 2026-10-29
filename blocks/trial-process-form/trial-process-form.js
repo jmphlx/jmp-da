@@ -72,6 +72,16 @@ function buildPreform(block, config) {
 
   roleDiv.append(roleLabel, roleSelect);
 
+  const academicMessageDiv = createTag('div', {
+    class: 'academic-message hidden',
+  });
+  academicMessageDiv.innerHTML = config.academicMessage || '';
+
+  roleSelect.addEventListener('change', () => {
+    const isAcademic = roleSelect.value === 'Academic Educator or Researcher';
+    academicMessageDiv.classList.toggle('hidden', !isAcademic);
+  });
+
   const submitBtn = createTag('input', {
     type: 'submit',
     value: 'Next',
@@ -97,7 +107,7 @@ function buildPreform(block, config) {
       preform.parentElement.classList.add('hidden');
     }
   });
-  preform.append(roleDiv, submitBtn);
+  preform.append(roleDiv, academicMessageDiv, submitBtn);
   block.append(preform);
 }
 

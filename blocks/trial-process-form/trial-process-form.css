@@ -44,6 +44,10 @@
     }
   }
 
+  div.academic-message {
+    margin-bottom: 1.6rem;
+  }
+
   input[type="submit"] {
     cursor: pointer;
     margin-top: 2.4rem;
