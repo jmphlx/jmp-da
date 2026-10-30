@@ -23,7 +23,6 @@ const englishStrings = Object.freeze({
  * @returns {object} translated strings keyed by English source text
  */
 async function getTranslations() {
-  console.log(getLanguage());
   const json = await getJsonFromUrl(translationsUrl);
   const langStrings = json?.[getLanguage()]?.data?.[0];
   return { ...englishStrings, ...langStrings };
@@ -134,7 +133,6 @@ function buildPreform(block, config, t) {
       const messageDiv = createTag('div', {
         class: 'student-message',
       });
-      console.log(config.studentMessage);
       messageDiv.innerHTML = config.studentMessage || '';
       preform.parentElement.appendChild(messageDiv);
       preform.classList.add('hidden');
