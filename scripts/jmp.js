@@ -313,7 +313,6 @@ function getBlockConfig(block) {
       const cols = [...row.children];
       if (cols[1]) {
         const col = cols[1];
-        console.log(col);
         const name = cols[0].textContent;
         let value = '';
         if (col.querySelector('ul')) {
