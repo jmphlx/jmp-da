@@ -14,6 +14,7 @@ const englishStrings = Object.freeze({
   Professional: 'Professional',
   'Academic Educator or Researcher': 'Academic Educator or Researcher',
   Next: 'Next',
+  'Please select a role': 'Please select a role',
 });
 
 /**
@@ -99,6 +100,13 @@ function buildPreform(block, config, t) {
   roleSelect.append(studentOption);
 
   roleDiv.append(roleLabel, roleSelect);
+
+  // Replace the browser's default required-field message with the translated one
+  const updateRoleValidity = () => {
+    roleSelect.setCustomValidity(roleSelect.value ? '' : t['Please select a role']);
+  };
+  updateRoleValidity();
+  roleSelect.addEventListener('change', updateRoleValidity);
 
   const academicMessageDiv = createTag('div', {
     class: 'academic-message hidden',
