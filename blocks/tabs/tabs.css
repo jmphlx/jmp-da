@@ -17,6 +17,20 @@
       font-size: var(--body-font-size-s);
     }
   }
+  &.quotations-blue {
+    p {
+      z-index: 1 !important;
+
+    }
+    p:before, p:after {
+      color: var(--blue) !important;
+      z-index: -1 !important;
+      opacity: .3;
+    }
+    p:before {
+      margin: 50px 0 0 -80px !important;
+    }
+  }
 }
 @media (width >= 600px) {
   .tabs .tabs-list {

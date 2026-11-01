@@ -106,8 +106,38 @@ div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
   &.column-gray {
     background-color: var(--gray);
   }
+  &.columns-gray {
+    div div {
+      background-color: rgba(0, 0, 0, .04);
+    }
+  }
+  &.padding-16 {
+    padding: 16px;
+  }
+  &.columns-padding-16 {
+    div div {
+      padding: 16px;
+    }
+  }
   &.padding-24 {
     padding: 24px;
+  }
+  &.columns-padding-24 {
+    div div {
+      padding: 24px;
+    }
+  }
+  &.columns-margin-bottom-16 {
+    @media (width <= 900px) {
+      div div {
+        margin-bottom: 16px !important;
+      }
+    }
+  }
+  &.columns-margin-bottom-24 {
+    div div {
+      margin-bottom: 24px;
+    }
   }
   &.column-margin-24 {
     margin-bottom: 24px;
@@ -115,11 +145,26 @@ div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
   &.rounded-5 {
     border-radius: 5px;
   }
+  &.columns-rounded-5 {
+    div div {
+      border-radius: 5px;
+    }
+  }
   &.rounded-10 {
     border-radius: 10px;
   }
+  &.columns-rounded-10 {
+    div div {
+      border-radius: 10px;
+    }
+  }
   &.rounded-20 {
     border-radius: 20px;
+  }
+  &.columns-rounded-20 {
+    div div {
+      border-radius: 20px;
+    }
   }
   &.text-light {
     strong, blockquote {

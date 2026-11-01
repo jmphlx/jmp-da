@@ -83,6 +83,15 @@ div.quote-small .quote-quotation {
 }
 
 .quote {
+  &.quote-light {
+    div.quote-quotation {
+      z-index: 2 !important;
+      p {
+        color: var(--white) !important;
+        z-index: 2 !important;
+      }
+    }
+  }
   &.text-light{
     p, h1, h2, h3, h4, h5 {
     color: #ffffff !important;
@@ -91,6 +100,20 @@ div.quote-small .quote-quotation {
     :first-child:before, :first-child:after {
       color: rgba(220, 220, 220, .2) !important;
       z-index: 1 !important;
+    }
+  }
+  &.quotations-blue {
+    p {
+      z-index: 1 !important;
+
+    }
+    p:before, p:after {
+      color: var(--blue) !important;
+      z-index: -1 !important;
+      opacity: .3;
+    }
+    p:before {
+      margin: 50px 0 0 -80px !important;
     }
   }
 }
