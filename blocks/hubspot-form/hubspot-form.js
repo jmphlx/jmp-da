@@ -32,6 +32,12 @@ const embedHubspot = (block, config) => {
     HubSpotFormsV4.getFormFromEvent(event).setFieldValue('0-1/last_action__c', config.lastAction);
     HubSpotFormsV4.getFormFromEvent(event).setFieldValue('0-1/leadsource', config.leadSource);
     HubSpotFormsV4.getFormFromEvent(event).setFieldValue('0-1/salesforce_campaign_event_id_event_registration_only', config.salesforceCampaignId);
+
+    // Optional role value set by the calling block (see trial-process-form)
+    const { roleField, role } = block.dataset;
+    if (roleField && role) {
+      HubSpotFormsV4.getFormFromEvent(event).setFieldValue(`0-1/${roleField}`, role);
+    }
   });
 
   const head = document.querySelector('head');
