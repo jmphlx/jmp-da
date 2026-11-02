@@ -50,7 +50,7 @@ function buildHubspotForm(config, role) {
   const portalId = buildBlockRow('portalId', config.portalId);
   const formId = buildBlockRow('formId', config.formId);
   const salesforceCampaignId = buildBlockRow('salesforceCampaignId', config.salesforceCampaignId);
-  const redirect = buildBlockRow('redirectTarget', '/en/sandbox/laurel/sprint-demos/thanks/thank-you-page');
+  const redirect = buildBlockRow('redirectTarget', config.redirectTarget);
   hubspotWrapper.append(region, portalId, formId, salesforceCampaignId, redirect);
   hubspotWrapper.dataset.roleField = hubspotRoleFieldName;
   hubspotWrapper.dataset.role = role;
