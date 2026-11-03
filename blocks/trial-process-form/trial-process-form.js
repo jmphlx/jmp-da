@@ -139,7 +139,7 @@ function buildPreform(block, config, t) {
       messageDiv.innerHTML = config.studentMessage || '';
       preform.parentElement.appendChild(messageDiv);
       preform.classList.add('hidden');
-    } else if (selectedRole === 'Academic Educator or Researcher' || selectedRole === 'Professional') {
+    } else if (selectedRole === 'Teaching' || selectedRole === 'Professional') {
       buildHubspotForm(config, selectedRole);
       preform.parentElement.classList.add('hidden');
     }
