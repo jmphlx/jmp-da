@@ -52,7 +52,9 @@ function buildHubspotForm(config, role) {
   const salesforceCampaignId = buildBlockRow('salesforceCampaignId', config.salesforceCampaignId);
   const redirect = buildBlockRow('redirectTarget', config.redirectTarget);
   const headline = buildBlockRow('headline', config.headline);
-  hubspotWrapper.append(headline, region, portalId, formId, salesforceCampaignId, redirect);
+  const leadSource = buildBlockRow('leadSource', 'Demo Download');
+  const lastAction = buildBlockRow('lastAction', 'Demo Download');
+  hubspotWrapper.append(headline, region, portalId, formId, leadSource,lastAction, salesforceCampaignId, redirect);
   hubspotWrapper.dataset.roleField = hubspotRoleFieldName;
   hubspotWrapper.dataset.role = role;
   parent.append(hubspotWrapper);
