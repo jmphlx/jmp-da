@@ -54,7 +54,7 @@ function buildHubspotForm(config, role) {
   const headline = buildBlockRow('headline', config.headline);
   const leadSource = buildBlockRow('leadSource', 'Demo Download');
   const lastAction = buildBlockRow('lastAction', 'Demo Download');
-  hubspotWrapper.append(headline, region, portalId, formId, leadSource,lastAction, salesforceCampaignId, redirect);
+  hubspotWrapper.append(headline, region, portalId, formId, leadSource, lastAction, salesforceCampaignId, redirect);
   hubspotWrapper.dataset.roleField = hubspotRoleFieldName;
   hubspotWrapper.dataset.role = role;
   parent.append(hubspotWrapper);
