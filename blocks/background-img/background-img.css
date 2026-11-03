@@ -312,12 +312,32 @@
       }
     }
   }
+  /* 5% Opacity */
+  &.opacity-5.background-img-container {
+    & .background-img-wrapper {
+      & .background-img {
+        img {
+          opacity: .05 !important;
+        }
+      }
+    }
+  }
   /* 10% Opacity */
   &.opacity-10.background-img-container {
     & .background-img-wrapper {
       & .background-img {
         img {
           opacity: .1 !important;
+        }
+      }
+    }
+  }
+  /* 15% Opacity */
+  &.opacity-15.background-img-container {
+    & .background-img-wrapper {
+      & .background-img {
+        img {
+          opacity: .15 !important;
         }
       }
     }
@@ -332,12 +352,32 @@
       }
     }
   }
+  /* 25% Opacity */
+  &.opacity-25.background-img-container {
+    & .background-img-wrapper {
+      & .background-img {
+        img {
+          opacity: .25 !important;
+        }
+      }
+    }
+  }
   /* 30% Opacity */
   &.opacity-30.background-img-container {
     & .background-img-wrapper {
       & .background-img {
         img {
           opacity: .3 !important;
+        }
+      }
+    }
+  }
+  /* 35% Opacity */
+  &.opacity-35.background-img-container {
+    & .background-img-wrapper {
+      & .background-img {
+        img {
+          opacity: .35 !important;
         }
       }
     }
@@ -352,12 +392,32 @@
       }
     }
   }
+  /* 45% Opacity */
+  &.opacity-45.background-img-container {
+    & .background-img-wrapper {
+      & .background-img {
+        img {
+          opacity: .45 !important;
+        }
+      }
+    }
+  }
   /* 50% Opacity */
   &.opacity-50.background-img-container {
     & .background-img-wrapper {
       & .background-img {
         img {
           opacity: .5 !important;
+        }
+      }
+    }
+  }
+  /* 55% Opacity */
+  &.opacity-55.background-img-container {
+    & .background-img-wrapper {
+      & .background-img {
+        img {
+          opacity: .55 !important;
         }
       }
     }
@@ -372,12 +432,32 @@
       }
     }
   }
+  /* 65% Opacity */
+  &.opacity-65.background-img-container {
+    & .background-img-wrapper {
+      & .background-img {
+        img {
+          opacity: .65 !important;
+        }
+      }
+    }
+  }
   /* 70% Opacity */
   &.opacity-70.background-img-container {
     & .background-img-wrapper {
       & .background-img {
         img {
           opacity: .7 !important;
+        }
+      }
+    }
+  }
+  /* 75% Opacity */
+  &.opacity-75.background-img-container {
+    & .background-img-wrapper {
+      & .background-img {
+        img {
+          opacity: .75 !important;
         }
       }
     }
@@ -392,12 +472,32 @@
       }
     }
   }
+  /* 85% Opacity */
+  &.opacity-85.background-img-container {
+    & .background-img-wrapper {
+      & .background-img {
+        img {
+          opacity: .85 !important;
+        }
+      }
+    }
+  }
   /* 90% Opacity */
   &.opacity-90.background-img-container {
     & .background-img-wrapper {
       & .background-img {
         img {
           opacity: .9 !important;
+        }
+      }
+    }
+  }
+  /* 95% Opacity */
+  &.opacity-95.background-img-container {
+    & .background-img-wrapper {
+      & .background-img {
+        img {
+          opacity: .95 !important;
         }
       }
     }

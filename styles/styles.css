@@ -29,6 +29,7 @@ html {
   --orange: #ff5000;
   --orange-hover: #d94500;
   --blueLight: #61CAE5;
+  --blueNeon: #01d1ff;
   --purple: #643695;
   --purpleLight: #9D57A3;
   --purpleDark: #4d1e80;
@@ -166,6 +167,14 @@ h1 {
       background-clip: text;
       color: transparent;
     }
+  }
+}
+.h1-line2-bluelight {
+  h1:first-child {
+    margin-bottom: 0;
+  }
+  h1:nth-child(2), h1:nth-child(2) strong {
+    color: var(--blueNeon) !important;
   }
 }
 h2 {
@@ -2482,6 +2491,16 @@ main img {
   img {
     border-radius: 2px !important;
     /* border: 1px solid var(--purple) !important; */
+  }
+}
+.icon-bg-transparent-gray {
+  span.icon {
+    margin-bottom: 12px;
+    height: 42px;
+    width: 42px;
+    background-color: rgba(0, 0, 0, .04);
+    padding: 6px;
+    border-radius: 4px;
   }
 }
 /* Column layouts */

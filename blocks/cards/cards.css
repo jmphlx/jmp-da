@@ -15,14 +15,32 @@
 }
 
 .cards {
+  &.border-top-blue {
+    ul li {
+      border-top: 3px solid var(--blue) !important;
+    }
+  }
   &.header-purple, .heading-purple {
     h1, h2, h3, h4, h5, h6 {
       color: var(--purple);
     }
   }
   &.heading-blue {
-    h1, h2, h3, h4, h5, h6 {
+    h1, h2, h3, h4, h5 {
       color: var(--blue);
+    }
+  }
+  &.h5-border-bottom {
+    h5 {
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--grayRule);
+    }
+  }
+  &.h6-gray {
+    h6 {
+      color: var(--gray7);
+      padding: 16px 0 0 0;
+      margin: 0 0 8px 0;
     }
   }
   &.justify-cards-center {
