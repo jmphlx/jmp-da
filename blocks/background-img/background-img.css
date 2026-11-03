@@ -333,7 +333,7 @@
     }
   }
   /* 15% Opacity */
-  &.opacity-10.background-img-container {
+  &.opacity-15.background-img-container {
     & .background-img-wrapper {
       & .background-img {
         img {
@@ -353,7 +353,7 @@
     }
   }
   /* 25% Opacity */
-  &.opacity-20.background-img-container {
+  &.opacity-25.background-img-container {
     & .background-img-wrapper {
       & .background-img {
         img {
@@ -373,7 +373,7 @@
     }
   }
   /* 35% Opacity */
-  &.opacity-30.background-img-container {
+  &.opacity-35.background-img-container {
     & .background-img-wrapper {
       & .background-img {
         img {
@@ -393,7 +393,7 @@
     }
   }
   /* 45% Opacity */
-  &.opacity-40.background-img-container {
+  &.opacity-45.background-img-container {
     & .background-img-wrapper {
       & .background-img {
         img {
@@ -413,7 +413,7 @@
     }
   }
   /* 55% Opacity */
-  &.opacity-50.background-img-container {
+  &.opacity-55.background-img-container {
     & .background-img-wrapper {
       & .background-img {
         img {
@@ -433,7 +433,7 @@
     }
   }
   /* 65% Opacity */
-  &.opacity-60.background-img-container {
+  &.opacity-65.background-img-container {
     & .background-img-wrapper {
       & .background-img {
         img {
@@ -453,7 +453,7 @@
     }
   }
   /* 75% Opacity */
-  &.opacity-70.background-img-container {
+  &.opacity-75.background-img-container {
     & .background-img-wrapper {
       & .background-img {
         img {
@@ -473,7 +473,7 @@
     }
   }
   /* 85% Opacity */
-  &.opacity-80.background-img-container {
+  &.opacity-85.background-img-container {
     & .background-img-wrapper {
       & .background-img {
         img {
@@ -493,7 +493,7 @@
     }
   }
   /* 95% Opacity */
-  &.opacity-90.background-img-container {
+  &.opacity-95.background-img-container {
     & .background-img-wrapper {
       & .background-img {
         img {
