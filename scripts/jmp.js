@@ -7,6 +7,7 @@ function getDefaultMetaImage() {
 
 const knownObjectProperties = ['options', 'filters'];
 const knownObjectCaseSensitiveProperties = ['tabs'];
+const knownStyledProperties = ['academicmessage', 'studentmessage'];
 
 const tagMap = {
   industry: 'industry',
@@ -327,7 +328,7 @@ function getBlockConfig(block) {
         } else if (knownObjectProperties.includes(name.toLowerCase())) {
           const stringValue = col.textContent;
           value = convertStringToJSONObject(stringValue);
-        } else if (col.querySelector('a') && col.querySelector('p')) {
+        } else if (knownStyledProperties.includes(name.toLowerCase())) {
           value = col.innerHTML;
         } else if (col.querySelector('a')) {
           const as = [...col.querySelectorAll('a')];
