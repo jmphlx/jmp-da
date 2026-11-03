@@ -92,7 +92,7 @@ function buildPreform(block, config, t) {
   roleSelect.append(professionalOption);
 
   const academicOption = createTag('option', {
-    value: 'Academic Educator or Researcher',
+    value: 'Teaching',
   }, t['Academic Educator or Researcher']);
   roleSelect.append(academicOption);
 
@@ -116,7 +116,7 @@ function buildPreform(block, config, t) {
   academicMessageDiv.innerHTML = config.academicMessage || '';
 
   roleSelect.addEventListener('change', () => {
-    const isAcademic = roleSelect.value === 'Academic Educator or Researcher';
+    const isAcademic = roleSelect.value === 'Teaching';
     academicMessageDiv.classList.toggle('hidden', !isAcademic);
   });
 
