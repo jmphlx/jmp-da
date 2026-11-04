@@ -2775,7 +2775,7 @@ div.columns-50-50, div.columns-25-75, div.columns-75-25, div.columns-30-70, div.
   }
 }
 .section-gray {
-  .layout-wrapper, > div{
+  .layout-wrapper {
     background-color: #f4f4f4;
     .group-1, .group-2 {
       padding: 2.4rem;
