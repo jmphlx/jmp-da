@@ -144,6 +144,14 @@ function buildPreform(block, config, t) {
       preform.parentElement.classList.add('hidden');
     }
   });
+
+  if (config.preformHeadline) {
+    const headlineElement = typeof config.preformHeadline === 'string'
+      ? createTag('p', {}, config.preformHeadline) : config.preformHeadline;
+    const wrapDiv = createTag('div', { class: 'headline' }, headlineElement);
+    preform.append(wrapDiv);
+  }
+
   preform.append(roleDiv, academicMessageDiv, submitBtn);
   block.append(preform);
 }
