@@ -569,6 +569,17 @@ async function loadBrandEager(header) {
     // silently fail if brand can't load
   }
 }
+/**
+ * Load the SKP background image with high priority to improve LCP.
+ */
+function loadSKPBackgroundEager() {
+  const preloadLink = document.createElement('link');
+  preloadLink.rel = 'preload';
+  preloadLink.as = 'image';
+  preloadLink.href = '/icons/skp-background-with-gradient.png';
+  preloadLink.fetchPriority = 'high';
+  document.head.append(preloadLink);
+}
 
 const localizedCheckCache = new Map();
 
@@ -763,6 +774,10 @@ async function loadEager(doc) {
   decorateTemplateAndTheme();
   decoratePageStyles();
   addThirdPartyScripts();
+
+  if (isSKPPage) {
+    loadSKPBackgroundEager();
+  }
 
   // Kick off nav HTML fetch early without blocking
   fetchNavHTML();
