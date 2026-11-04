@@ -567,7 +567,6 @@ div.listgroup-fixed, div.listgroup  {
   ul.list-tile {
     width: 100%;
     margin: 0;
-    column-gap: .75%;
     display: flex;
     column-gap: 0;
     justify-content: space-between;
@@ -584,7 +583,6 @@ div.listgroup-fixed, div.listgroup  {
           box-sizing: border-box;
           border: 1px solid var(--gray);
           gap: .5rem;
-          flex-flow: wrap;
           flex-direction: column;
           justify-content: center;
           /* align-items: center; */
@@ -670,10 +668,8 @@ div.listgroup-fixed, div.listgroup  {
           box-sizing: border-box;
           border: 1px solid var(--gray);
           gap: .5rem;
-          flex-flow: wrap;
           flex-direction: column;
           justify-content: center;
-          /* align-items: center; */
           text-align: left;
           margin: 0;
           transition: all 0.5s ease;
