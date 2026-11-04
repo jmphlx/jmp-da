@@ -7,7 +7,7 @@ function getDefaultMetaImage() {
 
 const knownObjectProperties = ['options', 'filters'];
 const knownObjectCaseSensitiveProperties = ['tabs'];
-const knownStyledProperties = ['academicmessage', 'studentmessage'];
+const knownStyledProperties = ['academicmessage', 'studentmessage', 'preformheadline'];
 
 const tagMap = {
   industry: 'industry',
