@@ -36,7 +36,7 @@ const embedHubspot = (block, config) => {
     // Optional role value set by the calling block (see trial-process-form)
     const { roleField, role } = block.dataset;
     if (roleField && role) {
-      HubSpotFormsV4.getFormFromEvent(event).setFieldValue(`0-1/academic_jmp_use__c`, role);
+      HubSpotFormsV4.getFormFromEvent(event).setFieldValue('0-1/academic_jmp_use__c', role);
     }
   });
 
