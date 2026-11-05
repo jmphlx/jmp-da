@@ -2,15 +2,46 @@
 
 ## Overview
 
-The **DAM Asset References** tool lists every asset in AEM Assets that Document Authoring
-content links to, how many documents link each one, and which documents those are. Results
-export to CSV and to Excel.
+The **DAM Asset References** tool compares the live AEM DAM against what Document Authoring
+content links to. For every asset it reports whether DA references it, how many documents do,
+and which ones. Results export to CSV and to Excel.
 
-It is **read only**. It opens DA documents and reports what they reference; it writes nothing
-to DA and nothing to AEM. Because it never calls AEM, it needs no author CORS policy, no
-metadata schema and no AEM credentials — it runs today with nothing but a DA session.
+Every asset lands in one of three states:
+
+| Status | Meaning |
+| --- | --- |
+| **Referenced** | In the DAM, and at least one DA document links it |
+| **Unreferenced** | In the DAM, but no DA document links it |
+| **Missing from DAM** | A DA document links the path, but the asset is not in the DAM |
+
+It is **read only**. It crawls DA, reads the DAM inventory from AEM author, and joins the two.
+Nothing is written to DA or to AEM.
 
 Open it from Document Authoring at `/tools/asset-references/asset-references.html`.
+
+---
+
+## How it reaches the DAM
+
+The tool reads the inventory from AEM author with QueryBuilder, using the IMS token DA already
+hands the app. No credential is stored or configured in the tool. Two things on the AEM side make
+that work, and both are already in place:
+
+- **Authentication** — the environment sets `ADOBE_PROVIDED_CLIENT_ID=darkalley`, so author
+  accepts tokens issued to DA's `darkalley` client. That is the token the tool receives.
+- **CORS** — DA does not run the app on `da.live`. It loads it in an iframe from the site's own
+  origin: `https://<ref>--jmp-da--jmphlx.preview.da.live`, or `.aem.live` as a fallback. Author
+  allowlists those origins, branch refs included, for cross-origin `GET`.
+
+If either stops being true, the tool does not fail the scan. It reports why the DAM could not be
+read — for example `AEM refused your session (401)` — and shows the DA references alone, with
+the status filter disabled and the Summary sheet saying the comparison was not made.
+
+The inventory is read by paging QueryBuilder by offset. That is only sound when the result order
+is stable, so the query is ordered by path and rows are keyed by path. The collected count is
+then checked against the server's own total, and a mismatch is reported rather than silently
+shrinking the DAM. Copies AEM keeps after a delete (under `jcr:content/cq:discarded`) are
+excluded, since they are not part of the DAM anyone manages.
 
 ---
 
@@ -44,29 +75,23 @@ DA source, which is what this tool does.
   `source`/`img` elements. Counting raw matches would inflate usage roughly threefold.
 - **Published split** — how many of the referencing documents are live, inferred from path
   (`/drafts/`, `/sandbox/`), mirroring the exclusions in `configurations/query.yaml`.
-- **Locations** — expand any asset to see each referencing document, with links to edit it in
-  DA and to view it live.
-- **Filter by path** — browse the DAM folder tree and narrow the list to a folder. The tree is
-  built from the scan results rather than from AEM, which keeps the tool credential-free and is
-  the right source anyway: the picker filters the results, so it should only offer folders the
-  results contain. Each folder shows the assets at or below it and the references they account
-  for, so its weight is visible before you open it. A folder containing no referenced assets has
-  no node at all, for the same reason — the tree is derived from the results.
-- **Sort** — most referenced, fewest references, or path A–Z, with the ordered column marked
-  in the table header. Path order is numeric, so `jmp-9` precedes `jmp-10`. Note that fewest-
-  first and A–Z look alike near the top of the list: most assets are referenced once and that
-  sort tie-breaks on path, so both begin with the same alphabetical run.
+- **Status filter** — show every asset, or only referenced, unreferenced or missing ones.
+- **Locations** — expand a referenced asset to see each document that links it, with links to
+  edit it in DA and to view it live.
+- **Filter by path** — browse the DAM folder tree and narrow the list to any number of folders.
+  With the DAM read, every DAM folder appears, including ones nothing references. Each folder
+  shows its asset count and the references those assets account for.
 - **Multi-select** — tick any number of folders, then press apply; the list shows their union.
   Ticking does not re-filter and does not re-render the tree, so folders you opened stay open
   and the re-filter happens once. Cancel discards the working selection. Ticking a parent
   drops its already-ticked children, since they change nothing. Each applied folder appears
   as a chip above the table, and clicking a chip removes that folder.
+- **Sort** — most referenced, fewest references, or path A–Z, with the ordered column marked
+  in the table header. Path order is numeric, so `jmp-9` precedes `jmp-10`.
 - **Export scope** — "Export currently selected folders" by default, or "Export everything".
   Filenames carry the date and the folders captured, for example
   `da-assets-2026-10-20-events+screenshots.csv`, and omit the folder part when the export
   covers everything.
-- **CSV export** — two files: the asset list, and the long-form asset/document pairs.
-- **Excel export** — one workbook: Summary, Referenced assets, References.
 
 ---
 
@@ -78,17 +103,21 @@ of the entire site: an asset used only by `/de` looks unreferenced if the crawl 
 
 ---
 
-## What this tool does not tell you
+## What the statuses do not tell you
 
-An asset absent from this report is unreferenced **by DA**. That is not the same as unused.
+**Unreferenced is not the same as unused.** DAM assets are publicly reachable at
+`www.jmp.com/content/dam/...`, so anything can link them — email campaigns, the JMP Community,
+the JMP application, documentation, a partner site. None of that is visible here. Measured on
+this repository, roughly **2,700 assets that DA does not reference were still being fetched**,
+including 92% of the `.jsl` scripts. Treat Unreferenced as a candidate list, and confirm against
+CDN request logs before deleting anything.
 
-DAM assets are publicly reachable at `www.jmp.com/content/dam/...`, so anything can link them —
-email campaigns, the JMP Community, the JMP application, documentation, a partner site. None of
-that is visible here.
-
-Measured on this repository, roughly **2,700 assets that DA does not reference were still being
-fetched**, including 92% of the `.jsl` scripts. Treat this report as a candidate list, and
-confirm against CDN request logs before deleting anything.
+**Missing from DAM is not always a broken image.** An asset deleted on author without being
+unpublished first stays live on the publish tier, so the page can still render it. For example,
+`images/data-viz/jmp-data-viz-bar-chart-background.png` is absent from the author DAM, yet
+publish serves it and over 600 pages show it. These orphans cannot be managed from the Assets
+console. Deleting on author does not remove the published copy, so cleanup should unpublish
+before it deletes.
 
 ---
 
@@ -96,12 +125,13 @@ confirm against CDN request logs before deleting anything.
 
 | File | Contents |
 | --- | --- |
-| `da-referenced-assets.csv` | One row per asset: path, folder, type, documents, published documents |
-| `da-asset-references.csv` | One row per asset/document pair, with edit and live URLs |
-| `da-asset-references.xlsx` | Summary, Referenced assets, References |
+| `da-assets-<date>[-<folders>].csv` | One row per asset: path, status, folder, type, documents, published documents |
+| `da-references-<date>[-<folders>].csv` | One row per asset/document pair, with edit and live URLs |
+| `da-workbook-<date>[-<folders>].xlsx` | Summary, Assets, References |
 
-The Summary sheet records the crawl stats, the export scope and the DA-only limitation, so an
-exported file explains itself to whoever opens it next and cannot be mistaken for the full set.
+The Summary sheet records the crawl stats, the export scope, the count of each status, and
+whether the DAM was compared at all, so an exported file explains itself to whoever opens it
+next and cannot be mistaken for the full set.
 
 The whole result list is rendered; each asset's document list is built only when expanded,
 because 14,000 links up front is what made rendering the full list slow, not the rows themselves.
@@ -117,12 +147,14 @@ on first use rather than on page load, because it is ~880KB and most runs never 
 | --- | --- |
 | `asset-references.html` | App interface |
 | `asset-references.js` | UI and orchestration |
-| `asset-tree.js` | DAM folder tree for the folder picker |
 | `scan.js` | Repository crawl and the usage map |
 | `dam-refs.js` | Reference extraction and path canonicalization |
+| `dam-inventory.js` | Reads the live DAM inventory from AEM author |
+| `compare.js` | Joins the DA scan to the DAM and assigns each asset a status |
+| `asset-tree.js` | DAM folder tree for the folder picker |
 | `export.js` | CSV and Excel builders |
 | `asset-references.css` | Styles |
 
-Unit tests for `dam-refs.js`, `export.js` and `asset-tree.js` are in `test/tools/asset-references/`. `scan.js`
-is not unit tested because it imports `crawl` from `da.live` at runtime, following the same
-convention as `tools/search/search.js`.
+Unit tests for `dam-refs.js`, `dam-inventory.js`, `compare.js`, `asset-tree.js` and `export.js`
+are in `test/tools/asset-references/`. `scan.js` is not unit tested because it imports `crawl`
+from `da.live` at runtime, following the same convention as `tools/search/search.js`.

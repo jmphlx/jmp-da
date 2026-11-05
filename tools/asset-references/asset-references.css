@@ -125,6 +125,39 @@ input[type="search"] {
   color: #c4511b;
 }
 
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.badge-referenced {
+  background: #e8f4ea;
+  color: #2d7d3a;
+}
+
+.badge-unreferenced {
+  background: #fdf0e6;
+  color: #b4510f;
+}
+
+.badge-missing {
+  background: #fdeeef;
+  color: #c9252d;
+}
+
+.pill.status-unreferenced {
+  background: #fdf0e6;
+  color: #b4510f;
+}
+
+.muted {
+  color: #9b9b9b;
+}
+
 .result-count {
   font-size: 13px;
   color: #6e6e6e;

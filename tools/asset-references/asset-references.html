@@ -14,8 +14,9 @@
     <div class="app-container">
       <h2>DAM Asset References</h2>
       <p class="intro">
-        Lists every asset in the DAM that Document Authoring content links to, how many
-        documents link it, and which ones. Read only &mdash; nothing is written to DA or to AEM.
+        Compares the live AEM DAM against what Document Authoring links: which assets are
+        referenced and where, which nothing references, and which references point at assets
+        no longer in the DAM. Read only &mdash; nothing is written to DA or to AEM.
       </p>
 
       <div class="controls">
@@ -23,6 +24,12 @@
         <button id="folderButton" type="button" disabled aria-haspopup="dialog">
           Filter by path
         </button>
+        <select id="statusFilter" aria-label="Filter by status" disabled>
+          <option value="all">All statuses</option>
+          <option value="referenced">Referenced</option>
+          <option value="unreferenced">Unreferenced</option>
+          <option value="missing">Missing from DAM</option>
+        </select>
         <select id="sortOrder" aria-label="Sort order">
           <option value="refs">Most referenced</option>
           <option value="least">Fewest references</option>
@@ -42,7 +49,7 @@
         <div class="folder-modal-head">
           <div>
             <h3>Filter by DAM folder</h3>
-            <p>Tick as many folders as you like, then apply. Only folders containing referenced assets appear &mdash; one missing here holds nothing this scan found, though it may still exist in the DAM.</p>
+            <p id="folderPickerNote">Tick as many folders as you like, then apply.</p>
           </div>
         </div>
         <div class="folder-tree" id="folderTree"></div>
@@ -62,6 +69,7 @@
         <thead>
           <tr>
             <th id="thAsset">Asset</th>
+            <th>Status</th>
             <th class="num" id="thDocs">Documents</th>
             <th class="num">Published</th>
             <th>Locations</th>

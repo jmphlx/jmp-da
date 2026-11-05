@@ -75,15 +75,30 @@ describe('folderOf and typeOf', () => {
 });
 
 describe('assetRows', () => {
-  it('returns one row per asset with its counts', () => {
-    const [first] = assetRows(ROWS);
+  it('returns one row per asset with its status and counts', () => {
+    const [first] = assetRows([{ ...ROWS[0], status: 'unreferenced' }]);
     expect(first).to.deep.equal([
       '/content/dam/jmp/images/why-jmp/hero.png',
+      'Unreferenced',
       '/content/dam/jmp/images/why-jmp',
       'png',
       2,
       1,
     ]);
+  });
+
+  it('labels each status the way the UI does', () => {
+    const labels = assetRows(['referenced', 'unreferenced', 'missing']
+      .map((status) => ({ ...ROWS[0], status }))).map((row) => row[1]);
+    expect(labels).to.deep.equal(['Referenced', 'Unreferenced', 'Missing from DAM']);
+  });
+
+  it('treats a row without a status as referenced, since DA found it', () => {
+    expect(assetRows(ROWS)[0][1]).to.equal('Referenced');
+  });
+
+  it('matches the header width', () => {
+    expect(assetRows(ROWS)[0].length).to.equal(ASSET_HEADERS.length);
   });
 });
 
@@ -104,19 +119,44 @@ describe('referenceRows', () => {
 });
 
 describe('summaryRows', () => {
+  const stats = {
+    documentsScanned: 10, documentsFailed: 0, documentsWithRefs: 2, references: 3,
+  };
+  const compared = [
+    { ...ROWS[0], status: 'referenced' },
+    {
+      damPath: '/content/dam/jmp/images/unused.png', count: 0, publishedCount: 0, pages: [], status: 'unreferenced',
+    },
+    { ...ROWS[1], status: 'missing' },
+  ];
+
   it('records the crawl stats and totals the references', () => {
-    const stats = {
-      documentsScanned: 10, documentsFailed: 0, documentsWithRefs: 2, references: 3,
-    };
     const pairs = Object.fromEntries(summaryRows(stats, ROWS));
     expect(pairs['Documents scanned']).to.equal(10);
-    expect(pairs['Distinct DAM assets referenced']).to.equal(2);
     expect(pairs['Total references']).to.equal(3);
   });
 
-  it('states that the evidence is DA only', () => {
-    const text = summaryRows({ documentsScanned: 0 }, []).map((r) => r[1]).join(' ');
-    expect(text).to.contain('Document Authoring only');
+  it('breaks the export down by status when the DAM was read', () => {
+    const pairs = Object.fromEntries(summaryRows(stats, compared, 'Every asset', { loaded: true }));
+    expect(pairs['DAM assets in this export']).to.equal(2);
+    expect(pairs['Referenced by DA']).to.equal(1);
+    expect(pairs['Unreferenced by DA']).to.equal(1);
+    expect(pairs['DA references missing from the DAM']).to.equal(1);
+  });
+
+  it('says plainly when the DAM was not compared, and why', () => {
+    const pairs = Object.fromEntries(summaryRows(stats, ROWS, 'Every referenced asset', {
+      loaded: false, reason: 'AEM refused your session (401)',
+    }));
+    expect(pairs['DAM comparison']).to.contain('Not available');
+    expect(pairs['DAM comparison']).to.contain('401');
+    expect(pairs['Referenced by DA']).to.equal(undefined);
+  });
+
+  it('states that unreferenced is not the same as unused', () => {
+    const text = summaryRows(stats, compared, 'Every asset', { loaded: true })
+      .map((r) => r[1]).join(' ');
+    expect(text).to.contain('not the same as unused');
   });
 });
 

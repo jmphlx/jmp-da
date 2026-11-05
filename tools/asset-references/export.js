@@ -7,6 +7,7 @@
  */
 
 import { DA_CONSTANTS } from '../../scripts/helper.js';
+import { STATUS, STATUS_LABELS, tally } from './compare.js';
 
 const SHEETJS_SRC = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
 
@@ -86,7 +87,9 @@ export function exportFileName(kind, extension, folders, now = new Date()) {
   return `da-${kind}-${date}${token ? `-${token}` : ''}.${extension}`;
 }
 
-export const ASSET_HEADERS = ['Asset path', 'Folder', 'Type', 'Documents referencing it', 'Published documents'];
+export const ASSET_HEADERS = [
+  'Asset path', 'Status', 'Folder', 'Type', 'Documents referencing it', 'Published documents',
+];
 export const REFERENCE_HEADERS = ['Asset path', 'Referencing document', 'Edit in DA', 'Live URL'];
 
 /** Segment of the DAM path that reads as the owning folder, e.g. /content/dam/jmp/images. */
@@ -108,7 +111,12 @@ export function typeOf(damPath) {
  */
 export function assetRows(rows) {
   return rows.map((r) => [
-    r.damPath, folderOf(r.damPath), typeOf(r.damPath), r.count, r.publishedCount,
+    r.damPath,
+    STATUS_LABELS[r.status ?? STATUS.referenced],
+    folderOf(r.damPath),
+    typeOf(r.damPath),
+    r.count,
+    r.publishedCount,
   ]);
 }
 
@@ -133,8 +141,18 @@ export function referenceRows(rows) {
  * @param {Object[]} rows rows from toRows
  * @returns {Array[]} label/value pairs
  */
-export function summaryRows(stats, rows, scope = 'Every referenced asset') {
+export function summaryRows(stats, rows, scope = 'Every asset', dam = null) {
   const references = rows.reduce((total, r) => total + r.count, 0);
+  const counts = tally(rows);
+  const damRows = dam?.loaded
+    ? [
+      ['DAM assets in this export', counts.inDam],
+      ['Referenced by DA', counts.referenced],
+      ['Unreferenced by DA', counts.unreferenced],
+      ['DA references missing from the DAM', counts.missing],
+    ]
+    : [['DAM comparison', `Not available - ${dam?.reason ?? 'the DAM was not read'}.`]];
+
   return [
     ['Scanned', new Date().toISOString().slice(0, 10)],
     ['Repository', `${DA_CONSTANTS.org}/${DA_CONSTANTS.repo}`],
@@ -142,12 +160,15 @@ export function summaryRows(stats, rows, scope = 'Every referenced asset') {
     ['Documents scanned', stats.documentsScanned],
     ['Documents that failed to load', stats.documentsFailed],
     ['Documents referencing at least one asset', stats.documentsWithRefs],
-    ['Distinct DAM assets referenced', rows.length],
+    ...damRows,
     ['Total references', references],
     ['', ''],
-    ['Evidence', 'Document Authoring only. An asset absent from this report is unreferenced '
-      + 'by DA, which is not the same as unused - links from email, the JMP Community or the '
-      + 'JMP application are invisible here.'],
+    ['Evidence', 'DA references compared against the live AEM DAM. Unreferenced means no DA '
+      + 'document links the asset, which is not the same as unused - links from email, the '
+      + 'JMP Community or the JMP application are invisible here.'],
+    ['Missing from DAM', 'The path is absent from the author DAM. An asset deleted on author '
+      + 'without being unpublished can still be live on the site, so this is not always a '
+      + 'broken image for visitors.'],
     ['Deduplication', 'References are counted once per document, so a <picture> emitting the '
       + 'same asset three times counts once.'],
   ];
@@ -213,20 +234,24 @@ export function loadSheetJs() {
  * @param {Object} stats crawl stats
  * @param {string} [scope] what the export covers, recorded on the Summary sheet
  * @param {string[]} [folders] folders the export covers, for the filename
+ * @param {Object} [dam] { loaded, reason } - whether the DAM comparison is in these rows
  * @returns {Promise<void>} resolves once the download has been offered
  */
-export async function downloadXlsx(rows, stats, scope, folders) {
+export async function downloadXlsx(rows, stats, scope, folders, dam) {
   const XLSX = await loadSheetJs();
   const book = XLSX.utils.book_new();
 
-  const summary = XLSX.utils.aoa_to_sheet(summaryRows(stats, rows, scope));
+  const summary = XLSX.utils.aoa_to_sheet(summaryRows(stats, rows, scope, dam));
   summary['!cols'] = [{ wch: 42 }, { wch: 96 }];
   XLSX.utils.book_append_sheet(book, summary, 'Summary');
 
   const assets = XLSX.utils.aoa_to_sheet([ASSET_HEADERS, ...assetRows(rows)]);
-  assets['!cols'] = [{ wch: 72 }, { wch: 46 }, { wch: 10 }, { wch: 22 }, { wch: 20 }];
-  assets['!autofilter'] = { ref: XLSX.utils.encode_range({ s: { c: 0, r: 0 }, e: { c: 4, r: rows.length } }) };
-  XLSX.utils.book_append_sheet(book, assets, 'Referenced assets');
+  assets['!cols'] = [{ wch: 72 }, { wch: 18 }, { wch: 46 }, { wch: 10 }, { wch: 22 }, { wch: 20 }];
+  const lastColumn = ASSET_HEADERS.length - 1;
+  assets['!autofilter'] = {
+    ref: XLSX.utils.encode_range({ s: { c: 0, r: 0 }, e: { c: lastColumn, r: rows.length } }),
+  };
+  XLSX.utils.book_append_sheet(book, assets, 'Assets');
 
   const refs = referenceRows(rows);
   const references = XLSX.utils.aoa_to_sheet([REFERENCE_HEADERS, ...refs]);

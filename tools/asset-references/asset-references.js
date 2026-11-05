@@ -1,20 +1,27 @@
 /**
- * DAM Asset References - lists every DAM asset referenced by Document Authoring content.
+ * DAM Asset References - compares the live AEM DAM against what Document Authoring links.
  *
- * Read only. It opens documents and reports what they link; it writes nothing to DA or to
- * AEM, and needs no AEM credentials, so it runs without the CORS policy and metadata schema
- * that a writeback tool would require.
+ * Read only. It crawls DA, reads the DAM inventory from AEM author with the viewer's own DA
+ * session, and joins the two. It writes nothing to DA or to AEM. If the DAM cannot be read it
+ * says why and falls back to the DA references alone, rather than failing the whole scan.
  */
 
 // eslint-disable-next-line import/no-unresolved
 import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 import { buildUsageMap, toRows } from './scan.js';
+import { fetchDamInventory } from './dam-inventory.js';
+import {
+  STATUS_LABELS, compareWithDam, referencesOnly, tally,
+} from './compare.js';
 import {
   downloadCsv, downloadXlsx, editUrl, liveUrl,
 } from './export.js';
 import { buildFolderTree, refreshMarks, renderFolderTree } from './asset-tree.js';
 
 let actions;
+let token;
+/** Whether the DAM inventory was read on the last scan, and if not, why. */
+let dam = { loaded: false, reason: 'no scan has run yet' };
 let rows = [];
 let stats = null;
 let filtered = [];
@@ -61,8 +68,16 @@ function enableExports(enabled) {
 function renderSummary() {
   if (!stats) return;
   const references = rows.reduce((total, r) => total + r.count, 0);
+  const counts = tally(rows);
+  const damPills = dam.loaded
+    ? `<span class="pill">${fmt(counts.inDam)} assets in the DAM</span>
+    <span class="pill">${fmt(counts.referenced)} referenced</span>
+    <span class="pill status-unreferenced">${fmt(counts.unreferenced)} unreferenced</span>
+    ${counts.missing ? `<span class="pill warn">${fmt(counts.missing)} missing from the DAM</span>` : ''}`
+    : `<span class="pill">${fmt(rows.length)} assets referenced</span>
+    <span class="pill warn">DAM not compared</span>`;
   el('.summary').innerHTML = `
-    <span class="pill">${fmt(rows.length)} assets referenced</span>
+    ${damPills}
     <span class="pill">${fmt(references)} references</span>
     <span class="pill">${fmt(stats.documentsWithRefs)} of ${fmt(stats.documentsScanned)} documents</span>
     ${stats.documentsFailed
@@ -91,11 +106,14 @@ function renderRows() {
   body.innerHTML = filtered.map((row, index) => `
       <tr class="asset-row">
         <td class="asset-path">${escapeHtml(row.damPath)}</td>
+        <td><span class="badge badge-${row.status}">${STATUS_LABELS[row.status]}</span></td>
         <td class="num">${fmt(row.count)}</td>
         <td class="num">${fmt(row.publishedCount)}</td>
-        <td><button type="button" class="link-button" data-i="${index}" aria-expanded="false">Show documents</button></td>
+        <td>${row.pages.length
+    ? `<button type="button" class="link-button" data-i="${index}" aria-expanded="false">Show documents</button>`
+    : '<span class="muted">&mdash;</span>'}</td>
       </tr>
-      <tr class="pages-row" hidden><td colspan="4"></td></tr>`).join('');
+      <tr class="pages-row" hidden><td colspan="5"></td></tr>`).join('');
 
   let where = '';
   if (folders.length === 1) where = ` in ${folders[0]}`;
@@ -196,13 +214,13 @@ function renderChips() {
   }
 }
 
-/** Narrows the list to the union of the selected folders. */
+/** Narrows the list to the selected status and the union of the selected folders. */
 function applyFilters() {
   renderChips();
   renderSortMarker();
-  const scoped = folders.length
-    ? rows.filter((row) => folders.some((f) => row.damPath.startsWith(`${f}/`)))
-    : rows;
+  const status = el('#statusFilter').value;
+  const scoped = rows.filter((row) => (status === 'all' || row.status === status)
+    && (!folders.length || folders.some((f) => row.damPath.startsWith(`${f}/`))));
   filtered = sortRows(scoped);
   renderRows();
 }
@@ -211,7 +229,7 @@ function applyFilters() {
 function exportSelection() {
   const everything = el('#exportScope').value === 'all';
   if (everything || folders.length === 0) {
-    return { rows, scope: 'Every referenced asset', folders: [] };
+    return { rows, scope: dam.loaded ? 'Every asset' : 'Every referenced asset', folders: [] };
   }
   const scope = folders.length === 1
     ? `Folder ${folders[0]}`
@@ -258,6 +276,11 @@ function applyDraft() {
 
 function openFolderPicker() {
   draft = [...folders];
+  el('#folderPickerNote').textContent = dam.loaded
+    ? 'Tick as many folders as you like, then apply. Every DAM folder appears, with its asset '
+      + 'count and the references those assets account for.'
+    : 'Tick as many folders as you like, then apply. The DAM could not be read, so only '
+      + 'folders containing referenced assets appear.';
   el('#folderModal').showModal();
   renderFolderTree(el('#folderTree'), buildFolderTree(rows), {
     selected: () => draft,
@@ -280,6 +303,7 @@ async function scan() {
   folders = [];
   draft = [];
   stats = null;
+  dam = { loaded: false, reason: 'the scan did not finish' };
   el('#folderButton').disabled = true;
   renderChips();
   el('.results tbody').innerHTML = '';
@@ -296,17 +320,38 @@ async function scan() {
       },
     });
     stats = result.stats;
-    rows = toRows(result.usage);
+    const usageRows = toRows(result.usage);
+
+    setStatus('Reading the DAM inventory from AEM…');
+    let damNote = '';
+    try {
+      const inventory = await fetchDamInventory({
+        token,
+        onProgress: (count) => setStatus(`Read ${fmt(count)} DAM assets…`),
+      });
+      rows = compareWithDam(usageRows, inventory.paths);
+      dam = { loaded: true, reason: '' };
+      if (inventory.matchesServer === false) {
+        damNote = ` The DAM read ${fmt(inventory.collected)} assets but AEM reports `
+          + `${fmt(inventory.serverTotal)}, so counts may be slightly off.`;
+      }
+    } catch (error) {
+      rows = referencesOnly(usageRows);
+      dam = { loaded: false, reason: error.message };
+      damNote = ` Could not compare against the DAM: ${error.message} Showing DA references only.`;
+    }
     folders = [];
 
+    el('#statusFilter').value = 'all';
+    el('#statusFilter').disabled = !dam.loaded;
     renderSummary();
     applyFilters();
     el('#folderButton').disabled = rows.length === 0;
     enableExports(rows.length > 0);
-    setStatus(stats.documentsFailed
-      ? `Done, but ${fmt(stats.documentsFailed)} documents could not be read. `
-        + 'Their references are missing from this report.'
-      : 'Done.');
+    const failed = stats.documentsFailed
+      ? ` ${fmt(stats.documentsFailed)} documents could not be read; their references are missing.`
+      : '';
+    setStatus(`Done.${failed}${damNote}`, !dam.loaded);
   } catch (error) {
     setStatus(`Scan failed: ${error.message}`, true);
   } finally {
@@ -321,7 +366,7 @@ async function exportXlsx() {
   button.textContent = 'Building…';
   try {
     const selection = exportSelection();
-    await downloadXlsx(selection.rows, stats, selection.scope, selection.folders);
+    await downloadXlsx(selection.rows, stats, selection.scope, selection.folders, dam);
     setStatus(`Excel workbook downloaded - ${selection.scope.toLowerCase()}.`);
   } catch (error) {
     setStatus(`Excel export failed: ${error.message}`, true);
@@ -332,10 +377,11 @@ async function exportXlsx() {
 }
 
 (async function init() {
-  ({ actions } = await DA_SDK);
+  ({ actions, token } = await DA_SDK);
   el('#scanButton').addEventListener('click', scan);
   el('#folderButton').addEventListener('click', openFolderPicker);
   el('#sortOrder').addEventListener('change', applyFilters);
+  el('#statusFilter').addEventListener('change', applyFilters);
   el('#folderApply').addEventListener('click', applyDraft);
   el('#folderCancel').addEventListener('click', () => el('#folderModal').close());
   el('#csvButton').addEventListener('click', () => {
