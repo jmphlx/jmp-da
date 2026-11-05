@@ -297,3 +297,29 @@ div.tabs-wrapper div.tabs.block div.tabs-list .tabs-tab {
     }
   }
 }
+
+.column-2-customer-story {
+  .tabs-panel {
+    background: none;
+    padding: 0;
+    .column-2{
+      background-color: white;
+      padding-bottom: 24px;
+      h6 {
+        color: var(--blue);
+      }
+      p picture {
+        max-height: 200px;
+        width: 100%;
+        margin: 24px 0 0 0;
+        img {
+          object-fit: cover;
+          max-height: 200px;
+          width: 100%;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+}
+
