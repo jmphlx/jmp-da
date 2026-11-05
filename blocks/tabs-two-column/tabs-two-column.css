@@ -302,8 +302,6 @@ div.tabs-wrapper div.tabs.block div.tabs-list .tabs-tab {
   .tabs-panel {
     background: none;
     padding: 0;
-    .column-1 {
-    }
     .column-2{
       background-color: white;
       padding-bottom: 24px;
