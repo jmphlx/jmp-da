@@ -321,5 +321,16 @@ div.tabs-wrapper div.tabs.block div.tabs-list .tabs-tab {
       }
     }
   }
+  @media (width <= 800px) {
+    .tabs-list button[aria-selected='true'] {
+      background-color: var(--white);
+      border: 1px solid var(--blue);
+      border-bottom: 0;
+      p {
+        color: var(--blue);
+        line-height: 1.2;
+      }
+    }
+  }
 }
 
