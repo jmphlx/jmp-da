@@ -47,7 +47,7 @@ html {
   --white: #FFFFFF;
   --grayDark: #172328;
   --grayMedium: #44545D;
-  --grayLight: #8F989E;
+  --grayLight: #FAFAFA;
   --gray: #f4f4f4;
   --black: #000000;
   --gray3: #333333;
@@ -572,7 +572,7 @@ sub {
 }
 /* Background Colors */
 div.light-gray-background {
-  background-color: #f4f4f4 !important;
+  background-color: var(--grayLight) !important;
 }
 div.dark-gray-background {
   background-color: #333333;
@@ -815,6 +815,9 @@ div.gray {
 }
 div.dark-gray {
   background: var(--gray3);
+}
+div.light-gray {
+  background: var(--grayLight);
 }
 div.blue {
   background: var(--blue);

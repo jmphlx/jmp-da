@@ -102,6 +102,18 @@
     }
   }
 }
+.light-gray:has(.brand-carousel) {
+  .brand-carousel-viewport {
+    &:before {
+      left: 0;
+      background: linear-gradient(to right, #fafafa, rgb(255 255 255 / 0));
+    }
+    &:after {
+      right: 0;
+      background: linear-gradient(to left, #fafafa, rgb(255 255 255 / 0));
+    }
+  }
+}
 .blue-purple-gradient:has(.brand-carousel) {
   .brand-carousel-viewport {
     &:before {
