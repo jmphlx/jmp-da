@@ -111,10 +111,27 @@ function checkForDateProperties(displayProperties) {
   return dateFound;
 }
 
+function getTagClasses(item, config) {
+  // Tags are in the format category|category-name. config.tagClass is a comma
+  // delimited list of categories. Tags matching any of them are used, and the
+  // category|prefix is stripped so only category-name remains.
+  if (!config.tagClass || !Array.isArray(item.tags)) return [];
+  const prefixes = config.tagClass
+    .split(',')
+    .map((category) => category.trim())
+    .filter((category) => category.length > 0)
+    .map((category) => `${category}|`);
+  return item.tags
+    .filter((tag) => typeof tag === 'string' && prefixes.some((prefix) => tag.startsWith(prefix)))
+    .map((tag) => tag.slice(tag.indexOf('|') + 1).trim())
+    .filter((tagClass) => tagClass.length > 0);
+}
+
 function writeItems(matching, config, listElement) {
   matching?.forEach((item) => {
     const listItem = document.createElement('li');
     listItem.classList = `${item.resourceOptions}`;
+    listItem.classList.add(...getTagClasses(item, config));
     const cardLink = document.createElement('a');
     if (item.redirectTarget?.length > 0) {
       cardLink.href = item.redirectTarget;
@@ -188,6 +205,7 @@ function writeAsOneGroup(matching, config) {
   matching?.forEach((item) => {
     const listItem = document.createElement('li');
     listItem.classList = `${item.resourceOptions}`;
+    listItem.classList.add(...getTagClasses(item, config));
     const cardLink = document.createElement('a');
     if (item.redirectTarget?.length > 0) {
       cardLink.href = item.redirectTarget;
