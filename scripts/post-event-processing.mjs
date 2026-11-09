@@ -115,8 +115,9 @@ async function updatePastEventPage(authToken, page) {
     for (let i = 0; i < rows.length; i++) {
       const cell = rows[i].textContent.toLowerCase().trim();
       console.log(`Checking cell: ${cell}`);
-      console.log(`Row ${i}: ${rows[i]}`);
-      if (cell === 'robots') {
+      console.log(`Row ${i}: ${rows[i].textContent}`);
+      console.log(rows[i].textContent.trim().length > 0)
+      if (cell === 'robots' && rows[i].textContent.trim().length > 0) {
         hasRobots = true;
         break;
       }
