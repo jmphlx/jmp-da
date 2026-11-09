@@ -116,18 +116,21 @@ async function updatePastEventPage(authToken, page) {
     let hasRobots = false;
     for (let i = 0; i < rows.length; i++) {
       const leftCell = rows[i].children[0]?.textContent.toLowerCase().trim() ?? '';
-      const rightCell = rows[i].children[1]?.textContent.trim() ?? '';
-      console.log(`Row ${i}: left="${leftCell}", right="${rightCell}"`);
       if (leftCell === 'robots') {
         hasRobots = true;
-        if (rightCell.length > 0) {
-          break;
-        } else {
-          rightCell.textContent = 'noindex, nofollow';
+        const rightCell = rows[i].children[1]?.textContent.trim() ?? '';
+        console.log(`Row ${i}: left="${leftCell}", right="${rightCell}"`);
+        if (rightCell.length === 0) {
+          const valueP = rows[i].children[1]?.querySelector('p');
+          if (valueP) {
+            valueP.textContent = 'noindex, nofollow';
+          } else {
+            rows[i].children[1].innerHTML = '<p>noindex, nofollow</p>';
+          }
           flag = true;
           console.log('Updated robots row to "noindex, nofollow"');
-          break;
         }
+        break;
       }
     }
 
@@ -149,14 +152,18 @@ async function updatePastEventPage(authToken, page) {
       if (leftCell === 'redirecttarget') {
         hasRedirectTarget = true;
         const rightCell = rows[i].children[1]?.textContent.trim() ?? '';
-        if (rightCell.length > 0) {
-          break;
-        } else {
-          rightCell.textContent = '/events';
+        console.log(`Row ${i}: left="${leftCell}", right="${rightCell}"`);
+        if (rightCell.length === 0) {
+          const valueP = rows[i].children[1]?.querySelector('p');
+          if (valueP) {
+            valueP.textContent = '/events';
+          } else {
+            rows[i].children[1].innerHTML = '<p>/events</p>';
+          }
           flag = true;
           console.log('Updated redirectTarget row to "/events"');
-          break;
         }
+        break;
       }
     }
 
