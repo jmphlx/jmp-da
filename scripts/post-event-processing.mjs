@@ -109,17 +109,25 @@ async function updatePastEventPage(authToken, page) {
     const metadataBlock = dom.querySelector('div.metadata');
     let flag = false;
 
+    // Each metadata row is a div with two column divs: left = name, right = value
+    const rows = Array.from(metadataBlock.querySelectorAll(':scope > div'));
+
     // Check if robots row exists
-    const rows = Array.from(metadataBlock.querySelectorAll('p'));
     let hasRobots = false;
     for (let i = 0; i < rows.length; i++) {
-      const cell = rows[i].textContent.toLowerCase().trim();
-      console.log(`Checking cell: ${cell}`);
-      console.log(`Row ${i}: ${rows[i].textContent}`);
-      console.log(rows[i].textContent.trim().length > 0)
-      if (cell === 'robots' && rows[i].textContent.trim().length > 0) {
+      const leftCell = rows[i].children[0]?.textContent.toLowerCase().trim() ?? '';
+      const rightCell = rows[i].children[1]?.textContent.trim() ?? '';
+      console.log(`Row ${i}: left="${leftCell}", right="${rightCell}"`);
+      if (leftCell === 'robots') {
         hasRobots = true;
-        break;
+        if (rightCell.length > 0) {
+          break;
+        } else {
+          rightCell.textContent = 'noindex, nofollow';
+          flag = true;
+          console.log('Updated robots row to "noindex, nofollow"');
+          break;
+        }
       }
     }
 
@@ -137,10 +145,18 @@ async function updatePastEventPage(authToken, page) {
     // Check if redirectTarget row exists
     let hasRedirectTarget = false;
     for (let i = 0; i < rows.length; i++) {
-      const cell = rows[i].textContent.toLowerCase().trim();
-      if (cell === 'redirecttarget') {
+      const leftCell = rows[i].children[0]?.textContent.toLowerCase().trim() ?? '';
+      if (leftCell === 'redirecttarget') {
         hasRedirectTarget = true;
-        break;
+        const rightCell = rows[i].children[1]?.textContent.trim() ?? '';
+        if (rightCell.length > 0) {
+          break;
+        } else {
+          rightCell.textContent = '/events';
+          flag = true;
+          console.log('Updated redirectTarget row to "/events"');
+          break;
+        }
       }
     }
 
