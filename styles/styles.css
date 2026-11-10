@@ -371,7 +371,7 @@ h1 + h5 {
 }
 :is(h2) {
   &:has(+ :is(h4, h5)) {
-    margin-bottom: .5em;
+    margin-bottom: .35em;
   }
   &:has(+ :is(p)) {
     margin-bottom: 1rem !important;
@@ -1047,6 +1047,28 @@ a:hover {
     border: 2px solid rgba(0, 0, 0, 0) !important;
   }
 }
+.button-outline-blue {
+  a.button, a.button:any-link {
+    background: rgba(0, 0, 0, 0) !important;
+    border: 2px solid var(--blue) !important;
+    border-radius: 5px;
+    box-sizing: content-box;
+    transition-duration: 0.2s;
+    transition-timing-function: ease;
+    position: relative;
+    z-index: 1;
+    color: var(--blue) !important;
+    padding: 6px 12px !important;
+    margin-bottom: 0 !important;
+    min-width: 128px !important;
+    line-height: 1.5;
+  }
+  a.button:hover {
+    color: var(--blueNeon) !important;
+    background: rgba(0, 0, 0, 0.05) !important;
+    border: 2px solid var(--blueNeon) !important;
+  }
+}
 .button-light-blue-outline {
   a.button {
     background: rgba(0, 0, 0, 0.125) !important;
@@ -1128,7 +1150,7 @@ a:hover {
       border: 2px solid var(--blue);
       color: var(--blue) !important;
       /* background-color: transparent; */
-      background-color: white;
+      background-color: rgba(250, 250, 250, 0.5);
     }
     a.button:hover {
       border: 2px solid var(--link-hover-color);
