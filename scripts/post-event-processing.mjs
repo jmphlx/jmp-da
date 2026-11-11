@@ -109,13 +109,27 @@ async function updatePastEventPage(authToken, page) {
     const metadataBlock = dom.querySelector('div.metadata');
     let flag = false;
 
+    // Each metadata row is a div with two column divs: left = name, right = value
+    const rows = Array.from(metadataBlock.querySelectorAll(':scope > div'));
+
     // Check if robots row exists
-    const rows = Array.from(metadataBlock.querySelectorAll('p'));
     let hasRobots = false;
     for (let i = 0; i < rows.length; i++) {
-      const cell = rows[i].textContent.toLowerCase().trim();
-      if (cell === 'robots') {
+      const leftCell = rows[i].children[0]?.textContent.toLowerCase().trim() ?? '';
+      if (leftCell === 'robots') {
         hasRobots = true;
+        const rightCell = rows[i].children[1]?.textContent.trim() ?? '';
+        console.log(`Row ${i}: left="${leftCell}", right="${rightCell}"`);
+        if (rightCell.length === 0) {
+          const valueP = rows[i].children[1]?.querySelector('p');
+          if (valueP) {
+            valueP.textContent = 'noindex, nofollow';
+          } else {
+            rows[i].children[1].innerHTML = '<p>noindex, nofollow</p>';
+          }
+          flag = true;
+          console.log('Updated robots row to "noindex, nofollow"');
+        }
         break;
       }
     }
@@ -134,9 +148,21 @@ async function updatePastEventPage(authToken, page) {
     // Check if redirectTarget row exists
     let hasRedirectTarget = false;
     for (let i = 0; i < rows.length; i++) {
-      const cell = rows[i].textContent.toLowerCase().trim();
-      if (cell === 'redirecttarget') {
+      const leftCell = rows[i].children[0]?.textContent.toLowerCase().trim() ?? '';
+      if (leftCell === 'redirecttarget') {
         hasRedirectTarget = true;
+        const rightCell = rows[i].children[1]?.textContent.trim() ?? '';
+        console.log(`Row ${i}: left="${leftCell}", right="${rightCell}"`);
+        if (rightCell.length === 0) {
+          const valueP = rows[i].children[1]?.querySelector('p');
+          if (valueP) {
+            valueP.textContent = '/events';
+          } else {
+            rows[i].children[1].innerHTML = '<p>/events</p>';
+          }
+          flag = true;
+          console.log('Updated redirectTarget row to "/events"');
+        }
         break;
       }
     }
