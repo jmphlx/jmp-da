@@ -278,7 +278,7 @@ div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
         padding: 12px;
         border-radius: 5px;
         position: relative;
-        display: block;
+        display: flex;
         align-items: center;
         justify-content: left;
         padding-left: 42px;
@@ -1836,31 +1836,64 @@ div.clm-80-20 {
     }
   }
 }
-.icon-bullet {
+.icon-bullet, .icon-bullet-gray-box {
   div {
+    gap: 16px;
     div {
       position: relative;
-      margin-bottom: 1rem;
+      margin-bottom: 16px;
       min-height: 84px;
+      background-color: var(--grayLight);
+      /* background: linear-gradient(90deg, #fdfdff 15%, #EFF1FE 100%); */
+      padding: 16px;
+      border-radius: 20px;
+      display: grid;
+      grid-template-rows: .25fr 1fr;
+      grid-template-columns: .25fr 1fr;
+      gap: 0;
+      align-items: center;
+      justify-content: center;
+      vertical-align: middle;
+      flex-wrap: wrap;
       .icon {
-        height: 64px;
-        width: 64px;
-        position: absolute;
-        left: 0;
+        height: 100%;
+        width: 72px;
+        margin-right: 16px;
+        grid-column: 1 / 2;
+				grid-row: 1 / 3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        vertical-align: middle;
+        padding: 8px;
+        border-radius: 10px;
+        background-color: rgba(0, 0, 0, .04);
+        background: linear-gradient(90deg, #fdfdff 0%, #EFF1FE 75%);
+        img {
+          height: 100%;
+        }
       }
-      h3, h4, h5, p {
+      h3, h4, h5 {
         text-align: left !important;
-        margin-left: 84px;
+        grid-column: 2;
+				grid-row: 1;
       }
       h5 {
         padding: 0;
-        margin: 1.5rem 0 .5em 84px;
+        margin: 1.5rem 0 .5em 0;
       }
       h5:has(p) {
         padding: unset;
       }
       p:has(span.icon) {
         margin-bottom: 0;
+        grid-column: 1 / 2;
+				grid-row: 1 / 3;
+      }
+      p {
+        margin-bottom: 0;
+        grid-column: 2;
+				grid-row: 2;
       }
     }
   }
@@ -2787,3 +2820,27 @@ div > div > div:nth-child(1){
   }
 }
 
+
+/* Animations */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up-column {
+  /* Bind the keyframes */
+  animation: fadeUp linear both;
+  
+  /* Link the animation clock to the element entering the viewport */
+  animation-timeline: view();
+  
+  /* Start when the top of the element hits the bottom of the viewport (entry 0%)
+     and finish completely when it has scrolled 30% into view */
+  animation-range: entry 0% entry 70%;
+}
