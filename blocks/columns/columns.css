@@ -1867,7 +1867,7 @@ div.clm-80-20 {
         vertical-align: middle;
         padding: 8px;
         border-radius: 10px;
-        background-color: rgba(0, 0, 0, .04);
+        /* background-color: rgba(0, 0, 0, .04); */
         background: linear-gradient(90deg, #fdfdff 0%, #EFF1FE 75%);
         img {
           height: 100%;
@@ -2822,7 +2822,7 @@ div > div > div:nth-child(1){
 
 
 /* Animations */
-@keyframes fadeUp {
+@keyframes fade-up {
   from {
     opacity: 0;
     transform: translateY(100px);
@@ -2835,7 +2835,7 @@ div > div > div:nth-child(1){
 
 .fade-up-column {
   /* Bind the keyframes */
-  animation: fadeUp linear both;
+  animation: fade-up linear both;
   
   /* Link the animation clock to the element entering the viewport */
   animation-timeline: view();
