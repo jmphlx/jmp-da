@@ -5,10 +5,58 @@ import {
 
 function decorateVidyardEmbed(elems) {
   elems.forEach((elem) => {
-    const embedHTML = embedVidyard(elem);
     const parentEl = elem.parentElement;
+    // authored image in the same column, shown as the poster until the player renders
+    const poster = parentEl.closest('div')?.querySelector('picture');
+
+    if (!poster) {
+      parentEl.classList.add('embed', 'embed-ceros');
+      parentEl.innerHTML = embedVidyard(elem);
+      elem.remove();
+      return;
+    }
+
+    // the poster is the first thing the user should see, so fetch it right away
+    const posterImg = poster.querySelector('img');
+    if (posterImg) {
+      posterImg.loading = 'eager';
+      posterImg.fetchPriority = 'high';
+    }
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'embed-placeholder';
+    wrapper.prepend(poster);
+
+    // the player renders into this hidden holder; the poster stays visible until it is ready
+    const holder = document.createElement('div');
+    holder.style.cssText = 'position: absolute; inset: 0; opacity: 0; pointer-events: none;';
+    wrapper.append(holder);
+    parentEl.replaceChildren(wrapper);
     parentEl.classList.add('embed', 'embed-ceros');
-    parentEl.innerHTML = embedHTML;
+
+    const playerObserver = new MutationObserver(() => {
+      if (holder.querySelector('.vidyard-player-container')) {
+        playerObserver.disconnect();
+        holder.removeAttribute('style');
+        parentEl.replaceChildren(holder);
+      }
+    });
+
+    const viewportObserver = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        viewportObserver.disconnect();
+        // start the player only after the poster has decoded, so the poster is painted
+        // and does not compete with the player's script and thumbnail downloads
+        const posterReady = posterImg?.decode
+          ? posterImg.decode().catch(() => {})
+          : Promise.resolve();
+        posterReady.then(() => {
+          playerObserver.observe(holder, { childList: true, subtree: true });
+          holder.innerHTML = embedVidyard(elem);
+        });
+      }
+    });
+    viewportObserver.observe(wrapper);
     elem.remove();
   });
 }
