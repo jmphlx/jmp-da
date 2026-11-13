@@ -3196,7 +3196,7 @@ div.interview-body {
   padding-top: 32px !important;
   padding-bottom: 16px !important;
 }
-.section-compact{
+.section-compact {
   padding: 40px 32px 4px 32px !important;
   @media (width <=600px) {
     padding: 40px 32px 0 32px !important;
