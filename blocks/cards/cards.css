@@ -2256,6 +2256,183 @@
     }
   }
 }
+.logo-hover-banner {
+  ul {
+    display: flex;
+    li {
+      background: linear-gradient(45deg, #0378CD 15%, #643695 95%);
+      border-radius: 10px;
+      width: 100%;
+      min-height: 172px;
+      display: flex;
+      position: relative;
+      .cards-card-image:nth-child(1){
+        position: absolute;
+        max-width: 240px;
+        right: 4rem;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 3;
+        border-radius: 10px;
+        picture {
+          img {
+            height: 100%;
+          }
+        }
+      }
+      .cards-card-image:nth-child(2) {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        z-index: 0;
+        border-radius: 10px;
+        picture {
+          width: 100%;
+          height: 100%;
+          opacity: .5;
+          border-
+          img {
+            height: 100%;
+          }
+        }
+      }
+      .cards-card-body {
+        color: var(--white);
+        position: relative;
+        flex-direction: column;
+        width: 100%;
+        /* padding: 24px; */
+        justify-content: center;
+        justify-self: center;
+        display: flex;
+        margin: 0;
+        h2, h3, h4 {
+          width: 50%;
+          color: white;
+          margin-bottom: 0 !important;
+          margin-left: 32px;
+        }
+        p.button-container {
+          position: absolute;
+          margin: 0;
+          width: 100%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 10;
+          a {
+            position: absolute;
+            color: transparent !important;
+            background-color: transparent;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 1;
+          }
+        }
+        p {
+          position: relative;
+          overflow: hidden;
+          picture {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            z-index: 0;
+          }
+        }
+      }
+      &:after {
+        content:'';
+        display: block;
+        width: 1.6rem;
+        height: 1.6rem;
+        border: solid var(--white);
+        border-width: 0 3px 3px 0;
+        position: absolute;
+        top: 2.4rem;
+        left: auto;
+        transform: rotate(-45deg) translateY(-50%);
+        right: 2rem;
+        opacity: 0;
+        background: none;
+        transition: all 0.5s ease;
+        z-index: 1;
+        border-radius: 0 !important;
+      }
+      &:hover {
+        &:after {
+          background: none;
+          right: 1rem;
+          opacity: 1;
+        }
+      }
+      @media (width <=900px) {
+        /* display: block; */
+        .cards-card-image:nth-child(1){
+          left: 32px;
+          position: absolute;
+          width: auto;
+          margin-top: 32px;
+          top: unset;
+          transform: none;
+          picture {
+            display: block;
+            width: 75%;
+            img {
+              width: 100%;
+            }
+          }
+        }
+        .cards-card-image:nth-child(2){
+          height: 100% !important;
+          img {
+            height: 100%;
+          }
+        }
+        .cards-card-body {
+          position: relative;
+          padding: 124px 32px 32px 32px;
+          width: 100%;
+          h2, h3, h4 {
+            width: 90%;
+            color: white;
+            margin: 0 !important;
+          }
+          p.button-container {
+            position: absolute;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+            z-index: 10;
+          }
+        }
+      }
+    }
+  }
+  &.red-purple {
+    ul {
+      li {
+        background: linear-gradient(45deg, #643695 15%, #F04B4B 95%);
+      }
+    }
+  }
+  &.multi {
+    ul {
+      li {
+        background: linear-gradient(160deg, var(--orange)-35%, var(--purple) 45%, var(--blue) 100%) !important;
+        border: none;
+      }
+    }
+  }
+}
 
 .banner {
   ul {
