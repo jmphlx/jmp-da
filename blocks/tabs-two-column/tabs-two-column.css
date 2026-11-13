@@ -222,6 +222,17 @@ div.tabs-wrapper div.tabs.block div.tabs-list .tabs-tab {
       p, h1, h2, h3 ,h4 ,h5, h6 {
         text-align: left !important;
       }
+      ul {
+        padding: 0 0 0 18px; 
+        li {
+          display: list-item !important;
+          list-style-type: disc;
+          text-indent: 0;
+        }
+        li::marker {
+          color: var(--blue) !important;
+        }
+      }
     }
   }
   @media (width <= 800px) {
