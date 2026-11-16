@@ -2855,7 +2855,6 @@ div > div > div:nth-child(1){
 }
 
 
-/* Animations */
 @keyframes fade-up {
   from {
     opacity: 0;
@@ -2867,14 +2866,32 @@ div > div > div:nth-child(1){
   }
 }
 
+/* Keep outer block/section wrapper visible if fade-up-column was authored on it */
+.columns.fade-up-column,
+.section.fade-up-column {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+/* Individual animated columns */
+.columns > div > div.fade-up-column,
 .fade-up-column {
-  /* Bind the keyframes */
-  animation: fade-up linear both;
-  
-  /* Link the animation clock to the element entering the viewport */
-  animation-timeline: view();
-  
-  /* Start when the top of the element hits the bottom of the viewport (entry 0%)
-     and finish completely when it has scrolled 30% into view */
-  animation-range: entry 0% entry 70%;
+  opacity: 0;
+  transform: translateY(100px);
+  will-change: opacity, transform;
+}
+
+.columns > div > div.fade-up-column.is-in-view,
+.fade-up-column.is-in-view {
+  animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .columns > div > div.fade-up-column,
+  .fade-up-column {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
 }
