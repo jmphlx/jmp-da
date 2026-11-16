@@ -4,12 +4,17 @@
   padding: 0 0 3.2rem 0;
   margin: 0;
   .quote-quotation {
+    position: relative;
+    isolation: isolate;
+    text-align: center;
+    margin: 32px auto;
     p, h1, h2, h3, h4, h5 {
+      display: inline;
       font-family: "anova-light", "Arial", "Helvetica", sans-serif;
       font-weight: normal;
       font-size: 2.8rem;
       color: #643695;
-      margin: 32px auto;
+      margin: 0;
       text-align: center;
       position: relative;
       padding: 0;
@@ -24,39 +29,52 @@
       margin-bottom: 0;
       line-height: 1.5;
       font-size: 16px;
-      color: #333333
+      color: #333333;
     }
   }
 }
+
 div.quote-small .quote-quotation {
   p, h1, h2, h3, h4, h5 {
     font-size: 1.9rem;
   }
 }
-.quote blockquote .quote-quotation > :first-child:before, .quote blockquote .quote-quotation > :last-child:after {
-  content: "";
+
+/* Prevent browser/global stylesheets from adding extra quotes on blockquote or child elements */
+.quote blockquote::before,
+.quote blockquote::after,
+.quote blockquote .quote-quotation > :first-child::before,
+.quote blockquote .quote-quotation > :last-child::after {
+  content: none !important;
+}
+
+/* Single consolidated decorative quotation marks on .quote-quotation */
+.quote blockquote .quote-quotation::before,
+.quote blockquote .quote-quotation::after {
   font-family: "Georgia", cursive;
   line-height: 0;
-  /* font-size: 800%; */
   font-size: 17.0rem;
   width: 0;
   height: 0;
   position: absolute;
+  bottom: -43px;
   color: #f2f2f2;
   z-index: -1;
 }
-.quote blockquote .quote-quotation > :first-child:before {
+
+.quote blockquote .quote-quotation::before {
   content: '\201C';
-  width: 1em;
-  /* top: 0;
-  left: -16px; */
+  top: 56px;
+  /* left: -23px; */
+  /* width: 1em; */
 }
-* *.quote blockquote .quote-quotation > :last-child:after {
+
+.quote blockquote .quote-quotation::after {
   content: '\201D';
-  /* bottom: -0.175em;
-  right: 105px; */
-  margin: 80px 0 0 -40px;
+  margin: 80px 0 0 -7%;
+  /* right: 24px; */
 }
+
 .img-float-right {
   p {
     font-size: 1.9rem !important;
@@ -70,12 +88,13 @@ div.quote-small .quote-quotation {
     min-width: 275px;
     margin: 0 0 1rem 3rem;
   }
-  @media (width <=600px) {
+  @media (width <= 600px) {
     img {
       float: none;
     }
   }
 }
+
 .quote-rule {
   border-top: 1px solid var(--grayRule);
   border-bottom: 1px solid var(--grayRule);
@@ -86,34 +105,131 @@ div.quote-small .quote-quotation {
   &.quote-light {
     div.quote-quotation {
       z-index: 2 !important;
+
       p {
         color: var(--white) !important;
         z-index: 2 !important;
       }
     }
   }
-  &.text-light{
-    p, h1, h2, h3, h4, h5 {
-    color: #ffffff !important;
-    z-index: 2;
+  &.quote-dark {
+    div.quote-quotation {
+      z-index: 2 !important;
+
+      p {
+        color: var(--gray3) !important;
+        z-index: 2 !important;
+      }
     }
-    :first-child:before, :first-child:after {
-      color: rgba(220, 220, 220, .2) !important;
-      z-index: 1 !important;
+  }
+  &.quote-blue {
+    div.quote-quotation {
+      z-index: 2 !important;
+      p {
+        color: var(--blue) !important;
+        z-index: 2 !important;
+      }
+    }
+  }
+  &.text-light {
+    p, h1, h2, h3, h4, h5 {
+      color: #ffffff !important;
+      z-index: 2;
+    }
+    .quote-quotation::before,
+    .quote-quotation::after {
+      color: rgba(220, 220, 220, 0.2) !important;
+      z-index: -1 !important;
     }
   }
   &.quotations-blue {
     p {
       z-index: 1 !important;
-
     }
-    p:before, p:after {
+    .quote-quotation::before,
+    .quote-quotation::after {
       color: var(--blue) !important;
       z-index: -1 !important;
-      opacity: .3;
+      opacity: 0.3;
     }
-    p:before {
-      margin: 50px 0 0 -80px !important;
+  }
+}
+
+/* Register animatable CSS variable for the typing sweep */
+@property --type-progress {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+}
+
+.quote.animate-blur-type {
+  --quote-text-color: #643695;
+  &.quote-blue {
+    --quote-text-color: var(--blue);
+  }
+  &.quote-light,
+  &.text-light {
+    --quote-text-color: var(--white, #ffffff);
+  }
+  &.quote-dark {
+    --quote-text-color: var(--gray3);
+  }
+  .quote-quotation p {
+    display: inline-block;
+    --type-progress: 0%;
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(8px);
+    background-image: linear-gradient(
+      90deg,
+      var(--quote-text-color) calc(var(--type-progress) - 15%),
+      transparent var(--type-progress)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition:
+      --type-progress 1.6s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.6s ease,
+      filter 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .quote-attribution {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateY(6px);
+    transition:
+      opacity 0.6s ease 1.1s,
+      filter 0.6s ease 1.1s,
+      transform 0.6s ease 1.1s;
+  }
+  /* .quote-quotation::after {
+    right: 56px;
+  } */
+  &.is-in-view {
+    .quote-quotation p {
+      --type-progress: 115%;
+      opacity: 1;
+      filter: none;
+      transform: none;
     }
+    .quote-attribution {
+      opacity: 1;
+      filter: none;
+      transform: none;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quote.animate-blur-type .quote-quotation p,
+  .quote.animate-blur-type .quote-attribution {
+    --type-progress: 115% !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    transition: none !important;
+    background-image: none !important;
+    -webkit-text-fill-color: currentColor !important;
   }
 }

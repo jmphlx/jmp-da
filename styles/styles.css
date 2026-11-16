@@ -1064,9 +1064,9 @@ a:hover {
     line-height: 1.5;
   }
   a.button:hover {
-    color: var(--blueNeon) !important;
+    color: var(--blue-hover) !important;
     background: rgba(0, 0, 0, 0.05) !important;
-    border: 2px solid var(--blueNeon) !important;
+    border: 2px solid var(--blue-hover) !important;
   }
 }
 .button-light-blue-outline {
