@@ -209,8 +209,8 @@ div.quote-small .quote-quotation {
   } */
   &.is-in-view {
     .quote-quotation p {
-
       --type-progress: 115%;
+      
       opacity: 1;
       filter: none;
       transform: none;
@@ -226,8 +226,8 @@ div.quote-small .quote-quotation {
 @media (prefers-reduced-motion: reduce) {
   .quote.animate-blur-type .quote-quotation p,
   .quote.animate-blur-type .quote-attribution {
-
     --type-progress: 115% !important;
+
     opacity: 1 !important;
     filter: none !important;
     transform: none !important;
