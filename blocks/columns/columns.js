@@ -3,16 +3,6 @@ import {
   embedYoutube,
 } from '../embed/embed.js';
 
-function decorateVidyardEmbed(elems) {
-  elems.forEach((elem) => {
-    const embedHTML = embedVidyard(elem);
-    const parentEl = elem.parentElement;
-    parentEl.classList.add('embed', 'embed-ceros');
-    parentEl.innerHTML = embedHTML;
-    elem.remove();
-  });
-}
-
 function decorateEmbeds(block, selector, embedFn, extraClasses = []) {
   block.querySelectorAll(selector).forEach((link) => {
     const parentEl = link.parentElement;
@@ -56,9 +46,7 @@ function initFadeUpColumns(block) {
 
 export default function decorate(block) {
   // Decorate Vidyard & YouTube embeds
-    // get all elements that are a vidyard share url & decorate them
-  const vidyardUrls = block.querySelectorAll('a[href*="share.vidyard.com"]');
-  decorateVidyardEmbed(vidyardUrls);
+  decorateEmbeds(block, 'a[href*="share.vidyard.com"]', embedVidyard, ['embed-ceros']);
   decorateEmbeds(block, 'a[href*="youtube.com/watch"]', embedYoutube);
   // Set column count class safely
   const firstRow = block.firstElementChild;
