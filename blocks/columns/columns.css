@@ -1930,6 +1930,9 @@ div.clm-80-20 {
 				grid-row: 2;
       }
     }
+    @media (width <=900px) {
+      gap: 0;
+    }
   }
   div:has(h5 + p) {
     h5 {
