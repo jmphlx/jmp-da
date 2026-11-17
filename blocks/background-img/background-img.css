@@ -142,6 +142,28 @@
       }
     }
   }
+  &.background-image-bottom {
+    .background-img-wrapper {
+      .background-img {
+        picture {
+          img {
+            object-position: bottom;
+          }
+        }
+      }
+    }
+    @media (width <= 900px) {
+      .background-img-wrapper {
+        .background-img {
+          picture {
+            img {
+              object-position: bottom;
+            }
+          }
+        }
+      }
+    }
+  }
   &.background-image-size-90 {
     .background-img-wrapper {
       .background-img {
