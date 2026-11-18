@@ -2318,6 +2318,7 @@
         p.button-container {
           position: absolute;
           margin: 0;
+          border: none;
           width: 100%;
             height: 100%;
             cursor: pointer;
@@ -2335,6 +2336,14 @@
         p {
           position: relative;
           overflow: hidden;
+          width: max-content;
+          color: white;
+          margin-bottom: 0 !important;
+          margin-left: 32px;
+          padding: 6px 12px;
+          border-radius: 5px;
+          margin-top: 16px;
+          border: 2px solid var(--white);
           picture {
             position: absolute;
             left: 0;
@@ -2358,7 +2367,7 @@
         left: auto;
         transform: rotate(-45deg) translateY(-50%);
         right: 2rem;
-        opacity: 0;
+        opacity: .5;
         background: none;
         transition: all 0.5s ease;
         z-index: 1;
@@ -2403,6 +2412,10 @@
             color: white;
             margin: 0 !important;
           }
+          p{
+            color: white;
+            margin-left: 0 !important;
+          }
           p.button-container {
             position: absolute;
             margin: 0;
@@ -2429,6 +2442,14 @@
       li {
         background: linear-gradient(160deg, var(--orange)-35%, var(--purple) 45%, var(--blue) 100%) !important;
         border: none;
+      }
+    }
+  }
+  &:hover {
+    ul li .cards-card-body {
+      p:not(.button-container) {
+        transition: all 0.5s ease;
+        background-color: rgba(0, 0, 0, 0.25) !important;
       }
     }
   }
