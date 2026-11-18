@@ -171,6 +171,32 @@ div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
       color: #ffffff !important;
     }
   }
+  &.h6-light-gray-block-tag {
+    position: relative;
+    h4 {
+      padding-top: 48px;
+    }
+    h6 {
+      position: absolute;
+      padding: 8px 16px 8px 24px;
+      left: 0;
+      background-color: rgba(0, 0, 0, .125);
+      color: var(--text-color);
+    }
+  }
+  &.h6-dark-gray-block-tag {
+    position: relative;
+    h4 {
+      padding-top: 48px;
+    }
+    h6 {
+      position: absolute;
+      padding: 8px 16px 8px 24px;
+      left: 0;
+      background-color: rgba(0, 0, 0, .25);
+      color: var(--white);
+    }
+  }
   &.h6-blue-block-tag {
     position: relative;
     h4 {
@@ -181,6 +207,19 @@ div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
       padding: 8px 16px 8px 24px;
       left: 0;
       background-color: var(--blue);
+      color: var(--white);
+    }
+  }
+  &.h6-purple-block-tag {
+    position: relative;
+    h4 {
+      padding-top: 48px;
+    }
+    h6 {
+      position: absolute;
+      padding: 8px 16px 8px 24px;
+      left: 0;
+      background-color: var(--purple);
       color: var(--white);
     }
   }
