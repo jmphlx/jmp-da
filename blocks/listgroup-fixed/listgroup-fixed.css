@@ -391,6 +391,15 @@ div.listgroup-fixed, div.listgroup  {
           flex: none;
           color: #333333 !important;
         }
+        .author {
+          display: flex;
+          max-width: 51%;
+          padding: 0;
+          margin: 0 2rem 0 2rem;
+          flex: none;
+          color: #333333 !important;
+          order: 1;
+        }
         &:after {
           content:'';
           display: block;
@@ -424,7 +433,7 @@ div.listgroup-fixed, div.listgroup  {
             font-size: 3rem;
             max-width: 45% !important;
           }
-          .abstract, .description, .displayDescription {
+          .abstract, .description, .displayDescription, .author {
             font-size: 1.9rem;
             max-width: 45% !important;
           }
@@ -451,7 +460,7 @@ div.listgroup-fixed, div.listgroup  {
             }
           }
         }
-        .navigation-title, .resourceType, .displayLabel {
+        .navigation-title, .resourceType, .displayLabel, .author {
           color: var(--link-hover-color) !important;
           text-decoration: none;
         }
@@ -479,16 +488,16 @@ div.listgroup-fixed, div.listgroup  {
             .title {
               font-size: 1.6rem;
               max-width: 55%;
-              margin: 0 2rem 0 3rem;
+              margin: 0 2rem 0 2rem;
             }
-            .navigation-title, .resourceType, .displayLabel {
+            .navigation-title, .resourceType, .displayLabel, .author {
               margin-top: 0;
               font-size: 1.3rem;
             }
             .abstract, .description, .displayDescription {
               font-size: 1.6rem;
               max-width: 55% !important;
-              margin: 0 2rem 0 3rem;
+              margin: 0 2rem 0 2rem;
             }
             &:after {
               width: 1.6rem;
@@ -510,7 +519,8 @@ div.listgroup-fixed, div.listgroup  {
           grid-template-areas: 
               "img"
               "title"
-              "abstract";
+              "abstract"
+              "author";
           grid-template-rows: auto;
           grid-template-columns: auto;
           span.image {
@@ -531,6 +541,19 @@ div.listgroup-fixed, div.listgroup  {
             max-width:  95%;
             margin: 0;
           }
+          .abstract, .description, .displayDescription {
+            display: block;
+            padding: 0 1.6rem 1.6rem 1.6rem;
+            width: 90% !important;
+            max-width:  95%;
+            margin: 0;
+          }
+          .author {
+            font-size: 1.6rem;
+            margin: 1.6rem 0 0 0;
+            padding: 1rem 1.6rem 0 1.6rem;
+            max-width: 100% !important;
+          }
         }
         &:first-child {
           width: 100%;
@@ -540,8 +563,9 @@ div.listgroup-fixed, div.listgroup  {
             .title {
               font-size: 1.6rem;
               margin-left: 0;
+              max-width: 100% !important;
             }
-            .navigation-title, .resourceType, .displayLabel {
+            .navigation-title, .resourceType, .displayLabel, .author {
               margin-top: 0;
               font-size: 1.3rem;
             }
@@ -549,6 +573,12 @@ div.listgroup-fixed, div.listgroup  {
               font-size: 1.6rem;
               margin: 0 1.6rem 0 0;
               padding-bottom: 2rem;
+              max-width: 100% !important;
+            }
+            .author {
+              font-size: 1.6rem;
+              margin: 1.6rem 0 0 0;
+              padding-bottom: 0;
               max-width: 100% !important;
             }
             &:after {
