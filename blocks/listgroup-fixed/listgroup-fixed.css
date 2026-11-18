@@ -541,13 +541,6 @@ div.listgroup-fixed, div.listgroup  {
             max-width:  95%;
             margin: 0;
           }
-          .abstract, .description, .displayDescription {
-            display: block;
-            padding: 0 1.6rem 1.6rem 1.6rem;
-            width: 90% !important;
-            max-width:  95%;
-            margin: 0;
-          }
           .author {
             font-size: 1.6rem;
             margin: 1.6rem 0 0 0;

@@ -2315,16 +2315,6 @@
           margin-bottom: 0 !important;
           margin-left: 32px;
         }
-        p {
-          width: max-content;
-          color: white;
-          margin-bottom: 0 !important;
-          margin-left: 32px;
-          padding: 6px 12px;
-          border-radius: 5px;
-          margin-top: 16px;
-          border: 2px solid var(--white);
-        }
         p.button-container {
           position: absolute;
           margin: 0;
@@ -2346,6 +2336,14 @@
         p {
           position: relative;
           overflow: hidden;
+          width: max-content;
+          color: white;
+          margin-bottom: 0 !important;
+          margin-left: 32px;
+          padding: 6px 12px;
+          border-radius: 5px;
+          margin-top: 16px;
+          border: 2px solid var(--white);
           picture {
             position: absolute;
             left: 0;
