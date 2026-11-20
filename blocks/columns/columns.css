@@ -127,6 +127,11 @@ div.columns-2-cols, div.columns-3-cols, div.columns-4-cols, div.columns-5-cols {
       padding: 24px;
     }
   }
+  &.columns-gap-24 {
+    div {
+      gap: 24px;
+    }
+  }
   &.columns-margin-bottom-16 {
     @media (width <= 900px) {
       div div {
