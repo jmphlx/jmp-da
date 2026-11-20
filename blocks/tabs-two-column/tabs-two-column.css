@@ -172,10 +172,13 @@ div.tabs-wrapper div.tabs.block div.tabs-list .tabs-tab {
     border-radius: 5px;
     border: 1px solid #d0d0d0;
     padding: 1rem 1.6rem 1rem 1rem;
+    span.icon {
+      width: 36px;
+      height: 36px;
+    }
   }
   .tabs-list button[aria-selected='true'] {
     height: 100%;
-    line-height: 1.2;
     align-items: center;
     padding: 1rem 1.6rem 1rem 1rem;
     color: var(--blue);
@@ -336,14 +339,13 @@ div.tabs-wrapper div.tabs.block div.tabs-list .tabs-tab {
     .tabs-list button[aria-selected='true'] {
       height: 100%;
       border: 2px solid var(--blue);
-      line-height: 1rem;
       align-items: center;
       padding: 1.6rem;
       border-bottom: none;
       background-color: var(--gray);
       color: white;
       p {
-        line-height: 1;
+        color: var(--blue);
       }
       :after {
         display: none;
