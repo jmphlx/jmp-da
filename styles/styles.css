@@ -787,6 +787,31 @@ div.gradient-feather {
         mask-image: linear-gradient(to left, black 0%, transparent 80%);
       }
     }
+    &.feather-70 {
+      .background-img {
+        mask-image: linear-gradient(to left, black 0%, transparent 70%);
+      }
+    }
+    &.feather-60 {
+      .background-img {
+        mask-image: linear-gradient(to left, black 0%, transparent 60%);
+      }
+    }
+    &.feather-50 {
+      .background-img {
+        mask-image: linear-gradient(to left, black 0%, transparent 50%);
+      }
+    }
+    &.feather-40 {
+      .background-img {
+        mask-image: linear-gradient(to left, black 0%, transparent 40%);
+      }
+    }
+    &.feather-30 {
+      .background-img {
+        mask-image: linear-gradient(to left, black 0%, transparent 30%);
+      }
+    }
   }
   &.blue-right-gradient {
     background: linear-gradient(45deg, #0378CD 70%, #61CAE5 95%);
