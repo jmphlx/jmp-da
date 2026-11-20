@@ -235,6 +235,83 @@ div.tabs-wrapper div.tabs.block div.tabs-list .tabs-tab {
       }
     }
   }
+  &.columns-stacked {
+    .tabs-panel {
+      flex-direction: column;
+      padding: 24px !important; 
+      background: white;
+      .column-1 {
+        padding: 0;
+        width: auto;
+        p, ul, ol {
+          font-size: 15px;
+        }
+      }
+      .column-2 {
+        margin-top: 24px;
+        padding: 0;
+        width: auto;
+        p, ul, ol {
+          font-size: 15px;
+        }
+      }
+    }
+    @media (width <= 800px) {
+      .tabs-panel {
+        .column-1 {
+          background-color: transparent !important;
+        }
+      }
+    }
+  }
+  &.column-2-blue-light {
+    .tabs-panel {
+      .column-2 {
+        background-color: rgba(3, 120, 205, .1);
+        border-radius: 5px;
+        padding: 16px;
+      }
+    }
+  }
+  &.bullet-grid {
+    .tabs-panel {
+      .column-1,  .column-2 {
+        ul {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          padding: 0;
+          list-style: none;
+          counter-reset: my-custom-counter;
+          padding-left: 0;
+          li {
+            background-color: var(--gray);
+            /* background-color: rgba(3, 120, 205, .1); */
+            padding: 16px;
+            border-radius: 5px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            /* padding-left: 42px; */
+            margin-bottom: 0;
+            width: calc(50% - 38px);
+            /* min-height: 42px; */
+            @media (width <= 600px) {
+              width: 100% !important;
+            }
+          }
+          li:last-child:nth-child(odd) {
+            width: 100%;
+          }
+          li::marker {
+            display: none;
+            color: transparent !important;
+          }
+        }
+      }
+    }
+  }
   @media (width <= 800px) {
     flex-direction: column;
     .tabs-list button {
@@ -258,13 +335,16 @@ div.tabs-wrapper div.tabs.block div.tabs-list .tabs-tab {
     }
     .tabs-list button[aria-selected='true'] {
       height: 100%;
-      border: none;
+      border: 2px solid var(--blue);
       line-height: 1rem;
       align-items: center;
       padding: 1.6rem;
       border-bottom: none;
-      background-color: var(--blue);
+      background-color: var(--gray);
       color: white;
+      p {
+        line-height: 1;
+      }
       :after {
         display: none;
       }
