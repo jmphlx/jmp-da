@@ -833,6 +833,69 @@ div.gradient-feather {
     .background-img {
       mask-image: linear-gradient(to right, black 0%, transparent 100%);
     }
+    &.feather-80 {
+      .background-img {
+        mask-image: linear-gradient(to left, black 0%, transparent 80%);
+      }
+    }
+    &.feather-70 {
+      .background-img {
+        mask-image: linear-gradient(to left, black 0%, transparent 70%);
+      }
+    }
+    &.feather-60 {
+      .background-img {
+        mask-image: linear-gradient(to left, black 0%, transparent 60%);
+      }
+    }
+    &.feather-50 {
+      .background-img {
+        mask-image: linear-gradient(to left, black 0%, transparent 50%);
+      }
+    }
+    &.feather-40 {
+      .background-img {
+        mask-image: linear-gradient(to left, black 0%, transparent 40%);
+      }
+    }
+    &.feather-30 {
+      .background-img {
+        mask-image: linear-gradient(to left, black 0%, transparent 30%);
+      }
+    }
+  }
+  &.blue-purple-left-gradient {
+    background: linear-gradient(45deg, #0378cd 0%, #643695 60%);
+    &.feather-80 {
+      .background-img {
+        mask-image: linear-gradient(to left, black 0%, transparent 80%);
+      }
+    }
+    &.feather-70 {
+      .background-img {
+        mask-image: linear-gradient(to left, black 0%, transparent 70%);
+      }
+    }
+    &.feather-60 {
+      .background-img {
+        mask-image: linear-gradient(to left, black 0%, transparent 60%);
+      }
+    }
+    &.feather-50 {
+      .background-img {
+        mask-image: linear-gradient(to left, black 0%, transparent 50%);
+      }
+    }
+    &.feather-40 {
+      .background-img {
+        mask-image: linear-gradient(to left, black 0%, transparent 40%);
+      }
+    }
+    &.feather-30 {
+      .background-img {
+        mask-image: linear-gradient(to left, black 0%, transparent 30%);
+      }
+    }
   }
 }
 div.gray {
